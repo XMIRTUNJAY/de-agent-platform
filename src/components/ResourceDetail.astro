@@ -8,6 +8,11 @@ const cat = registry.taxonomy.categories.find((c: any) => c.id === res.category)
 const techs = res.technologies?.map((t: any) => registry.taxonomy.technologies.find((x: any) => x.id === t)).filter(Boolean) ?? [];
 const prereqs = res.prerequisites?.map((id: any) => registry.resources.find((r: any) => r.id === id)).filter(Boolean) ?? [];
 
+/** documented limitations across all types (arrays or single strings), flattened */
+const limitations = [res.when_not, res.tradeoffs, res.security_notes, res.note]
+  .flatMap((v: any) => (Array.isArray(v) ? v : v ? [v] : []))
+  .filter(Boolean);
+
 /** stage lookup keyed by stage id */
 const stageById = registry.taxonomy.stagesById as Record<string, { title: string }>;
 
@@ -305,6 +310,41 @@ const relationships = Object.entries((res.relationships ?? {}) as Record<string,
             {res.stale && <div class="text-warn"><dt class="text-muted">Stale</dt><dd>Last verified {res.stale_days} days ago (>180 days)</dd></div>}
             {res.source_file && <div><dt class="text-muted">Source File</dt><dd class="font-mono text-xs">{res.source_file}</dd></div>}
             {res.publisher_source && <div><dt class="text-muted">Publisher Data</dt><dd class="font-mono text-xs">{JSON.stringify(res.publisher_source).slice(0,200)}</dd></div>}
+          </dl>
+        </section>
+
+        <!-- Before you trust this -->
+        <section class="card card-pad mount">
+          <h3 class="mono-label mb-3">Before you trust this</h3>
+          <dl class="space-y-2 text-sm">
+            <div>
+              <dt class="text-muted">Limitations</dt>
+              <dd class="text-sm">
+                {limitations.length > 0 ? (
+                  <ul class="space-y-1">
+                    {limitations.map((l: any) => (
+                      <li>{typeof l === 'string' ? l : JSON.stringify(l)}</li>
+                    ))}
+                  </ul>
+                ) : (
+                  <span class="text-muted">No documented limitations — treat the unknown as unknown, not as safe.</span>
+                )}
+              </dd>
+            </div>
+            <div>
+              <dt class="text-muted">Prerequisites</dt>
+              <dd class="text-sm">{prereqs.length ? prereqs.map((p: any) => p.title).join(' · ') : 'None declared'}</dd>
+            </div>
+            {res.evidence_summary && (
+              <div>
+                <dt class="text-muted">Evidence checklist</dt>
+                <dd class="flex flex-wrap gap-1.5 mt-1">
+                  {Object.entries(res.evidence_summary.checks).map(([check, c]: any) => (
+                    <span class="chip text-xs" title={c.status === 'unclaimed' ? 'no evidence on file' : `${c.status} · ${c.by ?? 'unknown'} · ${c.at ?? 'undated'}`}>{check.replace(/_/g, ' ')}: {c.status}</span>
+                  ))}
+                </dd>
+              </div>
+            )}
           </dl>
         </section>
 

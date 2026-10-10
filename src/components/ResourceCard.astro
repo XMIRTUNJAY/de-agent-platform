@@ -22,6 +22,10 @@ const verifiedLabel = verified && dateFmt.format(new Date(verified));
   <div class="card-meta">
     {r.difficulty && <span class="chip">{r.difficulty}</span>}
     {(r.tags || []).slice(0, 3).map((t: string) => <span class="chip">{t}</span>)}
-    {verifiedLabel && <span class="chip" style="margin-left: auto;">✓ verified {verifiedLabel}</span>}
+    {r.evidence_summary && r.evidence_summary.gap > 0 ? (
+      <span class="chip" style="margin-left: auto;">claimed {r.verification}</span>
+    ) : (
+      verifiedLabel && <span class="chip" style="margin-left: auto;">✓ {r.verification} {verifiedLabel}</span>
+    )}
   </div>
 </a>
