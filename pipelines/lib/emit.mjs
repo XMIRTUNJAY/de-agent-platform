@@ -78,6 +78,14 @@ function buildStats(resources, taxonomy) {
     if (r.category) byCategory[r.category] = (byCategory[r.category] ?? 0) + 1;
     if (!r.security_flags) secure++;
   }
+  const verification_earned = {};
+  let over_claims = 0;
+  for (const r of resources) {
+    const s = r.evidence_summary;
+    if (!s) continue;
+    verification_earned[s.earned] = (verification_earned[s.earned] ?? 0) + 1;
+    if (s.gap > 0) over_claims++;
+  }
   return {
     counts: {
       total: resources.length,
@@ -88,6 +96,8 @@ function buildStats(resources, taxonomy) {
       technologies: taxonomy.technologies.length,
       stages: taxonomy.stages.length,
     },
+    verification_earned,
+    over_claims,
     byStage,
     byCategory,
     readability: {

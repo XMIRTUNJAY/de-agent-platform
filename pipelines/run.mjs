@@ -15,8 +15,9 @@ import { validate } from './lib/validate.mjs';
 import { scoreAll } from './lib/score.mjs';
 import { emit } from './lib/emit.mjs';
 import { findCandidates } from './lib/identity.mjs';
+import { evaluateAll } from './lib/evidence.mjs';
 import { ROOT } from './lib/load.mjs';
-import { writeFileSync, mkdirSync, existsSync } from 'node:fs';
+import { writeFileSync, mkdirSync, existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 const args = process.argv.slice(2);
@@ -84,12 +85,28 @@ step('QUALITY SCORE', () => {
   return null;
 });
 
+// EVIDENCE
+step('EVIDENCE', () => {
+  const pipelineVersion = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8')).version;
+  const at = new Date().toISOString();
+  for (const r of resources) {
+    r.evidence = [...(r.evidence ?? []), { check: 'metadata_validated', status: 'passed', at, by: 'pipeline', tool: 'de-agent-pipeline', version: pipelineVersion, summary: 'schema + referential integrity OK' }];
+  }
+  evaluateAll(resources);
+  const over = resources.filter((r) => r.evidence_summary.gap > 0);
+  info(`${over.length} resource(s) claim more than evidence supports (labeled, never hidden)`);
+  return null;
+});
+
 // VERIFY
 step('VERIFY', () => {
   const byV = {};
   for (const r of resources) byV[r.verification] = (byV[r.verification] ?? 0) + 1;
   const stale = resources.filter((r) => r.stale).length;
   info(Object.entries(byV).map(([k, n]) => `${k}:${n}`).join('  '));
+  const byEarned = {};
+  for (const r of resources) byEarned[r.evidence_summary.earned] = (byEarned[r.evidence_summary.earned] ?? 0) + 1;
+  info('earned: ' + Object.entries(byEarned).map(([k, n]) => `${k}:${n}`).join('  '));
   info(`${stale} resource(s) past the 180-day staleness threshold`);
   return null;
 });

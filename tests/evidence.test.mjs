@@ -29,3 +29,12 @@ test('failed check blocks its level', () => {
   assert.equal(out.earned, 'reviewed');
   assert.equal(out.checks.tests_passed.status, 'failed');
 });
+
+test('pipeline emits earned distribution in stats', async () => {
+  const { readFileSync, existsSync } = await import('node:fs');
+  const p = new URL('../src/data/generated/stats.json', import.meta.url);
+  assert.ok(existsSync(p));
+  const doc = JSON.parse(readFileSync(p, 'utf8'));
+  assert.ok(doc.verification_earned, 'stats must carry verification_earned after wiring');
+  assert.equal(typeof doc.over_claims, 'number');
+});

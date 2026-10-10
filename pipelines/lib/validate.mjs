@@ -2,6 +2,7 @@
  * VALIDATE — schema + referential integrity. The build fails loudly rather than
  * publishing a broken registry.
  */
+import { CHECKS } from './evidence.mjs';
 const REQUIRED_COMMON = ['id', 'slug', 'type', 'title', 'description', 'category'];
 const REQUIRED_BY_TYPE = {
   skill: ['version', 'license', 'verification', 'last_verified'],
@@ -54,6 +55,14 @@ export function validate({ resources, taxonomy, meta }) {
     if (r.type !== 'reference' && r.type !== 'tool' && !r.difficulty) errors.push(`${where}: difficulty required for type "${r.type}"`);
     if (r.difficulty && !DIFFICULTY.includes(r.difficulty)) errors.push(`${where}: invalid difficulty "${r.difficulty}"`);
     if (r.verification && !VERIFICATION.includes(r.verification)) errors.push(`${where}: invalid verification "${r.verification}"`);
+
+    for (const e of r.evidence ?? []) {
+      if (!e || typeof e !== 'object') { errors.push(`${where}: evidence entry must be an object`); continue; }
+      if (!CHECKS.includes(e.check)) errors.push(`${where}: unknown evidence check "${e.check}"`);
+      if (!['passed', 'failed'].includes(e.status)) errors.push(`${where}: evidence "${e.check}" needs status passed|failed`);
+      if (!e.at || Number.isNaN(Date.parse(e.at))) errors.push(`${where}: evidence "${e.check}" needs a parseable at date`);
+      if (!['human', 'pipeline'].includes(e.by)) errors.push(`${where}: evidence "${e.check}" needs by human|pipeline`);
+    }
 
     for (const t of r.technologies ?? []) {
       if (!techIds.has(t)) warnings.push(`${where}: unknown technology "${t}"`);

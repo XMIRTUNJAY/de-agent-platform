@@ -127,6 +127,7 @@ function normalizeOne(r, ctx) {
     // verification & security
     verification: r.verification ?? 'community',
     last_verified: r.last_verified ?? null,
+    evidence: r.evidence ?? [],
     security: sec,
     security_notes: r.security_requirements ?? null,
     security_flags: flags,
