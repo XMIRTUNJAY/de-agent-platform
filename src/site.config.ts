@@ -60,6 +60,7 @@ export const SIDEBAR: NavGroup[] = [
       { label: 'Agents', href: '/agents' },
       { label: 'Hooks', href: '/hooks' },
       { label: 'Templates & starters', href: '/templates' },
+      { label: 'References', href: '/references' },
     ],
   },
   {

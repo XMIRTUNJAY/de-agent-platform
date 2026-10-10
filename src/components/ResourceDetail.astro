@@ -26,7 +26,7 @@ const relationships = Object.entries((res.relationships ?? {}) as Record<string,
       <ol class="flex items-center gap-1.5">
         <li><a href="/" class="link">Home</a></li>
         <li class="text-dim">/</li>
-        <li><a href={`/${res.type}s`} class="link">{res.typeLabel}s</a></li>
+        <li><a href={res.url.split('/').slice(0, -1).join('/') || '/'} class="link">{res.typeLabel}s</a></li>
         <li class="text-dim">/</li>
         <li aria-current="page">{res.title}</li>
       </ol>
@@ -400,7 +400,7 @@ const relationships = Object.entries((res.relationships ?? {}) as Record<string,
             <h3 class="mono-label mb-3">Technologies</h3>
             <ul class="space-y-1">
               {techs.map((t: any) => (
-                <li><a href={`/technologies/${t.slug}`} class="link text-sm">{t.name}</a> <span class="text-dim">({t.category})</span></li>
+                <li><a href={`/taxonomy#${t.slug}`} class="link text-sm">{t.name}</a> <span class="text-dim">({t.category})</span></li>
               ))}
             </ul>
           </section>

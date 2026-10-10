@@ -1,0 +1,16 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ListingPage from '@/components/ListingPage.astro';
+import registry from '@/data/generated/registry.json';
+
+const resources = registry.resources.filter(r => r.type === 'reference');
+---
+
+<BaseLayout title="References · DE//AGENT" sidebar>
+  <ListingPage
+    kicker="Marketplace"
+    title="Reference library"
+    lede="Official documentation, specifications, and books worth pointing at — scored on quality, not popularity."
+    resources={resources}
+  />
+</BaseLayout>
