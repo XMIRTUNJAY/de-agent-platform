@@ -138,6 +138,8 @@ function buildSearchIndex(resources, taxonomy) {
       stage: r.stage,
       difficulty: r.difficulty,
       verification: r.verification,
+      earned: r.evidence_summary?.earned ?? 'community',
+      eligibility: r.page_eligibility?.state ?? 'needs_review',
       security_flags: r.security_flags,
       tags: r.tags ?? [],
       technologies: (r.technologies ?? []).map(prettyTech),

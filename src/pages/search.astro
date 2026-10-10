@@ -1,32 +1,9 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import PageHero from '@/components/PageHero.astro';
-import ResourceCard from '@/components/ResourceCard.astro';
-import registry from '@/data/generated/registry.json';
-
-const query = (Astro.url.searchParams.get('q') ?? '').trim().toLowerCase();
-
-function score(r: any, q: string) {
-  if (!q) return 0;
-  const hay = [r.title, r.tagline, r.description, r.summary, ...(r.tags ?? []), ...(r.learning_objectives ?? []), ...(r.symptoms ?? []), ...(r.possible_causes ?? []), ...(r.when_to_use ?? [])].filter(Boolean).join(' ').toLowerCase();
-  const terms = q.split(/\s+/).filter(Boolean);
-  let s = 0;
-  for (const t of terms) {
-    if (r.title.toLowerCase().includes(t)) s += 10;
-    if ((r.tags ?? []).some((tag: any) => tag.toLowerCase().includes(t))) s += 5;
-    if (hay.includes(t)) s += 1;
-  }
-  return s;
-}
-
-const results = query
-  ? registry.resources.map(r => ({ r, score: score(r, query) })).filter(x => x.score > 0).sort((a,b) => b.score - a.score)
-  : [];
-
-const types = [...new Set(results.map(x => x.r.type))].sort();
 ---
 
-<BaseLayout title={query ? `Search: "${query}" · DE//AGENT` : 'Search · DE//AGENT'} sidebar>
+<BaseLayout title="Search · DE//AGENT" sidebar>
   <PageHero
     kicker="Search"
     title="Search the registry"
@@ -34,12 +11,13 @@ const types = [...new Set(results.map(x => x.r.type))].sort();
   />
 
   <section class="col section-sm" style="padding-top: 2.5rem;">
-    <form style="margin-bottom: 2rem;">
+    <form id="search-form" style="margin-bottom: 2rem;">
       <div style="display: flex; gap: 0.5rem;">
         <input
           type="search"
           name="q"
-          value={query}
+          id="search-input"
+          value=""
           placeholder="e.g. spark skew, schema drift, data quality, kafka lag…"
           aria-label="Search the registry"
           autocomplete="off"
@@ -51,24 +29,113 @@ const types = [...new Set(results.map(x => x.r.type))].sort();
       </div>
     </form>
 
-    {query && (
-      <div style="margin-bottom: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
-        <span class="chip">{results.length} result(s) for "{query}"</span>
-        {types.map(t => (
-          <a href={`?q=${query}&type=${t}`} class="chip">{registry.resources.find(r => r.type === t)?.typeLabel ?? t} ({results.filter(x => x.r.type === t).length})</a>
-        ))}
-      </div>
-    )}
+    <div id="search-meta" style="margin-bottom: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem;"></div>
+    <div id="search-facets" style="margin-bottom: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem;"></div>
+    <div id="search-results" class="card-grid stagger"></div>
+    <p id="search-empty" class="hidden mt-8 text-center text-muted py-8">Type a query to search the registry.</p>
 
-    {query && results.length === 0 && (
-      <div class="card card-pad-lg" style="text-align: center;">
-        <p class="text-muted">No resources matched "{query}".</p>
-        <p style="margin-top: 0.5rem; font-size: var(--text-sm); color: var(--fg-dim);">Try a broader term or check the <a href="/taxonomy" class="link">taxonomy</a>.</p>
-      </div>
-    )}
+    <script>
+      (function () {
+        function esc(s) {
+          return String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+        var input = document.getElementById('search-input');
+        var meta = document.getElementById('search-meta');
+        var facets = document.getElementById('search-facets');
+        var resultsEl = document.getElementById('search-results');
+        var emptyEl = document.getElementById('search-empty');
+        var form = document.getElementById('search-form');
+        if (!input || !resultsEl) return;
 
-    <div class="card-grid stagger">
-      {results.map(({ r }) => <ResourceCard resource={r} />)}
-    </div>
+        var params = new URLSearchParams(window.location.search);
+        var initialQ = params.get('q') || '';
+        input.value = initialQ;
+        var entries = [];
+        var activeType = null;
+
+        function score(r, q) {
+          if (!q) return 0;
+          var terms = q.split(/\s+/).filter(Boolean);
+          var hay = [r.title, r.tagline, r.description, r.summary, (r.tags || []).join(' '), (r.technologies || []).join(' '), r.categoryTitle || '', r.typeLabel || ''].filter(Boolean).join(' ').toLowerCase();
+          var s = 0;
+          for (var i = 0; i < terms.length; i++) {
+            var t = terms[i];
+            if ((r.title || '').toLowerCase().includes(t)) s += 10;
+            if ((r.tags || []).some(function (tag) { return String(tag).toLowerCase().includes(t); })) s += 5;
+            if ((r.technologies || []).some(function (tech) { return String(tech).toLowerCase().includes(t); })) s += 3;
+            if ((r.categoryTitle || '').toLowerCase().includes(t)) s += 3;
+            if (hay.includes(t)) s += 1;
+          }
+          return s;
+        }
+
+        function earnedChip(r) {
+          if (r.earned && r.earned !== r.verification) return '<span class="chip">earned ' + esc(r.earned) + ' · claimed ' + esc(r.verification) + '</span>';
+          return '<span class="chip">' + esc(r.verification || 'community') + '</span>';
+        }
+
+        function render() {
+          var q = (input.value || '').trim().toLowerCase();
+          if (!q) {
+            meta.innerHTML = '';
+            facets.innerHTML = '';
+            resultsEl.innerHTML = '';
+            emptyEl.textContent = 'Type a query to search the registry.';
+            emptyEl.classList.remove('hidden');
+            return;
+          }
+          var scored = entries
+            .filter(function (r) { return r.eligibility !== 'retired'; })
+            .map(function (r) { return { r: r, score: score(r, q) }; })
+            .filter(function (x) { return x.score > 0; })
+            .sort(function (a, b) { return b.score - a.score; });
+          var types = {};
+          scored.forEach(function (x) { types[x.r.type] = (types[x.r.type] || 0) + 1; });
+          var shown = activeType ? scored.filter(function (x) { return x.r.type === activeType; }) : scored;
+          meta.innerHTML = '<span class="chip">' + shown.length + ' result(s) for &quot;' + esc(q) + '&quot;</span>';
+          facets.innerHTML = Object.keys(types).sort().map(function (t) {
+            var on = activeType === t ? ' chip-accent' : '';
+            return '<button class="chip' + on + '" data-type="' + esc(t) + '">' + esc(t) + ' (' + types[t] + ')</button>';
+          }).join('');
+          facets.querySelectorAll('button').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+              activeType = activeType === btn.dataset.type ? null : (btn.dataset.type || null);
+              render();
+            });
+          });
+          if (!shown.length) {
+            resultsEl.innerHTML = '';
+            emptyEl.innerHTML = 'No resources matched &quot;' + esc(q) + '&quot;. Try a broader term or check the <a href="/taxonomy" class="link">taxonomy</a>.';
+            emptyEl.classList.remove('hidden');
+            return;
+          }
+          emptyEl.classList.add('hidden');
+          resultsEl.innerHTML = shown.map(function (x) {
+            var r = x.r;
+            return '<a href="' + esc(r.url) + '" class="card card-pad card-interactive">' +
+              '<div class="card-header"><span class="mono-label">' + esc(r.typeLabel) + '</span>' + earnedChip(r) + '</div>' +
+              '<h3>' + esc(r.title) + '</h3>' +
+              (r.tagline || r.description ? '<p class="card-desc">' + esc((r.tagline || r.description || '').slice(0, 200)) + '</p>' : '') +
+              '</a>';
+          }).join('');
+        }
+
+        form.addEventListener('submit', function (ev) {
+          ev.preventDefault();
+          activeType = null;
+          var url = new URL(window.location.href);
+          url.searchParams.set('q', input.value);
+          window.history.replaceState({}, '', url);
+          render();
+        });
+        fetch('/data/generated/search-index.json')
+          .then(function (r) { return r.json(); })
+          .then(function (d) { entries = d.entries || []; render(); })
+          .catch(function () {
+            emptyEl.textContent = 'Search index failed to load. Try the sitemap links below or the command palette (Ctrl/⌘K).';
+            emptyEl.classList.remove('hidden');
+          });
+      })();
+    </script>
   </section>
 </BaseLayout>
