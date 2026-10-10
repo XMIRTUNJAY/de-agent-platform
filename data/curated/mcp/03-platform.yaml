@@ -96,24 +96,25 @@
   category: cat-kafka
   difficulty: advanced
   tags: [mcp, kafka, streaming, lag]
-  server: { name: "kafka-mcp-server", registry: community, publisher: Community }
+  server: { name: "kafka-mcp-server", registry: community, publisher: tuannvm }
   transport: stdio
-  tools: [list_topics, describe_topic, get_consumer_group_lag, sample_messages]
+  tools: [list_topics, describe_topic, describe_consumer_group, consume_messages]
   installation:
-    command: "uvx kafka-mcp-server"
-    config_snippet: { mcpServers: { kafka: { command: "uvx", args: ["kafka-mcp-server"], env: { KAFKA_BOOTSTRAP_SERVERS: "${KAFKA_BOOTSTRAP}" } } } }
+    command: "kafka-mcp-server"
+    config_snippet: { mcpServers: { kafka: { command: "kafka-mcp-server", args: [], env: { KAFKA_BROKERS: "localhost:9092", KAFKA_CLIENT_ID: "kafka-mcp-server", MCP_TRANSPORT: "stdio" } } } }
   environment_variables:
-    - { name: KAFKA_BOOTSTRAP_SERVERS, description: "Broker list.", required: true }
-    - { name: KAFKA_SASL_USERNAME, description: "SASL user, if the cluster requires it.", required: false }
+    - { name: KAFKA_BROKERS, description: "Comma-separated broker list.", required: true }
+    - { name: KAFKA_CLIENT_ID, description: "Kafka client id for connections.", required: false }
+    - { name: KAFKA_SASL_USER, description: "SASL user, if the cluster requires it.", required: false }
     - { name: KAFKA_SASL_PASSWORD, description: "SASL password, if required.", required: false }
   security: { runs_code: false, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
   security_requirements: "Sampling messages can expose production PII in the agent's context. Grant a read-only principal, prefer a topic allow-list, and never sample topics containing personal data without masking."
   compatible_agents: [claude-code, codex, cursor, amp, gemini-cli]
-  source_url: https://github.com/kafka-mcp/kafka-mcp-server
-  github_url: https://github.com/kafka-mcp/kafka-mcp-server
+  source_url: https://github.com/tuannvm/kafka-mcp-server
+  github_url: https://github.com/tuannvm/kafka-mcp-server
   license: MIT
-  version: 0.2.0
+  version: 2.0.2
   last_verified: 2026-09-15
   verification: community
-  note: "Community project — the upstream repo is not affiliated with the ASF. Review before use."
+  note: "Retargeted 2026-10-10 from dead kafka-mcp/kafka-mcp-server to tuannvm/kafka-mcp-server (Go, release v2.0.2, MIT badge in README; no LICENSE file in repo and API license detection disagrees — verify before commercial use). Not affiliated with the ASF. Review before use."
   relationships: { related_to: [cat-kafka, runbook-kafka-consumer-lagging] }

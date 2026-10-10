@@ -32,3 +32,12 @@ Retired records stay in curated YAML and the knowledge graph — they leave the 
 ## Backlog discipline
 
 The queue is an editorial backlog, not a publishing queue. Cap promotions per week to what review hours support. If the backlog grows three weeks running, throttle discovery (`--limit`) before quality slips — narrowing intake beats widening standards.
+
+## Deferred to V2 (after first GitHub publish + traction)
+
+Recorded here so deferral is a decision, not drift:
+
+- **Analytics + Search Console.** Hooks ship (`__DE_OUTBOUND__`, opt-in provider config); nothing collects. Enable after the first publish, then let the data pick expansion clusters.
+- **Affiliate links.** Policy and disclosure ship; zero links live. Review program terms (eligibility, geography, attribution, thresholds) only once content is listed and getting traction.
+- **First-party org (`de-agent/*`).** 111 original records point at a planned `github.com/de-agent` org (8 repos) that does not exist yet; freshness records them unreachable honestly. Decision: create the org and publish the content, then re-run provenance refresh to clear the flags.
+- **`backend/` dead code and `astro check` exclusion.** Scoped as future work; the exclusion comment in `ci.yml` tracks the type-debt reason.
