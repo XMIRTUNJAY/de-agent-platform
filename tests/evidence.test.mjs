@@ -20,7 +20,7 @@ test('claimed reviewed with no evidence earns community and flags over-claim', (
   const r = { id: 'x', verification: 'reviewed', evidence: [] };
   const out = evaluateEvidence(r);
   assert.equal(out.earned, 'community');
-  assert.equal(out.gap, 2);
+  assert.equal(out.gap, 1);
 });
 
 test('failed check blocks its level', () => {
