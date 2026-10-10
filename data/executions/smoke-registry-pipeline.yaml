@@ -1,0 +1,16 @@
+# Example execution manifest: re-run the offline registry pipeline as a smoke test.
+# Curator-approved, offline, workdir-jailed. Copy this file to author new runs.
+id: smoke-registry-pipeline
+target: null
+trust: curator-approved
+workdir: .
+commands:
+  - name: pipeline-check
+    argv: ['node', 'pipelines/run.mjs', '--check']
+    timeout_ms: 120000
+capabilities:
+  network: off
+  filesystem: workdir-only
+limits:
+  timeout_ms: 120000
+  max_output_bytes: 200000

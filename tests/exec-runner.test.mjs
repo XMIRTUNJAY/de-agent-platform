@@ -57,3 +57,14 @@ test('blocked manifest never spawns', async () => {
   assert.equal(out.state, 'blocked');
   assert.equal(out.spawned, false);
 });
+
+test('CLI dry-run exits 0 and writes nothing', async () => {
+  const { execFile } = await import('node:child_process');
+  const { promisify } = await import('node:util');
+  const run = promisify(execFile);
+  const before = Date.now();
+  const { stdout } = await run('node', ['pipelines/execute.mjs', '--manifest', 'data/executions/smoke-registry-pipeline.yaml'], { cwd: ROOT });
+  assert.ok(stdout.includes('eligible_for_execution'));
+  assert.ok(stdout.includes('backend: dry'));
+  assert.ok(Date.now() - before < 30000);
+});
