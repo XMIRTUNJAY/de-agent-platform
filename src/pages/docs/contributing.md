@@ -32,3 +32,9 @@ Hard rules, enforced by the build: one canonical category per resource; a declar
 - Does the description say what it does — not what it aspires to?
 
 If all four are yes, it belongs here.
+
+## Promotion checklist
+
+Drafts become records through an evidence gate, not enthusiasm. Run `node pipelines/promote.mjs --draft <file>` — it moves nothing by default, only renders a verdict. Add `--apply` to move a passing draft into `data/curated/`.
+
+The gate requires: a unique id and slug, a known type and category, a declared license, a description of 200+ characters, and — for any claim above `community` — passed evidence entries matching the level (license and source checks for `reviewed`, plus build and test runs for `tested`, plus smoke and output validation for `verified`). Drafts ship as `community` unless that evidence rides along. After promotion, run the pipeline and the build; both must stay green.

@@ -66,6 +66,7 @@ const TRUST = [
 ];
 
 const earned = (stats as any).verification_earned as Record<string, number> | undefined;
+const depth = (stats as any).depth as Record<string, number> | undefined;
 const overClaims = (stats as any).over_claims as number | undefined;
 ---
 
@@ -121,6 +122,37 @@ const overClaims = (stats as any).over_claims as number | undefined;
       <div class="card card-pad" style="margin-top: 1.75rem;">
         <p class="mono-label">no evidence runs recorded</p>
         <p class="card-desc" style="margin-top: 0.5rem;">Run the registry pipeline to attest checks and compute earned levels.</p>
+      </div>
+    )}
+  </section>
+
+  <hr class="hairline col" />
+
+  <section class="col section">
+    <SectionHeader kicker="Depth" title="Content depth" lede="Substance per record from description, required fields, runnable examples, and richness. Thin pages stay browsable but uncrawled until curators deepen them." />
+    {depth ? (
+      <div class="card-grid card-grid--2" style="margin-top: 1.75rem;">
+        <div class="card card-pad">
+          <p class="mono-label">depth levels</p>
+          <ul style="list-style: none; padding: 0; margin-top: 1rem; display: grid; gap: 0.55rem;">
+            {Object.entries(depth).map(([lv, n]) => (
+              <li style="display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;">
+                <span style="font-size: var(--text-sm); text-transform: capitalize;">{lv}</span>
+                <span class="text-muted" style="font-size: var(--text-sm); font-variant-numeric: tabular-nums;">{n}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="card card-pad">
+          <p class="mono-label">thin pages</p>
+          <p class="display" style="font-size: var(--text-3xl, 2rem); letter-spacing: -0.02em;" style="margin-top: 0.5rem;">{depth.thin ?? 0}</p>
+          <p class="card-desc" style="margin-top: 0.25rem;">need deepening before they earn crawling; the thin list ships in depth.json</p>
+        </div>
+      </div>
+    ) : (
+      <div class="card card-pad" style="margin-top: 1.75rem;">
+        <p class="mono-label">no depth runs recorded</p>
+        <p class="card-desc" style="margin-top: 0.5rem;">Run the registry pipeline to score content depth.</p>
       </div>
     )}
   </section>
