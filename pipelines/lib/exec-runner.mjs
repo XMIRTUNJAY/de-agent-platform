@@ -66,7 +66,11 @@ export async function runManifest(manifest, { backend = 'dry', root = process.cw
       resultPath: null, provenance,
     };
   }
-  if (backend !== 'local') throw new Error(`unknown backend: ${backend} (supported: dry, local; docker is planned, no daemon on this host)`);
+  if (backend !== 'local' && backend !== 'docker') throw new Error(`unknown backend: ${backend} (supported: dry, local, docker)`);
+  if (backend === 'docker') {
+    const { runDockerManifest } = await import('./exec-docker.mjs');
+    return runDockerManifest(manifest, { root, env, limits: manifest.limits ?? {}, policy, provenance });
+  }
   const cwd = resolve(root, manifest.workdir ?? '.');
   if (relative(root, cwd).startsWith('..') || !cwd.startsWith(resolve(root))) {
     return { state: 'blocked', spawned: false, policy: { eligible: false, reasons: [{ code: 'path-escape', detail: 'workdir escapes repo root' }] }, commands: [], log: '', resultPath: null, provenance };
