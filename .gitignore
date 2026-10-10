@@ -15,6 +15,7 @@ backend/dist/
 data/drafts/.seen.json
 data/drafts/.source-health.json
 data/cache/
+data/curated/.cache/
 
 # Logs and OS noise
 *.log
