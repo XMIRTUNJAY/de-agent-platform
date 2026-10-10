@@ -101,6 +101,7 @@ export const SIDEBAR: NavGroup[] = [
       { label: 'Relationships graph', href: '/docs/relationships' },
       { label: 'Monetization policy', href: '/docs/monetization' },
       { label: 'Measurement', href: '/docs/measurement' },
+      { label: 'Maintenance', href: '/docs/maintenance' },
     ],
   },
   {
