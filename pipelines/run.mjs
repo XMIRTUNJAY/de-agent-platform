@@ -17,6 +17,7 @@ import { emit } from './lib/emit.mjs';
 import { findCandidates } from './lib/identity.mjs';
 import { evaluateAll } from './lib/evidence.mjs';
 import { pageEligibility } from './lib/eligibility.mjs';
+import { relatedFor } from './lib/related.mjs';
 import { ROUTE } from './lib/emit.mjs';
 import { ROOT } from './lib/load.mjs';
 import { writeFileSync, mkdirSync, existsSync, readFileSync } from 'node:fs';
@@ -125,6 +126,13 @@ step('ELIGIBILITY', () => {
   const counts = {};
   for (const s of Object.values(states)) counts[s] = (counts[s] ?? 0) + 1;
   info('eligibility: ' + Object.entries(counts).map(([k, n]) => `${k}:${n}`).join('  '));
+  return null;
+});
+
+// RELATED
+step('RELATED', () => {
+  for (const r of resources) r.related_computed = relatedFor(r, resources, 5);
+  info(`related links computed for ${resources.length} resources`);
   return null;
 });
 

@@ -340,6 +340,20 @@ const relationships = Object.entries((res.relationships ?? {}) as Record<string,
           </section>
         )}
 
+        <!-- Related in the graph (computed, not curated) -->
+        {(res.related_computed ?? []).length > 0 && (
+          <section class="card card-pad mount">
+            <h3 class="mono-label mb-3">Related in the graph</h3>
+            <ul class="space-y-1">
+              {(res.related_computed ?? []).map((rel: any) => {
+                const r = registry.resources.find((x: any) => x.id === rel.id);
+                return r ? <li><a href={r.url} class="link text-sm">{r.title}</a> <span class="text-dim">({r.typeLabel})</span></li> : null;
+              })}
+            </ul>
+            <p class="card-desc" style="margin-top: 0.75rem;">Computed from shared taxonomy — not curator endorsements.</p>
+          </section>
+        )}
+
         <!-- Technologies -->
         {techs.length && (
           <section class="card card-pad mount">
