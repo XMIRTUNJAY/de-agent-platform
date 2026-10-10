@@ -4,7 +4,7 @@
  */
 import { CHECKS } from './evidence.mjs';
 const REQUIRED_COMMON = ['id', 'slug', 'type', 'title', 'description', 'category'];
-const REQUIRED_BY_TYPE = {
+export const REQUIRED_BY_TYPE = {
   skill: ['version', 'license', 'verification', 'last_verified'],
   mcp: ['server', 'transport', 'tools'],
   agent: ['purpose', 'workflow', 'outputs'],

@@ -24,7 +24,7 @@ export const CHECKS = [
 export const LEVELS = ['community', 'reviewed', 'tested', 'verified'];
 const RANK = Object.fromEntries(LEVELS.map((l, i) => [l, i]));
 
-const REQUIRED = {
+export const REQUIRED = {
   reviewed: ['metadata_validated', 'license_reviewed', 'source_reachable'],
   tested: ['metadata_validated', 'license_reviewed', 'source_reachable', 'build_passed', 'tests_passed'],
   verified: ['metadata_validated', 'license_reviewed', 'source_reachable', 'build_passed', 'tests_passed', 'smoke_passed', 'output_validated'],
