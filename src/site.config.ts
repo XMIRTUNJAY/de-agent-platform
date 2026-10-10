@@ -47,6 +47,7 @@ export const SIDEBAR: NavGroup[] = [
       { label: 'Taxonomy', href: '/taxonomy' },
       { label: 'All categories', href: '/categories' },
       { label: 'Tutorials', href: '/tutorials' },
+      { label: 'Guides', href: '/guides' },
     ],
   },
   {

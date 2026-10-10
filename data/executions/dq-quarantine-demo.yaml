@@ -1,0 +1,15 @@
+# Runnable companion to the data-quality starter guide.
+id: dq-quarantine-demo
+target: null
+trust: curator-approved
+workdir: .
+commands:
+  - name: quarantine-demo
+    argv: ['node', 'data/executions/dq-quarantine-demo.mjs']
+    timeout_ms: 30000
+capabilities:
+  network: off
+  filesystem: workdir-only
+limits:
+  timeout_ms: 30000
+  max_output_bytes: 50000

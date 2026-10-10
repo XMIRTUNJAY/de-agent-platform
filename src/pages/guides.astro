@@ -1,0 +1,41 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import SectionHeader from '@/components/SectionHeader.astro';
+
+const GUIDES = [
+  {
+    slug: 'dq-starter-kit',
+    title: 'Data Quality Starter Kit',
+    description: 'Quarantine bad rows instead of losing them: a starter pattern with a runnable demo, dbt tests, and review skills.',
+    badge: 'runnable demo',
+  },
+  {
+    slug: 'kafka-lakehouse-ingest',
+    title: 'Kafka to Lakehouse Ingestion',
+    description: 'Stream events from Kafka into a lakehouse with deduplication, checkpointing, and lag triage.',
+    badge: 'design guide',
+  },
+];
+---
+
+<BaseLayout title="Guides · DE//AGENT" sidebar>
+  <PageHero
+    kicker="Learn by building"
+    title="Implementation guides"
+    lede="Small, honest guides that connect registry resources into working outcomes. Every runnable step says what executed it; everything else says what it needs."
+  />
+
+  <section class="col section">
+    <SectionHeader kicker="Guides" title="Start here" lede="Two exemplars. More arrive when they earn their validation." />
+    <div class="card-grid card-grid--2" style="margin-top: 1.75rem;">
+      {GUIDES.map((g) => (
+        <a href={`/guides/${g.slug}`} class="card card-pad card-interactive">
+          <p class="mono-label">{g.badge}</p>
+          <h3 style="font-size: var(--text-xl); font-weight: 500; margin-top: 0.5rem;">{g.title}</h3>
+          <p class="card-desc" style="margin-top: 0.5rem;">{g.description}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
