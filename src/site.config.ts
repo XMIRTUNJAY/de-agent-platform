@@ -21,6 +21,13 @@ export const SITE = {
 export type NavItem = { label: string; href: string; badge?: string; external?: boolean };
 export type NavGroup = { title: string; items: NavItem[] };
 
+/** Optional privacy-friendly analytics. Null provider ships zero third-party requests. */
+export const ANALYTICS: { provider: null | 'plausible' | 'umami'; domain: string; script: string } = {
+  provider: null,
+  domain: '',
+  script: '',
+};
+
 /** Top-bar navigation (mirrors a docs-product top bar). */
 export const TOP_NAV: NavItem[] = [
   { label: 'Roadmap', href: '/roadmap' },
@@ -93,6 +100,7 @@ export const SIDEBAR: NavGroup[] = [
       { label: 'Ingestion pipeline', href: '/docs/ingestion' },
       { label: 'Relationships graph', href: '/docs/relationships' },
       { label: 'Monetization policy', href: '/docs/monetization' },
+      { label: 'Measurement', href: '/docs/measurement' },
     ],
   },
   {
