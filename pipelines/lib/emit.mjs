@@ -99,6 +99,10 @@ function buildStats(resources, taxonomy) {
     if (f.archived) freshness.archived++;
     if (f.stale) freshness.stale++;
   }
+  const depth = { deep: 0, adequate: 0, thin: 0 };
+  for (const r of resources) {
+    if (r.depth) depth[r.depth.level] = (depth[r.depth.level] ?? 0) + 1;
+  }
   return {
     counts: {
       total: resources.length,
@@ -113,6 +117,7 @@ function buildStats(resources, taxonomy) {
     over_claims,
     eligibility,
     freshness,
+    depth,
     byStage,
     byCategory,
     readability: {

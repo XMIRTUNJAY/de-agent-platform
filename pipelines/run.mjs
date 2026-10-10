@@ -19,6 +19,7 @@ import { evaluateAll } from './lib/evidence.mjs';
 import { pageEligibility } from './lib/eligibility.mjs';
 import { relatedFor } from './lib/related.mjs';
 import { evaluateFreshness } from './lib/freshness.mjs';
+import { depthAll } from './lib/depth.mjs';
 import { ROUTE } from './lib/emit.mjs';
 import { ROOT } from './lib/load.mjs';
 import { writeFileSync, mkdirSync, existsSync, readFileSync } from 'node:fs';
@@ -86,6 +87,17 @@ step('QUALITY SCORE', () => {
   const avg = scored.length ? (scored.reduce((a, r) => a + r.scores.quality, 0) / scored.length).toFixed(2) : 'n/a';
   const compAvg = (resources.reduce((a, r) => a + r.scores.completeness, 0) / resources.length).toFixed(0);
   info(`${scored.length} source-quality scores (avg ${avg}/5) · mean completeness ${compAvg}%`);
+  return null;
+});
+
+// DEPTH
+step('DEPTH', () => {
+  depthAll(resources);
+  const byLevel = {};
+  for (const r of resources) byLevel[r.depth.level] = (byLevel[r.depth.level] ?? 0) + 1;
+  for (const r of resources.filter((r) => r.depth.level === 'thin').slice(0, 20)) warn('  ! thin [' + r.depth.score + '] ' + r.id);
+  info('depth: ' + Object.entries(byLevel).map(([k, n]) => `${k}:${n}`).join('  '));
+  emitDepth(byLevel);
   return null;
 });
 
@@ -196,6 +208,13 @@ function emitEligibility(states) {
   for (const dir of [join(ROOT, 'src', 'data', 'generated'), join(ROOT, 'public', 'data', 'generated')]) {
     if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
     writeFileSync(join(dir, 'page-eligibility.json'), JSON.stringify(payload, null, 1) + '\n', 'utf8');
+  }
+}
+function emitDepth(byLevel) {
+  const payload = { generated_at: new Date().toISOString(), levels: byLevel, thin_ids: resources.filter((r) => r.depth.level === 'thin').map((r) => r.id).sort() };
+  for (const dir of [join(ROOT, 'src', 'data', 'generated'), join(ROOT, 'public', 'data', 'generated')]) {
+    if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
+    writeFileSync(join(dir, 'depth.json'), JSON.stringify(payload, null, 1) + '\n', 'utf8');
   }
 }
 function warn(msg) { console.log(`      \x1b[33m${msg}\x1b[0m`); }

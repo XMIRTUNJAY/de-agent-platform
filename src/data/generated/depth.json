@@ -1,0 +1,34 @@
+{
+ "generated_at": "2026-10-10T11:54:15.478Z",
+ "levels": {
+  "adequate": 109,
+  "deep": 2,
+  "thin": 24
+ },
+ "thin_ids": [
+  "ref-agent-skills",
+  "ref-airflow-docs",
+  "ref-bigquery-docs",
+  "ref-data-mesh",
+  "ref-databricks-docs",
+  "ref-datahub-docs",
+  "ref-dbt-best-practices",
+  "ref-dbt-docs",
+  "ref-ddia",
+  "ref-debezium-docs",
+  "ref-delta-docs",
+  "ref-duckdb-docs",
+  "ref-fundamentals-de",
+  "ref-glue-docs",
+  "ref-gx-docs",
+  "ref-iceberg-docs",
+  "ref-kafka-docs",
+  "ref-mcp-registry",
+  "ref-mcp-spec",
+  "ref-openlineage-docs",
+  "ref-parquet-docs",
+  "ref-snowflake-docs",
+  "ref-soda-core",
+  "ref-spark-docs"
+ ]
+}

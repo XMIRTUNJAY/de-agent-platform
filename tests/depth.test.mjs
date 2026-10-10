@@ -25,3 +25,11 @@ test('reference without install is judged fairly', () => {
   const out = scoreDepth({ id: 'r', type: 'reference', title: 'Docs', description: 'd '.repeat(300), category: 'cat-sql', url: 'https://x.io/', publisher: 'X', license: 'Proprietary', tags: ['docs'] });
   assert.ok(['adequate', 'deep'].includes(out.level));
 });
+
+test('pipeline emits depth distribution in stats', async () => {
+  const { readFileSync, existsSync } = await import('node:fs');
+  const p = new URL('../src/data/generated/stats.json', import.meta.url);
+  assert.ok(existsSync(p));
+  const doc = JSON.parse(readFileSync(p, 'utf8'));
+  assert.ok(doc.depth && typeof doc.depth.thin === 'number', 'stats must carry depth after wiring');
+});
