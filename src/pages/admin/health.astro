@@ -3,6 +3,27 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import PageHero from '@/components/PageHero.astro';
 import SectionHeader from '@/components/SectionHeader.astro';
 import stats from '@/data/generated/stats.json';
+import sourceHealth from '@/data/generated/source-health.json';
+
+interface SourceHealthEntry {
+  checks: number;
+  successes: number;
+  failures: number;
+  consecutive_failures: number;
+  last_status: 'ok' | 'error';
+  last_error: string | null;
+  last_run: string;
+  last_success: string | null;
+  last_items: number | null;
+  last_drafted: number | null;
+}
+
+const healthSources = (sourceHealth.sources ?? {}) as Record<string, SourceHealthEntry>;
+const healthEntries = Object.entries(healthSources).sort(
+  (a, b) => b[1].consecutive_failures - a[1].consecutive_failures || a[0].localeCompare(b[0])
+);
+const healthOk = healthEntries.filter(([, s]) => s.last_status === 'ok').length;
+const healthErr = healthEntries.length - healthOk;
 
 const c = stats.counts;
 const total = c.total;
@@ -105,6 +126,36 @@ const TRUST = [
         </div>
       ))}
     </div>
+  </section>
+
+  <hr class="hairline col" />
+
+  <section class="col section" style="padding-bottom: 6rem;">
+    <SectionHeader kicker="Freshness" title="Source health" lede="Per-source discovery state from the last pipelines/discover.mjs run — retries included, failures recorded per source, never failing the whole run." />
+    {healthEntries.length === 0 ? (
+      <div class="card card-pad" style="margin-top: 1.75rem;">
+        <p class="mono-label">no runs recorded</p>
+        <p class="card-desc" style="margin-top: 0.5rem;">No discovery run has reported health yet. Run <span class="mono-label">node pipelines/discover.mjs --dry</span> to probe sources without writing drafts.</p>
+      </div>
+    ) : (
+      <>
+        <div style="margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+          <span class="chip chip-accent">{healthOk} healthy</span>
+          {healthErr > 0 && <span class="chip">{healthErr} failing</span>}
+          <span class="chip">updated {new Date((sourceHealth as { generated_at: string }).generated_at).toISOString().slice(0, 10)}</span>
+        </div>
+        <div class="card-grid card-grid--2" style="margin-top: 1.75rem;">
+          {healthEntries.map(([id, s]) => (
+            <div class="card card-pad-sm" style="display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;">
+              <span style="font-size: var(--text-sm);">{id}</span>
+              <span class="text-muted" style="font-size: var(--text-sm); font-variant-numeric: tabular-nums;">
+                {s.last_status === 'ok' ? `ok · ${s.last_items ?? 0} items` : `error ×${s.consecutive_failures} · ${s.last_error ?? 'unknown'}`}
+              </span>
+            </div>
+          ))}
+        </div>
+      </>
+    )}
   </section>
 
   <hr class="hairline col" />
