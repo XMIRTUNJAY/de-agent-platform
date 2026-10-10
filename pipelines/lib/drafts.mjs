@@ -76,6 +76,8 @@ export function writeDraft(seen, { source, item, classification }) {
     license: 'Proprietary',
     verification: 'community',
     curation_state: 'draft',
+    draft_kind: 'brief', // agent upgrades to tutorial|guide|skill|reference|comparison when writing the body
+    body: '', // agent-written content; empty until an agent fills it per agents/draft-writer/
     discovered_from: { source: source.id, extracted_at: new Date().toISOString(), published: item.published ?? null },
     classification: {
       backend: 'rules',
