@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-duckdb-and-hugging-face-querying-datasets-directly
+  slug: duckdb-and-hugging-face-querying-datasets-directly
+  type: reference
+  title: "DuckDB and Hugging Face: Querying Datasets Directly"
+  description: Hugging Face hosts hundreds of thousands of datasets, and DuckDB
+    can read them directly, exactly where they are and without downloading
+    anything, over the DuckDB `hf://` protocol. This post looks at how the
+    integration works and the scenarios where it works best.
+  category: cat-databases
+  tags: []
+  url: https://duckdb.org/2026/09/25/hugging-face.html
+  publisher: DuckDB News
+  kind: blog
+  why: null
+  source_url: https://duckdb.org/2026/09/25/hugging-face.html
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  discovered_from:
+    source: duckdb
+    extracted_at: 2026-10-09T04:47:10.518Z
+    published: 2026-09-25T00:00:00+00:00
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-databases

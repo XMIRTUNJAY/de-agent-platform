@@ -1,0 +1,16 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ListingPage from '@/components/ListingPage.astro';
+import registry from '@/data/generated/registry.json';
+
+const resources = registry.resources.filter(r => r.type === 'architecture');
+---
+
+<BaseLayout title="Architecture Patterns · DE//AGENT" sidebar>
+  <ListingPage
+    kicker="Build"
+    title="Architecture patterns"
+    lede="Named, reusable solutions to recurring data engineering problems — each with context, forces, trade-offs, and when not to use it."
+    resources={resources}
+  />
+</BaseLayout>

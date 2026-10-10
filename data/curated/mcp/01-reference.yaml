@@ -1,0 +1,110 @@
+# MCP servers — official/reference set. Listing != trust: see security block.
+- id: mcp-filesystem
+  slug: filesystem
+  type: mcp
+  title: Filesystem MCP Server
+  description: >-
+    Reference server that exposes a sandboxed set of directories as readable and
+    (optionally) writable tools. Useful for pipelines that operate on local files.
+  category: cat-agentic
+  difficulty: beginner
+  tags: [mcp, filesystem, reference]
+  server: { name: "@modelcontextprotocol/server-filesystem", registry: official-registry, publisher: Model Context Protocol }
+  transport: stdio
+  tools: [read_file, read_text_file, write_file, edit_file, list_directory, directory_tree, search_files, move_file, get_file_info]
+  installation:
+    command: "npx -y @modelcontextprotocol/server-filesystem /path/to/allowed/dir"
+    config_snippet: { mcpServers: { filesystem: { command: "npx", args: ["-y", "@modelcontextprotocol/server-filesystem", "/data"] } } }
+  environment_variables: []
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
+  security_requirements: "Grants read/write within the directories you pass as arguments. Scope it to a single working directory; never pass a home directory or a mount containing secrets."
+  compatible_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  source_url: https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem
+  github_url: https://github.com/modelcontextprotocol/servers
+  license: MIT
+  version: 2025.8.21
+  last_verified: 2026-09-30
+  verification: community
+  relationships: { related_to: [cat-agentic] }
+- id: mcp-git
+  slug: git
+  type: mcp
+  title: Git MCP Server
+  description: >-
+    Exposes local Git operations — status, diff, log, commit, branch — as tools, so
+    an agent can inspect history and prepare changes without shelling out blindly.
+  category: cat-agentic
+  difficulty: beginner
+  tags: [mcp, git, version-control]
+  server: { name: "mcp-server-git", registry: official-registry, publisher: Model Context Protocol }
+  transport: stdio
+  tools: [git_status, git_diff_unstaged, git_diff_staged, git_log, git_commit, git_add, git_create_branch, git_checkout]
+  installation:
+    command: "uvx mcp-server-git --repository /path/to/repo"
+    config_snippet: { mcpServers: { git: { command: "uvx", args: ["mcp-server-git", "--repository", "/repo"] } } }
+  environment_variables: []
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
+  security_requirements: "Can commit and create branches in the scoped repository. It cannot push unless credentials are also present in the environment."
+  compatible_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  source_url: https://github.com/modelcontextprotocol/servers/tree/main/src/git
+  github_url: https://github.com/modelcontextprotocol/servers
+  license: MIT
+  version: 2025.8.21
+  last_verified: 2026-09-30
+  verification: community
+  relationships: { related_to: [cat-agentic, cat-cicd] }
+- id: mcp-fetch
+  slug: fetch
+  type: mcp
+  title: Fetch MCP Server
+  description: >-
+    Retrieves a URL and converts it to markdown for the model. Commonly used to
+    read documentation during a task.
+  category: cat-agentic
+  difficulty: beginner
+  tags: [mcp, fetch, http, reference]
+  server: { name: "mcp-server-fetch", registry: official-registry, publisher: Model Context Protocol }
+  transport: stdio
+  tools: [fetch]
+  installation:
+    command: "uvx mcp-server-fetch"
+    config_snippet: { mcpServers: { fetch: { command: "uvx", args: ["mcp-server-fetch"] } } }
+  environment_variables: []
+  security: { runs_code: false, network_access: true, credentials: false, filesystem_access: false, external_apis: true }
+  security_requirements: "Network egress to arbitrary URLs. In a corporate environment, route it through an allowlisting proxy; otherwise it can reach internal endpoints (SSRF risk)."
+  compatible_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  source_url: https://github.com/modelcontextprotocol/servers/tree/main/src/fetch
+  github_url: https://github.com/modelcontextprotocol/servers
+  license: MIT
+  version: 2025.8.21
+  last_verified: 2026-09-30
+  verification: community
+  relationships: { related_to: [cat-agentic, cat-ingestion] }
+- id: mcp-github
+  slug: github
+  type: mcp
+  title: GitHub MCP Server
+  description: >-
+    First-party GitHub server exposing repositories, issues, pull requests and
+    code search, plus optional write operations.
+  category: cat-agentic
+  difficulty: beginner
+  tags: [mcp, github, issues, pull-requests]
+  server: { name: "github-mcp-server", registry: vendor, publisher: GitHub }
+  transport: stdio
+  tools: [search_repositories, get_file_contents, create_issue, create_pull_request, list_commits, search_code]
+  installation:
+    command: "docker run -i --rm -e GITHUB_PERSONAL_ACCESS_TOKEN ghcr.io/github/github-mcp-server"
+    config_snippet: { mcpServers: { github: { command: "docker", args: ["run", "-i", "--rm", "-e", "GITHUB_PERSONAL_ACCESS_TOKEN", "ghcr.io/github/github-mcp-server"], env: { GITHUB_PERSONAL_ACCESS_TOKEN: "${GITHUB_TOKEN}" } } } }
+  environment_variables:
+    - { name: GITHUB_PERSONAL_ACCESS_TOKEN, description: "PAT or fine-grained token; scope defines blast radius.", required: true }
+  security: { runs_code: false, network_access: true, credentials: true, filesystem_access: false, external_apis: true }
+  security_requirements: "Requires a GitHub token. Use a fine-grained token limited to the target repositories and read-only unless the task must open PRs. Never grant org-wide admin."
+  compatible_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  source_url: https://github.com/github/github-mcp-server
+  github_url: https://github.com/github/github-mcp-server
+  license: MIT
+  version: v0.20.0
+  last_verified: 2026-09-29
+  verification: community
+  relationships: { related_to: [cat-agentic, cat-cicd] }

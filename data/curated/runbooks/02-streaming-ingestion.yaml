@@ -1,0 +1,180 @@
+# Runbooks — streaming & ingestion
+- id: runbook-kafka-consumer-lagging
+  slug: kafka-consumer-lagging
+  type: runbook
+  title: "Kafka consumer lagging"
+  description: A consumer group is falling behind the topic and downstream tables are going stale.
+  severity: high
+  category: cat-kafka
+  difficulty: advanced
+  tags: [kafka, lag, streaming, incident]
+  symptoms:
+    - Consumer group lag rising and not recovering
+    - Downstream tables increasingly stale
+    - Processor CPU may be low (waiting on downstream) or saturated
+  possible_causes:
+    - Downstream sink (DB/warehouse) is the bottleneck
+    - A hot key routes to a single partition
+    - Rebalance loop stealing consumption time
+    - A poison message retried forever
+    - Too few consumers for the partition count
+  diagnosis:
+    - Get per-partition lag: uniform vs skewed tells you capacity vs key skew.
+    - Check the consumer-group state history for `PreparingRebalance`.
+    - Look for one partition whose committed offset is stuck.
+  commands:
+    - "kafka-consumer-groups --bootstrap-server $B --describe --group $G"
+    - "kafka-consumer-groups --bootstrap-server $B --describe --group $G --state"
+  fix:
+    - Sink-bound → batch/upsert in bulk, or scale the sink.
+    - Key skew → re-key the topic or increase partitions (breaks ordering per key).
+    - Rebalance → raise session.timeout.ms / max.poll.interval.ms.
+    - Poison message → route to a DLQ and commit past it.
+    - Never reset offsets to reduce lag; that is silent data loss.
+  prevention:
+    - Alert on lag slope, not on an absolute lag number.
+    - A DLQ for messages failing N times.
+  monitoring:
+    - consumer lag per partition, rebalance count, DLQ depth
+  agent_skills: [skill-kafka-lag-triage]
+  agents: [agent-kafka-troubleshooter]
+  version: 1.3.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/de-agent/runbooks/tree/main/kafka-consumer-lagging
+  github_url: https://github.com/de-agent/runbooks
+  verification: reviewed
+  last_verified: 2026-09-27
+  security: { runs_code: true, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-kafka, skill-kafka-lag-triage] }
+- id: runbook-cdc-stopped
+  slug: cdc-stopped
+  type: runbook
+  title: "CDC stopped"
+  description: Change events stopped flowing from a source and the target table is silently diverging.
+  severity: critical
+  category: cat-cdc
+  difficulty: advanced
+  tags: [cdc, debezium, kafka, incident]
+  symptoms:
+    - Change events stop arriving for a source table
+    - Target table silently diverges from source
+    - Often no error surfaced to consumers
+  possible_causes:
+    - Connector task failed (slot invalidated, WAL purged)
+    - Replication slot dropped or lagging beyond retention
+    - Network/credentials rotated and the connector cannot reconnect
+    - Schema change broke the connector's mapping
+  diagnosis:
+    - Check connector and task status for the source.
+    - Check the replication slot's retained WAL / active state on the DB.
+    - Confirm the topic still has recent timestamps.
+  commands:
+    - "curl -s $CONNECT/connectors/$NAME/status | jq .tasks"
+    - "SELECT slot_name, active, restart_lsn, confirmed_flush_lsn FROM pg_replication_slots;"
+    - "kafka-run-class kafka.tools.GetOffsetShell --topic $T --time -1"
+  fix:
+    - Task failed → restart the task; if the slot was dropped, re-snapshot.
+    - WAL purged → the only correct fix is a fresh snapshot + restart.
+    - Never hand-edit offsets; replay from the snapshot point.
+  prevention:
+    - Alert on replication-slot retained WAL and on connector task failures.
+    - Monitor the source→target row-count delta continuously.
+  monitoring:
+    - connector task state, slot retained WAL, event lag vs source
+  agent_skills: [skill-cdc-merge-designer]
+  agents: [agent-incident-assistant]
+  version: 1.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/de-agent/runbooks/tree/main/cdc-stopped
+  github_url: https://github.com/de-agent/runbooks
+  verification: reviewed
+  last_verified: 2026-09-24
+  security: { runs_code: true, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-cdc, skill-cdc-merge-designer] }
+- id: runbook-late-files
+  slug: late-files
+  type: runbook
+  title: "Late files"
+  description: Partner files arrive after the job has already run, so historical numbers keep changing.
+  severity: medium
+  category: cat-file-ingestion
+  difficulty: intermediate
+  tags: [late-data, ingestion, sftp, batch]
+  symptoms:
+    - Files arrive after the daily job already ran
+    - Yesterday's numbers change the next morning
+    - Downstream reconciliations disagree
+  possible_causes:
+    - Partner sends late; no watermark policy defined
+    - Timezone mismatch between partner and pipeline
+    - Job scheduled before the partner's SLA window closes
+  diagnosis:
+    - Measure arrival-time distribution of files over the last 30 days.
+    - Compare the job schedule against the partner's contractual delivery time.
+  commands:
+    - "aws s3api list-objects-v2 --bucket b --prefix in/ --query 'Contents[].LastModified'"
+  fix:
+    - Re-process the late window idempotently (partition overwrite or MERGE).
+    - Widen the reprocessing window to cover observed lateness.
+  prevention:
+    - A watermark policy: reprocess the last N days every run.
+    - Idempotent writes keyed by business date so a re-run is safe.
+  monitoring:
+    - max file lateness, count of late arrivals per run
+  agent_skills: [skill-airflow-dag-reviewer, skill-backfill-planner]
+  agents: [agent-pipeline-reviewer]
+  version: 1.0.2
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/de-agent/runbooks/tree/main/late-files
+  github_url: https://github.com/de-agent/runbooks
+  verification: reviewed
+  last_verified: 2026-09-19
+  security: { runs_code: true, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-file-ingestion, skill-airflow-dag-reviewer] }
+- id: runbook-duplicate-records
+  slug: duplicate-records
+  type: runbook
+  title: "Duplicate records"
+  description: Row counts are inflated and metrics double-counted after a retry, a fan-out join or a backfill.
+  severity: high
+  category: cat-data-quality
+  difficulty: intermediate
+  tags: [duplicates, idempotency, data-quality]
+  symptoms:
+    - Row counts inflated relative to source
+    - Revenue/metrics double-counted
+    - A unique-key test starts failing
+  possible_causes:
+    - A retried task appended instead of overwriting the partition
+    - A join fanned out (non-unique key on the "one" side)
+    - A backfill re-inserted rows that already existed
+    - Exactly-once not achieved in a streaming write
+  diagnosis:
+    - Identify the duplicate key and count duplicates per key.
+    - Determine the earliest date duplicates appeared → correlate with a deploy.
+    - Check whether the write is append vs merge/overwrite.
+  commands:
+    - "SELECT k, count(*) c FROM t GROUP BY k HAVING count(*) > 1 ORDER BY c DESC LIMIT 20;"
+    - "SELECT min(dt), max(dt) FROM (SELECT dt, k, count(*) FROM t GROUP BY dt, k HAVING count(*)>1);"
+  fix:
+    - Deduplicate on the business key, keeping the latest by event time.
+    - Rewrite the affected partitions (overwrite), not the whole table.
+  prevention:
+    - Idempotent writes (partition overwrite or MERGE on the key).
+    - A `unique` test on the grain key in CI and in production.
+  monitoring:
+    - duplicate-rate per key, row count vs source count
+  agent_skills: [skill-spark-data-quality-review, skill-cdc-merge-designer]
+  agents: [agent-data-quality-reviewer]
+  version: 1.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/de-agent/runbooks/tree/main/duplicate-records
+  github_url: https://github.com/de-agent/runbooks
+  verification: reviewed
+  last_verified: 2026-09-23
+  security: { runs_code: true, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-data-quality, runbook-data-quality-failure] }

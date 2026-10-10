@@ -1,0 +1,93 @@
+# Skills: agentic + observability
+- id: skill-mcp-tool-contract-auditor
+  slug: mcp-tool-contract-auditor
+  type: skill
+  title: MCP Tool Contract Auditor
+  tagline: Review an MCP server's tools for blast radius before you connect it.
+  description: >-
+    Inspects an MCP server's tool list and schemas, flags tools that can write,
+    delete, spend money or exfiltrate data, and produces a least-privilege
+    connection recommendation.
+  category: cat-agentic
+  subcategory: Security
+  difficulty: advanced
+  tags: [mcp, security, least-privilege, tools, review]
+  technologies: [tech-python]
+  learning_objectives:
+    - Read a tool schema and predict its side effects
+    - Classify tools by blast radius
+    - Write a least-privilege MCP configuration
+  prerequisites: [skill-pii-classifier]
+  supported_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  version: 0.1.0
+  license: Apache-2.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/de-agent/skills/tree/main/mcp-tool-contract-auditor
+  github_url: https://github.com/de-agent/skills
+  install_command: "amp skill add de-agent/mcp-tool-contract-auditor"
+  verification: reviewed
+  last_verified: 2026-09-29
+  files: [SKILL.md, references/blast-radius.md, examples/audit.md]
+  security: { runs_code: false, network_access: true, credentials: false, filesystem_access: false, external_apis: false }
+  compatibility: [claude-code, codex, cursor, amp, gemini-cli]
+  relationships:
+    related_to: [cat-agentic, doc-tooling, hook-pre-deployment-dq-check]
+  body: |
+    # MCP Tool Contract Auditor
+
+    ## Classify every tool
+    - **Read** — safe, still logs the data it can reach.
+    - **Write** — can mutate state; needs a sandbox or a dry-run.
+    - **Destructive** — delete/drop/truncate; require human confirmation.
+    - **Spend** — provisions resources or runs billable queries.
+    - **Exfiltrate** — can send data to an external network.
+
+    ## Deliverable
+    A table of tools by class, then a config that grants only the Read/Write tools
+    the task needs. Never connect an unvetted server with broad credentials.
+- id: skill-lineage-explainer
+  slug: lineage-explainer
+  type: skill
+  title: Lineage Explainer
+  tagline: Answer "what breaks if I change this column?" with evidence.
+  description: >-
+    Traces column-level lineage from an asset to its upstream sources and
+    downstream consumers, and reports the impact set for a proposed change.
+  category: cat-data-lineage
+  subcategory: Observability
+  difficulty: intermediate
+  tags: [lineage, impact-analysis, openlineage, provenance]
+  technologies: [tech-openlineage, tech-datahub]
+  learning_objectives:
+    - Read the lineages of an asset from a lineage store
+    - Compute a downstream impact set
+    - Distinguish technical from business lineage
+  prerequisites: [skill-sql-review]
+  supported_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  version: 0.1.1
+  license: Apache-2.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/de-agent/skills/tree/main/lineage-explainer
+  github_url: https://github.com/de-agent/skills
+  install_command: "amp skill add de-agent/lineage-explainer"
+  verification: reviewed
+  last_verified: 2026-09-12
+  files: [SKILL.md, examples/impact.md, references/lineage-stores.md]
+  security: { runs_code: false, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
+  compatibility: [claude-code, codex, cursor, amp, gemini-cli]
+  relationships:
+    related_to: [cat-data-lineage, runbook-data-contract-broken]
+  body: |
+    # Lineage Explainer
+
+    ## Two questions, two graphs
+    - **Technical lineage** — which tables/jobs depend on this column.
+    - **Business lineage** — which metrics/reports depend on it.
+
+    A breaking change needs both, because a CFO does not read table names.
+
+    ## Impact set
+    Walk downstream from the changed node, stopping at published marts. Report
+    owner, criticality, and the earliest SLA that will break.

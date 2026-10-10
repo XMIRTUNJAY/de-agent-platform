@@ -1,0 +1,42 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import SectionHeader from '@/components/SectionHeader.astro';
+import ResourceCard from '@/components/ResourceCard.astro';
+import registry from '@/data/generated/registry.json';
+
+// "Learning by doing": skills and starter projects carry explicit learning objectives.
+const resources = registry.resources.filter(r => r.learning_objectives?.length > 0);
+const LEVELS = [
+  { id: 'beginner', title: 'Beginner', blurb: 'No assumptions. Start here if the vocabulary is new.' },
+  { id: 'intermediate', title: 'Intermediate', blurb: 'For working data engineers sharpening a specific skill.' },
+  { id: 'advanced', title: 'Advanced', blurb: 'Deep mechanics: internals, failure modes and trade-offs.' },
+];
+---
+
+<BaseLayout title="Tutorials · DE//AGENT" sidebar>
+  <PageHero
+    kicker="Learn"
+    title="Hands-on tutorials"
+    lede="Every entry below carries explicit learning objectives — skills you practise with an agent and starter projects you build end to end. Ordered from first principles to production depth."
+  >
+    <div style="margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+      <span class="chip">{resources.length} tutorials</span>
+      <span class="chip chip-accent">{resources.filter(r => r.learning_objectives.length).reduce((a, r) => a + r.learning_objectives.length, 0)} learning objectives</span>
+    </div>
+  </PageHero>
+
+  {LEVELS.map((level, i) => {
+    const items = resources.filter(r => (r.difficulty ?? 'beginner') === level.id);
+    if (!items.length) return null;
+    return (
+      <section class="col section">
+        <SectionHeader kicker={level.title} title={level.title === 'Beginner' ? 'Start here' : level.title === 'Intermediate' ? 'Sharpen a skill' : 'Go deep'} lede={level.blurb} />
+        <div class="card-grid stagger" style="margin-top: 1.75rem;">
+          {items.map((r) => <ResourceCard resource={r} />)}
+        </div>
+        {i < LEVELS.length - 1 && <hr class="hairline" style="margin-top: 3.5rem;" />}
+      </section>
+    );
+  })}
+</BaseLayout>

@@ -1,0 +1,29 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-jenkins-and-ai-agents-the-trusted-engine-for-faster-software-del
+  slug: jenkins-and-ai-agents-the-trusted-engine-for-faster-software-del
+  type: reference
+  title: "Jenkins and AI Agents: The Trusted Engine for Faster Software Delivery"
+  description: "The 2026 Reality Check By 2026, software development has crossed a
+    threshold. AI coding assistants are no longer just suggesting lines of code:
+    agentic systems can take on larger tasks, refactor existing code, open pull
+    requests, and attempt to fix defects with less hands-on dire"
+  category: cat-agentic
+  tags: []
+  url: https://www.jenkins.io/blog/2026/10/01/jenkins_in_age_of_sdlc/
+  publisher: Continuous Coalition (DE blog via Feedburner)
+  kind: blog
+  why: null
+  source_url: https://www.jenkins.io/blog/2026/10/01/jenkins_in_age_of_sdlc/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  discovered_from:
+    source: databricks-continuous
+    extracted_at: 2026-10-09T04:45:42.397Z
+    published: 2026-10-01T00:00:00+00:00
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+      - cat-cicd

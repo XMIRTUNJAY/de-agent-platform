@@ -1,0 +1,143 @@
+# Skills: quality, contracts, security
+- id: skill-schema-change-contract-review
+  slug: schema-change-contract-review
+  type: skill
+  title: Schema Change Contract Review
+  tagline: Classify a schema change as safe, risky, or breaking — before it ships.
+  description: >-
+    Diffs an old and new schema, classifies the change (compatible / risky /
+    breaking) against consumers, and produces the migration and comms plan.
+  category: cat-data-contracts
+  subcategory: Governance
+  difficulty: intermediate
+  tags: [schema, contracts, compatibility, migration]
+  technologies: [tech-avro, tech-dbt]
+  learning_objectives:
+    - Apply backward/forward compatibility rules to a diff
+    - Detect a breaking change hidden behind a "safe" rename
+    - Write a deprecation plan with dates
+  prerequisites: [skill-sql-review]
+  supported_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  version: 0.2.0
+  license: Apache-2.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/de-agent/skills/tree/main/schema-change-contract-review
+  github_url: https://github.com/de-agent/skills
+  install_command: "amp skill add de-agent/schema-change-contract-review"
+  verification: reviewed
+  last_verified: 2026-09-26
+  files: [SKILL.md, references/compatibility-rules.md, examples/diff.md]
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
+  compatibility: [claude-code, codex, cursor, amp, gemini-cli]
+  relationships:
+    related_to: [runbook-data-contract-broken, cat-data-contracts, hook-schema-change-check]
+  body: |
+    # Schema Change Contract Review
+
+    ## Classification
+    - **Compatible** — new nullable column, widened type that preserves values.
+    - **Risky** — narrowing a type, adding a NOT NULL without a default, changing units.
+    - **Breaking** — rename, remove, or semantic change to an existing column.
+
+    ## The hidden breaking change
+    A rename + a new column with the old name looks compatible to a schema differ
+    but breaks every consumer that read the old semantics. Always diff *semantics*,
+    not just names.
+
+    ## Migration skeleton
+    Add → dual-write → backfill → announce → migrate consumers → remove (dated).
+- id: skill-data-contract-author
+  slug: data-contract-author
+  type: skill
+  title: Data Contract Author
+  tagline: Turn a vague producer/consumer agreement into an enforceable contract.
+  description: >-
+    Drafts a data contract (schema, semantics, freshness SLA, ownership, breaking-
+    change policy) and the tests that enforce it in CI.
+  category: cat-data-contracts
+  subcategory: Governance
+  difficulty: intermediate
+  tags: [data-contract, sla, ownership, enforcement]
+  technologies: [tech-avro, tech-dbt]
+  learning_objectives:
+    - Specify a freshness and completeness SLA
+    - Encode a contract as executable tests
+    - Define a breaking-change policy consumers can rely on
+  prerequisites: [skill-schema-change-contract-review]
+  supported_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  version: 0.1.2
+  license: Apache-2.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/de-agent/skills/tree/main/data-contract-author
+  github_url: https://github.com/de-agent/skills
+  install_command: "amp skill add de-agent/data-contract-author"
+  verification: reviewed
+  last_verified: 2026-09-13
+  files: [SKILL.md, references/contract-template.md, examples/contract.yaml]
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
+  compatibility: [claude-code, codex, cursor, amp, gemini-cli]
+  relationships:
+    related_to: [pattern-contracts-quality-gate, cat-data-contracts]
+  body: |
+    # Data Contract Author
+
+    ## A contract has six parts
+    1. Owner (a team, with an on-call).
+    2. Schema (typed, versioned).
+    3. Semantics (what each field *means*, units, nullability).
+    4. SLA (freshness, completeness).
+    5. Breaking-change policy (notice period, deprecation path).
+    6. Enforcement (which CI test fails on violation).
+
+    ## Rule
+    A contract with no enforcement is documentation. Documentation is not a contract.
+- id: skill-pii-classifier
+  slug: pii-classifier
+  type: skill
+  title: PII Classifier
+  tagline: Find PII in a dataset and propose the masking policy.
+  description: >-
+    Scans column names and sample values for PII categories, then proposes
+    classification tags and a masking/pseudonymisation policy.
+  category: cat-security
+  subcategory: Security
+  difficulty: intermediate
+  tags: [pii, security, masking, governance, classification]
+  technologies: [tech-python, tech-snowflake]
+  learning_objectives:
+    - Classify columns into PII categories
+    - Choose masking vs hashing vs tokenisation
+    - Record a data-classification tag
+  prerequisites: []
+  supported_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  version: 0.1.1
+  license: Apache-2.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/de-agent/skills/tree/main/pii-classifier
+  github_url: https://github.com/de-agent/skills
+  install_command: "amp skill add de-agent/pii-classifier"
+  verification: reviewed
+  last_verified: 2026-09-10
+  files: [SKILL.md, references/classification-taxonomy.md, examples/scan.py]
+  security: { runs_code: true, network_access: false, credentials: true, filesystem_access: true, external_apis: false }
+  compatibility: [claude-code, codex, cursor, amp, gemini-cli]
+  relationships:
+    related_to: [cat-security, cat-governance]
+  body: |
+    # PII Classifier
+
+    ## Caution
+    Sampling real data to find PII is itself a privacy action. Prefer metadata-only
+    heuristics first; only sample with authorisation, and never persist samples.
+
+    ## Categories
+    Direct identifiers (name, email, phone, national ID), quasi-identifiers
+    (postcode, DOB), sensitive attributes (health, financial), and free text
+    (which can contain anything).
+
+    ## Policy mapping
+    Direct → mask or tokenise. Quasi → generalise. Free text → never expose raw in
+    analytics; store separately with restricted access.

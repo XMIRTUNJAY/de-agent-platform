@@ -1,0 +1,24 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-how-we-knew-covid-was-over-and-what-our-models-had-to-unlearn
+  slug: how-we-knew-covid-was-over-and-what-our-models-had-to-unlearn
+  type: reference
+  title: How we knew COVID was over (and what our models had to unlearn)
+  description: Summary pending review — see the source.
+  category: null
+  tags: []
+  url: https://medium.com/airbnb-engineering/how-we-knew-covid-was-over-and-what-our-models-had-to-unlearn-c606b9bdb0ab?source=rss----53c7c27702d5---4
+  publisher: Airbnb Engineering & Data Science Blog
+  kind: blog
+  why: null
+  source_url: https://medium.com/airbnb-engineering/how-we-knew-covid-was-over-and-what-our-models-had-to-unlearn-c606b9bdb0ab?source=rss----53c7c27702d5---4
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  discovered_from:
+    source: airbnb-eng
+    extracted_at: 2026-10-09T04:47:09.067Z
+    published: Wed, 19 Aug 2026 17:01:03 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []

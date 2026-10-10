@@ -1,0 +1,23 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ListingPage from '@/components/ListingPage.astro';
+import registry from '@/data/generated/registry.json';
+
+const resources = registry.resources.filter(r => r.type === 'template' || r.type === 'starter');
+const templates = resources.filter(r => r.type === 'template').length;
+const starters = resources.filter(r => r.type === 'starter').length;
+---
+
+<BaseLayout title="Templates & Starters · DE//AGENT" sidebar>
+  <ListingPage
+    kicker="Marketplace"
+    title="Templates & starter projects"
+    lede="Copy-paste starting points: layered dbt projects, pipeline scaffolds and full starter repos with tests, CI and sample data already wired in."
+    resources={resources}
+  >
+    <Fragment slot="chips">
+      <span class="chip">{templates} templates</span>
+      <span class="chip">{starters} starter projects</span>
+    </Fragment>
+  </ListingPage>
+</BaseLayout>

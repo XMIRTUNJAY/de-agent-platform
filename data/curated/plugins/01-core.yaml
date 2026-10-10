@@ -1,0 +1,141 @@
+# Plugins — core engineering
+- id: plugin-de-data-toolkit
+  slug: de-data-toolkit
+  type: plugin
+  title: DE Data Toolkit
+  description: >-
+    The opinionated starter plugin: SQL/Spark review skills, the destructive-SQL
+    guard, a secret scanner and the file/git MCP servers, wired for data engineers.
+  category: cat-agentic
+  difficulty: beginner
+  tags: [plugin, starter, review, guardrails]
+  runtime: agent-plugin
+  capabilities: [code-review, guardrails, file-access]
+  tools: [read_file, edit_file, search_files]
+  commands: ["/review-sql", "/review-spark", "/guard-status"]
+  hooks: [hook-destructive-sql-guard, hook-secret-scan-commit]
+  skills: [skill-sql-review, skill-spark-data-quality-review]
+  installation: "amp plugin add de-agent/de-data-toolkit"
+  permissions: { filesystem: read-write, network: none, credentials: none }
+  compatible_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  version: 0.4.0
+  license: Apache-2.0
+  author: de-agent
+  source_url: https://github.com/de-agent/plugins/tree/main/de-data-toolkit
+  github_url: https://github.com/de-agent/plugins
+  verification: reviewed
+  last_verified: 2026-09-30
+  security: { runs_code: true, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
+  relationships: { related_to: [cat-agentic], uses: [skill-sql-review] }
+- id: plugin-dbt-workbench
+  slug: dbt-workbench
+  type: plugin
+  title: dbt Workbench
+  description: >-
+    Model review, test generation, incremental-safety checks and a full-refresh
+    guard, plus the dbt MCP server for running commands from the agent.
+  category: cat-dbt
+  difficulty: intermediate
+  tags: [plugin, dbt, review, testing]
+  runtime: agent-plugin
+  capabilities: [code-review, test-generation, command-execution]
+  tools: [read_file, edit_file]
+  commands: ["/dbt-review-model", "/dbt-write-tests", "/dbt-impact"]
+  hooks: [hook-dbt-full-refresh-guard]
+  skills: [skill-dbt-model-review, skill-dbt-test-writer]
+  installation: "amp plugin add de-agent/dbt-workbench"
+  permissions: { filesystem: read-write, network: warehouse, credentials: dbt-profile }
+  compatible_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  version: 0.3.1
+  license: Apache-2.0
+  author: de-agent
+  source_url: https://github.com/de-agent/plugins/tree/main/dbt-workbench
+  github_url: https://github.com/de-agent/plugins
+  verification: reviewed
+  last_verified: 2026-09-28
+  security: { runs_code: true, network_access: true, credentials: true, filesystem_access: true, external_apis: false }
+  relationships: { related_to: [cat-dbt], uses: [skill-dbt-model-review] }
+- id: plugin-spark-lens
+  slug: spark-lens
+  type: plugin
+  title: Spark Lens
+  description: >-
+    Parses Spark event logs into a task histogram, flags skew and shuffle
+    amplification, and compares against a stored cost baseline.
+  category: cat-spark
+  difficulty: advanced
+  tags: [plugin, spark, performance, cost]
+  runtime: agent-plugin
+  capabilities: [metrics-analysis, cost-guard]
+  tools: [read_file]
+  commands: ["/spark-analyze", "/spark-baseline", "/spark-explain-plan"]
+  hooks: [hook-spark-cost-check]
+  skills: [skill-spark-skew-diagnosis, skill-spark-cost-regression-guard]
+  installation: "amp plugin add de-agent/spark-lens"
+  permissions: { filesystem: read, network: none, credentials: none }
+  compatible_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  version: 0.2.0
+  license: Apache-2.0
+  author: de-agent
+  source_url: https://github.com/de-agent/plugins/tree/main/spark-lens
+  github_url: https://github.com/de-agent/plugins
+  verification: reviewed
+  last_verified: 2026-09-26
+  security: { runs_code: true, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
+  relationships: { related_to: [cat-spark], uses: [skill-spark-skew-diagnosis] }
+- id: plugin-lakehouse-guard
+  slug: lakehouse-guard
+  type: plugin
+  title: Lakehouse Guard
+  description: >-
+    Delta/Iceberg table maintenance advisor plus a guard that blocks compaction or
+    snapshot expiry during peak ingestion windows.
+  category: cat-lakehouse
+  difficulty: advanced
+  tags: [plugin, delta, iceberg, maintenance]
+  runtime: agent-plugin
+  capabilities: [table-maintenance, guardrails]
+  tools: [read_file]
+  commands: ["/table-health", "/plan-compaction", "/expire-snapshots"]
+  hooks: []
+  skills: [skill-iceberg-maintenance, skill-delta-optimizer]
+  installation: "amp plugin add de-agent/lakehouse-guard"
+  permissions: { filesystem: read, network: warehouse, credentials: warehouse }
+  compatible_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  version: 0.1.4
+  license: Apache-2.0
+  author: de-agent
+  source_url: https://github.com/de-agent/plugins/tree/main/lakehouse-guard
+  github_url: https://github.com/de-agent/plugins
+  verification: reviewed
+  last_verified: 2026-09-19
+  security: { runs_code: true, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-lakehouse], uses: [skill-iceberg-maintenance] }
+- id: plugin-warehouse-explorer
+  slug: warehouse-explorer
+  type: plugin
+  title: Warehouse Explorer
+  description: >-
+    Schema browsing, query-plan explanation, clustering advice and a read-only
+    connection profile for Snowflake/BigQuery/Redshift.
+  category: cat-warehouses
+  difficulty: intermediate
+  tags: [plugin, warehouse, sql, exploration]
+  runtime: agent-plugin
+  capabilities: [schema-browse, query-analysis]
+  tools: [read_file]
+  commands: ["/explain-plan", "/clustering-advice", "/schema"]
+  hooks: []
+  skills: [skill-sql-query-plan, skill-warehouse-clustering-advisor]
+  installation: "amp plugin add de-agent/warehouse-explorer"
+  permissions: { filesystem: read, network: warehouse, credentials: read-only-role }
+  compatible_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  version: 0.2.2
+  license: Apache-2.0
+  author: de-agent
+  source_url: https://github.com/de-agent/plugins/tree/main/warehouse-explorer
+  github_url: https://github.com/de-agent/plugins
+  verification: reviewed
+  last_verified: 2026-09-23
+  security: { runs_code: true, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-warehouses], uses: [skill-sql-query-plan] }

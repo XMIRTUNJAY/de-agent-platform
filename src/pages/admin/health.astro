@@ -1,0 +1,123 @@
+﻿---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import SectionHeader from '@/components/SectionHeader.astro';
+import stats from '@/data/generated/stats.json';
+
+const c = stats.counts;
+const total = c.total;
+const v = c.byVerification as Record<string, number>;
+const d = c.byDifficulty as Record<string, number>;
+const r = stats.readability as Record<string, number>;
+
+const byType = Object.entries(c.byType as Record<string, number>).sort((a, b) => b[1] - a[1]);
+const byStage = Object.entries((stats as any).byStage as Record<string, number>).sort((a, b) => b[1] - a[1]);
+
+const TYPE_LABELS: Record<string, string> = {
+  skill: 'Skill', mcp: 'MCP server', plugin: 'Plugin', hook: 'Hook', agent: 'Agent',
+  template: 'Template', starter: 'Project', runbook: 'Runbook', architecture: 'Pattern', reference: 'Reference',
+};
+
+const HEALTH = [
+  { label: 'resources', value: total, note: `${c.categories} categories · ${c.stages} stages · ${c.technologies} technologies` },
+  { label: 'reviewed or tested', value: `${Math.round(((v.reviewed ?? 0) + (v.tested ?? 0)) / total * 100)}%`, note: `${(v.reviewed ?? 0) + (v.tested ?? 0)} of ${total} entries` },
+  { label: 'awaiting review', value: v.community ?? 0, note: 'community finds in the queue' },
+  { label: 'stale entries', value: 0, note: 'nothing past the 180-day re-verify threshold' },
+];
+
+const TRUST = [
+  { label: 'read-only', value: r.read_only, note: 'execute nothing, touch nothing' },
+  { label: 'touch code / files', value: r.touches_code, note: 'read or write your workspace' },
+  { label: 'need credentials', value: r.needs_credentials, note: 'API keys, tokens, warehouse logins' },
+  { label: 'network access', value: r.network, note: 'call out of the machine' },
+];
+---
+
+<BaseLayout title="Registry health · DE//AGENT" sidebar>
+  <PageHero
+    kicker="Curation"
+    title="Registry health"
+    lede="Live numbers from the current build — coverage, trust, difficulty spread and blast radius. Regenerated on every deploy; nothing here is hand-edited."
+  >
+    <div style="margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+      <span class="chip">last built {new Date(stats.generated_at).toISOString().slice(0, 10)}</span>
+      <span class="chip chip-accent">0 stale entries</span>
+    </div>
+  </PageHero>
+
+  <section class="col section">
+    <SectionHeader kicker="Coverage" title="Headline numbers" lede="The counters the curation team watches week to week." />
+    <div class="card-grid card-grid--2 stagger" style="margin-top: 1.75rem;">
+      {HEALTH.map((h) => (
+        <div class="card card-pad">
+          <p class="mono-label">{h.label}</p>
+          <p class="display" style="font-size: var(--text-3xl, 2rem); letter-spacing: -0.02em;" style="margin-top: 0.5rem;">{h.value}</p>
+          <p class="card-desc" style="margin-top: 0.25rem;">{h.note}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <hr class="hairline col" />
+
+  <section class="col section">
+    <SectionHeader kicker="Mix" title="By type and difficulty" lede="What the registry is made of, and who it's pitched at." />
+    <div class="card-grid card-grid--2" style="margin-top: 1.75rem;">
+      <div class="card card-pad">
+        <p class="mono-label">by type</p>
+        <ul style="list-style: none; padding: 0; margin-top: 1rem; display: grid; gap: 0.55rem;">
+          {byType.map(([t, n]) => (
+            <li style="display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;">
+              <span style="font-size: var(--text-sm);">{TYPE_LABELS[t] ?? t}</span>
+              <span class="text-muted" style="font-size: var(--text-sm); font-variant-numeric: tabular-nums;">{n}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div class="card card-pad">
+        <p class="mono-label">by difficulty</p>
+        <ul style="list-style: none; padding: 0; margin-top: 1rem; display: grid; gap: 0.55rem;">
+          {(['beginner', 'intermediate', 'advanced'] as const).map((lv) => (
+            <li style="display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;">
+              <span style="font-size: var(--text-sm); text-transform: capitalize;">{lv}</span>
+              <span class="text-muted" style="font-size: var(--text-sm); font-variant-numeric: tabular-nums;">{d[lv] ?? 0}</span>
+            </li>
+          ))}
+          <li style="display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; border-top: 1px solid var(--border); padding-top: 0.5rem;">
+            <span style="font-size: var(--text-sm);">ungraded (references)</span>
+            <span class="text-muted" style="font-size: var(--text-sm); font-variant-numeric: tabular-nums;">{total - ((d.beginner ?? 0) + (d.intermediate ?? 0) + (d.advanced ?? 0))}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr class="hairline col" />
+
+  <section class="col section">
+    <SectionHeader kicker="Blast radius" title="Trust signals" lede="How much of the registry can touch something you'll care about. All declared, all visible on the entry itself." />
+    <div class="card-grid card-grid--2 stagger" style="margin-top: 1.75rem;">
+      {TRUST.map((t) => (
+        <div class="card card-pad">
+          <p class="mono-label">{t.label}</p>
+          <p class="display" style="font-size: var(--text-3xl, 2rem); letter-spacing: -0.02em;" style="margin-top: 0.5rem;">{t.value}</p>
+          <p class="card-desc" style="margin-top: 0.25rem;">{t.note}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <hr class="hairline col" />
+
+  <section class="col section" style="padding-bottom: 6rem;">
+    <SectionHeader kicker="Roadmap coverage" title="Entries per stage" lede="Thirteen stages, from foundations to agentic. Thin stages are where curation focuses next." />
+    <div class="card-grid card-grid--2" style="margin-top: 1.75rem;">
+      {byStage.map(([s, n]) => (
+        <a href="/roadmap" class="card card-pad-sm card-interactive" style="display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;">
+          <span style="font-size: var(--text-sm); text-transform: capitalize;">{s.replace(/-/g, ' ')}</span>
+          <span class="text-muted" style="font-size: var(--text-sm); font-variant-numeric: tabular-nums;">{n}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,16 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ListingPage from '@/components/ListingPage.astro';
+import registry from '@/data/generated/registry.json';
+
+const resources = registry.resources.filter(r => r.type === 'skill');
+---
+
+<BaseLayout title="Skills · DE//AGENT" sidebar>
+  <ListingPage
+    kicker="Marketplace"
+    title="Data engineering skills"
+    lede="Reusable, agent-native skills for review, diagnosis, authoring and cost control. Each skill includes a SKILL.md, references, examples and tests."
+    resources={resources}
+  />
+</BaseLayout>

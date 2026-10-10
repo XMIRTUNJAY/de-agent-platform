@@ -1,0 +1,158 @@
+# =============================================================================
+# TAXONOMY — the canonical Data Engineering map.
+# Every category belongs to one roadmap stage, so the roadmap and the registry
+# share a single spine. `tools` are first-class technology links (not vendors).
+# =============================================================================
+
+stages:
+  - id: foundations
+    slug: foundations
+    order: 1
+    title: Foundations
+    summary: How data systems actually work — storage, compute, encoding, and the vocabulary you'll use for the next decade.
+    outcomes: [explain the data lifecycle, read an architecture diagram, reason about storage vs compute]
+  - id: python-sql
+    slug: python-sql
+    order: 2
+    title: Python + SQL
+    summary: The two languages everything else is built from. Fluency here is the single highest-leverage investment.
+    outcomes: [write set-based SQL, write testable Python, move data between the two]
+  - id: data-processing
+    slug: data-processing
+    order: 3
+    title: Data Processing
+    summary: Batch engines, file formats, and the mechanics of turning raw bytes into queryable tables.
+    outcomes: [build a batch pipeline, choose a file format, control partitioning]
+  - id: warehousing
+    slug: warehousing
+    order: 4
+    title: Warehousing
+    summary: Modelling, transformation and serving — dimensional design, dbt, and warehouse-native patterns.
+    outcomes: [model a star schema, write dbt tests, serve a metric reliably]
+  - id: lakehouse
+    slug: lakehouse
+    order: 5
+    title: Lakehouse
+    summary: Open table formats that give object storage ACID, time travel and schema evolution.
+    outcomes: [choose Delta vs Iceberg vs Hudi, run maintenance, reason about metadata]
+  - id: orchestration
+    slug: orchestration
+    order: 6
+    title: Orchestration
+    summary: Scheduling, dependencies, retries, backfills and idempotency across many moving parts.
+    outcomes: [build an idempotent DAG, plan a safe backfill, handle late data]
+  - id: streaming
+    slug: streaming
+    order: 7
+    title: Streaming
+    summary: Event-driven ingestion, log-based CDC, windowing, and exactly-once semantics under load.
+    outcomes: [design an event schema, consume at scale, recover consumer lag]
+  - id: cloud
+    slug: cloud
+    order: 8
+    title: Cloud
+    summary: Provider primitives — object storage, managed compute, IAM, and the platform-specific data stack.
+    outcomes: [provision least-privilege access, pick managed vs self-hosted, control spend]
+  - id: data-quality
+    slug: data-quality
+    order: 9
+    title: Data Quality
+    summary: Contracts, expectations, quarantine and the tests that keep a table trustworthy on Monday morning.
+    outcomes: [express a quality contract, quarantine bad rows, gate a deploy on tests]
+  - id: observability
+    slug: observability
+    order: 10
+    title: Observability
+    summary: Knowing what a pipeline did without reading its code — metrics, freshness, lineage and cataloguing.
+    outcomes: [detect drift automatically, trace a column to source, catalogue an asset]
+  - id: reliability
+    slug: reliability
+    order: 11
+    title: Reliability
+    summary: Operating data systems for years — SLOs, incident response, cost control and safe change.
+    outcomes: [write a runbook, respond to an incident, prevent a repeat failure]
+  - id: system-design
+    slug: system-design
+    order: 12
+    title: System Design
+    summary: Choosing architectures under real constraints and defending the tradeoffs in an interview.
+    outcomes: [size a design, articulate tradeoffs, whiteboard a pipeline]
+  - id: agentic
+    slug: agentic
+    order: 13
+    title: Agentic Data Engineering
+    summary: Using coding agents as first-class data engineers — skills, MCP servers, hooks and guardrails.
+    outcomes: [install a skill, wire an MCP server, build a review agent]
+
+categories:
+  - { id: cat-engineering-foundations, slug: engineering-foundations, title: Engineering Foundations, stage: foundations, group: Core, order: 1, summary: "Filesystems, encoding, memory vs disk, networks and the operating vocabulary behind every pipeline.", keywords: [storage, compute, encoding, immutability, latency], tools: [docker, linux] }
+  - { id: cat-python, slug: python, title: Python, stage: python-sql, group: Language, order: 2, summary: "Typing, packaging, virtualenvs and the data libraries (pandas, polars, pyarrow) you'll actually reach for.", keywords: [python, pandas, polars, pyarrow, typing, packaging], tools: [pydantic, polars, pandas, pyarrow, uv] }
+  - { id: cat-sql, slug: sql, title: SQL, stage: python-sql, group: Language, order: 3, summary: "Set-based thinking, window functions, CTEs and query plans. The highest-ROI skill in the field.", keywords: [sql, window functions, cte, joins, query plan], tools: [postgres, duckdb, snowflake, bigquery] }
+  - { id: cat-data-formats, slug: data-formats, title: Data Structures & Formats, stage: foundations, group: Storage, order: 4, summary: "Row vs columnar, Parquet vs ORC vs Avro, encoding, compression and predicate pushdown.", keywords: [parquet, orc, avro, arrow, compression, columnar], tools: [arrow, parquet, avro] }
+  - { id: cat-databases, slug: databases, title: Databases, stage: data-processing, group: Storage, order: 5, summary: "OLTP systems, indexes, transactions, replication and how operational data is born.", keywords: [postgres, mysql, transactions, indexes, replication], tools: [postgres, mysql] }
+  - { id: cat-warehouses, slug: data-warehouses, title: Data Warehouses, stage: warehousing, group: Serving, order: 6, summary: "Columnar MPP serving layers, dimensional modelling, marts and semantic layers.", keywords: [dimensional modelling, star schema, mpp, semantic layer], tools: [snowflake, bigquery, redshift] }
+  - { id: cat-lakes, slug: data-lakes, title: Data Lakes, stage: lakehouse, group: Storage, order: 7, summary: "Object-storage data lakes, zones (raw/curated), partitioning strategy and the small-files problem.", keywords: [s3, object storage, partitioning, small files, zones], tools: [aws-s3, gcs, adls] }
+  - { id: cat-lakehouse, slug: lakehouse, title: Lakehouse, stage: lakehouse, group: Storage, order: 8, summary: "Delta Lake, Apache Iceberg and Hudi — ACID tables on object storage with time travel and evolution.", keywords: [delta lake, iceberg, hudi, acid, time travel], tools: [delta-lake, iceberg, hudi] }
+  - { id: cat-spark, slug: spark, title: Spark / PySpark, stage: data-processing, group: Processing, order: 9, summary: "Distributed dataframes: lazy DAGs, shuffles, skew, partitioning and physical plans.", keywords: [spark, pyspark, shuffle, skew, aqe], tools: [spark, pyspark, databricks] }
+  - { id: cat-batch-processing, slug: batch-processing, title: Batch Processing, stage: data-processing, group: Processing, order: 10, summary: "Incremental vs full reload, watermarks, idempotent writes and reprocessing strategy.", keywords: [batch, incremental, watermark, idempotency, backfill], tools: [spark, glue, dbt] }
+  - { id: cat-streaming, slug: streaming, title: Streaming, stage: streaming, group: Processing, order: 11, summary: "Event time vs processing time, windowing, watermarks, delivery guarantees and state.", keywords: [streaming, windowing, watermark, exactly-once, state], tools: [kafka, flink, spark-structured-streaming] }
+  - { id: cat-kafka, slug: kafka, title: Kafka, stage: streaming, group: Processing, order: 12, summary: "Topics, partitions, consumer groups, offsets, retention and lag diagnosis.", keywords: [kafka, partitions, consumer group, lag, retention], tools: [kafka, redpanda, confluent] }
+  - { id: cat-cdc, slug: cdc, title: CDC, stage: streaming, group: Processing, order: 13, summary: "Change data capture: log-based vs query-based, ordering, deletes and merge strategies.", keywords: [cdc, debezium, wal, merge, upsert], tools: [debezium, kafka-connect, airbyte] }
+  - { id: cat-ingestion, slug: ingestion, title: APIs & Ingestion, stage: data-processing, group: Processing, order: 14, summary: "Pulling from REST/GraphQL APIs: pagination, rate limits, idempotency keys and incremental syncs.", keywords: [api, pagination, rate limit, idempotency, webhook], tools: [python-requests, airbyte, meltano] }
+  - { id: cat-file-ingestion, slug: file-ingestion, title: File & Partner Ingestion, stage: data-processing, group: Processing, order: 15, summary: "Landing CSV/XML/EDI drops safely: manifesting, validation, late and duplicate files.", keywords: [csv, sftp, manifest, late files, validation], tools: [aws-s3, python-pandas] }
+  - { id: cat-airflow, slug: airflow, title: Airflow / Orchestration, stage: orchestration, group: Orchestration, order: 16, summary: "DAGs, operators, task state, retries, backfills and the difference between scheduling and dependency management.", keywords: [airflow, dag, retries, backfill, sensors], tools: [airflow, dagster, prefect] }
+  - { id: cat-dbt, slug: dbt, title: dbt, stage: warehousing, group: Serving, order: 17, summary: "Analytics engineering as software: models, refs, tests, docs and incremental materialisations.", keywords: [dbt, models, ref, incremental, tests], tools: [dbt, sqlmesh] }
+  - { id: cat-data-quality, slug: data-quality, title: Data Quality, stage: data-quality, group: Quality, order: 18, summary: "Expectations, completeness, uniqueness and quarantine flows that stop bad data reaching consumers.", keywords: [data quality, expectations, quarantine, completeness, uniqueness], tools: [great-expectations, soda, dbt, deequ] }
+  - { id: cat-data-contracts, slug: data-contracts, title: Data Contracts, stage: data-quality, group: Quality, order: 19, summary: "Versioned producer/consumer agreements: schema, semantics, SLAs and breaking-change policy.", keywords: [data contract, schema registry, sla, backfill policy], tools: [avro, protobuf, json-schema, confluent] }
+  - { id: cat-data-observability, slug: data-observability, title: Data Observability, stage: observability, group: Quality, order: 20, summary: "Freshness, volume, schema and distribution monitoring with automated anomaly detection.", keywords: [freshness, volume, anomaly detection, alerting], tools: [elementary, monte-carlo, datadog] }
+  - { id: cat-data-lineage, slug: data-lineage, title: Data Lineage, stage: observability, group: Quality, order: 21, summary: "Column-level provenance — what broke, what depends on it and where to fix it.", keywords: [lineage, column-level, provenance, impact analysis], tools: [openlineage, marquez, datahub] }
+  - { id: cat-data-catalog, slug: data-catalog, title: Data Catalog, stage: observability, group: Quality, order: 22, summary: "Discoverability: technical and business metadata, ownership, glossary and search.", keywords: [catalog, metadata, ownership, glossary], tools: [datahub, openmetadata, glue-catalog] }
+  - { id: cat-aws, slug: aws, title: AWS, stage: cloud, group: Cloud, order: 23, summary: "S3, Glue, Athena, Kinesis, Redshift, EMR and IAM — the most common data platform in the world.", keywords: [s3, glue, athena, kinesis, redshift, emr, iam], tools: [aws-s3, aws-glue, athena, aws-redshift] }
+  - { id: cat-azure, slug: azure, title: Azure, stage: cloud, group: Cloud, order: 24, summary: "ADLS, Synapse, Data Factory, Fabric and Entra ID for the Microsoft-shaped data stack.", keywords: [adls, synapse, data factory, fabric, entra], tools: [azure-adls, azure-synapse, azure-data-factory] }
+  - { id: cat-gcp, slug: gcp, title: GCP, stage: cloud, group: Cloud, order: 25, summary: "BigQuery, Cloud Storage, Dataflow, Pub/Sub and Dataproc.", keywords: [bigquery, gcs, dataflow, pubsub, dataproc], tools: [bigquery, gcs, dataflow, pubsub] }
+  - { id: cat-databricks, slug: databricks, title: Databricks, stage: cloud, group: Cloud, order: 26, summary: "Delta Lake, Unity Catalog, jobs, DLT pipelines and the lakehouse platform.", keywords: [databricks, unity catalog, delta live tables, jobs, clusters], tools: [databricks, delta-lake, unity-catalog] }
+  - { id: cat-snowflake, slug: snowflake, title: Snowflake, stage: cloud, group: Cloud, order: 27, summary: "Virtual warehouses, micro-partitions, clustering, streams/tasks and Snowpark.", keywords: [snowflake, micro-partitions, clustering, streams, tasks], tools: [snowflake] }
+  - { id: cat-infrastructure, slug: infrastructure, title: Infrastructure / Docker / Terraform, stage: cloud, group: Platform, order: 28, summary: "Containers, images, IaC and reproducible environments for pipelines and platforms.", keywords: [docker, terraform, containers, iac, images], tools: [docker, terraform, kubernetes] }
+  - { id: cat-cicd, slug: cicd, title: CI/CD, stage: cloud, group: Platform, order: 29, summary: "Testing, packaging and deploying data code — including data-aware CI and safe promotion.", keywords: [ci, cd, github actions, deployment, promotion], tools: [github-actions, dbt, python-uv] }
+  - { id: cat-security, slug: security, title: Security, stage: reliability, group: Operations, order: 30, summary: "Least privilege, secrets, PII handling, masking and secure data sharing.", keywords: [iam, secrets, pii, masking, least privilege], tools: [aws-iam, vault, lakeformation] }
+  - { id: cat-governance, slug: governance, title: Governance, stage: reliability, group: Operations, order: 31, summary: "Access policy, retention, residency, audit and stewardship at organisational scale.", keywords: [governance, retention, audit, policy, stewardship], tools: [unity-catalog, lakeformation, datahub] }
+  - { id: cat-cost-engineering, slug: cost-engineering, title: Cost Engineering, stage: reliability, group: Operations, order: 32, summary: "Unit economics of data — attribution, reducing shuffle/scan, and stopping 4x regressions.", keywords: [cost, unit economics, scan bytes, shuffle, attribution], tools: [aws, snowflake, databricks] }
+  - { id: cat-reliability, slug: reliability, title: Reliability, stage: reliability, group: Operations, order: 33, summary: "SLOs, error budgets, retries vs idempotency, graceful degradation and incident review.", keywords: [slo, error budget, retries, incident, postmortem], tools: [airflow, datadog, pagerduty] }
+  - { id: cat-testing, slug: testing, title: Testing, stage: reliability, group: Quality, order: 34, summary: "Unit, integration and data tests; fixtures, contracts and CI gates for pipelines.", keywords: [unit tests, integration tests, fixtures, contracts, ci gates], tools: [pytest, dbt, great-expectations, duckdb] }
+  - { id: cat-production-operations, slug: production-operations, title: Production Operations, stage: reliability, group: Operations, order: 35, summary: "Day-two work: monitoring, on-call, backfills, deployments and capacity.", keywords: [on-call, backfill, deployment, monitoring, capacity], tools: [airflow, prometheus, grafana] }
+  - { id: cat-system-design, slug: system-design, title: Data Engineering System Design, stage: system-design, group: Practice, order: 36, summary: "Sizing, throughput, tradeoffs and communicating an architecture under interview pressure.", keywords: [throughput, tradeoffs, sizing, interview, architecture], tools: [] }
+  - { id: cat-agentic, slug: agentic-data-engineering, title: Agentic Data Engineering, stage: agentic, group: Practice, order: 37, summary: "Skills, MCP servers, agents and hooks that let coding agents do real data engineering safely.", keywords: [agent skills, mcp, hooks, guardrails, evaluation], tools: [claude-code, codex, cursor, amp, gemini-cli] }
+  - { id: cat-ai-ml, slug: ai-ml-data-infrastructure, title: AI / ML Data Infrastructure, stage: agentic, group: Practice, order: 38, summary: "Feature stores, embeddings, vector indexes, training data pipelines and retrieval infra.", keywords: [feature store, embeddings, vector db, retrieval, training data], tools: [pgvector, delta-lake, spark] }
+
+technologies:
+  - { id: tech-python, slug: python, name: Python, category: cat-python, homepage: "https://www.python.org/", license: PSF-2.0 }
+  - { id: tech-sql, slug: sql, name: SQL, category: cat-sql }
+  - { id: tech-postgres, slug: postgres, name: PostgreSQL, category: cat-databases, homepage: "https://www.postgresql.org/", license: PostgreSQL, repo: "https://github.com/postgres/postgres" }
+  - { id: tech-duckdb, slug: duckdb, name: DuckDB, category: cat-sql, homepage: "https://duckdb.org/", license: MIT, repo: "https://github.com/duckdb/duckdb" }
+  - { id: tech-arrow, slug: arrow, name: Apache Arrow, category: cat-data-formats, homepage: "https://arrow.apache.org/", license: Apache-2.0 }
+  - { id: tech-parquet, slug: parquet, name: Apache Parquet, category: cat-data-formats, homepage: "https://parquet.apache.org/", license: Apache-2.0 }
+  - { id: tech-avro, slug: avro, name: Apache Avro, category: cat-data-formats, homepage: "https://avro.apache.org/", license: Apache-2.0 }
+  - { id: tech-spark, slug: spark, name: Apache Spark, category: cat-spark, homepage: "https://spark.apache.org/", license: Apache-2.0, repo: "https://github.com/apache/spark" }
+  - { id: tech-pyspark, slug: pyspark, name: PySpark, category: cat-spark, homepage: "https://spark.apache.org/docs/latest/api/python/", license: Apache-2.0 }
+  - { id: tech-kafka, slug: kafka, name: Apache Kafka, category: cat-kafka, homepage: "https://kafka.apache.org/", license: Apache-2.0, repo: "https://github.com/apache/kafka" }
+  - { id: tech-flink, slug: flink, name: Apache Flink, category: cat-streaming, homepage: "https://flink.apache.org/", license: Apache-2.0, repo: "https://github.com/apache/flink" }
+  - { id: tech-airflow, slug: airflow, name: Apache Airflow, category: cat-airflow, homepage: "https://airflow.apache.org/", license: Apache-2.0, repo: "https://github.com/apache/airflow" }
+  - { id: tech-dagster, slug: dagster, name: Dagster, category: cat-airflow, homepage: "https://dagster.io/", license: Apache-2.0, repo: "https://github.com/dagster-io/dagster" }
+  - { id: tech-dbt, slug: dbt, name: dbt, category: cat-dbt, homepage: "https://www.getdbt.com/", license: Apache-2.0, repo: "https://github.com/dbt-labs/dbt-core" }
+  - { id: tech-delta, slug: delta-lake, name: Delta Lake, category: cat-lakehouse, homepage: "https://delta.io/", license: Apache-2.0, repo: "https://github.com/delta-io/delta" }
+  - { id: tech-iceberg, slug: iceberg, name: Apache Iceberg, category: cat-lakehouse, homepage: "https://iceberg.apache.org/", license: Apache-2.0, repo: "https://github.com/apache/iceberg" }
+  - { id: tech-hudi, slug: hudi, name: Apache Hudi, category: cat-lakehouse, homepage: "https://hudi.apache.org/", license: Apache-2.0, repo: "https://github.com/apache/hudi" }
+  - { id: tech-debezium, slug: debezium, name: Debezium, category: cat-cdc, homepage: "https://debezium.io/", license: Apache-2.0, repo: "https://github.com/debezium/debezium" }
+  - { id: tech-gx, slug: great-expectations, name: Great Expectations, category: cat-data-quality, homepage: "https://greatexpectations.io/", license: Apache-2.0, repo: "https://github.com/great-expectations/great_expectations" }
+  - { id: tech-soda, slug: soda, name: Soda Core, category: cat-data-quality, homepage: "https://www.soda.io/", license: Apache-2.0, repo: "https://github.com/sodadata/soda-core" }
+  - { id: tech-docker, slug: docker, name: Docker, category: cat-infrastructure, homepage: "https://www.docker.com/", license: Apache-2.0 }
+  - { id: tech-terraform, slug: terraform, name: Terraform, category: cat-infrastructure, homepage: "https://www.terraform.io/", license: BUSL-1.1 }
+  - { id: tech-databricks, slug: databricks, name: Databricks, category: cat-databricks, homepage: "https://www.databricks.com/" }
+  - { id: tech-snowflake, slug: snowflake, name: Snowflake, category: cat-snowflake, homepage: "https://www.snowflake.com/" }
+  - { id: tech-bigquery, slug: bigquery, name: BigQuery, category: cat-gcp, homepage: "https://cloud.google.com/bigquery" }
+  - { id: tech-s3, slug: aws-s3, name: Amazon S3, category: cat-aws, homepage: "https://aws.amazon.com/s3/" }
+  - { id: tech-glue, slug: aws-glue, name: AWS Glue, category: cat-aws, homepage: "https://aws.amazon.com/glue/" }
+  - { id: tech-athena, slug: athena, name: Amazon Athena, category: cat-aws, homepage: "https://aws.amazon.com/athena/" }
+  - { id: tech-openlineage, slug: openlineage, name: OpenLineage, category: cat-data-lineage, homepage: "https://openlineage.io/", license: Apache-2.0, repo: "https://github.com/OpenLineage/OpenLineage" }
+  - { id: tech-datahub, slug: datahub, name: DataHub, category: cat-data-catalog, homepage: "https://datahubproject.io/", license: Apache-2.0, repo: "https://github.com/datahub-project/datahub" }
+  - { id: tech-aws, slug: aws, name: AWS, category: cat-aws, homepage: "https://aws.amazon.com/" }

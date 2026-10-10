@@ -1,0 +1,25 @@
+---
+// DocsLayout — reading layout for docs pages: PageHero + prose column.
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+
+interface Props {
+  frontmatter: {
+    title: string;
+    description?: string;
+    kicker?: string;
+  };
+}
+const { frontmatter } = Astro.props;
+---
+
+<BaseLayout sidebar title={frontmatter.title} description={frontmatter.description}>
+  <PageHero
+    kicker={frontmatter.kicker ?? 'Docs'}
+    title={frontmatter.title}
+    lede={frontmatter.description}
+  />
+  <article class="col prose-de section" style="padding-bottom: 6rem;">
+    <slot />
+  </article>
+</BaseLayout>

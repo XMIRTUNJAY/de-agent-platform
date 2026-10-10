@@ -1,0 +1,27 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-risingwavelabs-risingwave
+  slug: risingwavelabs-risingwave
+  type: reference
+  title: risingwavelabs/risingwave
+  description: Event streaming platform for agentic AI. Continuously ingest,
+    transform, and serve event streams in real time, at scale.
+  category: cat-streaming
+  tags: []
+  url: https://github.com/risingwavelabs/risingwave
+  publisher: GitHub topic — data-engineering
+  kind: blog
+  why: null
+  source_url: https://github.com/risingwavelabs/risingwave
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  discovered_from:
+    source: github-topic-de
+    extracted_at: 2026-10-09T04:45:42.625Z
+    published: 2026-10-09T04:43:02Z
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-streaming
+      - cat-agentic

@@ -1,0 +1,268 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SectionHeader from '@/components/SectionHeader.astro';
+import ResourceCard from '@/components/ResourceCard.astro';
+import { SITE } from '@/site.config';
+import registry from '@/data/generated/registry.json';
+import stats from '@/data/generated/stats.json';
+
+const stages = registry.taxonomy.stages;
+
+/** byStage counts keyed by stage id */
+const stageCounts = stats.byStage as Record<string, number>;
+
+interface Stage { id: string; order: number; title: string; slug: string; }
+const PHASE_SLUGS: [string, string, string[]][] = [
+  ['Foundations', 'Storage, compute, and the primitives everything else builds on.', ['foundations', 'python-sql', 'data-processing']],
+  ['Platforms', 'Warehouses, lakehouses, streaming backbones, and the cloud they run on.', ['warehousing', 'lakehouse', 'cloud', 'streaming']],
+  ['Trust & Operations', 'Make data reliable: quality checks, observability, orchestration, reliability.', ['data-quality', 'observability', 'orchestration', 'reliability']],
+  ['Advanced & Agentic', 'System design judgment and AI agents as first-class data workers.', ['system-design', 'agentic']],
+];
+const stageById = new Map((stages as unknown as Stage[]).map((s) => [s.id, s] as const));
+const phases = PHASE_SLUGS.map(([name, tagline, ids], i) => {
+  const sts = ids.map((id) => stageById.get(id)).filter((s): s is Stage => !!s)
+    .sort((a, b) => a.order - b.order);
+  return { index: i + 1, name, tagline, stages: sts, count: sts.reduce((n, s) => n + (stageCounts[s.id] ?? 0), 0) };
+});
+
+// Feature cards — real data, five amp-style cards
+const skill = registry.resources.find(r => r.type === 'skill' && r.install_command)!;
+const mcp = registry.resources.find(r => r.type === 'mcp');
+const runbook = registry.resources.find(r => r.type === 'runbook');
+const arch = registry.resources.find(r => r.type === 'architecture');
+const starter = registry.resources.find(r => r.type === 'starter');
+const skill2 = registry.resources.find(r => r.type === 'skill' && r.id !== skill?.id && r.install_command);
+const verifiedCount = stats.counts.byVerification.reviewed + stats.counts.byVerification.tested;
+
+// Learn by building — starters + architectures
+const builders = registry.resources
+  .filter(r => r.type === 'starter' || r.type === 'architecture')
+  .slice(0, 6);
+
+// Fresh from the registry — newest by last_verified
+const fresh = registry.resources
+  .filter(r => r.last_verified)
+  .sort((a, b) => b.last_verified.localeCompare(a.last_verified))
+  .slice(0, 6);
+
+const securityFlags = (r: any) => r
+  ? ['runs_code', 'network_access', 'credentials', 'filesystem_access', 'external_apis']
+      .filter(k => r.security?.[k]).length
+  : 0;
+
+const heroLines = ['Learn the pattern.', 'Install the skill.', 'Run the pipeline.', 'Ship agent-native data.'];
+---
+
+<BaseLayout title={SITE.longName} sidebar={false}>
+
+  <!-- 1. Hero — amp grammar: kicker, rotating serif headline, lede, actions -->
+  <section class="col section">
+    <p class="kicker mount">Data engineering for the agent era</p>
+    <h1 class="display-hero mount mount-delay-1" id="hero-headline" style="margin-top: 1.25rem;">
+      {heroLines.map((line, i) => (
+        <span class:list={['hero-line', i > 0 && 'hero-line-hidden']} data-hero-line={i}>{line}</span>
+      ))}
+    </h1>
+    <p class="lede mount mount-delay-2" style="margin-top: 1.5rem;">
+      An open registry and learning platform: tutorials, architecture patterns,
+      agent skills, MCP servers, agents, hooks and production runbooks — each with
+      provenance, license, compatibility and verification status.
+    </p>
+    <div class="mount mount-delay-3" style="margin-top: 2rem; display: flex; flex-wrap: wrap; gap: 0.75rem;">
+      <a href="/roadmap" class="btn btn-accent btn-lg">Explore the roadmap</a>
+      <a href="/marketplace" class="btn btn-lg">Browse the marketplace</a>
+    </div>
+    <script is:inline>
+      (function () {
+        var lines = document.querySelectorAll('[data-hero-line]');
+        var i = 0;
+        function show(n) {
+          lines.forEach(function (el, idx) {
+            el.classList.toggle('hero-line-hidden', idx !== n);
+          });
+        }
+        show(0);
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        setInterval(function () { i = (i + 1) % lines.length; show(i); }, 2600);
+      })();
+    </script>
+    <style>
+      .hero-line { display: block; animation: hero-fade 0.6s var(--ease-out); }
+      .hero-line-hidden { display: none; }
+      @keyframes hero-fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+      @media (prefers-reduced-motion: reduce) { .hero-line { animation: none; } }
+    </style>
+  </section>
+
+  <hr class="hairline col" />
+
+  <!-- 2. A day in the platform — 4 phase cards, full detail lives on /roadmap -->
+  <section class="col section">
+    <SectionHeader
+      kicker="A day in the platform"
+      title="Thirteen stages, four phases"
+      lede="From Foundations to Agentic Data Engineering — the roadmap groups thirteen stages into four phases you can learn top-to-bottom."
+      linkHref="/roadmap"
+      linkLabel="View the roadmap"
+    />
+    <div class="card-grid card-grid--2 reveal" style="margin-top: 3rem;">
+      {phases.map((p) => (
+        <a href={`/roadmap#${p.stages[0].slug}`} class="card card-pad card-interactive" style="display: flex; flex-direction: column; gap: 0.75rem;">
+          <div class="card-header" style="margin-bottom: 0;">
+            <span class="mono-label">Phase {String(p.index).padStart(2, '0')}</span>
+            <span class="chip">{p.count} resources</span>
+          </div>
+          <h3 style="font-size: var(--text-2xl); font-weight: 500; color: var(--fg); letter-spacing: -0.01em; margin: 0.25rem 0 0;">{p.name}</h3>
+          <p class="card-desc" style="flex: 1;">{p.tagline}</p>
+          <ul style="display: flex; flex-wrap: wrap; gap: 0.4rem; list-style: none; padding: 0; margin: 0.5rem 0 0;">
+            {p.stages.map((s) => (
+              <li class="chip" style="font-size: var(--text-2xs);">{String(s.order).padStart(2, '0')} · {s.title}</li>
+            ))}
+          </ul>
+        </a>
+      ))}
+    </div>
+    <p style="margin-top: 1.5rem;" class="text-center">
+      <a class="arrow-link" href="/roadmap">All thirteen stages in full detail →</a>
+    </p>
+  </section>
+
+  <hr class="hairline col" />
+
+  <!-- 3. Five feature cards with real data -->
+  <section class="col section">
+    <SectionHeader
+      kicker="What's inside"
+      title="Built for agents, trusted by pipelines"
+    />
+    <div class="card-grid reveal" style="margin-top: 3rem;">
+
+      <!-- One command -->
+      <div class="card card-pad-lg" style="display: flex; flex-direction: column; gap: 1rem;">
+        <p class="mono-label">One command</p>
+        <h3 style="font-size: var(--text-2xl); font-weight: 500;">{skill.title}</h3>
+        <p class="card-desc">{skill.tagline}</p>
+        <div class="codeblock">
+          <pre style="margin: 0; padding: 0.9rem 1.1rem; font-size: var(--text-sm); overflow-x: auto;"><code>{skill.install_command}</code></pre>
+        </div>
+        <a href={skill.url} class="link-arrow" style="margin-top: auto;">View in registry <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+
+      <!-- Verification -->
+      <div class="card card-pad-lg" style="display: flex; flex-direction: column; gap: 1rem;">
+        <p class="mono-label">Verification</p>
+        <h3 style="font-size: var(--text-2xl); font-weight: 500;">{skill2?.title ?? 'Reviewed by maintainers'}</h3>
+        <p class="card-desc">{skill2?.tagline ?? 'Every entry carries provenance, license and verification status.'}</p>
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+          <span class="chip chip-accent">✓ {skill2?.verification ?? 'reviewed'}</span>
+          {skill2?.last_verified && <span class="chip">verified {skill2.last_verified}</span>}
+          <span class="chip">license: {skill2?.license ?? 'Apache-2.0'}</span>
+        </div>
+        <a href={skill2?.url ?? '/resources'} class="link-arrow" style="margin-top: auto;">Inspect the entry <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+
+      <!-- Security posture -->
+      <div class="card card-pad-lg" style="display: flex; flex-direction: column; gap: 1rem;">
+        <p class="mono-label">Security posture</p>
+        <h3 style="font-size: var(--text-2xl); font-weight: 500;">{mcp?.title ?? 'Least-privilege by default'}</h3>
+        <p class="card-desc">{mcp?.tagline ?? 'Machine-readable security posture for every MCP server.'}</p>
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; font-size: var(--text-xs);">
+          <span class:list={['chip', mcp?.security?.runs_code ? 'chip-warn' : 'chip-accent']}>{mcp?.security?.runs_code ? 'runs code' : 'no code'}</span>
+          <span class:list={['chip', mcp?.security?.network_access ? 'chip-warn' : 'chip-accent']}>{mcp?.security?.network_access ? 'network' : 'offline'}</span>
+          <span class:list={['chip', mcp?.security?.credentials ? 'chip-warn' : 'chip-accent']}>{mcp?.security?.credentials ? 'credentials' : 'no creds'}</span>
+          <span class="chip">{securityFlags(mcp)} flags</span>
+        </div>
+        <a href={mcp?.url ?? '/mcp'} class="link-arrow" style="margin-top: auto;">See the posture <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+
+      <!-- Runbooks -->
+      <div class="card card-pad-lg" style="display: flex; flex-direction: column; gap: 1rem;">
+        <p class="mono-label">Operate</p>
+        <h3 style="font-size: var(--text-2xl); font-weight: 500;">{runbook?.title ?? 'Production runbooks'}</h3>
+        <p class="card-desc">{runbook?.tagline ?? runbook?.description ?? 'Symptom → diagnosis → fix for the most common incidents.'}</p>
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+          {runbook?.difficulty && <span class="chip">{runbook.difficulty}</span>}
+          {runbook?.severity && <span class="chip chip-danger">{runbook.severity}</span>}
+          <span class="chip">{stats.counts.byType.runbook} runbooks</span>
+        </div>
+        <a href="/runbooks" class="link-arrow" style="margin-top: auto;">Browse runbooks <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+
+      <!-- Architecture -->
+      <div class="card card-pad-lg" style="display: flex; flex-direction: column; gap: 1rem;">
+        <p class="mono-label">Design</p>
+        <h3 style="font-size: var(--text-2xl); font-weight: 500;">{arch?.title ?? 'Architecture patterns'}</h3>
+        <p class="card-desc">{arch?.tagline ?? arch?.description ?? 'Reference architectures with pros, cons and agg tradeoffs.'}</p>
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+          {(arch?.tags ?? []).slice(0, 4).map((t) => <span class="chip">{t}</span>)}
+        </div>
+        <a href={arch?.url ?? '/taxonomy'} class="link-arrow" style="margin-top: auto;">Read the pattern <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <hr class="hairline col" />
+
+  <!-- 4. Learn by building — starters + architectures -->
+  <section class="col section">
+    <SectionHeader
+      kicker="Learn by building"
+      title="Starters and reference architectures"
+      lede="End-to-end projects you can run locally, and patterns that explain why they work."
+      linkHref="/projects"
+      linkLabel="All projects"
+    />
+    <div class="card-grid stagger" style="margin-top: 3rem;">
+      {builders.map((r) => <ResourceCard resource={r} />)}
+    </div>
+  </section>
+
+  <!-- 5. Registry in numbers -->
+  <section class="hairline-block">
+    <div class="col section" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 2rem;">
+      {[
+        { n: stats.counts.total, label: 'Resources' },
+        { n: verifiedCount, label: 'Reviewed or tested' },
+        { n: stats.counts.byType.skill, label: 'Agent skills' },
+        { n: stats.counts.byType.mcp, label: 'MCP servers' },
+        { n: stats.counts.stages, label: 'Learning stages' },
+        { n: stats.counts.categories, label: 'Categories' },
+      ].map((s) => (
+        <div class="reveal">
+          <p style="font-size: var(--text-5xl); font-family: var(--font-display); line-height: 1;">{s.n}</p>
+          <p class="mono-label" style="margin-top: 0.5rem;">{s.label}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- 6. Install band -->
+  <section class="hairline-block">
+    <div class="col section" style="text-align: center;">
+      <p class="kicker">Install in seconds</p>
+      <h2 class="display-section" style="margin-top: 0.75rem;">One command, production-ready</h2>
+      <div class="codeblock" style="max-width: 34rem; margin: 2rem auto 0; text-align: left;">
+        <pre style="margin: 0; padding: 1.1rem 1.25rem; font-size: var(--text-sm); overflow-x: auto;"><code>{skill.install_command}</code></pre>
+      </div>
+      <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap;">
+        <a href="/marketplace" class="btn btn-accent btn-lg">Browse the registry</a>
+        <a href="/roadmap" class="btn btn-lg">Start learning <span class="arrow" aria-hidden="true"></span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Fresh from the registry -->
+  <section class="col section">
+    <SectionHeader
+      kicker="Fresh from the registry"
+      title="Latest verified entries"
+      linkHref="/marketplace"
+      linkLabel="View all"
+    />
+    <div class="card-grid stagger" style="margin-top: 3rem;">
+      {fresh.map((r) => <ResourceCard resource={r} />)}
+    </div>
+  </section>
+
+</BaseLayout>
+

@@ -1,0 +1,48 @@
+---
+import { SIDEBAR } from '@/site.config';
+const path = Astro.url.pathname;
+const norm = (p: string) => (p.length > 1 && p.endsWith('/') ? p.slice(0, -1) : p);
+const isActive = (href: string) => norm(path) === norm(href);
+---
+<nav
+  id="sidebar"
+  class="sidebar"
+  aria-label="Documentation"
+>
+  <div class="px-3">
+    {SIDEBAR.map((group, gi) => (
+      <div class="mb-5">
+        <p class="mono-label px-2 pb-1.5">{group.title}</p>
+        <ul class="space-y-px">
+          {group.items.map((item, ii) => (
+            <li>
+              {item.badge === 'soon' ? (
+                <span
+                  class="flex items-center justify-between gap-2 rounded-md px-2 py-2 font-mono text-sm leading-5 text-muted opacity-50 cursor-default"
+                  aria-disabled="true"
+                >
+                  <span class="truncate">{item.label}</span>
+                  <span class="chip">soon</span>
+                </span>
+              ) : (
+                <a
+                  href={item.href}
+                  class:list={[
+                    'flex items-center justify-between gap-2 rounded-md px-2 py-2 font-mono text-sm leading-5 transition-colors',
+                    isActive(item.href)
+                      ? 'bg-accent-soft text-accent'
+                      : 'text-muted hover:bg-surface-2 hover:text-fg',
+                  ]}
+                  aria-current={isActive(item.href) ? 'page' : undefined}
+                >
+                  <span class="truncate">{item.label}</span>
+                  {item.badge && <span class="chip">{item.badge}</span>}
+                </a>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+</nav>

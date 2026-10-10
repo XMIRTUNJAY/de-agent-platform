@@ -1,0 +1,94 @@
+# Agents — schema, pipeline, platform reviewers
+- id: agent-schema-reviewer
+  slug: schema-reviewer
+  type: agent
+  title: Schema Reviewer
+  purpose: Classify schema changes and prevent breaking changes from shipping.
+  category: cat-data-contracts
+  difficulty: intermediate
+  tags: [agent, schema, contracts]
+  inputs: ["Before/after schema", "Consumer list or lineage"]
+  tools: [read_file]
+  skills: [skill-schema-change-contract-review, skill-data-contract-author]
+  mcp: [mcp-filesystem, mcp-datahub]
+  workflow:
+    - Diff the schemas field by field.
+    - Classify each change: compatible, risky, breaking.
+    - Resolve consumers from lineage.
+    - Emit a migration plan with dates.
+  outputs: ["Change classification", "Consumer impact set", "Migration & deprecation plan"]
+  guardrails: ["Assumes breaking when semantics are ambiguous", "Will not approve a breaking change without a dated plan"]
+  example: "Detects a type narrowing from decimal(18,2) to decimal(10,2) and blocks it as data-loss risky."
+  evaluation: "Correctly classifies a labelled set of 20 schema changes."
+  compatible_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  version: 0.1.4
+  license: Apache-2.0
+  author: de-agent
+  source_url: https://github.com/de-agent/agents/tree/main/schema-reviewer
+  github_url: https://github.com/de-agent/agents
+  verification: reviewed
+  last_verified: 2026-09-24
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
+  relationships: { uses: [skill-schema-change-contract-review], related_to: [hook-schema-change-check] }
+- id: agent-pipeline-reviewer
+  slug: pipeline-reviewer
+  type: agent
+  title: Pipeline Reviewer
+  purpose: Review a DAG or pipeline for idempotency, retries and backfill safety.
+  category: cat-airflow
+  difficulty: intermediate
+  tags: [agent, airflow, pipeline, review]
+  inputs: ["DAG/pipeline source", "Schedule and SLA"]
+  tools: [read_file, mcp-git]
+  skills: [skill-airflow-dag-reviewer, skill-backfill-planner, skill-pipeline-test-author]
+  mcp: [mcp-filesystem, mcp-git]
+  workflow:
+    - Apply the idempotency test to every task.
+    - Check retry, timeout and concurrency settings.
+    - Predict backfill behaviour.
+    - Propose missing integration tests.
+  outputs: ["Idempotency findings", "Retry/concurrency fixes", "Backfill prediction", "Test plan"]
+  guardrails: ["Never triggers a run", "Read-only analysis"]
+  example: "Finds a task that appends without a partition key and will duplicate rows on retry."
+  evaluation: "Fixture of 8 DAGs with seeded non-idempotency bugs."
+  compatible_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  version: 0.1.3
+  license: Apache-2.0
+  author: de-agent
+  source_url: https://github.com/de-agent/agents/tree/main/pipeline-reviewer
+  github_url: https://github.com/de-agent/agents
+  verification: reviewed
+  last_verified: 2026-09-23
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
+  relationships: { uses: [skill-airflow-dag-reviewer], related_to: [runbook-pipeline-failed] }
+- id: agent-aws-architecture-reviewer
+  slug: aws-architecture-reviewer
+  type: agent
+  title: AWS Architecture Reviewer
+  purpose: Review an AWS data architecture for cost, IAM and reliability risks.
+  category: cat-aws
+  difficulty: advanced
+  tags: [agent, aws, architecture, iam]
+  inputs: ["Architecture description or IaC", "Workload characteristics"]
+  tools: [read_file, mcp-aws]
+  skills: [skill-aws-glue-reviewer, skill-athena-partition-advisor]
+  mcp: [mcp-aws, mcp-filesystem]
+  workflow:
+    - Map the described services to a data flow.
+    - Check IAM for least privilege.
+    - Estimate dominant cost drivers.
+    - Identify single points of failure.
+  outputs: ["Architecture diagram (text)", "IAM findings", "Cost drivers", "Reliability risks"]
+  guardrails: ["Never creates resources", "Requires human approval for any IAM recommendation"]
+  example: "Flags a Glue job running with an admin role and no bookmark, causing nightly full reprocessing."
+  evaluation: "Scores against a checklist of 30 AWS data-platform anti-patterns."
+  compatible_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  version: 0.1.2
+  license: Apache-2.0
+  author: de-agent
+  source_url: https://github.com/de-agent/agents/tree/main/aws-architecture-reviewer
+  github_url: https://github.com/de-agent/agents
+  verification: reviewed
+  last_verified: 2026-09-21
+  security: { runs_code: false, network_access: true, credentials: true, filesystem_access: false, external_apis: true }
+  relationships: { uses: [skill-aws-glue-reviewer], related_to: [cat-aws] }

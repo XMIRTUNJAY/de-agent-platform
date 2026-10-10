@@ -1,0 +1,27 @@
+---
+// ResourceCard — registry resource summary card (amp hairline-card grammar).
+interface Props {
+  resource: any;
+}
+const { resource: r } = Astro.props;
+const verified = r.last_verified;
+const dateFmt = new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric', year: 'numeric' });
+const verifiedLabel = verified && dateFmt.format(new Date(verified));
+---
+
+<a href={r.url} class="card card-pad card-interactive" style="display: flex; flex-direction: column; height: 100%; content-visibility: auto; contain-intrinsic-size: auto 180px;">
+  <div class="card-header" style="margin-bottom: 0.5rem;">
+    <span class="mono-label">{r.typeLabel}{r.categoryTitle && ` / ${r.categoryTitle}`}</span>
+    {r.verification === 'reviewed' && <span class="chip chip-accent">reviewed</span>}
+    {r.verification === 'tested' && <span class="chip chip-accent">tested</span>}
+  </div>
+  <h3 style="font-size: var(--text-xl); font-weight: 500; line-height: 1.3; color: var(--fg);">{r.title}</h3>
+  {(r.tagline || r.summary) && (
+    <p class="card-desc" style="flex: 1;">{r.tagline || r.summary}</p>
+  )}
+  <div class="card-meta">
+    {r.difficulty && <span class="chip">{r.difficulty}</span>}
+    {(r.tags || []).slice(0, 3).map((t: string) => <span class="chip">{t}</span>)}
+    {verifiedLabel && <span class="chip" style="margin-left: auto;">✓ verified {verifiedLabel}</span>}
+  </div>
+</a>

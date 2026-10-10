@@ -1,0 +1,187 @@
+# External references — cloud docs, books, specs, agent resources
+- id: ref-snowflake-docs
+  slug: snowflake-docs
+  type: reference
+  title: Snowflake Documentation
+  url: https://docs.snowflake.com/
+  publisher: Snowflake Inc.
+  kind: documentation
+  category: cat-snowflake
+  license: Proprietary (docs)
+  summary: Snowflake's official docs — micro-partitions, clustering, virtual warehouses, streams and tasks.
+  why: The performance and cost sections are the reference for clustering-key and warehouse-sizing decisions.
+  tags: [snowflake, warehouse, docs]
+  quality: { authority: 5, docs_quality: 5, repo_activity: 4, license_clarity: 2, installation: null, tests: null, examples: 4, security: 4, maintenance: 5, compatibility: 3 }
+  verification: reviewed
+  last_verified: 2026-09-24
+- id: ref-bigquery-docs
+  slug: bigquery-docs
+  type: reference
+  title: BigQuery Documentation
+  url: https://cloud.google.com/bigquery/docs
+  publisher: Google Cloud
+  kind: documentation
+  category: cat-gcp
+  license: Proprietary (docs)
+  summary: BigQuery's official docs — partitioning, clustering, slots, and the query optimiser behaviour.
+  why: The partitioning/clustering pages explain the levers our Athena/BigQuery cost guidance mirrors.
+  tags: [bigquery, gcp, docs]
+  quality: { authority: 5, docs_quality: 5, repo_activity: 4, license_clarity: 2, installation: null, tests: null, examples: 5, security: 4, maintenance: 5, compatibility: 3 }
+  verification: reviewed
+  last_verified: 2026-09-21
+- id: ref-databricks-docs
+  slug: databricks-docs
+  type: reference
+  title: Databricks Documentation
+  url: https://docs.databricks.com/
+  publisher: Databricks Inc.
+  kind: documentation
+  category: cat-databricks
+  license: Proprietary (docs)
+  summary: Databricks docs — Delta Live Tables, Unity Catalog, jobs, clusters and liquid clustering.
+  why: Liquid clustering and Unity Catalog are platform-specific and only documented here.
+  tags: [databricks, lakehouse, unity-catalog, docs]
+  quality: { authority: 5, docs_quality: 4, repo_activity: 4, license_clarity: 2, installation: null, tests: null, examples: 4, security: 4, maintenance: 5, compatibility: 3 }
+  verification: reviewed
+  last_verified: 2026-09-19
+- id: ref-glue-docs
+  slug: aws-glue-docs
+  type: reference
+  title: AWS Glue Documentation
+  url: https://docs.aws.amazon.com/glue/
+  publisher: Amazon Web Services
+  kind: documentation
+  category: cat-aws
+  license: Proprietary (docs)
+  summary: AWS Glue docs — jobs, crawlers, the Data Catalog, job bookmarks and DPU configuration.
+  why: Job bookmarks and the catalogue's behaviour are the source of the most common Glue surprises.
+  tags: [aws, glue, catalog, docs]
+  quality: { authority: 5, docs_quality: 4, repo_activity: 4, license_clarity: 2, installation: null, tests: null, examples: 4, security: 4, maintenance: 5, compatibility: 3 }
+  verification: reviewed
+  last_verified: 2026-09-17
+- id: ref-soda-core
+  slug: soda-core
+  type: reference
+  title: Soda Core
+  url: https://github.com/sodadata/soda-core
+  publisher: Soda Data
+  kind: repo
+  category: cat-data-quality
+  license: Apache-2.0
+  summary: Open-source checks-as-code for data quality, with a YAML DSL for column and row-level checks.
+  why: A lightweight alternative to Great Expectations; the SQL-metric approach is easy to reason about.
+  tags: [data-quality, soda, checks, repo]
+  quality: { authority: 3, docs_quality: 3, repo_activity: 3, license_clarity: 5, installation: 4, tests: 3, examples: 3, security: null, maintenance: 3, compatibility: 3 }
+  verification: community
+  last_verified: 2026-09-14
+- id: ref-mcp-spec
+  slug: mcp-specification
+  type: reference
+  title: Model Context Protocol Specification
+  url: https://modelcontextprotocol.io/specification
+  publisher: Anthropic / MCP
+  kind: spec
+  category: cat-agentic
+  license: MIT
+  summary: The MCP specification — transports (stdio/SSE/HTTP), tools, resources, prompts and the security model.
+  why: The security section is required reading before connecting any MCP server to real data.
+  tags: [mcp, spec, agentic, protocol]
+  quality: { authority: 5, docs_quality: 4, repo_activity: 5, license_clarity: 5, installation: 3, tests: 3, examples: 4, security: 5, maintenance: 5, compatibility: 5 }
+  verification: reviewed
+  last_verified: 2026-09-30
+- id: ref-mcp-registry
+  slug: mcp-registry
+  type: reference
+  title: MCP Registry (official)
+  url: https://github.com/modelcontextprotocol/registry
+  publisher: Model Context Protocol
+  kind: registry
+  category: cat-agentic
+  license: MIT
+  summary: The community-driven registry of MCP servers, with a metadata schema for discovery.
+  why: The canonical place to discover MCP servers — treat entries as *discovery*, never as a trust signal.
+  tags: [mcp, registry, discovery]
+  quality: { authority: 4, docs_quality: 3, repo_activity: 5, license_clarity: 5, installation: 3, tests: 3, examples: 3, security: 4, maintenance: 5, compatibility: 5 }
+  verification: reviewed
+  last_verified: 2026-09-29
+- id: ref-agent-skills
+  slug: agent-skills
+  type: reference
+  title: Agent Skills (open format)
+  url: https://code.claude.com/docs/en/skills
+  publisher: Anthropic
+  kind: documentation
+  category: cat-agentic
+  license: Proprietary (docs)
+  summary: >-
+    The Agent Skills format: a SKILL.md with front-matter (name, description),
+    plus references/, scripts/ and examples/ that an agent loads on demand.
+  why: The format this platform's Skill object is modelled on — portable across compatible agents.
+  tags: [agentic, skills, format, docs]
+  quality: { authority: 4, docs_quality: 4, repo_activity: 4, license_clarity: 2, installation: 3, tests: 2, examples: 4, security: 4, maintenance: 4, compatibility: 4 }
+  verification: community
+  last_verified: 2026-09-28
+- id: ref-ddia
+  slug: designing-data-intensive-applications
+  type: reference
+  title: Designing Data-Intensive Applications (O'Reilly)
+  url: https://dataintensive.net/
+  publisher: O'Reilly Media
+  kind: book
+  category: cat-system-design
+  license: Proprietary (all rights reserved)
+  summary: >-
+    The canonical book on the principles behind data systems: reliability,
+    scalability, replication, partitioning, consistency and batch/stream processing.
+  why: The single highest-value read for system-design interviews and for understanding why the tools are shaped as they are.
+  tags: [book, system-design, fundamentals]
+  quality: { authority: 5, docs_quality: 5, repo_activity: null, license_clarity: 1, installation: null, tests: null, examples: 3, security: null, maintenance: 5, compatibility: 4 }
+  verification: reviewed
+  last_verified: 2026-09-12
+- id: ref-fundamentals-de
+  slug: fundamentals-of-data-engineering
+  type: reference
+  title: Fundamentals of Data Engineering (O'Reilly)
+  url: https://www.oreilly.com/library/view/fundamentals-of-data/9781098108298/
+  publisher: O'Reilly Media
+  kind: book
+  category: cat-engineering-foundations
+  license: Proprietary (all rights reserved)
+  summary: >-
+    A lifecycle view of data engineering — generation, storage, ingestion,
+    transformation and serving — with the "undercurrents" of security, governance and cost.
+  why: The best map of the field for someone moving into data engineering; pairs well with this roadmap.
+  tags: [book, foundations, roadmap]
+  quality: { authority: 4, docs_quality: 4, repo_activity: null, license_clarity: 1, installation: null, tests: null, examples: 2, security: 4, maintenance: 4, compatibility: 3 }
+  verification: reviewed
+  last_verified: 2026-09-12
+- id: ref-data-mesh
+  slug: data-mesh
+  type: reference
+  title: Data Mesh (O'Reilly)
+  url: https://www.oreilly.com/library/view/data-mesh/9781492092384/
+  publisher: O'Reilly Media
+  kind: book
+  category: cat-governance
+  license: Proprietary (all rights reserved)
+  summary: Organizational principles for analytical data at scale — domain ownership, data as a product, self-serve platform, federated governance.
+  why: The organizational counterpoint to a central platform team; useful vocabulary for governance discussions.
+  tags: [book, governance, organization, architecture]
+  quality: { authority: 4, docs_quality: 4, repo_activity: null, license_clarity: 1, installation: null, tests: null, examples: 3, security: 3, maintenance: 4, compatibility: 3 }
+  verification: reviewed
+  last_verified: 2026-09-12
+- id: ref-dbt-best-practices
+  slug: dbt-best-practices
+  type: reference
+  title: dbt Best Practices Guide
+  url: https://docs.getdbt.com/best-practices
+  publisher: dbt Labs
+  kind: guide
+  category: cat-dbt
+  license: Proprietary (docs)
+  summary: dbt's own guidance on project structure, staging/marts layering, naming and testing conventions.
+  why: A widely-adopted convention set — agreeing on it early avoids a lot of friction later.
+  tags: [dbt, best-practices, guide]
+  quality: { authority: 4, docs_quality: 5, repo_activity: 5, license_clarity: 2, installation: null, tests: 4, examples: 5, security: null, maintenance: 5, compatibility: 4 }
+  verification: reviewed
+  last_verified: 2026-09-26

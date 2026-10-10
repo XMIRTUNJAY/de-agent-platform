@@ -1,0 +1,58 @@
+# Weekly content discovery — runs the ONLINE loop (network) on a schedule and
+# opens one PR per batch of drafts. Drafts are never merged by automation;
+# a human reviews and promotes records from data/drafts/ to data/curated/.
+name: Content discovery
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'   # Mondays 06:00 UTC
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: 'Max new drafts per source'
+        required: false
+        default: '10'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Run discovery (network)
+        env:
+          # Unauthenticated GitHub rest API is ~60 req/h — the workflow token
+          # raises that to 5k so gh-org/gh-topic sources do not get skipped.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node pipelines/discover.mjs --limit ${{ github.event.inputs.limit || '10' }}
+      - name: Open batch PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ -z "$(git status --porcelain data/drafts)" ]; then
+            echo "no new drafts — nothing to review"
+            exit 0
+          fi
+          branch="discovery/$(date +%F)"
+          count=$(git status --porcelain data/drafts | wc -l | tr -d ' ')
+          git config user.name "de-agent-bot"
+          git config user.email "bot@de-agent.example.dev"
+          git checkout -b "$branch"
+          git add data/drafts
+          git commit -m "discovery: $count draft(s) from trusted sources ($(date +%F))"
+          git push -u origin "$branch"
+          gh pr create --title "Content drafts · $(date +%F) ($count files)" \
+            --body "Auto-discovered drafts from data/curated/sources.yaml.
+
+Each record: review for accuracy, plain language (docs/style-guide.md), correct
+category, and the contribution bar (docs/contributing). Promote by moving into
+data/curated/ with verification + license filled in; delete rejects." \
+            --base main || echo "PR already exists for this branch"

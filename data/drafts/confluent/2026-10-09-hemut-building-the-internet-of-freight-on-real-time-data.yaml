@@ -1,0 +1,27 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-hemut-building-the-internet-of-freight-on-real-time-data
+  slug: hemut-building-the-internet-of-freight-on-real-time-data
+  type: reference
+  title: "Hemut: Building the Internet of Freight on Real-Time Data"
+  description: Hemut uses Confluent, real-time data streaming, and AI to automate
+    trucking operations, improve fleet efficiency, and build the Internet of
+    Freight.
+  category: cat-streaming
+  tags: []
+  url: https://www.confluent.io/blog/hemut-building-the-internet-of-freight-on-real-time-data/
+  publisher: Confluent Blog (Kafka/Flink/Streaming)
+  kind: blog
+  why: null
+  source_url: https://www.confluent.io/blog/hemut-building-the-internet-of-freight-on-real-time-data/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  discovered_from:
+    source: confluent
+    extracted_at: 2026-10-09T04:47:07.644Z
+    published: Thu, 27 Aug 2026 20:23:15 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-streaming

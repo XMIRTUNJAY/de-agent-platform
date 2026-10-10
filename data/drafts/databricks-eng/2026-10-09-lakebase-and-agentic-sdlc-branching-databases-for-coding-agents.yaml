@@ -1,0 +1,26 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-lakebase-and-agentic-sdlc-branching-databases-for-coding-agents
+  slug: lakebase-and-agentic-sdlc-branching-databases-for-coding-agents
+  type: reference
+  title: "Lakebase and Agentic SDLC: Branching Databases for Coding Agents"
+  description: AI has changed how software gets built. As coding agents take on a
+    growing share...
+  category: cat-agentic
+  tags: []
+  url: https://www.databricks.com/blog/lakebase-and-agentic-sdlc-branching-databases-coding-agents
+  publisher: Databricks Engineering Blog
+  kind: blog
+  why: null
+  source_url: https://www.databricks.com/blog/lakebase-and-agentic-sdlc-branching-databases-coding-agents
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  discovered_from:
+    source: databricks-eng
+    extracted_at: 2026-10-09T04:45:38.082Z
+    published: Thu, 08 Oct 2026 22:00:00 GMT
+  classification:
+    backend: rules
+    confidence: high
+    suggested_categories:
+      - cat-agentic

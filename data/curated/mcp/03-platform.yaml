@@ -1,0 +1,119 @@
+# MCP servers — platform & orchestration
+- id: mcp-dbt
+  slug: dbt
+  type: mcp
+  title: dbt MCP Server
+  description: >-
+    dbt Labs server that exposes project discovery, the semantic layer, and the dbt
+    CLI (`run`, `test`, `compile`) as tools, so an agent can build and inspect models.
+  category: cat-dbt
+  difficulty: intermediate
+  tags: [mcp, dbt, analytics-engineering, semantic-layer]
+  server: { name: "dbt-mcp", registry: vendor, publisher: dbt Labs }
+  transport: stdio
+  tools: [list_models, get_model_details, run_dbt_command, query_metrics, compile_sql]
+  installation:
+    command: "uvx dbt-mcp"
+    config_snippet: { mcpServers: { dbt: { command: "uvx", args: ["dbt-mcp"], env: { DBT_PROJECT_DIR: "${PWD}", DBT_PROFILES_DIR: "${HOME}/.dbt" } } } }
+  environment_variables:
+    - { name: DBT_PROJECT_DIR, description: "Path to the dbt project.", required: true }
+    - { name: DBT_PROFILES_DIR, description: "Path to the dbt profiles directory.", required: true }
+  security: { runs_code: true, network_access: true, credentials: true, filesystem_access: true, external_apis: false }
+  security_requirements: "Running `dbt run` executes arbitrary SQL against your warehouse with the credentials in profiles.yml. Point it at a dev target, never prod, and treat `--full-refresh` as a destructive operation."
+  compatible_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  source_url: https://github.com/dbt-labs/dbt-mcp
+  github_url: https://github.com/dbt-labs/dbt-mcp
+  license: Apache-2.0
+  version: 1.7.0
+  last_verified: 2026-09-27
+  verification: community
+  relationships: { related_to: [cat-dbt, tech-dbt] }
+- id: mcp-datahub
+  slug: datahub
+  type: mcp
+  title: DataHub MCP Server
+  description: >-
+    Exposes a DataHub catalog: search entities, read lineage and schema, and inspect
+    metadata, so an agent can answer "what is this table and what depends on it?".
+  category: cat-data-catalog
+  difficulty: intermediate
+  tags: [mcp, catalog, lineage, metadata]
+  server: { name: "mcp-server-datahub", registry: vendor, publisher: Acryl Data }
+  transport: stdio
+  tools: [search, get_entities, get_lineage, get_dataset_queries]
+  installation:
+    command: "uvx mcp-server-datahub"
+    config_snippet: { mcpServers: { datahub: { command: "uvx", args: ["mcp-server-datahub"], env: { DATAHUB_GMS_URL: "${DATAHUB_URL}", DATAHUB_GMS_TOKEN: "${DATAHUB_TOKEN}" } } } }
+  environment_variables:
+    - { name: DATAHUB_GMS_URL, description: "URL of the DataHub GMS endpoint.", required: true }
+    - { name: DATAHUB_GMS_TOKEN, description: "Personal access token.", required: true }
+  security: { runs_code: false, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
+  security_requirements: "Read-only against the catalog, but catalogue metadata can itself be sensitive (PII tags, internal table names). Use a scoped token and keep the GMS endpoint internal."
+  compatible_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  source_url: https://github.com/acryldata/mcp-server-datahub
+  github_url: https://github.com/acryldata/mcp-server-datahub
+  license: Apache-2.0
+  version: 0.4.0
+  last_verified: 2026-09-18
+  verification: community
+  relationships: { related_to: [cat-data-catalog, cat-data-lineage] }
+- id: mcp-aws
+  slug: aws
+  type: mcp
+  title: AWS MCP Servers (Labs)
+  description: >-
+    A suite of AWS Labs servers — including documentation search, CDK/Terraform
+    assistance, and service-specific servers — for agents working on AWS.
+  category: cat-aws
+  difficulty: advanced
+  tags: [mcp, aws, infrastructure, iam]
+  server: { name: "awslabs-mcp", registry: vendor, publisher: AWS Labs }
+  transport: stdio
+  tools: [aws_documentation_search, read_documentation, recommend, run_iac_generation]
+  installation:
+    command: "uvx awslabs.core-mcp-server@latest"
+    config_snippet: { mcpServers: { aws-core: { command: "uvx", args: ["awslabs.core-mcp-server@latest"], env: { AWS_PROFILE: "${AWS_PROFILE}", FASTMCP_LOG_LEVEL: "ERROR" } } } }
+  environment_variables:
+    - { name: AWS_PROFILE, description: "Named profile whose IAM permissions define what is reachable.", required: true }
+    - { name: AWS_REGION, description: "Default region.", required: false }
+  security: { runs_code: true, network_access: true, credentials: true, filesystem_access: true, external_apis: true }
+  security_requirements: "Server capabilities vary widely; some can create resources. Bind to a dedicated AWS profile with least privilege, use short-lived SSO credentials, and never attach an admin role. Treat resource-creating tools as requiring human confirmation."
+  compatible_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  source_url: https://github.com/awslabs/mcp
+  github_url: https://github.com/awslabs/mcp
+  license: Apache-2.0
+  version: 1.0.0
+  last_verified: 2026-09-22
+  verification: community
+  relationships: { related_to: [cat-aws, cat-infrastructure] }
+- id: mcp-kafka
+  slug: kafka
+  type: mcp
+  title: Kafka MCP Server
+  description: >-
+    Community server for Apache Kafka that lists topics, reads consumer-group lag,
+    and samples messages, for stream debugging from an agent.
+  category: cat-kafka
+  difficulty: advanced
+  tags: [mcp, kafka, streaming, lag]
+  server: { name: "kafka-mcp-server", registry: community, publisher: Community }
+  transport: stdio
+  tools: [list_topics, describe_topic, get_consumer_group_lag, sample_messages]
+  installation:
+    command: "uvx kafka-mcp-server"
+    config_snippet: { mcpServers: { kafka: { command: "uvx", args: ["kafka-mcp-server"], env: { KAFKA_BOOTSTRAP_SERVERS: "${KAFKA_BOOTSTRAP}" } } } }
+  environment_variables:
+    - { name: KAFKA_BOOTSTRAP_SERVERS, description: "Broker list.", required: true }
+    - { name: KAFKA_SASL_USERNAME, description: "SASL user, if the cluster requires it.", required: false }
+    - { name: KAFKA_SASL_PASSWORD, description: "SASL password, if required.", required: false }
+  security: { runs_code: false, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
+  security_requirements: "Sampling messages can expose production PII in the agent's context. Grant a read-only principal, prefer a topic allow-list, and never sample topics containing personal data without masking."
+  compatible_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  source_url: https://github.com/kafka-mcp/kafka-mcp-server
+  github_url: https://github.com/kafka-mcp/kafka-mcp-server
+  license: MIT
+  version: 0.2.0
+  last_verified: 2026-09-15
+  verification: community
+  note: "Community project — the upstream repo is not affiliated with the ASF. Review before use."
+  relationships: { related_to: [cat-kafka, runbook-kafka-consumer-lagging] }

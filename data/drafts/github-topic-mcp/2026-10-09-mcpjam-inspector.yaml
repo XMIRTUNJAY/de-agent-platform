@@ -1,0 +1,26 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-mcpjam-inspector
+  slug: mcpjam-inspector
+  type: reference
+  title: MCPJam/inspector
+  description: Testing and evaluation platform to chat, inspect, and debug MCP
+    servers, MCP apps, and ChatGPT apps.
+  category: cat-agentic
+  tags: []
+  url: https://github.com/MCPJam/inspector
+  publisher: GitHub topic — mcp-server
+  kind: blog
+  why: null
+  source_url: https://github.com/MCPJam/inspector
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  discovered_from:
+    source: github-topic-mcp
+    extracted_at: 2026-10-09T04:47:12.099Z
+    published: 2026-10-09T04:41:28Z
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic

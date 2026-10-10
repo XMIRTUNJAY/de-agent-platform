@@ -1,0 +1,227 @@
+# Runbooks — Spark & warehouse performance
+- id: runbook-spark-job-slow
+  slug: spark-job-slow
+  type: runbook
+  title: "Spark job is slow"
+  description: A batch Spark job's runtime has jumped — find whether it is skew, partition count, spill or over-scan.
+  severity: high
+  category: cat-spark
+  difficulty: advanced
+  tags: [spark, performance, incident]
+  symptoms:
+    - Job duration rose sharply with no code change
+    - One or a few tasks dominate the stage
+    - Executors idle while a handful run long
+  possible_causes:
+    - Key skew on a join or group-by key
+    - Too few partitions after a filter, or too many after a shuffle
+    - Spill to disk from an oversized partition
+    - Reading far more data than needed (missing partition filter)
+  diagnosis:
+    - Open the Spark UI stage view; compare p50 vs p99 task duration.
+    - Skew if p99 >> p50 (10x+). Uniform slowness if p50 is high.
+    - Check shuffle read/write bytes and spill (disk) bytes per task.
+    - Check input bytes scanned vs table size.
+  commands:
+    - "spark-submit --conf spark.sql.adaptive.enabled=true ..."
+    - "# inspect the event log: grep 'TaskSetManager' spark.log | tail"
+    - "df.explain('formatted')  # confirm broadcast vs sort-merge join"
+  fix:
+    - Skew → enable AQE skew join; else salt the hot key and aggregate twice.
+    - Spill → increase partition count or raise executor memory.
+    - Over-scan → add the partition predicate; confirm with bytes scanned.
+    - Never repartition(1); it serialises the stage.
+  prevention:
+    - Baseline shuffle/spill/scan metrics and fail CI on regression.
+    - Add a partition filter lint on source reads.
+  monitoring:
+    - task duration p99/p50 ratio
+    - shuffle read/write bytes per run
+    - spill bytes per stage
+  agent_skills: [skill-spark-skew-diagnosis, skill-spark-cost-regression-guard]
+  agents: [agent-spark-optimizer]
+  version: 1.2.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/de-agent/runbooks/tree/main/spark-job-slow
+  github_url: https://github.com/de-agent/runbooks
+  verification: reviewed
+  last_verified: 2026-09-28
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
+  relationships: { related_to: [cat-spark, runbook-small-files-explosion] }
+- id: runbook-spark-job-suddenly-costs-4x
+  slug: spark-job-suddenly-costs-4x
+  type: runbook
+  title: "Spark job suddenly costs 4x"
+  description: One job's compute cost quadrupled without an obvious functional change — attribute it and reverse the regression.
+  severity: high
+  category: cat-cost-engineering
+  difficulty: advanced
+  tags: [spark, cost, incident, regression]
+  symptoms:
+    - Cluster/DBU spend for one job quadrupled overnight
+    - Invoice alert, or a cost-per-run dashboard spike
+    - Often no functional change was noticed
+  possible_causes:
+    - A join started fanning out, exploding row counts mid-stage
+    - A partition filter was dropped (full history re-read)
+    - Small-file explosion after a partitioning change
+    - Autoscaling widened because a stage became slow (compounding loop)
+  diagnosis:
+    - Diff shuffle write bytes and input bytes for the job run-over-run.
+    - Compare output row counts before/after the join, per stage.
+    - Check whether the partition predicate still prunes (bytes scanned).
+  commands:
+    - "# from the event log"
+    - "grep -E 'Shuffle Write|Input Size' spark.log | tail -40"
+    - "SELECT count(*) FROM stage_output_pre JOIN ... -- compare to source count"
+  fix:
+    - Fan-out → dedupe the many-side on the join key before joining.
+    - Lost filter → restore the partition predicate and re-run.
+    - Small files → OPTIMIZE/compact, then re-run.
+  prevention:
+    - Cost-per-run unit metric with a 25% regression alarm.
+    - CI guard on shuffle/scan metrics (hook-spark-cost-check).
+  monitoring:
+    - $ per run, shuffle write bytes, input bytes, output rows
+  agent_skills: [skill-spark-cost-regression-guard, skill-cost-unit-economics]
+  agents: [agent-cost-optimizer, agent-spark-optimizer]
+  version: 1.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/de-agent/runbooks/tree/main/spark-job-suddenly-costs-4x
+  github_url: https://github.com/de-agent/runbooks
+  verification: reviewed
+  last_verified: 2026-09-25
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
+  relationships: { related_to: [hook-spark-cost-check, skill-cost-unit-economics] }
+- id: runbook-small-files-explosion
+  slug: small-files-explosion
+  type: runbook
+  title: "Small files explosion"
+  description: A table has fragmented into thousands of tiny files and query planning now dominates runtime.
+  severity: medium
+  category: cat-lakehouse
+  difficulty: intermediate
+  tags: [small-files, lakehouse, performance, compaction]
+  symptoms:
+    - Table has tens of thousands of tiny files
+    - Query planning and listing dominate query time
+    - Metadata operations (OPTIMIZE/REPAIR) become very slow
+  possible_causes:
+    - Streaming or high-frequency writes without compaction
+    - Over-partitioning (partition per hour, per user)
+    - Many small appends from a micro-batch job
+  diagnosis:
+    - List file sizes; avg < 32 MB and a growing count is the signature.
+    - For Iceberg/Delta, query the metadata tables (`files`, `history`).
+  commands:
+    - "SELECT count(*), avg(file_size_in_bytes)/1e6 FROM db.tbl.files;"
+    - "OPTIMIZE db.tbl ZORDER BY (user_id);  -- Delta"
+    - "CALL catalog.system.rewrite_data_files('db.tbl');  -- Iceberg"
+  fix:
+    - Compact to a 128-256 MB target; rewrite manifests if huge.
+    - Reduce partition granularity if the layout over-partitions.
+    - Schedule compaction after the ingestion window, never during it.
+  prevention:
+    - Auto-compaction on the table (Delta) or a scheduled maintenance job.
+    - Partition by date, not by hour/user, unless access patterns demand it.
+  monitoring:
+    - file count, avg file size, planning time
+  agent_skills: [skill-iceberg-maintenance, skill-delta-optimizer]
+  agents: [agent-databricks-reviewer]
+  version: 1.0.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/de-agent/runbooks/tree/main/small-files-explosion
+  github_url: https://github.com/de-agent/runbooks
+  verification: reviewed
+  last_verified: 2026-09-22
+  security: { runs_code: true, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-lakehouse, runbook-spark-job-slow] }
+- id: runbook-warehouse-query-slow
+  slug: warehouse-query-slow
+  type: runbook
+  title: "Warehouse query is slow"
+  description: A query that used to be fast became slow — separate scan inefficiency from compute contention.
+  severity: medium
+  category: cat-warehouses
+  difficulty: intermediate
+  tags: [warehouse, query, performance]
+  symptoms:
+    - A dashboard or model query that used to take seconds now takes minutes
+    - Queue times rising on a shared warehouse
+  possible_causes:
+    - Full table scan from a lost filter or a broken cluster key
+    - Clustering key no longer matches query predicates
+    - Warehouse undersized, or too many concurrent queries
+    - Data volume growth crossing a micro-partition threshold
+  diagnosis:
+    - Separate scan cost from compute time (bytes/partitions scanned vs queue time).
+    - Compare the plan against the clustering/partition key.
+  commands:
+    - "-- Snowflake"
+    - "SELECT query_id, partitions_scanned, partitions_total, bytes_scanned FROM table(information_schema.query_history_by_session()) ORDER BY start_time DESC LIMIT 10;"
+  fix:
+    - Over-scan → fix the predicate or add/adjust the clustering key.
+    - Compute-bound with high queue time → add clusters, not size.
+    - Rebuild clustering on a low-selectivity key.
+  prevention:
+    - Alert on partitions_scanned/partitions_total ratio.
+    - Review query history weekly for the top cost queries.
+  monitoring:
+    - bytes scanned, partitions scanned ratio, queue time
+  agent_skills: [skill-warehouse-clustering-advisor, skill-sql-query-plan]
+  agents: []
+  version: 1.0.1
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/de-agent/runbooks/tree/main/warehouse-query-slow
+  github_url: https://github.com/de-agent/runbooks
+  verification: reviewed
+  last_verified: 2026-09-18
+  security: { runs_code: true, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [skill-warehouse-clustering-advisor] }
+- id: runbook-missing-partition
+  slug: missing-partition
+  type: runbook
+  title: "Missing partition"
+  description: An expected date partition is absent, so a downstream report silently excludes a day.
+  severity: high
+  category: cat-batch-processing
+  difficulty: intermediate
+  tags: [partition, batch, data-completeness]
+  symptoms:
+    - A date partition is absent from the table
+    - A downstream report silently excludes a day
+    - Freshness check passes but completeness fails
+  possible_causes:
+    - Upstream produced no file for that date (source gap)
+    - The job wrote to the wrong date due to timezone handling
+    - A partially failed run left an empty or absent partition
+  diagnosis:
+    - List partitions for the range and diff against the calendar.
+    - Check the job's logical date vs UTC vs local conversion.
+    - Confirm whether the source actually had data.
+  commands:
+    - "aws s3 ls s3://bucket/table/ --recursive | grep 'dt=2026-09'"
+    - "SELECT dt, count(*) FROM tbl GROUP BY dt ORDER BY dt DESC LIMIT 30;"
+  fix:
+    - Re-run the specific logical date once the source is confirmed.
+    - Backfill the gap partition with the corrected timezone mapping.
+  prevention:
+    - A completeness check that asserts every expected partition exists.
+    - Store the logical date explicitly as a partition column, not derived at read time.
+  monitoring:
+    - partition count per day, completeness assertions
+  agent_skills: [skill-airflow-dag-reviewer, skill-backfill-planner]
+  agents: [agent-backfill-planner]
+  version: 1.0.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/de-agent/runbooks/tree/main/missing-partition
+  github_url: https://github.com/de-agent/runbooks
+  verification: reviewed
+  last_verified: 2026-09-16
+  security: { runs_code: true, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [runbook-backfill-required, runbook-late-files] }

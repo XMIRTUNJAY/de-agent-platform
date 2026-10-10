@@ -1,0 +1,29 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-altimateai-vscode-dbt-power-user
+  slug: altimateai-vscode-dbt-power-user
+  type: reference
+  title: AltimateAI/vscode-dbt-power-user
+  description: "This extension makes vscode seamlessly work with dbt™:
+    Auto-complete, preview, column lineage, AI docs generation, health checks,
+    cost estimation etc"
+  category: cat-dbt
+  tags: []
+  url: https://github.com/AltimateAI/vscode-dbt-power-user
+  publisher: GitHub topic — dbt
+  kind: blog
+  why: null
+  source_url: https://github.com/AltimateAI/vscode-dbt-power-user
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  discovered_from:
+    source: github-topic-dbt
+    extracted_at: 2026-10-09T04:45:42.700Z
+    published: 2026-10-09T02:09:09Z
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-dbt
+      - cat-data-lineage
+      - cat-cost-engineering

@@ -1,0 +1,73 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import SectionHeader from '@/components/SectionHeader.astro';
+import { loadDrafts, groupByConfidence } from '@/lib/drafts';
+
+const drafts = loadDrafts();
+const groups = groupByConfidence(drafts);
+
+const CONF_ORDER = [
+  { id: 'low', title: 'Review first', desc: 'Classifier was unsure — category is a suggestion, double-check the fit and the "why".', chipClass: 'chip' },
+  { id: 'medium', title: 'Needs a skim', desc: 'Reasonable category guess. Confirm the summary is accurate and in plain language.', chipClass: 'chip' },
+  { id: 'high', title: 'Likely fine', desc: 'Strong signal match. Verify it is not a duplicate of something already curated.', chipClass: 'chip chip-accent' },
+];
+---
+
+<BaseLayout title="Review queue · DE//AGENT" sidebar noindex>
+  <PageHero
+    kicker="Curation"
+    title="Draft review queue"
+    lede="Every item here was pulled from a trusted source by the discovery pipeline and auto-classified. Nothing on this page is published — promote a draft by moving its record into data/curated/ and filling the gaps."
+  >
+    <div style="margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+      <span class="chip">{drafts.length} drafts waiting</span>
+      <span class="chip chip-accent">{groups.high.length} high confidence</span>
+      <span class="chip">{groups.low.length} need judgement</span>
+    </div>
+  </PageHero>
+
+  <section class="col section">
+    <SectionHeader
+      kicker="How to review"
+      title="Three questions per draft"
+      lede="Is the summary accurate and plain-language? Is it in the right category? Does it pass the contribution bar — would a beginner with an agent actually use this?"
+    />
+  </section>
+
+  {CONF_ORDER.map((g) => {
+    const items = groups[g.id as 'low' | 'medium' | 'high'];
+    if (!items.length) return null;
+    return (
+      <section class="col section">
+        <SectionHeader kicker={`${items.length} drafts`} title={g.title} lede={g.desc} />
+        <div class="card-grid stagger" style="margin-top: 1.75rem;">
+          {items.map((d) => (
+            <a href={d.url} target="_blank" rel="noopener" class="card card-pad card-interactive">
+              <div class="card-meta" style="margin-top: 0; margin-bottom: 0.5rem;">
+                <span class={g.chipClass}>{d.confidence}</span>
+                <span class="chip">{d.publisher}</span>
+                {d.category && <span class="chip">{d.category.replace('cat-', '')}</span>}
+              </div>
+              <h3 style="font-weight: 500; line-height: 1.35;">{d.title}</h3>
+              <p class="card-desc" style="margin-top: 0.5rem;">
+                {d.suggested_categories.length > 0
+                  ? `Suggestions: ${d.suggested_categories.map((c) => c.replace('cat-', '')).join(' · ')}`
+                  : 'No category suggestion — assign during review.'}
+              </p>
+              <p class="mono-label" style="margin-top: 0.75rem;">{d.file}</p>
+            </a>
+          ))}
+        </div>
+      </section>
+    );
+  })}
+
+  {drafts.length === 0 && (
+    <section class="col section" style="padding-bottom: 6rem;">
+      <p class="text-muted" style="padding: 2rem 0;">
+        Queue is empty. Run <code>npm run discover</code> to pull the latest from trusted sources.
+      </p>
+    </section>
+  )}
+</BaseLayout>

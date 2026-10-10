@@ -1,0 +1,129 @@
+# Hooks — schema & safety
+- id: hook-schema-change-check
+  slug: schema-change-check
+  type: hook
+  title: Schema Change Check
+  trigger: pre-commit
+  purpose: Block a commit that introduces a breaking schema change without a migration plan.
+  category: cat-data-contracts
+  difficulty: intermediate
+  tags: [hook, schema, contracts, guardrail]
+  supported_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  implementation: |
+    Runs on staged schema files (*.avsc, *.sql DDL, dbt schema.yml).
+    Diffs against HEAD, classifies the change, and exits non-zero on a breaking
+    change unless a MIGRATION.md or a `deprecated_at` annotation is present.
+  example: "A commit narrowing `amount` from decimal(18,2) to decimal(10,2) is blocked with an explanation and a suggested migration."
+  failure_behavior: block
+  version: 0.2.0
+  license: Apache-2.0
+  author: de-agent
+  source_url: https://github.com/de-agent/hooks/tree/main/schema-change-check
+  github_url: https://github.com/de-agent/hooks
+  verification: reviewed
+  last_verified: 2026-09-28
+  security: { runs_code: true, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
+  relationships: { related_to: [skill-schema-change-contract-review, agent-schema-reviewer] }
+- id: hook-pre-deployment-dq-check
+  slug: pre-deployment-dq-check
+  type: hook
+  title: Pre-deployment DQ Check
+  trigger: pre-deploy
+  purpose: Run the quality suite against a staged run before promoting to production.
+  category: cat-data-quality
+  difficulty: intermediate
+  tags: [hook, data-quality, deployment, ci]
+  supported_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  implementation: |
+    After a pipeline writes to the staging namespace, run the model's dbt/GE tests
+    against the staged output. Promote only if all critical tests pass; otherwise
+    leave the previous production data in place and report the failed expectations.
+  example: "A not-null test fails on 412 rows in staging → promotion blocked, production untouched."
+  failure_behavior: block
+  version: 0.2.0
+  license: Apache-2.0
+  author: de-agent
+  source_url: https://github.com/de-agent/hooks/tree/main/pre-deployment-dq-check
+  github_url: https://github.com/de-agent/hooks
+  verification: reviewed
+  last_verified: 2026-09-27
+  security: { runs_code: true, network_access: true, credentials: true, filesystem_access: true, external_apis: false }
+  relationships: { related_to: [pattern-contracts-quality-gate, runbook-data-quality-failure] }
+- id: hook-destructive-sql-guard
+  slug: destructive-sql-guard
+  type: hook
+  title: Destructive SQL Guard
+  trigger: on-tool-call
+  purpose: Intercept DROP / TRUNCATE / DELETE-without-WHERE before an agent executes it.
+  category: cat-security
+  difficulty: beginner
+  tags: [hook, sql, safety, guardrail]
+  supported_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  implementation: |
+    Matches the SQL string passed to a database/MCP tool. Destructive statements
+    are denied by default; a DELETE/UPDATE without a WHERE clause is always denied.
+    Statements on a non-production target can be allowed with a `--allow-destructive`
+    flag that requires a human confirmation token.
+  example: "`DROP TABLE prod.orders` from an agent is denied and surfaced for confirmation."
+  failure_behavior: block
+  version: 0.3.0
+  license: Apache-2.0
+  author: de-agent
+  source_url: https://github.com/de-agent/hooks/tree/main/destructive-sql-guard
+  github_url: https://github.com/de-agent/hooks
+  verification: reviewed
+  last_verified: 2026-09-29
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [agent-data-quality-reviewer, doc-security] }
+- id: hook-secret-scan-commit
+  slug: secret-scan-commit
+  type: hook
+  title: Secret Scan on Commit
+  trigger: pre-commit
+  purpose: Stop credentials from being committed into a pipeline repo.
+  category: cat-security
+  difficulty: beginner
+  tags: [hook, secrets, security, pre-commit]
+  supported_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  implementation: |
+    Scan staged diffs for high-confidence secret patterns (AWS keys, private key
+    headers, connection strings with passwords, JWTs). Entropy-based detection runs
+    as a warning; pattern matches block the commit.
+  example: "A hardcoded `postgresql://user:pass@...` in a notebook is blocked."
+  failure_behavior: block
+  version: 0.2.1
+  license: Apache-2.0
+  author: de-agent
+  source_url: https://github.com/de-agent/hooks/tree/main/secret-scan-commit
+  github_url: https://github.com/de-agent/hooks
+  verification: reviewed
+  last_verified: 2026-09-26
+  security: { runs_code: true, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
+  relationships: { related_to: [doc-security, cat-security] }
+- id: hook-pii-leak-guard
+  slug: pii-leak-guard
+  type: hook
+  title: PII Leak Guard
+  description: Prevent raw PII from entering model context or being written to an unprotected path.
+  trigger: on-tool-call
+  purpose: Prevent raw PII from entering model context or being written to an unprotected path.
+  category: cat-governance
+  difficulty: advanced
+  tags: [hook, pii, governance, guardrail]
+  supported_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  implementation: |
+    Wrap database/sample tools. Inspect returned rows against the column
+    classification tags; if a column is classified PII and not masked, redact the
+    value in the tool response and log the access. Block writes of PII to any path
+    not tagged as restricted.
+  example: "A `select * from customers` returns an email column; values are redacted before the agent sees them."
+  failure_behavior: redact
+  version: 0.1.4
+  license: Apache-2.0
+  author: de-agent
+  source_url: https://github.com/de-agent/hooks/tree/main/pii-leak-guard
+  github_url: https://github.com/de-agent/hooks
+  verification: reviewed
+  last_verified: 2026-09-20
+  security: { runs_code: true, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
+  relationships: { related_to: [skill-pii-classifier, cat-governance] }

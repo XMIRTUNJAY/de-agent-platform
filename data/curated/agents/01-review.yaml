@@ -1,0 +1,94 @@
+# Agents — review & optimization
+- id: agent-sql-reviewer
+  slug: sql-reviewer
+  type: agent
+  title: SQL Reviewer
+  purpose: Review SQL before it merges, catching correctness bugs and fan-out joins.
+  category: cat-sql
+  difficulty: beginner
+  tags: [agent, sql, review]
+  inputs: ["A pull request or a .sql file", "The target dialect (postgres/duckdb/snowflake)"]
+  tools: [read_file, git_diff_unstaged]
+  skills: [skill-sql-review]
+  mcp: [mcp-filesystem, mcp-git]
+  workflow:
+    - Read the diff and the file context.
+    - Establish the grain of every result set.
+    - Apply the SQL review rules; stop at the first fan-out.
+    - Emit findings with file:line and a rewritten clause.
+  outputs: ["Findings list (severity, location, rule, fix)", "Grain statement for each SELECT"]
+  guardrails: ["Read-only: never executes SQL", "Does not modify files without explicit approval"]
+  example: "Reviewing a PR that joins orders to a non-unique customer snapshot — flags fan-out and proposes a dedupe CTE."
+  evaluation: "On a 12-case fixture of known-bad SQL, correctly identifies 11 correctness bugs and 0 false positives."
+  compatible_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  version: 0.2.0
+  license: Apache-2.0
+  author: de-agent
+  source_url: https://github.com/de-agent/agents/tree/main/sql-reviewer
+  github_url: https://github.com/de-agent/agents
+  verification: reviewed
+  last_verified: 2026-09-30
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
+  relationships: { uses: [skill-sql-review], related_to: [cat-sql] }
+- id: agent-spark-optimizer
+  slug: spark-optimizer
+  type: agent
+  title: Spark Optimizer
+  purpose: Diagnose and fix slow or expensive Spark jobs from their metrics.
+  category: cat-spark
+  difficulty: advanced
+  tags: [agent, spark, performance, cost]
+  inputs: ["Spark event log or Spark UI metrics", "The job source"]
+  tools: [read_file, skill-spark-skew-diagnosis]
+  skills: [skill-spark-skew-diagnosis, skill-spark-cost-regression-guard]
+  mcp: [mcp-filesystem]
+  workflow:
+    - Parse task-duration and shuffle metrics.
+    - Classify: skew, partition count, spill, or scan.
+    - Propose the single highest-impact change with expected effect.
+    - Verify against the baseline metrics.
+  outputs: ["Root-cause classification", "One recommended change", "Before/after metric expectation"]
+  guardrails: ["Never suggests repartition(1)", "Requires metrics; will not guess without them"]
+  example: "Sees p99 task duration 34 min vs p50 40 s, confirms key skew, recommends AQE skew join plus salting the top key."
+  evaluation: "Root-cause classification matches a set of labelled Spark event logs."
+  compatible_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  version: 0.2.1
+  license: Apache-2.0
+  author: de-agent
+  source_url: https://github.com/de-agent/agents/tree/main/spark-optimizer
+  github_url: https://github.com/de-agent/agents
+  verification: reviewed
+  last_verified: 2026-09-28
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
+  relationships: { uses: [skill-spark-skew-diagnosis], related_to: [runbook-spark-job-slow] }
+- id: agent-data-quality-reviewer
+  slug: data-quality-reviewer
+  type: agent
+  title: Data Quality Reviewer
+  purpose: Audit a dataset or pipeline for the quality failures that reach consumers.
+  category: cat-data-quality
+  difficulty: intermediate
+  tags: [agent, data-quality, testing]
+  inputs: ["A table or pipeline definition", "Optional sample of the data"]
+  tools: [read_file, mcp-duckdb]
+  skills: [skill-spark-data-quality-review, skill-dbt-test-writer]
+  mcp: [mcp-duckdb, mcp-filesystem]
+  workflow:
+    - Profile key columns (null rate, uniqueness, ranges).
+    - Rank failure modes by blast radius.
+    - Propose the minimum test set.
+    - Emit a quarantine path for rows that fail.
+  outputs: ["Profiling summary", "Ranked failure modes", "Proposed tests", "Quarantine design"]
+  guardrails: ["Profiling runs against a provided sample or a read-only replica only", "Never writes to the source"]
+  example: "Finds order_id null rate jumped from 0% to 2.1% after an upstream deploy; proposes a not-null gate and a quarantine table."
+  evaluation: "Detects a seeded null-rate regression in a fixture dataset."
+  compatible_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  version: 0.1.6
+  license: Apache-2.0
+  author: de-agent
+  source_url: https://github.com/de-agent/agents/tree/main/data-quality-reviewer
+  github_url: https://github.com/de-agent/agents
+  verification: reviewed
+  last_verified: 2026-09-26
+  security: { runs_code: true, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
+  relationships: { uses: [skill-spark-data-quality-review, skill-dbt-test-writer], related_to: [pattern-quarantine-publish] }

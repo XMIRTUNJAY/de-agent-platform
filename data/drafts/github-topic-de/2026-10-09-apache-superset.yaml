@@ -1,0 +1,24 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-apache-superset
+  slug: apache-superset
+  type: reference
+  title: apache/superset
+  description: Apache Superset is a Data Visualization and Data Exploration Platform
+  category: null
+  tags: []
+  url: https://github.com/apache/superset
+  publisher: GitHub topic — data-engineering
+  kind: blog
+  why: null
+  source_url: https://github.com/apache/superset
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  discovered_from:
+    source: github-topic-de
+    extracted_at: 2026-10-09T04:47:11.405Z
+    published: 2026-10-09T03:44:54Z
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []

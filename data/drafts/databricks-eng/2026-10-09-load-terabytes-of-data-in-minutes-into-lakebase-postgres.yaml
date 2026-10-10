@@ -1,0 +1,26 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-load-terabytes-of-data-in-minutes-into-lakebase-postgres
+  slug: load-terabytes-of-data-in-minutes-into-lakebase-postgres
+  type: reference
+  title: Load terabytes of data in minutes into Lakebase Postgres
+  description: Operational databases like Postgres are built to reliably execute
+    highly concurrent...
+  category: cat-databases
+  tags: []
+  url: https://www.databricks.com/blog/load-terabytes-data-minutes-lakebase-postgres
+  publisher: Databricks Engineering Blog
+  kind: blog
+  why: null
+  source_url: https://www.databricks.com/blog/load-terabytes-data-minutes-lakebase-postgres
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  discovered_from:
+    source: databricks-eng
+    extracted_at: 2026-10-09T04:47:07.069Z
+    published: Thu, 08 Oct 2026 18:49:31 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-databases

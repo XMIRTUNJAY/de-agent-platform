@@ -1,0 +1,74 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import ResourceCard from '@/components/ResourceCard.astro';
+import registry from '@/data/generated/registry.json';
+
+const query = (Astro.url.searchParams.get('q') ?? '').trim().toLowerCase();
+
+function score(r: any, q: string) {
+  if (!q) return 0;
+  const hay = [r.title, r.tagline, r.description, r.summary, ...(r.tags ?? []), ...(r.learning_objectives ?? []), ...(r.symptoms ?? []), ...(r.possible_causes ?? []), ...(r.when_to_use ?? [])].filter(Boolean).join(' ').toLowerCase();
+  const terms = q.split(/\s+/).filter(Boolean);
+  let s = 0;
+  for (const t of terms) {
+    if (r.title.toLowerCase().includes(t)) s += 10;
+    if ((r.tags ?? []).some((tag: any) => tag.toLowerCase().includes(t))) s += 5;
+    if (hay.includes(t)) s += 1;
+  }
+  return s;
+}
+
+const results = query
+  ? registry.resources.map(r => ({ r, score: score(r, query) })).filter(x => x.score > 0).sort((a,b) => b.score - a.score)
+  : [];
+
+const types = [...new Set(results.map(x => x.r.type))].sort();
+---
+
+<BaseLayout title={query ? `Search: "${query}" · DE//AGENT` : 'Search · DE//AGENT'} sidebar>
+  <PageHero
+    kicker="Search"
+    title="Search the registry"
+    lede="Search understands concepts, technologies, problems, skills, MCP servers, architectures and production issues."
+  />
+
+  <section class="col section-sm" style="padding-top: 2.5rem;">
+    <form style="margin-bottom: 2rem;">
+      <div style="display: flex; gap: 0.5rem;">
+        <input
+          type="search"
+          name="q"
+          value={query}
+          placeholder="e.g. spark skew, schema drift, data quality, kafka lag…"
+          aria-label="Search the registry"
+          autocomplete="off"
+          spellcheck={false}
+          class="input"
+          autofocus
+        />
+        <button type="submit" class="btn btn-accent">Search</button>
+      </div>
+    </form>
+
+    {query && (
+      <div style="margin-bottom: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+        <span class="chip">{results.length} result(s) for "{query}"</span>
+        {types.map(t => (
+          <a href={`?q=${query}&type=${t}`} class="chip">{registry.resources.find(r => r.type === t)?.typeLabel ?? t} ({results.filter(x => x.r.type === t).length})</a>
+        ))}
+      </div>
+    )}
+
+    {query && results.length === 0 && (
+      <div class="card card-pad-lg" style="text-align: center;">
+        <p class="text-muted">No resources matched "{query}".</p>
+        <p style="margin-top: 0.5rem; font-size: var(--text-sm); color: var(--fg-dim);">Try a broader term or check the <a href="/taxonomy" class="link">taxonomy</a>.</p>
+      </div>
+    )}
+
+    <div class="card-grid stagger">
+      {results.map(({ r }) => <ResourceCard resource={r} />)}
+    </div>
+  </section>
+</BaseLayout>

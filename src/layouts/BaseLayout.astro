@@ -1,0 +1,254 @@
+---
+import '@/styles/global.css';
+import '@fontsource-variable/jetbrains-mono';
+import '@fontsource/instrument-serif';
+import '@fontsource-variable/inter';
+
+import TopBar from '@/components/TopBar.astro';
+import SidebarNav from '@/components/SidebarNav.astro';
+import Footer from '@/components/Footer.astro';
+import Backdrop from '@/components/Backdrop.astro';
+import { SITE } from '@/site.config';
+
+interface Props {
+  title?: string;
+  description?: string;
+  sidebar?: boolean;
+  ogType?: string;
+  keywords?: string[];
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description = SITE.description,
+  sidebar = false,
+  ogType = 'website',
+  keywords = [],
+  noindex = false,
+} = Astro.props;
+
+const pageTitle = title
+  ? (title.includes(SITE.name) ? title : `${title} · ${SITE.name}`)
+  : `${SITE.name} · ${SITE.longName}`;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL('/og.svg', Astro.site).href;
+---
+<!doctype html>
+<html lang={SITE.locale} data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <script is:inline>
+      (function () {
+        try {
+          var t = localStorage.getItem('de-theme');
+          if (t !== 'light' && t !== 'dark') {
+            t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+          }
+          document.documentElement.setAttribute('data-theme', t);
+        } catch (e) { /* keep default */ }
+      })();
+    </script>
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    {keywords.length > 0 && <meta name="keywords" content={keywords.join(', ')} />}
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex,follow" />}
+
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content="en_US" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="alternate" type="application/rss+xml" title={`${SITE.name} — newest resources`} href={new URL('/rss.xml', Astro.site).href} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#0b0d0b" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#fafaf8" media="(prefers-color-scheme: light)" />
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to content</a>
+    <Backdrop />
+    <TopBar />
+    {sidebar && <div id="sidebar-scrim" class="sidebar-scrim" aria-hidden="true"></div>}
+    <div class="mx-auto flex max-w-[1600px]">
+      {sidebar && <SidebarNav />}
+      {sidebar && <div id="sidebar-scrim" class="sidebar-scrim" aria-hidden="true"></div>}
+      <main id="main" class="min-w-0 flex-1">
+        <slot />
+      </main>
+    </div>
+    {!sidebar && <Footer />}
+
+    <script is:inline>
+      (function () {
+        // theme toggle
+        document.addEventListener('click', function (e) {
+          var t = e.target.closest('[data-theme-toggle]');
+          if (!t) return;
+          var cur = document.documentElement.getAttribute('data-theme') || 'dark';
+          var next = cur === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', next);
+          try { localStorage.setItem('de-theme', next); } catch (err) {}
+          document.querySelectorAll('[data-theme-icon]').forEach(function (ic) {
+            ic.classList.toggle('hidden', ic.getAttribute('data-theme-icon') !== next);
+          });
+        });
+        // sync icons on load
+        var cur = document.documentElement.getAttribute('data-theme') || 'dark';
+        document.querySelectorAll('[data-theme-icon]').forEach(function (ic) {
+          ic.classList.toggle('hidden', ic.getAttribute('data-theme-icon') !== cur);
+        });
+
+        // mobile sidebar
+        var sb = document.getElementById('sidebar');
+        var scrim = document.getElementById('sidebar-scrim');
+        var toggle = document.querySelector('[data-sidebar-toggle]');
+        function setSidebar(open) {
+          if (!sb) return;
+          sb.classList.toggle('open', open);
+          if (scrim) scrim.classList.toggle('visible', open);
+          if (toggle) toggle.setAttribute('aria-expanded', String(open));
+        }
+        if (toggle) toggle.addEventListener('click', function () {
+          setSidebar(!sb.classList.contains('open'));
+        });
+        if (scrim) scrim.addEventListener('click', function () { setSidebar(false); });
+
+        // Command Palette
+        var palette = document.getElementById('cmd-palette');
+        var paletteInput = palette?.querySelector('.cmd-input');
+        var paletteResults = document.getElementById('cmd-results');
+        var paletteOpen = false;
+
+        function openPalette() {
+          if (!palette || paletteOpen) return;
+          paletteOpen = true;
+          palette.classList.add('open');
+          paletteInput?.focus();
+          document.body.style.overflow = 'hidden';
+          renderResults('');
+        }
+        function closePalette() {
+          if (!palette || !paletteOpen) return;
+          paletteOpen = false;
+          palette.classList.remove('open');
+          document.body.style.overflow = '';
+        }
+
+        document.addEventListener('click', function (e) {
+          var t = e.target.closest('[data-cmd-palette-open]');
+          if (t) { openPalette(); return; }
+          if (paletteOpen && !palette.contains(e.target)) closePalette();
+        });
+        document.addEventListener('keydown', function (e) {
+          if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+            e.preventDefault();
+            if (paletteOpen) closePalette(); else openPalette();
+          }
+          if (e.key === 'Escape') {
+            if (paletteOpen) closePalette();
+            setSidebar(false);
+          }
+          if (e.key === '/' && !/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName) && !document.activeElement.isContentEditable) {
+            e.preventDefault();
+            openPalette();
+          }
+        });
+
+        function renderResults(query) {
+          if (!paletteResults) return;
+          var q = (query || '').trim().toLowerCase();
+          var registry = window.__DE_REGISTRY__ || [];
+          var results = registry
+            .map(function(r) {
+              var hay = (r.title + ' ' + (r.tagline || '') + ' ' + (r.description || '') + ' ' + (r.tags || []).join(' ') + ' ' + (r.categoryTitle || '')).toLowerCase();
+              var terms = q.split(/\s+/).filter(Boolean);
+              var score = 0;
+              for (var i = 0; i < terms.length; i++) {
+                if (r.title.toLowerCase().includes(terms[i])) score += 10;
+                if (r.tags?.some(function(tag) { return tag.toLowerCase().includes(terms[i]); })) score += 5;
+                if (hay.includes(terms[i])) score += 1;
+              }
+              return { r: r, score: score };
+            })
+            .filter(function(x) { return x.score > 0; })
+            .sort(function(a,b) { return b.score - a.score; })
+            .slice(0, 10);
+
+          if (!results.length) {
+            paletteResults.innerHTML = '<div class="px-4 py-8 text-center text-dim">No matches for "' + q + '"</div>';
+            return;
+          }
+          paletteResults.innerHTML = results.map(function(x) {
+            var r = x.r;
+            var verificationLabel = r.verification === 'verified' ? '✓ Verified' : r.verification === 'tested' ? '✓ Tested' : r.verification === 'reviewed' ? '✓ Reviewed' : 'Community';
+            var verificationColor = r.verification === 'verified' ? 'accent' : r.verification === 'tested' ? 'info' : r.verification === 'reviewed' ? 'warn' : 'dim';
+            return '<div class="cmd-item" data-url="' + r.url + '" role="option" tabindex="0">' +
+              '<span class="chip">' + r.typeLabel + '</span>' +
+              '<span class="flex-1 min-w-0 truncate">' + r.title + '</span>' +
+              '<span class="chip" style="color: var(--color-' + verificationColor + ')">' + verificationLabel + '</span>' +
+              '<kbd class="kbd ml-auto">Enter</kbd>' +
+            '</div>';
+          }).join('');
+
+          // keyboard navigation
+          var items = paletteResults.querySelectorAll('.cmd-item');
+          var selected = 0;
+          items.forEach(function(item, i) {
+            item.addEventListener('click', function() {
+              window.location.href = item.dataset.url;
+              closePalette();
+            });
+            item.addEventListener('keydown', function(ev) {
+              if (ev.key === 'Enter') {
+                window.location.href = item.dataset.url;
+                closePalette();
+              } else if (ev.key === 'ArrowDown') {
+                ev.preventDefault();
+                items[(i + 1) % items.length]?.focus();
+              } else if (ev.key === 'ArrowUp') {
+                ev.preventDefault();
+                items[(i - 1 + items.length) % items.length]?.focus();
+              }
+            });
+          });
+          if (items.length) items[0].focus();
+        }
+
+        if (paletteInput) {
+          paletteInput.addEventListener('input', function() { renderResults(this.value); });
+        }
+
+        // registry data for command palette
+        fetch('/data/generated/search-index.json')
+          .then(function(r) { return r.json(); })
+          .then(function(d) { window.__DE_REGISTRY__ = d.entries || []; })
+          .catch(function() {});
+
+        // Scroll-triggered reveal animations
+        if ('IntersectionObserver' in window) {
+          var revealObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                revealObserver.unobserve(entry.target);
+              }
+            });
+          }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+          document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(function(el) {
+            revealObserver.observe(el);
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

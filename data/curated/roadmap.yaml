@@ -1,0 +1,118 @@
+# The learning roadmap. Stages are defined in taxonomy.yaml; this file adds the
+# narrative, the exit gate, and the deliverable artifact for each stage, plus
+# provider branch tracks.
+roadmap:
+  title: The Data Engineering Roadmap
+  tagline: 13 stages from foundations to agentic data engineering. Each has an exit gate you can prove.
+  main_path:
+    - foundations
+    - python-sql
+    - data-processing
+    - warehousing
+    - lakehouse
+    - orchestration
+    - streaming
+    - cloud
+    - data-quality
+    - observability
+    - reliability
+    - system-design
+    - agentic
+  stages:
+    foundations:
+      teaches: How storage, compute, encoding and networks actually behave.
+      can_do: ["Explain why columnar storage beats row storage for analytics", "Trace bytes from a source to a query"]
+      artifact: ref-fundamentals-de
+      gate: You can describe a data system's lifecycle and where cost and latency come from.
+    python-sql:
+      teaches: The two languages everything else is expressed in.
+      can_do: ["Write a set-based SQL query with window functions", "Write typed, packaged, tested Python"]
+      artifact: project-dbt-warehouse-tests
+      gate: You can move a dataset from an API into a table with tested code.
+    data-processing:
+      teaches: Batch engines, file formats, partitioning and incremental loads.
+      can_do: ["Choose a file format and partition layout", "Write an idempotent incremental batch job"]
+      artifact: project-api-s3-spark-parquet
+      gate: You can build and re-run a batch pipeline safely.
+    warehousing:
+      teaches: Dimensional modelling, dbt and serving reliable metrics.
+      can_do: ["Model a star schema with a declared grain", "Gate a change on data-aware CI"]
+      artifact: pattern-dimensional-model
+      gate: You can serve a metric that analysts trust.
+    lakehouse:
+      teaches: ACID tables on object storage — Delta, Iceberg, Hudi.
+      can_do: ["Choose between Delta, Iceberg and Hudi", "Plan compaction and snapshot expiry"]
+      artifact: skill-iceberg-maintenance
+      gate: You can run and maintain an open table format at scale.
+    orchestration:
+      teaches: Dependencies, retries, backfills and idempotency.
+      can_do: ["Build an idempotent DAG", "Plan a safe backfill"]
+      artifact: project-dbt-warehouse-tests
+      gate: You can schedule and recover a multi-step pipeline.
+    streaming:
+      teaches: Event time, windows, watermarks and exactly-once.
+      can_do: ["Design an event schema", "Recover consumer lag without data loss"]
+      artifact: project-kafka-spark-delta
+      gate: You can run a streaming pipeline that survives replay.
+    cloud:
+      teaches: Provider primitives, IAM and managed vs self-hosted.
+      can_do: ["Provision least-privilege access", "Pick managed vs self-managed with reasons"]
+      artifact: project-s3-glue-athena
+      gate: You can stand up a data platform on a cloud provider.
+    data-quality:
+      teaches: Contracts, expectations, quarantine and quality gates.
+      can_do: ["Express a quality contract", "Quarantine bad rows without losing them"]
+      artifact: project-pipeline-dq-quarantine
+      gate: You can stop bad data reaching a consumer.
+    observability:
+      teaches: Freshness, volume, lineage and cataloguing.
+      can_do: ["Detect drift automatically", "Trace a column to its source"]
+      artifact: ref-openlineage-docs
+      gate: You can tell what a pipeline did without reading its code.
+    reliability:
+      teaches: SLOs, incidents, cost control and safe change.
+      can_do: ["Write and run a runbook", "Respond to an incident and prevent a repeat"]
+      artifact: runbook-spark-job-slow
+      gate: You can operate a data system for years.
+    system-design:
+      teaches: Sizing, tradeoffs and communicating an architecture.
+      can_do: ["Size a design against throughput and cost", "Defend the tradeoffs in an interview"]
+      artifact: ref-ddia
+      gate: You can whiteboard and defend a data architecture.
+    agentic:
+      teaches: Skills, MCP, agents and hooks as first-class data engineering tools.
+      can_do: ["Install and use a skill", "Wire an MCP server least-privilege", "Build a review agent with guardrails"]
+      artifact: agent-sql-reviewer
+      gate: You can delegate real work to an agent with bounded blast radius.
+
+  tracks:
+    - id: track-aws
+      title: AWS Track
+      description: The most common data platform. S3 → Glue → Athena → Redshift/EMR.
+      entry_after: foundations
+      categories: [cat-aws, cat-lakes, cat-warehouse]
+      path: [project-s3-glue-athena, skill-aws-glue-reviewer, skill-athena-partition-advisor, runbook-small-files-explosion]
+    - id: track-azure
+      title: Azure Track
+      description: ADLS → Data Factory → Synapse/Fabric with Entra ID governance.
+      entry_after: foundations
+      categories: [cat-azure]
+      path: [ref-fundamentals-de, pattern-medallion-zones]
+    - id: track-gcp
+      title: GCP Track
+      description: GCS → Dataflow → BigQuery → Pub/Sub.
+      entry_after: foundations
+      categories: [cat-gcp]
+      path: [ref-bigquery-docs, skill-warehouse-clustering-advisor]
+    - id: track-databricks
+      title: Databricks Track
+      description: The lakehouse platform — Delta, Unity Catalog, jobs and DLT.
+      entry_after: lakehouse
+      categories: [cat-databricks, cat-lakehouse]
+      path: [ref-databricks-docs, skill-delta-optimizer, agent-databricks-reviewer]
+    - id: track-snowflake
+      title: Snowflake Track
+      description: Micro-partitions, clustering, streams/tasks and Snowpark.
+      entry_after: warehousing
+      categories: [cat-snowflake, cat-warehouses]
+      path: [ref-snowflake-docs, skill-warehouse-clustering-advisor, runbook-warehouse-query-slow]

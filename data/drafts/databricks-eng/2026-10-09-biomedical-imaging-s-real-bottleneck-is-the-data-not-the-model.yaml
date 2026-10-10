@@ -1,0 +1,25 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-biomedical-imaging-s-real-bottleneck-is-the-data-not-the-model
+  slug: biomedical-imaging-s-real-bottleneck-is-the-data-not-the-model
+  type: reference
+  title: Biomedical Imaging's Real Bottleneck Is the Data, Not the Model
+  description: Part I — The problemFour sectors, one bottleneckHospitals and
+    health systems generate...
+  category: null
+  tags: []
+  url: https://www.databricks.com/blog/biomedical-imagings-real-bottleneck-data-not-model
+  publisher: Databricks Engineering Blog
+  kind: blog
+  why: null
+  source_url: https://www.databricks.com/blog/biomedical-imagings-real-bottleneck-data-not-model
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  discovered_from:
+    source: databricks-eng
+    extracted_at: 2026-10-09T04:47:07.067Z
+    published: Thu, 08 Oct 2026 21:00:00 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []

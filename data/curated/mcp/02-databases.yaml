@@ -1,0 +1,116 @@
+# MCP servers — databases & warehouses
+- id: mcp-postgres
+  slug: postgres
+  type: mcp
+  title: PostgreSQL MCP Server
+  description: >-
+    Connects an agent to a Postgres database with a read-only query tool and schema
+    introspection. The canonical example of a "database over MCP" server.
+  category: cat-databases
+  difficulty: beginner
+  tags: [mcp, postgres, sql, read-only]
+  server: { name: "@modelcontextprotocol/server-postgres", registry: official-registry, publisher: Model Context Protocol }
+  transport: stdio
+  tools: [query, list_schemas, describe_table]
+  installation:
+    command: "npx -y @modelcontextprotocol/server-postgres postgresql://user:pass@host/db"
+    config_snippet: { mcpServers: { postgres: { command: "npx", args: ["-y", "@modelcontextprotocol/server-postgres", "postgresql://readonly@host/db"] } } }
+  environment_variables:
+    - { name: DATABASE_URL, description: "Connection string. Use a read-only role.", required: false }
+  security: { runs_code: false, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
+  security_requirements: "The reference server issues raw SQL. Connect with a role that only has SELECT on the schemas intended, and prefer a replica. Do not point it at production with a superuser."
+  compatible_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  source_url: https://github.com/modelcontextprotocol/servers-archived/tree/main/src/postgres
+  github_url: https://github.com/modelcontextprotocol/servers
+  license: MIT
+  version: 0.6.2
+  last_verified: 2026-09-30
+  verification: community
+  relationships: { related_to: [cat-databases, cat-sql] }
+- id: mcp-duckdb
+  slug: duckdb
+  type: mcp
+  title: DuckDB / MotherDuck MCP Server
+  description: >-
+    Queries DuckDB databases and MotherDuck, including reading Parquet/CSV directly
+    from object storage. Excellent for local, offline analysis with an agent.
+  category: cat-sql
+  difficulty: beginner
+  tags: [mcp, duckdb, parquet, analytics]
+  server: { name: "mcp-server-motherduck", registry: vendor, publisher: MotherDuck }
+  transport: stdio
+  tools: [query, list_tables, describe_table]
+  installation:
+    command: "uvx mcp-server-motherduck --db-path /data/warehouse.duckdb"
+    config_snippet: { mcpServers: { duckdb: { command: "uvx", args: ["mcp-server-motherduck", "--db-path", "/data/warehouse.duckdb"] } } }
+  environment_variables:
+    - { name: MOTHERDUCK_TOKEN, description: "Only required if connecting to MotherDuck.", required: false }
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
+  security_requirements: "Reads/writes files it is pointed at. With `--read-only` it is safe for untrusted prompts. Without it, an agent can modify or drop local tables."
+  compatible_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  source_url: https://github.com/motherduckdb/mcp-server-motherduck
+  github_url: https://github.com/motherduckdb/mcp-server-motherduck
+  license: MIT
+  version: 0.7.0
+  last_verified: 2026-09-28
+  verification: community
+  relationships: { related_to: [cat-sql, tech-duckdb] }
+- id: mcp-snowflake
+  slug: snowflake
+  type: mcp
+  title: Snowflake MCP Server (Labs)
+  description: >-
+    Snowflake Labs server exposing object management and SQL execution against a
+    Snowflake account, including Cortex Search and Analyst services.
+  category: cat-snowflake
+  difficulty: intermediate
+  tags: [mcp, snowflake, warehouse, sql]
+  server: { name: "mcp-server-snowflake", registry: vendor, publisher: Snowflake Labs }
+  transport: stdio
+  tools: [run_query, list_objects, describe_object, create_object, drop_object]
+  installation:
+    command: "uvx --from mcp-server-snowflake mcp_server_snowflake"
+    config_snippet: { mcpServers: { snowflake: { command: "uvx", args: ["--from", "mcp-server-snowflake", "mcp_server_snowflake"], env: { SNOWFLAKE_ACCOUNT: "${SNOWFLAKE_ACCOUNT}", SNOWFLAKE_USER: "${SNOWFLAKE_USER}", SNOWFLAKE_PRIVATE_KEY_PATH: "${SNOWFLAKE_KEY}" } } } }
+  environment_variables:
+    - { name: SNOWFLAKE_ACCOUNT, description: "Account identifier.", required: true }
+    - { name: SNOWFLAKE_USER, description: "Service user for the agent.", required: true }
+    - { name: SNOWFLAKE_PRIVATE_KEY_PATH, description: "Key-pair auth key; prefer key-pair over password.", required: true }
+  security: { runs_code: true, network_access: true, credentials: true, filesystem_access: false, external_apis: true }
+  security_requirements: "Exposes create/drop tooling and billable query execution. Use a dedicated service user with a least-privilege role, a resource monitor with a hard credit cap, and a read-only role by default."
+  compatible_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  source_url: https://github.com/Snowflake-Labs/mcp
+  github_url: https://github.com/Snowflake-Labs/mcp
+  license: Apache-2.0
+  version: 0.6.0
+  last_verified: 2026-09-27
+  verification: community
+  relationships: { related_to: [cat-snowflake, cat-cost-engineering] }
+- id: mcp-bigquery
+  slug: bigquery
+  type: mcp
+  title: BigQuery MCP Server
+  description: >-
+    Community server for BigQuery that lists datasets and runs SQL against a
+    project, with support for the BigQuery SQL dialect.
+  category: cat-gcp
+  difficulty: intermediate
+  tags: [mcp, bigquery, gcp, sql]
+  server: { name: "mcp-server-bigquery", registry: community, publisher: Community }
+  transport: stdio
+  tools: [execute_query, list_datasets, list_tables, describe_table]
+  installation:
+    command: "uvx mcp-server-bigquery --project my-project --location EU"
+    config_snippet: { mcpServers: { bigquery: { command: "uvx", args: ["mcp-server-bigquery", "--project", "my-project"] } } }
+  environment_variables:
+    - { name: GOOGLE_APPLICATION_CREDENTIALS, description: "Path to a service-account key with BigQuery roles.", required: true }
+  security: { runs_code: true, network_access: true, credentials: true, filesystem_access: false, external_apis: true }
+  security_requirements: "Queries are billable. Grant `bigquery.dataViewer` + `bigquery.jobUser` only, set a custom quota, and consider `maximum_bytes_billed` on every job."
+  compatible_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  source_url: https://github.com/ergut/mcp-bigquery-server
+  github_url: https://github.com/ergut/mcp-bigquery-server
+  license: MIT
+  version: 1.1.0
+  last_verified: 2026-09-20
+  verification: community
+  note: "Community project — review the source before granting credentials."
+  relationships: { related_to: [cat-gcp, tech-bigquery] }

@@ -1,0 +1,24 @@
+---
+// SectionHeader — kicker, serif headline, optional trailing "→" link (amp grammar).
+interface Props {
+  kicker: string;
+  title: string;
+  lede?: string;
+  linkHref?: string;
+  linkLabel?: string;
+}
+const { kicker, title, lede, linkHref, linkLabel } = Astro.props;
+---
+
+<div class="reveal" style="display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; flex-wrap: wrap;">
+  <div style="max-width: 40rem;">
+    <p class="kicker">{kicker}</p>
+    <h2 class="display-section" style="margin-top: 0.75rem;">{title}</h2>
+    {lede && <p class="lede" style="margin-top: 0.75rem;">{lede}</p>}
+  </div>
+  {linkHref && linkLabel && (
+    <a href={linkHref} class="link-arrow">
+      {linkLabel} <span class="arrow" aria-hidden="true">→</span>
+    </a>
+  )}
+</div>

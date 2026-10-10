@@ -1,0 +1,123 @@
+# Templates — processing & transformation
+- id: tpl-pyspark-project
+  slug: pyspark-project
+  type: template
+  title: PySpark Project Template
+  description: >-
+    A testable PySpark project: src/transforms, tests with a local Spark session,
+    a Dockerfile, and a Makefile that runs lint + tests offline.
+  category: cat-spark
+  difficulty: intermediate
+  tags: [template, spark, pyspark, testing, docker]
+  technologies: [tech-spark, tech-pyspark, tech-docker]
+  contents: [pyproject.toml, src/transforms/, tests/, Dockerfile, Makefile, README.md]
+  repo_structure: |
+    pyspark-project/
+      pyproject.toml
+      Makefile
+      Dockerfile
+      src/
+        transforms/
+          orders_daily.py
+        io/readers.py
+      tests/
+        data/            # 3-10 row fixtures
+        test_orders_daily.py
+  installation: "amp template new de-agent/pyspark-project ./my-pipeline"
+  version: 1.2.0
+  license: MIT
+  author: de-agent
+  source_url: https://github.com/de-agent/templates/tree/main/pyspark-project
+  github_url: https://github.com/de-agent/templates
+  verification: reviewed
+  last_verified: 2026-09-28
+  security: { runs_code: true, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
+  relationships: { related_to: [skill-pipeline-test-author, project-api-s3-spark-parquet] }
+- id: tpl-dbt-project
+  slug: dbt-project
+  type: template
+  title: dbt Project Template
+  description: >-
+    A layered dbt project (staging/intermediate/marts) with tests, docs, a CI
+    workflow that builds against a staging schema, and a source freshness config.
+  category: cat-dbt
+  difficulty: beginner
+  tags: [template, dbt, testing, ci]
+  technologies: [tech-dbt]
+  contents: [dbt_project.yml, models/staging, models/intermediate, models/marts, tests/, .github/workflows/ci.yml]
+  repo_structure: |
+    dbt-project/
+      dbt_project.yml
+      models/
+        staging/
+        intermediate/
+        marts/
+      macros/
+      tests/
+      .github/workflows/ci.yml
+  installation: "amp template new de-agent/dbt-project ./my-dbt"
+  version: 1.3.0
+  license: MIT
+  author: de-agent
+  source_url: https://github.com/de-agent/templates/tree/main/dbt-project
+  github_url: https://github.com/de-agent/templates
+  verification: reviewed
+  last_verified: 2026-09-27
+  security: { runs_code: true, network_access: true, credentials: true, filesystem_access: true, external_apis: false }
+  relationships: { related_to: [project-dbt-warehouse-tests, skill-dbt-model-review] }
+- id: tpl-airflow-dag
+  slug: airflow-dag
+  type: template
+  title: Airflow DAG Template
+  description: >-
+    An idempotent DAG skeleton with task groups, retries and backoff, SLA, pools,
+    and a sensor using reschedule mode.
+  category: cat-airflow
+  difficulty: intermediate
+  tags: [template, airflow, dag, orchestration]
+  technologies: [tech-airflow]
+  contents: [dags/, plugins/, Dockerfile, tests/]
+  repo_structure: |
+    airflow-dag/
+      dags/orders_pipeline.py
+      plugins/
+      tests/test_dag_integrity.py
+      Dockerfile
+  installation: "amp template new de-agent/airflow-dag ./dags"
+  version: 1.1.0
+  license: MIT
+  author: de-agent
+  source_url: https://github.com/de-agent/templates/tree/main/airflow-dag
+  github_url: https://github.com/de-agent/templates
+  verification: reviewed
+  last_verified: 2026-09-24
+  security: { runs_code: true, network_access: true, credentials: true, filesystem_access: true, external_apis: false }
+  relationships: { related_to: [skill-airflow-dag-reviewer, pattern-backfill-safety] }
+- id: tpl-kafka-streaming
+  slug: kafka-streaming
+  type: template
+  title: Kafka Streaming Job Template
+  description: >-
+    A structured-streaming job with checkpointing, watermarking, a dedupe stage and
+    an idempotent MERGE sink to Delta/Iceberg.
+  category: cat-streaming
+  difficulty: advanced
+  tags: [template, kafka, streaming, spark, delta]
+  technologies: [tech-kafka, tech-spark, tech-delta]
+  contents: [src/stream.py, conf/, tests/, docker-compose.yml]
+  repo_structure: |
+    kafka-streaming/
+      src/stream.py
+      conf/consumer.yml
+      tests/test_dedupe.py
+      docker-compose.yml   # kafka + minio for local dev
+  installation: "amp template new de-agent/kafka-streaming ./streaming"
+  version: 1.0.0
+  license: MIT
+  author: de-agent
+  source_url: https://github.com/de-agent/templates/tree/main/kafka-streaming
+  github_url: https://github.com/de-agent/templates
+  verification: reviewed
+  last_verified: 2026-09-21
+  security: { runs_code: true, network_access: true, credentials: true, filesystem_access: true, external_apis: false }
+  relationships: { related_to: [project-kafka-spark-delta, pattern-streaming-dedup-upsert] }

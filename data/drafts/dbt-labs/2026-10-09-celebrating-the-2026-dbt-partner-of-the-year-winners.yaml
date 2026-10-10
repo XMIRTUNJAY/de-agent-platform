@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-celebrating-the-2026-dbt-partner-of-the-year-winners
+  slug: celebrating-the-2026-dbt-partner-of-the-year-winners
+  type: reference
+  title: Celebrating the 2026 dbt partner of the year winners
+  description: "Meet the 2026 dbt Labs Partner of the Year winners: phData,
+    Snowflake, Cívica, Datum Studio, and 66degrees."
+  category: cat-warehouses
+  tags: []
+  url: https://www.getdbt.com/blog/2026-partner-of-the-year-winners
+  publisher: dbt Labs Blog
+  kind: blog
+  why: null
+  source_url: https://www.getdbt.com/blog/2026-partner-of-the-year-winners
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  discovered_from:
+    source: dbt-labs
+    extracted_at: 2026-10-09T04:47:08.102Z
+    published: Tue, 15 Sep 2026 21:00:00 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-warehouses
+      - cat-dbt
+      - cat-snowflake

@@ -1,0 +1,94 @@
+# Agents — operations
+- id: agent-kafka-troubleshooter
+  slug: kafka-troubleshooter
+  type: agent
+  title: Kafka Troubleshooter
+  purpose: Triage consumer lag, rebalance loops and poison messages in minutes.
+  category: cat-kafka
+  difficulty: advanced
+  tags: [agent, kafka, lag, incidents]
+  inputs: ["Consumer-group describe output", "Per-partition offsets", "Consumer application logs"]
+  tools: [mcp-kafka]
+  skills: [skill-kafka-lag-triage]
+  mcp: [mcp-kafka]
+  workflow:
+    - Check lag trend and per-partition distribution.
+    - Check group state history for rebalances.
+    - Identify poison messages from retry counts.
+    - Recommend the least destructive fix.
+  outputs: ["Diagnosis", "Evidence", "Fix with risk rating", "Prevention measure"]
+  guardrails: ["Never resets offsets", "Read-only against the cluster"]
+  example: "Lag on partitions 3 and 7 only, others flat → re-key the offending key, not scale the fleet."
+  evaluation: "Matches labelled lag scenarios from incident reports."
+  compatible_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  version: 0.1.1
+  license: Apache-2.0
+  author: de-agent
+  source_url: https://github.com/de-agent/agents/tree/main/kafka-troubleshooter
+  github_url: https://github.com/de-agent/agents
+  verification: reviewed
+  last_verified: 2026-09-20
+  security: { runs_code: false, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
+  relationships: { uses: [skill-kafka-lag-triage], related_to: [runbook-kafka-consumer-lagging] }
+- id: agent-backfill-planner
+  slug: backfill-planner-agent
+  type: agent
+  title: Backfill Planner
+  purpose: Produce a safe, staged backfill plan with validation and rollback.
+  category: cat-airflow
+  difficulty: advanced
+  tags: [agent, backfill, planning, safety]
+  inputs: ["Target table and date range", "Pipeline dependencies and lineage"]
+  tools: [read_file, mcp-datahub]
+  skills: [skill-backfill-planner, skill-airflow-dag-reviewer]
+  mcp: [mcp-datahub, mcp-filesystem]
+  workflow:
+    - Define correctness criteria for the backfill.
+    - Compute downstream impact from lineage.
+    - Estimate cost and contention.
+    - Stage batches with validation between them.
+  outputs: ["Impact set", "Batched execution plan", "Validation gates", "Rollback procedure"]
+  guardrails: ["Refuses to plan without a rollback path", "Requires an explicit window with the daily job excluded"]
+  example: "Plans a 90-day backfill around the 01:00 daily run, batched weekly, with a shadow table and a row-count gate."
+  evaluation: "Plans validated against known-good backfill runbooks."
+  compatible_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  version: 0.1.2
+  license: Apache-2.0
+  author: de-agent
+  source_url: https://github.com/de-agent/agents/tree/main/backfill-planner
+  github_url: https://github.com/de-agent/agents
+  verification: reviewed
+  last_verified: 2026-09-19
+  security: { runs_code: false, network_access: true, credentials: true, filesystem_access: true, external_apis: false }
+  relationships: { uses: [skill-backfill-planner], related_to: [runbook-backfill-required] }
+- id: agent-incident-assistant
+  slug: incident-assistant
+  type: agent
+  title: Incident Assistant
+  purpose: Guide an on-call engineer through a data incident and produce the postmortem.
+  category: cat-reliability
+  difficulty: intermediate
+  tags: [agent, incident, on-call, postmortem]
+  inputs: ["Alert description", "Recent deploy history", "Pipeline run logs"]
+  tools: [read_file, mcp-git]
+  skills: [skill-incident-postmortem-writer, skill-lineage-explainer]
+  mcp: [mcp-git, mcp-datahub]
+  workflow:
+    - Establish impact and start time.
+    - Check for a correlated deploy.
+    - Walk the matching runbook.
+    - Capture the timeline for the postmortem.
+  outputs: ["Rolling timeline", "Diagnosis", "Mitigation steps", "Draft postmortem"]
+  guardrails: ["Suggests, never executes, production changes", "Escalates to a human before any destructive step"]
+  example: "Correlates a freshness alert with a dbt deploy; recommends rollback of the incremental model."
+  evaluation: "Time-to-diagnosis against a tabletop incident set."
+  compatible_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  version: 0.2.0
+  license: Apache-2.0
+  author: de-agent
+  source_url: https://github.com/de-agent/agents/tree/main/incident-assistant
+  github_url: https://github.com/de-agent/agents
+  verification: reviewed
+  last_verified: 2026-09-25
+  security: { runs_code: false, network_access: true, credentials: true, filesystem_access: true, external_apis: false }
+  relationships: { uses: [skill-incident-postmortem-writer], related_to: [cat-production-operations] }

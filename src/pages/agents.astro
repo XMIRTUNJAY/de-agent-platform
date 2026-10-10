@@ -1,0 +1,16 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ListingPage from '@/components/ListingPage.astro';
+import registry from '@/data/generated/registry.json';
+
+const resources = registry.resources.filter(r => r.type === 'agent');
+---
+
+<BaseLayout title="Agents · DE//AGENT" sidebar>
+  <ListingPage
+    kicker="Marketplace"
+    title="Agents"
+    lede="Composable agents built from skills and MCP servers with explicit guardrails. Each agent declares its inputs, tools, workflow, outputs and safety constraints."
+    resources={resources}
+  />
+</BaseLayout>

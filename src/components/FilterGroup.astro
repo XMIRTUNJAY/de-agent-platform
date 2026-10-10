@@ -1,0 +1,24 @@
+---
+interface Props {
+  filter: {
+    label: string;
+    key: string;
+    options: { value: string; label: string; count: number }[];
+  };
+}
+const { filter } = Astro.props;
+---
+<details class="card card-pad-sm" open>
+  <summary class="mono-label cursor-pointer">{filter.label} <span class="text-dim">({filter.options.filter(o => o.count > 0).length})</span></summary>
+  <ul class="mt-3 space-y-2">
+    {filter.options.filter(o => o.count > 0).map((opt) => (
+      <li>
+        <label class="flex items-center gap-2 cursor-pointer">
+          <input type="checkbox" name={filter.key} value={opt.value} class="checkbox" />
+          <span class="text-sm text-muted">{opt.label}</span>
+          <span class="ml-auto font-mono text-2xs text-dim">({opt.count})</span>
+        </label>
+      </li>
+    ))}
+  </ul>
+</details>

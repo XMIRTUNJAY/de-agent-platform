@@ -1,0 +1,141 @@
+# Plugins — ops, streaming, governance
+- id: plugin-kafka-console
+  slug: kafka-console
+  type: plugin
+  title: Kafka Console
+  description: >-
+    Topic inventory, per-partition lag triage, rebalance detection and a read-only
+    message sampler with a PII redaction pass.
+  category: cat-kafka
+  difficulty: advanced
+  tags: [plugin, kafka, lag, streaming]
+  runtime: agent-plugin
+  capabilities: [stream-debug, metrics-analysis]
+  tools: [read_file]
+  commands: ["/lag-triage", "/topic-info", "/sample-topic"]
+  hooks: [hook-pii-leak-guard]
+  skills: [skill-kafka-lag-triage, skill-kafka-topic-design]
+  installation: "amp plugin add de-agent/kafka-console"
+  permissions: { filesystem: none, network: kafka, credentials: kafka-sasl-read }
+  compatible_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  version: 0.1.3
+  license: Apache-2.0
+  author: de-agent
+  source_url: https://github.com/de-agent/plugins/tree/main/kafka-console
+  github_url: https://github.com/de-agent/plugins
+  verification: reviewed
+  last_verified: 2026-09-21
+  security: { runs_code: true, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-kafka], uses: [skill-kafka-lag-triage] }
+- id: plugin-lineage-graph
+  slug: lineage-graph
+  type: plugin
+  title: Lineage Graph
+  description: >-
+    Column-level impact analysis over a lineage store, with a change-impact command
+    that lists the downstream consumers a schema change would break.
+  category: cat-data-lineage
+  difficulty: intermediate
+  tags: [plugin, lineage, impact-analysis]
+  runtime: agent-plugin
+  capabilities: [impact-analysis, lineage-query]
+  tools: [read_file]
+  commands: ["/impact", "/lineage-up", "/lineage-down"]
+  hooks: [hook-schema-change-check]
+  skills: [skill-lineage-explainer]
+  installation: "amp plugin add de-agent/lineage-graph"
+  permissions: { filesystem: none, network: catalog, credentials: catalog-token }
+  compatible_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  version: 0.2.1
+  license: Apache-2.0
+  author: de-agent
+  source_url: https://github.com/de-agent/plugins/tree/main/lineage-graph
+  github_url: https://github.com/de-agent/plugins
+  verification: reviewed
+  last_verified: 2026-09-20
+  security: { runs_code: true, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-data-lineage], uses: [skill-lineage-explainer] }
+- id: plugin-cost-lens
+  slug: cost-lens
+  type: plugin
+  title: Cost Lens
+  description: >-
+    Attributes warehouse/cluster spend to pipelines, computes unit economics, and
+    alerts on cost-per-run regressions rather than on total spend.
+  category: cat-cost-engineering
+  difficulty: advanced
+  tags: [plugin, cost, finops, attribution]
+  runtime: agent-plugin
+  capabilities: [cost-attribution, unit-economics]
+  tools: [read_file]
+  commands: ["/cost-by-pipeline", "/unit-cost", "/cost-guard"]
+  hooks: [hook-spark-cost-check, hook-backfill-safety-check, hook-prod-write-confirm, hook-freshness-pre-merge]
+  skills: [skill-cost-unit-economics, skill-spark-cost-regression-guard]
+  installation: "amp plugin add de-agent/cost-lens"
+  permissions: { filesystem: read, network: billing+catalog, credentials: billing-read }
+  compatible_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  version: 0.1.5
+  license: Apache-2.0
+  author: de-agent
+  source_url: https://github.com/de-agent/plugins/tree/main/cost-lens
+  github_url: https://github.com/de-agent/plugins
+  verification: reviewed
+  last_verified: 2026-09-17
+  security: { runs_code: true, network_access: true, credentials: true, filesystem_access: true, external_apis: true }
+  relationships: { related_to: [cat-cost-engineering], uses: [skill-cost-unit-economics] }
+- id: plugin-contract-kit
+  slug: contract-kit
+  type: plugin
+  title: Contract Kit
+  description: >-
+    Authors data contracts, enforces them in CI, and classifies schema changes as
+    compatible/risky/breaking for producers and consumers.
+  category: cat-data-contracts
+  difficulty: intermediate
+  tags: [plugin, contracts, governance, ci]
+  runtime: agent-plugin
+  capabilities: [contract-authoring, compatibility-check]
+  tools: [read_file, edit_file]
+  commands: ["/new-contract", "/check-compat", "/deprecate"]
+  hooks: [hook-schema-change-check, hook-pre-deployment-dq-check]
+  skills: [skill-schema-change-contract-review, skill-data-contract-author]
+  installation: "amp plugin add de-agent/contract-kit"
+  permissions: { filesystem: read-write, network: none, credentials: none }
+  compatible_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  version: 0.3.0
+  license: Apache-2.0
+  author: de-agent
+  source_url: https://github.com/de-agent/plugins/tree/main/contract-kit
+  github_url: https://github.com/de-agent/plugins
+  verification: reviewed
+  last_verified: 2026-09-27
+  security: { runs_code: true, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
+  relationships: { related_to: [cat-data-contracts], uses: [skill-schema-change-contract-review] }
+- id: plugin-runbook-runner
+  slug: runbook-runner
+  type: plugin
+  title: Runbook Runner
+  description: >-
+    Loads the production playbooks into the agent, matches an alert to a runbook,
+    and walks the operator through diagnosis and mitigation step by step.
+  category: cat-production-operations
+  difficulty: beginner
+  tags: [plugin, runbooks, incidents, on-call]
+  runtime: agent-plugin
+  capabilities: [runbook-execution, incident-support]
+  tools: [read_file]
+  commands: ["/runbook", "/match-alert", "/incident-timeline"]
+  hooks: [hook-prod-write-confirm]
+  skills: [skill-incident-postmortem-writer]
+  installation: "amp plugin add de-agent/runbook-runner"
+  permissions: { filesystem: read, network: none, credentials: none }
+  compatible_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  version: 0.2.0
+  license: Apache-2.0
+  author: de-agent
+  source_url: https://github.com/de-agent/plugins/tree/main/runbook-runner
+  github_url: https://github.com/de-agent/plugins
+  verification: reviewed
+  last_verified: 2026-09-25
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
+  relationships: { related_to: [cat-production-operations], uses: [skill-incident-postmortem-writer] }

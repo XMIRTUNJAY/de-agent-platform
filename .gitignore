@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+
+# Astro build output
+dist/
+.astro/
+
+# Backend build output
+backend/dist/
+
+# Local scratch analysis (css dumps, snapshots, logs)
+.scratch/
+
+# Discovery runtime state (machine-generated, resumable via re-run)
+data/drafts/.seen.json
+data/drafts/.source-health.json
+data/cache/
+
+# Logs and OS noise
+*.log
+build-log.txt
+.DS_Store
+Thumbs.db

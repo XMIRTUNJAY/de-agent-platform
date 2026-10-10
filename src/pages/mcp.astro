@@ -1,0 +1,16 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ListingPage from '@/components/ListingPage.astro';
+import registry from '@/data/generated/registry.json';
+
+const resources = registry.resources.filter(r => r.type === 'mcp');
+---
+
+<BaseLayout title="MCP Servers · DE//AGENT" sidebar>
+  <ListingPage
+    kicker="Marketplace"
+    title="MCP servers"
+    lede="Curated MCP servers with explicit security posture. A listing is never a trust signal — review source, license, credentials and network access before connecting."
+    resources={resources}
+  />
+</BaseLayout>

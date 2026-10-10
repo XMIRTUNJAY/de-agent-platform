@@ -1,0 +1,548 @@
+# Trusted sources for online discovery (pipelines/discover.mjs).
+# Allowlist: only domains listed here are ever fetched. Every source declares
+# how it may be used — default posture is summarize-and-link ONLY.
+#
+# Policy: fail-closed. A source ships only after its URL is probed live and
+# returns a parseable feed/API payload (last full verification: 2026-10-09).
+# Broken sources are listed in the "disabled" comments at the bottom, not shipped.
+#
+# Kinds: rss | atom | github-search | github-org
+# Lanes: vendor-eng · company-eng · llm-labs · education · youtube · github
+# Optional hints: default_category / default_type — applied ONLY when the
+# classifier is unsure (safe-fallback; never overrides a confident match).
+sources:
+  # ---------------------------------------------------------------- vendors
+  - id: aws-big-data
+    name: AWS Big Data Blog
+    kind: rss
+    url: https://aws.amazon.com/blogs/big-data/feed/
+    domain: aws.amazon.com
+    authority: 5
+    cadence: daily
+    usage: summarize-link
+  - id: aws-machine-learning
+    name: AWS Machine Learning Blog
+    kind: rss
+    url: https://aws.amazon.com/blogs/machine-learning/feed/
+    domain: aws.amazon.com
+    authority: 5
+    cadence: daily
+    usage: summarize-link
+    default_category: cat-agentic
+  - id: gcp-data-analytics
+    name: Google Cloud — Data Analytics blog
+    kind: rss
+    url: https://cloudblog.withgoogle.com/products/data-analytics/rss/
+    domain: cloudblog.withgoogle.com
+    authority: 5
+    cadence: daily
+    usage: summarize-link
+    default_category: cat-gcp
+  - id: google-dev-blog
+    name: Google Developers Blog
+    kind: atom
+    url: https://developers.googleblog.com/feeds/posts/default
+    domain: developers.googleblog.com
+    authority: 5
+    cadence: daily
+    usage: summarize-link
+  - id: databricks-eng
+    name: Databricks Engineering Blog
+    kind: rss
+    url: https://www.databricks.com/feed
+    domain: www.databricks.com
+    authority: 5
+    cadence: daily
+    usage: summarize-link
+  - id: snowflake-eng
+    name: Snowflake Engineering Blog
+    kind: rss
+    url: https://medium.com/feed/snowflake
+    domain: medium.com
+    authority: 5
+    cadence: daily
+    usage: summarize-link
+  - id: confluent
+    name: Confluent Blog (Kafka/Flink/Streaming)
+    kind: rss
+    url: https://www.confluent.io/feed/
+    domain: www.confluent.io
+    authority: 5
+    cadence: daily
+    usage: summarize-link
+    default_category: cat-streaming
+  - id: dbt-labs
+    name: dbt Labs Blog
+    kind: rss
+    url: https://www.getdbt.com/blog/rss
+    domain: www.getdbt.com
+    authority: 4
+    cadence: daily
+    usage: summarize-link
+    default_category: cat-dbt
+  - id: duckdb
+    name: DuckDB News
+    kind: rss
+    url: https://duckdb.org/feed.xml
+    domain: duckdb.org
+    authority: 5
+    cadence: weekly
+    usage: summarize-link
+    default_category: cat-databases
+  - id: cloudflare
+    name: Cloudflare Blog (platform + data infra)
+    kind: rss
+    url: https://blog.cloudflare.com/rss/
+    domain: blog.cloudflare.com
+    authority: 5
+    cadence: daily
+    usage: summarize-link
+  - id: github-blog-eng
+    name: GitHub Blog — Engineering
+    kind: rss
+    url: https://github.blog/tag/engineering/feed/
+    domain: github.blog
+    authority: 4
+    cadence: daily
+    usage: summarize-link
+
+  # --------------------------------------------------- companies doing DE at scale
+  - id: meta-eng
+    name: Meta Engineering Blog
+    kind: rss
+    url: https://engineering.fb.com/feed/
+    domain: engineering.fb.com
+    authority: 5
+    cadence: daily
+    usage: summarize-link
+  - id: netflix-techblog
+    name: Netflix TechBlog (data platform posts)
+    kind: rss
+    url: https://netflixtechblog.com/feed
+    domain: netflixtechblog.com
+    authority: 5
+    cadence: daily
+    usage: summarize-link
+  - id: airbnb-eng
+    name: Airbnb Engineering & Data Science Blog
+    kind: rss
+    url: https://medium.com/feed/airbnb-engineering
+    domain: medium.com
+    authority: 4
+    cadence: daily
+    usage: summarize-link
+  - id: stripe-eng
+    name: Stripe Engineering Blog
+    kind: rss
+    url: https://stripe.com/blog/feed.rss
+    domain: stripe.com
+    authority: 5
+    cadence: daily
+    usage: summarize-link
+  - id: discord-eng
+    name: Discord Engineering Blog
+    kind: rss
+    url: https://discord.com/blog/rss.xml
+    domain: discord.com
+    authority: 4
+    cadence: weekly
+    usage: summarize-link
+  - id: pinterest-eng
+    name: Pinterest Engineering
+    kind: rss
+    url: https://medium.com/feed/pinterest-engineering
+    domain: medium.com
+    authority: 4
+    cadence: weekly
+    usage: summarize-link
+  - id: databricks-continuous
+    name: Continuous Coalition (DE blog via Feedburner)
+    kind: rss
+    url: https://feeds.feedburner.com/ContinuousBlog
+    domain: feeds.feedburner.com
+    authority: 3
+    cadence: weekly
+    usage: summarize-link
+
+  # -------------------------------------------- LLM labs & agent framework feeds
+  # Lane goal: skills / agents / hooks / MCP artifacts + agentic categories.
+  - id: openai-news
+    name: OpenAI News
+    kind: rss
+    url: https://openai.com/news/rss.xml
+    domain: openai.com
+    authority: 5
+    cadence: daily
+    usage: summarize-link
+    default_category: cat-agentic
+  - id: mistral-news
+    name: Mistral AI News
+    kind: rss
+    url: https://mistral.ai/news/rss
+    domain: mistral.ai
+    authority: 5
+    cadence: weekly
+    usage: summarize-link
+    default_category: cat-agentic
+  - id: huggingface-blog
+    name: Hugging Face Blog
+    kind: rss
+    url: https://huggingface.co/blog/feed.xml
+    domain: huggingface.co
+    authority: 5
+    cadence: daily
+    usage: summarize-link
+    default_category: cat-agentic
+  - id: google-ai-blog
+    name: Google Blog — AI
+    kind: rss
+    url: https://blog.google/technology/ai/rss/
+    domain: blog.google
+    authority: 5
+    cadence: daily
+    usage: summarize-link
+    default_category: cat-agentic
+  - id: tensorflow-blog
+    name: TensorFlow Blog (Google)
+    kind: atom
+    url: https://blog.tensorflow.org/atom.xml
+    domain: blog.tensorflow.org
+    authority: 4
+    cadence: weekly
+    usage: summarize-link
+    default_category: cat-agentic
+  - id: langchain-blog
+    name: LangChain Blog
+    kind: rss
+    url: https://blog.langchain.dev/rss.xml
+    domain: blog.langchain.dev
+    authority: 5
+    cadence: weekly
+    usage: summarize-link
+    default_category: cat-agentic
+  - id: stackoverflow-blog
+    name: Stack Overflow Blog (AI + devops essays)
+    kind: rss
+    url: https://stackoverflow.blog/feed/
+    domain: stackoverflow.blog
+    authority: 4
+    cadence: daily
+    usage: summarize-link
+
+  # ---------------------------------------------------------------- education
+  # Lane goal: tutorials the reviewer can promote to type: tutorial.
+  - id: coursera-blog
+    name: Coursera Blog
+    kind: rss
+    url: https://blog.coursera.org/feed/
+    domain: blog.coursera.org
+    authority: 4
+    cadence: daily
+    usage: summarize-link
+    default_type: tutorial
+  - id: freecodecamp-news
+    name: freeCodeCamp News
+    kind: rss
+    url: https://www.freecodecamp.org/news/rss/
+    domain: www.freecodecamp.org
+    authority: 4
+    cadence: daily
+    usage: summarize-link
+    default_type: tutorial
+  - id: freecodecamp-medium
+    name: freeCodeCamp (Medium)
+    kind: rss
+    url: https://medium.freecodecamp.org/feed
+    domain: medium.freecodecamp.org
+    authority: 4
+    cadence: daily
+    usage: summarize-link
+    default_type: tutorial
+  - id: towards-data-science
+    name: Towards Data Science
+    kind: rss
+    url: https://towardsdatascience.com/feed
+    domain: towardsdatascience.com
+    authority: 4
+    cadence: daily
+    usage: summarize-link
+    default_type: tutorial
+  - id: medium-data-science
+    name: Medium — Data Science tag
+    kind: rss
+    url: https://medium.com/feed/data-science
+    domain: medium.com
+    authority: 3
+    cadence: daily
+    usage: summarize-link
+    default_type: tutorial
+  - id: pybites
+    name: PyBites (Python practice + coaching)
+    kind: rss
+    url: https://pybit.es/feed/
+    domain: pybit.es
+    authority: 3
+    cadence: weekly
+    usage: summarize-link
+    default_category: cat-python
+    default_type: tutorial
+  - id: joseph-machado
+    name: Start Data Engineering (Joseph Machado)
+    kind: rss
+    url: https://josephmachado.substack.com/feed
+    domain: josephmachado.substack.com
+    authority: 4
+    cadence: weekly
+    usage: summarize-link
+    default_type: tutorial
+  - id: seattle-data-guy
+    name: SeattleDataGuy (Data Engineering Substack)
+    kind: rss
+    url: https://seattledataguy.substack.com/feed
+    domain: seattledataguy.substack.com
+    authority: 4
+    cadence: weekly
+    usage: summarize-link
+    default_category: cat-airflow
+  - id: martin-heinz
+    name: Martin Heinz (Practical Data Science)
+    kind: rss
+    url: https://martinheinz.dev/rss/
+    domain: martinheinz.dev
+    authority: 3
+    cadence: weekly
+    usage: summarize-link
+    default_type: tutorial
+  - id: sql-server-central
+    name: SQLServerCentral (tutorials)
+    kind: rss
+    url: https://www.sqlservercentral.com/feed/
+    domain: www.sqlservercentral.com
+    authority: 4
+    cadence: daily
+    usage: summarize-link
+    default_category: cat-sql
+    default_type: tutorial
+  - id: sqlskills
+    name: SQLskills (SQL Server deep-dives)
+    kind: rss
+    url: https://www.sqlskills.com/feed
+    domain: www.sqlskills.com
+    authority: 4
+    cadence: weekly
+    usage: summarize-link
+    default_category: cat-sql
+  - id: percona-blog
+    name: Percona Database Performance Blog
+    kind: rss
+    url: https://www.percona.com/blog/feed/
+    domain: www.percona.com
+    authority: 4
+    cadence: daily
+    usage: summarize-link
+    default_category: cat-databases
+
+  # ------------------------------------------------------------------ youtube
+  # Lane goal: project-based videos the reviewer rewrites as type: tutorial
+  # (video URL + plain-language steps; transcript text is never copied).
+  - id: yt-arjancodes
+    name: ArjanCodes (software design, Python)
+    kind: atom
+    url: https://www.youtube.com/feeds/videos.xml?channel_id=UCVhQ2NnY5Rskt6UjCUkJ_DA
+    domain: youtube.com
+    authority: 4
+    cadence: weekly
+    usage: metadata-link
+    default_category: cat-python
+    default_type: tutorial
+  - id: yt-freecodecamp
+    name: freeCodeCamp YouTube (full courses)
+    kind: atom
+    url: https://www.youtube.com/feeds/videos.xml?channel_id=UC8butISFwT-Wl7EV0hUK0BQ
+    domain: youtube.com
+    authority: 4
+    cadence: weekly
+    usage: metadata-link
+    default_type: tutorial
+  - id: yt-nana
+    name: TechWorld with Nana (devops/data infra)
+    kind: atom
+    url: https://www.youtube.com/feeds/videos.xml?channel_id=UCdngmbVKX1Tgre699-XLlUA
+    domain: youtube.com
+    authority: 4
+    cadence: weekly
+    usage: metadata-link
+    default_type: tutorial
+  - id: yt-sentdex
+    name: sentdex (Python + ML projects)
+    kind: atom
+    url: https://www.youtube.com/feeds/videos.xml?channel_id=UCfzlCWGWYyIQ0aLC5w48gBQ
+    domain: youtube.com
+    authority: 4
+    cadence: weekly
+    usage: metadata-link
+    default_category: cat-python
+    default_type: tutorial
+
+  # ------------------------------------------------------------------- github
+  # Lane goal: skills / agents / hooks / MCP / project starters straight from
+  # official orgs. Content-type tags keep results artifact-focused.
+  - id: gh-org-anthropic
+    name: GitHub org — Anthropic (claude, agents, skills)
+    kind: github-org
+    url: https://api.github.com/orgs/anthropics/repos?sort=updated&per_page=20
+    domain: api.github.com
+    authority: 5
+    cadence: weekly
+    usage: metadata-link
+    default_category: cat-agentic
+  - id: gh-org-deepmind
+    name: GitHub org — Google DeepMind
+    kind: github-org
+    url: https://api.github.com/orgs/google-deepmind/repos?sort=updated&per_page=20
+    domain: api.github.com
+    authority: 5
+    cadence: weekly
+    usage: metadata-link
+    default_category: cat-agentic
+  - id: gh-org-google
+    name: GitHub org — Google (incl. Gemini samples)
+    kind: github-org
+    url: https://api.github.com/orgs/google/repos?sort=updated&per_page=20
+    domain: api.github.com
+    authority: 5
+    cadence: weekly
+    usage: metadata-link
+    default_category: cat-agentic
+  - id: gh-org-deepseek
+    name: GitHub org — DeepSeek
+    kind: github-org
+    url: https://api.github.com/orgs/deepseek-ai/repos?sort=updated&per_page=20
+    domain: api.github.com
+    authority: 5
+    cadence: weekly
+    usage: metadata-link
+    default_category: cat-agentic
+  - id: gh-org-kimi
+    name: GitHub org — MoonshotAI (Kimi)
+    kind: github-org
+    url: https://api.github.com/orgs/MoonshotAI/repos?sort=updated&per_page=20
+    domain: api.github.com
+    authority: 5
+    cadence: weekly
+    usage: metadata-link
+    default_category: cat-agentic
+  - id: gh-org-zhipu
+    name: GitHub org — Zhipu AI (GLM — moved to zai-org)
+    kind: github-org
+    url: https://api.github.com/orgs/zai-org/repos?sort=updated&per_page=20
+    domain: api.github.com
+    authority: 5
+    cadence: weekly
+    usage: metadata-link
+    default_category: cat-agentic
+  - id: gh-org-mistral
+    name: GitHub org — Mistral AI
+    kind: github-org
+    url: https://api.github.com/orgs/mistralai/repos?sort=updated&per_page=20
+    domain: api.github.com
+    authority: 5
+    cadence: weekly
+    usage: metadata-link
+    default_category: cat-agentic
+  - id: gh-org-crewai
+    name: GitHub org — CrewAI
+    kind: github-org
+    url: https://api.github.com/orgs/crewAIInc/repos?sort=updated&per_page=20
+    domain: api.github.com
+    authority: 4
+    cadence: weekly
+    usage: metadata-link
+    default_category: cat-agentic
+  - id: gh-org-mcp
+    name: GitHub org — Model Context Protocol
+    kind: github-org
+    url: https://api.github.com/orgs/modelcontextprotocol/repos?sort=updated&per_page=20
+    domain: api.github.com
+    authority: 5
+    cadence: weekly
+    usage: metadata-link
+    default_category: cat-agentic
+  - id: gh-topic-claude-code
+    name: GitHub topic — claude-code
+    kind: github-search
+    url: https://api.github.com/search/repositories?q=topic:claude-code+sort:updated&per_page=15
+    domain: api.github.com
+    authority: 3
+    cadence: weekly
+    usage: metadata-link
+    default_category: cat-agentic
+  - id: gh-topic-mcp-server
+    name: GitHub topic — mcp-server
+    kind: github-search
+    url: https://api.github.com/search/repositories?q=topic:mcp-server+sort:updated&per_page=15
+    domain: api.github.com
+    authority: 3
+    cadence: weekly
+    usage: metadata-link
+    default_category: cat-agentic
+  - id: gh-topic-agent-skills
+    name: GitHub topic — agent-skills
+    kind: github-search
+    url: https://api.github.com/search/repositories?q=topic:agent-skills+sort:updated&per_page=15
+    domain: api.github.com
+    authority: 3
+    cadence: weekly
+    usage: metadata-link
+    default_category: cat-agentic
+  - id: gh-topic-llm-agents
+    name: GitHub topic — llm agents
+    kind: github-search
+    url: https://api.github.com/search/repositories?q=topic:llm-agents+sort:updated&per_page=15
+    domain: api.github.com
+    authority: 3
+    cadence: weekly
+    usage: metadata-link
+    default_category: cat-agentic
+  - id: github-topic-de
+    name: GitHub topic — data-engineering
+    kind: github-search
+    url: https://api.github.com/search/repositories?q=topic:data-engineering+stars:%3E500&sort=updated&per_page=15
+    domain: api.github.com
+    authority: 3
+    cadence: weekly
+    usage: metadata-link
+  - id: github-topic-mcp
+    name: GitHub topic — mcp
+    kind: github-search
+    url: https://api.github.com/search/repositories?q=topic:mcp+sort:updated&per_page=15
+    domain: api.github.com
+    authority: 3
+    cadence: weekly
+    usage: metadata-link
+    default_category: cat-agentic
+  - id: github-topic-dbt
+    name: GitHub topic — dbt
+    kind: github-search
+    url: https://api.github.com/search/repositories?q=topic:dbt+stars:%3E100&sort=updated&per_page=15
+    domain: api.github.com
+    authority: 3
+    cadence: weekly
+    usage: metadata-link
+    default_category: cat-dbt
+
+# Disabled until a working public URL is verified (fail-closed — we ship only
+# what we have fetched successfully):
+#   uber-eng, linkedin-eng, shopify, dropbox, lyft, xing    → no public feed found
+#   anthropic (feed), deepmind (feed), qwen, groq, together → no RSS endpoint
+#   cohere → blog/rss.xml returns rendered HTML (JS site), no XML feed found
+#   anthropic/deepseek/etc. ARE covered via their GitHub orgs above.
+#   datacamp, udemy, kdnuggets                             → feeds return 403
+#   (blocked for bots; revisit with polite cadence or manual quarterly import)
+#   apache-foundation, openlineage, mcp site               → feed endpoints 404
+
+# Hard rules the pipeline enforces on every extracted item:
+# - never copy body text past the excerpt cap (pipelines/discover.mjs capItem)
+# - every draft carries source_url + extracted_at + source authority
+# - items from sources with usage: summarize-link are Reference drafts only
+# - anything below classification confidence → safe default + human assigns

@@ -1,0 +1,85 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import FilterGroup from '@/components/FilterGroup.astro';
+import ResourceCard from '@/components/ResourceCard.astro';
+import registry from '@/data/generated/registry.json';
+
+const cat = registry.taxonomy.categories.find(c => c.slug === Astro.params.slug);
+if (!cat) throw new Error('Category not found');
+
+const resources = registry.resources.filter(r => r.category === cat.id);
+const types = [...new Set(resources.map(r => r.type))].sort();
+const difficulties = ['beginner', 'intermediate', 'advanced'];
+const verifications = ['verified', 'tested', 'reviewed', 'community'];
+
+const filters = [
+  { label: 'Type', key: 'type', options: types.map(t => ({ value: t, label: registry.resources.find(r => r.type === t)?.typeLabel ?? t, count: resources.filter(r => r.type === t).length })) },
+  { label: 'Difficulty', key: 'difficulty', options: difficulties.map(d => ({ value: d, label: d, count: resources.filter(r => r.difficulty === d).length })) },
+  { label: 'Verification', key: 'verification', options: verifications.map(v => ({ value: v, label: v.charAt(0).toUpperCase() + v.slice(1), count: resources.filter(r => r.verification === v).length })) },
+];
+
+export async function getStaticPaths() {
+  return registry.taxonomy.categories.map(c => ({ params: { slug: c.slug } }));
+}
+---
+
+<BaseLayout title={cat.title} sidebar>
+  <PageHero kicker={cat.group} title={cat.title} lede={cat.summary}>
+    <div style="margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+      <span class="chip">{resources.length} resources</span>
+      <span class="chip">{types.length} types</span>
+    </div>
+  </PageHero>
+
+  <div class="col section-sm" style="padding-top: 2.5rem;">
+    <div class="grid gap-8 lg:grid-cols-[280px_1fr]">
+      <aside class="sticky top-16 space-y-6 self-start" style="max-height: calc(100vh - 5rem); overflow-y: auto; overscroll-behavior: contain; scrollbar-gutter: stable; padding-bottom: 1rem;">
+        {filters.map((filter) => <FilterGroup filter={filter} />)}
+      </aside>
+
+      <section>
+        <div id="results" class="card-grid">
+          {resources.map((r) => (
+            <div data-type={r.type} data-difficulty={r.difficulty ?? ''} data-verification={r.verification}>
+              <ResourceCard resource={r} />
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
+  </div>
+
+    <script>
+      (function () {
+        const results = document.getElementById('results') as HTMLElement | null;
+        if (!results) return;
+        const cards = Array.from(results.children) as HTMLElement[];
+        const checkboxes = document.querySelectorAll('aside input[type="checkbox"]') as NodeListOf<HTMLInputElement>;
+        const active = new Map<string, Set<string>>();
+        checkboxes.forEach((cb) => { active.set(cb.name, new Set()); });
+
+        function apply() {
+          for (const card of cards) {
+            let show = true;
+            for (const [key, values] of active) {
+              if (values.size === 0) continue;
+              const val = card.dataset[key];
+              if (!val) { show = false; break; }
+              if (!values.has(val)) { show = false; break; }
+            }
+            card.hidden = !show;
+          }
+        }
+
+        checkboxes.forEach((cb) => {
+          cb.addEventListener('change', () => {
+            const set = active.get(cb.name)!;
+            if (cb.checked) set.add(cb.value);
+            else set.delete(cb.value);
+            apply();
+          });
+        });
+      })();
+    </script>
+</BaseLayout>

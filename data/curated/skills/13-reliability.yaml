@@ -1,0 +1,94 @@
+# Skills: reliability
+- id: skill-incident-postmortem-writer
+  slug: incident-postmortem-writer
+  type: skill
+  title: Incident Postmortem Writer
+  tagline: Turn a pipeline incident into a blameless postmortem with real action items.
+  description: >-
+    Structures incident notes into a blameless postmortem: timeline, impact,
+    detection gap, contributing factors, and action items with owners and dates.
+  category: cat-reliability
+  subcategory: Operations
+  difficulty: beginner
+  tags: [incident, postmortem, reliability, sre]
+  technologies: [tech-airflow]
+  learning_objectives:
+    - Write a blameless timeline
+    - Separate trigger from contributing factors
+    - Convert findings into dated, owned action items
+  prerequisites: []
+  supported_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  version: 0.2.0
+  license: Apache-2.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/de-agent/skills/tree/main/incident-postmortem-writer
+  github_url: https://github.com/de-agent/skills
+  install_command: "amp skill add de-agent/incident-postmortem-writer"
+  verification: reviewed
+  last_verified: 2026-09-25
+  files: [SKILL.md, references/postmortem-template.md, examples/postmortem.md]
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
+  compatibility: [claude-code, codex, cursor, amp, gemini-cli]
+  relationships:
+    related_to: [cat-reliability, cat-production-operations]
+  body: |
+    # Incident Postmortem Writer
+
+    ## Structure
+    1. **Impact** — who/what, in business terms, with a duration.
+    2. **Timeline** — timestamped, factual, no blame.
+    3. **Detection** — how we found out; if a human told us, that's a gap.
+    4. **Contributing factors** — plural; incidents are rarely single-cause.
+    5. **Action items** — each with an owner and a date, and a "done" definition.
+
+    ## Anti-pattern
+    "Be more careful" is not an action item. Change the system so a careful mistake
+    is harmless.
+- id: skill-spark-cost-regression-guard
+  slug: spark-cost-regression-guard
+  type: skill
+  title: Spark Cost Regression Guard
+  tagline: Detect the 4x cost jump in CI, before it reaches the invoice.
+  description: >-
+    Compares a job's shuffle/spill/scan metrics against a stored baseline and fails
+    the change if cost-per-run regresses beyond a threshold, with the diff explained.
+  category: cat-cost-engineering
+  subcategory: Cost
+  difficulty: advanced
+  tags: [spark, cost, regression, ci, performance]
+  technologies: [tech-spark, tech-databricks]
+  learning_objectives:
+    - Capture cost-relevant metrics from a Spark run
+    - Store and compare a baseline
+    - Explain which stage caused a regression
+  prerequisites: [skill-spark-skew-diagnosis]
+  supported_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  version: 0.1.2
+  license: Apache-2.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/de-agent/skills/tree/main/spark-cost-regression-guard
+  github_url: https://github.com/de-agent/skills
+  install_command: "amp skill add de-agent/spark-cost-regression-guard"
+  verification: reviewed
+  last_verified: 2026-09-14
+  files: [SKILL.md, examples/compare_metrics.py, references/cost-metrics.md]
+  security: { runs_code: true, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
+  compatibility: [claude-code, codex, cursor, amp, gemini-cli]
+  relationships:
+    related_to: [skill-cost-unit-economics, runbook-spark-job-suddenly-costs-4x, hook-spark-cost-check]
+  body: |
+    # Spark Cost Regression Guard
+
+    ## Metrics worth baselining
+    shuffle read/write bytes, spill (disk) bytes, task count, max task duration,
+    input bytes. These predict cost far better than wall-clock time.
+
+    ## Threshold
+    Fail if any metric grows > 25% vs the stored median of the last 5 runs. A 4x
+    regression is then caught at 1.25x, in CI, for free.
+
+    ## Explain the diff
+    Name the stage whose metric moved, and whether it was a join, an aggregation,
+    or a partition count change.

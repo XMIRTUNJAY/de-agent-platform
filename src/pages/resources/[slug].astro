@@ -1,0 +1,13 @@
+---
+import ResourceDetail from '@/components/ResourceDetail.astro';
+import registry from '@/data/generated/registry.json';
+
+const res = registry.resources.find(r => r.slug === Astro.params.slug);
+if (!res) throw new Error('Not found');
+
+export async function getStaticPaths() {
+  return registry.resources.map(r => ({ params: { slug: r.slug } }));
+}
+---
+
+<ResourceDetail res={res} />

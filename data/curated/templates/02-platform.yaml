@@ -1,0 +1,87 @@
+# Templates — platform, infra, contracts
+- id: tpl-terraform-aws-data
+  slug: terraform-aws-data-platform
+  type: template
+  title: Terraform AWS Data Platform
+  description: >-
+    S3 buckets with lifecycle + encryption, Glue catalogue, IAM roles scoped to
+    least privilege, and Athena workgroups with query limits.
+  category: cat-aws
+  difficulty: advanced
+  tags: [template, terraform, aws, iac, security]
+  technologies: [tech-terraform, tech-s3, tech-glue, tech-athena]
+  contents: [main.tf, variables.tf, modules/s3, modules/glue, modules/iam, modules/athena]
+  repo_structure: |
+    terraform-aws-data-platform/
+      modules/
+        s3/       # versioning, SSE-KMS, lifecycle
+        glue/     # catalog + crawlers
+        iam/      # least-privilege roles
+        athena/   # workgroup + bytes-scanned limit
+      main.tf
+      variables.tf
+  installation: "amp template new de-agent/terraform-aws-data-platform ./infra"
+  version: 1.1.0
+  license: MIT
+  author: de-agent
+  source_url: https://github.com/de-agent/templates/tree/main/terraform-aws-data-platform
+  github_url: https://github.com/de-agent/templates
+  verification: reviewed
+  last_verified: 2026-09-20
+  security: { runs_code: true, network_access: true, credentials: true, filesystem_access: true, external_apis: true }
+  relationships: { related_to: [project-s3-glue-athena, cat-infrastructure] }
+- id: tpl-docker-local-stack
+  slug: docker-local-stack
+  type: template
+  title: Local Docker Data Stack
+  description: >-
+    A docker-compose stack (Postgres, Kafka, MinIO, Spark, and a DuckDB CLI) for
+    developing and testing pipelines entirely offline.
+  category: cat-infrastructure
+  difficulty: beginner
+  tags: [template, docker, local-dev, offline]
+  technologies: [tech-docker, tech-postgres, tech-kafka, tech-spark]
+  contents: [docker-compose.yml, .env.example, Makefile, README.md]
+  repo_structure: |
+    docker-local-stack/
+      docker-compose.yml   # postgres, kafka, minio, spark,
+      .env.example
+      Makefile             # make up / make seed / make down
+  installation: "amp template new de-agent/docker-local-stack ./local"
+  version: 1.4.0
+  license: MIT
+  author: de-agent
+  source_url: https://github.com/de-agent/templates/tree/main/docker-local-stack
+  github_url: https://github.com/de-agent/templates
+  verification: reviewed
+  last_verified: 2026-09-30
+  security: { runs_code: true, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
+  relationships: { related_to: [project-postgres-cdc-kafka-lakehouse, cat-infrastructure] }
+- id: tpl-data-contract
+  slug: data-contract-template
+  type: template
+  title: Data Contract Template
+  description: >-
+    A contract skeleton (ownership, schema, semantics, SLA, compatibility policy)
+    with the CI check that enforces it and a deprecation checklist.
+  category: cat-data-contracts
+  difficulty: intermediate
+  tags: [template, data-contract, governance, ci]
+  technologies: [tech-dbt]
+  contents: [contract.yaml, schema.avsc, ci/check-compat.sh, DEPRECATION.md]
+  repo_structure: |
+    data-contract-template/
+      contract.yaml        # owner, sla, semantics, policy
+      schema.avsc          # typed schema
+      ci/check-compat.sh   # compatibility gate
+      DEPRECATION.md       # dated deprecation path
+  installation: "amp template new de-agent/data-contract-template ./contracts"
+  version: 1.2.0
+  license: MIT
+  author: de-agent
+  source_url: https://github.com/de-agent/templates/tree/main/data-contract-template
+  github_url: https://github.com/de-agent/templates
+  verification: reviewed
+  last_verified: 2026-09-23
+  security: { runs_code: true, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
+  relationships: { related_to: [skill-data-contract-author, pattern-contracts-quality-gate] }

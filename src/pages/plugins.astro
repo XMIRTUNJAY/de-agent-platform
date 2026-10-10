@@ -1,0 +1,16 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ListingPage from '@/components/ListingPage.astro';
+import registry from '@/data/generated/registry.json';
+
+const resources = registry.resources.filter(r => r.type === 'plugin');
+---
+
+<BaseLayout title="Plugins · DE//AGENT" sidebar>
+  <ListingPage
+    kicker="Marketplace"
+    title="Data engineering plugins"
+    lede="Battery-included bundles: skills, hooks, commands and MCP servers wired together so an agent ships with a working DE toolkit instead of a bag of parts."
+    resources={resources}
+  />
+</BaseLayout>

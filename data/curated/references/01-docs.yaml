@@ -1,0 +1,183 @@
+# External references — official documentation (metadata + original summary only)
+- id: ref-spark-docs
+  slug: spark-docs
+  type: reference
+  title: Apache Spark Documentation
+  url: https://spark.apache.org/docs/latest/
+  publisher: Apache Software Foundation
+  kind: documentation
+  category: cat-spark
+  license: Apache-2.0
+  summary: >-
+    The authoritative reference for Spark SQL, the DataFrame API, tuning and the
+    configuration catalogue. Use it for exact semantics and config keys.
+  why: Exact, versioned, and free to reuse. The config reference alone resolves most tuning debates.
+  tags: [spark, docs, official]
+  quality: { authority: 5, docs_quality: 4, repo_activity: 5, license_clarity: 5, installation: null, tests: null, examples: 4, security: null, maintenance: 5, compatibility: 4 }
+  verification: reviewed
+  last_verified: 2026-09-28
+- id: ref-delta-docs
+  slug: delta-lake-docs
+  type: reference
+  title: Delta Lake Documentation
+  url: https://docs.delta.io/
+  publisher: Delta Lake / LF Projects
+  kind: documentation
+  category: cat-lakehouse
+  license: Apache-2.0
+  summary: Delta Lake's official docs — ACID tables on object storage, time travel, OPTIMIZE and Z-ORDER.
+  why: The definitive source for Delta features and the maintenance operations referenced by our lakehouse skills.
+  tags: [delta, lakehouse, docs, official]
+  quality: { authority: 5, docs_quality: 4, repo_activity: 5, license_clarity: 5, installation: 3, tests: 3, examples: 4, security: null, maintenance: 5, compatibility: 4 }
+  verification: reviewed
+  last_verified: 2026-09-26
+- id: ref-iceberg-docs
+  slug: iceberg-docs
+  type: reference
+  title: Apache Iceberg Documentation
+  url: https://iceberg.apache.org/docs/latest/
+  publisher: Apache Software Foundation
+  kind: documentation
+  category: cat-lakehouse
+  license: Apache-2.0
+  summary: Iceberg's spec and docs — table format, snapshots, manifests, and the maintenance procedures.
+  why: The table format is a specification; the spec is the ground truth when tools disagree.
+  tags: [iceberg, lakehouse, spec, official]
+  quality: { authority: 5, docs_quality: 4, repo_activity: 5, license_clarity: 5, installation: 3, tests: 4, examples: 3, security: null, maintenance: 5, compatibility: 4 }
+  verification: reviewed
+  last_verified: 2026-09-25
+- id: ref-kafka-docs
+  slug: kafka-docs
+  type: reference
+  title: Apache Kafka Documentation
+  url: https://kafka.apache.org/documentation/
+  publisher: Apache Software Foundation
+  kind: documentation
+  category: cat-kafka
+  license: Apache-2.0
+  summary: Kafka's official documentation — design, semantics, the protocol, and consumer-group behaviour.
+  why: The design section explains why ordering and partitions behave the way they do; the operations section is the runbook companion.
+  tags: [kafka, streaming, docs, official]
+  quality: { authority: 5, docs_quality: 4, repo_activity: 5, license_clarity: 5, installation: 4, tests: 3, examples: 3, security: 3, maintenance: 5, compatibility: 5 }
+  verification: reviewed
+  last_verified: 2026-09-27
+- id: ref-debezium-docs
+  slug: debezium-docs
+  type: reference
+  title: Debezium Documentation
+  url: https://debezium.io/documentation/
+  publisher: Red Hat / Debezium Community
+  kind: documentation
+  category: cat-cdc
+  license: Apache-2.0
+  summary: Debezium's docs — connectors, the change-event envelope, snapshots and the operational pitfalls.
+  why: The connector matrix and the events section are what you need to design a correct CDC merge.
+  tags: [cdc, debezium, docs, official]
+  quality: { authority: 5, docs_quality: 4, repo_activity: 5, license_clarity: 5, installation: 3, tests: 3, examples: 4, security: 3, maintenance: 5, compatibility: 4 }
+  verification: reviewed
+  last_verified: 2026-09-24
+- id: ref-airflow-docs
+  slug: airflow-docs
+  type: reference
+  title: Apache Airflow Documentation
+  url: https://airflow.apache.org/docs/
+  publisher: Apache Software Foundation
+  kind: documentation
+  category: cat-airflow
+  license: Apache-2.0
+  summary: Airflow's docs — DAG authoring, scheduling semantics, backfills, task state and best practices.
+  why: The "best practices" and scheduling pages answer the idempotency and backfill questions our skills only sketch.
+  tags: [airflow, orchestration, docs, official]
+  quality: { authority: 5, docs_quality: 4, repo_activity: 5, license_clarity: 5, installation: 4, tests: 3, examples: 4, security: 3, maintenance: 5, compatibility: 5 }
+  verification: reviewed
+  last_verified: 2026-09-29
+- id: ref-dbt-docs
+  slug: dbt-docs
+  type: reference
+  title: dbt Documentation
+  url: https://docs.getdbt.com/
+  publisher: dbt Labs
+  kind: documentation
+  category: cat-dbt
+  license: Proprietary (docs); dbt-core is Apache-2.0
+  summary: dbt's docs — model configuration, materialisations, tests, and the analytics-engineering workflow.
+  why: The materialisation and incremental-model pages are the reference for the incremental traps our skill lists.
+  tags: [dbt, transformation, docs]
+  quality: { authority: 4, docs_quality: 5, repo_activity: 5, license_clarity: 3, installation: 4, tests: 4, examples: 5, security: 3, maintenance: 5, compatibility: 4 }
+  verification: reviewed
+  last_verified: 2026-09-27
+- id: ref-gx-docs
+  slug: great-expectations-docs
+  type: reference
+  title: Great Expectations Documentation
+  url: https://docs.greatexpectations.io/
+  publisher: Great Expectations
+  kind: documentation
+  category: cat-data-quality
+  license: Apache-2.0
+  summary: Great Expectations docs — expectations, suites, checkpoints and data-docs for quality validation.
+  why: The expectation catalogue is a practical vocabulary for expressing quality rules precisely.
+  tags: [data-quality, expectations, docs]
+  quality: { authority: 4, docs_quality: 4, repo_activity: 4, license_clarity: 5, installation: 3, tests: 3, examples: 4, security: null, maintenance: 4, compatibility: 3 }
+  verification: reviewed
+  last_verified: 2026-09-22
+- id: ref-duckdb-docs
+  slug: duckdb-docs
+  type: reference
+  title: DuckDB Documentation
+  url: https://duckdb.org/docs/
+  publisher: DuckDB Labs
+  kind: documentation
+  category: cat-sql
+  license: MIT
+  summary: DuckDB's docs — in-process analytics SQL, Parquet/CSV readers, and extensions.
+  why: The fastest way to make a pipeline testable offline; the Parquet and SQL pages cover everything our test skill needs.
+  tags: [duckdb, sql, local, docs]
+  quality: { authority: 4, docs_quality: 5, repo_activity: 5, license_clarity: 5, installation: 5, tests: 4, examples: 5, security: null, maintenance: 5, compatibility: 4 }
+  verification: reviewed
+  last_verified: 2026-09-30
+- id: ref-datahub-docs
+  slug: datahub-docs
+  type: reference
+  title: DataHub Documentation
+  url: https://docs.datahub.com/
+  publisher: Acryl Data / DataHub Project
+  kind: documentation
+  category: cat-data-catalog
+  license: Apache-2.0
+  summary: DataHub docs — metadata model, lineage, search, and the ingestion framework.
+  why: The metadata model explains how to represent ownership and lineage consistently across tools.
+  tags: [catalog, lineage, metadata, docs]
+  quality: { authority: 4, docs_quality: 4, repo_activity: 4, license_clarity: 5, installation: 2, tests: 3, examples: 4, security: 3, maintenance: 4, compatibility: 3 }
+  verification: reviewed
+  last_verified: 2026-09-18
+- id: ref-openlineage-docs
+  slug: openlineage-docs
+  type: reference
+  title: OpenLineage Documentation
+  url: https://openlineage.io/docs/
+  publisher: OpenLineage / LF AI & Data
+  kind: documentation
+  category: cat-data-lineage
+  license: Apache-2.0
+  summary: OpenLineage docs — the lineage event spec and integrations for Airflow, Spark and dbt.
+  why: It is an open specification for lineage events, which is what makes cross-tool lineage possible.
+  tags: [lineage, openlineage, spec, docs]
+  quality: { authority: 4, docs_quality: 4, repo_activity: 4, license_clarity: 5, installation: 3, tests: 3, examples: 3, security: null, maintenance: 4, compatibility: 4 }
+  verification: reviewed
+  last_verified: 2026-09-16
+- id: ref-parquet-docs
+  slug: parquet-docs
+  type: reference
+  title: Apache Parquet Documentation & Spec
+  url: https://parquet.apache.org/docs/
+  publisher: Apache Software Foundation
+  kind: spec
+  category: cat-data-formats
+  license: Apache-2.0
+  summary: The Parquet format documentation and specification — encoding, row groups, column chunks, predicate pushdown.
+  why: Understanding row groups and statistics is what turns "use Parquet" into "and lay it out like this".
+  tags: [parquet, formats, spec, docs]
+  quality: { authority: 5, docs_quality: 3, repo_activity: 5, license_clarity: 5, installation: null, tests: 4, examples: 2, security: null, maintenance: 5, compatibility: 5 }
+  verification: reviewed
+  last_verified: 2026-09-20

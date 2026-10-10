@@ -1,0 +1,92 @@
+# Skills: warehouse + cost
+- id: skill-warehouse-clustering-advisor
+  slug: warehouse-clustering-advisor
+  type: skill
+  title: Warehouse Clustering Advisor
+  tagline: Choose warehouse size, clustering keys, and caching — measured.
+  description: >-
+    Advises on Snowflake/BigQuery/Redshift tuning: clustering keys, warehouse sizing,
+    result caching, and the difference between a scan problem and a compute problem.
+  category: cat-warehouses
+  subcategory: Performance
+  difficulty: advanced
+  tags: [snowflake, bigquery, clustering, warehouse-sizing, performance]
+  technologies: [tech-snowflake, tech-bigquery, tech-databricks]
+  learning_objectives:
+    - Separate scan inefficiency from compute inefficiency
+    - Choose a clustering key from predicate selectivity
+    - Right-size a virtual warehouse from queue time
+  prerequisites: [skill-sql-query-plan]
+  supported_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  version: 0.2.0
+  license: Apache-2.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/de-agent/skills/tree/main/warehouse-clustering-advisor
+  github_url: https://github.com/de-agent/skills
+  install_command: "amp skill add de-agent/warehouse-clustering-advisor"
+  verification: reviewed
+  last_verified: 2026-09-17
+  files: [SKILL.md, references/clustering-keys.md, examples/query-history.sql]
+  security: { runs_code: true, network_access: false, credentials: true, filesystem_access: false, external_apis: false }
+  compatibility: [claude-code, codex, cursor, amp, gemini-cli]
+  relationships:
+    related_to: [runbook-warehouse-query-slow, cat-cost-engineering]
+  body: |
+    # Warehouse Clustering Advisor
+
+    ## Diagnose first
+    - Query scans far more partitions than it needs → clustering/partition problem.
+    - Scan is optimal but the query waits → warehouse sizing or concurrency problem.
+
+    ## Clustering key choice
+    Pick the column that appears in the WHERE clause of the *most expensive* queries,
+    with reasonable cardinality. Order matters: put the most selective first.
+
+    ## Right-sizing from queue time
+    If queue time >> execution time for short queries, scale out (more clusters),
+    not up (bigger warehouse). Different problems, different knobs.
+- id: skill-cost-unit-economics
+  slug: cost-unit-economics-reporter
+  type: skill
+  title: Cost Unit-Economics Reporter
+  tagline: Attribute pipeline cost per row, per table, per team.
+  description: >-
+    Turns cluster/warehouse billing into unit economics (cost per 1M rows, per run,
+    per model) so a 4x regression shows up as a number, not a surprise invoice.
+  category: cat-cost-engineering
+  subcategory: Cost
+  difficulty: intermediate
+  tags: [cost, attribution, unit-economics, finops]
+  technologies: [tech-databricks, tech-snowflake, tech-aws]
+  learning_objectives:
+    - Attribute compute cost to a pipeline run
+    - Define a unit metric that resists regressions
+    - Set an alert on cost-per-run, not on total spend
+  prerequisites: []
+  supported_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  version: 0.1.3
+  license: Apache-2.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/de-agent/skills/tree/main/cost-unit-economics-reporter
+  github_url: https://github.com/de-agent/skills
+  install_command: "amp skill add de-agent/cost-unit-economics-reporter"
+  verification: reviewed
+  last_verified: 2026-09-11
+  files: [SKILL.md, examples/cost_model.sql, references/unit-metrics.md]
+  security: { runs_code: true, network_access: true, credentials: true, filesystem_access: false, external_apis: true }
+  compatibility: [claude-code, codex, cursor, amp, gemini-cli]
+  relationships:
+    related_to: [runbook-spark-job-suddenly-costs-4x, cat-cost-engineering]
+  body: |
+    # Cost Unit-Economics Reporter
+
+    ## Unit metrics that don't lie
+    - $ per pipeline run (stable denominator)
+    - $ per 1M rows processed
+    - DBU/credits per model build
+
+    ## Why total spend is the wrong alert
+    Total spend rises with growth and hides regressions. Cost-per-unit is flat when
+    growth is healthy and spikes the day a join starts fanning out.

@@ -1,0 +1,19 @@
+---
+// PageHero — amp-style page opening: mono kicker → serif headline → muted lede.
+interface Props {
+  kicker: string;
+  title: string;
+  lede?: string;
+}
+const { kicker, title, lede } = Astro.props;
+---
+
+<header class="col section-sm" style="padding-top: 4.5rem;">
+  <div class="mount">
+    <p class="kicker">{kicker}</p>
+    <h1 class="display-hero" style="margin-top: 1rem; max-width: 18ch;">{title}</h1>
+    {lede && <p class="lede" style="margin-top: 1.25rem;">{lede}</p>}
+    <slot />
+  </div>
+</header>
+<hr class="hairline col" />

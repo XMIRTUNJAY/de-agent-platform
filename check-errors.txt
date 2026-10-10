@@ -1,0 +1,82 @@
+astro.config.mjs:23:15 - error ts(2322): Type 'Plugin<any>[]' is not assignable to type 'PluginOption'.
+                    Type 'HotUpdatePluginContext' is missing the following properties from type 'MinimalPluginContext': error, info, warn, debug, meta
+src/components/ResourceDetail.astro:337:26 - error ts(7006): Parameter 't' implicitly has an 'any' type.
+src/components/ResourceDetail.astro:323:123 - error ts(2322): Type '{ children: any; class: string; key: any; }' is not assignable to type 'HTMLAttributes'.
+src/components/ResourceDetail.astro:323:71 - error ts(2322): Type '{ children: string; href: string; class: string; key: any; }' is not assignable to type 'AnchorHTMLAttributes'.
+src/components/ResourceDetail.astro:321:31 - error ts(7006): Parameter 'id' implicitly has an 'any' type.
+src/components/ResourceDetail.astro:321:27 - error ts(2339): Property 'map' does not exist on type '{}'.
+src/components/ResourceDetail.astro:318:22 - error ts(2322): Type '{ children: any[]; key: string; }' is not assignable to type 'HTMLAttributes'.
+src/components/ResourceDetail.astro:317:83 - error ts(2339): Property 'length' does not exist on type '{}'.
+src/components/ResourceDetail.astro:313:70 - error ts(2339): Property 'length' does not exist on type '{}'.
+src/components/ResourceDetail.astro:305:28 - error ts(7006): Parameter 'p' implicitly has an 'any' type.
+src/components/ResourceDetail.astro:262:58 - error ts(7053): Element implicitly has an 'any' type because expression of type 'any' can't be used to index type '{ foundations: { id: string; slug: string; order: number; title: string; summary: string; outcomes: string[]; }; "python-sql": { id: string; slug: string; order: number; title: string; summary: string; outcomes: string[]; }; ... 10 more ...; agentic: { ...; }; }'.
+src/components/ResourceDetail.astro:248:35 - error ts(7006): Parameter 'c' implicitly has an 'any' type.
+src/components/ResourceDetail.astro:242:30 - error ts(7006): Parameter 'm' implicitly has an 'any' type.
+src/components/ResourceDetail.astro:236:32 - error ts(7006): Parameter 'h' implicitly has an 'any' type.
+src/components/ResourceDetail.astro:230:33 - error ts(7006): Parameter 's' implicitly has an 'any' type.
+src/components/ResourceDetail.astro:224:32 - error ts(7006): Parameter 't' implicitly has an 'any' type.
+src/components/ResourceDetail.astro:218:39 - error ts(7006): Parameter 'c' implicitly has an 'any' type.
+src/components/ResourceDetail.astro:200:37 - error ts(7006): Parameter 'g' implicitly has an 'any' type.
+src/components/ResourceDetail.astro:194:34 - error ts(7006): Parameter 'o' implicitly has an 'any' type.
+src/components/ResourceDetail.astro:188:33 - error ts(7006): Parameter 'i' implicitly has an 'any' type.
+src/components/ResourceDetail.astro:182:35 - error ts(7006): Parameter 'w' implicitly has an 'any' type.
+src/components/ResourceDetail.astro:170:32 - error ts(7006): Parameter 's' implicitly has an 'any' type.
+src/components/ResourceDetail.astro:146:47 - error ts(7006): Parameter 'p' implicitly has an 'any' type.
+src/components/ResourceDetail.astro:140:44 - error ts(7006): Parameter 'f' implicitly has an 'any' type.
+src/components/ResourceDetail.astro:134:32 - error ts(7006): Parameter 't' implicitly has an 'any' type.
+src/components/ResourceDetail.astro:125:43 - error ts(7006): Parameter 'i' implicitly has an 'any' type.
+src/components/ResourceDetail.astro:118:36 - error ts(7006): Parameter 't' implicitly has an 'any' type.
+src/components/ResourceDetail.astro:112:37 - error ts(7006): Parameter 'm' implicitly has an 'any' type.
+src/components/ResourceDetail.astro:106:37 - error ts(7006): Parameter 'p' implicitly has an 'any' type.
+src/components/ResourceDetail.astro:100:30 - error ts(7006): Parameter 'f' implicitly has an 'any' type.
+src/components/ResourceDetail.astro:89:31 - error ts(7006): Parameter 'c' implicitly has an 'any' type.
+src/components/ResourceDetail.astro:83:36 - error ts(7006): Parameter 'd' implicitly has an 'any' type.
+src/components/ResourceDetail.astro:77:33 - error ts(7006): Parameter 'f' implicitly has an 'any' type.
+src/components/ResourceDetail.astro:9:40 - error ts(7006): Parameter 'id' implicitly has an 'any' type.
+src/components/ResourceDetail.astro:8:37 - error ts(7006): Parameter 't' implicitly has an 'any' type.
+src/pages/index.astro:223:110 - error ts(18048): 'skill' is possibly 'undefined'.
+src/pages/index.astro:205:20 - error ts(2339): Property 'byType' does not exist on type '{ generated_at: string; counts: { total: number; byType: { skill: number; mcp: number; plugin: number; hook: number; agent: number; template: number; starter: number; runbook: number; architecture: number; reference: number; }; ... 4 more ...; stages: number; }; byStage: { ...; }; byCategory: { ...; }; readability: ...'.
+src/pages/index.astro:204:20 - error ts(2339): Property 'byType' does not exist on type '{ generated_at: string; counts: { total: number; byType: { skill: number; mcp: number; plugin: number; hook: number; agent: number; template: number; starter: number; runbook: number; architecture: number; reference: number; }; ... 4 more ...; stages: number; }; byStage: { ...; }; byCategory: { ...; }; readability: ...'.
+src/pages/index.astro:126:18 - error ts(18048): 'skill' is possibly 'undefined'.
+src/pages/index.astro:124:111 - error ts(18048): 'skill' is possibly 'undefined'.
+src/pages/index.astro:122:31 - error ts(18048): 'skill' is possibly 'undefined'.
+src/pages/index.astro:121:68 - error ts(18048): 'skill' is possibly 'undefined'.
+src/pages/index.astro:100:56 - error ts(7053): Element implicitly has an 'any' type because expression of type 'string' can't be used to index type '{ warehousing: number; reliability: number; "python-sql": number; orchestration: number; cloud: number; "data-quality": number; lakehouse: number; observability: number; "data-processing": number; streaming: number; agentic: number; foundations: number; "system-design": number; }'.
+src/pages/index.astro:100:33 - error ts(7053): Element implicitly has an 'any' type because expression of type 'string' can't be used to index type '{ warehousing: number; reliability: number; "python-sql": number; orchestration: number; cloud: number; "data-quality": number; lakehouse: number; observability: number; "data-processing": number; streaming: number; agentic: number; foundations: number; "system-design": number; }'.
+src/pages/index.astro:31:24 - error ts(7006): Parameter 'r' implicitly has an 'any' type.
+src/pages/marketplace.astro:48:71 - error ts(2345): Argument of type 'string' is not assignable to parameter of type 'never'.
+src/pages/marketplace.astro:210:32 - error ts(2339): Property 'value' does not exist on type 'Element'.
+src/pages/marketplace.astro:209:40 - error ts(2339): Property 'value' does not exist on type 'Element'.
+src/pages/marketplace.astro:209:20 - error ts(2339): Property 'checked' does not exist on type 'Element'.
+src/pages/marketplace.astro:208:39 - error ts(2339): Property 'name' does not exist on type 'Element'.
+src/pages/marketplace.astro:203:11 - error ts(18047): 'empty' is possibly 'null'.
+src/pages/marketplace.astro:200:18 - error ts(2339): Property 'hidden' does not exist on type 'Element'.
+src/pages/marketplace.astro:194:49 - error ts(7006): Parameter 'v' implicitly has an 'any' type.
+src/pages/marketplace.astro:189:30 - error ts(2339): Property 'dataset' does not exist on type 'Element'.
+src/pages/marketplace.astro:181:50 - error ts(2339): Property 'name' does not exist on type 'Element'.
+src/pages/marketplace.astro:178:34 - error ts(18047): 'results' is possibly 'null'.
+src/pages/roadmap.astro:86:25 - error ts(7006): Parameter 'p' implicitly has an 'any' type.
+src/pages/roadmap.astro:81:20 - error ts(7006): Parameter 't' implicitly has an 'any' type.
+src/pages/roadmap.astro:53:26 - error ts(7006): Parameter 'cat' implicitly has an 'any' type.
+src/pages/roadmap.astro:31:23 - error ts(7053): Element implicitly has an 'any' type because expression of type 'string' can't be used to index type '{ warehousing: number; reliability: number; "python-sql": number; orchestration: number; cloud: number; "data-quality": number; lakehouse: number; observability: number; "data-processing": number; streaming: number; agentic: number; foundations: number; "system-design": number; }'.
+src/pages/roadmap.astro:30:59 - error ts(7006): Parameter 'b' implicitly has an 'any' type.
+src/pages/roadmap.astro:30:57 - error ts(7006): Parameter 'a' implicitly has an 'any' type.
+src/pages/roadmap.astro:30:23 - error ts(7053): Element implicitly has an 'any' type because expression of type 'string' can't be used to index type '{}'.
+src/pages/roadmap.astro:15:30 - error ts(7053): Element implicitly has an 'any' type because expression of type 'string' can't be used to index type '{}'.
+src/pages/roadmap.astro:12:33 - error ts(2339): Property 'tracks' does not exist on type '{ roadmap: { title: string; tagline: string; main_path: string[]; stages: { foundations: { teaches: string; can_do: string[]; artifact: string; gate: string; }; "python-sql": { teaches: string; can_do: string[]; artifact: string; gate: string; }; ... 10 more ...; agentic: { ...; }; }; tracks: { ...; }[]; }; }'.
+src/pages/roadmap.astro:11:40 - error ts(2339): Property 'stages' does not exist on type '{ roadmap: { title: string; tagline: string; main_path: string[]; stages: { foundations: { teaches: string; can_do: string[]; artifact: string; gate: string; }; "python-sql": { teaches: string; can_do: string[]; artifact: string; gate: string; }; ... 10 more ...; agentic: { ...; }; }; tracks: { ...; }[]; }; }'.
+src/pages/search.astro:16:22 - error ts(7006): Parameter 'tag' implicitly has an 'any' type.
+src/pages/search.astro:9:19 - error ts(7006): Parameter 'q' implicitly has an 'any' type.
+src/pages/search.astro:9:16 - error ts(7006): Parameter 'r' implicitly has an 'any' type.
+src/pages/taxonomy.astro:34:26 - error ts(7006): Parameter 'cat' implicitly has an 'any' type.
+src/pages/taxonomy.astro:24:22 - error ts(7053): Element implicitly has an 'any' type because expression of type 'string' can't be used to index type '{}'.
+src/pages/taxonomy.astro:11:30 - error ts(7053): Element implicitly has an 'any' type because expression of type 'string' can't be used to index type '{}'.
+src/pages/categories/[slug].astro:78:32 - error ts(2339): Property 'value' does not exist on type 'Element'.
+src/pages/categories/[slug].astro:77:40 - error ts(2339): Property 'value' does not exist on type 'Element'.
+src/pages/categories/[slug].astro:77:20 - error ts(2339): Property 'checked' does not exist on type 'Element'.
+src/pages/categories/[slug].astro:76:39 - error ts(2339): Property 'name' does not exist on type 'Element'.
+src/pages/categories/[slug].astro:70:18 - error ts(2339): Property 'hidden' does not exist on type 'Element'.
+src/pages/categories/[slug].astro:66:32 - error ts(2339): Property 'dataset' does not exist on type 'Element'.
+src/pages/categories/[slug].astro:59:50 - error ts(2339): Property 'name' does not exist on type 'Element'.
+src/pages/categories/[slug].astro:56:34 - error ts(18047): 'results' is possibly 'null'.
+- 80 errors

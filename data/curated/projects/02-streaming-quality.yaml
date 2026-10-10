@@ -1,0 +1,171 @@
+# Projects — streaming & quality
+- id: project-postgres-cdc-kafka-lakehouse
+  slug: postgres-cdc-kafka-lakehouse
+  type: starter
+  title: "Postgres → CDC → Kafka → Lakehouse"
+  description: >-
+    Capture changes from Postgres with Debezium, stream through Kafka, and merge
+    into a lakehouse table with correct ordering, deletes and replay safety.
+  category: cat-cdc
+  difficulty: advanced
+  technologies: [tech-postgres, tech-debezium, tech-kafka, tech-delta, tech-iceberg, tech-spark]
+  stack: [Postgres, Debezium, Kafka, Spark Structured Streaming, Delta Lake]
+  learning_objectives:
+    - Configure a logical replication slot safely
+    - Order events by LSN and dedupe before merging
+    - Handle tombstones without losing history
+  architecture: |
+    Postgres (WAL) ─▶ Debezium ─▶ Kafka (orders.cdc) ─▶ Spark SS [dedupe by LSN]
+                                                              │
+                                                              ▼
+                                                    MERGE into Delta/Iceberg
+  repo_structure: |
+    postgres-cdc-kafka-lakehouse/
+      docker-compose.yml        # postgres, kafka, connect, minio, spark
+      connect/orders-connector.json
+      stream/merge_to_lake.py
+      ddl/target_table.sql
+      tests/test_merge.py
+  sample_data: A seeded Postgres `orders` table; a script that performs inserts, updates and a delete to exercise all CDC ops.
+  setup:
+    - "make up  # postgres + kafka + connect + minio"
+    - "make register-connector"
+    - "make seed-mutations  # insert/update/delete"
+  implementation:
+    - Debezium with `decimal.handling.mode=string` to avoid precision loss.
+    - Read the stream, keep the latest event per key by (lsn, ts_ms).
+    - MERGE on the primary key; `op='d'` → soft delete with `_deleted_at`.
+    - Checkpoint to object storage so a restart resumes correctly.
+  tests:
+    - "replaying the same batch produces an identical table"
+    - "deletes propagate as soft deletes within the SLA"
+    - "no duplicate primary keys after a replay"
+  failure_scenarios:
+    - "Replication slot dropped / WAL purged → full re-snapshot required"
+    - "Out-of-order events flip a value back → ordering used arrival time"
+    - "Schema change in source breaks the connector → handle and evolve"
+  production_hardening:
+    - "Alert on slot retained WAL and connector task failures"
+    - "Monitor source-vs-target row counts continuously"
+    - "Backpressure with `maxOffsetsPerTrigger`"
+  agent_skills: [skill-cdc-merge-designer, skill-kafka-lag-triage]
+  version: 1.1.0
+  license: MIT
+  author: de-agent
+  source_url: https://github.com/de-agent/projects/tree/main/postgres-cdc-kafka-lakehouse
+  github_url: https://github.com/de-agent/projects
+  verification: reviewed
+  last_verified: 2026-09-25
+  security: { runs_code: true, network_access: true, credentials: true, filesystem_access: true, external_apis: false }
+  relationships: { related_to: [pattern-postgres-cdc-lakehouse, runbook-cdc-stopped] }
+- id: project-kafka-spark-delta
+  slug: kafka-spark-delta
+  type: starter
+  title: "Kafka → Spark Streaming → Delta"
+  description: >-
+    A low-latency stream into Delta Lake with watermarking, windowed aggregation
+    and idempotent upserts that survive replays.
+  category: cat-streaming
+  difficulty: advanced
+  technologies: [tech-kafka, tech-spark, tech-delta]
+  stack: [Kafka, Spark Structured Streaming, Delta Lake]
+  learning_objectives:
+    - Choose event-time vs processing-time windows
+    - Set a watermark and reason about late data
+    - Make the sink idempotent under replay
+  architecture: |
+    Kafka (events) ─▶ Spark SS [watermark 2m, dedupe on event_id]
+                        ├─▶ Delta: raw_events (append, bronze)
+                        └─▶ Delta: agg_5min  (windowed, MERGE on window key)
+  repo_structure: |
+    kafka-spark-delta/
+      src/stream_raw.py
+      src/stream_agg.py
+      conf/stream.yml
+      tests/test_window.py
+      docker-compose.yml
+  sample_data: A producer script emitting synthetic events with a controllable late-arrival fraction.
+  setup:
+    - "make up"
+    - "make produce  # emits events, some deliberately late"
+    - "make stream &"
+  implementation:
+    - Read with `startingOffsets=earliest` in dev only; latest in prod.
+    - Dedupe on `event_id` within the watermark.
+    - Windowed aggregation to 5-minute tumbling windows, appended idempotently.
+    - MERGE aggregates on the window key so replays converge.
+  tests:
+    - "a late event beyond the watermark is dropped (documented, not silent)"
+    - "replaying a batch yields the same aggregate"
+  failure_scenarios:
+    - "Checkpoint lost → duplicates; fix by making the sink idempotent"
+    - "Skewed key → one partition saturates; re-key"
+    - "Watermark too short → late data silently dropped"
+  production_hardening:
+    - "Checkpoints on durable storage with lineage"
+    - "Lag + batch-duration metrics; alert on rising batch duration"
+    - "Compaction job on the aggregate table"
+  agent_skills: [skill-kafka-lag-triage, skill-delta-optimizer]
+  version: 1.0.0
+  license: MIT
+  author: de-agent
+  source_url: https://github.com/de-agent/projects/tree/main/kafka-spark-delta
+  github_url: https://github.com/de-agent/projects
+  verification: reviewed
+  last_verified: 2026-09-23
+  security: { runs_code: true, network_access: true, credentials: true, filesystem_access: true, external_apis: false }
+  relationships: { related_to: [pattern-streaming-dedup-upsert, runbook-kafka-consumer-lagging] }
+- id: project-pipeline-dq-quarantine
+  slug: pipeline-dq-quarantine
+  type: starter
+  title: "Pipeline → DQ → quarantine → publish"
+  description: >-
+    Put a contract in front of a table: validate each batch, publish the clean rows,
+    quarantine the rest with reasons, and alert on the quarantine rate.
+  category: cat-data-quality
+  difficulty: intermediate
+  technologies: [tech-spark, tech-duckdb, tech-parquet, tech-python]
+  stack: [PySpark / DuckDB, Parquet, a quality contract in YAML]
+  learning_objectives:
+    - Express a quality contract as executable checks
+    - Design a quarantine table with a reason
+    - Alert on the quarantine rate, not just on failure
+  architecture: |
+    batch ─▶ [contract check] ─┬─ pass ─▶ published/ (SLA-bearing)
+                               └─ fail ─▶ quarantine/ (+reason, +source_file)
+                                              │
+                                              └─▶ alert on rate
+  repo_structure: |
+    pipeline-dq-quarantine/
+      contract/orders.yml       # rules: not_null, unique, range, enum
+      src/validate.py
+      src/publish.py
+      tests/test_quarantine.py
+  sample_data: A batch with ~5% deliberately invalid rows (nulls, dupes, out-of-range).
+  setup:
+    - "make test  # validates against the fixtures offline"
+    - "make run"
+  implementation:
+    - Load the contract, compile rules to SQL (DuckDB) or Spark expressions.
+    - Split into pass/fail with a stable `failure_reason`.
+    - Publish the pass set; write the fail set to quarantine with provenance.
+  tests:
+    - "every row is either published or quarantined — never lost"
+    - "the quarantine contains exactly the seeded bad rows"
+    - "a clean batch produces an empty quarantine"
+  failure_scenarios:
+    - "Contract too strict → quarantine rate explodes; tier rules and loosen with evidence"
+    - "Quarantine never reviewed → add a scheduled review and a reprocess path"
+  production_hardening:
+    - "Alert when quarantine rate > 1% for 2 consecutive runs"
+    - "A reprocess command that re-runs the quarantined rows after a fix"
+  agent_skills: [skill-spark-data-quality-review, skill-data-contract-author]
+  version: 1.0.0
+  license: MIT
+  author: de-agent
+  source_url: https://github.com/de-agent/projects/tree/main/pipeline-dq-quarantine
+  github_url: https://github.com/de-agent/projects
+  verification: reviewed
+  last_verified: 2026-09-26
+  security: { runs_code: true, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
+  relationships: { related_to: [pattern-quarantine-publish, runbook-data-quality-failure] }

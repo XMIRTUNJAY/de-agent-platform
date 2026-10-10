@@ -1,0 +1,28 @@
+---
+/**
+ * Fixed, non-interactive backdrop: dotted vertical "rails" + a faint grid,
+ * echoing a terminal/engineering-grid aesthetic. Cheap (single SVG pattern).
+ */
+interface Props { dense?: boolean }
+const { dense = false } = Astro.props;
+const gap = dense ? 64 : 96;
+---
+<div class="pointer-events-none fixed inset-0 -z-10 overflow-hidden" aria-hidden="true">
+  <svg class="h-full w-full opacity-50">
+    <defs>
+      <pattern id="rails" width={gap} height="26" patternUnits="userSpaceOnUse">
+        <line x1="0.5" y1="0" x2="0.5" y2="26"
+              stroke="var(--rail)" stroke-width="0.75"
+              stroke-dasharray="1 7" stroke-linecap="round" />
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#rails)" />
+  </svg>
+  <div class="grid-lines-bg absolute inset-0 opacity-60"></div>
+  <div class="absolute inset-x-0 top-0 h-[420px]"
+       style="background: radial-gradient(120% 100% at 50% -20%, var(--accent-soft) 0%, transparent 62%);">
+  </div>
+  <div class="absolute inset-x-0 bottom-0 h-64"
+       style="background: linear-gradient(to top, var(--shell) 10%, transparent);">
+  </div>
+</div>

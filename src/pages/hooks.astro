@@ -1,0 +1,16 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ListingPage from '@/components/ListingPage.astro';
+import registry from '@/data/generated/registry.json';
+
+const resources = registry.resources.filter(r => r.type === 'hook');
+---
+
+<BaseLayout title="Hooks · DE//AGENT" sidebar>
+  <ListingPage
+    kicker="Marketplace"
+    title="Hooks"
+    lede="Guardrails that intercept agent actions — pre-commit, pre-deploy, on-tool-call. Each declares its trigger, implementation and failure behavior."
+    resources={resources}
+  />
+</BaseLayout>

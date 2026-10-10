@@ -1,0 +1,94 @@
+# Skills: SQL
+- id: skill-sql-review
+  slug: sql-review
+  type: skill
+  title: SQL Review
+  tagline: A review pass that catches correctness bugs before the query reaches production.
+  description: >-
+    Reviews a SQL statement for fan-out joins, NULL-unsafe predicates, implicit
+    casts, non-deterministic ordering, and functions that silently change grain.
+  category: cat-sql
+  subcategory: Code Review
+  difficulty: beginner
+  tags: [sql, review, joins, correctness]
+  technologies: [tech-sql, tech-duckdb]
+  learning_objectives:
+    - Prove a join cannot fan out before writing it
+    - Spot NULL-unsafe `NOT IN` and `=` predicates
+    - State the grain of a result set in one sentence
+  prerequisites: []
+  supported_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  version: 0.3.0
+  license: Apache-2.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/de-agent/skills/tree/main/sql-review
+  github_url: https://github.com/de-agent/skills
+  install_command: "amp skill add de-agent/sql-review"
+  verification: reviewed
+  last_verified: 2026-09-30
+  files: [SKILL.md, references/null-semantics.md, examples/fanout.sql, tests/test_rules.py]
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
+  compatibility: [claude-code, codex, cursor, amp, gemini-cli]
+  relationships:
+    related_to: [skill-sql-query-plan, cat-sql]
+  body: |
+    # SQL Review
+
+    ## The first question
+    *What is the grain of this result?* If the author can't answer, stop.
+
+    ## Rules
+    1. Every join states its cardinality (1:1, N:1, N:N) and justifies it.
+    2. `NOT IN (subquery)` is banned where the subquery can return NULL — use `NOT EXISTS`.
+    3. Comparisons across types must be explicit casts, not implicit.
+    4. `ORDER BY` without `LIMIT` in a view is meaningless — drop it.
+    5. `SELECT *` in a persisted model freezes an unstable schema.
+
+    ## Deliverable
+    Findings with the exact predicate, the failure case, and a rewritten clause.
+- id: skill-sql-query-plan
+  slug: sql-query-plan-explainer
+  type: skill
+  title: SQL Query Plan Explainer
+  tagline: Translate an EXPLAIN plan into plain language and the one change worth making.
+  description: >-
+    Reads EXPLAIN / EXPLAIN ANALYZE output and explains scans, joins, spills and
+    estimated-vs-actual row skew, then proposes the single highest-impact change.
+  category: cat-sql
+  subcategory: Performance
+  difficulty: intermediate
+  tags: [sql, explain, query-plan, performance]
+  technologies: [tech-sql, tech-postgres, tech-duckdb]
+  learning_objectives:
+    - Read a plan bottom-up and name the expensive node
+    - Detect cardinality misestimation from stale statistics
+    - Decide between an index, a rewrite, or a stats refresh
+  prerequisites: [skill-sql-review]
+  supported_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  version: 0.2.1
+  license: Apache-2.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/de-agent/skills/tree/main/sql-query-plan-explainer
+  github_url: https://github.com/de-agent/skills
+  install_command: "amp skill add de-agent/sql-query-plan-explainer"
+  verification: reviewed
+  last_verified: 2026-09-22
+  files: [SKILL.md, references/plan-nodes.md, examples/explain.txt]
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
+  compatibility: [claude-code, codex, cursor, amp, gemini-cli]
+  relationships:
+    related_to: [skill-sql-review, runbook-warehouse-query-slow]
+  body: |
+    # SQL Query Plan Explainer
+
+    ## Method
+    1. Read bottom-up; the deepest node is the first data touched.
+    2. Compare `rows` (estimate) to `actual rows`. >10x off means stale stats.
+    3. Look for `Seq Scan` on a large table that should use an index.
+    4. Look for `Sort` / `Hash` spilling to disk (`disk usage` in the plan).
+
+    ## Output
+    One sentence per expensive node, then exactly one recommended change with
+    the expected effect and a way to measure it.

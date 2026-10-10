@@ -1,0 +1,180 @@
+# Projects — batch & warehouse
+- id: project-api-s3-spark-parquet
+  slug: api-s3-spark-parquet
+  type: starter
+  title: "API → S3 → Spark → Parquet"
+  description: >-
+    Land a paginated REST API into S3 raw, transform with PySpark into partitioned
+    Parquet, and make the whole thing idempotent and testable offline.
+  category: cat-ingestion
+  difficulty: intermediate
+  technologies: [tech-python, tech-s3, tech-spark, tech-pyspark, tech-parquet, tech-docker]
+  stack: [Python, Amazon S3, PySpark, Parquet, Docker]
+  learning_objectives:
+    - Handle pagination, retries and rate limits correctly
+    - Write an idempotent partition overwrite
+    - Test a Spark transform without a cluster
+  architecture: |
+    REST API ─▶ [extract: paginate + retry] ─▶ S3 raw/ (JSON, immutable)
+                                                      │
+                                                      ▼
+                                     [PySpark transform: type, dedupe, partition]
+                                                      │
+                                                      ▼
+                                     S3 curated/ (Parquet, dt=.., Hive layout)
+  repo_structure: |
+    api-s3-spark-parquet/
+      extract/api_client.py     # pagination, backoff, idempotency key
+      transform/orders.py       # typed, deduped, partitioned
+      extract/land_raw.py       # writes raw JSON, never overwrites silently
+      tests/data/*.json         # tiny fixtures
+      tests/test_orders.py
+      docker-compose.yml        # minio + spark local
+      Makefile
+  sample_data: tests/data/orders_page_1.json, tests/data/orders_page_2.json (3-5 rows each)
+  setup:
+    - "make up  # starts MinIO + a local Spark"
+    - "make seed  # uploads sample raw JSON"
+    - "make test  # runs the transform tests offline"
+  implementation:
+    - Extract with an explicit cursor and a max-pages guard; log every request.
+    - Land raw JSON untouched, keyed by ingestion date.
+    - Transform: cast types explicitly, dedupe on the business key, add dt.
+    - Write Parquet with INSERT OVERWRITE on dt so re-runs are safe.
+  tests:
+    - "row count stable across two runs (idempotency)"
+    - "no nulls in the business key"
+    - "partition dt matches the logical date, not the wall clock"
+  failure_scenarios:
+    - "API returns 429 → backoff then resume from the last cursor, not from page 1"
+    - "A page arrives with a changed field type → quarantine the page, alert"
+    - "A re-run for the same date duplicates rows → the overwrite is not partition-scoped"
+  production_hardening:
+    - "Retry with jittered exponential backoff"
+    - "Alert on extract lag and on null business keys"
+    - "Checksum raw files; store the API's cursor for replay"
+  agent_skills: [skill-spark-data-quality-review, skill-pipeline-test-author, skill-sql-review]
+  version: 1.2.0
+  license: MIT
+  author: de-agent
+  source_url: https://github.com/de-agent/projects/tree/main/api-s3-spark-parquet
+  github_url: https://github.com/de-agent/projects
+  verification: reviewed
+  last_verified: 2026-09-28
+  security: { runs_code: true, network_access: true, credentials: true, filesystem_access: true, external_apis: true }
+  relationships: { related_to: [pattern-medallion-zones, pattern-idempotent-partition-overwrite] }
+- id: project-s3-glue-athena
+  slug: s3-glue-athena
+  type: starter
+  title: "S3 → Glue → Athena"
+  description: >-
+    A serverless, query-in-place pattern: land Parquet in S3, catalogue it with
+    Glue, and query with Athena while keeping scanned bytes (and cost) low.
+  category: cat-aws
+  difficulty: intermediate
+  technologies: [tech-s3, tech-glue, tech-athena, tech-parquet, tech-terraform]
+  stack: [Amazon S3, AWS Glue, Amazon Athena, Terraform]
+  learning_objectives:
+    - Lay out Parquet so Athena prunes well
+    - Use partition projection instead of repeated crawls
+    - Measure and cut bytes scanned
+  architecture: |
+    Parquet in S3 (Hive layout: dt=..) ─▶ Glue Data Catalog ─▶ Athena (serverless SQL)
+              ▲                                                     │
+        [Terraform: buckets, catalog, workgroup with bytes limit]    └─▶ BI / notebooks
+  repo_structure: |
+    s3-glue-athena/
+      terraform/            # s3, glue catalog, athena workgroup
+      ddl/table.sql         # partition projection DDL
+      queries/*.sql
+      data/dt=2026-09-01/*.parquet
+  sample_data: A small synthetic Parquet dataset partitioned by dt, with one deliberately oversized file to demonstrate compaction.
+  setup:
+    - "terraform init && terraform apply"
+    - "aws s3 sync data/ s3://<bucket>/<prefix>/"
+    - "run ddl/table.sql in Athena to register with projection"
+  implementation:
+    - Write Parquet compressed, target 128 MB files.
+    - Define the table with projection on dt (no MSCK REPAIR).
+    - Query only the needed columns; compare scanned bytes before/after.
+  tests:
+    - "explain analyze shows partition pruning on dt"
+    - "bytes scanned per query within budget"
+  failure_scenarios:
+    - "A new partition is invisible → projection pattern doesn't match the layout"
+    - "Query scans everything → predicate not on the partition column"
+    - "Thousands of tiny files → compact"
+  production_hardening:
+    - "Athena workgroup with a per-query bytes-scanned limit"
+    - "A nightly compaction job"
+    - "CloudWatch alarms on scanned bytes per hour"
+  agent_skills: [skill-athena-partition-advisor, skill-aws-glue-reviewer]
+  version: 1.1.0
+  license: MIT
+  author: de-agent
+  source_url: https://github.com/de-agent/projects/tree/main/s3-glue-athena
+  github_url: https://github.com/de-agent/projects
+  verification: reviewed
+  last_verified: 2026-09-22
+  security: { runs_code: true, network_access: true, credentials: true, filesystem_access: true, external_apis: true }
+  relationships: { related_to: [pattern-medallion-zones, runbook-small-files-explosion] }
+- id: project-dbt-warehouse-tests
+  slug: dbt-warehouse-tests
+  type: starter
+  title: "dbt → warehouse → tests → docs"
+  description: >-
+    Transform raw landed data into a tested, documented star schema with dbt, and
+    gate every change on data-aware CI.
+  category: cat-dbt
+  difficulty: beginner
+  technologies: [tech-dbt, tech-postgres, tech-duckdb]
+  stack: [dbt, Postgres, DuckDB (for CI)]
+  learning_objectives:
+    - Layer staging/intermediate/marts
+    - Write tests that protect the grain
+    - Run data-aware CI against a staging schema
+  architecture: |
+    raw.orders ─▶ stg_orders ─▶ int_orders_enriched ─┐
+    raw.customers ─▶ stg_customers ──────────────────┼─▶ fct_orders ─▶ marts
+    seeds/ ─▶ dim_date ──────────────────────────────┘
+                (tests + docs on every node; CI on staging schema)
+  repo_structure: |
+    dbt-warehouse-tests/
+      models/staging/
+      models/intermediate/
+      models/marts/
+      models/schema.yml     # tests + descriptions
+      tests/                # singular tests
+      .github/workflows/ci.yml
+  sample_data: dbt seeds — customers.csv, orders.csv (small, deterministic)
+  setup:
+    - "dbt deps && dbt seed"
+    - "dbt build --target dev"
+    - "dbt docs generate && dbt docs serve"
+  implementation:
+    - Staging: rename, cast, one row per source row.
+    - Intermediate: business logic, no direct consumer reads.
+    - Marts: fct vs dim, grain declared in schema.yml.
+    - Incremental on fct_orders with a 3-day lookback.
+  tests:
+    - "unique + not_null on the fct grain key"
+    - "relationships from fct to dims"
+    - "accepted_values on status"
+  failure_scenarios:
+    - "Late-arriving order missed → lookback window too short"
+    - "Grain key not unique → a join fanned out upstream"
+    - "CI green but prod differs → CI ran on a different target/schema"
+  production_hardening:
+    - "CI builds to a per-PR staging schema and runs full tests"
+    - "Source freshness checks on raw"
+    - "Exposures declared for dashboards"
+  agent_skills: [skill-dbt-model-review, skill-dbt-test-writer, skill-sql-review]
+  version: 1.3.0
+  license: MIT
+  author: de-agent
+  source_url: https://github.com/de-agent/projects/tree/main/dbt-warehouse-tests
+  github_url: https://github.com/de-agent/projects
+  verification: reviewed
+  last_verified: 2026-09-27
+  security: { runs_code: true, network_access: true, credentials: true, filesystem_access: true, external_apis: false }
+  relationships: { related_to: [pattern-dbt-tests-docs, pattern-dimensional-model] }

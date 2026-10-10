@@ -1,0 +1,96 @@
+# Skills: testing (dbt, pipeline)
+- id: skill-dbt-test-writer
+  slug: dbt-test-writer
+  type: skill
+  title: dbt Test Writer
+  tagline: Generate the minimum test set that actually protects a model.
+  description: >-
+    Proposes dbt tests ranked by blast radius: uniqueness/not-null on the grain key,
+    accepted values on enums, relationships on foreign keys, and freshness on sources.
+  category: cat-dbt
+  subcategory: Testing
+  difficulty: beginner
+  tags: [dbt, testing, data-quality]
+  technologies: [tech-dbt]
+  learning_objectives:
+    - Rank tests by the cost of the failure they prevent
+    - Write a custom singular test
+    - Wire freshness on a source
+  prerequisites: [skill-dbt-model-review]
+  supported_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  version: 0.3.2
+  license: Apache-2.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/de-agent/skills/tree/main/dbt-test-writer
+  github_url: https://github.com/de-agent/skills
+  install_command: "amp skill add de-agent/dbt-test-writer"
+  verification: reviewed
+  last_verified: 2026-09-28
+  files: [SKILL.md, examples/schema.yml, references/test-catalogue.md]
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
+  compatibility: [claude-code, codex, cursor, amp, gemini-cli]
+  relationships:
+    related_to: [skill-dbt-model-review, cat-data-quality]
+    implements: [pattern-contracts-quality-gate]
+  body: |
+    # dbt Test Writer
+
+    ## Rank by blast radius, not by effort
+    1. `unique` + `not_null` on the grain key — the model is meaningless without it.
+    2. `relationships` on every foreign key — catches broken joins upstream.
+    3. `accepted_values` on low-cardinality enums — catches upstream renames.
+    4. `freshness` on sources — catches a stalled extractor, the #1 silent outage.
+
+    ## Avoid
+    - Row-count equality tests on raw sources: they flake.
+    - Testing a column nobody reads.
+    - `warn` severity on a correctness test nobody will see.
+- id: skill-pipeline-test-author
+  slug: pipeline-test-author
+  type: skill
+  title: Pipeline Test Author
+  tagline: Write integration tests for a pipeline that run in seconds, offline.
+  description: >-
+    Builds a local DuckDB/pyarrow harness with tiny fixtures so pipeline logic is
+    testable in CI without a cluster, and asserts on invariants, not snapshots.
+  category: cat-testing
+  subcategory: Testing
+  difficulty: intermediate
+  tags: [testing, pytest, duckdb, fixtures, ci]
+  technologies: [tech-python, tech-duckdb, tech-parquet]
+  learning_objectives:
+    - Test a transform without a Spark cluster
+    - Assert invariants instead of golden files
+    - Make a pipeline test deterministic
+  prerequisites: [skill-spark-data-quality-review]
+  supported_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  version: 0.2.0
+  license: Apache-2.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/de-agent/skills/tree/main/pipeline-test-author
+  github_url: https://github.com/de-agent/skills
+  install_command: "amp skill add de-agent/pipeline-test-author"
+  verification: tested
+  last_verified: 2026-09-27
+  files: [SKILL.md, examples/test_orders.py, examples/conftest.py, references/invariants.md]
+  security: { runs_code: true, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
+  compatibility: [claude-code, codex, cursor, amp, gemini-cli]
+  relationships:
+    related_to: [cat-testing, cat-cicd, skill-dbt-test-writer]
+  body: |
+    # Pipeline Test Author
+
+    ## The harness
+    Keep fixtures as 3-10 row Parquet/CSV files under `tests/data/`. Load them with
+    DuckDB or pyarrow. No cluster, no network, < 2s.
+
+    ## Assert invariants, not snapshots
+    - `count(*)` is stable across a re-run (idempotency)
+    - no nulls in the grain key
+    - sum(revenue) equals the source sum within tolerance
+    - a quarantined row never appears in the published table
+
+    ## Rule
+    If a test needs the network or a running warehouse, it is not a unit test.

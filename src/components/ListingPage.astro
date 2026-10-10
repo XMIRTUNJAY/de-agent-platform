@@ -1,0 +1,29 @@
+---
+// ListingPage — shared template: PageHero + stat chips + ResourceCard grid.
+import PageHero from '@/components/PageHero.astro';
+import ResourceCard from '@/components/ResourceCard.astro';
+
+interface Props {
+  kicker: string;
+  title: string;
+  lede: string;
+  resources: any[];
+}
+const { kicker, title, lede, resources } = Astro.props;
+const verified = resources.filter(r => r.verification === 'reviewed' || r.verification === 'tested').length;
+---
+
+<PageHero kicker={kicker} title={title} lede={lede}>
+  <div style="margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+    <span class="chip">{resources.length} entries</span>
+    <span class="chip chip-accent">{verified} reviewed or tested</span>
+    <slot name="chips" />
+  </div>
+</PageHero>
+
+<section class="col section-sm" style="padding-top: 2.5rem;">
+  <div class="card-grid stagger" style="margin-top: 0;">
+    {resources.map((r) => <ResourceCard resource={r} />)}
+  </div>
+  {resources.length === 0 && <p class="text-muted" style="padding: 3rem 0; text-align: center;">Nothing here yet.</p>}
+</section>

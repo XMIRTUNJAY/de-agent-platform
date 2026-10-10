@@ -1,0 +1,51 @@
+# Skills: dbt
+- id: skill-dbt-model-review
+  slug: dbt-model-review
+  type: skill
+  title: dbt Model Review
+  tagline: Review a dbt model for grain, materialisation, and incremental correctness.
+  description: >-
+    Checks a dbt model's grain statement, ref/dependency hygiene, incremental
+    strategy and late-arriving-data handling, then proposes a test set.
+  category: cat-dbt
+  subcategory: Code Review
+  difficulty: intermediate
+  tags: [dbt, review, incremental, grain]
+  technologies: [tech-dbt]
+  learning_objectives:
+    - State a model's grain and match it to its unique key test
+    - Choose table vs incremental vs view deliberately
+    - Handle late data in an incremental model
+  prerequisites: [skill-sql-review]
+  supported_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  version: 0.4.0
+  license: Apache-2.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/de-agent/skills/tree/main/dbt-model-review
+  github_url: https://github.com/de-agent/skills
+  install_command: "amp skill add de-agent/dbt-model-review"
+  verification: reviewed
+  last_verified: 2026-09-28
+  files: [SKILL.md, references/incremental-patterns.md, examples/models.yml, tests/test_rules.py]
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
+  compatibility: [claude-code, codex, cursor, amp, gemini-cli]
+  relationships:
+    related_to: [skill-dbt-test-writer, cat-dbt, pattern-dbt-tests-docs]
+    uses: [tech-dbt]
+  body: |
+    # dbt Model Review
+
+    ## Grain first
+    Every model must answer: "one row = one ___". The `unique` test goes on that key.
+
+    ## Materialisation picker
+    - `view` — cheap, and the model is small or rarely queried.
+    - `table` — the source is huge and consumers need speed.
+    - `incremental` — the source grows monotonically and you can define the watermark.
+
+    ## Incremental traps
+    1. Late-arriving rows older than the watermark are silently dropped. Add a
+       lookback window (e.g. `>= max(updated_at) - interval '3 days'`).
+    2. `is_incremental()` must guard the filter or every full run is a full reload.
+    3. Deletes never arrive. Decide explicitly: soft-delete, or periodic full-refresh.

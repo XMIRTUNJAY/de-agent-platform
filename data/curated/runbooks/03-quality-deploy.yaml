@@ -1,0 +1,263 @@
+# Runbooks — quality, contracts, deployment
+- id: runbook-schema-drift
+  slug: schema-drift
+  type: runbook
+  title: "Schema drift"
+  description: The upstream schema changed without notice and a cast broke or a column silently nulled.
+  severity: high
+  category: cat-data-contracts
+  difficulty: intermediate
+  tags: [schema-drift, contracts, ingestion]
+  symptoms:
+    - A column appears, disappears, or changes type upstream without notice
+    - A pipeline fails on a cast, or silently nulls a column
+    - Catalogue schema and file schema disagree
+  possible_causes:
+    - Producer changed the schema with no contract or notice
+    - A new column was added dynamically by the source
+    - Type widened upstream (int → decimal) and broke a cast
+  diagnosis:
+    - Diff the source schema against the last accepted contract version.
+    - Classify the change: additive, type change, rename, removal.
+    - Determine whether the failure is hard (job error) or silent (nulls).
+  commands:
+    - "diff <(parquet-tools schema old.parquet) <(parquet-tools schema new.parquet)"
+    - "-- Glue/Athena: compare catalog columns to the Parquet footer"
+  fix:
+    - Additive change → evolve the schema forward (safe) and register it.
+    - Type change → cast explicitly, or reject and quarantine.
+    - Rename/removal → this is breaking; coordinate with consumers.
+  prevention:
+    - A schema contract with a compatibility policy enforced in CI.
+    - Alert on any schema delta, even additive ones.
+  monitoring:
+    - schema-hash per source, drift events, quarantine counts
+  agent_skills: [skill-schema-change-contract-review, skill-data-contract-author]
+  agents: [agent-schema-reviewer]
+  version: 1.2.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/de-agent/runbooks/tree/main/schema-drift
+  github_url: https://github.com/de-agent/runbooks
+  verification: reviewed
+  last_verified: 2026-09-26
+  security: { runs_code: true, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
+  relationships: { related_to: [runbook-data-contract-broken, hook-schema-change-check] }
+- id: runbook-data-contract-broken
+  slug: data-contract-broken
+  type: runbook
+  title: "Data contract broken"
+  description: A producer violated its contract and a consumer broke in production — bound the impact before fixing.
+  severity: high
+  category: cat-data-contracts
+  difficulty: intermediate
+  tags: [contract, sla, breaking-change]
+  symptoms:
+    - A consumer's pipeline fails after a producer deploy
+    - A promised column or semantic changed
+    - An SLA (freshness/completeness) is breached
+  possible_causes:
+    - Producer shipped a breaking change without the notice period
+    - A "safe" rename that changed semantics
+    - SLA breach from an unrelated upstream outage
+  diagnosis:
+    - Identify which contract clause broke (schema, semantics, or SLA).
+    - Establish the impact set from lineage before anything else.
+    - Determine if the fix is on the producer (revert) or consumer (adapt).
+  commands:
+    - "# impact set from lineage"
+    - "SELECT * FROM lineage WHERE upstream = 'prod.orders' AND direction = 'downstream';"
+  fix:
+    - Schema breach → producer reverts or adds a compatibility shim.
+    - SLA breach → negotiate a temporary relaxation and a root-cause fix.
+  prevention:
+    - Contracts with CI enforcement and a dated deprecation path.
+    - Consumer-driven contract tests in the producer's pipeline.
+  monitoring:
+    - contract-violation events, SLA breach count per asset
+  agent_skills: [skill-schema-change-contract-review, skill-lineage-explainer]
+  agents: [agent-schema-reviewer, agent-data-catalog-assistant]
+  version: 1.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/de-agent/runbooks/tree/main/data-contract-broken
+  github_url: https://github.com/de-agent/runbooks
+  verification: reviewed
+  last_verified: 2026-09-21
+  security: { runs_code: false, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-data-contracts, runbook-schema-drift] }
+- id: runbook-data-quality-failure
+  slug: data-quality-failure
+  type: runbook
+  title: "Data quality failure"
+  description: A quality expectation failed in production and bad data may be reaching consumers.
+  severity: high
+  category: cat-data-quality
+  difficulty: intermediate
+  tags: [data-quality, quarantine, tests]
+  symptoms:
+    - An expectation/test fails in production
+    - A freshness or volume check alarms
+    - Consumers report obviously wrong numbers
+  possible_causes:
+    - Genuine upstream data problem (source sent bad data)
+    - A code change altered the distribution
+    - A threshold that is too tight (false positive)
+  diagnosis:
+    - Read the failing expectation precisely: which column, which rule, what value.
+    - Quantify: how many rows, and which ones (sample them).
+    - Decide: block, quarantine, or pass-with-warning.
+  commands:
+    - "dbt test --select fct_orders  # see the failing test"
+    - "SELECT * FROM fct_orders WHERE order_id IS NULL LIMIT 20;"
+  fix:
+    - Quarantine the failing rows, publish the clean set, keep the bad set for reprocessing.
+    - If it is upstream, halt promotion and notify the producer.
+    - If it is a false positive, loosen the threshold with evidence.
+  prevention:
+    - Tier the expectations: critical (block) vs warning (alert only).
+    - A quarantine table so a bad batch never reaches consumers.
+  monitoring:
+    - expectation pass rate, quarantine row counts, freshness
+  agent_skills: [skill-spark-data-quality-review, skill-dbt-test-writer]
+  agents: [agent-data-quality-reviewer]
+  version: 1.2.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/de-agent/runbooks/tree/main/data-quality-failure
+  github_url: https://github.com/de-agent/runbooks
+  verification: reviewed
+  last_verified: 2026-09-27
+  security: { runs_code: true, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
+  relationships: { related_to: [pattern-quarantine-publish, hook-pre-deployment-dq-check] }
+- id: runbook-pipeline-failed
+  slug: pipeline-failed
+  type: runbook
+  title: "Pipeline failed"
+  description: A task or DAG run has failed and downstream work is blocked — triage, classify and recover.
+  severity: critical
+  category: cat-production-operations
+  difficulty: beginner
+  tags: [incident, orchestration, failure]
+  symptoms:
+    - A task or DAG run is in a failed state
+    - Downstream tasks are skipped/upstream_failed
+    - An alert has fired
+  possible_causes:
+    - Transient (network, throttling) — retry is enough
+    - Code/resource error — retry will not help
+    - Data error (bad input) — needs a fix upstream or a quarantine
+  diagnosis:
+    - Read the task log and find the first real error, not the last.
+    - Classify: transient, deterministic, or data.
+    - Check whether a re-run is safe (idempotency).
+  commands:
+    - "airflow tasks test dag_id task_id 2026-09-27"
+    - "-- read the task log via the UI or the log file path in the task instance"
+  fix:
+    - Transient → clear and retry the task.
+    - Deterministic → fix the code, redeploy, re-run from the failed task.
+    - Data → fix or quarantine the input, then re-run idempotently.
+  prevention:
+    - Idempotent tasks so a re-run is always safe.
+    - Retries with backoff and a clear failure classification in the alert.
+  monitoring:
+    - task failure rate, DAG run duration, SLA misses
+  agent_skills: [skill-airflow-dag-reviewer, skill-incident-postmortem-writer]
+  agents: [agent-incident-assistant, agent-pipeline-reviewer]
+  version: 1.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/de-agent/runbooks/tree/main/pipeline-failed
+  github_url: https://github.com/de-agent/runbooks
+  verification: reviewed
+  last_verified: 2026-09-29
+  security: { runs_code: true, network_access: true, credentials: true, filesystem_access: true, external_apis: false }
+  relationships: { related_to: [cat-production-operations, skill-airflow-dag-reviewer] }
+- id: runbook-backfill-required
+  slug: backfill-required
+  type: runbook
+  title: "Backfill required"
+  description: Historical output is wrong or missing and must be recomputed safely, without breaking production.
+  severity: high
+  category: cat-airflow
+  difficulty: advanced
+  tags: [backfill, orchestration, recovery]
+  symptoms:
+    - A past date range is wrong or missing
+    - A logic fix requires historical recompute
+    - A new column needs populating historically
+  possible_causes:
+    - A bug that only affected a date range
+    - A late upstream correction
+    - A new feature that must be applied retroactively
+  diagnosis:
+    - Define correctness: what should the values be, and how will you check?
+    - Compute the downstream impact set from lineage.
+    - Establish the idle window and the resource budget.
+  commands:
+    - "airflow dags backfill --start-date YYYY-MM-DD --end-date YYYY-MM-DD --reset-dagruns dag_id"
+    - "-- prefer batched date ranges over one large range"
+  fix:
+    - Write to a shadow table, validate a sample, then swap.
+    - Batch by date; validate a sample after each batch.
+    - Never run a backfill concurrently with the daily production run.
+  prevention:
+    - Keep pipelines idempotent so a backfill is a routine operation.
+    - A documented backfill runbook per pipeline.
+  monitoring:
+    - backfill progress, resource contention, validation pass rate
+  agent_skills: [skill-backfill-planner]
+  agents: [agent-backfill-planner]
+  version: 1.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/de-agent/runbooks/tree/main/backfill-required
+  github_url: https://github.com/de-agent/runbooks
+  verification: reviewed
+  last_verified: 2026-09-25
+  security: { runs_code: true, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [skill-backfill-planner, hook-backfill-safety-check] }
+- id: runbook-bad-deployment
+  slug: bad-deployment
+  type: runbook
+  title: "Bad deployment"
+  description: A deploy broke production; correlate the signal with the change and roll back first.
+  severity: critical
+  category: cat-cicd
+  difficulty: intermediate
+  tags: [deployment, rollback, ci-cd]
+  symptoms:
+    - Errors or data changes began immediately after a deploy
+    - A metric or quality check degraded right after promotion
+    - A previous-good version is known
+  possible_causes:
+    - A logic regression shipped without a test catching it
+    - A config/env change (e.g. timezone, cluster setting)
+    - An incompatible schema or model change
+  diagnosis:
+    - Correlate the first failing signal with the deployment timestamp.
+    - Identify the exact changed artifact and its blast radius.
+    - Confirm the previous version is a valid rollback target.
+  commands:
+    - "git log --since='2 hours ago' --oneline"
+    - "dbt ls --select state:modified+  # what changed in the last build"
+  fix:
+    - Roll back the artifact first, then diagnose at leisure.
+    - If data was written, roll back the code and re-run the affected period.
+  prevention:
+    - Data-aware CI: tests run against a staged build, not production.
+    - Deploy pipelines the way you deploy services: small, reversible, observable.
+  monitoring:
+    - deploy markers on dashboards, post-deploy quality gates
+  agent_skills: [skill-incident-postmortem-writer]
+  agents: [agent-incident-assistant, agent-pipeline-reviewer]
+  version: 1.0.1
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/de-agent/runbooks/tree/main/bad-deployment
+  github_url: https://github.com/de-agent/runbooks
+  verification: reviewed
+  last_verified: 2026-09-20
+  security: { runs_code: false, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-cicd, runbook-pipeline-failed] }

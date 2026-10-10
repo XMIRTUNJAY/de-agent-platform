@@ -1,0 +1,41 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import registry from '@/data/generated/registry.json';
+import stats from '@/data/generated/stats.json';
+
+const categories = registry.taxonomy.categories.slice().sort((a, b) => a.order - b.order);
+const stagesById: Record<string, any> = registry.taxonomy.stagesById;
+const countByCategory: Record<string, number> = {};
+for (const r of registry.resources) countByCategory[r.category] = (countByCategory[r.category] ?? 0) + 1;
+---
+
+<BaseLayout title="All categories · DE//AGENT" sidebar>
+  <PageHero
+    kicker="Learn"
+    title="All categories"
+    lede="The 38 canonical categories of the registry, in roadmap order. Each one is a curated neighbourhood: everything inside it answers the same kind of question."
+  >
+    <div style="margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+      <span class="chip">{categories.length} categories</span>
+      <span class="chip">{stats.counts.total} resources</span>
+      <span class="chip">{stats.counts.stages} stages</span>
+    </div>
+  </PageHero>
+
+  <section class="col section">
+    <div class="card-grid stagger" style="margin-top: 0;">
+      {categories.map((cat: any) => (
+        <a href={`/categories/${cat.slug}`} class="card card-pad card-interactive">
+          <p class="mono-label">{stagesById[cat.stage]?.title ?? cat.stage}</p>
+          <h3 style="margin-top: 0.4rem; font-weight: 500;">{cat.title}</h3>
+          <p class="card-desc">{cat.summary}</p>
+          <div class="card-meta">
+            <span class="chip">{countByCategory[cat.id] ?? 0} resources</span>
+            <span class="chip">{cat.group}</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

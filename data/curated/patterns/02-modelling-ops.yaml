@@ -1,0 +1,282 @@
+# Architecture patterns — modelling, processing, ops
+- id: pattern-dimensional-model
+  slug: dimensional-model
+  type: architecture
+  title: Dimensional Model (star schema)
+  category: cat-warehouses
+  difficulty: intermediate
+  tags: [architecture, modelling, star-schema, dimensional]
+  problem: Analysts re-derive the same joins and disagree on metric definitions.
+  context: A warehouse serving BI and analytics with recurring query patterns.
+  forces: ["Analysts need simple, fast queries", "Definitions must be consistent", "History matters for some attributes"]
+  solution: |
+    Facts (events/measures) surrounded by conformed dimensions (context).
+      fct_orders (grain: one row per order line)
+        ├─ dim_customer (SCD2 for history)
+        ├─ dim_product
+        └─ dim_date
+    Declare the fact grain explicitly. Conform dimensions across facts so they can
+    be combined. Use slowly-changing-dimension type 2 when an attribute's history
+    must be preserved at the point of the fact.
+  diagram: |
+        dim_customer ─┐
+        dim_product  ─┼─▶ fct_orders ─▶ marts
+        dim_date     ─┘
+  tradeoffs:
+    - "pro: fast, intuitive, consistent; BI-friendly"
+    - "con: less flexible for rare queries; ETL to maintain SCDs"
+  when_to_use: ["BI-heavy consumption", "Stable, known query patterns"]
+  when_not: ["Rapidly changing source schemas (consider Data Vault)", "Pure event/append analytics"]
+  implementations: [project-dbt-warehouse-tests, skill-dbt-model-review]
+  related: [pattern-data-vault, pattern-medallion-zones]
+  version: 1.0.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/de-agent/patterns/tree/main/dimensional-model
+  github_url: https://github.com/de-agent/patterns
+  verification: reviewed
+  last_verified: 2026-09-20
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+- id: pattern-data-vault
+  slug: data-vault
+  type: architecture
+  title: Data Vault (hubs, links, satellites)
+  category: cat-warehouses
+  difficulty: advanced
+  tags: [architecture, modelling, data-vault, integration]
+  problem: Integrating many changing sources into a warehouse without constant rework.
+  context: Many source systems, frequent schema changes, auditability requirements.
+  forces: ["Sources change constantly", "History and auditability are mandatory", "Loads must be parallel and restartable"]
+  solution: |
+    Model the raw integration layer as insert-only:
+      hubs       — business keys
+      links      — relationships between hubs
+      satellites — descriptive attributes over time
+    Loads are insert-only and parallel, so a source change adds a satellite rather
+    than forcing a rewrite. Build star schemas as a downstream, disposable layer.
+  diagram: |
+    source ─▶ hub_customer ─┐
+             hub_order    ─┼─ link_order_customer ─▶ sat_* ─▶ star marts
+    source ─▶ hub_product ──┘
+  tradeoffs:
+    - "pro: resilient to change, auditable, parallel loads"
+    - "con: more objects, harder to query directly; needs a downstream marts layer"
+  when_to_use: ["Enterprise integration of many sources", "Strong audit/lineage requirements"]
+  when_not: ["A single source feeding a known set of reports"]
+  implementations: [skill-dbt-model-review]
+  related: [pattern-dimensional-model, pattern-medallion-zones]
+  version: 0.9.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/de-agent/patterns/tree/main/data-vault
+  github_url: https://github.com/de-agent/patterns
+  verification: reviewed
+  last_verified: 2026-09-14
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+- id: pattern-lambda-vs-kappa
+  slug: lambda-vs-kappa
+  type: architecture
+  title: Lambda vs Kappa (batch + stream)
+  category: cat-streaming
+  difficulty: advanced
+  tags: [architecture, lambda, kappa, streaming, batch]
+  problem: Streaming is fast but hard; batch is simple but slow; you need both speed and correctness.
+  context: An analytics need with both a latency requirement and a need to reprocess history.
+  forces: ["Freshness needs", "Reprocessing needs", "Operational complexity budget", "Consistency between batch and stream logic"]
+  solution: |
+    Lambda: run a batch layer (authoritative, reprocessable) and a speed layer
+    (approximate, low-latency), merge at query time. Two code paths, two bugs.
+    Kappa: one streaming path; reprocessing = replay the log. Simpler, but the log
+    must retain enough history and the stream must be replay-safe.
+    Modern default: a single lakehouse path with replayable streams (a pragmatic
+    kappa), keeping raw immutable so history is always reprocessable.
+  diagram: |
+    Lambda:  source ─┬─ batch (authoritative) ─┐
+                     └─ speed (approx)       ─┴─▶ serve
+    Kappa:   source ─▶ stream ─▶ table ─▶ serve   (reprocess = replay)
+  tradeoffs:
+    - "lambda pro: batch correctness; con: two implementations to keep consistent"
+    - "kappa pro: one code path; con: requires long log retention + replay safety"
+  when_to_use: ["Lambda when reprocessing is cheap and latency needs are moderate", "Kappa when streams are replayable and ops budget is limited"]
+  when_not: ["Neither, if a nightly batch genuinely meets the SLA — keep it simple"]
+  implementations: [pattern-medallion-zones, pattern-streaming-dedup-upsert]
+  related: [pattern-batch-incremental-watermark]
+  version: 1.0.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/de-agent/patterns/tree/main/lambda-vs-kappa
+  github_url: https://github.com/de-agent/patterns
+  verification: reviewed
+  last_verified: 2026-09-17
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+- id: pattern-small-files-compaction
+  slug: small-files-compaction
+  type: architecture
+  title: Compaction & File-Size Management
+  category: cat-lakehouse
+  difficulty: intermediate
+  tags: [architecture, compaction, small-files, lakehouse]
+  problem: High-frequency writes shatter a table into thousands of tiny files and queries crawl.
+  context: A lakehouse table written by micro-batches or streaming.
+  forces: ["Write latency matters", "Read performance matters", "Metadata scanning is expensive too"]
+  solution: |
+    Separate the write path from the layout path.
+      writes ─▶ many small files ─▶ [scheduled compaction] ─▶ 128-256 MB files
+    Compact on a schedule (or auto-compact), targeting a file size that matches your
+    read pattern. Rewrite manifests when metadata grows. Do it outside the ingestion
+    window so compaction and writers don't contend.
+  diagram: |
+    micro-batches ─▶ ⬚⬚⬚⬚⬚⬚⬚⬚ ─▶ [compaction] ─▶ ▭▭▭ (128-256 MB)
+  tradeoffs:
+    - "pro: fast reads without slowing writes"
+    - "con: compaction costs compute and can conflict with concurrent writers"
+  when_to_use: ["Streaming/micro-batch writes to a table", "Many small appends per hour"]
+  when_not: ["Low-frequency bulk writes that already produce large files"]
+  implementations: [runbook-small-files-explosion, skill-iceberg-maintenance, skill-delta-optimizer]
+  related: [pattern-medallion-zones]
+  version: 1.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/de-agent/patterns/tree/main/small-files-compaction
+  github_url: https://github.com/de-agent/patterns
+  verification: reviewed
+  last_verified: 2026-09-22
+  security: { runs_code: true, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
+- id: pattern-backfill-safety
+  slug: backfill-safety
+  type: architecture
+  title: Safe Backfill
+  category: cat-airflow
+  difficulty: advanced
+  tags: [architecture, backfill, safety, operations]
+  problem: Backfills corrupt production or take down the daily run.
+  context: A pipeline whose historical output must be recomputed.
+  forces: ["Correctness must be verifiable", "Production must stay available", "Rollback must be possible"]
+  solution: |
+    Treat a backfill as a controlled migration.
+      1. shadow target (or snapshot)
+      2. batched date ranges, smallest first
+      3. validate a sample after each batch
+      4. swap atomically
+      5. keep the old data until validated
+    Never overlap the production window; never backfill without a rollback path.
+  diagram: |
+    [range] ─▶ shadow ─▶ validate ─▶ swap ─▶ keep old until verified
+  tradeoffs:
+    - "pro: reversible, observable, low-blast-radius"
+    - "con: extra storage and orchestration for the shadow"
+  when_to_use: ["Any historical recompute of a production table"]
+  when_not: ["A tiny table you can recompute in one safe step"]
+  implementations: [runbook-backfill-required, skill-backfill-planner, hook-backfill-safety-check]
+  related: [pattern-idempotent-partition-overwrite]
+  version: 1.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/de-agent/patterns/tree/main/backfill-safety
+  github_url: https://github.com/de-agent/patterns
+  verification: reviewed
+  last_verified: 2026-09-24
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+- id: pattern-dbt-tests-docs
+  slug: dbt-tests-docs
+  type: architecture
+  title: dbt as Models + Tests + Docs
+  category: cat-dbt
+  difficulty: beginner
+  tags: [architecture, dbt, testing, documentation]
+  problem: Transformation logic lives in untested, undocumented SQL scattered across scripts.
+  context: Warehouse transformation with recurring models and consumers.
+  forces: ["Logic must be reviewable", "Changes must be testable", "New joiners need to understand the lineage"]
+  solution: |
+    Every model is code with three faces:
+      model (SQL) + tests (schema.yml) + docs (descriptions)
+    `ref()` builds the DAG; tests encode the invariants; descriptions are the docs
+    site consumers actually read. Materialisation is a deliberate choice per model.
+  diagram: |
+    source ─▶ stg_* ─▶ int_* ─▶ fct_*/dim_* ─▶ marts
+              (tests + docs on every node)
+  tradeoffs:
+    - "pro: testable, reviewable, self-documenting transformations"
+    - "con: dbt adds a layer to learn; over-testing becomes slow CI"
+  when_to_use: ["Warehouse SQL with multiple consumers", "A team larger than one"]
+  when_not: ["A single ad-hoc query", "Non-SQL-heavy processing"]
+  implementations: [project-dbt-warehouse-tests, skill-dbt-model-review, skill-dbt-test-writer]
+  related: [pattern-dimensional-model, pattern-contracts-quality-gate]
+  version: 1.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/de-agent/patterns/tree/main/dbt-tests-docs
+  github_url: https://github.com/de-agent/patterns
+  verification: reviewed
+  last_verified: 2026-09-26
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+- id: pattern-cost-guardrails
+  slug: cost-guardrails
+  type: architecture
+  title: Cost Guardrails
+  category: cat-cost-engineering
+  difficulty: intermediate
+  tags: [architecture, cost, finops, guardrails]
+  problem: A working pipeline silently becomes expensive and nobody notices until the invoice.
+  context: Any cloud data platform with variable compute.
+  forces: ["Spend varies with data growth", "Regressions hide in growth", "Engineers need fast feedback"]
+  solution: |
+    Instrument, attribute, then guard.
+      1. unit metric per pipeline ($ per run, per 1M rows)
+      2. baseline the last N runs
+      3. fail CI on regression > threshold
+      4. hard caps (warehouse resource monitors, quota limits)
+    Alert on the *unit* metric, never on total spend, so healthy growth doesn't page
+    anyone and a regression does.
+  diagram: |
+    run ─▶ metrics ─▶ unit metric ─┬─ within baseline ─▶ pass
+                                    └─ regressed ─▶ fail CI / alert
+  tradeoffs:
+    - "pro: cheap early detection, no invoice surprises"
+    - "con: needs metrics plumbing and a baseline to be maintained"
+  when_to_use: ["Any pipeline with variable compute cost", "Multi-team platforms"]
+  when_not: ["Negligible fixed-cost workloads"]
+  implementations: [hook-spark-cost-check, skill-cost-unit-economics, runbook-spark-job-suddenly-costs-4x]
+  related: [pattern-backfill-safety]
+  version: 1.0.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/de-agent/patterns/tree/main/cost-guardrails
+  github_url: https://github.com/de-agent/patterns
+  verification: reviewed
+  last_verified: 2026-09-19
+  security: { runs_code: false, network_access: true, credentials: true, filesystem_access: false, external_apis: true }
+- id: pattern-agent-in-the-loop-review
+  slug: agent-in-the-loop-review
+  type: architecture
+  title: Agent-in-the-Loop Review
+  category: cat-agentic
+  difficulty: intermediate
+  tags: [architecture, agentic, review, guardrails]
+  problem: Coding agents can do real data-engineering work, but can also ship a schema change or drop a table.
+  context: Using coding agents against real data repositories and warehouses.
+  forces: ["Agents accelerate review and drafting", "Blast radius can be production", "Trust must be earned per action"]
+  solution: |
+    Separate read/recommend from write/execute.
+      read ─▶ recommend ─▶ human approves ─▶ execute (scoped, logged)
+    Constrain the agent with read-only credentials plus MCP servers limited to the
+    needed tools. Encode the safety policy as hooks (destructive SQL guard, prod
+    write confirmation), and keep a human in the loop for anything irreversible.
+  diagram: |
+    agent ─(read tools)─▶ analysis ─▶ proposal ─▶ ⛔ human gate ─▶ scoped write
+                                          └─ hooks enforce policy ─┘
+  tradeoffs:
+    - "pro: agent velocity with bounded, auditable blast radius"
+    - "con: the human gate adds friction; requires a real permission model"
+  when_to_use: ["Any agent touching production data", "Regulated environments"]
+  when_not: ["A purely local sandbox with no real data"]
+  implementations: [doc-security, hook-destructive-sql-guard, hook-prod-write-confirm, agent-sql-reviewer]
+  related: [pattern-contracts-quality-gate]
+  version: 1.0.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/de-agent/patterns/tree/main/agent-in-the-loop-review
+  github_url: https://github.com/de-agent/patterns
+  verification: reviewed
+  last_verified: 2026-09-29
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }

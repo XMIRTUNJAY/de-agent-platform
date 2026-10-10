@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>Example Data Blog</title>
+    <link>https://example.dev/</link>
+    <description>Sample feed</description>
+    <item>
+      <title>Exactly-once Streaming at Scale</title>
+      <link>https://example.dev/blog/exactly-once-streaming</link>
+      <pubDate>Mon, 06 Oct 2026 09:00:00 +0000</pubDate>
+      <description><![CDATA[<p>How we got exactly-once delivery in Flink with two-phase commit sinks and checkpoint tuning.</p>]]></description>
+    </item>
+    <item>
+      <title>Aws Glue cost cliffs</title>
+      <link>https://example.dev/blog/glue-cost-cliffs</link>
+      <pubDate>Sun, 05 Oct 2026 12:00:00 +0000</pubDate>
+      <description>Why Glue bills double when bookmarks are misconfigured.</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,26 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-sodadata-soda-core
+  slug: sodadata-soda-core
+  type: reference
+  title: sodadata/soda-core
+  description: Data Contracts engine for the modern data stack. https://www.soda.io
+  category: cat-data-contracts
+  tags: []
+  url: https://github.com/sodadata/soda-core
+  publisher: GitHub topic — dbt
+  kind: blog
+  why: null
+  source_url: https://github.com/sodadata/soda-core
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  discovered_from:
+    source: github-topic-dbt
+    extracted_at: 2026-10-09T04:47:12.879Z
+    published: 2026-10-08T20:50:19Z
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-data-contracts
+      - cat-data-quality

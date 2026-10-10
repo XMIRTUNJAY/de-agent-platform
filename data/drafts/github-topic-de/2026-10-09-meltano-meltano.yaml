@@ -1,0 +1,26 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-meltano-meltano
+  slug: meltano-meltano
+  type: reference
+  title: meltano/meltano
+  description: "Meltano: the declarative code-first data integration engine that
+    powers your wildest data and ML-powered product ideas. Say goodbye to
+    writing, maintaining, and scaling your own API integrations."
+  category: null
+  tags: []
+  url: https://github.com/meltano/meltano
+  publisher: GitHub topic — data-engineering
+  kind: blog
+  why: null
+  source_url: https://github.com/meltano/meltano
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  discovered_from:
+    source: github-topic-de
+    extracted_at: 2026-10-09T04:45:42.621Z
+    published: 2026-10-09T04:37:44Z
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []

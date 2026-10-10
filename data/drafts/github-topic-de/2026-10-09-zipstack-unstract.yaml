@@ -1,0 +1,26 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-zipstack-unstract
+  slug: zipstack-unstract
+  type: reference
+  title: Zipstack/unstract
+  description: LLM-Driven Extraction of Unstructured Data — Built for API
+    Deployments & ETL Pipeline Workflows
+  category: cat-agentic
+  tags: []
+  url: https://github.com/Zipstack/unstract
+  publisher: GitHub topic — data-engineering
+  kind: blog
+  why: null
+  source_url: https://github.com/Zipstack/unstract
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  discovered_from:
+    source: github-topic-de
+    extracted_at: 2026-10-09T04:45:42.624Z
+    published: 2026-10-09T04:33:01Z
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic

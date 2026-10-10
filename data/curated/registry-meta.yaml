@@ -1,0 +1,95 @@
+# Registry metadata: licenses, sources, authors/publishers, the verification
+# model, curation states, and the source quality score rubric.
+licenses:
+  - { spdx: Apache-2.0, name: Apache License 2.0, osi_approved: true, allows_reproduce: true, allows_modify: true, note: "Redistribution permitted with attribution and the license text." }
+  - { spdx: MIT, name: MIT License, osi_approved: true, allows_reproduce: true, allows_modify: true, note: "Permissive; keep the copyright notice." }
+  - { spdx: BSD-3-Clause, name: BSD 3-Clause, osi_approved: true, allows_reproduce: true, allows_modify: true }
+  - { spdx: CC-BY-4.0, name: Creative Commons Attribution 4.0, osi_approved: false, allows_reproduce: true, allows_modify: true, note: "Content license; attribution required." }
+  - { spdx: PSF-2.0, name: Python Software Foundation License, osi_approved: true, allows_reproduce: true, allows_modify: true }
+  - { spdx: PostgreSQL, name: PostgreSQL License, osi_approved: true, allows_reproduce: true, allows_modify: true }
+  - { spdx: BUSL-1.1, name: Business Source License 1.1, osi_approved: false, allows_reproduce: false, allows_modify: false, note: "Source-available, not open source; restrict commercial use until the change date." }
+  - { spdx: Proprietary, name: Proprietary / All rights reserved, osi_approved: false, allows_reproduce: false, allows_modify: false, note: "WE ONLY LINK AND SUMMARISE. No content is reproduced. See the ingestion policy." }
+
+sources:
+  - { id: src-apache, name: Apache Software Foundation, kind: foundation, url: "https://apache.org/", authority: 5, note: "Canonical for Spark, Kafka, Airflow, Iceberg, Parquet, Hudi, Flink." }
+  - { id: src-mcp, name: Model Context Protocol, kind: standard-body, url: "https://modelcontextprotocol.io/", authority: 5, note: "Owner of the MCP spec and the official registry." }
+  - { id: src-aws, name: Amazon Web Services, kind: vendor, url: "https://docs.aws.amazon.com/", authority: 5 }
+  - { id: src-dbtlabs, name: dbt Labs, kind: vendor, url: "https://docs.getdbt.com/", authority: 4, note: "Docs are proprietary; dbt-core is Apache-2.0." }
+  - { id: src-databricks, name: Databricks, kind: vendor, url: "https://docs.databricks.com/", authority: 5 }
+  - { id: src-snowflake, name: Snowflake, kind: vendor, url: "https://docs.snowflake.com/", authority: 5 }
+  - { id: src-debezium, name: Debezium Community, kind: community, url: "https://debezium.io/", authority: 5 }
+  - { id: src-github, name: GitHub, kind: platform, url: "https://github.com/", authority: 3, note: "Hosting platform; a repo's authority derives from its owner, not the host." }
+  - { id: src-oreilly, name: O'Reilly Media, kind: publisher, url: "https://www.oreilly.com/", authority: 5, note: "Books are proprietary — summarise and link only." }
+  - { id: src-de-agent, name: DE//AGENT Registry, kind: first-party, url: "https://github.com/de-agent", authority: 4, note: "First-party reference implementation of this registry." }
+
+authors:
+  - { id: au-de-agent, name: DE//AGENT, kind: organization, homepage: "https://github.com/de-agent" }
+  - { id: au-apache, name: Apache Software Foundation, kind: organization, homepage: "https://apache.org/" }
+  - { id: au-mcp, name: Model Context Protocol, kind: organization, homepage: "https://modelcontextprotocol.io/" }
+  - { id: au-dbtlabs, name: dbt Labs, kind: organization, homepage: "https://www.getdbt.com/" }
+  - { id: au-snowflake-labs, name: Snowflake Labs, kind: organization, homepage: "https://github.com/Snowflake-Labs" }
+  - { id: au-awslabs, name: AWS Labs, kind: organization, homepage: "https://github.com/awslabs" }
+  - { id: au-acryl, name: Acryl Data, kind: organization, homepage: "https://www.acryl.io/" }
+  - { id: au-github, name: GitHub, kind: organization, homepage: "https://github.com/" }
+  - { id: au-motherduck, name: MotherDuck, kind: organization, homepage: "https://motherduck.com/" }
+
+# ---------------------------------------------------------------------------
+# Verification model. Status is earned at each level; it is never assumed.
+verification_model:
+  levels:
+    - id: community
+      label: Community
+      rank: 1
+      means: "Found in an external source. Metadata captured, nothing checked."
+      checks: [discovered]
+    - id: reviewed
+      label: Reviewed
+      rank: 2
+      means: "Source, documentation and license have been checked by a curator."
+      checks: [source_checked, license_checked, docs_checked]
+    - id: tested
+      label: Tested
+      rank: 3
+      means: "Installation and the provided example have been run successfully."
+      checks: [install_tested, example_tested]
+    - id: verified
+      label: Verified
+      rank: 4
+      means: "The artifact was executed and its behaviour matched the documented expectation."
+      checks: [artifact_executed, behavior_validated]
+  rules:
+    - "A resource cannot skip a level."
+    - "verification is time-bounded: `last_verified` records the date, and the UI warns past a staleness threshold."
+    - "Listing is not endorsement: security posture is always displayed separately from verification."
+
+# Curation states (internal workflow).
+states:
+  - { id: discovered, label: Discovered, description: "Found by the ingestion pipeline; metadata only." }
+  - { id: pending_review, label: Pending review, description: "Queued for a curator." }
+  - { id: license_checked, label: License checked, description: "License identified and its terms recorded." }
+  - { id: reviewed, label: Reviewed, description: "Source and docs checked." }
+  - { id: tested, label: Tested, description: "Install and example run." }
+  - { id: verified, label: Verified, description: "Behaviour validated." }
+  - { id: published, label: Published, description: "Live in the registry." }
+  - { id: deprecated, label: Deprecated, description: "Superseded or unmaintained; kept for provenance." }
+
+# Source quality score (0-5 per component; stars are NOT the metric).
+scoring:
+  scale: "0 = absent, 5 = exemplary. Components are averaged with equal weight; null components are excluded and reported."
+  components:
+    - { id: authority, label: Source authority, description: "How authoritative is the publisher (standards body > vendor > individual)?" }
+    - { id: docs_quality, label: Documentation quality, description: "Completeness and accuracy of the docs." }
+    - { id: repo_activity, label: Repository activity, description: "Commit recency and release cadence (not stars)." }
+    - { id: license_clarity, label: License clarity, description: "Is a clear, machine-readable license present?" }
+    - { id: installation, label: Installation quality, description: "Is installation reproducible and documented?" }
+    - { id: tests, label: Tests, description: "Are there tests you can run to trust the artifact?" }
+    - { id: examples, label: Examples, description: "Runnable, relevant examples." }
+    - { id: security, label: Security, description: "Documented security posture and safe defaults." }
+    - { id: maintenance, label: Maintenance, description: "Evidence of ongoing maintenance and issue responsiveness." }
+    - { id: compatibility, label: Compatibility, description: "Stated compatibility with agents and versions." }
+  guide:
+    - { min: 4.5, label: Exemplary }
+    - { min: 3.5, label: Strong }
+    - { min: 2.5, label: Adequate }
+    - { min: 1.5, label: Weak }
+    - { min: 0.0, label: Unproven }

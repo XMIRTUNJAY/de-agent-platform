@@ -1,0 +1,55 @@
+# Skills: processing (Spark, SQL)
+- id: skill-spark-data-quality-review
+  slug: spark-data-quality-review
+  type: skill
+  title: Spark Data Quality Review
+  tagline: Audit a PySpark job for silent data-quality failures before it ships.
+  description: >-
+    A review skill an agent runs against a Spark/PySpark transform. It checks null
+    propagation, join fan-out, silent type coercion, non-deterministic row counts
+    and missing post-write assertions, then reports findings as a diff-level list.
+  category: cat-spark
+  subcategory: Data Quality
+  difficulty: intermediate
+  tags: [spark, pyspark, data-quality, code-review]
+  technologies: [tech-spark, tech-pyspark]
+  learning_objectives:
+    - Identify the five classes of silent failure in a Spark transform
+    - Add pre/post row-count and null assertions to a job
+    - Recognise join fan-out caused by non-unique keys
+  prerequisites: [skill-sql-review]
+  supported_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  version: 0.2.0
+  license: Apache-2.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/de-agent/skills/tree/main/spark-data-quality-review
+  github_url: https://github.com/de-agent/skills
+  install_command: "amp skill add de-agent/spark-data-quality-review"
+  verification: reviewed
+  last_verified: 2026-09-30
+  files: [SKILL.md, references/spark-dq-patterns.md, references/common-failures.md, examples/orders_daily.py, tests/test_review_rules.py]
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
+  compatibility: [claude-code, codex, cursor, amp, gemini-cli]
+  relationships:
+    related_to: [cat-data-quality, pattern-quarantine-publish, skill-dbt-test-writer]
+    uses: [tech-spark]
+  body: |
+    # Spark Data Quality Review
+
+    ## When to use
+    Run this when a PySpark transform is about to be merged, or when a downstream
+    table's row count changed without a code change.
+
+    ## Check order
+    1. **Null propagation** — every outer join introduces nullable right-side keys.
+       Confirm downstream code coalesces or filters them.
+    2. **Join fan-out** — assert key uniqueness on the intended 1-side before joining.
+    3. **Silent coercion** — `cast` failures return null, not errors. Prefer `try_cast`
+       and count the nulls it produces.
+    4. **Non-determinism** — `dropDuplicates` without a sort key keeps an arbitrary row.
+    5. **Missing assertions** — every write should be followed by a row-count and a
+       null-rate check on the primary key.
+
+    ## Output
+    A findings list: `severity | file:line | rule | suggested patch`.

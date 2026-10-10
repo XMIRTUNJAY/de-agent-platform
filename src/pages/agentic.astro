@@ -1,0 +1,155 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import SectionHeader from '@/components/SectionHeader.astro';
+import ResourceCard from '@/components/ResourceCard.astro';
+import registry from '@/data/generated/registry.json';
+import stats from '@/data/generated/stats.json';
+
+const counts = stats.counts.byType;
+const agenticResources = registry.resources.filter(r => r.stage === 'agentic');
+
+const CAPABILITIES = [
+  {
+    title: 'Skills',
+    href: '/skills',
+    count: counts.skill,
+    label: 'skills',
+    desc: 'Portable expertise an agent loads on demand — review checklists, diagnosis playbooks, authoring recipes. Files, not magic.',
+  },
+  {
+    title: 'MCP servers',
+    href: '/mcp',
+    count: counts.mcp,
+    label: 'servers',
+    desc: 'Live tools the agent can call: query a warehouse, read a catalog, run a profiler. The hands behind the reasoning.',
+  },
+  {
+    title: 'Hooks',
+    href: '/hooks',
+    count: counts.hook,
+    label: 'hooks',
+    desc: 'Guardrails that intercept agent actions — block destructive SQL, scan secrets, stop runaway cost before it happens.',
+  },
+  {
+    title: 'Agents',
+    href: '/agents',
+    count: counts.agent,
+    label: 'agents',
+    desc: 'Composed workflows: inputs, tools, skills and guardrails wired into a repeatable job like incident triage.',
+  },
+  {
+    title: 'Plugins',
+    href: '/plugins',
+    count: counts.plugin,
+    label: 'plugins',
+    desc: 'Battery-included bundles that install skills, hooks, commands and MCP servers as one coherent toolkit.',
+  },
+  {
+    title: 'Patterns',
+    href: '/patterns',
+    count: counts.architecture,
+    label: 'patterns',
+    desc: 'Architecture patterns the agent knows by name — so "make this idempotent" means something specific.',
+  },
+];
+
+const SIGNALS = [
+  { label: 'read-only resources', value: stats.readability.read_only },
+  { label: 'touch your code or files', value: stats.readability.touches_code },
+  { label: 'need credentials', value: stats.readability.needs_credentials },
+  { label: 'access the network', value: stats.readability.network },
+];
+---
+
+<BaseLayout title="Agentic Data Engineering · DE//AGENT" sidebar>
+  <PageHero
+    kicker="Agentic Data Engineering"
+    title="Capabilities for coding agents"
+    lede="The registry is built so a coding agent can do data engineering with you: load the right skill, call the right tool, stay inside the guardrails. Five primitives, one trust model."
+  >
+    <div style="margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+      <span class="chip">{counts.skill + counts.mcp + counts.hook + counts.agent + counts.plugin} executable resources</span>
+      <span class="chip chip-accent">trust signals on every entry</span>
+    </div>
+  </PageHero>
+
+  <section class="col section">
+    <SectionHeader
+      kicker="Primitives"
+      title="Five building blocks"
+      lede="Each primitive has a strict contract — what it is, what it can do, and what it must never do. Mix them deliberately."
+    />
+    <div class="card-grid stagger" style="margin-top: 1.75rem;">
+      {CAPABILITIES.map((c) => (
+        <a href={c.href} class="card card-pad card-interactive">
+          <p class="mono-label">{c.count} {c.label}</p>
+          <h3 style="margin-top: 0.4rem; font-weight: 500;">{c.title}</h3>
+          <p class="card-desc">{c.desc}</p>
+          <span class="link-arrow" style="margin-top: auto;">Browse {c.title.toLowerCase()} <span class="arrow" aria-hidden="true">→</span></span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <hr class="hairline col" />
+
+  <section class="col section">
+    <SectionHeader
+      kicker="Blast radius"
+      title="Know what you are installing"
+      lede="Every resource declares what it can touch. These counts update with every registry build — check them before you grant access."
+    />
+    <div class="card-grid card-grid--2 stagger" style="margin-top: 1.75rem;">
+      {SIGNALS.map((s) => (
+        <div class="card card-pad-sm">
+          <p class="mono-label">{s.value} entries</p>
+          <p style="margin-top: 0.35rem; font-weight: 500;">{s.label}</p>
+        </div>
+      ))}
+    </div>
+    <p class="text-muted" style="margin-top: 1.5rem; font-size: var(--text-sm);">
+      The 180-day staleness rule and per-resource security flags are detailed in <a href="/docs/verification">Verification levels</a> and <a href="/docs/security">Security &amp; trust</a>.
+    </p>
+  </section>
+
+  <hr class="hairline col" />
+
+  <section class="col section">
+    <SectionHeader
+      kicker="Stage 13"
+      title="Agentic stage curriculum"
+      lede="The dedicated stage of the roadmap — skills, servers and references specifically about working with agents."
+    />
+    <div class="card-grid stagger" style="margin-top: 1.75rem;">
+      {agenticResources.map((r) => <ResourceCard resource={r} />)}
+    </div>
+  </section>
+
+  <hr class="hairline col" />
+
+  <section class="col section" style="padding-bottom: 6rem;">
+    <SectionHeader
+      kicker="Go deeper"
+      title="Read the contracts"
+      lede="The exact shapes behind every primitive — content model, skill anatomy and the tool contract."
+    />
+    <div class="card-grid stagger" style="margin-top: 1.75rem;">
+      <a href="/docs/skill-anatomy" class="card card-pad card-interactive">
+        <h3 style="font-weight: 500;">Skill anatomy</h3>
+        <p class="card-desc">What a SKILL.md contains, how progressive disclosure works, and the files a skill ships with.</p>
+        <span class="link-arrow" style="margin-top: auto;">Read the anatomy <span class="arrow" aria-hidden="true">→</span></span>
+      </a>
+      <a href="/docs/tooling" class="card card-pad card-interactive">
+        <h3 style="font-weight: 500;">Tool &amp; MCP contract</h3>
+        <p class="card-desc">How MCP servers, tools, hooks and plugins declare what they touch — transports, permissions, permissions again.</p>
+        <span class="link-arrow" style="margin-top: auto;">Read the contract <span class="arrow" aria-hidden="true">→</span></span>
+      </a>
+      <a href="/docs/content-model" class="card card-pad card-interactive">
+        <h3 style="font-weight: 500;">Content object model</h3>
+        <p class="card-desc">The canonical Resource shape every entry normalizes into, and the 16 fields a complete record fills.</p>
+        <span class="link-arrow" style="margin-top: auto;">Read the model <span class="arrow" aria-hidden="true">→</span></span>
+      </a>
+    </div>
+  </section>
+</BaseLayout>

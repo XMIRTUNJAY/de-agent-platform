@@ -1,0 +1,94 @@
+# Agents — analytics, cost, catalog
+- id: agent-databricks-reviewer
+  slug: databricks-reviewer
+  type: agent
+  title: Databricks Reviewer
+  purpose: Review notebooks, jobs and Delta tables for the Databricks-specific pitfalls.
+  category: cat-databricks
+  difficulty: advanced
+  tags: [agent, databricks, delta, unity-catalog]
+  inputs: ["Notebook or job definition", "Table metadata"]
+  tools: [read_file]
+  skills: [skill-delta-optimizer, skill-spark-skew-diagnosis]
+  mcp: [mcp-filesystem]
+  workflow:
+    - Check Delta layout: file sizes, Z-ORDER, partition columns.
+    - Check cluster config for cost and autoscaling.
+    - Check Unity Catalog grants for over-permissioning.
+    - Recommend liquid clustering where partitioning fails.
+  outputs: ["Table maintenance plan", "Cluster config findings", "Governance findings"]
+  guardrails: ["Read-only", "Never triggers OPTIMIZE without approval"]
+  example: "Table with 41k files averaging 6 MB → recommends OPTIMIZE + liquid clustering on event_date, user_id."
+  evaluation: "Checklist of 25 Databricks lakehouse anti-patterns."
+  compatible_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  version: 0.1.3
+  license: Apache-2.0
+  author: de-agent
+  source_url: https://github.com/de-agent/agents/tree/main/databricks-reviewer
+  github_url: https://github.com/de-agent/agents
+  verification: reviewed
+  last_verified: 2026-09-18
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
+  relationships: { uses: [skill-delta-optimizer], related_to: [cat-databricks] }
+- id: agent-cost-optimizer
+  slug: cost-optimizer
+  type: agent
+  title: Cost Optimizer
+  purpose: Reduce the unit cost of pipelines without breaking them.
+  category: cat-cost-engineering
+  difficulty: advanced
+  tags: [agent, cost, finops, performance]
+  inputs: ["Billing/usage export", "Pipeline and query logs"]
+  tools: [read_file, mcp-duckdb]
+  skills: [skill-cost-unit-economics, skill-spark-cost-regression-guard, skill-warehouse-clustering-advisor]
+  mcp: [mcp-duckdb, mcp-snowflake]
+  workflow:
+    - Attribute spend to pipelines and tables.
+    - Rank by cost and by wasteful ratio (scan vs needed).
+    - Propose changes ordered by savings / risk.
+    - Define the unit metric to watch afterwards.
+  outputs: ["Cost attribution", "Ranked opportunities", "Per-change expected saving", "Guard metric"]
+  guardrails: ["Never applies a change", "Flags any recommendation that could change results"]
+  example: "Finds a nightly job re-reading 12 months of history because of a broken partition filter — 71% of the bill."
+  evaluation: "Savings estimates validated against historical billing after applying the change."
+  compatible_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  version: 0.1.4
+  license: Apache-2.0
+  author: de-agent
+  source_url: https://github.com/de-agent/agents/tree/main/cost-optimizer
+  github_url: https://github.com/de-agent/agents
+  verification: reviewed
+  last_verified: 2026-09-16
+  security: { runs_code: true, network_access: true, credentials: true, filesystem_access: true, external_apis: true }
+  relationships: { uses: [skill-cost-unit-economics], related_to: [runbook-spark-job-suddenly-costs-4x] }
+- id: agent-data-catalog-assistant
+  slug: data-catalog-assistant
+  type: agent
+  title: Data Catalog Assistant
+  purpose: Answer "what is this data, who owns it, and is it safe to use?".
+  category: cat-data-catalog
+  difficulty: beginner
+  tags: [agent, catalog, metadata, lineage]
+  inputs: ["An asset name or a natural-language question"]
+  tools: [mcp-datahub]
+  skills: [skill-lineage-explainer, skill-pii-classifier]
+  mcp: [mcp-datahub]
+  workflow:
+    - Resolve the asset(s) from the catalogue.
+    - Retrieve schema, ownership and classification.
+    - Retrieve lineage and freshness.
+    - Summarise with provenance and caveats.
+  outputs: ["Asset summary", "Owner & SLA", "Classification", "Upstream/downstream"]
+  guardrails: ["Read-only", "Never returns raw row data, only metadata"]
+  example: "Answers 'which tables feed the revenue mart and who owns them?' with owners and freshness."
+  evaluation: "Answer accuracy against a curated catalogue fixture."
+  compatible_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  version: 0.1.1
+  license: Apache-2.0
+  author: de-agent
+  source_url: https://github.com/de-agent/agents/tree/main/data-catalog-assistant
+  github_url: https://github.com/de-agent/agents
+  verification: reviewed
+  last_verified: 2026-09-12
+  security: { runs_code: false, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
+  relationships: { uses: [skill-lineage-explainer], related_to: [cat-data-catalog] }

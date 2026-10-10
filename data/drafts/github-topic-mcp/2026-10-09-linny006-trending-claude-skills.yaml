@@ -1,0 +1,26 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-linny006-trending-claude-skills
+  slug: linny006-trending-claude-skills
+  type: reference
+  title: linny006/trending-claude-skills
+  description: Auto-updated leaderboard of trending claude-skills and AI agent
+    repos, refreshed every 15 minutes
+  category: cat-agentic
+  tags: []
+  url: https://github.com/linny006/trending-claude-skills
+  publisher: GitHub topic — mcp-server
+  kind: blog
+  why: null
+  source_url: https://github.com/linny006/trending-claude-skills
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  discovered_from:
+    source: github-topic-mcp
+    extracted_at: 2026-10-09T04:45:42.662Z
+    published: 2026-10-09T04:45:13Z
+  classification:
+    backend: rules
+    confidence: high
+    suggested_categories:
+      - cat-agentic

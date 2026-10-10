@@ -1,0 +1,19 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="404 · DE//AGENT">
+  <section class="col" style="padding-top: 8rem; padding-bottom: 8rem;">
+    <p class="kicker">Error 404</p>
+    <h1 class="display-section" style="margin-top: 0.75rem;">The pipeline couldn’t find this record.</h1>
+    <p class="lede" style="margin-top: 1.25rem;">
+      Every reference we serve is verified — this one just doesn’t exist.
+      Try the marketplace, the roadmap, or a search instead.
+    </p>
+    <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem;">
+      <a href="/" class="btn btn-accent">Back to home</a>
+      <a href="/marketplace" class="btn">Browse marketplace</a>
+      <a href="/search" class="btn">Search the registry</a>
+    </div>
+  </section>
+</BaseLayout>

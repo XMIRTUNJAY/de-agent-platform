@@ -1,0 +1,101 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import SectionHeader from '@/components/SectionHeader.astro';
+import registry from '@/data/generated/registry.json';
+import stats from '@/data/generated/stats.json';
+
+const stages = registry.taxonomy.stages;
+const categories = registry.taxonomy.categories;
+const resources = registry.resources;
+const roadmapStages = ((registry as any).roadmap.stages ?? {}) as Record<string, { gate?: string; artifact?: string }>;
+const tracks = ((registry as any).roadmap.tracks ?? []) as { title: string; description: string; path: string[] }[];
+
+const catByStage: Record<string, typeof categories> = {};
+
+/** byStage counts keyed by stage id */
+const stageCounts = stats.byStage as Record<string, number>;
+for (const c of categories) (catByStage[c.stage] ??= []).push(c);
+---
+
+<BaseLayout title="Roadmap · DE//AGENT" sidebar>
+
+  <PageHero
+    kicker="Learning roadmap"
+    title="The Data Engineering Roadmap"
+    lede="13 stages from Foundations to Agentic Data Engineering. Each has an exit gate you can prove and a deliverable artifact."
+  />
+
+  <!-- Main path — chapter timeline with stable anchors -->
+  <section class="col section">
+    <ol style="list-style: none; padding: 0; margin: 0;">
+      {stages.map((stage, i) => {
+        const cats = (catByStage[stage.id] ?? []).sort((a: any, b: any) => a.order - b.order);
+        const count = stageCounts[stage.id] ?? 0;
+        const gate = roadmapStages[stage.id];
+        return (
+          <li id={stage.slug ?? stage.id} class:list={['reveal']} style="padding-top: 1rem;">
+            <a href={`#${stage.slug ?? stage.id}`} class="chapter-row chapter-stage">
+              <span class="chapter-num">{String(stage.order).padStart(2, '0')}</span>
+              <span style="flex: 1; min-width: 0;">
+                <span style="display: block; font-size: var(--text-2xl); font-weight: 500;">{stage.title}</span>
+                <span style="display: block; color: var(--fg-muted); margin-top: 0.35rem;">{stage.summary}</span>
+              </span>
+              <span class="chip">{count} resources</span>
+            </a>
+            {gate && (
+              <div class="mono-teach" style="padding: 0 0.5rem 1.25rem 4.25rem; color: var(--fg-muted); font-size: var(--text-sm);">
+                <span><strong style="color: var(--fg); font-weight: 500;">Gate:</strong> {gate.gate ?? '—'}</span>
+                {gate.artifact && <>
+                  <span style="margin: 0 0.5rem; color: var(--fg-dim);">·</span>
+                  <code class="icode">{gate.artifact}</code>
+                </>}
+              </div>
+            )}
+            <div style="padding: 0 0.5rem 2rem 4.25rem; display: grid; gap: 0.75rem; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));">
+              {cats.map((cat: any) => {
+                const catCount = resources.filter(r => r.category === cat.id).length;
+                return (
+                  <a href={`/categories/${cat.slug}`} class="card card-pad card-interactive">
+                    <p class="mono-label">{cat.group}</p>
+                    <h4 style="margin-top: 0.4rem; font-weight: 500;">{cat.title}</h4>
+                    <p style="margin-top: 0.4rem; font-size: var(--text-sm); color: var(--fg-muted);">{cat.summary}</p>
+                    <p style="margin-top: 0.6rem; font-size: var(--text-xs); color: var(--fg-dim); font-family: var(--font-mono);">{catCount} resources</p>
+                  </a>
+                );
+              })}
+            </div>
+          </li>
+        );
+      })}
+    </ol>
+  </section>
+
+  <hr class="hairline col" />
+
+  <!-- Provider tracks -->
+  <section class="col section">
+    <SectionHeader
+      kicker="Provider tracks"
+      title="Platform-specific paths"
+      lede="A focused sequence per provider — combine any track with the main roadmap."
+    />
+    <div class="card-grid stagger" style="margin-top: 3rem;">
+      {tracks.map((t: any) => (
+        <article class="card card-pad-lg">
+          <h3 style="font-size: var(--text-lg); font-weight: 500;">{t.title}</h3>
+          <p class="card-desc">{t.description}</p>
+          <div class="card-meta">
+            {t.path.map((p: any) => <span class="chip">{p}</span>)}
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  .chapter-stage { border-top: 1px solid var(--border); padding-top: 2rem; }
+  .mono-teach { border-left: 2px solid var(--border); margin-left: 1rem; }
+</style>

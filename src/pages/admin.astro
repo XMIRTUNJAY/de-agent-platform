@@ -1,0 +1,119 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import SectionHeader from '@/components/SectionHeader.astro';
+import stats from '@/data/generated/stats.json';
+
+const v = stats.counts.byVerification as Record<string, number>;
+const total = stats.counts.total;
+const covered = (v.reviewed ?? 0) + (v.tested ?? 0);
+const pct = Math.round((covered / total) * 100);
+
+const WORKFLOW = [
+  {
+    step: '01',
+    title: 'Discover',
+    what: 'Candidate resources are found from sources with recorded authority — standards bodies, official vendor docs, established communities.',
+    link: ['/docs/ingestion', 'Ingestion pipeline'],
+  },
+  {
+    step: '02',
+    title: 'Draft the record',
+    what: 'A curator writes the YAML record against the canonical model: one category, provenance, security flags, learning objectives, relationships.',
+    link: ['/docs/content-model', 'Content object model'],
+  },
+  {
+    step: '03',
+    title: 'License check',
+    what: 'Every license is checked against the catalogue. Proprietary and non-reproducible sources are linked and summarised only — never redistributed.',
+    link: ['/docs/ingestion', 'License policy'],
+  },
+  {
+    step: '04',
+    title: 'Score',
+    what: 'Quality (per-component rubric), completeness (16 canonical fields) and trust (verification − flags − staleness) are computed by the build.',
+    link: ['/docs/scoring', 'Scoring'],
+  },
+  {
+    step: '05',
+    title: 'Verify & promote',
+    what: 'Entries land at community, then are promoted to reviewed (source/license/docs checked) and tested (install + example run). Re-checked every 180 days.',
+    link: ['/docs/verification', 'Verification levels'],
+  },
+  {
+    step: '06',
+    title: 'Publish',
+    what: 'The pipeline regenerates registry, search index, graph and stats; the site reads only those artifacts. A failed validation halts the build.',
+    link: ['/admin/health', 'Registry health'],
+  },
+];
+
+const TIERS = [
+  { id: 'tested', label: 'Tested', n: v.tested ?? 0, note: 'install + example run' },
+  { id: 'reviewed', label: 'Reviewed', n: v.reviewed ?? 0, note: 'source, license, docs checked' },
+  { id: 'community', label: 'Community', n: v.community ?? 0, note: 'found; awaiting checks' },
+];
+---
+
+<BaseLayout title="Curation workflow · DE//AGENT" sidebar>
+  <PageHero
+    kicker="Curation"
+    title="How entries get curated"
+    lede="Six steps from a discovered URL to a verified registry entry — the same checklist the build pipeline enforces, in the same order."
+  >
+    <div style="margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+      <span class="chip">{total} resources under curation</span>
+      <span class="chip chip-accent">{pct}% reviewed or tested</span>
+      <span class="chip">{stats.counts.categories} categories · {stats.counts.stages} stages</span>
+    </div>
+  </PageHero>
+
+  <section class="col section">
+    <SectionHeader
+      kicker="The pipeline as a checklist"
+      title="Six steps, no shortcuts"
+      lede="Each step has a dedicated reference doc and an enforcing build stage. Skipping one is a build error, not a style choice."
+    />
+    <div class="card-grid card-grid--2 stagger" style="margin-top: 1.75rem;">
+      {WORKFLOW.map((w) => (
+        <div class="card card-pad">
+          <p class="mono-label">Step {w.step}</p>
+          <h3 style="margin-top: 0.4rem; font-weight: 500;">{w.title}</h3>
+          <p class="card-desc" style="margin-top: 0.5rem;">{w.what}</p>
+          <a class="link-arrow" style="margin-top: auto;" href={w.link[0]}>{w.link[1]} <span class="arrow" aria-hidden="true">→</span></a>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <hr class="hairline col" />
+
+  <section class="col section" style="padding-bottom: 6rem;">
+    <SectionHeader
+      kicker="Current state"
+      title="Where the registry stands"
+      lede={`Of ${total} resources, ${covered} have been reviewed or tested (${pct}%). The remaining ${v.community ?? 0} are community finds awaiting a curator check.`}
+    />
+    <div class="card-grid stagger" style="margin-top: 1.75rem;">
+      {TIERS.map((t) => (
+        <a href="/docs/verification" class="card card-pad card-interactive">
+          <p class="mono-label">{t.n} {t.n === 1 ? 'entry' : 'entries'}</p>
+          <h3 style="margin-top: 0.4rem; font-weight: 500;">{t.label}</h3>
+          <p class="card-desc">{t.note}</p>
+        </a>
+      ))}
+    </div>
+    <div class="card-grid card-grid--2" style="margin-top: 0.75rem;">
+      <a href="/admin/health" class="card card-pad card-interactive">
+        <h3 style="font-weight: 500;">Registry health</h3>
+        <p class="card-desc">Live counts per type, stage, difficulty and trust signal from the current build.</p>
+        <span class="link-arrow" style="margin-top: auto;">Open the dashboard <span class="arrow" aria-hidden="true">→</span></span>
+      </a>
+      <a href="/docs/contributing" class="card card-pad card-interactive">
+        <h3 style="font-weight: 500;">Contribute a resource</h3>
+        <p class="card-desc">What belongs in the registry, what the record needs, and the bar an entry has to clear.</p>
+        <span class="link-arrow" style="margin-top: auto;">Read the guide <span class="arrow" aria-hidden="true">→</span></span>
+      </a>
+    </div>
+  </section>
+</BaseLayout>

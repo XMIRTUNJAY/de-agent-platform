@@ -1,0 +1,243 @@
+# Architecture patterns — data flow & storage
+- id: pattern-medallion-zones
+  slug: medallion-zones
+  type: architecture
+  title: Medallion Zones (raw / curated / serving)
+  category: cat-lakes
+  difficulty: beginner
+  tags: [architecture, lakehouse, layers, medallion]
+  problem: Object storage gives you a place to put files but no structure for trust or ownership.
+  context: A lake or lakehouse where many teams write and read, and consumers need to know how far to trust a table.
+  forces: ["Reprocessing needs the original bytes", "Consumers want clean, typed, tested tables", "Cost grows with redundant copies", "Ownership must be legible"]
+  solution: |
+    Three zones with explicit contracts between them.
+      raw/       — immutable, exactly as received; never edited; schema-on-read.
+      curated/   — cleaned, typed, deduplicated; partitioned; quality-gated.
+      serving/   — modelled marts optimised for consumption; SLA-bearing.
+    Each zone has a different retention, quality bar and owner. Promotion between
+    zones is a pipeline step with a gate, not a copy.
+  diagram: |
+    source ─▶ raw (immutable) ─▶ [validate] ─▶ curated ─▶ [model+test] ─▶ serving
+                  ▲                                              │
+                  └──────────────── reprocess ◀──────────────────┘
+  tradeoffs:
+    - "pro: clear trust boundary, cheap reprocessing from raw"
+    - "con: multiple copies, more storage and more pipelines to run"
+    - "watch: don't let curated become a dumping ground; enforce the gate"
+  when_to_use: ["Multiple consumers with different quality needs", "You need to reprocess history", "You need an audit trail to the source"]
+  when_not: ["A single small pipeline with one consumer", "When storage cost dominates and copies are wasteful"]
+  implementations: [project-api-s3-spark-parquet, project-s3-glue-athena]
+  related: [pattern-batch-incremental-watermark, pattern-quarantine-publish]
+  version: 1.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/de-agent/patterns/tree/main/medallion-zones
+  github_url: https://github.com/de-agent/patterns
+  verification: reviewed
+  last_verified: 2026-09-28
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+- id: pattern-batch-incremental-watermark
+  slug: batch-incremental-watermark
+  type: architecture
+  title: Incremental Batch with a Watermark
+  category: cat-batch-processing
+  difficulty: intermediate
+  tags: [architecture, incremental, watermark, batch]
+  problem: Full reloads are too slow and too expensive once a table grows past millions of rows.
+  context: A batch pipeline reading an append-mostly source that has an updated_at/event time.
+  forces: ["Cost grows with history size", "Late-arriving rows must not be lost", "Re-runs must be safe", "Deletes may never be seen"]
+  solution: |
+    Process a window that ends at a watermark and starts a lookback before it.
+      scan from (max(watermark) - lookback) to now
+    The lookback absorbs late arrivals; the watermark bounds the work. Write
+    idempotently (partition overwrite or MERGE) so a re-run is safe. Handle deletes
+    explicitly (soft-delete or periodic full refresh) — they don't arrive in an
+    append-only stream.
+  diagram: |
+    [max(updated_at) - N days] ─────▶ [now]
+              lookback              watermark
+  tradeoffs:
+    - "pro: cost scales with new data, not history"
+    - "con: lookback trades correctness for cost; too short loses late rows"
+    - "watch: a naive is_incremental() without a lookback silently drops late data"
+  when_to_use: ["Append-mostly sources", "Cost-sensitive pipelines", "Deterministic event/updated timestamps"]
+  when_not: ["Little history", "Frequently mutating data without a reliable change marker (use CDC)"]
+  implementations: [project-api-s3-spark-parquet, skill-dbt-model-review]
+  related: [pattern-idempotent-partition-overwrite, pattern-postgres-cdc-lakehouse]
+  version: 1.2.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/de-agent/patterns/tree/main/batch-incremental-watermark
+  github_url: https://github.com/de-agent/patterns
+  verification: reviewed
+  last_verified: 2026-09-26
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+- id: pattern-idempotent-partition-overwrite
+  slug: idempotent-partition-overwrite
+  type: architecture
+  title: Idempotent Partition Overwrite
+  category: cat-batch-processing
+  difficulty: beginner
+  tags: [architecture, idempotency, partitions, batch]
+  problem: Retries and backfills duplicate or corrupt data because writes are appends.
+  context: Any batch pipeline that may be re-run for the same logical date.
+  forces: ["Retries are inevitable", "Backfills are routine", "Consumers must see stable values"]
+  solution: |
+    Make each run write the complete result for its logical partition and replace
+    that partition atomically. Never append to a partition you can recompute.
+    `INSERT OVERWRITE partition(dt=...)` or Delta/Iceberg replace-where do this.
+    The invariant: running the same date twice yields identical output.
+  diagram: |
+    run(dt=2026-09-01) ─▶ [compute] ─▶ OVERWRITE dt=2026-09-01
+    run(dt=2026-09-01) ─▶ [compute] ─▶ OVERWRITE dt=2026-09-01  (same result)
+  tradeoffs:
+    - "pro: retries and backfills are safe by construction"
+    - "con: requires a well-defined logical partition; hard for cross-partition state"
+  when_to_use: ["Any re-runnable batch job", "Backfill-heavy pipelines"]
+  when_not: ["Streaming writes with no partition boundary (use MERGE/upsert instead)"]
+  implementations: [project-api-s3-spark-parquet, skill-airflow-dag-reviewer]
+  related: [pattern-batch-incremental-watermark, pattern-streaming-dedup-upsert]
+  version: 1.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/de-agent/patterns/tree/main/idempotent-partition-overwrite
+  github_url: https://github.com/de-agent/patterns
+  verification: reviewed
+  last_verified: 2026-09-24
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+- id: pattern-quarantine-publish
+  slug: quarantine-publish
+  type: architecture
+  title: Quarantine then Publish
+  category: cat-data-quality
+  difficulty: intermediate
+  tags: [architecture, data-quality, quarantine, dq]
+  problem: One bad batch of rows can poison a whole table and every downstream metric.
+  context: A pipeline where a known fraction of incoming rows may be malformed.
+  forces: ["Consumers need clean data", "Bad rows must not be silently dropped", "Reprocessing bad rows must be possible"]
+  solution: |
+    Split every batch into publish and quarantine on a quality contract.
+      pass ─▶ published table (SLA-bearing)
+      fail ─▶ quarantine table (retained, alertable, reprocessable)
+    A row never disappears: it is either published or quarantined with a reason.
+    Alert on quarantine *rate*, not just on a hard failure — a rising rate is the
+    early signal of an upstream problem.
+  diagram: |
+    batch ─▶ [contract check] ─┬─ pass ─▶ published ─▶ consumers
+                               └─ fail ─▶ quarantine (+reason) ─▶ alert/reprocess
+  tradeoffs:
+    - "pro: consumers always read clean data; failures are visible and recoverable"
+    - "con: extra storage and a reprocessing path to maintain"
+    - "watch: a quarantine nobody reviews is just a slower data loss"
+  when_to_use: ["External/partner data", "Any table with an SLA", "High-value downstream metrics"]
+  when_not: ["Throwaway exploratory pipelines"]
+  implementations: [project-pipeline-dq-quarantine, runbook-data-quality-failure]
+  related: [pattern-contracts-quality-gate, skill-spark-data-quality-review]
+  version: 1.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/de-agent/patterns/tree/main/quarantine-publish
+  github_url: https://github.com/de-agent/patterns
+  verification: reviewed
+  last_verified: 2026-09-27
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+- id: pattern-contracts-quality-gate
+  slug: contracts-quality-gate
+  type: architecture
+  title: Contracts as a Quality Gate
+  category: cat-data-contracts
+  difficulty: intermediate
+  tags: [architecture, contracts, ci, quality-gate]
+  problem: Producers change schemas and semantics with no notice; consumers break in production.
+  context: Multiple teams, a shared data platform, and a catalogue or registry of assets.
+  forces: ["Producers move fast", "Consumers need stability", "Nobody reads a wiki on time"]
+  solution: |
+    A contract is code that runs in the producer's CI.
+      contract ─▶ compatibility check (CI) ─▶ build ─▶ publish ─▶ consumers
+    Additive changes pass. Breaking changes require a dated deprecation plan.
+    The gate lives where the change is made (producer CI), not in the consumer's
+    runtime — the cheapest place to catch it is before merge.
+  diagram: |
+    producer change ─▶ [contract CI] ─┬─ compatible ─▶ deploy
+                                      └─ breaking ─▶ blocked + plan required
+  tradeoffs:
+    - "pro: failures caught pre-merge, at the producer"
+    - "con: producers carry process overhead; needs buy-in"
+  when_to_use: ["Shared assets across teams", "Regulated or SLA-bearing data"]
+  when_not: ["A single team owning the whole chain"]
+  implementations: [hook-schema-change-check, hook-pre-deployment-dq-check, skill-data-contract-author]
+  related: [pattern-quarantine-publish, runbook-data-contract-broken]
+  version: 1.0.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/de-agent/patterns/tree/main/contracts-quality-gate
+  github_url: https://github.com/de-agent/patterns
+  verification: reviewed
+  last_verified: 2026-09-22
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+- id: pattern-postgres-cdc-lakehouse
+  slug: postgres-cdc-lakehouse
+  type: architecture
+  title: Postgres CDC to Lakehouse
+  category: cat-cdc
+  difficulty: advanced
+  tags: [architecture, cdc, debezium, kafka, lakehouse]
+  problem: Batch extraction from an OLTP database loads it and still misses deletes and mid-day changes.
+  context: A Postgres/MySQL source whose changes must reach a lakehouse with low latency.
+  forces: ["OLTP must not be slowed", "Deletes and updates must be captured", "Ordering matters", "Exactly-once is hard"]
+  solution: |
+    Read the write-ahead log, not the tables.
+      WAL ─▶ Debezium ─▶ Kafka ─▶ [dedupe by LSN] ─▶ MERGE into lakehouse
+    Rank events by (lsn, ts_ms) so out-of-order delivery resolves deterministically.
+    Debounce/compact in a streaming job before the merge. Handle tombstones
+    explicitly (hard or soft delete). Never read the source tables on a schedule.
+  diagram: |
+    Postgres WAL ─▶ Debezium ─▶ Kafka topic ─▶ stream dedupe ─▶ MERGE ─▶ Delta/Iceberg
+  tradeoffs:
+    - "pro: low latency, captures updates and deletes, no query load on OLTP"
+    - "con: operational complexity (slots, connectors, ordering)"
+    - "watch: a dropped replication slot forces a full re-snapshot"
+  when_to_use: ["OLTP → lakehouse with freshness < 15 min", "You need deletes/updates"]
+  when_not: ["A nightly batch is sufficient and the source is small"]
+  implementations: [project-postgres-cdc-kafka-lakehouse, skill-cdc-merge-designer]
+  related: [pattern-streaming-dedup-upsert, runbook-cdc-stopped]
+  version: 1.2.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/de-agent/patterns/tree/main/postgres-cdc-lakehouse
+  github_url: https://github.com/de-agent/patterns
+  verification: reviewed
+  last_verified: 2026-09-25
+  security: { runs_code: false, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
+- id: pattern-streaming-dedup-upsert
+  slug: streaming-dedup-upsert
+  type: architecture
+  title: Streaming Dedup and Upsert
+  category: cat-streaming
+  difficulty: advanced
+  tags: [architecture, streaming, dedup, upsert, exactly-once]
+  problem: Streaming sinks either duplicate on replay or lose rows on failure.
+  context: A streaming job writing a change/event stream into a mutable table.
+  forces: ["At-least-once delivery is the norm", "Replays happen after failure", "Consumers must not see duplicates"]
+  solution: |
+    Make the sink idempotent rather than trying to make the source exactly-once.
+    Deduplicate by a business key + event time within the watermark, then MERGE
+    (upsert) on the key. A replay recomputes the same rows and merges to the same
+    state — idempotent by construction. Order by event time, not arrival time.
+  diagram: |
+    stream ─▶ [windowed dedupe by key] ─▶ MERGE (upsert on key) ─▶ table
+  tradeoffs:
+    - "pro: correct under replay; no reliance on perfect exactly-once"
+    - "con: requires a stable business key and event time; state cost"
+  when_to_use: ["Kafka → Delta/Iceberg/warehouse", "Any replay-prone stream"]
+  when_not: ["Pure append-only event log with no dedup need"]
+  implementations: [project-kafka-spark-delta, skill-cdc-merge-designer]
+  related: [pattern-postgres-cdc-lakehouse, pattern-idempotent-partition-overwrite]
+  version: 1.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/de-agent/patterns/tree/main/streaming-dedup-upsert
+  github_url: https://github.com/de-agent/patterns
+  verification: reviewed
+  last_verified: 2026-09-23
+  security: { runs_code: false, network_access: true, credentials: true, filesystem_access: false, external_apis: false }

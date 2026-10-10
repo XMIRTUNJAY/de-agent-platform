@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Example Eng</title>
+  <entry>
+    <title>Iceberg table maintenance without the tears</title>
+    <link rel="alternate" href="https://example.dev/blog/iceberg-maintenance" />
+    <published>2026-10-04T08:30:00Z</published>
+    <summary>Compaction, snapshot expiry and manifest hygiene for busy tables.</summary>
+  </entry>
+</feed>

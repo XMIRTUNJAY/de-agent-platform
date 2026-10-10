@@ -1,0 +1,16 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ListingPage from '@/components/ListingPage.astro';
+import registry from '@/data/generated/registry.json';
+
+const resources = registry.resources.filter(r => r.type === 'runbook');
+---
+
+<BaseLayout title="Runbooks · DE//AGENT" sidebar>
+  <ListingPage
+    kicker="Operate"
+    title="Production runbooks"
+    lede="Symptom → diagnosis → fix for the fifteen most common incidents — each with commands, prevention and monitoring."
+    resources={resources}
+  />
+</BaseLayout>

@@ -1,0 +1,352 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import registry from '@/data/generated/registry.json';
+
+const { res } = Astro.props as { res: any };
+
+const cat = registry.taxonomy.categories.find((c: any) => c.id === res.category);
+const techs = res.technologies?.map((t: any) => registry.taxonomy.technologies.find((x: any) => x.id === t)).filter(Boolean) ?? [];
+const prereqs = res.prerequisites?.map((id: any) => registry.resources.find((r: any) => r.id === id)).filter(Boolean) ?? [];
+
+/** stage lookup keyed by stage id */
+const stageById = registry.taxonomy.stagesById as Record<string, { title: string }>;
+
+/** resource relationship groups (rel name -> resource ids) */
+const relationships = Object.entries((res.relationships ?? {}) as Record<string, any[]>);
+---
+
+<BaseLayout title={res.title} sidebar>
+  <main class="mx-auto max-w-[1600px] px-4 py-8 sm:px-6">
+    <nav class="mb-6 text-sm text-muted" aria-label="Breadcrumb">
+      <ol class="flex items-center gap-1.5">
+        <li><a href="/" class="link">Home</a></li>
+        <li class="text-dim">/</li>
+        <li><a href={`/${res.type}s`} class="link">{res.typeLabel}s</a></li>
+        <li class="text-dim">/</li>
+        <li aria-current="page">{res.title}</li>
+      </ol>
+    </nav>
+
+    <header class="mb-8 mount">
+      <div class="flex flex-wrap items-center gap-2 mb-3">
+        <span class="chip">{res.typeLabel}</span>
+        <span class="chip" style="color: var(--color-{res.verification === 'verified' ? 'accent' : res.verification === 'tested' ? 'info' : res.verification === 'reviewed' ? 'warn' : 'dim'})">{res.verification}</span>
+        {res.difficulty && <span class="chip">{res.difficulty}</span>}
+      </div>
+      <h1 class="display text-3xl sm:text-4xl">{res.title}</h1>
+      {res.tagline && <p class="mt-2 text-muted">{res.tagline}</p>}
+      <p class="mt-3 max-w-3xl">{res.description}</p>
+
+      {res.install_command && (
+        <div class="mt-4 codeblock">
+          <pre><code class="language-bash">{res.install_command}</code></pre>
+          <button class="copy-btn btn btn-sm btn-ghost" onclick="navigator.clipboard.writeText(this.previousElementSibling.innerText)">Copy</button>
+        </div>
+      )}
+    </header>
+
+    <div class="grid gap-8 lg:grid-cols-[1fr_320px]">
+      <section class="prose-de space-y-8">
+        {res.purpose && (
+          <section class="mount">
+            <h2>Purpose</h2>
+            <p>{res.purpose}</p>
+          </section>
+        )}
+        {res.problem && (
+          <section class="mount">
+            <h2>Problem</h2>
+            <p>{res.problem}</p>
+          </section>
+        )}
+        {res.solution && (
+          <section class="mount">
+            <h2>Solution</h2>
+            <p>{res.solution}</p>
+          </section>
+        )}
+        {res.body && (
+          <section class="mount">
+            <h2>Details</h2>
+            <div class="prose-de">{res.body}</div>
+          </section>
+        )}
+        {res.context && (
+          <section class="mount">
+            <h2>Context</h2>
+            <p>{res.context}</p>
+          </section>
+        )}
+        {res.forces && res.forces.length && (
+          <section class="mount">
+            <h2>Forces</h2>
+            <ul>{res.forces.map((f: any) => <li>{f}</li>)}</ul>
+          </section>
+        )}
+        {res.diagnosis && res.diagnosis.length && (
+          <section class="mount">
+            <h2>Diagnosis</h2>
+            <ul>{res.diagnosis.map((d: any) => <li>{d}</li>)}</ul>
+          </section>
+        )}
+        {res.commands && res.commands.length && (
+          <section class="mount">
+            <h2>Commands</h2>
+            {res.commands.map((c: any) => (
+              <div class="codeblock my-2">
+                <pre><code class="language-bash">{c}</code></pre>
+                <button class="copy-btn btn btn-sm btn-ghost" onclick="navigator.clipboard.writeText(this.previousElementSibling.innerText)">Copy</button>
+              </div>
+            ))}
+          </section>
+        )}
+        {res.fix && res.fix.length && (
+          <section class="mount">
+            <h2>Fix</h2>
+            <ul>{res.fix.map((f: any) => <li>{f}</li>)}</ul>
+          </section>
+        )}
+        {res.prevention && res.prevention.length && (
+          <section class="mount">
+            <h2>Prevention</h2>
+            <ul>{res.prevention.map((p: any) => <li>{p}</li>)}</ul>
+          </section>
+        )}
+        {res.monitoring && res.monitoring.length && (
+          <section class="mount">
+            <h2>Monitoring</h2>
+            <ul>{res.monitoring.map((m: any) => <li>{m}</li>)}</ul>
+          </section>
+        )}
+        {res.tradeoffs && res.tradeoffs.length && (
+          <section class="mount">
+            <h2>Tradeoffs</h2>
+            <ul>{res.tradeoffs.map((t: any) => <li>{t}</li>)}</ul>
+          </section>
+        )}
+        {res.implementation && (Array.isArray(res.implementation) ? res.implementation.length : typeof res.implementation === 'string') && (
+          <section class="mount">
+            <h2>Implementation</h2>
+            {Array.isArray(res.implementation) ? (
+              <ul>{res.implementation.map((i: any) => <li>{i}</li>)}</ul>
+            ) : (
+              <p>{res.implementation}</p>
+            )}
+          </section>
+        )}
+        {res.tests && res.tests.length && (
+          <section class="mount">
+            <h2>Tests</h2>
+            <ul>{res.tests.map((t: any) => <li>{t}</li>)}</ul>
+          </section>
+        )}
+        {res.failure_scenarios && res.failure_scenarios.length && (
+          <section class="mount">
+            <h2>Failure Scenarios</h2>
+            <ul>{res.failure_scenarios.map((f: any) => <li>{f}</li>)}</ul>
+          </section>
+        )}
+        {res.production_hardening && res.production_hardening.length && (
+          <section class="mount">
+            <h2>Production Hardening</h2>
+            <ul>{res.production_hardening.map((p: any) => <li>{p}</li>)}</ul>
+          </section>
+        )}
+        {res.diagram && (
+          <section class="mount">
+            <h2>Diagram</h2>
+            <pre class="codeblock"><code>{res.diagram}</code></pre>
+          </section>
+        )}
+        {res.repo_structure && (
+          <section class="mount">
+            <h2>Repository Structure</h2>
+            <pre class="codeblock"><code>{res.repo_structure}</code></pre>
+          </section>
+        )}
+        {res.architecture && (
+          <section class="mount">
+            <h2>Architecture</h2>
+            <p>{res.architecture}</p>
+          </section>
+        )}
+        {res.setup && res.setup.length && (
+          <section class="mount">
+            <h2>Setup</h2>
+            <ul>{res.setup.map((s: any) => <li>{s}</li>)}</ul>
+          </section>
+        )}
+        {res.sample_data && (
+          <section class="mount">
+            <h2>Sample Data</h2>
+            <p>{res.sample_data}</p>
+          </section>
+        )}
+        {res.workflow && res.workflow.length && (
+          <section class="mount">
+            <h2>Workflow</h2>
+            <ul>{res.workflow.map((w: any) => <li>{w}</li>)}</ul>
+          </section>
+        )}
+        {res.inputs && res.inputs.length && (
+          <section class="mount">
+            <h2>Inputs</h2>
+            <ul>{res.inputs.map((i: any) => <li>{i}</li>)}</ul>
+          </section>
+        )}
+        {res.outputs && res.outputs.length && (
+          <section class="mount">
+            <h2>Outputs</h2>
+            <ul>{res.outputs.map((o: any) => <li>{o}</li>)}</ul>
+          </section>
+        )}
+        {res.guardrails && res.guardrails.length && (
+          <section class="mount">
+            <h2>Guardrails</h2>
+            <ul>{res.guardrails.map((g: any) => <li>{g}</li>)}</ul>
+          </section>
+        )}
+        {res.example && (
+          <section class="mount">
+            <h2>Example</h2>
+            <p>{res.example}</p>
+          </section>
+        )}
+        {res.evaluation && (
+          <section class="mount">
+            <h2>Evaluation</h2>
+            <p>{res.evaluation}</p>
+          </section>
+        )}
+        {res.capabilities && res.capabilities.length && (
+          <section class="mount">
+            <h2>Capabilities</h2>
+            <ul>{res.capabilities.map((c: any) => <li>{c}</li>)}</ul>
+          </section>
+        )}
+        {res.tools && res.tools.length && (
+          <section class="mount">
+            <h2>Tools</h2>
+            <ul>{res.tools.map((t: any) => <li>{t}</li>)}</ul>
+          </section>
+        )}
+        {res.skills && res.skills.length && (
+          <section class="mount">
+            <h2>Skills</h2>
+            <ul>{res.skills.map((s: any) => <li><a href={s.url ?? '#'} class="link">{s}</a></li>)}</ul>
+          </section>
+        )}
+        {res.hooks && res.hooks.length && (
+          <section class="mount">
+            <h2>Hooks</h2>
+            <ul>{res.hooks.map((h: any) => <li><a href={h.url ?? '#'} class="link">{h}</a></li>)}</ul>
+          </section>
+        )}
+        {res.mcp && res.mcp.length && (
+          <section class="mount">
+            <h2>MCP Servers</h2>
+            <ul>{res.mcp.map((m: any) => <li><a href={m.url ?? '#'} class="link">{m}</a></li>)}</ul>
+          </section>
+        )}
+        {res.commands && res.commands.length && (
+          <section class="mount">
+            <h2>Commands</h2>
+            <ul>{res.commands.map((c: any) => <li><code class="icode">{c}</code></li>)}</ul>
+          </section>
+        )}
+      </section>
+
+      <aside class="sticky top-16 space-y-6">
+        <!-- Metadata card -->
+        <section class="card card-pad mount">
+          <h3 class="mono-label mb-3">Metadata</h3>
+          <dl class="space-y-3 text-sm">
+            {res.categoryTitle && (
+              <div><dt class="text-muted">Category</dt><dd><a href={`/categories/${res.categorySlug}`} class="link">{res.categoryTitle}</a></dd></div>
+            )}
+            {res.stage && (
+              <div><dt class="text-muted">Stage</dt><dd>{stageById[res.stage]?.title ?? res.stage}</dd></div>
+            )}
+            {res.version && <div><dt class="text-muted">Version</dt><dd class="font-mono">{res.version}</dd></div>}
+            {res.license && <div><dt class="text-muted">License</dt><dd class="font-mono">{res.license}</dd></div>}
+            {res.author && <div><dt class="text-muted">Author</dt><dd>{res.author}</dd></div>}
+            {res.publisher && <div><dt class="text-muted">Publisher</dt><dd>{res.publisher}</dd></div>}
+            {res.last_verified && <div><dt class="text-muted">Last Verified</dt><dd class="font-mono">{res.last_verified}</dd></div>}
+            {res.source_url && <div><dt class="text-muted">Source</dt><dd><a href={res.source_url} target="_blank" rel="noopener" class="link">{res.source_url}</a></dd></div>}
+            {res.github_url && <div><dt class="text-muted">Repository</dt><dd><a href={res.github_url} target="_blank" rel="noopener" class="link">{res.github_url}</a></dd></div>}
+            {res.files && res.files.length && <div><dt class="text-muted">Files</dt><dd>{res.files.join(', ')}</dd></div>}
+          </dl>
+        </section>
+
+        <!-- Security card -->
+        <section class="card card-pad mount">
+          <h3 class="mono-label mb-3">Security Posture</h3>
+          <p class="text-sm text-muted mb-3">A listing is not an endorsement. Review the flags before connecting.</p>
+          <dl class="space-y-2 text-sm">
+            {Object.entries(res.security ?? {}).map(([k, v]) => (
+              <div class="flex items-center justify-between">
+                <dt class="text-muted capitalize">{k.replace(/_/g, ' ')}</dt>
+                <dd class="font-mono">{v === true ? 'Yes' : v === false ? 'No' : '—'}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+
+        <!-- Provenance card -->
+        <section class="card card-pad mount">
+          <h3 class="mono-label mb-3">Provenance</h3>
+          <dl class="space-y-2 text-sm">
+            <div><dt class="text-muted">Verification</dt><dd class="font-mono capitalize">{res.verification}</dd></div>
+            {res.stale && <div class="text-warn"><dt class="text-muted">Stale</dt><dd>Last verified {res.stale_days} days ago (>180 days)</dd></div>}
+            {res.source_file && <div><dt class="text-muted">Source File</dt><dd class="font-mono text-xs">{res.source_file}</dd></div>}
+            {res.publisher_source && <div><dt class="text-muted">Publisher Data</dt><dd class="font-mono text-xs">{JSON.stringify(res.publisher_source).slice(0,200)}</dd></div>}
+          </dl>
+        </section>
+
+        <!-- Prerequisites -->
+        {prereqs.length && (
+          <section class="card card-pad mount">
+            <h3 class="mono-label mb-3">Prerequisites</h3>
+            <ul class="space-y-1">
+              {prereqs.map((p: any) => (
+                <li><a href={p.url} class="link text-sm">{p.title}</a> <span class="text-dim">({p.typeLabel})</span></li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        <!-- Related -->
+        {relationships.some(([_, v]) => v?.length) && (
+          <section class="card card-pad mount">
+            <h3 class="mono-label mb-3">Relationships</h3>
+            <dl class="space-y-2 text-sm">
+              {relationships.map(([rel, list]) => list?.length && (
+                <div>
+                  <dt class="text-muted capitalize">{rel.replace(/_/g, ' ')}</dt>
+                  <dd class="flex flex-wrap gap-1.5 mt-1">
+                    {list.map((id: any) => {
+                      const r = registry.resources.find((x: any) => x.id === id);
+                      return r ? <a href={r.url} class="chip text-xs">{r.title}</a> : <span class="chip text-xs">{id}</span>;
+                    })}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </section>
+        )}
+
+        <!-- Technologies -->
+        {techs.length && (
+          <section class="card card-pad mount">
+            <h3 class="mono-label mb-3">Technologies</h3>
+            <ul class="space-y-1">
+              {techs.map((t: any) => (
+                <li><a href={`/technologies/${t.slug}`} class="link text-sm">{t.name}</a> <span class="text-dim">({t.category})</span></li>
+              ))}
+            </ul>
+          </section>
+        )}
+      </aside>
+    </div>
+  </main>
+</BaseLayout>

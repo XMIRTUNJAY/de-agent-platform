@@ -1,0 +1,16 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ListingPage from '@/components/ListingPage.astro';
+import registry from '@/data/generated/registry.json';
+
+const resources = registry.resources.filter(r => r.type === 'starter');
+---
+
+<BaseLayout title="Projects · DE//AGENT" sidebar>
+  <ListingPage
+    kicker="Build"
+    title="Practical projects"
+    lede="End-to-end starters you can run locally — architecture, sample data, setup steps, tests, failure scenarios and production hardening."
+    resources={resources}
+  />
+</BaseLayout>

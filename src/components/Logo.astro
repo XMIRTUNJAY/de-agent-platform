@@ -1,0 +1,18 @@
+---
+/**
+ * Brand mark + wordmark. Original glyph (pipeline node), not derived from any
+ * third-party logo.
+ */
+interface Props { size?: number }
+const { size = 20 } = Astro.props;
+---
+<span class="inline-flex items-center gap-2 select-none">
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true" class="shrink-0">
+    <rect x="1.25" y="1.25" width="21.5" height="21.5" rx="4" stroke="var(--accent)" stroke-width="1.5" />
+    <path d="M6 12h4.2l2-4.4 2 8.8 1.6-4.4H18" stroke="var(--accent)" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round" />
+  </svg>
+  <span class="font-mono text-[0.9rem] font-semibold tracking-tight text-fg">
+    DE<span class="text-accent">//</span>AGENT
+  </span>
+</span>

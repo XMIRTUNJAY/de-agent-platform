@@ -1,0 +1,131 @@
+# Hooks — cost, backfill, deployment
+- id: hook-spark-cost-check
+  slug: spark-cost-check
+  type: hook
+  title: Spark Cost Check
+  description: Fail a build when a Spark job's shuffle/spill/scan metrics regress past a threshold.
+  trigger: post-run
+  purpose: Fail a build when a Spark job's cost metrics regress past a threshold.
+  category: cat-cost-engineering
+  difficulty: advanced
+  tags: [hook, spark, cost, ci, regression]
+  supported_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  implementation: |
+    After the job's test run, read shuffle/spill/scan metrics from the event log,
+    compare against the stored baseline (median of last 5), and fail if any metric
+    grew by more than 25%. Emit the offending stage and metric.
+  example: "Shuffle write grows 3.9x after a join change → build fails with the stage id."
+  failure_behavior: block
+  version: 0.1.3
+  license: Apache-2.0
+  author: de-agent
+  source_url: https://github.com/de-agent/hooks/tree/main/spark-cost-check
+  github_url: https://github.com/de-agent/hooks
+  verification: reviewed
+  last_verified: 2026-09-24
+  security: { runs_code: true, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
+  relationships: { related_to: [skill-spark-cost-regression-guard, runbook-spark-job-suddenly-costs-4x] }
+- id: hook-backfill-safety-check
+  slug: backfill-safety-check
+  type: hook
+  title: Backfill Safety Check
+  description: Refuse to start a backfill that lacks a rollback path or overlaps the daily run.
+  trigger: pre-run
+  purpose: Refuse to start a backfill that lacks a rollback path or overlaps the daily run.
+  category: cat-airflow
+  difficulty: advanced
+  tags: [hook, backfill, safety, orchestration]
+  supported_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  implementation: |
+    Intercepts a backfill trigger. Requires: an explicit date range, a target that
+    is either a shadow table or snapshotted, and a window that does not overlap the
+    scheduled production run. Denies otherwise.
+  example: "A bare `airflow dags backfill --start-date 2024-01-01` is denied for missing a range and rollback."
+  failure_behavior: block
+  version: 0.1.2
+  license: Apache-2.0
+  author: de-agent
+  source_url: https://github.com/de-agent/hooks/tree/main/backfill-safety-check
+  github_url: https://github.com/de-agent/hooks
+  verification: reviewed
+  last_verified: 2026-09-22
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [skill-backfill-planner, runbook-backfill-required] }
+- id: hook-dbt-full-refresh-guard
+  slug: dbt-full-refresh-guard
+  type: hook
+  title: dbt Full-Refresh Guard
+  description: Require confirmation before a full-refresh of a large incremental model.
+  trigger: on-tool-call
+  purpose: Require confirmation before a full-refresh of a large incremental model.
+  category: cat-dbt
+  difficulty: intermediate
+  tags: [hook, dbt, guardrail, cost]
+  supported_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  implementation: |
+    Inspect dbt commands for `--full-refresh`. If any affected model exceeds a row
+    threshold (from the manifest's stats) or is tagged `critical`, require an
+    explicit confirmation token and log the operator identity.
+  example: "`dbt run --full-refresh --select fct_orders` on a 4B-row model is paused for confirmation."
+  failure_behavior: confirm
+  version: 0.2.0
+  license: Apache-2.0
+  author: de-agent
+  source_url: https://github.com/de-agent/hooks/tree/main/dbt-full-refresh-guard
+  github_url: https://github.com/de-agent/hooks
+  verification: reviewed
+  last_verified: 2026-09-21
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
+  relationships: { related_to: [skill-dbt-model-review, cat-dbt] }
+- id: hook-prod-write-confirm
+  slug: prod-write-confirm
+  type: hook
+  title: Production Write Confirmation
+  description: Force human confirmation for any write against a production data target.
+  trigger: on-tool-call
+  purpose: Force human confirmation for any write against a production data target.
+  category: cat-production-operations
+  difficulty: beginner
+  tags: [hook, production, guardrail, safety]
+  supported_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  implementation: |
+    Classify the tool target as production by connection string, project or
+    catalogue tag. Any write-class tool against a production target is suspended
+    and surfaced for a human "approve once" token scoped to the single call.
+  example: "An agent asked to run a MERGE on prod.sales is suspended pending approval."
+  failure_behavior: confirm
+  version: 0.2.2
+  license: Apache-2.0
+  author: de-agent
+  source_url: https://github.com/de-agent/hooks/tree/main/prod-write-confirm
+  github_url: https://github.com/de-agent/hooks
+  verification: reviewed
+  last_verified: 2026-09-25
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [doc-security, hook-destructive-sql-guard] }
+- id: hook-freshness-pre-merge
+  slug: freshness-pre-merge
+  type: hook
+  title: Freshness Pre-Merge Check
+  description: Warn when a change would silently widen the freshness SLA of a source.
+  trigger: pre-merge
+  purpose: Warn when a change would silently widen the freshness SLA of a source.
+  category: cat-data-observability
+  difficulty: intermediate
+  tags: [hook, freshness, observability, sla]
+  supported_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  implementation: |
+    Compare the schedule/cron in the diff with the source's declared freshness SLA.
+    If the new schedule can produce data older than the SLA (e.g. daily when the
+    SLA is 6h), warn with the computed worst-case lag.
+  example: "Changing a source cron from hourly to daily warns that the 6h freshness SLA will be violated."
+  failure_behavior: warn
+  version: 0.1.1
+  license: Apache-2.0
+  author: de-agent
+  source_url: https://github.com/de-agent/hooks/tree/main/freshness-pre-merge
+  github_url: https://github.com/de-agent/hooks
+  verification: reviewed
+  last_verified: 2026-09-18
+  security: { runs_code: true, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
+  relationships: { related_to: [cat-data-observability, runbook-missing-partition] }

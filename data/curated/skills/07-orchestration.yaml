@@ -1,0 +1,93 @@
+# Skills: orchestration
+- id: skill-airflow-dag-reviewer
+  slug: airflow-dag-reviewer
+  type: skill
+  title: Airflow DAG Reviewer
+  tagline: Review a DAG for idempotency, retry safety, and backfill behaviour.
+  description: >-
+    Checks a DAG for non-idempotent tasks, unsafe retries, missing catchup policy,
+    ambiguous catchup/backfill semantics and unbounded concurrency.
+  category: cat-airflow
+  subcategory: Code Review
+  difficulty: intermediate
+  tags: [airflow, dag, idempotency, retries]
+  technologies: [tech-airflow]
+  learning_objectives:
+    - Make every task safe to re-run
+    - Choose retries and timeouts deliberately
+    - Predict what a backfill will do before running it
+  prerequisites: [skill-pipeline-test-author]
+  supported_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  version: 0.2.2
+  license: Apache-2.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/de-agent/skills/tree/main/airflow-dag-reviewer
+  github_url: https://github.com/de-agent/skills
+  install_command: "amp skill add de-agent/airflow-dag-reviewer"
+  verification: reviewed
+  last_verified: 2026-09-24
+  files: [SKILL.md, references/idempotency-patterns.md, examples/dag.py]
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
+  compatibility: [claude-code, codex, cursor, amp, gemini-cli]
+  relationships:
+    related_to: [runbook-pipeline-failed, skill-backfill-planner]
+    uses: [tech-airflow]
+  body: |
+    # Airflow DAG Reviewer
+
+    ## The idempotency test
+    "If this task runs twice for the same logical date, is the output the same?"
+    If no, fix it before anything else — retries will happen.
+
+    ## Checklist
+    1. Every task writes to a partition keyed by the logical date, or uses MERGE.
+    2. `catchup` is a deliberate choice, not a default.
+    3. Retries have a backoff; a task that retries instantly will hammer a downstream.
+    4. `max_active_runs` and pool limits prevent a backfill from starving the daily run.
+    5. Sensors use `reschedule`, not `poke`, so they don't hold a worker slot.
+- id: skill-backfill-planner
+  slug: backfill-planner
+  type: skill
+  title: Backfill Planner
+  tagline: Plan a backfill that doesn't melt production or corrupt the target.
+  description: >-
+    Produces a backfill plan: date ranges, blast radius, resource contention,
+    idempotency check, validation gates and rollback.
+  category: cat-airflow
+  subcategory: Operations
+  difficulty: advanced
+  tags: [backfill, orchestration, planning, safety]
+  technologies: [tech-airflow, tech-spark, tech-dbt]
+  learning_objectives:
+    - Scope a backfill by date and by dependency
+    - Detect which downstream tables must also be rebuilt
+    - Stage a backfill gradually with validation between batches
+  prerequisites: [skill-airflow-dag-reviewer]
+  supported_agents: [claude-code, codex, cursor, amp, gemini-cli]
+  version: 0.1.5
+  license: Apache-2.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/de-agent/skills/tree/main/backfill-planner
+  github_url: https://github.com/de-agent/skills
+  install_command: "amp skill add de-agent/backfill-planner"
+  verification: reviewed
+  last_verified: 2026-09-19
+  files: [SKILL.md, references/backfill-checklists.md, examples/plan.md]
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
+  compatibility: [claude-code, codex, cursor, amp, gemini-cli]
+  relationships:
+    related_to: [runbook-backfill-required, skill-airflow-dag-reviewer, pattern-backfill-safety]
+  body: |
+    # Backfill Planner
+
+    ## Before running anything
+    1. **Why** — which dates are wrong, and what does "correct" look like?
+    2. **Blast radius** — list every downstream model/table that reads the target.
+    3. **Contention** — will this run beside the daily job? At what hour is the cluster idle?
+    4. **Idempotency** — can each date be re-run safely?
+    5. **Rollback** — snapshot the target, or write to a shadow table first.
+
+    ## Execution
+    Backfill in date batches, smallest first, validating a sample after each batch.

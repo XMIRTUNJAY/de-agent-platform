@@ -1,0 +1,26 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-aletheore-aletheore
+  slug: aletheore-aletheore
+  type: reference
+  title: Aletheore/Aletheore
+  description: Evidence-grounded repository audit CLI - deterministic scanner, MCP
+    server, live dashboard, and a GitHub Action that posts PR diffs.
+  category: cat-agentic
+  tags: []
+  url: https://github.com/Aletheore/Aletheore
+  publisher: GitHub topic — mcp-server
+  kind: blog
+  why: null
+  source_url: https://github.com/Aletheore/Aletheore
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  discovered_from:
+    source: github-topic-mcp
+    extracted_at: 2026-10-09T04:45:42.665Z
+    published: 2026-10-09T04:43:18Z
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic

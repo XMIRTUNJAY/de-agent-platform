@@ -1,0 +1,29 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-fivetran-dbt-labs-announces-new-capabilities-to-make-enterprise-
+  slug: fivetran-dbt-labs-announces-new-capabilities-to-make-enterprise-
+  type: reference
+  title: Fivetran + dbt Labs Announces New Capabilities to Make Enterprise Data
+    Agent-Ready at dbt Summit 2026
+  description: dbt v2, dbt State are GA and Fivetran + dbt Labs debuts Fivetran
+    Context Layer, dbt Charts and a new open lakehouse vision
+  category: cat-dbt
+  tags: []
+  url: https://www.getdbt.com/blog/fivetran-dbt-labs-announces-new-capabilities-to-make-enterprise-data-agent-ready-at-dbt-summit
+  publisher: dbt Labs Blog
+  kind: blog
+  why: null
+  source_url: https://www.getdbt.com/blog/fivetran-dbt-labs-announces-new-capabilities-to-make-enterprise-data-agent-ready-at-dbt-summit
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  discovered_from:
+    source: dbt-labs
+    extracted_at: 2026-10-09T04:45:39.201Z
+    published: Wed, 16 Sep 2026 17:00:00 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-dbt
+      - cat-lakehouse
+      - cat-ingestion
