@@ -14,6 +14,10 @@ import { normalizeAll } from './lib/normalize.mjs';
 import { validate } from './lib/validate.mjs';
 import { scoreAll } from './lib/score.mjs';
 import { emit } from './lib/emit.mjs';
+import { findCandidates } from './lib/identity.mjs';
+import { ROOT } from './lib/load.mjs';
+import { writeFileSync, mkdirSync, existsSync } from 'node:fs';
+import { join } from 'node:path';
 
 const args = process.argv.slice(2);
 const FLAGS = new Set(args);
@@ -37,6 +41,10 @@ step('DEDUPLICATE', () => {
     seen.set(r.slug, r);
   }
   info(`${dupes} duplicate slug(s) detected`);
+  const { groups, checked } = findCandidates(resources);
+  for (const g of groups.slice(0, 20)) warn('  ! candidate [' + g.reason + '] ' + g.ids.join(' ~ '));
+  info(`${groups.length} duplicate-candidate group(s) across ${checked} resources (reported, never merged)`);
+  emitDuplicates({ groups, checked });
   return null;
 });
 
@@ -119,5 +127,12 @@ function step(name, fn) {
 }
 function info(msg) { console.log(`      \x1b[2m${msg}\x1b[0m`); }
 function ok(msg) { console.log(`      \x1b[32m${msg}\x1b[0m`); }
+function emitDuplicates(doc) {
+  const payload = { generated_at: new Date().toISOString(), ...doc };
+  for (const dir of [join(ROOT, 'src', 'data', 'generated'), join(ROOT, 'public', 'data', 'generated')]) {
+    if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
+    writeFileSync(join(dir, 'duplicates.json'), JSON.stringify(payload, null, 1) + '\n', 'utf8');
+  }
+}
 function warn(msg) { console.log(`      \x1b[33m${msg}\x1b[0m`); }
 function error(msg) { console.log(`      \x1b[31m${msg}\x1b[0m`); }

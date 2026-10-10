@@ -36,3 +36,12 @@ test('same repo name under different owners is a possible-fork candidate', () =>
   assert.equal(out.groups.length, 1);
   assert.equal(out.groups[0].reason, 'possible-fork');
 });
+
+test('duplicates.json payload shape', async () => {
+  const { readFileSync, existsSync } = await import('node:fs');
+  const p = new URL('../src/data/generated/duplicates.json', import.meta.url);
+  assert.ok(existsSync(p), 'duplicates.json must exist after a pipeline run');
+  const doc = JSON.parse(readFileSync(p, 'utf8'));
+  assert.ok(Array.isArray(doc.groups), 'groups must be an array');
+  assert.equal(typeof doc.checked, 'number');
+});
