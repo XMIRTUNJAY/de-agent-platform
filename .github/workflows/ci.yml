@@ -1,0 +1,21 @@
+name: ci
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: node pipelines/run.mjs --check
+      - run: npm test
+      - run: npm run build
+# astro check is deliberately excluded until the ~80 stale type errors
+# (previously dumped in check-errors.txt, now retired) are triaged.
+# It is not a pass; it is tracked debt. Do not read this exclusion as approval.
