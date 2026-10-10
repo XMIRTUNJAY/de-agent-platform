@@ -72,3 +72,14 @@ Most older records predate this system and show a gap. To clear one, work throug
 ## Freshness
 
 Every resource records `last_verified` — the date of its most recent check at its current level. Entries older than a reviewer-defined freshness window are re-queued for re-check. If you find a stale or broken entry, see the report path in [Security](/docs/security).
+
+## Running checks with the execution engine
+
+Evidence for build, test, and smoke checks comes from the execution engine (`pipelines/execute.mjs`), not from claims. The rules:
+
+- **Manifests are curator-authored.** Nothing runs because a model suggested it. A manifest lists exact commands, pins versions in its arguments, and is reviewed like any other change.
+- **Dry is the default.** The engine prints its plan and runs nothing. Local execution needs two explicit keys: `--backend local` and `--local-i-understand`.
+- **The policy gate runs first.** Unapproved trust, network access, paths outside the repo, and malformed commands block the run before anything spawns. A blocked run executes zero commands.
+- **Runs are recorded.** Every execution writes a checksummed transcript and a machine-readable summary with tool, version, timestamps, and exit codes. Secrets are scrubbed from the environment and redacted from logs.
+- **Evidence is assigned by a human.** The engine prints suggested entries; the curator uncomments the checks the run actually proves and pastes them into the record. A passing build earns `build_passed` — it never implies production readiness.
+- **Guarded is not isolated.** Timeouts and output caps are enforced; CPU, memory, and disk quotas plus network isolation need container backends, which are planned but not built. Run only manifests for projects you have already reviewed.
