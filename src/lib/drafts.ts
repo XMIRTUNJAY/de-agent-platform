@@ -5,6 +5,7 @@
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { parse } from 'yaml';
+import { reviewDraft, CHECKS } from '../../pipelines/lib/review-checks.mjs';
 
 export interface Draft {
   id: string;
@@ -24,9 +25,16 @@ export interface Draft {
   age_days: number | null;
   has_body: boolean;
   body_words: number | null;
+  review: { pass: number; warn: number; fail: number } | null;
 }
 
 const DRAFTS = join(process.cwd(), 'data', 'drafts');
+
+const REGISTRY_JSON = join(process.cwd(), 'src', 'data', 'generated', 'registry.json');
+const registryIds: Set<string> = new Set(
+  existsSync(REGISTRY_JSON) ? (JSON.parse(readFileSync(REGISTRY_JSON, 'utf8')).resources ?? []).map((r: any) => r.id) : []
+);
+export const CHECK_TOTAL = CHECKS.length;
 
 export function loadDrafts(): Draft[] {
   if (!existsSync(DRAFTS)) return [];
@@ -62,6 +70,14 @@ export function loadDrafts(): Draft[] {
           age_days: Number.isNaN(parsed) ? null : Math.floor((Date.now() - parsed) / 86400000),
           has_body: bodyText.length > 0,
           body_words: bodyText.length > 0 ? bodyText.split(/\s+/).length : null,
+          review: (() => {
+            try {
+              const s = reviewDraft({ ...first, draft_kind: first.draft_kind ?? 'brief', body: first.body ?? '', related: first.related ?? [], description: first.description ?? '' }, { ids: registryIds });
+              return { pass: s.score.pass, warn: s.score.warn, fail: s.score.fail };
+            } catch {
+              return null;
+            }
+          })(),
         });
       } catch {
         // unreadable draft — skip it, queue is informational

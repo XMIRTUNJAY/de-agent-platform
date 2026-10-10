@@ -2,7 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import PageHero from '@/components/PageHero.astro';
 import SectionHeader from '@/components/SectionHeader.astro';
-import { loadDrafts, groupByConfidence } from '@/lib/drafts';
+import { loadDrafts, groupByConfidence, CHECK_TOTAL } from '@/lib/drafts';
 
 const drafts = loadDrafts();
 const groups = groupByConfidence(drafts);
@@ -38,7 +38,7 @@ const CONF_ORDER = [
   </section>
 
   {CONF_ORDER.map((g) => {
-    const items = groups[g.id as 'low' | 'medium' | 'high'];
+    const items = [...groups[g.id as 'low' | 'medium' | 'high']].sort((a, b) => ((b.review?.fail ?? 0) - (a.review?.fail ?? 0)) || ((b.review?.warn ?? 0) - (a.review?.warn ?? 0)));
     if (!items.length) return null;
     return (
       <section class="col section">
@@ -51,6 +51,8 @@ const CONF_ORDER = [
                 <span class="chip">{d.publisher}</span>
                 {d.category && <span class="chip">{d.category.replace('cat-', '')}</span>}
                 <span class="chip">{d.age_days == null ? 'age unknown' : `${d.age_days}d old`}</span>
+                {d.review && <span class="chip">{d.review.pass}/{CHECK_TOTAL} checks</span>}
+                {d.review && d.review.fail > 0 && <span class="chip">{d.review.fail} failing</span>}
               </div>
               <h3 style="font-weight: 500; line-height: 1.35;">{d.title}</h3>
               <p class="card-desc" style="margin-top: 0.5rem;">
