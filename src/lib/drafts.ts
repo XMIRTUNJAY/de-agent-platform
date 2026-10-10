@@ -52,6 +52,7 @@ export function loadDrafts(): Draft[] {
         const anchor = extracted_at ?? fileDate;
         const parsed = anchor ? Date.parse(anchor) : NaN;
         const bodyText = String(first.body ?? '').trim();
+        const draftKind = first.draft_kind ?? first.kind ?? first.type ?? 'brief';
         out.push({
           id: first.id,
           slug: first.slug,
@@ -72,7 +73,7 @@ export function loadDrafts(): Draft[] {
           body_words: bodyText.length > 0 ? bodyText.split(/\s+/).length : null,
           review: (() => {
             try {
-              const s = reviewDraft({ ...first, draft_kind: first.draft_kind ?? 'brief', body: first.body ?? '', related: first.related ?? [], description: first.description ?? '' }, { ids: registryIds });
+              const s = reviewDraft({ ...first, draft_kind: draftKind, body: first.body ?? '', related: first.related ?? [], description: first.description ?? '' }, { ids: registryIds });
               return { pass: s.score.pass, warn: s.score.warn, fail: s.score.fail };
             } catch {
               return null;
