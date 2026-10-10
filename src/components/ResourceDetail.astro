@@ -30,7 +30,11 @@ const relationships = Object.entries((res.relationships ?? {}) as Record<string,
     <header class="mb-8 mount">
       <div class="flex flex-wrap items-center gap-2 mb-3">
         <span class="chip">{res.typeLabel}</span>
-        <span class="chip" style="color: var(--color-{res.verification === 'verified' ? 'accent' : res.verification === 'tested' ? 'info' : res.verification === 'reviewed' ? 'warn' : 'dim'})">{res.verification}</span>
+        {res.evidence_summary && res.evidence_summary.gap > 0 ? (
+          <span class="chip" style="color: var(--color-dim)" title={`Claimed ${res.verification}; evidence on file supports ${res.evidence_summary.earned}`}>evidence: {res.evidence_summary.earned} · claimed {res.verification}</span>
+        ) : (
+          <span class="chip" style="color: var(--color-{res.verification === 'verified' ? 'accent' : res.verification === 'tested' ? 'info' : res.verification === 'reviewed' ? 'warn' : 'dim'})">{res.verification}</span>
+        )}
         {res.difficulty && <span class="chip">{res.difficulty}</span>}
       </div>
       <h1 class="display text-3xl sm:text-4xl">{res.title}</h1>
@@ -297,6 +301,7 @@ const relationships = Object.entries((res.relationships ?? {}) as Record<string,
           <h3 class="mono-label mb-3">Provenance</h3>
           <dl class="space-y-2 text-sm">
             <div><dt class="text-muted">Verification</dt><dd class="font-mono capitalize">{res.verification}</dd></div>
+            {res.evidence_summary && <div><dt class="text-muted">Evidence</dt><dd class="font-mono text-xs">{Object.values(res.evidence_summary.checks).filter((c: any) => c.status === 'passed').length}/10 checks · earned {res.evidence_summary.earned}</dd></div>}
             {res.stale && <div class="text-warn"><dt class="text-muted">Stale</dt><dd>Last verified {res.stale_days} days ago (>180 days)</dd></div>}
             {res.source_file && <div><dt class="text-muted">Source File</dt><dd class="font-mono text-xs">{res.source_file}</dd></div>}
             {res.publisher_source && <div><dt class="text-muted">Publisher Data</dt><dd class="font-mono text-xs">{JSON.stringify(res.publisher_source).slice(0,200)}</dd></div>}

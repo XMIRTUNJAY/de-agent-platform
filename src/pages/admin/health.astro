@@ -52,6 +52,9 @@ const TRUST = [
   { label: 'need credentials', value: r.needs_credentials, note: 'API keys, tokens, warehouse logins' },
   { label: 'network access', value: r.network, note: 'call out of the machine' },
 ];
+
+const earned = (stats as any).verification_earned as Record<string, number> | undefined;
+const overClaims = (stats as any).over_claims as number | undefined;
 ---
 
 <BaseLayout title="Registry health · DE//AGENT" sidebar>
@@ -77,6 +80,37 @@ const TRUST = [
         </div>
       ))}
     </div>
+  </section>
+
+  <hr class="hairline col" />
+
+  <section class="col section">
+    <SectionHeader kicker="Evidence" title="Claimed vs earned" lede="Verification levels are earned per check with timestamps — not asserted. Over-claimed entries stay listed, labeled, until curators backfill evidence." />
+    {earned ? (
+      <div class="card-grid card-grid--2" style="margin-top: 1.75rem;">
+        <div class="card card-pad">
+          <p class="mono-label">earned levels</p>
+          <ul style="list-style: none; padding: 0; margin-top: 1rem; display: grid; gap: 0.55rem;">
+            {Object.entries(earned).map(([lv, n]) => (
+              <li style="display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;">
+                <span style="font-size: var(--text-sm); text-transform: capitalize;">{lv}</span>
+                <span class="text-muted" style="font-size: var(--text-sm); font-variant-numeric: tabular-nums;">{n}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="card card-pad">
+          <p class="mono-label">over-claimed</p>
+          <p class="display" style="font-size: var(--text-3xl, 2rem); letter-spacing: -0.02em;" style="margin-top: 0.5rem;">{overClaims ?? 0}</p>
+          <p class="card-desc" style="margin-top: 0.25rem;">claim more than evidence supports; backfill evidence to clear the gap</p>
+        </div>
+      </div>
+    ) : (
+      <div class="card card-pad" style="margin-top: 1.75rem;">
+        <p class="mono-label">no evidence runs recorded</p>
+        <p class="card-desc" style="margin-top: 0.5rem;">Run the registry pipeline to attest checks and compute earned levels.</p>
+      </div>
+    )}
   </section>
 
   <hr class="hairline col" />
