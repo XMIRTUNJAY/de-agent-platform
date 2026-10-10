@@ -24,8 +24,8 @@
   source_url: https://github.com/dbt-labs/dbt-mcp
   github_url: https://github.com/dbt-labs/dbt-mcp
   license: Apache-2.0
-  version: 1.7.0
-  last_verified: 2026-09-27
+  version: 2.7.0
+  last_verified: 2026-10-10
   verification: community
   relationships: { related_to: [cat-dbt, tech-dbt] }
 - id: mcp-datahub
@@ -53,8 +53,8 @@
   source_url: https://github.com/acryldata/mcp-server-datahub
   github_url: https://github.com/acryldata/mcp-server-datahub
   license: Apache-2.0
-  version: 0.4.0
-  last_verified: 2026-09-18
+  version: 0.7.1
+  last_verified: 2026-10-10
   verification: community
   relationships: { related_to: [cat-data-catalog, cat-data-lineage] }
 - id: mcp-aws
@@ -82,8 +82,8 @@
   source_url: https://github.com/awslabs/mcp
   github_url: https://github.com/awslabs/mcp
   license: Apache-2.0
-  version: 1.0.0
-  last_verified: 2026-09-22
+  version: 1.0.27
+  last_verified: 2026-10-10
   verification: community
   relationships: { related_to: [cat-aws, cat-infrastructure] }
 - id: mcp-kafka
