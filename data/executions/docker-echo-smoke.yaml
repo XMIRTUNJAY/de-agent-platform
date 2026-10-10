@@ -1,0 +1,18 @@
+# Example Docker manifest: prove the container backend works end to end.
+# Pinned image, no network, read-only mount, nobody user. Copy to author new runs.
+id: docker-echo-smoke
+target: null
+trust: curator-approved
+workdir: .
+image: redis:7-alpine
+commands:
+  - name: echo-inside-container
+    argv: ['echo', 'hello-from-container']
+    timeout_ms: 30000
+capabilities:
+  network: 'off'
+  filesystem: workdir-only
+  runtime: docker
+limits:
+  timeout_ms: 30000
+  max_output_bytes: 50000
