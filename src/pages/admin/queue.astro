@@ -6,6 +6,7 @@ import { loadDrafts, groupByConfidence } from '@/lib/drafts';
 
 const drafts = loadDrafts();
 const groups = groupByConfidence(drafts);
+const oldDrafts = drafts.filter((d) => (d.age_days ?? 0) >= 90).length;
 
 const CONF_ORDER = [
   { id: 'low', title: 'Review first', desc: 'Classifier was unsure — category is a suggestion, double-check the fit and the "why".', chipClass: 'chip' },
@@ -21,9 +22,10 @@ const CONF_ORDER = [
     lede="Every item here was pulled from a trusted source by the discovery pipeline and auto-classified. Nothing on this page is published — promote a draft by moving its record into data/curated/ and filling the gaps."
   >
     <div style="margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
-      <span class="chip">{drafts.length} drafts waiting</span>
-      <span class="chip chip-accent">{groups.high.length} high confidence</span>
-      <span class="chip">{groups.low.length} need judgement</span>
+        <span class="chip">{drafts.length} drafts waiting</span>
+        <span class="chip chip-accent">{groups.high.length} high confidence</span>
+        <span class="chip">{groups.low.length} need judgement</span>
+        {oldDrafts > 0 && <span class="chip">{oldDrafts} waiting 90+ days</span>}
     </div>
   </PageHero>
 
@@ -48,6 +50,7 @@ const CONF_ORDER = [
                 <span class={g.chipClass}>{d.confidence}</span>
                 <span class="chip">{d.publisher}</span>
                 {d.category && <span class="chip">{d.category.replace('cat-', '')}</span>}
+                <span class="chip">{d.age_days == null ? 'age unknown' : `${d.age_days}d old`}</span>
               </div>
               <h3 style="font-weight: 500; line-height: 1.35;">{d.title}</h3>
               <p class="card-desc" style="margin-top: 0.5rem;">

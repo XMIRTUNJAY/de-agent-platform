@@ -20,6 +20,8 @@ export interface Draft {
   source: string;
   published: string | null;
   file: string;
+  extracted_at: string | null;
+  age_days: number | null;
 }
 
 const DRAFTS = join(process.cwd(), 'data', 'drafts');
@@ -35,6 +37,10 @@ export function loadDrafts(): Draft[] {
         const items = parse(readFileSync(join(dir, f), 'utf8'));
         const first = Array.isArray(items) ? items[0] : items;
         if (!first?.id) continue;
+        const extracted_at = first.discovered_from?.extracted_at ?? null;
+        const fileDate = f.match(/^(\d{4}-\d{2}-\d{2})/)?.[1] ?? null;
+        const anchor = extracted_at ?? fileDate;
+        const parsed = anchor ? Date.parse(anchor) : NaN;
         out.push({
           id: first.id,
           slug: first.slug,
@@ -49,6 +55,8 @@ export function loadDrafts(): Draft[] {
           source: sourceDir.name,
           published: first.discovered_from?.published ?? null,
           file: `data/drafts/${sourceDir.name}/${f}`,
+          extracted_at,
+          age_days: Number.isNaN(parsed) ? null : Math.floor((Date.now() - parsed) / 86400000),
         });
       } catch {
         // unreadable draft — skip it, queue is informational
