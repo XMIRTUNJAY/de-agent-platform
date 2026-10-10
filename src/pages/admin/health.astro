@@ -11,6 +11,12 @@ const triage = (registry.resources as any[])
   .sort((a, b) => (b.evidence_summary.gap - a.evidence_summary.gap) || a.id.localeCompare(b.id))
   .slice(0, 20);
 
+const fresh = (stats as any).freshness as { upstream_changed: number; archived: number; stale: number } | undefined;
+const changedTop = (registry.resources as any[])
+  .filter((x) => x.freshness?.upstream_changed)
+  .sort((a, b) => String(b.freshness?.upstream_checked_at ?? '').localeCompare(String(a.freshness?.upstream_checked_at ?? '')))
+  .slice(0, 10);
+
 interface SourceHealthEntry {
   checks: number;
   successes: number;
@@ -137,6 +143,36 @@ const overClaims = (stats as any).over_claims as number | undefined;
           </a>
         ))}
       </div>
+    )}
+  </section>
+
+  <hr class="hairline col" />
+
+  <section class="col section">
+    <SectionHeader kicker="Freshness" title="Upstream drift" lede="Records whose upstream moved since verification, archived upstreams, and stale entries. Refresh provenance, then re-verify." />
+    {!fresh ? (
+      <div class="card card-pad" style="margin-top: 1.75rem;">
+        <p class="mono-label">no freshness runs recorded</p>
+        <p class="card-desc" style="margin-top: 0.5rem;">Run the registry pipeline after a provenance refresh to compute drift.</p>
+      </div>
+    ) : (
+      <>
+        <div style="margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+          <span class="chip chip-accent">{fresh.upstream_changed} upstream-changed</span>
+          <span class="chip">{fresh.archived} archived</span>
+          <span class="chip">{fresh.stale} stale</span>
+        </div>
+        {changedTop.length > 0 && (
+          <div class="card-grid card-grid--2" style="margin-top: 1.75rem;">
+            {changedTop.map((t) => (
+              <a href={t.url} class="card card-pad-sm card-interactive" style="display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;">
+                <span style="font-size: var(--text-sm);">{t.title}</span>
+                <span class="text-muted" style="font-size: var(--text-sm); font-variant-numeric: tabular-nums;">pushed {String(t.freshness?.pushed_at ?? '').slice(0, 10)} · verified {String(t.freshness?.last_verified ?? '').slice(0, 10)}</span>
+              </a>
+            ))}
+          </div>
+        )}
+      </>
     )}
   </section>
 

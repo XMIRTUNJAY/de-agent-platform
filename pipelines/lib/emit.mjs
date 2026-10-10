@@ -91,6 +91,14 @@ function buildStats(resources, taxonomy) {
     const st = r.page_eligibility?.state ?? 'needs_review';
     eligibility[st] = (eligibility[st] ?? 0) + 1;
   }
+  const freshness = { upstream_changed: 0, archived: 0, stale: 0 };
+  for (const r of resources) {
+    const f = r.freshness;
+    if (!f) continue;
+    if (f.upstream_changed) freshness.upstream_changed++;
+    if (f.archived) freshness.archived++;
+    if (f.stale) freshness.stale++;
+  }
   return {
     counts: {
       total: resources.length,
@@ -104,6 +112,7 @@ function buildStats(resources, taxonomy) {
     verification_earned,
     over_claims,
     eligibility,
+    freshness,
     byStage,
     byCategory,
     readability: {

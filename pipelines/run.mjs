@@ -18,6 +18,7 @@ import { findCandidates } from './lib/identity.mjs';
 import { evaluateAll } from './lib/evidence.mjs';
 import { pageEligibility } from './lib/eligibility.mjs';
 import { relatedFor } from './lib/related.mjs';
+import { evaluateFreshness } from './lib/freshness.mjs';
 import { ROUTE } from './lib/emit.mjs';
 import { ROOT } from './lib/load.mjs';
 import { writeFileSync, mkdirSync, existsSync, readFileSync } from 'node:fs';
@@ -133,6 +134,20 @@ step('ELIGIBILITY', () => {
 step('RELATED', () => {
   for (const r of resources) r.related_computed = relatedFor(r, resources, 5);
   info(`related links computed for ${resources.length} resources`);
+  return null;
+});
+
+// FRESHNESS
+step('FRESHNESS', () => {
+  const now = new Date().toISOString();
+  let changed = 0, archived = 0, stale = 0;
+  for (const r of resources) {
+    r.freshness = evaluateFreshness(r, now);
+    if (r.freshness.upstream_changed) changed++;
+    if (r.freshness.archived) archived++;
+    if (r.freshness.stale) stale++;
+  }
+  info(`${changed} upstream-changed · ${archived} archived · ${stale} stale`);
   return null;
 });
 
