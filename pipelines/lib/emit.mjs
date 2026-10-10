@@ -7,7 +7,7 @@ import { join } from 'node:path';
 import { GENERATED, ROOT } from './load.mjs';
 import { isStale, stalenessDays } from './score.mjs';
 
-const ROUTE = {
+export const ROUTE = {
   skill: 'skills', mcp: 'mcp', plugin: 'plugins', agent: 'agents', hook: 'hooks',
   template: 'templates', starter: 'projects', runbook: 'runbooks', architecture: 'patterns',
   reference: 'references', tutorial: 'tutorials', tool: 'tools', checklist: 'checklists',
