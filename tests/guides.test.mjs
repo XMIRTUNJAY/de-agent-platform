@@ -19,3 +19,19 @@ test('every guide declares resolvable related ids and honest validation', () => 
     assert.ok('validation' in fm, `${f} must declare validation (object or null)`);
   }
 });
+
+test('comparisons carry criteria, verdict, and labeled unknowns', async () => {
+  const { readdirSync, readFileSync } = await import('node:fs');
+  const dir = new URL('../src/pages/guides/', import.meta.url);
+  const files = readdirSync(dir).filter((f) => f.endsWith('.md'));
+  const comparisons = files.filter((f) => {
+    const fm = parse(readFileSync(new URL(`../src/pages/guides/${f}`, import.meta.url), 'utf8').split('---')[1]);
+    return fm.kind === 'comparison';
+  });
+  assert.ok(comparisons.length >= 1, 'need at least one comparison exemplar');
+  for (const f of comparisons) {
+    const raw = readFileSync(new URL(`../src/pages/guides/${f}`, import.meta.url), 'utf8');
+    assert.ok(raw.includes('## Criteria'), `${f} needs a Criteria section`);
+    assert.ok(raw.includes('## Verdict'), `${f} needs a Verdict section`);
+  }
+});
