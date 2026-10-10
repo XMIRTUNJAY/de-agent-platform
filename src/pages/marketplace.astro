@@ -54,6 +54,21 @@ const securityOptions = [
   { value: 'network', label: 'Network access', count: readability.network },
   { value: 'runs-code', label: 'Runs code', count: readability.touches_code },
 ];
+
+const technologies = registry.taxonomy.technologies.filter(t => registry.resources.some(r => (r.technologies ?? []).includes(t.id)));
+const stages = registry.taxonomy.stages.filter(s => registry.resources.some(r => r.stage === s.id));
+
+const technologyOptions = technologies.map(t => ({
+  value: t.id,
+  label: t.name,
+  count: registry.resources.filter(r => (r.technologies ?? []).includes(t.id)).length
+}));
+
+const stageOptions = stages.map(s => ({
+  value: s.id,
+  label: s.title,
+  count: registry.resources.filter(r => r.stage === s.id).length
+}));
 ---
 
 <BaseLayout title="Marketplace · DE//AGENT" sidebar>
@@ -151,13 +166,41 @@ const securityOptions = [
             ))}
           </ul>
         </details>
+        <details class="card card-pad-sm" open>
+          <summary class="mono-label cursor-pointer">Technology <span class="text-dim">({technologyOptions.filter(o => o.count > 0).length})</span></summary>
+          <ul class="mt-3 space-y-2">
+            {technologyOptions.filter(o => o.count > 0).map((opt) => (
+              <li>
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" name="technology" value={opt.value} class="checkbox" />
+                  <span class="text-sm text-muted">{opt.label}</span>
+                  <span class="ml-auto font-mono text-2xs text-dim">({opt.count})</span>
+                </label>
+              </li>
+            ))}
+          </ul>
+        </details>
+        <details class="card card-pad-sm" open>
+          <summary class="mono-label cursor-pointer">Stage <span class="text-dim">({stageOptions.filter(o => o.count > 0).length})</span></summary>
+          <ul class="mt-3 space-y-2">
+            {stageOptions.filter(o => o.count > 0).map((opt) => (
+              <li>
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" name="stage" value={opt.value} class="checkbox" />
+                  <span class="text-sm text-muted">{opt.label}</span>
+                  <span class="ml-auto font-mono text-2xs text-dim">({opt.count})</span>
+                </label>
+              </li>
+            ))}
+          </ul>
+        </details>
       </aside>
 
       <!-- Results grid -->
       <section>
         <div id="results" class="card-grid stagger">
           {registry.resources.filter((r) => (r.page_eligibility?.state ?? 'eligible') !== 'internal_only').map((r) => (
-            <div data-type={r.type} data-category={r.categorySlug ?? ''} data-difficulty={r.difficulty ?? ''} data-verification={r.verification} data-agents={r.compatible_agents?.join(',') ?? ''} data-security={[
+            <div data-type={r.type} data-category={r.categorySlug ?? ''} data-difficulty={r.difficulty ?? ''} data-verification={r.verification} data-technology={(r.technologies ?? []).join(',')} data-stage={r.stage ?? ''} data-agents={r.compatible_agents?.join(',') ?? ''} data-security={[
               r.security_flags === 0 && 'read-only',
               r.security?.credentials && 'needs-credentials',
               r.security?.network_access && 'network',
@@ -191,7 +234,7 @@ const securityOptions = [
               if (!val) { show = false; break; }
               if (key === 'category' || key === 'type') {
                 if (!values.has(val)) { show = false; break; }
-              } else if (key === 'agent' || key === 'security') {
+              } else if (key === 'agent' || key === 'security' || key === 'technology') {
                 const has = val.split(',').some((v: string) => values.has(v));
                 if (!has) { show = false; break; }
               } else {
