@@ -49,3 +49,24 @@ test('failure classification', () => {
   assert.equal(classifyFailure({ error: { code: 'ENOENT' } }).category, 'missing-executable');
   assert.equal(classifyFailure({ exitCode: 3 }).category, 'nonzero-exit');
 });
+
+test('docker runtime needs a pinned image', () => {
+  const m = { id: 'd', trust: 'curator-approved', workdir: '.', commands: [{ name: 'e', argv: ['echo', 'hi'] }], capabilities: { network: 'off', filesystem: 'workdir-only', runtime: 'docker' }, limits: {} };
+  const noImage = evaluatePolicy(m);
+  assert.equal(noImage.eligible, false);
+  assert.ok(noImage.reasons.some((r) => r.code === 'unpinned-image'));
+  const latest = evaluatePolicy({ ...m, image: 'redis:latest' });
+  assert.ok(latest.reasons.some((r) => r.code === 'unpinned-image'));
+  const pinned = evaluatePolicy({ ...m, image: 'redis:7-alpine' });
+  assert.ok(!pinned.reasons.some((r) => r.code === 'unpinned-image'));
+});
+
+test('writable mounts and host escapes are blocked', () => {
+  const m = { id: 'd', trust: 'curator-approved', workdir: '.', image: 'redis:7-alpine', commands: [{ name: 'e', argv: ['echo', 'hi'] }], capabilities: { network: 'off', filesystem: 'workdir-only', runtime: 'docker' }, limits: {} };
+  const w = evaluatePolicy({ ...m, mounts: [{ host: '.', container: '/work', readonly: false }] });
+  assert.ok(w.reasons.some((r) => r.code === 'writable-mount'));
+  const e = evaluatePolicy({ ...m, mounts: [{ host: '../outside', container: '/work', readonly: true }] });
+  assert.ok(e.reasons.some((r) => r.code === 'path-escape'));
+  const ok = evaluatePolicy({ ...m, mounts: [{ host: 'data', container: '/work', readonly: true }] });
+  assert.equal(ok.eligible, true);
+});

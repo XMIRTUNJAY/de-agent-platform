@@ -18,7 +18,18 @@ export function evaluatePolicy(manifest) {
   if (!VALID.trust.includes(manifest.trust)) block('untrusted-manifest', `trust is ${JSON.stringify(manifest.trust)}; must be curator-approved by a human`);
   if (!VALID.network.includes(manifest.capabilities?.network)) block('network-not-supported', 'only network: off is supported; no backend grants network access yet');
   if (!VALID.filesystem.includes(manifest.capabilities?.filesystem)) block('unsupported-filesystem', 'only filesystem: workdir-only is supported');
-  if (typeof manifest.workdir === 'string' && (isAbsolute(manifest.workdir) || manifest.workdir.split(/[\\/]/).includes('..'))) {
+  const runtime = manifest.capabilities?.runtime ?? 'local';
+  if (!['local', 'docker'].includes(runtime)) block('unsupported-runtime', 'runtime must be local or docker');
+  if (runtime === 'docker') {
+    const image = manifest.image ?? '';
+    if (!image.includes(':') || image.endsWith(':latest')) block('unpinned-image', `image ${JSON.stringify(image)} must be pinned name:tag, never latest`);
+    for (const mt of manifest.mounts ?? []) {
+      if (!mt || typeof mt !== 'object' || !mt.host || !mt.container) { block('malformed-mount', 'mounts need { host, container, readonly }'); continue; }
+      if (isAbsolute(mt.host) || String(mt.host).split(/[\\/]/).includes('..')) block('path-escape', `mount host ${JSON.stringify(mt.host)} must be repo-relative without ..`);
+      if (!String(mt.container).startsWith('/')) block('malformed-mount', `mount container ${JSON.stringify(mt.container)} must be absolute`);
+      if (mt.readonly === false) block('writable-mount', 'only read-only mounts are supported');
+    }
+  }  if (typeof manifest.workdir === 'string' && (isAbsolute(manifest.workdir) || manifest.workdir.split(/[\\/]/).includes('..'))) {
     block('path-escape', `workdir ${JSON.stringify(manifest.workdir)} must be repo-relative without ..`);
   }
   for (const c of manifest.commands ?? []) {
