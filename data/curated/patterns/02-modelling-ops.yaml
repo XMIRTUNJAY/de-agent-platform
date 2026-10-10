@@ -34,7 +34,7 @@
   author: de-agent
   source_url: https://github.com/de-agent/patterns/tree/main/dimensional-model
   github_url: https://github.com/de-agent/patterns
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-20
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
 - id: pattern-data-vault
@@ -70,7 +70,7 @@
   author: de-agent
   source_url: https://github.com/de-agent/patterns/tree/main/data-vault
   github_url: https://github.com/de-agent/patterns
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-14
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
 - id: pattern-lambda-vs-kappa
@@ -106,7 +106,7 @@
   author: de-agent
   source_url: https://github.com/de-agent/patterns/tree/main/lambda-vs-kappa
   github_url: https://github.com/de-agent/patterns
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-17
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
 - id: pattern-small-files-compaction
@@ -139,7 +139,7 @@
   author: de-agent
   source_url: https://github.com/de-agent/patterns/tree/main/small-files-compaction
   github_url: https://github.com/de-agent/patterns
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-22
   security: { runs_code: true, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
 - id: pattern-backfill-safety
@@ -174,7 +174,7 @@
   author: de-agent
   source_url: https://github.com/de-agent/patterns/tree/main/backfill-safety
   github_url: https://github.com/de-agent/patterns
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-24
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
 - id: pattern-dbt-tests-docs
@@ -207,7 +207,7 @@
   author: de-agent
   source_url: https://github.com/de-agent/patterns/tree/main/dbt-tests-docs
   github_url: https://github.com/de-agent/patterns
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-26
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
 - id: pattern-cost-guardrails
@@ -243,7 +243,7 @@
   author: de-agent
   source_url: https://github.com/de-agent/patterns/tree/main/cost-guardrails
   github_url: https://github.com/de-agent/patterns
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-19
   security: { runs_code: false, network_access: true, credentials: true, filesystem_access: false, external_apis: true }
 - id: pattern-agent-in-the-loop-review
@@ -277,6 +277,6 @@
   author: de-agent
   source_url: https://github.com/de-agent/patterns/tree/main/agent-in-the-loop-review
   github_url: https://github.com/de-agent/patterns
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-29
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }

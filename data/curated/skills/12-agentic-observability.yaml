@@ -26,7 +26,7 @@
   source_url: https://github.com/de-agent/skills/tree/main/mcp-tool-contract-auditor
   github_url: https://github.com/de-agent/skills
   install_command: "amp skill add de-agent/mcp-tool-contract-auditor"
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-29
   files: [SKILL.md, references/blast-radius.md, examples/audit.md]
   security: { runs_code: false, network_access: true, credentials: false, filesystem_access: false, external_apis: false }
@@ -72,7 +72,7 @@
   source_url: https://github.com/de-agent/skills/tree/main/lineage-explainer
   github_url: https://github.com/de-agent/skills
   install_command: "amp skill add de-agent/lineage-explainer"
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-12
   files: [SKILL.md, examples/impact.md, references/lineage-stores.md]
   security: { runs_code: false, network_access: true, credentials: true, filesystem_access: false, external_apis: false }

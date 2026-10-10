@@ -16,7 +16,7 @@
   why: Exact, versioned, and free to reuse. The config reference alone resolves most tuning debates.
   tags: [spark, docs, official]
   quality: { authority: 5, docs_quality: 4, repo_activity: 5, license_clarity: 5, installation: null, tests: null, examples: 4, security: null, maintenance: 5, compatibility: 4 }
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-28
 - id: ref-delta-docs
   slug: delta-lake-docs
@@ -31,7 +31,7 @@
   why: The definitive source for Delta features and the maintenance operations referenced by our lakehouse skills.
   tags: [delta, lakehouse, docs, official]
   quality: { authority: 5, docs_quality: 4, repo_activity: 5, license_clarity: 5, installation: 3, tests: 3, examples: 4, security: null, maintenance: 5, compatibility: 4 }
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-26
 - id: ref-iceberg-docs
   slug: iceberg-docs
@@ -46,7 +46,7 @@
   why: The table format is a specification; the spec is the ground truth when tools disagree.
   tags: [iceberg, lakehouse, spec, official]
   quality: { authority: 5, docs_quality: 4, repo_activity: 5, license_clarity: 5, installation: 3, tests: 4, examples: 3, security: null, maintenance: 5, compatibility: 4 }
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-25
 - id: ref-kafka-docs
   slug: kafka-docs
@@ -61,7 +61,7 @@
   why: The design section explains why ordering and partitions behave the way they do; the operations section is the runbook companion.
   tags: [kafka, streaming, docs, official]
   quality: { authority: 5, docs_quality: 4, repo_activity: 5, license_clarity: 5, installation: 4, tests: 3, examples: 3, security: 3, maintenance: 5, compatibility: 5 }
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-27
 - id: ref-debezium-docs
   slug: debezium-docs
@@ -76,7 +76,7 @@
   why: The connector matrix and the events section are what you need to design a correct CDC merge.
   tags: [cdc, debezium, docs, official]
   quality: { authority: 5, docs_quality: 4, repo_activity: 5, license_clarity: 5, installation: 3, tests: 3, examples: 4, security: 3, maintenance: 5, compatibility: 4 }
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-24
 - id: ref-airflow-docs
   slug: airflow-docs
@@ -91,7 +91,7 @@
   why: The "best practices" and scheduling pages answer the idempotency and backfill questions our skills only sketch.
   tags: [airflow, orchestration, docs, official]
   quality: { authority: 5, docs_quality: 4, repo_activity: 5, license_clarity: 5, installation: 4, tests: 3, examples: 4, security: 3, maintenance: 5, compatibility: 5 }
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-29
 - id: ref-dbt-docs
   slug: dbt-docs
@@ -106,7 +106,7 @@
   why: The materialisation and incremental-model pages are the reference for the incremental traps our skill lists.
   tags: [dbt, transformation, docs]
   quality: { authority: 4, docs_quality: 5, repo_activity: 5, license_clarity: 3, installation: 4, tests: 4, examples: 5, security: 3, maintenance: 5, compatibility: 4 }
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-27
 - id: ref-gx-docs
   slug: great-expectations-docs
@@ -121,7 +121,7 @@
   why: The expectation catalogue is a practical vocabulary for expressing quality rules precisely.
   tags: [data-quality, expectations, docs]
   quality: { authority: 4, docs_quality: 4, repo_activity: 4, license_clarity: 5, installation: 3, tests: 3, examples: 4, security: null, maintenance: 4, compatibility: 3 }
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-22
 - id: ref-duckdb-docs
   slug: duckdb-docs
@@ -136,7 +136,7 @@
   why: The fastest way to make a pipeline testable offline; the Parquet and SQL pages cover everything our test skill needs.
   tags: [duckdb, sql, local, docs]
   quality: { authority: 4, docs_quality: 5, repo_activity: 5, license_clarity: 5, installation: 5, tests: 4, examples: 5, security: null, maintenance: 5, compatibility: 4 }
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-30
 - id: ref-datahub-docs
   slug: datahub-docs
@@ -151,7 +151,7 @@
   why: The metadata model explains how to represent ownership and lineage consistently across tools.
   tags: [catalog, lineage, metadata, docs]
   quality: { authority: 4, docs_quality: 4, repo_activity: 4, license_clarity: 5, installation: 2, tests: 3, examples: 4, security: 3, maintenance: 4, compatibility: 3 }
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-18
 - id: ref-openlineage-docs
   slug: openlineage-docs
@@ -166,7 +166,7 @@
   why: It is an open specification for lineage events, which is what makes cross-tool lineage possible.
   tags: [lineage, openlineage, spec, docs]
   quality: { authority: 4, docs_quality: 4, repo_activity: 4, license_clarity: 5, installation: 3, tests: 3, examples: 3, security: null, maintenance: 4, compatibility: 4 }
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-16
 - id: ref-parquet-docs
   slug: parquet-docs
@@ -181,5 +181,5 @@
   why: Understanding row groups and statistics is what turns "use Parquet" into "and lay it out like this".
   tags: [parquet, formats, spec, docs]
   quality: { authority: 5, docs_quality: 3, repo_activity: 5, license_clarity: 5, installation: null, tests: 4, examples: 2, security: null, maintenance: 5, compatibility: 5 }
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-20

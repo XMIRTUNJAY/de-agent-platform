@@ -25,7 +25,7 @@
   source_url: https://github.com/de-agent/skills/tree/main/sql-review
   github_url: https://github.com/de-agent/skills
   install_command: "amp skill add de-agent/sql-review"
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-30
   files: [SKILL.md, references/null-semantics.md, examples/fanout.sql, tests/test_rules.py]
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
@@ -73,7 +73,7 @@
   source_url: https://github.com/de-agent/skills/tree/main/sql-query-plan-explainer
   github_url: https://github.com/de-agent/skills
   install_command: "amp skill add de-agent/sql-query-plan-explainer"
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-22
   files: [SKILL.md, references/plan-nodes.md, examples/explain.txt]
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: true, external_apis: false }

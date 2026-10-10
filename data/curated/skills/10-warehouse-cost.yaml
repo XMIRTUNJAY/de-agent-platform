@@ -25,7 +25,7 @@
   source_url: https://github.com/de-agent/skills/tree/main/warehouse-clustering-advisor
   github_url: https://github.com/de-agent/skills
   install_command: "amp skill add de-agent/warehouse-clustering-advisor"
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-17
   files: [SKILL.md, references/clustering-keys.md, examples/query-history.sql]
   security: { runs_code: true, network_access: false, credentials: true, filesystem_access: false, external_apis: false }
@@ -72,7 +72,7 @@
   source_url: https://github.com/de-agent/skills/tree/main/cost-unit-economics-reporter
   github_url: https://github.com/de-agent/skills
   install_command: "amp skill add de-agent/cost-unit-economics-reporter"
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-11
   files: [SKILL.md, examples/cost_model.sql, references/unit-metrics.md]
   security: { runs_code: true, network_access: true, credentials: true, filesystem_access: false, external_apis: true }

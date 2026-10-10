@@ -25,7 +25,7 @@
   source_url: https://github.com/de-agent/skills/tree/main/schema-change-contract-review
   github_url: https://github.com/de-agent/skills
   install_command: "amp skill add de-agent/schema-change-contract-review"
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-26
   files: [SKILL.md, references/compatibility-rules.md, examples/diff.md]
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
@@ -73,7 +73,7 @@
   source_url: https://github.com/de-agent/skills/tree/main/data-contract-author
   github_url: https://github.com/de-agent/skills
   install_command: "amp skill add de-agent/data-contract-author"
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-13
   files: [SKILL.md, references/contract-template.md, examples/contract.yaml]
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
@@ -119,7 +119,7 @@
   source_url: https://github.com/de-agent/skills/tree/main/pii-classifier
   github_url: https://github.com/de-agent/skills
   install_command: "amp skill add de-agent/pii-classifier"
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-10
   files: [SKILL.md, references/classification-taxonomy.md, examples/scan.py]
   security: { runs_code: true, network_access: false, credentials: true, filesystem_access: true, external_apis: false }

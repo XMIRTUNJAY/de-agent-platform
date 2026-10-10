@@ -45,7 +45,7 @@
   author: de-agent
   source_url: https://github.com/de-agent/runbooks/tree/main/spark-job-slow
   github_url: https://github.com/de-agent/runbooks
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-28
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
   relationships: { related_to: [cat-spark, runbook-small-files-explosion] }
@@ -91,7 +91,7 @@
   author: de-agent
   source_url: https://github.com/de-agent/runbooks/tree/main/spark-job-suddenly-costs-4x
   github_url: https://github.com/de-agent/runbooks
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-25
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
   relationships: { related_to: [hook-spark-cost-check, skill-cost-unit-economics] }
@@ -135,7 +135,7 @@
   author: de-agent
   source_url: https://github.com/de-agent/runbooks/tree/main/small-files-explosion
   github_url: https://github.com/de-agent/runbooks
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-22
   security: { runs_code: true, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
   relationships: { related_to: [cat-lakehouse, runbook-spark-job-slow] }
@@ -178,7 +178,7 @@
   author: de-agent
   source_url: https://github.com/de-agent/runbooks/tree/main/warehouse-query-slow
   github_url: https://github.com/de-agent/runbooks
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-18
   security: { runs_code: true, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
   relationships: { related_to: [skill-warehouse-clustering-advisor] }
@@ -221,7 +221,7 @@
   author: de-agent
   source_url: https://github.com/de-agent/runbooks/tree/main/missing-partition
   github_url: https://github.com/de-agent/runbooks
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-16
   security: { runs_code: true, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
   relationships: { related_to: [runbook-backfill-required, runbook-late-files] }

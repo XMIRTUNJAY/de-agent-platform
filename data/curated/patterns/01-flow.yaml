@@ -33,7 +33,7 @@
   author: de-agent
   source_url: https://github.com/de-agent/patterns/tree/main/medallion-zones
   github_url: https://github.com/de-agent/patterns
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-28
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
 - id: pattern-batch-incremental-watermark
@@ -69,7 +69,7 @@
   author: de-agent
   source_url: https://github.com/de-agent/patterns/tree/main/batch-incremental-watermark
   github_url: https://github.com/de-agent/patterns
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-26
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
 - id: pattern-idempotent-partition-overwrite
@@ -102,7 +102,7 @@
   author: de-agent
   source_url: https://github.com/de-agent/patterns/tree/main/idempotent-partition-overwrite
   github_url: https://github.com/de-agent/patterns
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-24
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
 - id: pattern-quarantine-publish
@@ -138,7 +138,7 @@
   author: de-agent
   source_url: https://github.com/de-agent/patterns/tree/main/quarantine-publish
   github_url: https://github.com/de-agent/patterns
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-27
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
 - id: pattern-contracts-quality-gate
@@ -172,7 +172,7 @@
   author: de-agent
   source_url: https://github.com/de-agent/patterns/tree/main/contracts-quality-gate
   github_url: https://github.com/de-agent/patterns
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-22
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
 - id: pattern-postgres-cdc-lakehouse
@@ -206,7 +206,7 @@
   author: de-agent
   source_url: https://github.com/de-agent/patterns/tree/main/postgres-cdc-lakehouse
   github_url: https://github.com/de-agent/patterns
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-25
   security: { runs_code: false, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
 - id: pattern-streaming-dedup-upsert
@@ -238,6 +238,6 @@
   author: de-agent
   source_url: https://github.com/de-agent/patterns/tree/main/streaming-dedup-upsert
   github_url: https://github.com/de-agent/patterns
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-23
   security: { runs_code: false, network_access: true, credentials: true, filesystem_access: false, external_apis: false }

@@ -25,7 +25,7 @@
   source_url: https://github.com/de-agent/skills/tree/main/incident-postmortem-writer
   github_url: https://github.com/de-agent/skills
   install_command: "amp skill add de-agent/incident-postmortem-writer"
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-25
   files: [SKILL.md, references/postmortem-template.md, examples/postmortem.md]
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
@@ -71,7 +71,7 @@
   source_url: https://github.com/de-agent/skills/tree/main/spark-cost-regression-guard
   github_url: https://github.com/de-agent/skills
   install_command: "amp skill add de-agent/spark-cost-regression-guard"
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-14
   files: [SKILL.md, examples/compare_metrics.py, references/cost-metrics.md]
   security: { runs_code: true, network_access: false, credentials: false, filesystem_access: true, external_apis: false }

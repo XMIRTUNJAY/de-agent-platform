@@ -39,7 +39,7 @@
   author: de-agent
   source_url: https://github.com/de-agent/runbooks/tree/main/schema-drift
   github_url: https://github.com/de-agent/runbooks
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-26
   security: { runs_code: true, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
   relationships: { related_to: [runbook-data-contract-broken, hook-schema-change-check] }
@@ -82,7 +82,7 @@
   author: de-agent
   source_url: https://github.com/de-agent/runbooks/tree/main/data-contract-broken
   github_url: https://github.com/de-agent/runbooks
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-21
   security: { runs_code: false, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
   relationships: { related_to: [cat-data-contracts, runbook-schema-drift] }
@@ -126,7 +126,7 @@
   author: de-agent
   source_url: https://github.com/de-agent/runbooks/tree/main/data-quality-failure
   github_url: https://github.com/de-agent/runbooks
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-27
   security: { runs_code: true, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
   relationships: { related_to: [pattern-quarantine-publish, hook-pre-deployment-dq-check] }
@@ -170,7 +170,7 @@
   author: de-agent
   source_url: https://github.com/de-agent/runbooks/tree/main/pipeline-failed
   github_url: https://github.com/de-agent/runbooks
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-29
   security: { runs_code: true, network_access: true, credentials: true, filesystem_access: true, external_apis: false }
   relationships: { related_to: [cat-production-operations, skill-airflow-dag-reviewer] }
@@ -214,7 +214,7 @@
   author: de-agent
   source_url: https://github.com/de-agent/runbooks/tree/main/backfill-required
   github_url: https://github.com/de-agent/runbooks
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-25
   security: { runs_code: true, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
   relationships: { related_to: [skill-backfill-planner, hook-backfill-safety-check] }
@@ -257,7 +257,7 @@
   author: de-agent
   source_url: https://github.com/de-agent/runbooks/tree/main/bad-deployment
   github_url: https://github.com/de-agent/runbooks
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-20
   security: { runs_code: false, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
   relationships: { related_to: [cat-cicd, runbook-pipeline-failed] }

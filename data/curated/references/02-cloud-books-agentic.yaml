@@ -12,7 +12,7 @@
   why: The performance and cost sections are the reference for clustering-key and warehouse-sizing decisions.
   tags: [snowflake, warehouse, docs]
   quality: { authority: 5, docs_quality: 5, repo_activity: 4, license_clarity: 2, installation: null, tests: null, examples: 4, security: 4, maintenance: 5, compatibility: 3 }
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-24
 - id: ref-bigquery-docs
   slug: bigquery-docs
@@ -27,7 +27,7 @@
   why: The partitioning/clustering pages explain the levers our Athena/BigQuery cost guidance mirrors.
   tags: [bigquery, gcp, docs]
   quality: { authority: 5, docs_quality: 5, repo_activity: 4, license_clarity: 2, installation: null, tests: null, examples: 5, security: 4, maintenance: 5, compatibility: 3 }
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-21
 - id: ref-databricks-docs
   slug: databricks-docs
@@ -42,7 +42,7 @@
   why: Liquid clustering and Unity Catalog are platform-specific and only documented here.
   tags: [databricks, lakehouse, unity-catalog, docs]
   quality: { authority: 5, docs_quality: 4, repo_activity: 4, license_clarity: 2, installation: null, tests: null, examples: 4, security: 4, maintenance: 5, compatibility: 3 }
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-19
 - id: ref-glue-docs
   slug: aws-glue-docs
@@ -57,7 +57,7 @@
   why: Job bookmarks and the catalogue's behaviour are the source of the most common Glue surprises.
   tags: [aws, glue, catalog, docs]
   quality: { authority: 5, docs_quality: 4, repo_activity: 4, license_clarity: 2, installation: null, tests: null, examples: 4, security: 4, maintenance: 5, compatibility: 3 }
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-17
 - id: ref-soda-core
   slug: soda-core
@@ -87,7 +87,7 @@
   why: The security section is required reading before connecting any MCP server to real data.
   tags: [mcp, spec, agentic, protocol]
   quality: { authority: 5, docs_quality: 4, repo_activity: 5, license_clarity: 5, installation: 3, tests: 3, examples: 4, security: 5, maintenance: 5, compatibility: 5 }
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-30
 - id: ref-mcp-registry
   slug: mcp-registry
@@ -102,7 +102,7 @@
   why: The canonical place to discover MCP servers — treat entries as *discovery*, never as a trust signal.
   tags: [mcp, registry, discovery]
   quality: { authority: 4, docs_quality: 3, repo_activity: 5, license_clarity: 5, installation: 3, tests: 3, examples: 3, security: 4, maintenance: 5, compatibility: 5 }
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-29
 - id: ref-agent-skills
   slug: agent-skills
@@ -136,7 +136,7 @@
   why: The single highest-value read for system-design interviews and for understanding why the tools are shaped as they are.
   tags: [book, system-design, fundamentals]
   quality: { authority: 5, docs_quality: 5, repo_activity: null, license_clarity: 1, installation: null, tests: null, examples: 3, security: null, maintenance: 5, compatibility: 4 }
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-12
 - id: ref-fundamentals-de
   slug: fundamentals-of-data-engineering
@@ -153,7 +153,7 @@
   why: The best map of the field for someone moving into data engineering; pairs well with this roadmap.
   tags: [book, foundations, roadmap]
   quality: { authority: 4, docs_quality: 4, repo_activity: null, license_clarity: 1, installation: null, tests: null, examples: 2, security: 4, maintenance: 4, compatibility: 3 }
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-12
 - id: ref-data-mesh
   slug: data-mesh
@@ -168,7 +168,7 @@
   why: The organizational counterpoint to a central platform team; useful vocabulary for governance discussions.
   tags: [book, governance, organization, architecture]
   quality: { authority: 4, docs_quality: 4, repo_activity: null, license_clarity: 1, installation: null, tests: null, examples: 3, security: 3, maintenance: 4, compatibility: 3 }
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-12
 - id: ref-dbt-best-practices
   slug: dbt-best-practices
@@ -183,5 +183,5 @@
   why: A widely-adopted convention set — agreeing on it early avoids a lot of friction later.
   tags: [dbt, best-practices, guide]
   quality: { authority: 4, docs_quality: 5, repo_activity: 5, license_clarity: 2, installation: null, tests: 4, examples: 5, security: null, maintenance: 5, compatibility: 4 }
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-26

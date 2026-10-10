@@ -23,7 +23,7 @@
   author: de-agent
   source_url: https://github.com/de-agent/plugins/tree/main/de-data-toolkit
   github_url: https://github.com/de-agent/plugins
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-30
   security: { runs_code: true, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
   relationships: { related_to: [cat-agentic], uses: [skill-sql-review] }
@@ -51,7 +51,7 @@
   author: de-agent
   source_url: https://github.com/de-agent/plugins/tree/main/dbt-workbench
   github_url: https://github.com/de-agent/plugins
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-28
   security: { runs_code: true, network_access: true, credentials: true, filesystem_access: true, external_apis: false }
   relationships: { related_to: [cat-dbt], uses: [skill-dbt-model-review] }
@@ -79,7 +79,7 @@
   author: de-agent
   source_url: https://github.com/de-agent/plugins/tree/main/spark-lens
   github_url: https://github.com/de-agent/plugins
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-26
   security: { runs_code: true, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
   relationships: { related_to: [cat-spark], uses: [skill-spark-skew-diagnosis] }
@@ -107,7 +107,7 @@
   author: de-agent
   source_url: https://github.com/de-agent/plugins/tree/main/lakehouse-guard
   github_url: https://github.com/de-agent/plugins
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-19
   security: { runs_code: true, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
   relationships: { related_to: [cat-lakehouse], uses: [skill-iceberg-maintenance] }
@@ -135,7 +135,7 @@
   author: de-agent
   source_url: https://github.com/de-agent/plugins/tree/main/warehouse-explorer
   github_url: https://github.com/de-agent/plugins
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-23
   security: { runs_code: true, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
   relationships: { related_to: [cat-warehouses], uses: [skill-sql-query-plan] }

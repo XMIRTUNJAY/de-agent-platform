@@ -26,7 +26,7 @@
   author: de-agent
   source_url: https://github.com/de-agent/templates/tree/main/terraform-aws-data-platform
   github_url: https://github.com/de-agent/templates
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-20
   security: { runs_code: true, network_access: true, credentials: true, filesystem_access: true, external_apis: true }
   relationships: { related_to: [project-s3-glue-athena, cat-infrastructure] }
@@ -53,7 +53,7 @@
   author: de-agent
   source_url: https://github.com/de-agent/templates/tree/main/docker-local-stack
   github_url: https://github.com/de-agent/templates
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-30
   security: { runs_code: true, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
   relationships: { related_to: [project-postgres-cdc-kafka-lakehouse, cat-infrastructure] }
@@ -81,7 +81,7 @@
   author: de-agent
   source_url: https://github.com/de-agent/templates/tree/main/data-contract-template
   github_url: https://github.com/de-agent/templates
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-23
   security: { runs_code: true, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
   relationships: { related_to: [skill-data-contract-author, pattern-contracts-quality-gate] }

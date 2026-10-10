@@ -25,7 +25,7 @@
   source_url: https://github.com/de-agent/skills/tree/main/iceberg-table-maintenance
   github_url: https://github.com/de-agent/skills
   install_command: "amp skill add de-agent/iceberg-table-maintenance"
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-16
   files: [SKILL.md, examples/compaction.sql, references/metadata-tables.md]
   security: { runs_code: true, network_access: false, credentials: true, filesystem_access: false, external_apis: false }
@@ -77,7 +77,7 @@
   source_url: https://github.com/de-agent/skills/tree/main/delta-optimization-advisor
   github_url: https://github.com/de-agent/skills
   install_command: "amp skill add de-agent/delta-optimization-advisor"
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-14
   files: [SKILL.md, examples/optimize.sql, references/zorder-guide.md]
   security: { runs_code: true, network_access: false, credentials: true, filesystem_access: false, external_apis: false }

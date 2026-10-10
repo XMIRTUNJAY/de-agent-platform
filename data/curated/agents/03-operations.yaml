@@ -26,7 +26,7 @@
   author: de-agent
   source_url: https://github.com/de-agent/agents/tree/main/kafka-troubleshooter
   github_url: https://github.com/de-agent/agents
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-20
   security: { runs_code: false, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
   relationships: { uses: [skill-kafka-lag-triage], related_to: [runbook-kafka-consumer-lagging] }
@@ -57,7 +57,7 @@
   author: de-agent
   source_url: https://github.com/de-agent/agents/tree/main/backfill-planner
   github_url: https://github.com/de-agent/agents
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-19
   security: { runs_code: false, network_access: true, credentials: true, filesystem_access: true, external_apis: false }
   relationships: { uses: [skill-backfill-planner], related_to: [runbook-backfill-required] }
@@ -88,7 +88,7 @@
   author: de-agent
   source_url: https://github.com/de-agent/agents/tree/main/incident-assistant
   github_url: https://github.com/de-agent/agents
-  verification: reviewed
+  verification: community
   last_verified: 2026-09-25
   security: { runs_code: false, network_access: true, credentials: true, filesystem_access: true, external_apis: false }
   relationships: { uses: [skill-incident-postmortem-writer], related_to: [cat-production-operations] }
