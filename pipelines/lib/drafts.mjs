@@ -10,6 +10,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { stringify } from 'yaml';
 import { ROOT, readYaml } from './load.mjs';
+import { normalizeUrl } from './identity.mjs';
 
 export const DRAFTS = join(ROOT, 'data', 'drafts');
 const SEEN_PATH = join(DRAFTS, '.seen.json');
@@ -92,14 +93,6 @@ export function writeDraft(seen, { source, item, classification }) {
   seen.urls[normalizeUrl(item.url)] = { id: finalId, at: date };
   seen.ids[finalId] = file;
   return { id: finalId, file };
-}
-
-function normalizeUrl(url) {
-  return String(url ?? '')
-    .toLowerCase()
-    .replace(/^https?:\/\//, '')
-    .replace(/\/+$/, '')
-    .replace(/[?#].*$/, '');
 }
 
 function ensureDir(p) {
