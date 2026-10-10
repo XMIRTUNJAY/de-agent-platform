@@ -23,7 +23,7 @@ const verified = resources.filter(r => r.verification === 'reviewed' || r.verifi
 
 <section class="col section-sm" style="padding-top: 2.5rem;">
   <div class="card-grid stagger" style="margin-top: 0;">
-    {resources.map((r) => <ResourceCard resource={r} />)}
+    {resources.filter((r) => (r.page_eligibility?.state ?? 'eligible') !== 'internal_only').map((r) => <ResourceCard resource={r} />)}
   </div>
   {resources.length === 0 && <p class="text-muted" style="padding: 3rem 0; text-align: center;">Nothing here yet.</p>}
 </section>

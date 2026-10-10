@@ -16,6 +16,8 @@ import { scoreAll } from './lib/score.mjs';
 import { emit } from './lib/emit.mjs';
 import { findCandidates } from './lib/identity.mjs';
 import { evaluateAll } from './lib/evidence.mjs';
+import { pageEligibility } from './lib/eligibility.mjs';
+import { ROUTE } from './lib/emit.mjs';
 import { ROOT } from './lib/load.mjs';
 import { writeFileSync, mkdirSync, existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -111,6 +113,21 @@ step('VERIFY', () => {
   return null;
 });
 
+// ELIGIBILITY
+step('ELIGIBILITY', () => {
+  const states = {};
+  for (const r of resources) {
+    r.page_eligibility = pageEligibility(r);
+    const url = `/${ROUTE[r.type] ?? 'resources'}/${r.slug}`;
+    states[url] = r.page_eligibility.state;
+  }
+  emitEligibility(states);
+  const counts = {};
+  for (const s of Object.values(states)) counts[s] = (counts[s] ?? 0) + 1;
+  info('eligibility: ' + Object.entries(counts).map(([k, n]) => `${k}:${n}`).join('  '));
+  return null;
+});
+
 if (failed && !FLAGS.has('--no-fail')) {
   error('build halted — fix the errors above');
   process.exit(1);
@@ -149,6 +166,13 @@ function emitDuplicates(doc) {
   for (const dir of [join(ROOT, 'src', 'data', 'generated'), join(ROOT, 'public', 'data', 'generated')]) {
     if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
     writeFileSync(join(dir, 'duplicates.json'), JSON.stringify(payload, null, 1) + '\n', 'utf8');
+  }
+}
+function emitEligibility(states) {
+  const payload = { generated_at: new Date().toISOString(), states };
+  for (const dir of [join(ROOT, 'src', 'data', 'generated'), join(ROOT, 'public', 'data', 'generated')]) {
+    if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
+    writeFileSync(join(dir, 'page-eligibility.json'), JSON.stringify(payload, null, 1) + '\n', 'utf8');
   }
 }
 function warn(msg) { console.log(`      \x1b[33m${msg}\x1b[0m`); }

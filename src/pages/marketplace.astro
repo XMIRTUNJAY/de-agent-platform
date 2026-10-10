@@ -156,7 +156,7 @@ const securityOptions = [
       <!-- Results grid -->
       <section>
         <div id="results" class="card-grid stagger">
-          {registry.resources.map((r) => (
+          {registry.resources.filter((r) => (r.page_eligibility?.state ?? 'eligible') !== 'internal_only').map((r) => (
             <div data-type={r.type} data-category={r.categorySlug ?? ''} data-difficulty={r.difficulty ?? ''} data-verification={r.verification} data-agents={r.compatible_agents?.join(',') ?? ''} data-security={[
               r.security_flags === 0 && 'read-only',
               r.security?.credentials && 'needs-credentials',

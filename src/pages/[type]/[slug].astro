@@ -2,12 +2,13 @@
 // Pretty resource URLs: /skills/<slug>, /mcp/<slug>, /plugins/<slug>, etc.
 import ResourceDetail from '@/components/ResourceDetail.astro';
 import registry from '@/data/generated/registry.json';
+import { isRoutable } from '../../../pipelines/lib/eligibility.mjs';
 
 const res = registry.resources.find(r => r.url === `/${Astro.params.type}/${Astro.params.slug}`);
 if (!res) return Astro.redirect('/404');
 
 export async function getStaticPaths() {
-  return registry.resources.map(r => {
+  return registry.resources.filter(isRoutable).map(r => {
     const [type, slug] = r.url.replace(/^\//, '').split('/');
     return { params: { type, slug } };
   });

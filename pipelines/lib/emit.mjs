@@ -86,6 +86,11 @@ function buildStats(resources, taxonomy) {
     verification_earned[s.earned] = (verification_earned[s.earned] ?? 0) + 1;
     if (s.gap > 0) over_claims++;
   }
+  const eligibility = {};
+  for (const r of resources) {
+    const st = r.page_eligibility?.state ?? 'needs_review';
+    eligibility[st] = (eligibility[st] ?? 0) + 1;
+  }
   return {
     counts: {
       total: resources.length,
@@ -98,6 +103,7 @@ function buildStats(resources, taxonomy) {
     },
     verification_earned,
     over_claims,
+    eligibility,
     byStage,
     byCategory,
     readability: {
