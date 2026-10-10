@@ -4,6 +4,12 @@ import PageHero from '@/components/PageHero.astro';
 import SectionHeader from '@/components/SectionHeader.astro';
 import stats from '@/data/generated/stats.json';
 import sourceHealth from '@/data/generated/source-health.json';
+import registry from '@/data/generated/registry.json';
+
+const triage = (registry.resources as any[])
+  .filter((x) => (x.evidence_summary?.gap ?? 0) > 0)
+  .sort((a, b) => (b.evidence_summary.gap - a.evidence_summary.gap) || a.id.localeCompare(b.id))
+  .slice(0, 20);
 
 interface SourceHealthEntry {
   checks: number;
@@ -109,6 +115,27 @@ const overClaims = (stats as any).over_claims as number | undefined;
       <div class="card card-pad" style="margin-top: 1.75rem;">
         <p class="mono-label">no evidence runs recorded</p>
         <p class="card-desc" style="margin-top: 0.5rem;">Run the registry pipeline to attest checks and compute earned levels.</p>
+      </div>
+    )}
+  </section>
+
+  <hr class="hairline col" />
+
+  <section class="col section">
+    <SectionHeader kicker="Triage" title="Evidence-gap queue" lede="Records claiming more than their file supports, worst first. Backfill evidence per /docs/verification to clear them." />
+    {triage.length === 0 ? (
+      <div class="card card-pad" style="margin-top: 1.75rem;">
+        <p class="mono-label">queue clear</p>
+        <p class="card-desc" style="margin-top: 0.5rem;">Every record earns what it claims.</p>
+      </div>
+    ) : (
+      <div class="card-grid card-grid--2" style="margin-top: 1.75rem;">
+        {triage.map((t) => (
+          <a href={t.url} class="card card-pad-sm card-interactive" style="display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;">
+            <span style="font-size: var(--text-sm);">{t.title}</span>
+            <span class="text-muted" style="font-size: var(--text-sm); font-variant-numeric: tabular-nums;">{t.verification} → {t.evidence_summary.earned}</span>
+          </a>
+        ))}
       </div>
     )}
   </section>
