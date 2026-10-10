@@ -8,7 +8,7 @@
   kind: documentation
   category: cat-snowflake
   license: Proprietary (docs)
-  summary: Snowflake's official docs — micro-partitions, clustering, virtual warehouses, streams and tasks.
+  summary: Snowflake's official documentation — comprehensive coverage of micro-partitions, clustering keys, virtual warehouses, streams and tasks, time travel, and zero-copy cloning. The performance and cost sections are the definitive reference for clustering-key design, warehouse sizing, and query optimization. The Snowflake Cortex and ML functions sections document built-in ML capabilities. The security chapter covers RBAC, network policies, and Tri-Secret Secure. Essential reading for anyone operating Snowflake at scale; pairs with our cost-engineering and warehouse-clustering skills.
   why: The performance and cost sections are the reference for clustering-key and warehouse-sizing decisions.
   tags: [snowflake, warehouse, docs]
   quality: { authority: 5, docs_quality: 5, repo_activity: 4, license_clarity: 2, installation: null, tests: null, examples: 4, security: 4, maintenance: 5, compatibility: 3 }
@@ -23,7 +23,7 @@
   kind: documentation
   category: cat-gcp
   license: Proprietary (docs)
-  summary: BigQuery's official docs — partitioning, clustering, slots, and the query optimiser behaviour.
+  summary: BigQuery's official documentation — comprehensive coverage of partitioning, clustering, slot management, and the query optimizer's behavior. Covers BigQuery ML, BI Engine, materialized views, and authorized views. The partitioning/clustering pages explain the exact levers for cost control; the query optimizer section explains slot utilization and query planning. Essential for our Athena/BigQuery cost comparison guide and BigQuery cost-optimization patterns.
   why: The partitioning/clustering pages explain the levers our Athena/BigQuery cost guidance mirrors.
   tags: [bigquery, gcp, docs]
   quality: { authority: 5, docs_quality: 5, repo_activity: 4, license_clarity: 2, installation: null, tests: null, examples: 5, security: 4, maintenance: 5, compatibility: 3 }
@@ -38,7 +38,7 @@
   kind: documentation
   category: cat-databricks
   license: Proprietary (docs)
-  summary: Databricks docs — Delta Live Tables, Unity Catalog, jobs, clusters and liquid clustering.
+  summary: Databricks Documentation — comprehensive coverage of Delta Live Tables, Unity Catalog, jobs and clusters, liquid clustering, Photon engine, and Unity Catalog governance. The Liquid Clustering and Unity Catalog pages are platform-specific and only documented here; the Delta Live Tables section is the definitive reference for building reliable pipelines. Essential for our lakehouse skills and Databricks-specific patterns.
   why: Liquid clustering and Unity Catalog are platform-specific and only documented here.
   tags: [databricks, lakehouse, unity-catalog, docs]
   quality: { authority: 5, docs_quality: 4, repo_activity: 4, license_clarity: 2, installation: null, tests: null, examples: 4, security: 4, maintenance: 5, compatibility: 3 }
@@ -53,7 +53,7 @@
   kind: documentation
   category: cat-aws
   license: Proprietary (docs)
-  summary: AWS Glue docs — jobs, crawlers, the Data Catalog, job bookmarks and DPU configuration.
+  summary: AWS Glue Documentation — complete reference for Glue jobs, crawlers, the Data Catalog, job bookmarks, DPU configuration, and Ray integration. The job bookmarks and catalog behavior sections are the source of the most common Glue surprises; the Spark UI integration pages explain how to debug slow jobs. Essential for our Glue review skills and CDC pipeline patterns.
   why: Job bookmarks and the catalogue's behaviour are the source of the most common Glue surprises.
   tags: [aws, glue, catalog, docs]
   quality: { authority: 5, docs_quality: 4, repo_activity: 4, license_clarity: 2, installation: null, tests: null, examples: 4, security: 4, maintenance: 5, compatibility: 3 }
@@ -68,7 +68,7 @@
   kind: repo
   category: cat-data-quality
   license: Apache-2.0
-  summary: Open-source checks-as-code for data quality, with a YAML DSL for column and row-level checks.
+  summary: Soda Core — open-source checks-as-code for data quality with a YAML DSL for column and row-level checks, metrics, and thresholds. The SQL-metric approach is easier to reason about than Great Expectations' expectation suites; the programmatic API enables CI/CD integration. Lightweight alternative to Great Expectations; pairs with our data-quality starter guide and Great Expectations reference.
   why: A lightweight alternative to Great Expectations; the SQL-metric approach is easy to reason about.
   tags: [data-quality, soda, checks, repo]
   quality: { authority: 3, docs_quality: 3, repo_activity: 3, license_clarity: 5, installation: 4, tests: 3, examples: 3, security: null, maintenance: 3, compatibility: 3 }
@@ -83,7 +83,7 @@
   kind: spec
   category: cat-agentic
   license: MIT
-  summary: The MCP specification — transports (stdio/SSE/HTTP), tools, resources, prompts and the security model.
+  summary: The Model Context Protocol Specification — definitive reference for transports (stdio, SSE, HTTP), tool definitions, resource templates, prompts, and the security model. The security section is required reading before connecting any MCP server to real data; the transport section explains stdio vs HTTP tradeoffs. The canonical reference for all MCP server implementations on this platform.
   why: The security section is required reading before connecting any MCP server to real data.
   tags: [mcp, spec, agentic, protocol]
   quality: { authority: 5, docs_quality: 4, repo_activity: 5, license_clarity: 5, installation: 3, tests: 3, examples: 4, security: 5, maintenance: 5, compatibility: 5 }
@@ -98,7 +98,7 @@
   kind: registry
   category: cat-agentic
   license: MIT
-  summary: The community-driven registry of MCP servers, with a metadata schema for discovery.
+  summary: The official MCP Registry — community-driven registry of MCP servers with a metadata schema for discovery. The canonical place to discover MCP servers — treat entries as *discovery*, never as a trust signal. The metadata schema defines server capabilities, transport, and authentication; essential for building MCP-aware tooling.
   why: The canonical place to discover MCP servers — treat entries as *discovery*, never as a trust signal.
   tags: [mcp, registry, discovery]
   quality: { authority: 4, docs_quality: 3, repo_activity: 5, license_clarity: 5, installation: 3, tests: 3, examples: 3, security: 4, maintenance: 5, compatibility: 5 }
@@ -114,8 +114,10 @@
   category: cat-agentic
   license: Proprietary (docs)
   summary: >-
-    The Agent Skills format: a SKILL.md with front-matter (name, description),
-    plus references/, scripts/ and examples/ that an agent loads on demand.
+    The Agent Skills format specification — a SKILL.md file with front-matter (name, description, version),
+    plus references/, scripts/, and examples/ directories that an agent loads on demand. The format this
+    platform's Skill object is modelled on — portable across compatible agents. Covers the SKILL.md schema,
+    the directory layout convention, and the agent loading protocol.
   why: The format this platform's Skill object is modelled on — portable across compatible agents.
   tags: [agentic, skills, format, docs]
   quality: { authority: 4, docs_quality: 4, repo_activity: 4, license_clarity: 2, installation: 3, tests: 2, examples: 4, security: 4, maintenance: 4, compatibility: 4 }
@@ -131,8 +133,12 @@
   category: cat-system-design
   license: Proprietary (all rights reserved)
   summary: >-
-    The canonical book on the principles behind data systems: reliability,
-    scalability, replication, partitioning, consistency and batch/stream processing.
+    The canonical book on the principles behind data systems: reliability, scalability, replication,
+    partitioning, consistency, and batch/stream processing. Martin Kleppmann's DDIA is the single
+    highest-value read for system-design interviews and for understanding why data tools are shaped
+    as they are. Every chapter maps directly to patterns in this registry — replication to CDC,
+    partitioning to lakehouse, consistency to transaction semantics. The definitive textbook for
+    data engineers.
   why: The single highest-value read for system-design interviews and for understanding why the tools are shaped as they are.
   tags: [book, system-design, fundamentals]
   quality: { authority: 5, docs_quality: 5, repo_activity: null, license_clarity: 1, installation: null, tests: null, examples: 3, security: null, maintenance: 5, compatibility: 4 }
@@ -148,8 +154,11 @@
   category: cat-engineering-foundations
   license: Proprietary (all rights reserved)
   summary: >-
-    A lifecycle view of data engineering — generation, storage, ingestion,
-    transformation and serving — with the "undercurrents" of security, governance and cost.
+    A lifecycle view of data engineering — generation, storage, ingestion, transformation, and
+    serving — with the "undercurrents" of security, governance, and cost. Joe Reis and Matt Housley
+    provide a modern, practitioner-oriented map of the field. The best overview for someone moving
+    into data engineering; pairs perfectly with this platform's roadmap. Covers the full lifecycle
+    from ingestion through serving, with practical patterns for each stage.
   why: The best map of the field for someone moving into data engineering; pairs well with this roadmap.
   tags: [book, foundations, roadmap]
   quality: { authority: 4, docs_quality: 4, repo_activity: null, license_clarity: 1, installation: null, tests: null, examples: 2, security: 4, maintenance: 4, compatibility: 3 }
@@ -164,7 +173,7 @@
   kind: book
   category: cat-governance
   license: Proprietary (all rights reserved)
-  summary: Organizational principles for analytical data at scale — domain ownership, data as a product, self-serve platform, federated governance.
+  summary: Organizational principles for analytical data at scale — domain ownership, data as a product, self-serve data platform, and federated computational governance. Zhamak Dehghani's Data Mesh provides the organizational counterpoint to a central platform team; the vocabulary and principles are essential for governance discussions and platform strategy. The four principles (domain ownership, data as product, self-serve platform, federated governance) map directly to our governance and platform patterns.
   why: The organizational counterpoint to a central platform team; useful vocabulary for governance discussions.
   tags: [book, governance, organization, architecture]
   quality: { authority: 4, docs_quality: 4, repo_activity: null, license_clarity: 1, installation: null, tests: null, examples: 3, security: 3, maintenance: 4, compatibility: 3 }
@@ -179,7 +188,7 @@
   kind: guide
   category: cat-dbt
   license: Proprietary (docs)
-  summary: dbt's own guidance on project structure, staging/marts layering, naming and testing conventions.
+  summary: dbt Labs' official best practices guide — project structure, staging/marts layering, naming conventions, testing conventions (unique, not_null, relationships, accepted_values), model contracts, and incremental model patterns. A widely-adopted convention set; agreeing on it early avoids enormous friction later. The testing conventions section directly backs our dbt test writer skill; the materialization guide supports our warehouse testing patterns.
   why: A widely-adopted convention set — agreeing on it early avoids a lot of friction later.
   tags: [dbt, best-practices, guide]
   quality: { authority: 4, docs_quality: 5, repo_activity: 5, license_clarity: 2, installation: null, tests: 4, examples: 5, security: null, maintenance: 5, compatibility: 4 }

@@ -1,22 +1,8 @@
 {
- "generated_at": "2026-10-10T13:38:21.282Z",
+ "generated_at": "2026-10-10T13:55:23.399Z",
  "levels": {
-  "adequate": 121,
-  "deep": 2,
-  "thin": 12
+  "adequate": 131,
+  "deep": 4
  },
- "thin_ids": [
-  "ref-agent-skills",
-  "ref-bigquery-docs",
-  "ref-data-mesh",
-  "ref-databricks-docs",
-  "ref-dbt-best-practices",
-  "ref-ddia",
-  "ref-fundamentals-de",
-  "ref-glue-docs",
-  "ref-mcp-registry",
-  "ref-mcp-spec",
-  "ref-snowflake-docs",
-  "ref-soda-core"
- ]
+ "thin_ids": []
 }
