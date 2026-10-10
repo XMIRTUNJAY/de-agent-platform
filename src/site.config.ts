@@ -92,6 +92,7 @@ export const SIDEBAR: NavGroup[] = [
       { label: 'Source quality score', href: '/docs/scoring' },
       { label: 'Ingestion pipeline', href: '/docs/ingestion' },
       { label: 'Relationships graph', href: '/docs/relationships' },
+      { label: 'Monetization policy', href: '/docs/monetization' },
     ],
   },
   {
