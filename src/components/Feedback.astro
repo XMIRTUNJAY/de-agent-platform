@@ -130,8 +130,14 @@ const { resourceId, resourceTitle } = Astro.props;
       } catch (err) {
         console.error('Feedback submit failed:', err);
         submitBtn.disabled = false;
-        submitBtn.textContent = 'Submit';
-        alert('Failed to submit feedback. Please try again.');
+        submitBtn.textContent = 'Retry';
+        let errNote = card.querySelector('.feedback-error');
+        if (!errNote) {
+          errNote = document.createElement('p');
+          errNote.className = 'feedback-error text-sm text-danger mt-2';
+          submitBtn.parentElement?.appendChild(errNote);
+        }
+        errNote.textContent = 'Could not send feedback (service unavailable). Your selection is kept — retry anytime.';
       }
     });
 

@@ -561,6 +561,9 @@ const scoreLabel = (score) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ resource_id: resourceId, backend: 'dry' }),
       });
+      if (!resp.ok) {
+        throw new Error('Install service unavailable (static preview) — copy the manifest from the docs instead.');
+      }
       const data = await resp.json();
 
       if (!data.ok) {
@@ -613,6 +616,9 @@ const scoreLabel = (score) => {
           user_id: 'anonymous', // In production: get from auth context
         }),
       });
+      if (!resp.ok) {
+        throw new Error('Rating service unavailable (static preview).');
+      }
       const data = await resp.json();
 
       if (!data.ok) {
