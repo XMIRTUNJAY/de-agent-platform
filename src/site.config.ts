@@ -148,6 +148,7 @@ export const FOOTER_COLUMNS: { title: string; items: NavItem[] }[] = [
     title: 'Project',
     items: [
       { label: 'Source (GitHub)', href: 'https://github.com/XMIRTUNJAY/de-agent-platform', external: true },
+      { label: 'eManisha (home)', href: 'https://emanisha.in/', external: true },
       { label: 'Contribute a resource', href: '/docs/contributing' },
       { label: 'RSS', href: '/rss.xml' },
       { label: 'Sitemap', href: '/sitemap-index.xml' },
