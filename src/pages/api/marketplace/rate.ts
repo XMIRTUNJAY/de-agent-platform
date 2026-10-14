@@ -2,6 +2,9 @@ import type { APIRoute } from 'astro';
 import { z } from 'zod';
 import registry from '@/data/generated/registry.json';
 
+// NOTE: @/lib/db is lazy-imported inside handlers (never top-level):
+// better-sqlite3's native init segfaults `astro build` static prerender.
+
 // Rating submission: 1-5 stars + optional review text
 // Requires verified install (enforced via install_attempt_id or user_id tracking)
 const RateSchema = z.object({
@@ -14,6 +17,7 @@ const RateSchema = z.object({
 
 export const POST: APIRoute = async ({ request }) => {
   try {
+    const { createRating, upsertResourceStats } = await import('@/lib/db');
     const body = await request.json();
     const parsed = RateSchema.parse(body);
 
@@ -25,8 +29,20 @@ export const POST: APIRoute = async ({ request }) => {
       });
     }
 
-    // In production: check if user has verified install for this resource
-    // For now: allow but log
+    // Check if user has verified install for this resource
+    // For now: allow but log - in production verify against install_attempts
+    const isVerifiedInstall = !!parsed.install_attempt_id;
+
+    // Create rating in database
+    const ratingId = createRating({
+      resource_id: parsed.resource_id,
+      resource_type: resource.type,
+      rating: parsed.rating,
+      review_text: parsed.review_text,
+      user_id: parsed.user_id,
+      install_attempt_id: parsed.install_attempt_id,
+      is_verified_install: isVerifiedInstall,
+    });
 
     // Log rating event
     console.log('[MARKETPLACE_RATE]', JSON.stringify({
@@ -36,10 +52,11 @@ export const POST: APIRoute = async ({ request }) => {
       review_text: parsed.review_text ?? null,
       user_id: parsed.user_id,
       install_attempt_id: parsed.install_attempt_id,
+      is_verified_install: isVerifiedInstall,
       submitted_at: new Date().toISOString(),
     }));
 
-    return new Response(JSON.stringify({ ok: true }), {
+    return new Response(JSON.stringify({ ok: true, rating_id: ratingId }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
     });
@@ -61,6 +78,7 @@ export const POST: APIRoute = async ({ request }) => {
 // Get reviews for a resource
 export const GET: APIRoute = async ({ request }) => {
   try {
+    const { getResourceStatsDb, getRatingsDb } = await import('@/lib/db');
     const url = new URL(request.url);
     const resourceId = url.searchParams.get('resource_id');
     const page = parseInt(url.searchParams.get('page') ?? '1', 10);
@@ -81,16 +99,18 @@ export const GET: APIRoute = async ({ request }) => {
       });
     }
 
-    // In production: query database for reviews
-    // For now: return empty with metadata
+    // Get stats from database
+    const stats = getResourceStatsDb(resourceId);
+    const { ratings, total } = getRatingsDb(resourceId, page, perPage);
+
     return new Response(JSON.stringify({
       ok: true,
-      data: [],
-      pagination: { page, per_page: perPage, total: 0, total_pages: 0 },
+      data: ratings,
+      pagination: { page, per_page: perPage, total, total_pages: Math.ceil(total / perPage) },
       summary: {
-        average: resource.marketplace?.rating_average ?? 0,
-        count: resource.marketplace?.rating_count ?? 0,
-        distribution: resource.marketplace?.rating_distribution ?? {},
+        average: stats?.rating_average ?? resource.marketplace?.rating_average ?? 0,
+        count: stats?.rating_count ?? resource.marketplace?.rating_count ?? 0,
+        distribution: stats?.rating_distribution ?? resource.marketplace?.rating_distribution ?? {},
       },
     }), {
       status: 200,

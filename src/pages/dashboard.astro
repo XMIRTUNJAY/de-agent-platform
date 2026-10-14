@@ -1,0 +1,286 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import registry from '@/data/generated/registry.json';
+---
+
+<BaseLayout title="Dashboard · DE//AGENT" sidebar>
+  <PageHero
+    kicker="Dashboard"
+    title="Your learning journey"
+    lede="Track your installed artifacts, ratings, and roadmap progress."
+  />
+
+  <div class="col section-sm" style="padding-top: 2.5rem;">
+    <div class="grid gap-8 lg:grid-cols-[320px_1fr]">
+      <!-- Sidebar -->
+      <aside class="sticky top-16 space-y-6 self-start" style="max-height: calc(100vh - 5rem); overflow-y: auto;">
+        <section class="card card-pad mount">
+          <h3 class="mono-label mb-3">Your Profile</h3>
+          <div id="user-profile" class="space-y-3">
+            <div class="text-sm text-muted">Sign in to view your dashboard</div>
+            <button id="dashboard-signin" class="btn btn-accent w-full">Sign In with GitHub</button>
+          </div>
+        </section>
+
+        <section class="card card-pad mount" id="stats-card" style="display: none;">
+          <h3 class="mono-label mb-3">Quick Stats</h3>
+          <dl class="space-y-2 text-sm" id="user-stats"></dl>
+        </section>
+
+        <section class="card card-pad mount" id="roadmap-progress-card" style="display: none;">
+          <h3 class="mono-label mb-3">Roadmap Progress</h3>
+          <div id="roadmap-progress" class="space-y-2"></div>
+        </section>
+      </aside>
+
+      <!-- Main content -->
+      <section>
+        <div id="dashboard-content">
+          <div class="card card-pad mount text-center py-12">
+            <h2 class="text-xl mb-2">Welcome to Your Dashboard</h2>
+            <p class="text-muted mb-4">Sign in to track your installed artifacts, ratings, reviews, and roadmap progress.</p>
+            <button id="dashboard-signin-main" class="btn btn-accent">Sign In with GitHub</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    let currentUser = null;
+
+    function initDashboard() {
+      const savedUser = localStorage.getItem('de_agent_user');
+      if (savedUser) {
+        currentUser = JSON.parse(savedUser);
+        renderAuthenticatedDashboard();
+      } else {
+        renderSignInView();
+      }
+    }
+
+    function renderSignInView() {
+      const content = document.getElementById('dashboard-content');
+      if (!content) return;
+      content.innerHTML = `
+        <div class="card card-pad mount text-center py-12">
+          <h2 class="text-xl mb-2">Welcome to Your Dashboard</h2>
+          <p class="text-muted mb-4">Sign in to track your installed artifacts, ratings, reviews, and roadmap progress.</p>
+          <button id="dashboard-signin-main" class="btn btn-accent">Sign In with GitHub</button>
+        </div>
+      `;
+      document.getElementById('dashboard-signin-main')?.addEventListener('click', signIn);
+      document.getElementById('dashboard-signin')?.addEventListener('click', signIn);
+      updateSidebarSignedOut();
+    }
+
+    function signIn() {
+      // Mock GitHub auth
+      currentUser = {
+        id: 'user_' + Date.now(),
+        login: 'dataengineer123',
+        name: 'Data Engineer',
+        avatar_url: 'https://github.com/identicons/dataengineer123.png',
+      };
+      localStorage.setItem('de_agent_user', JSON.stringify(currentUser));
+      renderAuthenticatedDashboard();
+    }
+
+    function signOut() {
+      currentUser = null;
+      localStorage.removeItem('de_agent_user');
+      renderSignInView();
+    }
+
+    function updateSidebarSignedOut() {
+      document.getElementById('user-profile')!.innerHTML = `
+        <div class="text-sm text-muted">Sign in to view your dashboard</div>
+        <button id="dashboard-signin" class="btn btn-accent w-full">Sign In with GitHub</button>
+      `;
+      document.getElementById('dashboard-signin')?.addEventListener('click', signIn);
+      document.getElementById('stats-card')!.style.display = 'none';
+      document.getElementById('roadmap-progress-card')!.style.display = 'none';
+    }
+
+    async function renderAuthenticatedDashboard() {
+      if (!currentUser) return;
+      
+      // Update sidebar
+      document.getElementById('user-profile')!.innerHTML = `
+        <div class="flex items-center gap-3">
+          <img src="${currentUser.avatar_url}" alt="" class="w-10 h-10 rounded-full" />
+          <div>
+            <strong>${currentUser.name ?? currentUser.login}</strong>
+            <div class="text-sm text-muted">@${currentUser.login}</div>
+          </div>
+        </div>
+        <button id="signout-btn" class="btn btn-ghost w-full text-left mt-2">Sign Out</button>
+      `;
+      document.getElementById('signout-btn')?.addEventListener('click', signOut);
+      document.getElementById('stats-card')!.style.display = 'block';
+      document.getElementById('roadmap-progress-card')!.style.display = 'block';
+
+      // Load user data
+      await loadUserData();
+    }
+
+    async function loadUserData() {
+      try {
+        // Fetch installs
+        const installsResp = await fetch('/api/marketplace/user/installs?user_id=' + currentUser.id);
+        const installsData = await installsResp.json();
+        
+        // Fetch ratings
+        const ratingsResp = await fetch('/api/marketplace/user/ratings?user_id=' + currentUser.id);
+        const ratingsData = await ratingsResp.json();
+
+        // Update stats sidebar
+        const statsHtml = `
+          <div><dt class="text-muted">Installs</dt><dd class="font-mono">${installsData.total ?? 0}</dd></div>
+          <div><dt class="text-muted">Ratings Given</dt><dd class="font-mono">${ratingsData.total ?? 0}</dd></div>
+          <div><dt class="text-muted">Resources Rated</dt><dd class="font-mono">${ratingsData.uniqueResources ?? 0}</dd></div>
+        `;
+        document.getElementById('user-stats')!.innerHTML = statsHtml;
+
+        // Load roadmap progress
+        await loadRoadmapProgress(installsData.attempts ?? []);
+
+        // Render main content tabs
+        renderDashboardTabs(installsData, ratingsData);
+      } catch (err) {
+        console.error('Failed to load user data:', err);
+      }
+    }
+
+    async function loadRoadmapProgress(installs) {
+      // Get unique stages from installed resources
+      const resourceIds = installs.map(i => i.resource_id);
+      const resources = resourceIds.map(id => registry.resources.find(r => r.id === id)).filter(Boolean);
+      const stages = [...new Set(resources.map(r => r.stage).filter(Boolean))];
+      
+      const allStages = registry.taxonomy.stages;
+      let html = '';
+      
+      for (const stage of allStages) {
+        const hasInstall = stages.includes(stage.id);
+        const stageResources = resources.filter(r => r.stage === stage.id);
+        html += `
+          <div class="flex items-center gap-3 p-2 ${hasInstall ? 'bg-accent/10' : ''} rounded">
+            <span class="chip ${hasInstall ? 'chip-accent' : 'chip-dim'} text-xs">
+              ${hasInstall ? '✓' : stage.order}
+            </span>
+            <div class="flex-1 min-w-0">
+              <div class="text-sm font-medium truncate">${stage.title}</div>
+              <div class="text-2xs text-muted">${stageResources.length} of ${registry.resources.filter(r => r.stage === stage.id).length} resources installed</div>
+            </div>
+          </div>
+        `;
+      }
+      
+      document.getElementById('roadmap-progress')!.innerHTML = html;
+    }
+
+    function renderDashboardTabs(installsData, ratingsData) {
+      const content = document.getElementById('dashboard-content');
+      if (!content) return;
+      
+      const installs = installsData.attempts ?? [];
+      const ratings = ratingsData.ratings ?? [];
+      
+      content.innerHTML = `
+        <div class="space-y-6">
+          <div class="flex gap-2 border-b border-line" role="tablist">
+            <button role="tab" class="tab-btn active" data-tab="installs">My Installs (${installs.length})</button>
+            <button role="tab" class="tab-btn" data-tab="ratings">My Ratings (${ratings.length})</button>
+            <button role="tab" class="tab-btn" data-tab="roadmap">Roadmap Progress</button>
+          </div>
+
+          <div role="tabpanel" id="tab-installs" class="tab-panel">
+            ${renderInstallsList(installs)}
+          </div>
+          <div role="tabpanel" id="tab-ratings" class="tab-panel hidden">
+            ${renderRatingsList(ratings)}
+          </div>
+          <div role="tabpanel" id="tab-roadmap" class="tab-panel hidden">
+            ${renderRoadmapDetail()}
+          </div>
+        </div>
+      `;
+
+      // Tab switching
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+          document.getElementById('tab-' + btn.dataset.tab)!.classList.remove('hidden');
+        });
+      });
+    }
+
+    function renderInstallsList(installs) {
+      if (installs.length === 0) {
+        return '<p class="text-muted text-center py-8">No installs yet. Browse the <a href="/marketplace" class="link">Marketplace</a> to get started.</p>';
+      }
+
+      return `
+        <div class="space-y-3">
+          ${installs.map(install => {
+            const resource = registry.resources.find(r => r.id === install.resource_id);
+            return `
+              <div class="card card-pad mount flex items-center justify-between gap-4">
+                <div class="flex items-center gap-3 flex-1 min-w-0">
+                  <span class="chip">${resource?.typeLabel ?? 'Resource'}</span>
+                  <div class="min-w-0">
+                    <a href="${resource?.url ?? '#'}" class="link font-medium truncate block">${resource?.title ?? install.resource_id}</a>
+                    <div class="text-sm text-muted">${install.backend} · ${install.success ? 'Success' : 'Failed'} · ${install.duration_ms}ms</div>
+                  </div>
+                </div>
+                <div class="text-sm text-muted whitespace-nowrap">${new Date(install.requested_at).toLocaleDateString()}</div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `;
+    }
+
+    function renderRatingsList(ratings) {
+      if (ratings.length === 0) {
+        return '<p class="text-muted text-center py-8">No ratings yet. Rate resources after installing them.</p>';
+      }
+
+      return `
+        <div class="space-y-3">
+          ${ratings.map(rating => {
+            const resource = registry.resources.find(r => r.id === rating.resource_id);
+            const stars = '★'.repeat(rating.rating) + '☆'.repeat(5 - rating.rating);
+            return `
+              <div class="card card-pad mount">
+                <div class="flex items-start justify-between gap-4">
+                  <div class="flex-1 min-w-0">
+                    <div class="flex items-center gap-2 mb-1">
+                      <span class="chip">${resource?.typeLabel ?? 'Resource'}</span>
+                      <a href="${resource?.url ?? '#'}" class="link font-medium">${resource?.title ?? rating.resource_id}</a>
+                    </div>
+                    <div class="text-lg text-accent">${stars}</div>
+                    ${rating.review_text ? `<p class="text-sm mt-2">${rating.review_text}</p>` : ''}
+                    <div class="text-2xs text-muted mt-1">Verified install: ${rating.is_verified_install ? 'Yes' : 'No'}</div>
+                  </div>
+                  <div class="text-sm text-muted whitespace-nowrap">${new Date(rating.created_at).toLocaleDateString()}</div>
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `;
+    }
+
+    function renderRoadmapDetail() {
+      // Load from sidebar data
+      return document.getElementById('roadmap-progress')?.innerHTML ?? '';
+    }
+
+    initDashboard();
+  </script>
+</BaseLayout>

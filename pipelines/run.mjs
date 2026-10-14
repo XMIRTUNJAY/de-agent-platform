@@ -115,6 +115,18 @@ step('EVIDENCE', () => {
   return null;
 });
 
+// GITHUB ENRICHMENT
+step('GITHUB ENRICHMENT', async () => {
+  try {
+    const { enrichResources } = await import('./github-enrichment.mjs');
+    await enrichResources(resources);
+    info('GitHub enrichment complete');
+  } catch (err) {
+    warn('GitHub enrichment skipped: ' + err.message);
+  }
+  return null;
+});
+
 // MARKETPLACE SCORE
 step('MARKETPLACE SCORE', () => {
   // Load execution results for performance scoring

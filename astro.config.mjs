@@ -19,8 +19,13 @@ try {
 const strip = (u) => String(u).replace(/\/+$/, '') || '/';
 
 // https://astro.build/config
+// DEAGENT_BASE / DEAGENT_SITE allow embedding the static export under a
+// subdirectory of another domain (e.g. emanisha.in/de-agent): the emanisha
+// deploy workflow builds with DEAGENT_BASE=/de-agent DEAGENT_SITE=https://emanisha.in.
+// Local dev and Vercel keep the defaults (root + SITE.url).
 export default defineConfig({
-  site: SITE.url,
+  site: process.env.DEAGENT_SITE ?? SITE.url,
+  base: process.env.DEAGENT_BASE ?? '/',
   trailingSlash: 'ignore',
   prefetch: { prefetchAll: true, defaultStrategy: 'viewport' },
   integrations: [

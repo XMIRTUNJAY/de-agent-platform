@@ -122,6 +122,7 @@ function normalizeOne(r, ctx) {
     homepage: r.url ?? null,
     publisher_source: provenanceEntry,
     install_command: r.install_command ?? r.installation?.command ?? r.installation ?? null,
+    install_manifest: r.install_manifest ?? null,
     compatibility: r.compatible_agents ?? r.compatibility ?? [],
     compatible_agents: r.compatible_agents ?? [],
 

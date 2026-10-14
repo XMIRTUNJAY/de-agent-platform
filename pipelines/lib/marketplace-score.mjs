@@ -51,6 +51,10 @@ export function computeMarketplaceScores(resources, meta, executions = {}) {
   const guide = meta.scoring?.guide ?? [];
   
   for (const r of resources) {
+    // Preserve existing marketplace data (e.g., community score from GitHub enrichment)
+    const existingMarketplace = r.marketplace || {};
+    const existingQualityScores = existingMarketplace.quality_scores || {};
+    
     const scores = {
       performance: computePerformanceScore(r, executions),
       completeness: computeCompletenessScore(r),
@@ -58,7 +62,7 @@ export function computeMarketplaceScores(resources, meta, executions = {}) {
       security: computeSecurityScore(r),
       documentation: computeDocumentationScore(r),
       maintainability: computeMaintainabilityScore(r),
-      community: computeCommunityScore(r, meta),
+      community: computeCommunityScore(r, meta, existingQualityScores.community),
     };
 
     // Composite score (weighted average of non-null scores)
@@ -293,9 +297,13 @@ function computeMaintainabilityScore(resource) {
 /**
  * Community Score (0-100) — Null if not applicable (e.g., private/internal)
  * GitHub stars, forks, contributors, issue response, release frequency
- * Requires GitHub API enrichment — returns null if no data
+ * Requires GitHub API enrichment — returns existing score if already set, otherwise null
  */
-function computeCommunityScore(resource, meta) {
+function computeCommunityScore(resource, meta, existingCommunityScore) {
+  // Use existing community score if already set by GitHub enrichment
+  if (existingCommunityScore !== null && existingCommunityScore !== undefined) {
+    return existingCommunityScore;
+  }
   // This requires external GitHub data — return null for now
   // Can be enriched later via a separate GitHub enrichment pipeline step
   return null;

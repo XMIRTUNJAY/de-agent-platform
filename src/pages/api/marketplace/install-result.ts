@@ -2,6 +2,9 @@ import type { APIRoute } from 'astro';
 import { z } from 'zod';
 import registry from '@/data/generated/registry.json';
 
+// NOTE: @/lib/db is lazy-imported inside the handler (never top-level):
+// better-sqlite3's native init segfaults `astro build` static prerender.
+
 // Install result: receive execution result from CLI/pipeline
 const InstallResultSchema = z.object({
   resource_id: z.string().min(1),
@@ -30,6 +33,7 @@ const InstallResultSchema = z.object({
 
 export const POST: APIRoute = async ({ request }) => {
   try {
+    const { completeInstallAttempt, addInstallCommands } = await import('@/lib/db');
     const body = await request.json();
     const parsed = InstallResultSchema.parse(body);
 
@@ -41,8 +45,23 @@ export const POST: APIRoute = async ({ request }) => {
       });
     }
 
-    // Update marketplace stats (in production: database)
-    // For now: log structured event
+    // Find the most recent install attempt for this resource/user
+    // In production, you'd track attempt_id from the install request
+    // For now, we'll create a new record or find the latest pending one
+    // This is a simplification - in reality you'd pass attempt_id from the install response
+
+    // Update resource stats
+    upsertResourceStats.run(
+      parsed.resource_id,
+      1, // install_count
+      parsed.success ? 1 : 0, // install_success_count
+      parsed.success ? 1 : 0, // install_success_rate (will be averaged)
+      parsed.success ? new Date().toISOString() : null,
+      0, 0, 0, // rating fields
+      JSON.stringify({})
+    );
+
+    // Log structured event for analytics
     console.log('[MARKETPLACE_INSTALL_RESULT]', JSON.stringify({
       resource_id: parsed.resource_id,
       resource_type: resource.type,
@@ -67,8 +86,6 @@ export const POST: APIRoute = async ({ request }) => {
       received_at: new Date().toISOString(),
     }));
 
-    // If successful and backend is local/docker, this could generate evidence
-    // For now just acknowledge
     return new Response(JSON.stringify({ ok: true }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },

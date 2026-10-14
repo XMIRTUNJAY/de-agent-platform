@@ -2,6 +2,9 @@ import type { APIRoute } from 'astro';
 import { z } from 'zod';
 import registry from '@/data/generated/registry.json';
 
+// NOTE: @/lib/db is lazy-imported inside the handler (never top-level):
+// better-sqlite3's native init segfaults `astro build` static prerender.
+
 // Install request: record an install attempt, return the manifest
 const InstallRequestSchema = z.object({
   resource_id: z.string().min(1),
@@ -12,6 +15,7 @@ const InstallRequestSchema = z.object({
 
 export const POST: APIRoute = async ({ request }) => {
   try {
+    const { createInstallAttempt, completeInstallAttempt, addInstallCommands } = await import('@/lib/db');
     const body = await request.json();
     const parsed = InstallRequestSchema.parse(body);
 
@@ -30,22 +34,22 @@ export const POST: APIRoute = async ({ request }) => {
       });
     }
 
-    // In production: record install attempt in database
-    // For now: log structured event
-    console.log('[MARKETPLACE_INSTALL]', JSON.stringify({
+    // Create install attempt record
+    const attemptId = createInstallAttempt({
       resource_id: parsed.resource_id,
       resource_type: resource.type,
       manifest_version: parsed.manifest_version ?? resource.marketplace.install_manifest.version,
       backend: parsed.backend,
       user_id: parsed.user_id,
-      requested_at: new Date().toISOString(),
       ip_hash: request.headers.get('x-forwarded-for') ? hashIP(request.headers.get('x-forwarded-for')!) : undefined,
       user_agent: request.headers.get('user-agent'),
-    }));
+      requested_at: new Date().toISOString(),
+    });
 
-    // Return the install manifest
+    // Return the install manifest with attempt ID
     return new Response(JSON.stringify({
       ok: true,
+      attempt_id: attemptId,
       manifest: resource.marketplace.install_manifest,
       resource: {
         id: resource.id,

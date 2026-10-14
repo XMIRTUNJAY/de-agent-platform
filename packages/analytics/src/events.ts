@@ -21,6 +21,11 @@ export const AnalyticsEventNameSchema = z.enum([
   'workspace_invite',
   'override_create',
   'override_update',
+  // Marketplace events
+  'marketplace_install',
+  'marketplace_install_result',
+  'marketplace_rate',
+  'marketplace_review_view',
 ]);
 
 export const BaseEventSchema = z.object({
@@ -131,6 +136,47 @@ export const ApiRequestPropsSchema = z.object({
   api_key_id: z.string().optional(),
 });
 
+// Marketplace event property schemas
+export const MarketplaceInstallPropsSchema = z.object({
+  resource_id: z.string(),
+  resource_type: z.string(),
+  manifest_version: z.string(),
+  backend: z.enum(['dry', 'local', 'docker']),
+  success: z.boolean(),
+  duration_ms: z.number().int().min(0),
+  error_category: z.string().optional(),
+});
+
+export const MarketplaceInstallResultPropsSchema = z.object({
+  resource_id: z.string(),
+  resource_type: z.string(),
+  manifest_version: z.string(),
+  backend: z.enum(['dry', 'local', 'docker']),
+  success: z.boolean(),
+  duration_ms: z.number().int().min(0),
+  exit_code: z.number().int().nullable(),
+  command_count: z.number().int().min(0),
+  error_category: z.string().optional(),
+  error_message: z.string().optional(),
+});
+
+export const MarketplaceRatePropsSchema = z.object({
+  resource_id: z.string(),
+  resource_type: z.string(),
+  rating: z.number().int().min(1).max(5),
+  review_text: z.string().max(2000).optional(),
+  user_id: z.string(),
+  install_attempt_id: z.string().optional(),
+  is_verified_install: z.boolean(),
+});
+
+export const MarketplaceReviewViewPropsSchema = z.object({
+  resource_id: z.string(),
+  resource_type: z.string(),
+  review_count: z.number().int().min(0),
+  average_rating: z.number().min(0).max(5),
+});
+
 export const SearchQueryEventSchema = BaseEventSchema.extend({
   event: z.literal('search_query'),
   properties: SearchQueryPropsSchema,
@@ -191,6 +237,27 @@ export const ApiRequestEventSchema = BaseEventSchema.extend({
   properties: ApiRequestPropsSchema,
 });
 
+// Marketplace event schemas
+export const MarketplaceInstallEventSchema = BaseEventSchema.extend({
+  event: z.literal('marketplace_install'),
+  properties: MarketplaceInstallPropsSchema,
+});
+
+export const MarketplaceInstallResultEventSchema = BaseEventSchema.extend({
+  event: z.literal('marketplace_install_result'),
+  properties: MarketplaceInstallResultPropsSchema,
+});
+
+export const MarketplaceRateEventSchema = BaseEventSchema.extend({
+  event: z.literal('marketplace_rate'),
+  properties: MarketplaceRatePropsSchema,
+});
+
+export const MarketplaceReviewViewEventSchema = BaseEventSchema.extend({
+  event: z.literal('marketplace_review_view'),
+  properties: MarketplaceReviewViewPropsSchema,
+});
+
 export const AllEventSchemas = z.discriminatedUnion('event', [
   SearchQueryEventSchema,
   SearchResultsEventSchema,
@@ -204,6 +271,11 @@ export const AllEventSchemas = z.discriminatedUnion('event', [
   CliSearchEventSchema,
   CliVerifyEventSchema,
   ApiRequestEventSchema,
+  // Marketplace events
+  MarketplaceInstallEventSchema,
+  MarketplaceInstallResultEventSchema,
+  MarketplaceRateEventSchema,
+  MarketplaceReviewViewEventSchema,
 ]);
 
 export type AnalyticsEvent = z.infer<typeof AllEventSchemas>;
@@ -220,6 +292,12 @@ export type CliInstallEvent = z.infer<typeof CliInstallEventSchema>;
 export type CliSearchEvent = z.infer<typeof CliSearchEventSchema>;
 export type CliVerifyEvent = z.infer<typeof CliVerifyEventSchema>;
 export type ApiRequestEvent = z.infer<typeof ApiRequestEventSchema>;
+
+// Marketplace event types
+export type MarketplaceInstallEvent = z.infer<typeof MarketplaceInstallEventSchema>;
+export type MarketplaceInstallResultEvent = z.infer<typeof MarketplaceInstallResultEventSchema>;
+export type MarketplaceRateEvent = z.infer<typeof MarketplaceRateEventSchema>;
+export type MarketplaceReviewViewEvent = z.infer<typeof MarketplaceReviewViewEventSchema>;
 
 export const EVENT_VERSION = '1.0.0';
 

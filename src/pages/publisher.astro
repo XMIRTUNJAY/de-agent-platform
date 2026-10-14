@@ -1,0 +1,196 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import registry from '@/data/generated/registry.json';
+---
+
+<BaseLayout title="Publisher Portal · DE//AGENT" sidebar>
+  <PageHero
+    kicker="Publisher Portal"
+    title="Manage your artifacts"
+    lede="Claim ownership, publish versions, and view analytics for your marketplace resources."
+  />
+
+  <div class="col section-sm" style="padding-top: 2.5rem;">
+    <div class="grid gap-8 lg:grid-cols-[320px_1fr]">
+      <!-- Sidebar navigation -->
+      <aside class="sticky top-16 space-y-6 self-start" style="max-height: calc(100vh - 5rem); overflow-y: auto;">
+        <section class="card card-pad mount">
+          <h3 class="mono-label mb-3">Your Resources</h3>
+          <ul class="space-y-2" id="my-resources">
+            <li class="text-sm text-muted">Loading...</li>
+          </ul>
+        </section>
+
+        <section class="card card-pad mount">
+          <h3 class="mono-label mb-3">Quick Actions</h3>
+          <div class="space-y-2">
+            <button id="claim-new-btn" class="btn btn-accent w-full">Claim New Resource</button>
+            <button id="publish-version-btn" class="btn btn-secondary w-full" disabled>Publish Version</button>
+          </div>
+        </section>
+      </aside>
+
+      <!-- Main content -->
+      <section>
+        <div id="publisher-content">
+          <div class="card card-pad mount text-center py-12">
+            <h2 class="text-xl mb-2">Welcome to the Publisher Portal</h2>
+            <p class="text-muted mb-4">Sign in to claim ownership of resources, publish new versions, and view installation analytics.</p>
+            <button id="signin-btn" class="btn btn-accent">Sign In with GitHub</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    // Simple auth state (in production: use proper auth)
+    let currentUser = null;
+    
+    function initPublisherPortal() {
+      // Check for existing session
+      const savedUser = localStorage.getItem('de_agent_publisher');
+      if (savedUser) {
+        currentUser = JSON.parse(savedUser);
+        renderAuthenticatedView();
+      } else {
+        renderSignInView();
+      }
+    }
+
+    function renderSignInView() {
+      const content = document.getElementById('publisher-content');
+      if (!content) return;
+      content.innerHTML = `
+        <div class="card card-pad mount text-center py-12">
+          <h2 class="text-xl mb-2">Welcome to the Publisher Portal</h2>
+          <p class="text-muted mb-4">Sign in to claim ownership of resources, publish new versions, and view installation analytics.</p>
+          <button id="signin-btn" class="btn btn-accent">Sign In with GitHub</button>
+        </div>
+      `;
+      document.getElementById('signin-btn')?.addEventListener('click', signIn);
+      document.getElementById('my-resources')!.innerHTML = '<li class="text-sm text-muted">Sign in to see your resources</li>';
+    }
+
+    function renderAuthenticatedView() {
+      if (!currentUser) return;
+      const content = document.getElementById('publisher-content');
+      if (!content) return;
+      
+      content.innerHTML = `
+        <div class="space-y-6">
+          <header class="flex items-center justify-between">
+            <div>
+              <h2 class="text-xl">Welcome, ${currentUser.name ?? currentUser.login}</h2>
+              <p class="text-muted">Manage your ${currentUser.claimedCount ?? 0} claimed resource(s)</p>
+            </div>
+            <button id="signout-btn" class="btn btn-ghost">Sign Out</button>
+          </header>
+
+          <div class="grid gap-6 lg:grid-cols-2">
+            <section class="card card-pad mount">
+              <h3 class="mono-label mb-3">Claimed Resources</h3>
+              <ul class="space-y-3" id="claimed-resources"></ul>
+            </section>
+
+            <section class="card card-pad mount">
+              <h3 class="mono-label mb-3">Quick Actions</h3>
+              <div class="space-y-2">
+                <button id="claim-new-btn" class="btn btn-accent w-full">Claim New Resource</button>
+                <button id="publish-version-btn" class="btn btn-secondary w-full">Publish New Version</button>
+              </div>
+            </section>
+          </div>
+
+          <div class="grid gap-6 lg:grid-cols-2" id="resource-detail" style="display: none;">
+            <section class="card card-pad mount">
+              <h3 class="mono-label mb-3">Install Analytics</h3>
+              <div id="install-analytics" class="space-y-3"></div>
+            </section>
+            <section class="card card-pad mount">
+              <h3 class="mono-label mb-3">Ratings & Reviews</h3>
+              <div id="ratings-analytics" class="space-y-3"></div>
+            </section>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('signout-btn')?.addEventListener('click', signOut);
+      document.getElementById('claim-new-btn')?.addEventListener('click', showClaimModal);
+      document.getElementById('publish-version-btn')?.addEventListener('click', showPublishModal);
+      
+      loadClaimedResources();
+    }
+
+    async function signIn() {
+      // In production: redirect to OAuth provider
+      // For demo: mock GitHub auth
+      currentUser = {
+        id: 'user_' + Date.now(),
+        login: 'dataengineer123',
+        name: 'Data Engineer',
+        avatar_url: 'https://github.com/identicons/dataengineer123.png',
+        claimedCount: 0
+      };
+      localStorage.setItem('de_agent_publisher', JSON.stringify(currentUser));
+      renderAuthenticatedView();
+    }
+
+    function signOut() {
+      currentUser = null;
+      localStorage.removeItem('de_agent_publisher');
+      renderSignInView();
+    }
+
+    async function loadClaimedResources() {
+      const list = document.getElementById('claimed-resources');
+      if (!list) return;
+      
+      // In production: fetch from API
+      // For demo: show empty state with option to claim
+      list.innerHTML = `
+        <li class="text-sm text-muted">No resources claimed yet</li>
+        <li>
+          <button class="btn btn-sm btn-secondary w-full" onclick="showClaimModal()">Claim a Resource</button>
+        </li>
+      `;
+    }
+
+    function showClaimModal() {
+      const resourceId = prompt('Enter resource ID to claim (e.g., skill-sqlfluff-linter):');
+      if (!resourceId) return;
+      
+      claimResource(resourceId);
+    }
+
+    async function claimResource(resourceId) {
+      try {
+        const resp = await fetch('/api/marketplace/publisher', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            resource_id: resourceId,
+            user_id: currentUser.id,
+            evidence: { claimed_via: 'publisher_portal', claimed_at: new Date().toISOString() }
+          })
+        });
+        const data = await resp.json();
+        if (data.ok) {
+          alert('Resource claimed successfully! Pending verification.');
+          loadClaimedResources();
+        } else {
+          alert('Error: ' + (data.error ?? 'Failed to claim resource'));
+        }
+      } catch (err) {
+        alert('Error: ' + err.message);
+      }
+    }
+
+    function showPublishModal() {
+      alert('Publish version flow - would open a form to select resource, version, manifest, and changelog');
+    }
+
+    initPublisherPortal();
+  </script>
+</BaseLayout>
