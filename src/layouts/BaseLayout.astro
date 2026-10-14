@@ -32,8 +32,14 @@ const {
 const pageTitle = title
   ? (title.includes(SITE.name) ? title : `${title} · ${SITE.name}`)
   : `${SITE.name} · ${SITE.longName}`;
-const canonical = new URL(Astro.url.pathname, Astro.site).href;
-const ogImage = new URL('/og.svg', Astro.site).href;
+// Canonical home is emanisha.in/de-agent on EVERY build (Vercel + static):
+// ranking consolidates on the money domain; Vercel also carries noindex.
+// Override with DEAGENT_CANONICAL only if the strategy ever changes.
+const canonBase = (process.env.DEAGENT_CANONICAL ?? 'https://emanisha.in/de-agent').replace(/\/+$/, '');
+const canonPath = Astro.url.pathname.replace(/^\/de-agent/, '') || '/';
+const canonical = canonBase + (canonPath === '/' ? '/' : canonPath);
+const ogImage = canonBase + '/og.svg';
+const envNoindex = process.env.DEAGENT_NOINDEX === '1';
 
 // Analytics config - read from env or config
 const analyticsEndpoint = import.meta.env.PUBLIC_ANALYTICS_ENDPOINT || '/api/analytics/collect';
@@ -59,7 +65,7 @@ const analyticsEnabled = import.meta.env.PUBLIC_ANALYTICS_ENABLED === 'true';
     <meta name="description" content={description} />
     {keywords.length > 0 && <meta name="keywords" content={keywords.join(', ')} />}
     <link rel="canonical" href={canonical} />
-    {noindex && <meta name="robots" content="noindex,follow" />}
+    {noindex || envNoindex ? <meta name="robots" content="noindex,follow" /> : null}
     {ANALYTICS.provider && ANALYTICS.script && <script async defer data-domain={ANALYTICS.domain} src={ANALYTICS.script}></script>}
 
     {analyticsEnabled && (

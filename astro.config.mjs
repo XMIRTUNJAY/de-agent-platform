@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
+import vercel from '@astrojs/vercel';
 import { existsSync, readFileSync } from 'node:fs';
 
 import { SITE } from './src/site.config.ts';
@@ -23,9 +24,14 @@ const strip = (u) => String(u).replace(/\/+$/, '') || '/';
 // subdirectory of another domain (e.g. emanisha.in/de-agent): the emanisha
 // deploy workflow builds with DEAGENT_BASE=/de-agent DEAGENT_SITE=https://emanisha.in.
 // Local dev and Vercel keep the defaults (root + SITE.url).
+// Vercel sets VERCEL=1 at build time: full SSR there (API routes live).
+// Everywhere else: static export (API routes are skipped at build).
+const onVercel = process.env.VERCEL === '1';
 export default defineConfig({
   site: process.env.DEAGENT_SITE ?? SITE.url,
   base: process.env.DEAGENT_BASE ?? '/',
+  output: onVercel ? 'server' : 'static',
+  ...(onVercel ? { adapter: vercel() } : {}),
   trailingSlash: 'ignore',
   prefetch: { prefetchAll: true, defaultStrategy: 'viewport' },
   integrations: [
