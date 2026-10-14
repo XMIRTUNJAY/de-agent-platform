@@ -23,8 +23,8 @@
   license: Apache-2.0
   author: de-agent
   publisher: DE//AGENT Registry
-  source_url: https://github.com/de-agent/skills/tree/main/spark-data-quality-review
-  github_url: https://github.com/de-agent/skills
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/skills/spark-data-quality-review
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/skills
   install_command: "amp skill add de-agent/spark-data-quality-review"
   verification: community
   last_verified: 2026-09-30
@@ -53,3 +53,5 @@
 
     ## Output
     A findings list: `severity | file:line | rule | suggested patch`.
+
+

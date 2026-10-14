@@ -17,7 +17,7 @@
   source_url: https://aws.amazon.com/blogs/big-data/query-across-accounts-and-table-formats-with-multi-catalog-in-amazon-emr/
   license: Proprietary
   verification: community
-  curation_state: draft
+  curation_state: curated
   discovered_from:
     source: aws-big-data
     extracted_at: 2026-10-09T04:45:37.943Z

@@ -23,8 +23,8 @@
   license: Apache-2.0
   author: de-agent
   publisher: DE//AGENT Registry
-  source_url: https://github.com/de-agent/skills/tree/main/spark-skew-diagnosis
-  github_url: https://github.com/de-agent/skills
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/skills/spark-skew-diagnosis
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/skills
   install_command: "amp skill add de-agent/spark-skew-diagnosis"
   verification: community
   last_verified: 2026-09-18
@@ -51,3 +51,5 @@
     ## Evidence to attach
     The task-duration histogram, the shuffle read/write bytes, and the top-10 keys
     by row count — the review is not complete without them.
+
+

@@ -1,10 +1,14 @@
-name: ci
+name: CI
+
 on:
   push:
     branches: [main]
   pull_request:
+    branches: [main]
+
 jobs:
   build:
+    name: Build, Test, Pipeline
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -13,9 +17,56 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: node pipelines/run.mjs --check
-      - run: npm test
-      - run: npm run build
-# astro check is deliberately excluded until the ~80 stale type errors
-# (previously dumped in check-errors.txt, now retired) are triaged.
-# It is not a pass; it is tracked debt. Do not read this exclusion as approval.
+      - name: Run pipeline (check mode)
+        run: node pipelines/run.mjs --check
+      - name: Run tests
+        run: npm test
+      - name: Build site
+        run: npm run build
+      # astro check is run separately in typecheck job
+
+  typecheck:
+    name: TypeScript / Astro Check
+    runs-on: ubuntu-latest
+    continue-on-error: true  # Known ~80 type errors tracked as tech debt
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Run astro check
+        run: npm run check
+        continue-on-error: true
+
+  link-audit:
+    name: Link Audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Run pipeline to generate registry
+        run: node pipelines/run.mjs
+      - name: Audit internal links
+        run: node pipelines/audit-links.mjs
+      - name: Audit pages
+        run: node pipelines/audit-pages.mjs
+
+  security-audit:
+    name: npm Audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Run npm audit (production only)
+        run: npm audit --omit=dev --audit-level=high
+        continue-on-error: true  # Report but don't fail on existing known issues

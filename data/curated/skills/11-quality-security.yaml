@@ -22,8 +22,8 @@
   license: Apache-2.0
   author: de-agent
   publisher: DE//AGENT Registry
-  source_url: https://github.com/de-agent/skills/tree/main/schema-change-contract-review
-  github_url: https://github.com/de-agent/skills
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/skills/schema-change-contract-review
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/skills
   install_command: "amp skill add de-agent/schema-change-contract-review"
   verification: community
   last_verified: 2026-09-26
@@ -70,8 +70,8 @@
   license: Apache-2.0
   author: de-agent
   publisher: DE//AGENT Registry
-  source_url: https://github.com/de-agent/skills/tree/main/data-contract-author
-  github_url: https://github.com/de-agent/skills
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/skills/data-contract-author
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/skills
   install_command: "amp skill add de-agent/data-contract-author"
   verification: community
   last_verified: 2026-09-13
@@ -116,8 +116,8 @@
   license: Apache-2.0
   author: de-agent
   publisher: DE//AGENT Registry
-  source_url: https://github.com/de-agent/skills/tree/main/pii-classifier
-  github_url: https://github.com/de-agent/skills
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/skills/pii-classifier
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/skills
   install_command: "amp skill add de-agent/pii-classifier"
   verification: community
   last_verified: 2026-09-10
@@ -141,3 +141,5 @@
     ## Policy mapping
     Direct → mask or tokenise. Quasi → generalise. Free text → never expose raw in
     analytics; store separately with restricted access.
+
+

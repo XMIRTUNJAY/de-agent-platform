@@ -43,8 +43,8 @@
   version: 1.2.0
   license: CC-BY-4.0
   author: de-agent
-  source_url: https://github.com/de-agent/runbooks/tree/main/spark-job-slow
-  github_url: https://github.com/de-agent/runbooks
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/runbooks/spark-job-slow
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/runbooks
   verification: community
   last_verified: 2026-09-28
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
@@ -89,8 +89,8 @@
   version: 1.1.0
   license: CC-BY-4.0
   author: de-agent
-  source_url: https://github.com/de-agent/runbooks/tree/main/spark-job-suddenly-costs-4x
-  github_url: https://github.com/de-agent/runbooks
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/runbooks/spark-job-suddenly-costs-4x
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/runbooks
   verification: community
   last_verified: 2026-09-25
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
@@ -133,8 +133,8 @@
   version: 1.0.0
   license: CC-BY-4.0
   author: de-agent
-  source_url: https://github.com/de-agent/runbooks/tree/main/small-files-explosion
-  github_url: https://github.com/de-agent/runbooks
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/runbooks/small-files-explosion
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/runbooks
   verification: community
   last_verified: 2026-09-22
   security: { runs_code: true, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
@@ -176,8 +176,8 @@
   version: 1.0.1
   license: CC-BY-4.0
   author: de-agent
-  source_url: https://github.com/de-agent/runbooks/tree/main/warehouse-query-slow
-  github_url: https://github.com/de-agent/runbooks
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/runbooks/warehouse-query-slow
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/runbooks
   verification: community
   last_verified: 2026-09-18
   security: { runs_code: true, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
@@ -219,9 +219,11 @@
   version: 1.0.0
   license: CC-BY-4.0
   author: de-agent
-  source_url: https://github.com/de-agent/runbooks/tree/main/missing-partition
-  github_url: https://github.com/de-agent/runbooks
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/runbooks/missing-partition
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/runbooks
   verification: community
   last_verified: 2026-09-16
   security: { runs_code: true, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
   relationships: { related_to: [runbook-backfill-required, runbook-late-files] }
+
+

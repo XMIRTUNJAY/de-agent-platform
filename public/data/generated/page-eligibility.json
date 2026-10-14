@@ -1,6 +1,10 @@
 {
- "generated_at": "2026-10-10T15:02:03.429Z",
+ "generated_at": "2026-10-14T05:02:59.747Z",
  "states": {
+  "/resources/sqlfluff-core-rules": "eligible",
+  "/resources/data-classification-governance": "eligible",
+  "/resources/opa-data-access-policy": "eligible",
+  "/resources/snowflake-warehouse-config": "eligible",
   "/skills/dbt-test-writer": "eligible",
   "/skills/incident-postmortem-writer": "eligible",
   "/skills/sql-review": "eligible",

@@ -34,6 +34,10 @@ const pageTitle = title
   : `${SITE.name} · ${SITE.longName}`;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImage = new URL('/og.svg', Astro.site).href;
+
+// Analytics config - read from env or config
+const analyticsEndpoint = import.meta.env.PUBLIC_ANALYTICS_ENDPOINT || '/api/analytics/collect';
+const analyticsEnabled = import.meta.env.PUBLIC_ANALYTICS_ENABLED === 'true';
 ---
 <!doctype html>
 <html lang={SITE.locale} data-theme="dark">
@@ -57,6 +61,19 @@ const ogImage = new URL('/og.svg', Astro.site).href;
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex,follow" />}
     {ANALYTICS.provider && ANALYTICS.script && <script async defer data-domain={ANALYTICS.domain} src={ANALYTICS.script}></script>}
+
+    {analyticsEnabled && (
+      <script is:inline>
+        (function () {
+          window.__DE_ANALYTICS_CONFIG__ = {
+            endpoint: '/api/analytics/collect',
+            batchSize: 10,
+            flushInterval: 5000,
+            debug: import.meta.env.DEV,
+          };
+        })();
+      </script>
+    )}
 
     <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={SITE.name} />
@@ -258,6 +275,52 @@ const ogImage = new URL('/og.svg', Astro.site).href;
           document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(function(el) {
             revealObserver.observe(el);
           });
+        }
+
+        // Analytics initialization
+        if (window.__DE_ANALYTICS_CONFIG__) {
+          var config = window.__DE_ANALYTICS_CONFIG__;
+          var queue = [];
+          var sessionId = sessionStorage.getItem('de_agent_session_id') || crypto.randomUUID();
+          sessionStorage.setItem('de_agent_session_id', sessionId);
+          var anonymousId = localStorage.getItem('de_agent_anonymous_id') || crypto.randomUUID();
+          localStorage.setItem('de_agent_anonymous_id', anonymousId);
+
+          function flush() {
+            if (!queue.length) return;
+            var events = queue.splice(0, config.batchSize);
+            fetch(config.endpoint, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ events, version: '1.0.0' }),
+              keepalive: true,
+            }).catch(function() { queue.unshift.apply(queue, events); });
+          }
+
+          window.trackEvent = function(event, properties) {
+            var base = {
+              session_id: sessionId,
+              anonymous_id: anonymousId,
+              context: {
+                user_agent: navigator.userAgent,
+                locale: navigator.language,
+                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                screen_width: screen.width,
+                screen_height: screen.height,
+              },
+              page: {
+                path: window.location.pathname,
+                referrer: document.referrer || undefined,
+                title: document.title,
+              },
+            };
+            var fullEvent = Object.assign({}, base, { event, timestamp: new Date().toISOString(), properties });
+            queue.push(fullEvent);
+            if (queue.length >= config.batchSize) flush();
+          };
+
+          setInterval(flush, config.flushInterval);
+          window.addEventListener('beforeunload', flush);
         }
       })();
     </script>

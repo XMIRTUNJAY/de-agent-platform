@@ -11,6 +11,7 @@ const TYPE_LABELS = {
   skill: 'Skill', mcp: 'MCP server', plugin: 'Plugin', agent: 'Agent', hook: 'Hook',
   template: 'Template', starter: 'Project', runbook: 'Runbook', architecture: 'Pattern',
   reference: 'Reference', tutorial: 'Tutorial', checklist: 'Checklist', tool: 'Tool',
+  policy: 'Policy', rule_pack: 'Rule Pack', config_template: 'Config Template', governance_pack: 'Governance Pack',
 };
 
 export function normalizeAll() {
@@ -191,6 +192,14 @@ function typePayload(r) {
       };
     case 'reference':
       return { url: r.url ?? null, publisher: r.publisher ?? null, kind: r.kind ?? null, why: r.why ?? null, quality: r.quality ?? null };
+    case 'policy':
+      return { policy_engine: r.policy_engine ?? null, policy_language: r.policy_language ?? null, rules: r.rules ?? [], test_cases: r.test_cases ?? [] };
+    case 'rule_pack':
+      return { target_tool: r.target_tool ?? null, rules: r.rules ?? [], test_files: r.test_files ?? [], config_schema: r.config_schema ?? null };
+    case 'config_template':
+      return { target_system: r.target_system ?? null, parameters: r.parameters ?? [], example_values: r.example_values ?? {}, validation_rules: r.validation_rules ?? [] };
+    case 'governance_pack':
+      return { scope: r.scope ?? null, tag_taxonomy: r.tag_taxonomy ?? [], glossary_terms: r.glossary_terms ?? [], classification_rules: r.classification_rules ?? [], access_policies: r.access_policies ?? [] };
     default:
       return {};
   }

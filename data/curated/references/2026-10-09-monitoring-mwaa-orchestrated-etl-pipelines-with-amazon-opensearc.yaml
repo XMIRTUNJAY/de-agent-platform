@@ -16,7 +16,7 @@
   source_url: https://aws.amazon.com/blogs/big-data/monitoring-mwaa-orchestrated-etl-pipelines-with-amazon-opensearch-service/
   license: Proprietary
   verification: community
-  curation_state: draft
+  curation_state: curated
   discovered_from:
     source: aws-big-data
     extracted_at: 2026-10-09T04:45:37.933Z

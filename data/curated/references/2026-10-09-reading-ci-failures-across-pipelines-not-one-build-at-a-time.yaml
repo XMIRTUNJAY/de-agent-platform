@@ -16,7 +16,7 @@
   source_url: https://www.jenkins.io/blog/2026/10/05/reading-ci-failures-across-pipelines/
   license: Proprietary
   verification: community
-  curation_state: draft
+  curation_state: curated
   discovered_from:
     source: databricks-continuous
     extracted_at: 2026-10-09T04:45:42.395Z

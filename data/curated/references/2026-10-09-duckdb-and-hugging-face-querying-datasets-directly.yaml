@@ -16,7 +16,7 @@
   source_url: https://duckdb.org/2026/09/25/hugging-face.html
   license: Proprietary
   verification: community
-  curation_state: draft
+  curation_state: curated
   discovered_from:
     source: duckdb
     extracted_at: 2026-10-09T04:47:10.518Z

@@ -20,9 +20,10 @@ import { pageEligibility } from './lib/eligibility.mjs';
 import { relatedFor } from './lib/related.mjs';
 import { evaluateFreshness } from './lib/freshness.mjs';
 import { depthAll } from './lib/depth.mjs';
+import { computeMarketplaceScores } from './lib/marketplace-score.mjs';
 import { ROUTE } from './lib/emit.mjs';
 import { ROOT } from './lib/load.mjs';
-import { writeFileSync, mkdirSync, existsSync, readFileSync } from 'node:fs';
+import { writeFileSync, mkdirSync, existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 
 const args = process.argv.slice(2);
@@ -111,6 +112,21 @@ step('EVIDENCE', () => {
   evaluateAll(resources);
   const over = resources.filter((r) => r.evidence_summary.gap > 0);
   info(`${over.length} resource(s) claim more than evidence supports (labeled, never hidden)`);
+  return null;
+});
+
+// MARKETPLACE SCORE
+step('MARKETPLACE SCORE', () => {
+  // Load execution results for performance scoring
+  const executions = loadExecutions();
+  computeMarketplaceScores(resources, meta, executions);
+  const scored = resources.filter(r => r.marketplace?.composite_score > 0);
+  const avg = scored.length ? (scored.reduce((a, r) => a + r.marketplace.composite_score, 0) / scored.length).toFixed(1) : 'n/a';
+  const labels = {};
+  for (const r of scored) {
+    labels[r.marketplace.composite_label] = (labels[r.marketplace.composite_label] ?? 0) + 1;
+  }
+  info(`${scored.length} resources scored (avg ${avg}) · ${Object.entries(labels).map(([k, v]) => `${k}:${v}`).join(' ')}`);
   return null;
 });
 
@@ -217,5 +233,22 @@ function emitDepth(byLevel) {
     writeFileSync(join(dir, 'depth.json'), JSON.stringify(payload, null, 1) + '\n', 'utf8');
   }
 }
+
+function loadExecutions() {
+  const execDir = join(ROOT, 'data', 'cache', 'executions');
+  if (!existsSync(execDir)) return {};
+  const files = readdirSync(execDir).filter(f => f.endsWith('.json'));
+  const executions = {};
+  for (const file of files) {
+    try {
+      const data = JSON.parse(readFileSync(join(execDir, file), 'utf8'));
+      if (data.provenance?.manifest) {
+        executions[data.provenance.manifest] = data;
+      }
+    } catch {}
+  }
+  return executions;
+}
+
 function warn(msg) { console.log(`      \x1b[33m${msg}\x1b[0m`); }
 function error(msg) { console.log(`      \x1b[31m${msg}\x1b[0m`); }

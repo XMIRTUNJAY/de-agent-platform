@@ -1,0 +1,122 @@
+- id: rule-pack-sqlfluff-core
+  slug: sqlfluff-core-rules
+  type: rule_pack
+  typeLabel: Rule Pack
+  title: SQLFluff Core Rule Pack
+  tagline: Production-ready SQL linting rules for dbt, Spark, and warehouse dialects
+  description: "A curated SQLFluff configuration with rules optimized for modern data engineering workflows. Includes dialect-specific rules for dbt (Jinja), Spark SQL, Snowflake, BigQuery, and Redshift. Enforces naming conventions, formatting standards, performance anti-patterns, and security rules."
+  summary: Production-ready SQL linting rules for dbt, Spark, and warehouse dialects
+  category: cat-sql
+  categorySlug: sql
+  categoryTitle: SQL
+  stage: python-sql
+  difficulty: beginner
+  tags: [sqlfluff, sql-linting, sql-formatting, dbt, data-quality, ci-cd]
+  technologies: [tech-sql, tech-dbt, tech-spark, tech-snowflake, tech-bigquery]
+  learning_objectives:
+    - Configure SQLFluff for your warehouse dialect
+    - Customize rules for team standards
+    - Integrate SQLFluff into CI/CD pipelines
+    - Fix legacy SQL debt incrementally
+  prerequisites: []
+  verification: community
+  license: MIT
+  source_url: https://github.com/sqlfluff/sqlfluff
+  github_url: https://github.com/sqlfluff/sqlfluff
+  install_command: "pip install sqlfluff==3.0.0 sqlfluff-templater-dbt"
+  evidence: []
+  security:
+    runs_code: false
+    network_access: false
+    credentials: false
+    filesystem_access: true
+    external_apis: false
+  security_flags: 1
+  publisher: DE//AGENT
+  publisher_source: null
+  install_manifest:
+    version: "3.0.0"
+    commands:
+      - name: "install-sqlfluff"
+        argv: ["pip", "install", "sqlfluff==3.0.0", "sqlfluff-templater-dbt"]
+        timeout_ms: 120000
+      - name: "verify-install"
+        argv: ["sqlfluff", "--version"]
+        timeout_ms: 10000
+      - name: "test-lint"
+        argv: ["sqlfluff", "lint", "--help"]
+        timeout_ms: 10000
+    requirements:
+      - python >= 3.8
+      - pip
+    limits:
+      timeout_ms: 180000
+      max_output_bytes: 500000
+  target_tool: sqlfluff
+  rules:
+    - code: L001
+      name: trailing_whitespace
+      description: Remove trailing whitespace
+      severity: style
+    - code: L003
+      name: indentation
+      description: Consistent indentation
+      severity: style
+    - code: L006
+      name: line_length
+      description: Max line length (120 chars)
+      severity: style
+    - code: L010
+      name: capitalisation
+      description: Keywords capitalisation policy (UPPER)
+      severity: style
+    - code: L014
+      name: unqualified_column
+      description: Detect unqualified column references
+      severity: warning
+    - code: L016
+      name: line_length
+      description: Line too long
+      severity: style
+    - code: L019
+      name: trailing_comma
+      description: Trailing comma in select
+      severity: style
+    - code: L030
+      name: select_wildcard
+      description: SELECT star usage
+      severity: warning
+    - code: L036
+      name: select_modifiers
+      description: SELECT DISTINCT vs ALL
+      severity: style
+    - code: L057
+      name: unused_cte
+      description: Unused CTE detection
+      severity: warning
+    - code: L063
+      name: deprecated_type
+      description: Deprecated type usage
+      severity: warning
+  test_files:
+    - path: tests/fixtures/style_pass.sql
+      description: Passing style examples
+    - path: tests/fixtures/style_fail.sql
+      description: Failing style examples for testing
+  config_schema:
+    dialect:
+      type: string
+      enum: [postgres, mysql, snowflake, bigquery, redshift, spark, databricks, sqlite, tsql]
+      default: snowflake
+    templater:
+      type: string
+      enum: [jinja, dbt, python, raw]
+      default: dbt
+    rules:
+      type: array
+      items:
+        type: string
+    exclude_rules:
+      type: array
+      items:
+        type: string

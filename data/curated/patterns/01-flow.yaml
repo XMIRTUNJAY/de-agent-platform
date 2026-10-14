@@ -31,8 +31,8 @@
   version: 1.1.0
   license: CC-BY-4.0
   author: de-agent
-  source_url: https://github.com/de-agent/patterns/tree/main/medallion-zones
-  github_url: https://github.com/de-agent/patterns
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns/medallion-zones
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns
   verification: community
   last_verified: 2026-09-28
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
@@ -67,8 +67,8 @@
   version: 1.2.0
   license: CC-BY-4.0
   author: de-agent
-  source_url: https://github.com/de-agent/patterns/tree/main/batch-incremental-watermark
-  github_url: https://github.com/de-agent/patterns
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns/batch-incremental-watermark
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns
   verification: community
   last_verified: 2026-09-26
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
@@ -100,8 +100,8 @@
   version: 1.1.0
   license: CC-BY-4.0
   author: de-agent
-  source_url: https://github.com/de-agent/patterns/tree/main/idempotent-partition-overwrite
-  github_url: https://github.com/de-agent/patterns
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns/idempotent-partition-overwrite
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns
   verification: community
   last_verified: 2026-09-24
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
@@ -136,8 +136,8 @@
   version: 1.1.0
   license: CC-BY-4.0
   author: de-agent
-  source_url: https://github.com/de-agent/patterns/tree/main/quarantine-publish
-  github_url: https://github.com/de-agent/patterns
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns/quarantine-publish
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns
   verification: community
   last_verified: 2026-09-27
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
@@ -170,8 +170,8 @@
   version: 1.0.0
   license: CC-BY-4.0
   author: de-agent
-  source_url: https://github.com/de-agent/patterns/tree/main/contracts-quality-gate
-  github_url: https://github.com/de-agent/patterns
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns/contracts-quality-gate
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns
   verification: community
   last_verified: 2026-09-22
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
@@ -204,8 +204,8 @@
   version: 1.2.0
   license: CC-BY-4.0
   author: de-agent
-  source_url: https://github.com/de-agent/patterns/tree/main/postgres-cdc-lakehouse
-  github_url: https://github.com/de-agent/patterns
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns/postgres-cdc-lakehouse
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns
   verification: community
   last_verified: 2026-09-25
   security: { runs_code: false, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
@@ -236,8 +236,10 @@
   version: 1.1.0
   license: CC-BY-4.0
   author: de-agent
-  source_url: https://github.com/de-agent/patterns/tree/main/streaming-dedup-upsert
-  github_url: https://github.com/de-agent/patterns
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns/streaming-dedup-upsert
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns
   verification: community
   last_verified: 2026-09-23
   security: { runs_code: false, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
+
+

@@ -16,7 +16,7 @@
   source_url: https://duckdb.org/2026/10/07/view-only-mode.html
   license: Proprietary
   verification: community
-  curation_state: draft
+  curation_state: curated
   discovered_from:
     source: duckdb
     extracted_at: 2026-10-09T04:45:42.554Z

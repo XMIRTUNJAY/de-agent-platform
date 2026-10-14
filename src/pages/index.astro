@@ -32,7 +32,8 @@ const runbook = registry.resources.find(r => r.type === 'runbook');
 const arch = registry.resources.find(r => r.type === 'architecture');
 const starter = registry.resources.find(r => r.type === 'starter');
 const skill2 = registry.resources.find(r => r.type === 'skill' && r.id !== skill?.id && r.install_command);
-const verifiedCount = stats.counts.byVerification.reviewed + stats.counts.byVerification.tested;
+const verifiedCount = (stats.counts.byVerification.reviewed ?? 0) + (stats.counts.byVerification.tested ?? 0) + (stats.counts.byVerification.verified ?? 0);
+const communityCount = stats.counts.byVerification.community ?? 0;
 
 // Learn by building — starters + architectures
 const builders = registry.resources
@@ -151,11 +152,11 @@ const heroLines = ['Learn the pattern.', 'Install the skill.', 'Run the pipeline
       <!-- Verification -->
       <div class="card card-pad-lg" style="display: flex; flex-direction: column; gap: 1rem;">
         <p class="mono-label">Verification</p>
-        <h3 style="font-size: var(--text-2xl); font-weight: 500;">{skill2?.title ?? 'Reviewed by maintainers'}</h3>
+        <h3 style="font-size: var(--text-2xl); font-weight: 500;">{skill2?.title ?? 'Community-verified entries'}</h3>
         <p class="card-desc">{skill2?.tagline ?? 'Every entry carries provenance, license and verification status.'}</p>
         <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-          <span class="chip chip-accent">✓ {skill2?.verification ?? 'reviewed'}</span>
-          {skill2?.last_verified && <span class="chip">verified {skill2.last_verified}</span>}
+          <span class="chip">{skill2?.verification ?? 'community'}</span>
+          {skill2?.last_verified && <span class="chip">last checked {skill2.last_verified}</span>}
           <span class="chip">license: {skill2?.license ?? 'Apache-2.0'}</span>
         </div>
         <a href={skill2?.url ?? '/marketplace'} class="link-arrow" style="margin-top: auto;">Inspect the entry <span class="arrow" aria-hidden="true">→</span></a>
@@ -222,7 +223,8 @@ const heroLines = ['Learn the pattern.', 'Install the skill.', 'Run the pipeline
     <div class="col section" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 2rem;">
       {[
         { n: stats.counts.total, label: 'Resources' },
-        { n: verifiedCount, label: 'Reviewed or tested' },
+        { n: verifiedCount, label: 'Reviewed, tested, or verified' },
+        { n: communityCount, label: 'Community verified' },
         { n: stats.counts.byType.skill, label: 'Agent skills' },
         { n: stats.counts.byType.mcp, label: 'MCP servers' },
         { n: stats.counts.stages, label: 'Learning stages' },
@@ -255,7 +257,7 @@ const heroLines = ['Learn the pattern.', 'Install the skill.', 'Run the pipeline
   <section class="col section">
     <SectionHeader
       kicker="Fresh from the registry"
-      title="Latest verified entries"
+      title="Recently updated entries"
       linkHref="/marketplace"
       linkLabel="View all"
     />

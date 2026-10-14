@@ -22,8 +22,8 @@
   license: Apache-2.0
   author: de-agent
   publisher: DE//AGENT Registry
-  source_url: https://github.com/de-agent/skills/tree/main/sql-review
-  github_url: https://github.com/de-agent/skills
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/skills/sql-review
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/skills
   install_command: "amp skill add de-agent/sql-review"
   verification: community
   last_verified: 2026-09-30
@@ -70,8 +70,8 @@
   license: Apache-2.0
   author: de-agent
   publisher: DE//AGENT Registry
-  source_url: https://github.com/de-agent/skills/tree/main/sql-query-plan-explainer
-  github_url: https://github.com/de-agent/skills
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/skills/sql-query-plan-explainer
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/skills
   install_command: "amp skill add de-agent/sql-query-plan-explainer"
   verification: community
   last_verified: 2026-09-22
@@ -92,3 +92,5 @@
     ## Output
     One sentence per expensive node, then exactly one recommended change with
     the expected effect and a way to measure it.
+
+

@@ -25,6 +25,10 @@ export const TYPED_DIRS = {
   patterns: 'architecture',
   runbooks: 'runbook',
   references: 'reference',
+  policies: 'policy',
+  'rule-packs': 'rule_pack',
+  'config-templates': 'config_template',
+  'governance-packs': 'governance_pack',
 };
 
 export function readFileText(p) {

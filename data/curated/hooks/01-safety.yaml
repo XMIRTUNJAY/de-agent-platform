@@ -18,8 +18,8 @@
   version: 0.2.0
   license: Apache-2.0
   author: de-agent
-  source_url: https://github.com/de-agent/hooks/tree/main/schema-change-check
-  github_url: https://github.com/de-agent/hooks
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/hooks/schema-change-check
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/hooks
   verification: community
   last_verified: 2026-09-28
   security: { runs_code: true, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
@@ -43,8 +43,8 @@
   version: 0.2.0
   license: Apache-2.0
   author: de-agent
-  source_url: https://github.com/de-agent/hooks/tree/main/pre-deployment-dq-check
-  github_url: https://github.com/de-agent/hooks
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/hooks/pre-deployment-dq-check
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/hooks
   verification: community
   last_verified: 2026-09-27
   security: { runs_code: true, network_access: true, credentials: true, filesystem_access: true, external_apis: false }
@@ -69,8 +69,8 @@
   version: 0.3.0
   license: Apache-2.0
   author: de-agent
-  source_url: https://github.com/de-agent/hooks/tree/main/destructive-sql-guard
-  github_url: https://github.com/de-agent/hooks
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/hooks/destructive-sql-guard
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/hooks
   verification: community
   last_verified: 2026-09-29
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
@@ -94,8 +94,8 @@
   version: 0.2.1
   license: Apache-2.0
   author: de-agent
-  source_url: https://github.com/de-agent/hooks/tree/main/secret-scan-commit
-  github_url: https://github.com/de-agent/hooks
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/hooks/secret-scan-commit
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/hooks
   verification: community
   last_verified: 2026-09-26
   security: { runs_code: true, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
@@ -121,9 +121,11 @@
   version: 0.1.4
   license: Apache-2.0
   author: de-agent
-  source_url: https://github.com/de-agent/hooks/tree/main/pii-leak-guard
-  github_url: https://github.com/de-agent/hooks
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/hooks/pii-leak-guard
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/hooks
   verification: community
   last_verified: 2026-09-20
   security: { runs_code: true, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
   relationships: { related_to: [skill-pii-classifier, cat-governance] }
+
+

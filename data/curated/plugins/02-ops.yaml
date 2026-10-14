@@ -21,8 +21,8 @@
   version: 0.1.3
   license: Apache-2.0
   author: de-agent
-  source_url: https://github.com/de-agent/plugins/tree/main/kafka-console
-  github_url: https://github.com/de-agent/plugins
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/plugins/kafka-console
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/plugins
   verification: community
   last_verified: 2026-09-21
   security: { runs_code: true, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
@@ -49,8 +49,8 @@
   version: 0.2.1
   license: Apache-2.0
   author: de-agent
-  source_url: https://github.com/de-agent/plugins/tree/main/lineage-graph
-  github_url: https://github.com/de-agent/plugins
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/plugins/lineage-graph
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/plugins
   verification: community
   last_verified: 2026-09-20
   security: { runs_code: true, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
@@ -77,8 +77,8 @@
   version: 0.1.5
   license: Apache-2.0
   author: de-agent
-  source_url: https://github.com/de-agent/plugins/tree/main/cost-lens
-  github_url: https://github.com/de-agent/plugins
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/plugins/cost-lens
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/plugins
   verification: community
   last_verified: 2026-09-17
   security: { runs_code: true, network_access: true, credentials: true, filesystem_access: true, external_apis: true }
@@ -105,8 +105,8 @@
   version: 0.3.0
   license: Apache-2.0
   author: de-agent
-  source_url: https://github.com/de-agent/plugins/tree/main/contract-kit
-  github_url: https://github.com/de-agent/plugins
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/plugins/contract-kit
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/plugins
   verification: community
   last_verified: 2026-09-27
   security: { runs_code: true, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
@@ -133,9 +133,11 @@
   version: 0.2.0
   license: Apache-2.0
   author: de-agent
-  source_url: https://github.com/de-agent/plugins/tree/main/runbook-runner
-  github_url: https://github.com/de-agent/plugins
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/plugins/runbook-runner
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/plugins
   verification: community
   last_verified: 2026-09-25
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
   relationships: { related_to: [cat-production-operations], uses: [skill-incident-postmortem-writer] }
+
+

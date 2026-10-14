@@ -1,0 +1,93 @@
+- id: policy-opa-data-access
+  slug: opa-data-access-policy
+  type: policy
+  typeLabel: Policy
+  title: OPA Data Access Control Policy
+  tagline: Rego policies for least-privilege data access across warehouses, lakes, and catalogs
+  description: |
+    A comprehensive OPA policy bundle for enforcing data access controls across your data platform.
+    Includes policies for: row-level security, column masking, table-level permissions, and audit logging.
+    Compatible with Trino, Presto, Snowflake, BigQuery, and Databricks via their OPA integrations.
+  summary: Rego policies for least-privilege data access across warehouses, lakes, and catalogs
+  category: cat-governance
+  categorySlug: governance
+  categoryTitle: Governance
+  stage: reliability
+  difficulty: intermediate
+  tags: [opa, rego, policy-as-code, data-governance, access-control, rbac]
+  technologies: [tech-opa]
+  learning_objectives:
+    - Understand OPA/Rego for data access control
+    - Implement row-level security policies
+    - Apply column masking for PII
+    - Audit data access decisions
+  prerequisites: [skill-policy-author]
+  verification: community
+  license: Apache-2.0
+  source_url: https://github.com/open-policy-agent/opa
+  github_url: https://github.com/open-policy-agent/opa
+  install_command: |
+    # Install OPA
+    curl -L -o opa https://openpolicyagent.org/downloads/v0.70.0/opa_linux_amd64_static
+    chmod +x opa && sudo mv opa /usr/local/bin/
+
+    # Clone policy bundle
+    git clone https://github.com/de-agent/policies.git
+    cd policies/data-access
+  evidence: []
+  security:
+    runs_code: true
+    network_access: false
+    credentials: false
+    filesystem_access: true
+    external_apis: false
+  security_flags: 2
+  publisher: DE//AGENT
+  publisher_source: null
+  install_manifest:
+    version: "1.0.0"
+    commands:
+      - name: "install-opa"
+        argv: ["curl", "-L", "-o", "opa", "https://openpolicyagent.org/downloads/v0.70.0/opa_linux_amd64_static"]
+        timeout_ms: 60000
+      - name: "verify-opa"
+        argv: ["opa", "version"]
+        timeout_ms: 10000
+      - name: "test-policy"
+        argv: ["opa", "test", "-v", "./policies"]
+        timeout_ms: 30000
+    requirements:
+      - linux/amd64 or darwin/amd64
+      - curl
+    limits:
+      timeout_ms: 120000
+      max_output_bytes: 500000
+  policy_engine: opa
+  policy_language: rego
+  rules:
+    - id: data-access-table-level
+      title: Table-Level Access Control
+      description: Enforce table-level permissions based on user roles
+      severity: high
+    - id: data-access-row-level
+      title: Row-Level Security
+      description: Filter rows based on user attributes and data ownership
+      severity: high
+    - id: data-access-column-masking
+      title: Column Masking for PII
+      description: Mask sensitive columns (PII, credentials) for unauthorized roles
+      severity: critical
+    - id: data-access-audit
+      title: Access Decision Audit
+      description: Log all allow/deny decisions with context for compliance
+      severity: medium
+  test_cases:
+    - name: "admin-can-access-all-tables"
+      input: { user: { role: "admin" }, action: "select", resource: { table: "pii_data" } }
+      expected: { allow: true }
+    - name: "analyst-cannot-see-pii-columns"
+      input: { user: { role: "analyst" }, action: "select", resource: { table: "pii_data", columns: ["ssn", "email"] } }
+      expected: { allow: true, masked_columns: ["ssn", "email"] }
+    - name: "unauthorized-user-denied"
+      input: { user: { role: "guest" }, action: "select", resource: { table: "financial_data" } }
+      expected: { allow: false }

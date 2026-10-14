@@ -1,0 +1,148 @@
+- id: config-template-snowflake-warehouse
+  slug: snowflake-warehouse-config
+  type: config_template
+  typeLabel: Config Template
+  title: Snowflake Warehouse Configuration Template
+  tagline: Production-ready Snowflake warehouse configs with auto-scaling, resource monitors, and cost controls
+  description: |
+    A comprehensive Snowflake warehouse configuration template covering: warehouse sizing, auto-suspend/resume,
+    resource monitors for cost control, query acceleration, and multi-cluster settings. Includes environments
+    for dev, staging, and production with appropriate defaults.
+  summary: Production-ready Snowflake warehouse configs with auto-scaling, resource monitors, and cost controls
+  category: cat-snowflake
+  categorySlug: snowflake
+  categoryTitle: Snowflake
+  stage: cloud
+  difficulty: intermediate
+  tags: [snowflake, warehouse, configuration, cost-control, auto-scaling, resource-monitors]
+  technologies: [tech-snowflake]
+  learning_objectives:
+    - Configure warehouses for different workloads
+    - Set up resource monitors for budget enforcement
+    - Optimize auto-scaling for cost/performance
+    - Implement query acceleration for dashboards
+  prerequisites: [skill-snowflake-basics]
+  verification: community
+  license: Apache-2.0
+  source_url: https://docs.snowflake.com/en/user-guide/warehouses
+  github_url: https://github.com/snowflakedb/snowflake-workshops
+  install_command: |
+    # Apply via Snowflake CLI or UI
+    snowsql -f warehouse-config.sql
+  evidence: []
+  security:
+    runs_code: false
+    network_access: false
+    credentials: true
+    filesystem_access: false
+    external_apis: false
+  security_flags: 1
+  publisher: DE//AGENT
+  publisher_source: null
+  install_manifest:
+    version: "1.0.0"
+    commands:
+      - name: "validate-sql"
+        argv: ["snowsql", "-q", "SELECT 1"]
+        timeout_ms: 30000
+    requirements:
+      - snowsql CLI
+      - Snowflake account with ACCOUNTADMIN or SYSADMIN role
+    limits:
+      timeout_ms: 60000
+      max_output_bytes: 100000
+  target_system: snowflake
+  parameters:
+    - name: warehouse_name
+      type: string
+      description: Unique warehouse identifier
+      required: true
+      example: "etl_wh"
+    - name: warehouse_size
+      type: string
+      enum: [XSMALL, SMALL, MEDIUM, LARGE, XLARGE, XXLARGE, XXXLARGE, X4LARGE]
+      description: Compute size (credits/hour)
+      required: true
+      default: "MEDIUM"
+      example: "LARGE"
+    - name: auto_suspend
+      type: integer
+      description: Seconds of inactivity before suspend (0 = never)
+      required: false
+      default: 300
+      example: 600
+    - name: auto_resume
+      type: boolean
+      description: Auto-resume on query submission
+      required: false
+      default: true
+    - name: min_cluster_count
+      type: integer
+      description: Minimum clusters for multi-cluster warehouse
+      required: false
+      default: 1
+      example: 1
+    - name: max_cluster_count
+      type: integer
+      description: Maximum clusters for multi-cluster warehouse
+      required: false
+      default: 1
+      example: 3
+    - name: scaling_policy
+      type: string
+      enum: [STANDARD, ECONOMY]
+      description: Multi-cluster scaling policy
+      required: false
+      default: "STANDARD"
+    - name: resource_monitor_credits
+      type: integer
+      description: Monthly credit quota for resource monitor
+      required: false
+      default: 1000
+      example: 5000
+    - name: query_acceleration
+      type: boolean
+      description: Enable query acceleration service
+      required: false
+      default: false
+  example_values:
+    dev:
+      warehouse_name: "dev_etl_wh"
+      warehouse_size: "XSMALL"
+      auto_suspend: 60
+      auto_resume: true
+      min_cluster_count: 1
+      max_cluster_count: 1
+      scaling_policy: "ECONOMY"
+      resource_monitor_credits: 100
+      query_acceleration: false
+    staging:
+      warehouse_name: "staging_etl_wh"
+      warehouse_size: "MEDIUM"
+      auto_suspend: 300
+      auto_resume: true
+      min_cluster_count: 1
+      max_cluster_count: 2
+      scaling_policy: "STANDARD"
+      resource_monitor_credits: 500
+      query_acceleration: true
+    production:
+      warehouse_name: "prod_etl_wh"
+      warehouse_size: "LARGE"
+      auto_suspend: 600
+      auto_resume: true
+      min_cluster_count: 2
+      max_cluster_count: 5
+      scaling_policy: "STANDARD"
+      resource_monitor_credits: 5000
+      query_acceleration: true
+  validation_rules:
+    - field: warehouse_size
+      rule: "enum"
+      message: "Must be valid Snowflake warehouse size"
+    - field: min_cluster_count
+      rule: "lte:max_cluster_count"
+      message: "min_cluster_count cannot exceed max_cluster_count"
+    - field: resource_monitor_credits
+      rule: "gte:1"
+      message: "Resource monitor credits must be positive"

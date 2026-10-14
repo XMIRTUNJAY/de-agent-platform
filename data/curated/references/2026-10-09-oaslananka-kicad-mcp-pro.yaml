@@ -15,7 +15,7 @@
   source_url: https://github.com/oaslananka/kicad-mcp-pro
   license: Proprietary
   verification: community
-  curation_state: draft
+  curation_state: curated
   discovered_from:
     source: github-topic-mcp
     extracted_at: 2026-10-09T04:47:12.095Z

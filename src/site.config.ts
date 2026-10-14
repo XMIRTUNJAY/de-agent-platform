@@ -7,12 +7,12 @@
 export const SITE = {
   name: 'DE//AGENT',
   longName: 'Data Engineering for the Agent Era',
-  url: 'https://de-agent.example.dev',
+  url: 'https://de-agent-platform.vercel.app',
   tagline: 'Learn the pattern. Install the skill. Run the pipeline.',
   description:
     'An open registry and learning platform for modern Data Engineering: tutorials, architecture patterns, agent skills, MCP servers, agents, hooks and production runbooks — each with provenance, license, compatibility and verification status.',
   author: 'DE//AGENT',
-  repo: 'https://github.com/de-agent/platform',
+  repo: 'https://github.com/XMIRTUNJAY/de-agent-platform',
   ogLabel: 'Data Engineering · Agent Era',
   locale: 'en',
   twitter: '',
@@ -22,10 +22,12 @@ export type NavItem = { label: string; href: string; badge?: string; external?: 
 export type NavGroup = { title: string; items: NavItem[] };
 
 /** Optional privacy-friendly analytics. Null provider ships zero third-party requests. */
-export const ANALYTICS: { provider: null | 'plausible' | 'umami'; domain: string; script: string } = {
-  provider: null,
+export const ANALYTICS: { provider: null | 'plausible' | 'umami' | 'internal'; domain: string; script: string; endpoint: string; enabled: boolean } = {
+  provider: 'internal',
   domain: '',
   script: '',
+  endpoint: '/api/analytics/collect',
+  enabled: true,
 };
 
 /** Top-bar navigation (mirrors a docs-product top bar). */
@@ -145,7 +147,7 @@ export const FOOTER_COLUMNS: { title: string; items: NavItem[] }[] = [
   {
     title: 'Project',
     items: [
-      { label: 'Source (GitHub)', href: 'https://github.com/de-agent/platform', external: true },
+      { label: 'Source (GitHub)', href: 'https://github.com/XMIRTUNJAY/de-agent-platform', external: true },
       { label: 'Contribute a resource', href: '/docs/contributing' },
       { label: 'RSS', href: '/rss.xml' },
       { label: 'Sitemap', href: '/sitemap-index.xml' },

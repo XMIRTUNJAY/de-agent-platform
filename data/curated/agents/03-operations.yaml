@@ -24,8 +24,8 @@
   version: 0.1.1
   license: Apache-2.0
   author: de-agent
-  source_url: https://github.com/de-agent/agents/tree/main/kafka-troubleshooter
-  github_url: https://github.com/de-agent/agents
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/agents/kafka-troubleshooter
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/agents
   verification: community
   last_verified: 2026-09-20
   security: { runs_code: false, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
@@ -55,8 +55,8 @@
   version: 0.1.2
   license: Apache-2.0
   author: de-agent
-  source_url: https://github.com/de-agent/agents/tree/main/backfill-planner
-  github_url: https://github.com/de-agent/agents
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/agents/backfill-planner
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/agents
   verification: community
   last_verified: 2026-09-19
   security: { runs_code: false, network_access: true, credentials: true, filesystem_access: true, external_apis: false }
@@ -86,9 +86,11 @@
   version: 0.2.0
   license: Apache-2.0
   author: de-agent
-  source_url: https://github.com/de-agent/agents/tree/main/incident-assistant
-  github_url: https://github.com/de-agent/agents
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/agents/incident-assistant
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/agents
   verification: community
   last_verified: 2026-09-25
   security: { runs_code: false, network_access: true, credentials: true, filesystem_access: true, external_apis: false }
   relationships: { uses: [skill-incident-postmortem-writer], related_to: [cat-production-operations] }
+
+

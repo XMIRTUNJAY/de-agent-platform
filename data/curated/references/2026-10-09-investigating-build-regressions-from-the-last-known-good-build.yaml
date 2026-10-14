@@ -15,7 +15,7 @@
   source_url: https://www.jenkins.io/blog/2026/09/10/investigating-build-regressions-from-the-last-known-good-build/
   license: Proprietary
   verification: community
-  curation_state: draft
+  curation_state: curated
   discovered_from:
     source: databricks-continuous
     extracted_at: 2026-10-09 04:47:10.393000+00:00

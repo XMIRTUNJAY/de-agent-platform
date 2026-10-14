@@ -16,7 +16,7 @@
   source_url: https://aws.amazon.com/blogs/big-data/cost-effective-etl-with-duckdb-and-amazon-s3-tables-on-aws-glue/
   license: Proprietary
   verification: community
-  curation_state: draft
+  curation_state: curated
   discovered_from:
     source: aws-big-data
     extracted_at: 2026-10-09T04:45:37.941Z

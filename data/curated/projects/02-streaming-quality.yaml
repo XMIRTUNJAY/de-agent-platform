@@ -52,8 +52,8 @@
   version: 1.1.0
   license: MIT
   author: de-agent
-  source_url: https://github.com/de-agent/projects/tree/main/postgres-cdc-kafka-lakehouse
-  github_url: https://github.com/de-agent/projects
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/projects/postgres-cdc-kafka-lakehouse
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/projects
   verification: community
   last_verified: 2026-09-25
   security: { runs_code: true, network_access: true, credentials: true, filesystem_access: true, external_apis: false }
@@ -109,8 +109,8 @@
   version: 1.0.0
   license: MIT
   author: de-agent
-  source_url: https://github.com/de-agent/projects/tree/main/kafka-spark-delta
-  github_url: https://github.com/de-agent/projects
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/projects/kafka-spark-delta
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/projects
   verification: community
   last_verified: 2026-09-23
   security: { runs_code: true, network_access: true, credentials: true, filesystem_access: true, external_apis: false }
@@ -163,9 +163,11 @@
   version: 1.0.0
   license: MIT
   author: de-agent
-  source_url: https://github.com/de-agent/projects/tree/main/pipeline-dq-quarantine
-  github_url: https://github.com/de-agent/projects
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/projects/pipeline-dq-quarantine
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/projects
   verification: community
   last_verified: 2026-09-26
   security: { runs_code: true, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
   relationships: { related_to: [pattern-quarantine-publish, runbook-data-quality-failure] }
+
+

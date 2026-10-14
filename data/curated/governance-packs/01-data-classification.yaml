@@ -1,0 +1,155 @@
+- id: governance-pack-data-classification
+  slug: data-classification-governance
+  type: governance_pack
+  typeLabel: Governance Pack
+  title: Data Classification & Tagging Governance Pack
+  tagline: Standardized tag taxonomy, glossary, and classification rules for data governance
+  description: |
+    A complete governance pack for implementing data classification across your organization.
+    Includes: standardized tag taxonomy (PII, PCI, confidential, public), business glossary terms,
+    automated classification rules (regex, ML-based), and access policies by classification level.
+    Integrates with DataHub, OpenMetadata, and native warehouse tagging.
+  summary: Standardized tag taxonomy, glossary, and classification rules for data governance
+  category: cat-governance
+  categorySlug: governance
+  categoryTitle: Governance
+  stage: reliability
+  difficulty: intermediate
+  tags: [data-governance, classification, tagging, glossary, compliance, pii, pci]
+  technologies: [tech-datahub, tech-openmetadata, tech-snowflake, tech-bigquery]
+  learning_objectives:
+    - Implement consistent data classification taxonomy
+    - Build business glossary with ownership
+    - Automate classification via regex and ML
+    - Enforce access policies by classification level
+  prerequisites: [skill-data-catalog-basics]
+  verification: community
+  license: Apache-2.0
+  source_url: https://github.com/datahub-project/datahub
+  github_url: https://github.com/datahub-project/datahub
+  install_command: |
+    # Apply via DataHub CLI or UI
+    datahub ingest -c classification-recipe.yml
+  evidence: []
+  security:
+    runs_code: false
+    network_access: false
+    credentials: false
+    filesystem_access: false
+    external_apis: false
+  security_flags: 0
+  publisher: DE//AGENT
+  publisher_source: null
+  install_manifest:
+    version: "1.0.0"
+    commands:
+      - name: "validate-yaml"
+        argv: ["yamllint", "governance-pack.yaml"]
+        timeout_ms: 10000
+    requirements:
+      - yamllint
+      - DataHub/OpenMetadata access (optional)
+    limits:
+      timeout_ms: 30000
+      max_output_bytes: 100000
+  scope: organization-wide
+  tag_taxonomy:
+    - name: data_classification
+      description: Data sensitivity classification
+      required: true
+      values:
+        - public: "Public data, no restrictions"
+        - internal: "Internal use only"
+        - confidential: "Confidential - restricted access"
+        - restricted: "Highly restricted - need-to-know only"
+        - pii: "Personally Identifiable Information"
+        - pci: "Payment Card Industry data"
+        - phi: "Protected Health Information"
+    - name: data_domain
+      description: Business domain ownership
+      required: true
+      values:
+        - finance: "Finance & Accounting"
+        - marketing: "Marketing & Growth"
+        - product: "Product & Engineering"
+        - hr: "Human Resources"
+        - legal: "Legal & Compliance"
+        - operations: "Operations & Infrastructure"
+    - name: data_lifecycle
+      description: Data lifecycle stage
+      required: false
+      values:
+        - raw: "Raw ingested data"
+        - curated: "Cleaned and validated"
+        - serving: "Production-ready for consumers"
+        - archived: "Retained for compliance"
+        - deprecated: "Scheduled for removal"
+    - name: data_quality
+      description: Data quality tier
+      required: false
+      values:
+        - gold: "Highest quality, tested, documented"
+        - silver: "Good quality, minor known issues"
+        - bronze: "Raw quality, use with caution"
+  glossary_terms:
+    - term: "Customer PII"
+      definition: "Any data that can identify a specific individual"
+      classification: "pii"
+      owner: "privacy-team"
+      related_terms: ["email", "phone", "address", "ssn"]
+    - term: "Revenue"
+      definition: "Total income generated from business operations"
+      classification: "confidential"
+      owner: "finance-team"
+      related_terms: ["ARR", "MRR", "bookings"]
+    - term: "ETL Pipeline"
+      definition: "Automated process for extracting, transforming, and loading data"
+      classification: "internal"
+      owner: "data-engineering"
+      related_terms: ["pipeline", "DAG", "orchestration"]
+  classification_rules:
+    - name: "detect-ssn"
+      description: "Detect US Social Security Numbers"
+      pattern: "\\b\\d{3}-\\d{2}-\\d{4}\\b"
+      tags: ["pii", "confidential"]
+      action: "tag"
+    - name: "detect-email"
+      description: "Detect email addresses"
+      pattern: "\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\\b"
+      tags: ["pii", "internal"]
+      action: "tag"
+    - name: "detect-credit-card"
+      description: "Detect credit card numbers (Luhn-validated)"
+      pattern: "\\b(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|6(?:011|5[0-9]{2})[0-9]{12})\\b"
+      tags: ["pci", "restricted"]
+      action: "tag"
+    - name: "detect-api-key"
+      description: "Detect common API key patterns"
+      pattern: "(?i)(api[_-]?key|secret[_-]?key|access[_-]?token)\\s*[:=]\\s*[\"']?[A-Za-z0-9_-]{20,}[\"']?"
+      tags: ["confidential", "credentials"]
+      action: "tag_and_alert"
+  access_policies:
+    - classification: "public"
+      read: ["all"]
+      write: ["data-engineering"]
+      description: "Public data readable by everyone"
+    - classification: "internal"
+      read: ["employees"]
+      write: ["data-engineering", "domain-owners"]
+      description: "Internal data for employees only"
+    - classification: "confidential"
+      read: ["need-to-know"]
+      write: ["data-engineering", "security-team"]
+      description: "Confidential data with restricted access"
+    - classification: "restricted"
+      read: ["explicit-approval"]
+      write: ["security-team"]
+      description: "Highly restricted data requiring explicit approval"
+    - classification: "pii"
+      read: ["privacy-team", "legal", "explicit-approval"]
+      write: ["data-engineering", "privacy-team"]
+      description: "PII requires privacy team oversight"
+    - classification: "pci"
+      read: ["pci-compliance-team", "explicit-approval"]
+      write: ["security-team"]
+      description: "PCI data requires compliance team oversight"

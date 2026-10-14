@@ -22,3 +22,10 @@ data/curated/.cache/
 build-log.txt
 .DS_Store
 Thumbs.db
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+.vercel

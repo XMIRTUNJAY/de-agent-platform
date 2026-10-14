@@ -32,8 +32,8 @@
   version: 1.0.0
   license: CC-BY-4.0
   author: de-agent
-  source_url: https://github.com/de-agent/patterns/tree/main/dimensional-model
-  github_url: https://github.com/de-agent/patterns
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns/dimensional-model
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns
   verification: community
   last_verified: 2026-09-20
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
@@ -68,8 +68,8 @@
   version: 0.9.0
   license: CC-BY-4.0
   author: de-agent
-  source_url: https://github.com/de-agent/patterns/tree/main/data-vault
-  github_url: https://github.com/de-agent/patterns
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns/data-vault
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns
   verification: community
   last_verified: 2026-09-14
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
@@ -104,8 +104,8 @@
   version: 1.0.0
   license: CC-BY-4.0
   author: de-agent
-  source_url: https://github.com/de-agent/patterns/tree/main/lambda-vs-kappa
-  github_url: https://github.com/de-agent/patterns
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns/lambda-vs-kappa
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns
   verification: community
   last_verified: 2026-09-17
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
@@ -137,8 +137,8 @@
   version: 1.1.0
   license: CC-BY-4.0
   author: de-agent
-  source_url: https://github.com/de-agent/patterns/tree/main/small-files-compaction
-  github_url: https://github.com/de-agent/patterns
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns/small-files-compaction
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns
   verification: community
   last_verified: 2026-09-22
   security: { runs_code: true, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
@@ -172,8 +172,8 @@
   version: 1.1.0
   license: CC-BY-4.0
   author: de-agent
-  source_url: https://github.com/de-agent/patterns/tree/main/backfill-safety
-  github_url: https://github.com/de-agent/patterns
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns/backfill-safety
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns
   verification: community
   last_verified: 2026-09-24
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
@@ -205,8 +205,8 @@
   version: 1.1.0
   license: CC-BY-4.0
   author: de-agent
-  source_url: https://github.com/de-agent/patterns/tree/main/dbt-tests-docs
-  github_url: https://github.com/de-agent/patterns
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns/dbt-tests-docs
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns
   verification: community
   last_verified: 2026-09-26
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
@@ -241,8 +241,8 @@
   version: 1.0.0
   license: CC-BY-4.0
   author: de-agent
-  source_url: https://github.com/de-agent/patterns/tree/main/cost-guardrails
-  github_url: https://github.com/de-agent/patterns
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns/cost-guardrails
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns
   verification: community
   last_verified: 2026-09-19
   security: { runs_code: false, network_access: true, credentials: true, filesystem_access: false, external_apis: true }
@@ -275,8 +275,10 @@
   version: 1.0.0
   license: CC-BY-4.0
   author: de-agent
-  source_url: https://github.com/de-agent/patterns/tree/main/agent-in-the-loop-review
-  github_url: https://github.com/de-agent/patterns
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns/agent-in-the-loop-review
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns
   verification: community
   last_verified: 2026-09-29
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+
+
