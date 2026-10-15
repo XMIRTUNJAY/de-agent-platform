@@ -43,6 +43,10 @@ jobs:
   link-audit:
     name: Link Audit
     runs-on: ubuntu-latest
+    env:
+      # Authenticated GitHub API calls (5k/hr vs 60/hr anonymous) for the
+      # enrichment step inside the pipeline. Actions provides this free.
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -52,6 +56,13 @@ jobs:
       - run: npm ci
       - name: Run pipeline to generate registry
         run: node pipelines/run.mjs
+      - name: Build static site (API routes excluded: no server in CI)
+        # src/pages/api/* are server endpoints (better-sqlite3). They cannot
+        # prerender, so the static audit build drops them — same recipe as
+        # the emanisha.in/de-agent/ embed (see tools/de-agent-rewrite.mjs there).
+        run: |
+          rm -rf src/pages/api
+          npx astro build
       - name: Audit internal links
         run: node pipelines/audit-links.mjs
       - name: Audit pages

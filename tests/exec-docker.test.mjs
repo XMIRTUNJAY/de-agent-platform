@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { buildDockerArgs, dockerAvailable } from '../pipelines/lib/exec-docker.mjs';
+import { buildDockerArgs, dockerAvailable, imagePresent } from '../pipelines/lib/exec-docker.mjs';
 
 const manifest = () => ({
   id: 'd', trust: 'curator-approved', workdir: '.', image: 'redis:7-alpine',
@@ -22,8 +22,11 @@ test('builder hardens every flag', () => {
 });
 
 test('live container echoes and cleans up', async () => {
-  // No conditional-skip in node:test: early return keeps the suite green where no daemon runs.
+  // No conditional-skip in node:test: early return keeps the suite green where
+  // no daemon runs. Same when the pinned image is absent: the engine never
+  // pulls (see exec-docker.mjs header), so a live run is impossible.
   if (!(await dockerAvailable())) return;
+  if (!(await imagePresent('redis:7-alpine'))) return;
   const { runManifest } = await import('../pipelines/lib/exec-runner.mjs');
   const out = await runManifest(manifest(), { backend: 'docker', root: process.cwd() });
   assert.equal(out.state, 'passed');

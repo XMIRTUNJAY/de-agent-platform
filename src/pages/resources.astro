@@ -1,0 +1,20 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ListingPage from '@/components/ListingPage.astro';
+import registry from '@/data/generated/registry.json';
+
+// Policy & governance types live under /resources/<slug>/ and link back here
+// from their breadcrumbs. Without this hub those backlinks 404 (link-audit).
+const resources = registry.resources.filter((r) =>
+	['policy', 'rule_pack', 'config_template', 'governance_pack'].includes(r.type),
+);
+---
+
+<BaseLayout title="Policies & governance packs · DE//AGENT" sidebar>
+  <ListingPage
+    kicker="Marketplace"
+    title="Policies, rule packs & templates"
+    lede="Enforceable guardrails for data work: access policies, SQL rule packs, warehouse config templates and governance packs. Each ships with provenance, license and verification status."
+    resources={resources}
+  />
+</BaseLayout>
