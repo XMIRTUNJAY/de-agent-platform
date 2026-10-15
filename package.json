@@ -10,7 +10,7 @@
     "discover": "node pipelines/discover.mjs",
     "discover:dry": "node pipelines/discover.mjs --dry",
     "dev": "node pipelines/run.mjs && astro dev",
-    "build": "node pipelines/run.mjs && astro build",
+    "build": "npm run packages:build && node pipelines/run.mjs && astro build",
     "preview": "astro preview",
     "check": "astro check",
     "test": "node --test \"tests/**/*.test.mjs\"",
