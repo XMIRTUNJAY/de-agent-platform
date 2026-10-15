@@ -56,7 +56,7 @@ jobs:
       - run: npm ci
       - name: Run pipeline to generate registry
         run: node pipelines/run.mjs
-      - name: Build static site (API routes excluded: no server in CI)
+      - name: "Build static site - API routes excluded, no server in CI"
         # src/pages/api/* are server endpoints (better-sqlite3). They cannot
         # prerender, so the static audit build drops them — same recipe as
         # the emanisha.in/de-agent/ embed (see tools/de-agent-rewrite.mjs there).
