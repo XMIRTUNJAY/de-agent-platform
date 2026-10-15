@@ -39,7 +39,10 @@ const canonBase = (process.env.DEAGENT_CANONICAL ?? 'https://emanisha.in/de-agen
 const canonPath = Astro.url.pathname.replace(/^\/de-agent/, '') || '/';
 const canonical = canonBase + (canonPath === '/' ? '/' : canonPath);
 const ogImage = canonBase + '/og.svg';
-const envNoindex = process.env.DEAGENT_NOINDEX === '1';
+// Noindex whenever running on Vercel (the money pages live on emanisha.in;
+// Vercel is the interactive app, never the indexed copy). VERCEL=1 is set by
+// Vercel itself at build AND runtime — no dashboard variable needed.
+const envNoindex = process.env.DEAGENT_NOINDEX === '1' || process.env.VERCEL === '1';
 
 // Analytics config - read from env or config
 const analyticsEndpoint = import.meta.env.PUBLIC_ANALYTICS_ENDPOINT || '/api/analytics/collect';
