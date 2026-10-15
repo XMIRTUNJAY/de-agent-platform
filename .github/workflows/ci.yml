@@ -22,7 +22,12 @@ jobs:
       - name: Run tests
         run: npm test
       - name: Build site
-        run: npm run build
+        # src/pages/api/* are server endpoints (better-sqlite3): they cannot
+        # prerender, and loading them segfaults the static build. Vercel builds
+        # them live via the adapter; CI verifies the static export instead.
+        run: |
+          rm -rf src/pages/api
+          npm run build
       # astro check is run separately in typecheck job
 
   typecheck:

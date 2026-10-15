@@ -52,7 +52,7 @@ jobs:
           gh pr create --title "Content drafts · $(date +%F) ($count files)" \
             --body "Auto-discovered drafts from data/curated/sources.yaml.
 
-Each record: review for accuracy, plain language (docs/style-guide.md), correct
-category, and the contribution bar (docs/contributing). Promote by moving into
-data/curated/ with verification + license filled in; delete rejects." \
+            Each record - review for accuracy, plain language (docs/style-guide.md),
+            correct category, and the contribution bar (docs/contributing). Promote by
+            moving into data/curated/ with verification + license filled in; delete rejects." \
             --base main || echo "PR already exists for this branch"
