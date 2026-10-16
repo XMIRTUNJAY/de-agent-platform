@@ -21,7 +21,7 @@
   what_you_need:
     - A pull request or a .sql file
     - The target dialect (postgres/duckdb/snowflake)
-    - Install: amp skill add de-agent/sql-review
+    - Install: npx de-agent-platform add sql-review
   steps:
     - text: Read the diff and the file context.
       from_id: agent-sql-reviewer

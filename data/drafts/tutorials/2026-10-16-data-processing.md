@@ -10,7 +10,7 @@ alternates: skill-spark-skew-diagnosis, agent-spark-optimizer
 
 what_you_need (verbatim from source):
 - Prior: skill-sql-review
-- Install: amp skill add de-agent/spark-data-quality-review
+- Install: npx de-agent-platform add spark-data-quality-review
 
 steps (verbatim, in source order — do not rephrase):
 1. **Null propagation** — every outer join introduces nullable right-side keys.

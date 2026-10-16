@@ -40,7 +40,7 @@ Run compaction during peak ingestion; it conflicts with concurrent writers.
 ## Install
 
 ```
-amp skill add de-agent/iceberg-table-maintenance
+npx de-agent-platform add iceberg-table-maintenance
 ```
 
 ---

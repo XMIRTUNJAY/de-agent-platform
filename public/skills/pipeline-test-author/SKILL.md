@@ -36,7 +36,7 @@ If a test needs the network or a running warehouse, it is not a unit test.
 ## Install
 
 ```
-amp skill add de-agent/pipeline-test-author
+npx de-agent-platform add pipeline-test-author
 ```
 
 ---

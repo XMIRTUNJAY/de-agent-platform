@@ -33,7 +33,7 @@ bytes scanned?" — nothing else matters.
 ## Install
 
 ```
-amp skill add de-agent/athena-partition-advisor
+npx de-agent-platform add athena-partition-advisor
 ```
 
 ---

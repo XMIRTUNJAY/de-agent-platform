@@ -37,7 +37,7 @@ Every model must answer: "one row = one ___". The `unique` test goes on that key
 ## Install
 
 ```
-amp skill add de-agent/dbt-model-review
+npx de-agent-platform add dbt-model-review
 ```
 
 ---

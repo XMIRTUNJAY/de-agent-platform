@@ -25,7 +25,7 @@
   publisher: DE//AGENT Registry
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/skills/mcp-tool-contract-auditor
   github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/skills
-  install_command: "amp skill add de-agent/mcp-tool-contract-auditor"
+  install_command: "npx de-agent-platform add mcp-tool-contract-auditor"
   verification: community
   last_verified: 2026-09-29
   files: [SKILL.md, references/blast-radius.md, examples/audit.md]
@@ -71,7 +71,7 @@
   publisher: DE//AGENT Registry
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/skills/lineage-explainer
   github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/skills
-  install_command: "amp skill add de-agent/lineage-explainer"
+  install_command: "npx de-agent-platform add lineage-explainer"
   verification: community
   last_verified: 2026-09-12
   files: [SKILL.md, examples/impact.md, references/lineage-stores.md]

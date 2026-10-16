@@ -36,7 +36,7 @@ Add → dual-write → backfill → announce → migrate consumers → remove (d
 ## Install
 
 ```
-amp skill add de-agent/schema-change-contract-review
+npx de-agent-platform add schema-change-contract-review
 ```
 
 ---

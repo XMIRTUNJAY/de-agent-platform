@@ -38,7 +38,7 @@ guarantees this; ranking by arrival time does not.
 ## Install
 
 ```
-amp skill add de-agent/cdc-merge-designer
+npx de-agent-platform add cdc-merge-designer
 ```
 
 ---

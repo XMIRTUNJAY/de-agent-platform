@@ -9,7 +9,7 @@ difficulty: beginner
 alternates: agent-incident-assistant, agent-cost-optimizer
 
 what_you_need (verbatim from source):
-- Install: amp skill add de-agent/incident-postmortem-writer
+- Install: npx de-agent-platform add incident-postmortem-writer
 
 steps (verbatim, in source order — do not rephrase):
 1. **Impact** — who/what, in business terms, with a duration.

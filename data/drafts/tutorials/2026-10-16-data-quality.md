@@ -10,7 +10,7 @@ alternates: agent-data-quality-reviewer, agent-schema-reviewer
 
 what_you_need (verbatim from source):
 - Prior: skill-schema-change-contract-review
-- Install: amp skill add de-agent/data-contract-author
+- Install: npx de-agent-platform add data-contract-author
 
 steps (verbatim, in source order — do not rephrase):
 1. Owner (a team, with an on-call).

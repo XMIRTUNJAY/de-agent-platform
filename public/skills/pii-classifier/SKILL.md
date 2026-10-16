@@ -36,7 +36,7 @@ analytics; store separately with restricted access.
 ## Install
 
 ```
-amp skill add de-agent/pii-classifier
+npx de-agent-platform add pii-classifier
 ```
 
 ---

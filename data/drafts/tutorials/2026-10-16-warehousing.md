@@ -10,7 +10,7 @@ alternates: skill-dbt-model-review, runbook-warehouse-query-slow
 
 what_you_need (verbatim from source):
 - Prior: skill-dbt-model-review
-- Install: amp skill add de-agent/dbt-test-writer
+- Install: npx de-agent-platform add dbt-test-writer
 
 steps (verbatim, in source order — do not rephrase):
 1. `unique` + `not_null` on the grain key — the model is meaningless without it.

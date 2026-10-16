@@ -33,7 +33,7 @@ the expected effect and a way to measure it.
 ## Install
 
 ```
-amp skill add de-agent/sql-query-plan-explainer
+npx de-agent-platform add sql-query-plan-explainer
 ```
 
 ---

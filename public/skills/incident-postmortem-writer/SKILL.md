@@ -34,7 +34,7 @@ is harmless.
 ## Install
 
 ```
-amp skill add de-agent/incident-postmortem-writer
+npx de-agent-platform add incident-postmortem-writer
 ```
 
 ---

@@ -10,7 +10,7 @@ alternates: agent-kafka-troubleshooter, runbook-cdc-stopped
 
 what_you_need (verbatim from source):
 - Prior: skill-kafka-topic-design
-- Install: amp skill add de-agent/kafka-consumer-lag-triage
+- Install: npx de-agent-platform add kafka-consumer-lag-triage
 
 steps (verbatim, in source order — do not rephrase):
 1. Is lag rising, flat, or falling? Flat at a high number is fine; rising is not.

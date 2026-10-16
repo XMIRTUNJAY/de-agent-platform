@@ -35,7 +35,7 @@ not up (bigger warehouse). Different problems, different knobs.
 ## Install
 
 ```
-amp skill add de-agent/warehouse-clustering-advisor
+npx de-agent-platform add warehouse-clustering-advisor
 ```
 
 ---

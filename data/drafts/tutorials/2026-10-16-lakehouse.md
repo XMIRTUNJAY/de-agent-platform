@@ -10,7 +10,7 @@ alternates: runbook-small-files-explosion
 
 what_you_need (verbatim from source):
 - Prior: skill-spark-skew-diagnosis
-- Install: amp skill add de-agent/iceberg-table-maintenance
+- Install: npx de-agent-platform add iceberg-table-maintenance
 
 steps (verbatim, in source order — do not rephrase):
 1. `rewrite_data_files` with a target size (128-256 MB).

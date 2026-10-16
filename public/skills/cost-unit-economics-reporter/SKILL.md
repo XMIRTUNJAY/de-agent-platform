@@ -32,7 +32,7 @@ growth is healthy and spikes the day a join starts fanning out.
 ## Install
 
 ```
-amp skill add de-agent/cost-unit-economics-reporter
+npx de-agent-platform add cost-unit-economics-reporter
 ```
 
 ---

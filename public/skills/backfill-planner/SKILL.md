@@ -33,7 +33,7 @@ Backfill in date batches, smallest first, validating a sample after each batch.
 ## Install
 
 ```
-amp skill add de-agent/backfill-planner
+npx de-agent-platform add backfill-planner
 ```
 
 ---

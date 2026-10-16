@@ -35,7 +35,7 @@ or a partition count change.
 ## Install
 
 ```
-amp skill add de-agent/spark-cost-regression-guard
+npx de-agent-platform add spark-cost-regression-guard
 ```
 
 ---

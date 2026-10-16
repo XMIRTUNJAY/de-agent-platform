@@ -34,7 +34,7 @@ A contract with no enforcement is documentation. Documentation is not a contract
 ## Install
 
 ```
-amp skill add de-agent/data-contract-author
+npx de-agent-platform add data-contract-author
 ```
 
 ---

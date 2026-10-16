@@ -34,7 +34,7 @@ the task needs. Never connect an unvetted server with broad credentials.
 ## Install
 
 ```
-amp skill add de-agent/mcp-tool-contract-auditor
+npx de-agent-platform add mcp-tool-contract-auditor
 ```
 
 ---

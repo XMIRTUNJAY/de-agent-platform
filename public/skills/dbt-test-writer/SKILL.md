@@ -34,7 +34,7 @@ Proposes dbt tests ranked by blast radius: uniqueness/not-null on the grain key,
 ## Install
 
 ```
-amp skill add de-agent/dbt-test-writer
+npx de-agent-platform add dbt-test-writer
 ```
 
 ---

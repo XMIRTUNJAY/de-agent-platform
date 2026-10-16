@@ -24,7 +24,7 @@
   publisher: DE//AGENT Registry
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/skills/kafka-consumer-lag-triage
   github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/skills
-  install_command: "amp skill add de-agent/kafka-consumer-lag-triage"
+  install_command: "npx de-agent-platform add kafka-consumer-lag-triage"
   verification: community
   last_verified: 2026-09-20
   files: [SKILL.md, references/lag-signatures.md, examples/kafka-consumer-groups.txt]
@@ -73,7 +73,7 @@
   publisher: DE//AGENT Registry
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/skills/cdc-merge-designer
   github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/skills
-  install_command: "amp skill add de-agent/cdc-merge-designer"
+  install_command: "npx de-agent-platform add cdc-merge-designer"
   verification: community
   last_verified: 2026-09-15
   files: [SKILL.md, examples/merge.sql, references/tombstone-handling.md]

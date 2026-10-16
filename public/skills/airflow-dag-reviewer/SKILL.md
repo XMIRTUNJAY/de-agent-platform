@@ -34,7 +34,7 @@ If no, fix it before anything else — retries will happen.
 ## Install
 
 ```
-amp skill add de-agent/airflow-dag-reviewer
+npx de-agent-platform add airflow-dag-reviewer
 ```
 
 ---

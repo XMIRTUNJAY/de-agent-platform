@@ -33,7 +33,7 @@ owner, criticality, and the earliest SLA that will break.
 ## Install
 
 ```
-amp skill add de-agent/lineage-explainer
+npx de-agent-platform add lineage-explainer
 ```
 
 ---

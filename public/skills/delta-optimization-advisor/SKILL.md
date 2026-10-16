@@ -34,7 +34,7 @@ didn't drop, the Z-ORDER was on the wrong columns.
 ## Install
 
 ```
-amp skill add de-agent/delta-optimization-advisor
+npx de-agent-platform add delta-optimization-advisor
 ```
 
 ---

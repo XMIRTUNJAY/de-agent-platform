@@ -27,7 +27,7 @@
   publisher: DE//AGENT Registry
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/skills/sql-review
   github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/skills
-  install_command: "amp skill add de-agent/sql-review"
+  install_command: "npx de-agent-platform add sql-review"
   verification: community
   last_verified: 2026-09-30
   files: [SKILL.md, references/null-semantics.md, examples/fanout.sql, tests/test_rules.py]
@@ -75,7 +75,7 @@
   publisher: DE//AGENT Registry
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/skills/sql-query-plan-explainer
   github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/skills
-  install_command: "amp skill add de-agent/sql-query-plan-explainer"
+  install_command: "npx de-agent-platform add sql-query-plan-explainer"
   verification: community
   last_verified: 2026-09-22
   files: [SKILL.md, references/plan-nodes.md, examples/explain.txt]

@@ -40,7 +40,7 @@ A findings list: `severity | file:line | rule | suggested patch`.
 ## Install
 
 ```
-amp skill add de-agent/spark-data-quality-review
+npx de-agent-platform add spark-data-quality-review
 ```
 
 ---

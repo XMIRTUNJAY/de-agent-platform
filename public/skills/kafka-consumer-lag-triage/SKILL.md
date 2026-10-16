@@ -37,7 +37,7 @@ Do not "fix" lag by resetting offsets. That is data loss wearing a hat.
 ## Install
 
 ```
-amp skill add de-agent/kafka-consumer-lag-triage
+npx de-agent-platform add kafka-consumer-lag-triage
 ```
 
 ---

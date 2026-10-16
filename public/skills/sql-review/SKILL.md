@@ -36,7 +36,7 @@ Findings with the exact predicate, the failure case, and a rewritten clause.
 ## Install
 
 ```
-amp skill add de-agent/sql-review
+npx de-agent-platform add sql-review
 ```
 
 ---

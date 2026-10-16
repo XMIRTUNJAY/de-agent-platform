@@ -38,7 +38,7 @@ by row count — the review is not complete without them.
 ## Install
 
 ```
-amp skill add de-agent/spark-skew-diagnosis
+npx de-agent-platform add spark-skew-diagnosis
 ```
 
 ---

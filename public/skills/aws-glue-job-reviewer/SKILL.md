@@ -35,7 +35,7 @@ drop columns silently. Diff the catalogue schema against the file footer.
 ## Install
 
 ```
-amp skill add de-agent/aws-glue-job-reviewer
+npx de-agent-platform add aws-glue-job-reviewer
 ```
 
 ---

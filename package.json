@@ -47,11 +47,16 @@
   },
   "license": "Apache-2.0",
   "bin": {
-    "de-agent": "bin/de-agent.mjs"
+    "de-agent": "bin/de-agent.mjs",
+    "de-agent-platform": "bin/de-agent.mjs"
   },
   "files": [
     "bin/",
     "src/lib/",
-    "pipelines/"
-  ]
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/XMIRTUNJAY/de-agent-platform.git"
+  }
 }

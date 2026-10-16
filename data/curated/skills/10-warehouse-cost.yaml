@@ -24,7 +24,7 @@
   publisher: DE//AGENT Registry
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/skills/warehouse-clustering-advisor
   github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/skills
-  install_command: "amp skill add de-agent/warehouse-clustering-advisor"
+  install_command: "npx de-agent-platform add warehouse-clustering-advisor"
   verification: community
   last_verified: 2026-09-17
   files: [SKILL.md, references/clustering-keys.md, examples/query-history.sql]
@@ -71,7 +71,7 @@
   publisher: DE//AGENT Registry
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/skills/cost-unit-economics-reporter
   github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/skills
-  install_command: "amp skill add de-agent/cost-unit-economics-reporter"
+  install_command: "npx de-agent-platform add cost-unit-economics-reporter"
   verification: community
   last_verified: 2026-09-11
   files: [SKILL.md, examples/cost_model.sql, references/unit-metrics.md]

@@ -10,7 +10,7 @@ alternates: skill-backfill-planner, agent-pipeline-reviewer
 
 what_you_need (verbatim from source):
 - Prior: skill-pipeline-test-author
-- Install: amp skill add de-agent/airflow-dag-reviewer
+- Install: npx de-agent-platform add airflow-dag-reviewer
 
 steps (verbatim, in source order — do not rephrase):
 1. Every task writes to a partition keyed by the logical date, or uses MERGE.

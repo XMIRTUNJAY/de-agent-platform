@@ -24,7 +24,7 @@
   publisher: DE//AGENT Registry
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/skills/aws-glue-job-reviewer
   github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/skills
-  install_command: "amp skill add de-agent/aws-glue-job-reviewer"
+  install_command: "npx de-agent-platform add aws-glue-job-reviewer"
   verification: community
   last_verified: 2026-09-21
   files: [SKILL.md, references/dpu-sizing.md, examples/glue_job.py]
@@ -71,7 +71,7 @@
   publisher: DE//AGENT Registry
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/skills/athena-partition-advisor
   github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/skills
-  install_command: "amp skill add de-agent/athena-partition-advisor"
+  install_command: "npx de-agent-platform add athena-partition-advisor"
   verification: community
   last_verified: 2026-09-12
   files: [SKILL.md, examples/projection.sql, references/compaction.md]
