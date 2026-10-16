@@ -5,6 +5,7 @@
 import { writeFileSync, existsSync, mkdirSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { GENERATED, ROOT } from './load.mjs';
+import { buildSkillMd } from './skill-md.mjs';
 import { isStale, stalenessDays } from './score.mjs';
 
 export const ROUTE = {
@@ -53,7 +54,20 @@ export function emit(ctx) {
   ensure(publicGenerated);
   writeFileSync(join(publicGenerated, 'search-index.json'), JSON.stringify(searchIndex, null, 0) + '\n', 'utf8');
 
-  return { generated_at, stats };
+  // Agent Skills files: one SKILL.md per installable skill, served statically
+  // so every CLI installer (and the emanisha.in copy) can fetch them.
+  // Content is assembled verbatim from record fields — see skill-md.mjs.
+  const skillsDir = join(ROOT, 'public', 'skills');
+  let skillsEmitted = 0;
+  for (const r of enriched) {
+    if (r.type !== 'skill' || !(r.install_command || (r.files ?? []).length > 0)) continue;
+    const dir = join(skillsDir, r.slug);
+    ensure(dir);
+    writeFileSync(join(dir, 'SKILL.md'), buildSkillMd(r), 'utf8');
+    skillsEmitted++;
+  }
+
+  return { generated_at, stats, skillsEmitted };
 }
 
 function ensure(dir) {
