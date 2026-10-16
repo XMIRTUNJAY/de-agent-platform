@@ -15,7 +15,7 @@
  *   --limit <n>     cap new drafts per source (default 10)
  *   --dry           print what would be drafted, write nothing
  */
-import { loadSeen, saveSeen, loadSources, writeDraft, draftExists } from './lib/drafts.mjs';
+import { loadSeen, saveSeen, loadSources, writeDraft, writeExtractDraft, draftExists } from './lib/drafts.mjs';
 import { fetchText, fetchJson, fetchWithRetry } from './lib/fetch.mjs';
 import { recordResult } from './lib/source-health.mjs';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
@@ -23,6 +23,7 @@ import { dirname, join } from 'node:path';
 import { parseFeed } from './lib/feeds.mjs';
 import { classifyRules, resolveClassification } from './lib/classify.mjs';
 import { githubSearchItems, githubOrgItems } from './lib/github.mjs';
+import { extractRepo } from './lib/repo-extract.mjs';
 import { readYaml } from './lib/load.mjs';
 import { ROOT } from './lib/load.mjs';
 
@@ -102,7 +103,7 @@ async function runSource(source, taxonomy, seen, totals) {
   return { ok: false, error: `unknown source kind: ${source.kind}` };
 }
 
-function handleItems(source, items, taxonomy, seen, totals) {
+async function handleItems(source, items, taxonomy, seen, totals) {
   totals.fetched += items.length;
   let drafted = 0;
 
@@ -119,7 +120,28 @@ function handleItems(source, items, taxonomy, seen, totals) {
     cls = resolveClassification(cls, taxonomy);
     if (!cls.suggested_type && source.default_type) cls = { ...cls, suggested_type: source.default_type };
     if (cls.confidence === 'low') totals.low_confidence++;
-    if (!DRY) writeDraft(seen, { source, item: capItem(item, source), classification: cls });
+    if (DRY) { drafted++; totals.drafted++; continue; }
+    // Lane 2: github-kind items get the installable surface when the license
+    // allows; anything else (or a failed/closed extraction) stays summarize-only.
+    if (source.kind === 'github-search' || source.kind === 'github-org') {
+      let extraction = null;
+      try {
+        extraction = await extractRepo(item.url);
+      } catch { extraction = { lane: 'summarize', reason: 'extraction threw' }; }
+      if (extraction && extraction.lane === 'extract') {
+        // Repo layout beats keyword guessing: a SKILL.md on disk means skill.
+        if (extraction.typeHint && (cls.type === 'reference' || cls.confidence === 'low')) {
+          cls = { ...cls, type: extraction.typeHint, suggested_type: extraction.typeHint };
+        }
+        writeExtractDraft(seen, { source, item: capItem(item, source), classification: cls, extraction });
+        drafted++;
+        totals.drafted++;
+        totals.extracted = (totals.extracted ?? 0) + 1;
+        continue;
+      }
+      totals.summarized = (totals.summarized ?? 0) + 1;
+    }
+    writeDraft(seen, { source, item: capItem(item, source), classification: cls });
     drafted++;
     totals.drafted++;
   }

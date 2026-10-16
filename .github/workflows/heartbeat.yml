@@ -1,0 +1,72 @@
+# Weekly heartbeat — the full robust loop on a schedule, plus manual dispatch.
+#
+#   discover (lane 1 summarize + lane 2 extract) → promote-eligible (auto-gates)
+#     → pipeline (enrich, normalize, validate, emit incl. SKILL.md)
+#     → tutorial briefs + creation briefs → install manifests → secret scan
+#     → batch PR (drafts for review; gate-passing promotes included)
+#
+# Auto-publish happens ONLY through auto-gates inside promote-eligible.
+# Everything else proposes into data/drafts/ for review.
+name: Weekly heartbeat
+
+on:
+  schedule:
+    - cron: '0 3 * * 1'
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: 'Max new drafts per source'
+        default: '10'
+
+jobs:
+  heartbeat:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - name: Discover (network, both lanes)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node pipelines/discover.mjs --limit ${{ github.event.inputs.limit || '10' }}
+      - name: Auto-promote gate-passing extracts
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node pipelines/promote-eligible.mjs --limit 10
+      - name: Pipeline (enrich, validate, emit)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node pipelines/run.mjs
+      - name: Tutorial + creation briefs
+        run: node pipelines/generate-tutorial-briefs.mjs
+      - name: Install manifest proposals
+        run: node pipelines/generate-install-manifests.mjs
+      - name: Secret scan (local + remote)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node pipelines/scan-secrets.mjs
+      - name: Pipeline tests
+        run: npm test
+      - name: Open batch PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ -z "$(git status --porcelain data/drafts data/curated src/data/generated public)" ]; then
+            echo "heartbeat produced no changes"
+            exit 0
+          fi
+          branch="heartbeat/$(date +%F)"
+          count=$(git status --porcelain data/drafts data/curated | wc -l | tr -d ' ')
+          git config user.name "de-agent-bot"
+          git config user.email "bot@de-agent.example.dev"
+          git checkout -b "$branch"
+          git add data/drafts data/curated src/data/generated public/skills public/data/generated
+          git commit -m "heartbeat: robust loop output ($(date +%F))"
+          git push -u origin "$branch"
+          gh pr create --title "Heartbeat · $(date +%F) ($count files)" \
+            --body "Weekly robust-loop output: discovery drafts, auto-gate promotions, tutorial/creation briefs, install manifests.
+
+            Auto-promoted records passed all gates (500+ words, structure, install surface, beginner-friendly, secret-scan, live links). Everything else is a draft awaiting review." \
+            --base main || echo "PR already exists for this branch"

@@ -14,6 +14,7 @@ backend/dist/
 # Discovery runtime state (machine-generated, resumable via re-run)
 data/drafts/.seen.json
 data/drafts/.source-health.json
+data/drafts/.gate-reasons.json
 data/cache/
 data/curated/.cache/
 

@@ -48,6 +48,58 @@ export function draftExists(seen, url) {
   return !!seen.urls[key];
 }
 
+/**
+ * Extract draft: lane-2 output for permissively-licensed repos. Carries the
+ * installable surface (commands, files, skill doc excerpt, repo stats) so
+ * auto-gates and curators review substance, not just a link. Promotion path:
+ * auto-gates pass → promote-eligible moves it to data/curated/<type>/.
+ */
+export function writeExtractDraft(seen, { source, item, classification, extraction }, outDir = DRAFTS) {
+  const date = new Date().toISOString().slice(0, 10);
+  const slug = slugify(item.title);
+  const id = `${classification.type === 'reference' ? 'ref-' : 'ext-'}${slug}`;
+
+  let finalId = id;
+  let n = 2;
+  while (seen.ids[finalId]) finalId = `${id}-${n++}`;
+
+  const installLine = (extraction.installCandidates ?? [])[0] ?? null;
+  const record = {
+    id: finalId,
+    slug: finalId.replace(/^(ref|ext)-/, ''),
+    type: classification.type,
+    title: item.title,
+    description: [
+      extraction.description,
+      extraction.installSection ? `Install (from source README):\n${extraction.installSection.slice(0, 600)}` : '',
+    ].filter(Boolean).join('\n\n').slice(0, 1500) || `See the source repository.`,
+    category: classification.category,
+    tags: [...(extraction.topics ?? [])].slice(0, 8),
+    url: item.url,
+    publisher: source.name,
+    source_url: item.url,
+    github_url: item.url,
+    license: extraction.license,
+    install_command: installLine,
+    install_candidates: extraction.installCandidates ?? [],
+    skill_files: extraction.skillFiles ?? [],
+    executables: extraction.executables ?? true,
+    verification: 'community',
+    curation_state: 'draft',
+    draft_kind: 'extract',
+    discovered_from: { source: source.id, extracted_at: new Date().toISOString(), lane: 'extract' },
+  };
+
+  const dir = join(outDir, source.id);
+  ensureDir(dir);
+  const file = join(dir, `${date}-${record.slug}.yaml`);
+  writeFileSync(file, '# DRAFT extract — not published. Auto-gates or a curator promotes it.\n' + stringify([record]), 'utf8');
+
+  seen.urls[normalizeUrl(item.url)] = { id: finalId, at: date };
+  seen.ids[finalId] = file;
+  return { id: finalId, file };
+}
+
 export function writeDraft(seen, { source, item, classification }) {
   const date = new Date().toISOString().slice(0, 10);
   const slug = slugify(item.title);

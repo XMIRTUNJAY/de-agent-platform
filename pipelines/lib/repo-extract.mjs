@@ -50,6 +50,13 @@ function hasMarker(paths, markers) {
   return markers.some((m) => paths.some((p) => p === m || p.includes(m)));
 }
 
+const EXECUTABLE_EXT = /\.(py|js|ts|sh|bash|go|rs|rb|php|exe|bin|dll|so)$/i;
+
+/** Docs-only repos auto-promote; anything executable needs human security review. */
+export function hasExecutables(paths) {
+  return (paths ?? []).some((p) => EXECUTABLE_EXT.test(p));
+}
+
 /** Best-effort type hint from repo layout; classifier still decides. */
 export function hintTypeFromTree(paths) {
   if (hasMarker(paths, SKILL_MARKERS)) return 'skill';
@@ -116,6 +123,7 @@ export async function extractRepo(url) {
     fileCount: paths.length,
     treeTruncated: tree.truncated,
     skillFiles: paths.filter((p) => p === 'SKILL.md' || p.endsWith('/SKILL.md')).slice(0, 10),
+    executables: hasExecutables(paths),
     installSection: installMd,
     installCandidates: candidateInstallCommands(`${installMd}\n${readme.slice(0, 3000)}`),
     skillDoc: skillDoc.slice(0, 4000),
