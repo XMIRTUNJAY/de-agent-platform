@@ -6,6 +6,9 @@
   description: Fail a build when a Spark job's shuffle/spill/scan metrics regress past a threshold.
   trigger: post-run
   purpose: Fail a build when a Spark job's cost metrics regress past a threshold.
+  editorial:
+    limitations:
+      - Needs prior runs to build its 5-run baseline, so a cold start has nothing to compare against.
   category: cat-cost-engineering
   difficulty: advanced
   tags: [hook, spark, cost, ci, regression]

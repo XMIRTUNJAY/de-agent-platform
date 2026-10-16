@@ -102,6 +102,68 @@ const scoreLabel = (score) => {
             <p>{res.solution}</p>
           </section>
         )}
+        {res.when_to_use && (
+          <section class="mount">
+            <h2>When to use</h2>
+            {Array.isArray(res.when_to_use) ? (
+              <ul>
+                {res.when_to_use.map((w: any) => (
+                  <li>{w}</li>
+                ))}
+              </ul>
+            ) : (
+              <p>{res.when_to_use}</p>
+            )}
+          </section>
+        )}
+        {res.when_not?.length > 0 && (
+          <section class="mount">
+            <h2>When not to use</h2>
+            <ul>
+              {res.when_not.map((w: any) => (
+                <li>{w}</li>
+              ))}
+            </ul>
+          </section>
+        )}
+        {res.editorial && (res.editorial.rating !== undefined || (res.editorial.limitations ?? []).length > 0 || (res.editorial.needs_improvement ?? []).length > 0) && (
+          <section class="mount">
+            <h2>Our assessment</h2>
+            {res.editorial.rating !== undefined && (
+              <p>DE//AGENT rating: {res.editorial.rating} / 5</p>
+            )}
+            {(res.editorial.limitations ?? []).length > 0 && (
+              <>
+                <h3>Limitations</h3>
+                <ul>
+                  {res.editorial.limitations.map((l: any) => (
+                    <li>{l}</li>
+                  ))}
+                </ul>
+              </>
+            )}
+            {(res.editorial.needs_improvement ?? []).length > 0 && (
+              <>
+                <h3>Needs improvement</h3>
+                <ul>
+                  {res.editorial.needs_improvement.map((n: any) => (
+                    <li>{n}</li>
+                  ))}
+                </ul>
+              </>
+            )}
+          </section>
+        )}
+        {(res.vulnerability_scan_at || (res.secret_findings ?? []).length > 0) && (
+          <section class="mount">
+            <h2>Security scan</h2>
+            <p>
+              Last sweep{res.vulnerability_scan_at ? ` ${res.vulnerability_scan_at.slice(0, 10)}` : ''}:
+              {(res.secret_findings ?? []).filter((f: any) => !f.likelyExample).length} finding(s),
+              {(res.secret_findings ?? []).filter((f: any) => f.likelyExample).length} marked as examples.
+            </p>
+          </section>
+        )}
         {res.body && (
           <section class="mount">
             <h2>Details</h2>

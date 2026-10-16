@@ -4,6 +4,9 @@
   type: runbook
   title: "Spark job is slow"
   description: A batch Spark job's runtime has jumped — find whether it is skew, partition count, spill or over-scan.
+  editorial:
+    limitations:
+      - The diagnosis steps assume Spark UI or event-log access; wall-clock time alone is not enough.
   severity: high
   category: cat-spark
   difficulty: advanced

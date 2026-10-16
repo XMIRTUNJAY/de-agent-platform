@@ -7,6 +7,9 @@
   description: >-
     Reviews a SQL statement for fan-out joins, NULL-unsafe predicates, implicit
     casts, non-deterministic ordering, and functions that silently change grain.
+  editorial:
+    needs_improvement:
+      - The 11/12 evaluation with 0 false positives is self-reported on the author's own fixture; independent verification pending.
   category: cat-sql
   subcategory: Code Review
   difficulty: beginner

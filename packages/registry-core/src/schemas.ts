@@ -99,6 +99,16 @@ export const ResourceSchema = z.object({
   tagline: z.string().optional(),
   description: z.string(),
   summary: z.string().optional(),
+  when_to_use: z.union([z.string(), z.array(z.string())]).optional(),
+  when_not: z.array(z.string()).optional(),
+  editorial: z
+    .object({
+      rating: z.number().min(0).max(5).optional(),
+      limitations: z.array(z.string()).default([]),
+      needs_improvement: z.array(z.string()).default([]),
+      reviewed_at: z.string().optional(),
+    })
+    .optional(),
   category: z.string(),
   categorySlug: z.string(),
   categoryTitle: z.string().optional(),
@@ -135,6 +145,10 @@ export const ResourceSchema = z.object({
   relationships: z.record(z.array(z.string())).default({}),
   security: SecurityFlagsSchema.default({}),
   security_flags: z.number().int().default(0),
+  vulnerability_scan_at: z.string().datetime().optional(),
+  secret_findings: z
+    .array(z.object({ file: z.string(), line: z.number().nullable(), pattern: z.string(), likelyExample: z.boolean() }))
+    .default([]),
   page_eligibility: z.object({
     state: z.enum(['eligible', 'needs_review', 'internal_only']),
     reason: z.string().optional(),

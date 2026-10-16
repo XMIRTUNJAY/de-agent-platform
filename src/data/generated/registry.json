@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-14T06:33:37.987Z",
+  "generated_at": "2026-10-16T01:57:05.565Z",
   "counts": {
     "total": 156,
     "byType": {
@@ -2203,7 +2203,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -2247,7 +2247,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -2309,7 +2309,7 @@
           "security": 90,
           "documentation": 25,
           "maintainability": 10,
-          "community": 94
+          "community": null
         },
         "composite_score": 41.14,
         "composite_label": "weak",
@@ -2720,7 +2720,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -2764,7 +2764,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -2826,7 +2826,7 @@
           "security": 100,
           "documentation": 25,
           "maintainability": 10,
-          "community": 95
+          "community": null
         },
         "composite_score": 44.57,
         "composite_label": "weak",
@@ -3078,7 +3078,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -3122,7 +3122,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -3184,7 +3184,7 @@
           "security": 70,
           "documentation": 25,
           "maintainability": 10,
-          "community": 95
+          "community": null
         },
         "composite_score": 38.36,
         "composite_label": "weak",
@@ -3491,7 +3491,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -3535,7 +3535,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -3746,7 +3746,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -3798,7 +3798,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -3910,7 +3910,7 @@
       },
       "url": "/skills/dbt-test-writer",
       "stale": false,
-      "stale_days": 16
+      "stale_days": 18
     },
     {
       "id": "skill-incident-postmortem-writer",
@@ -3987,7 +3987,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -4036,7 +4036,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -4148,7 +4148,7 @@
       },
       "url": "/skills/incident-postmortem-writer",
       "stale": false,
-      "stale_days": 19
+      "stale_days": 21
     },
     {
       "id": "skill-sql-review",
@@ -4159,6 +4159,11 @@
       "tagline": "A review pass that catches correctness bugs before the query reaches production.",
       "description": "Reviews a SQL statement for fan-out joins, NULL-unsafe predicates, implicit casts, non-deterministic ordering, and functions that silently change grain.",
       "summary": "",
+      "editorial": {
+        "needs_improvement": [
+          "The 11/12 evaluation with 0 false positives is self-reported on the author's own fixture; independent verification pending."
+        ]
+      },
       "purpose": null,
       "problem": null,
       "category": "cat-sql",
@@ -4227,7 +4232,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -4276,7 +4281,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -4388,7 +4393,7 @@
       },
       "url": "/skills/sql-review",
       "stale": false,
-      "stale_days": 14
+      "stale_days": 16
     },
     {
       "id": "skill-airflow-dag-reviewer",
@@ -4467,7 +4472,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -4519,7 +4524,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -4631,7 +4636,7 @@
       },
       "url": "/skills/airflow-dag-reviewer",
       "stale": false,
-      "stale_days": 20
+      "stale_days": 22
     },
     {
       "id": "skill-athena-partition-advisor",
@@ -4711,7 +4716,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -4761,7 +4766,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -4873,7 +4878,7 @@
       },
       "url": "/skills/athena-partition-advisor",
       "stale": false,
-      "stale_days": 32
+      "stale_days": 34
     },
     {
       "id": "skill-aws-glue-reviewer",
@@ -4955,7 +4960,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -5005,7 +5010,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -5117,7 +5122,7 @@
       },
       "url": "/skills/aws-glue-job-reviewer",
       "stale": false,
-      "stale_days": 23
+      "stale_days": 25
     },
     {
       "id": "skill-cost-unit-economics",
@@ -5196,7 +5201,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -5245,7 +5250,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -5357,7 +5362,7 @@
       },
       "url": "/skills/cost-unit-economics-reporter",
       "stale": false,
-      "stale_days": 33
+      "stale_days": 35
     },
     {
       "id": "skill-data-contract-author",
@@ -5437,7 +5442,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -5486,7 +5491,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -5598,7 +5603,7 @@
       },
       "url": "/skills/data-contract-author",
       "stale": false,
-      "stale_days": 31
+      "stale_days": 33
     },
     {
       "id": "skill-dbt-model-review",
@@ -5678,7 +5683,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -5731,7 +5736,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -5843,7 +5848,7 @@
       },
       "url": "/skills/dbt-model-review",
       "stale": false,
-      "stale_days": 16
+      "stale_days": 18
     },
     {
       "id": "skill-delta-optimizer",
@@ -5921,7 +5926,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -5971,7 +5976,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -6083,7 +6088,7 @@
       },
       "url": "/skills/delta-optimization-advisor",
       "stale": false,
-      "stale_days": 30
+      "stale_days": 32
     },
     {
       "id": "skill-lineage-explainer",
@@ -6163,7 +6168,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -6212,7 +6217,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -6324,7 +6329,7 @@
       },
       "url": "/skills/lineage-explainer",
       "stale": false,
-      "stale_days": 32
+      "stale_days": 34
     },
     {
       "id": "skill-pii-classifier",
@@ -6403,7 +6408,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -6452,7 +6457,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -6564,7 +6569,7 @@
       },
       "url": "/skills/pii-classifier",
       "stale": false,
-      "stale_days": 34
+      "stale_days": 36
     },
     {
       "id": "skill-pipeline-test-author",
@@ -6647,7 +6652,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -6697,7 +6702,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -6809,7 +6814,7 @@
       },
       "url": "/skills/pipeline-test-author",
       "stale": false,
-      "stale_days": 17
+      "stale_days": 19
     },
     {
       "id": "skill-schema-change-contract-review",
@@ -6889,7 +6894,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -6939,7 +6944,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -7051,7 +7056,7 @@
       },
       "url": "/skills/schema-change-contract-review",
       "stale": false,
-      "stale_days": 18
+      "stale_days": 20
     },
     {
       "id": "skill-spark-data-quality-review",
@@ -7133,7 +7138,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -7186,7 +7191,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -7298,7 +7303,7 @@
       },
       "url": "/skills/spark-data-quality-review",
       "stale": false,
-      "stale_days": 14
+      "stale_days": 16
     },
     {
       "id": "skill-sql-query-plan",
@@ -7379,7 +7384,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -7428,7 +7433,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -7540,7 +7545,7 @@
       },
       "url": "/skills/sql-query-plan-explainer",
       "stale": false,
-      "stale_days": 22
+      "stale_days": 24
     },
     {
       "id": "skill-backfill-planner",
@@ -7621,7 +7626,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -7671,7 +7676,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -7783,7 +7788,7 @@
       },
       "url": "/skills/backfill-planner",
       "stale": false,
-      "stale_days": 25
+      "stale_days": 27
     },
     {
       "id": "skill-cdc-merge-designer",
@@ -7865,7 +7870,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -7915,7 +7920,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -7976,10 +7981,10 @@
           "test_coverage": 5,
           "security": 90,
           "documentation": 55,
-          "maintainability": 50,
+          "maintainability": 40,
           "community": null
         },
-        "composite_score": 57.14,
+        "composite_score": 55.71,
         "composite_label": "adequate",
         "roadmap_stages": [
           "streaming"
@@ -8027,7 +8032,7 @@
       },
       "url": "/skills/cdc-merge-designer",
       "stale": false,
-      "stale_days": 29
+      "stale_days": 31
     },
     {
       "id": "skill-iceberg-maintenance",
@@ -8107,7 +8112,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -8157,7 +8162,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -8218,10 +8223,10 @@
           "test_coverage": 5,
           "security": 60,
           "documentation": 55,
-          "maintainability": 50,
+          "maintainability": 40,
           "community": null
         },
-        "composite_score": 50.71,
+        "composite_score": 49.29,
         "composite_label": "adequate",
         "roadmap_stages": [
           "lakehouse"
@@ -8269,7 +8274,7 @@
       },
       "url": "/skills/iceberg-table-maintenance",
       "stale": false,
-      "stale_days": 28
+      "stale_days": 30
     },
     {
       "id": "skill-kafka-lag-triage",
@@ -8349,7 +8354,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -8398,7 +8403,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -8510,7 +8515,7 @@
       },
       "url": "/skills/kafka-consumer-lag-triage",
       "stale": false,
-      "stale_days": 24
+      "stale_days": 26
     },
     {
       "id": "skill-mcp-tool-contract-auditor",
@@ -8590,7 +8595,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -8640,7 +8645,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -8752,7 +8757,7 @@
       },
       "url": "/skills/mcp-tool-contract-auditor",
       "stale": false,
-      "stale_days": 15
+      "stale_days": 17
     },
     {
       "id": "skill-spark-cost-regression-guard",
@@ -8833,7 +8838,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -8883,7 +8888,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -8995,7 +9000,7 @@
       },
       "url": "/skills/spark-cost-regression-guard",
       "stale": false,
-      "stale_days": 30
+      "stale_days": 32
     },
     {
       "id": "skill-spark-skew-diagnosis",
@@ -9076,7 +9081,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -9128,7 +9133,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -9240,7 +9245,7 @@
       },
       "url": "/skills/spark-skew-diagnosis",
       "stale": false,
-      "stale_days": 26
+      "stale_days": 28
     },
     {
       "id": "skill-warehouse-clustering-advisor",
@@ -9322,7 +9327,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -9371,7 +9376,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -9483,7 +9488,7 @@
       },
       "url": "/skills/warehouse-clustering-advisor",
       "stale": false,
-      "stale_days": 27
+      "stale_days": 29
     },
     {
       "id": "mcp-duckdb",
@@ -9582,7 +9587,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -9631,7 +9636,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -9743,7 +9748,7 @@
       },
       "url": "/mcp/duckdb",
       "stale": false,
-      "stale_days": 16
+      "stale_days": 18
     },
     {
       "id": "mcp-fetch",
@@ -9832,7 +9837,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -9881,7 +9886,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -9993,7 +9998,7 @@
       },
       "url": "/mcp/fetch",
       "stale": false,
-      "stale_days": 14
+      "stale_days": 16
     },
     {
       "id": "mcp-filesystem",
@@ -10091,7 +10096,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -10139,7 +10144,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -10251,7 +10256,7 @@
       },
       "url": "/mcp/filesystem",
       "stale": false,
-      "stale_days": 14
+      "stale_days": 16
     },
     {
       "id": "mcp-git",
@@ -10348,7 +10353,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -10397,7 +10402,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -10509,7 +10514,7 @@
       },
       "url": "/mcp/git",
       "stale": false,
-      "stale_days": 14
+      "stale_days": 16
     },
     {
       "id": "mcp-github",
@@ -10617,7 +10622,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -10666,7 +10671,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -10778,7 +10783,7 @@
       },
       "url": "/mcp/github",
       "stale": false,
-      "stale_days": 15
+      "stale_days": 17
     },
     {
       "id": "mcp-postgres",
@@ -10877,7 +10882,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -10926,7 +10931,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -11038,7 +11043,7 @@
       },
       "url": "/mcp/postgres",
       "stale": false,
-      "stale_days": 14
+      "stale_days": 16
     },
     {
       "id": "mcp-bigquery",
@@ -11138,7 +11143,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -11187,7 +11192,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -11299,7 +11304,7 @@
       },
       "url": "/mcp/bigquery",
       "stale": false,
-      "stale_days": 24
+      "stale_days": 26
     },
     {
       "id": "mcp-datahub",
@@ -11406,7 +11411,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -11455,7 +11460,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -11567,7 +11572,7 @@
       },
       "url": "/mcp/datahub",
       "stale": false,
-      "stale_days": 4
+      "stale_days": 6
     },
     {
       "id": "mcp-dbt",
@@ -11675,7 +11680,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -11724,7 +11729,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -11836,7 +11841,7 @@
       },
       "url": "/mcp/dbt",
       "stale": false,
-      "stale_days": 4
+      "stale_days": 6
     },
     {
       "id": "mcp-snowflake",
@@ -11952,7 +11957,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -12001,7 +12006,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -12113,7 +12118,7 @@
       },
       "url": "/mcp/snowflake",
       "stale": false,
-      "stale_days": 17
+      "stale_days": 19
     },
     {
       "id": "mcp-aws",
@@ -12220,7 +12225,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -12269,7 +12274,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -12381,7 +12386,7 @@
       },
       "url": "/mcp/aws",
       "stale": false,
-      "stale_days": 4
+      "stale_days": 6
     },
     {
       "id": "mcp-kafka",
@@ -12495,7 +12500,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -12544,7 +12549,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -12605,10 +12610,10 @@
           "test_coverage": 5,
           "security": 60,
           "documentation": 35,
-          "maintainability": 50,
+          "maintainability": 40,
           "community": null
         },
-        "composite_score": 43.57,
+        "composite_score": 42.14,
         "composite_label": "weak",
         "roadmap_stages": [
           "streaming"
@@ -12656,7 +12661,7 @@
       },
       "url": "/mcp/kafka",
       "stale": false,
-      "stale_days": 29
+      "stale_days": 31
     },
     {
       "id": "plugin-de-data-toolkit",
@@ -12750,7 +12755,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -12801,7 +12806,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -12913,7 +12918,7 @@
       },
       "url": "/plugins/de-data-toolkit",
       "stale": false,
-      "stale_days": 14
+      "stale_days": 16
     },
     {
       "id": "plugin-runbook-runner",
@@ -13002,7 +13007,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -13053,7 +13058,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -13165,7 +13170,7 @@
       },
       "url": "/plugins/runbook-runner",
       "stale": false,
-      "stale_days": 19
+      "stale_days": 21
     },
     {
       "id": "plugin-contract-kit",
@@ -13257,7 +13262,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -13308,7 +13313,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -13420,7 +13425,7 @@
       },
       "url": "/plugins/contract-kit",
       "stale": false,
-      "stale_days": 17
+      "stale_days": 19
     },
     {
       "id": "plugin-dbt-workbench",
@@ -13512,7 +13517,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -13563,7 +13568,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -13675,7 +13680,7 @@
       },
       "url": "/plugins/dbt-workbench",
       "stale": false,
-      "stale_days": 16
+      "stale_days": 18
     },
     {
       "id": "plugin-lineage-graph",
@@ -13763,7 +13768,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -13814,7 +13819,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -13926,7 +13931,7 @@
       },
       "url": "/plugins/lineage-graph",
       "stale": false,
-      "stale_days": 24
+      "stale_days": 26
     },
     {
       "id": "plugin-warehouse-explorer",
@@ -14014,7 +14019,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -14065,7 +14070,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -14177,7 +14182,7 @@
       },
       "url": "/plugins/warehouse-explorer",
       "stale": false,
-      "stale_days": 21
+      "stale_days": 23
     },
     {
       "id": "plugin-cost-lens",
@@ -14270,7 +14275,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -14321,7 +14326,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -14433,7 +14438,7 @@
       },
       "url": "/plugins/cost-lens",
       "stale": false,
-      "stale_days": 27
+      "stale_days": 29
     },
     {
       "id": "plugin-kafka-console",
@@ -14523,7 +14528,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -14574,7 +14579,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -14686,7 +14691,7 @@
       },
       "url": "/plugins/kafka-console",
       "stale": false,
-      "stale_days": 23
+      "stale_days": 25
     },
     {
       "id": "plugin-lakehouse-guard",
@@ -14774,7 +14779,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -14825,7 +14830,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -14937,7 +14942,7 @@
       },
       "url": "/plugins/lakehouse-guard",
       "stale": false,
-      "stale_days": 25
+      "stale_days": 27
     },
     {
       "id": "plugin-spark-lens",
@@ -15027,7 +15032,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -15078,7 +15083,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -15190,7 +15195,7 @@
       },
       "url": "/plugins/spark-lens",
       "stale": false,
-      "stale_days": 18
+      "stale_days": 20
     },
     {
       "id": "hook-destructive-sql-guard",
@@ -15253,7 +15258,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -15302,7 +15307,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -15414,7 +15419,7 @@
       },
       "url": "/hooks/destructive-sql-guard",
       "stale": false,
-      "stale_days": 15
+      "stale_days": 17
     },
     {
       "id": "hook-prod-write-confirm",
@@ -15477,7 +15482,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -15526,7 +15531,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -15638,7 +15643,7 @@
       },
       "url": "/hooks/prod-write-confirm",
       "stale": false,
-      "stale_days": 19
+      "stale_days": 21
     },
     {
       "id": "hook-secret-scan-commit",
@@ -15701,7 +15706,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -15750,7 +15755,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -15862,7 +15867,7 @@
       },
       "url": "/hooks/secret-scan-commit",
       "stale": false,
-      "stale_days": 18
+      "stale_days": 20
     },
     {
       "id": "hook-dbt-full-refresh-guard",
@@ -15925,7 +15930,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -15974,7 +15979,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -16086,7 +16091,7 @@
       },
       "url": "/hooks/dbt-full-refresh-guard",
       "stale": false,
-      "stale_days": 23
+      "stale_days": 25
     },
     {
       "id": "hook-freshness-pre-merge",
@@ -16149,7 +16154,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -16198,7 +16203,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -16310,7 +16315,7 @@
       },
       "url": "/hooks/freshness-pre-merge",
       "stale": false,
-      "stale_days": 26
+      "stale_days": 28
     },
     {
       "id": "hook-pre-deployment-dq-check",
@@ -16373,7 +16378,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -16422,7 +16427,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -16534,7 +16539,7 @@
       },
       "url": "/hooks/pre-deployment-dq-check",
       "stale": false,
-      "stale_days": 17
+      "stale_days": 19
     },
     {
       "id": "hook-schema-change-check",
@@ -16597,7 +16602,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -16646,7 +16651,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -16758,7 +16763,7 @@
       },
       "url": "/hooks/schema-change-check",
       "stale": false,
-      "stale_days": 16
+      "stale_days": 18
     },
     {
       "id": "hook-backfill-safety-check",
@@ -16821,7 +16826,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -16870,7 +16875,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -16982,7 +16987,7 @@
       },
       "url": "/hooks/backfill-safety-check",
       "stale": false,
-      "stale_days": 22
+      "stale_days": 24
     },
     {
       "id": "hook-pii-leak-guard",
@@ -17045,7 +17050,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -17094,7 +17099,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -17206,7 +17211,7 @@
       },
       "url": "/hooks/pii-leak-guard",
       "stale": false,
-      "stale_days": 24
+      "stale_days": 26
     },
     {
       "id": "hook-spark-cost-check",
@@ -17217,6 +17222,11 @@
       "tagline": null,
       "description": "Fail a build when a Spark job's shuffle/spill/scan metrics regress past a threshold.",
       "summary": "Fail a build when a Spark job's cost metrics regress past a threshold.",
+      "editorial": {
+        "limitations": [
+          "Needs prior runs to build its 5-run baseline, so a cold start has nothing to compare against."
+        ]
+      },
       "purpose": "Fail a build when a Spark job's cost metrics regress past a threshold.",
       "problem": null,
       "category": "cat-cost-engineering",
@@ -17270,7 +17280,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -17319,7 +17329,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -17431,7 +17441,7 @@
       },
       "url": "/hooks/spark-cost-check",
       "stale": false,
-      "stale_days": 20
+      "stale_days": 22
     },
     {
       "id": "agent-data-catalog-assistant",
@@ -17526,7 +17536,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -17577,7 +17587,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -17689,7 +17699,7 @@
       },
       "url": "/agents/data-catalog-assistant",
       "stale": false,
-      "stale_days": 32
+      "stale_days": 34
     },
     {
       "id": "agent-sql-reviewer",
@@ -17783,7 +17793,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -17834,7 +17844,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -17946,7 +17956,7 @@
       },
       "url": "/agents/sql-reviewer",
       "stale": false,
-      "stale_days": 14
+      "stale_days": 16
     },
     {
       "id": "agent-data-quality-reviewer",
@@ -18043,7 +18053,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -18095,7 +18105,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -18207,7 +18217,7 @@
       },
       "url": "/agents/data-quality-reviewer",
       "stale": false,
-      "stale_days": 18
+      "stale_days": 20
     },
     {
       "id": "agent-incident-assistant",
@@ -18306,7 +18316,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -18357,7 +18367,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -18469,7 +18479,7 @@
       },
       "url": "/agents/incident-assistant",
       "stale": false,
-      "stale_days": 19
+      "stale_days": 21
     },
     {
       "id": "agent-pipeline-reviewer",
@@ -18568,7 +18578,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -18619,7 +18629,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -18731,7 +18741,7 @@
       },
       "url": "/agents/pipeline-reviewer",
       "stale": false,
-      "stale_days": 21
+      "stale_days": 23
     },
     {
       "id": "agent-schema-reviewer",
@@ -18828,7 +18838,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -18879,7 +18889,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -18991,7 +19001,7 @@
       },
       "url": "/agents/schema-reviewer",
       "stale": false,
-      "stale_days": 20
+      "stale_days": 22
     },
     {
       "id": "agent-aws-architecture-reviewer",
@@ -19089,7 +19099,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -19140,7 +19150,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -19252,7 +19262,7 @@
       },
       "url": "/agents/aws-architecture-reviewer",
       "stale": false,
-      "stale_days": 23
+      "stale_days": 25
     },
     {
       "id": "agent-backfill-planner",
@@ -19350,7 +19360,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -19401,7 +19411,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -19513,7 +19523,7 @@
       },
       "url": "/agents/backfill-planner-agent",
       "stale": false,
-      "stale_days": 25
+      "stale_days": 27
     },
     {
       "id": "agent-cost-optimizer",
@@ -19612,7 +19622,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -19663,7 +19673,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -19724,10 +19734,10 @@
           "test_coverage": 5,
           "security": 20,
           "documentation": 10,
-          "maintainability": 50,
+          "maintainability": 40,
           "community": null
         },
-        "composite_score": 31.43,
+        "composite_score": 30,
         "composite_label": "weak",
         "roadmap_stages": [
           "reliability"
@@ -19775,7 +19785,7 @@
       },
       "url": "/agents/cost-optimizer",
       "stale": false,
-      "stale_days": 28
+      "stale_days": 30
     },
     {
       "id": "agent-databricks-reviewer",
@@ -19872,7 +19882,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -19923,7 +19933,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -20035,7 +20045,7 @@
       },
       "url": "/agents/databricks-reviewer",
       "stale": false,
-      "stale_days": 26
+      "stale_days": 28
     },
     {
       "id": "agent-kafka-troubleshooter",
@@ -20131,7 +20141,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -20182,7 +20192,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -20294,7 +20304,7 @@
       },
       "url": "/agents/kafka-troubleshooter",
       "stale": false,
-      "stale_days": 24
+      "stale_days": 26
     },
     {
       "id": "agent-spark-optimizer",
@@ -20392,7 +20402,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -20443,7 +20453,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -20555,7 +20565,7 @@
       },
       "url": "/agents/spark-optimizer",
       "stale": false,
-      "stale_days": 16
+      "stale_days": 18
     },
     {
       "id": "tpl-dbt-project",
@@ -20619,7 +20629,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -20668,7 +20678,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -20780,7 +20790,7 @@
       },
       "url": "/templates/dbt-project",
       "stale": false,
-      "stale_days": 17
+      "stale_days": 19
     },
     {
       "id": "tpl-docker-local-stack",
@@ -20845,7 +20855,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -20894,7 +20904,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -21006,7 +21016,7 @@
       },
       "url": "/templates/docker-local-stack",
       "stale": false,
-      "stale_days": 14
+      "stale_days": 16
     },
     {
       "id": "tpl-airflow-dag",
@@ -21068,7 +21078,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -21117,7 +21127,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -21229,7 +21239,7 @@
       },
       "url": "/templates/airflow-dag",
       "stale": false,
-      "stale_days": 20
+      "stale_days": 22
     },
     {
       "id": "tpl-data-contract",
@@ -21291,7 +21301,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -21340,7 +21350,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -21452,7 +21462,7 @@
       },
       "url": "/templates/data-contract-template",
       "stale": false,
-      "stale_days": 21
+      "stale_days": 23
     },
     {
       "id": "tpl-pyspark-project",
@@ -21519,7 +21529,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -21568,7 +21578,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -21680,7 +21690,7 @@
       },
       "url": "/templates/pyspark-project",
       "stale": false,
-      "stale_days": 16
+      "stale_days": 18
     },
     {
       "id": "tpl-kafka-streaming",
@@ -21745,7 +21755,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -21794,7 +21804,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -21906,7 +21916,7 @@
       },
       "url": "/templates/kafka-streaming",
       "stale": false,
-      "stale_days": 23
+      "stale_days": 25
     },
     {
       "id": "tpl-terraform-aws-data",
@@ -21974,7 +21984,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -22023,7 +22033,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -22135,7 +22145,7 @@
       },
       "url": "/templates/terraform-aws-data-platform",
       "stale": false,
-      "stale_days": 24
+      "stale_days": 26
     },
     {
       "id": "project-dbt-warehouse-tests",
@@ -22235,7 +22245,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -22284,7 +22294,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -22396,7 +22406,7 @@
       },
       "url": "/projects/dbt-warehouse-tests",
       "stale": false,
-      "stale_days": 17
+      "stale_days": 19
     },
     {
       "id": "project-api-s3-spark-parquet",
@@ -22497,7 +22507,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -22546,7 +22556,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -22658,7 +22668,7 @@
       },
       "url": "/projects/api-s3-spark-parquet",
       "stale": false,
-      "stale_days": 16
+      "stale_days": 18
     },
     {
       "id": "project-pipeline-dq-quarantine",
@@ -22748,7 +22758,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -22797,7 +22807,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -22909,7 +22919,7 @@
       },
       "url": "/projects/pipeline-dq-quarantine",
       "stale": false,
-      "stale_days": 18
+      "stale_days": 20
     },
     {
       "id": "project-s3-glue-athena",
@@ -23003,7 +23013,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -23052,7 +23062,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -23164,7 +23174,7 @@
       },
       "url": "/projects/s3-glue-athena",
       "stale": false,
-      "stale_days": 22
+      "stale_days": 24
     },
     {
       "id": "project-kafka-spark-delta",
@@ -23256,7 +23266,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -23305,7 +23315,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -23417,7 +23427,7 @@
       },
       "url": "/projects/kafka-spark-delta",
       "stale": false,
-      "stale_days": 21
+      "stale_days": 23
     },
     {
       "id": "project-postgres-cdc-kafka-lakehouse",
@@ -23515,7 +23525,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -23564,7 +23574,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -23676,7 +23686,7 @@
       },
       "url": "/projects/postgres-cdc-kafka-lakehouse",
       "stale": false,
-      "stale_days": 19
+      "stale_days": 21
     },
     {
       "id": "runbook-pipeline-failed",
@@ -23768,7 +23778,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -23817,7 +23827,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -23929,7 +23939,7 @@
       },
       "url": "/runbooks/pipeline-failed",
       "stale": false,
-      "stale_days": 15
+      "stale_days": 17
     },
     {
       "id": "runbook-bad-deployment",
@@ -24021,7 +24031,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -24070,7 +24080,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -24182,7 +24192,7 @@
       },
       "url": "/runbooks/bad-deployment",
       "stale": false,
-      "stale_days": 24
+      "stale_days": 26
     },
     {
       "id": "runbook-data-contract-broken",
@@ -24271,7 +24281,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -24320,7 +24330,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -24432,7 +24442,7 @@
       },
       "url": "/runbooks/data-contract-broken",
       "stale": false,
-      "stale_days": 23
+      "stale_days": 25
     },
     {
       "id": "runbook-data-quality-failure",
@@ -24529,7 +24539,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -24578,7 +24588,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -24690,7 +24700,7 @@
       },
       "url": "/runbooks/data-quality-failure",
       "stale": false,
-      "stale_days": 17
+      "stale_days": 19
     },
     {
       "id": "runbook-duplicate-records",
@@ -24779,7 +24789,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -24828,7 +24838,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -24940,7 +24950,7 @@
       },
       "url": "/runbooks/duplicate-records",
       "stale": false,
-      "stale_days": 21
+      "stale_days": 23
     },
     {
       "id": "runbook-late-files",
@@ -25029,7 +25039,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -25078,7 +25088,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -25190,7 +25200,7 @@
       },
       "url": "/runbooks/late-files",
       "stale": false,
-      "stale_days": 25
+      "stale_days": 27
     },
     {
       "id": "runbook-missing-partition",
@@ -25278,7 +25288,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -25327,7 +25337,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -25388,10 +25398,10 @@
           "test_coverage": 5,
           "security": 40,
           "documentation": 35,
-          "maintainability": 50,
+          "maintainability": 40,
           "community": null
         },
-        "composite_score": 38.21,
+        "composite_score": 36.79,
         "composite_label": "weak",
         "roadmap_stages": [
           "data-processing"
@@ -25439,7 +25449,7 @@
       },
       "url": "/runbooks/missing-partition",
       "stale": false,
-      "stale_days": 28
+      "stale_days": 30
     },
     {
       "id": "runbook-schema-drift",
@@ -25530,7 +25540,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -25579,7 +25589,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -25691,7 +25701,7 @@
       },
       "url": "/runbooks/schema-drift",
       "stale": false,
-      "stale_days": 18
+      "stale_days": 20
     },
     {
       "id": "runbook-small-files-explosion",
@@ -25781,7 +25791,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -25830,7 +25840,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -25942,7 +25952,7 @@
       },
       "url": "/runbooks/small-files-explosion",
       "stale": false,
-      "stale_days": 22
+      "stale_days": 24
     },
     {
       "id": "runbook-warehouse-query-slow",
@@ -26028,7 +26038,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -26076,7 +26086,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -26188,7 +26198,7 @@
       },
       "url": "/runbooks/warehouse-query-slow",
       "stale": false,
-      "stale_days": 26
+      "stale_days": 28
     },
     {
       "id": "runbook-backfill-required",
@@ -26278,7 +26288,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -26327,7 +26337,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -26439,7 +26449,7 @@
       },
       "url": "/runbooks/backfill-required",
       "stale": false,
-      "stale_days": 19
+      "stale_days": 21
     },
     {
       "id": "runbook-cdc-stopped",
@@ -26530,7 +26540,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -26579,7 +26589,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -26691,7 +26701,7 @@
       },
       "url": "/runbooks/cdc-stopped",
       "stale": false,
-      "stale_days": 20
+      "stale_days": 22
     },
     {
       "id": "runbook-kafka-consumer-lagging",
@@ -26786,7 +26796,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -26835,7 +26845,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -26947,7 +26957,7 @@
       },
       "url": "/runbooks/kafka-consumer-lagging",
       "stale": false,
-      "stale_days": 17
+      "stale_days": 19
     },
     {
       "id": "runbook-spark-job-slow",
@@ -26958,6 +26968,11 @@
       "tagline": null,
       "description": "A batch Spark job's runtime has jumped — find whether it is skew, partition count, spill or over-scan.",
       "summary": "",
+      "editorial": {
+        "limitations": [
+          "The diagnosis steps assume Spark UI or event-log access; wall-clock time alone is not enough."
+        ]
+      },
       "purpose": null,
       "problem": null,
       "category": "cat-spark",
@@ -27042,7 +27057,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -27091,7 +27106,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -27203,7 +27218,7 @@
       },
       "url": "/runbooks/spark-job-slow",
       "stale": false,
-      "stale_days": 16
+      "stale_days": 18
     },
     {
       "id": "runbook-spark-job-suddenly-costs-4x",
@@ -27296,7 +27311,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -27345,7 +27360,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -27457,7 +27472,7 @@
       },
       "url": "/runbooks/spark-job-suddenly-costs-4x",
       "stale": false,
-      "stale_days": 19
+      "stale_days": 21
     },
     {
       "id": "pattern-dbt-tests-docs",
@@ -27468,6 +27483,14 @@
       "tagline": null,
       "description": "Transformation logic lives in untested, undocumented SQL scattered across scripts.",
       "summary": "Transformation logic lives in untested, undocumented SQL scattered across scripts.",
+      "when_to_use": [
+        "Warehouse SQL with multiple consumers",
+        "A team larger than one"
+      ],
+      "when_not": [
+        "A single ad-hoc query",
+        "Non-SQL-heavy processing"
+      ],
       "purpose": null,
       "problem": "Transformation logic lives in untested, undocumented SQL scattered across scripts.",
       "category": "cat-dbt",
@@ -27498,14 +27521,6 @@
         "pro: testable, reviewable, self-documenting transformations",
         "con: dbt adds a layer to learn; over-testing becomes slow CI"
       ],
-      "when_to_use": [
-        "Warehouse SQL with multiple consumers",
-        "A team larger than one"
-      ],
-      "when_not": [
-        "A single ad-hoc query",
-        "Non-SQL-heavy processing"
-      ],
       "implementations": [
         "project-dbt-warehouse-tests",
         "skill-dbt-model-review",
@@ -27534,7 +27549,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -27588,7 +27603,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -27700,7 +27715,7 @@
       },
       "url": "/patterns/dbt-tests-docs",
       "stale": false,
-      "stale_days": 18
+      "stale_days": 20
     },
     {
       "id": "pattern-idempotent-partition-overwrite",
@@ -27711,6 +27726,13 @@
       "tagline": null,
       "description": "Retries and backfills duplicate or corrupt data because writes are appends.",
       "summary": "Retries and backfills duplicate or corrupt data because writes are appends.",
+      "when_to_use": [
+        "Any re-runnable batch job",
+        "Backfill-heavy pipelines"
+      ],
+      "when_not": [
+        "Streaming writes with no partition boundary (use MERGE/upsert instead)"
+      ],
       "purpose": null,
       "problem": "Retries and backfills duplicate or corrupt data because writes are appends.",
       "category": "cat-batch-processing",
@@ -27741,13 +27763,6 @@
         "pro: retries and backfills are safe by construction",
         "con: requires a well-defined logical partition; hard for cross-partition state"
       ],
-      "when_to_use": [
-        "Any re-runnable batch job",
-        "Backfill-heavy pipelines"
-      ],
-      "when_not": [
-        "Streaming writes with no partition boundary (use MERGE/upsert instead)"
-      ],
       "implementations": [
         "project-api-s3-spark-parquet",
         "skill-airflow-dag-reviewer"
@@ -27775,7 +27790,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -27828,7 +27843,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -27940,7 +27955,7 @@
       },
       "url": "/patterns/idempotent-partition-overwrite",
       "stale": false,
-      "stale_days": 20
+      "stale_days": 22
     },
     {
       "id": "pattern-medallion-zones",
@@ -27951,6 +27966,15 @@
       "tagline": null,
       "description": "Object storage gives you a place to put files but no structure for trust or ownership.",
       "summary": "Object storage gives you a place to put files but no structure for trust or ownership.",
+      "when_to_use": [
+        "Multiple consumers with different quality needs",
+        "You need to reprocess history",
+        "You need an audit trail to the source"
+      ],
+      "when_not": [
+        "A single small pipeline with one consumer",
+        "When storage cost dominates and copies are wasteful"
+      ],
       "purpose": null,
       "problem": "Object storage gives you a place to put files but no structure for trust or ownership.",
       "category": "cat-lakes",
@@ -27983,15 +28007,6 @@
         "con: multiple copies, more storage and more pipelines to run",
         "watch: don't let curated become a dumping ground; enforce the gate"
       ],
-      "when_to_use": [
-        "Multiple consumers with different quality needs",
-        "You need to reprocess history",
-        "You need an audit trail to the source"
-      ],
-      "when_not": [
-        "A single small pipeline with one consumer",
-        "When storage cost dominates and copies are wasteful"
-      ],
       "implementations": [
         "project-api-s3-spark-parquet",
         "project-s3-glue-athena"
@@ -28019,7 +28034,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -28072,7 +28087,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -28184,7 +28199,7 @@
       },
       "url": "/patterns/medallion-zones",
       "stale": false,
-      "stale_days": 16
+      "stale_days": 18
     },
     {
       "id": "pattern-agent-in-the-loop-review",
@@ -28195,6 +28210,13 @@
       "tagline": null,
       "description": "Coding agents can do real data-engineering work, but can also ship a schema change or drop a table.",
       "summary": "Coding agents can do real data-engineering work, but can also ship a schema change or drop a table.",
+      "when_to_use": [
+        "Any agent touching production data",
+        "Regulated environments"
+      ],
+      "when_not": [
+        "A purely local sandbox with no real data"
+      ],
       "purpose": null,
       "problem": "Coding agents can do real data-engineering work, but can also ship a schema change or drop a table.",
       "category": "cat-agentic",
@@ -28225,13 +28247,6 @@
         "pro: agent velocity with bounded, auditable blast radius",
         "con: the human gate adds friction; requires a real permission model"
       ],
-      "when_to_use": [
-        "Any agent touching production data",
-        "Regulated environments"
-      ],
-      "when_not": [
-        "A purely local sandbox with no real data"
-      ],
       "implementations": [
         "doc-security",
         "hook-destructive-sql-guard",
@@ -28261,7 +28276,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -28315,7 +28330,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -28427,7 +28442,7 @@
       },
       "url": "/patterns/agent-in-the-loop-review",
       "stale": false,
-      "stale_days": 15
+      "stale_days": 17
     },
     {
       "id": "pattern-small-files-compaction",
@@ -28438,6 +28453,13 @@
       "tagline": null,
       "description": "High-frequency writes shatter a table into thousands of tiny files and queries crawl.",
       "summary": "High-frequency writes shatter a table into thousands of tiny files and queries crawl.",
+      "when_to_use": [
+        "Streaming/micro-batch writes to a table",
+        "Many small appends per hour"
+      ],
+      "when_not": [
+        "Low-frequency bulk writes that already produce large files"
+      ],
       "purpose": null,
       "problem": "High-frequency writes shatter a table into thousands of tiny files and queries crawl.",
       "category": "cat-lakehouse",
@@ -28468,13 +28490,6 @@
         "pro: fast reads without slowing writes",
         "con: compaction costs compute and can conflict with concurrent writers"
       ],
-      "when_to_use": [
-        "Streaming/micro-batch writes to a table",
-        "Many small appends per hour"
-      ],
-      "when_not": [
-        "Low-frequency bulk writes that already produce large files"
-      ],
       "implementations": [
         "runbook-small-files-explosion",
         "skill-iceberg-maintenance",
@@ -28503,7 +28518,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -28556,7 +28571,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -28668,7 +28683,7 @@
       },
       "url": "/patterns/small-files-compaction",
       "stale": false,
-      "stale_days": 22
+      "stale_days": 24
     },
     {
       "id": "pattern-contracts-quality-gate",
@@ -28679,6 +28694,13 @@
       "tagline": null,
       "description": "Producers change schemas and semantics with no notice; consumers break in production.",
       "summary": "Producers change schemas and semantics with no notice; consumers break in production.",
+      "when_to_use": [
+        "Shared assets across teams",
+        "Regulated or SLA-bearing data"
+      ],
+      "when_not": [
+        "A single team owning the whole chain"
+      ],
       "purpose": null,
       "problem": "Producers change schemas and semantics with no notice; consumers break in production.",
       "category": "cat-data-contracts",
@@ -28709,13 +28731,6 @@
         "pro: failures caught pre-merge, at the producer",
         "con: producers carry process overhead; needs buy-in"
       ],
-      "when_to_use": [
-        "Shared assets across teams",
-        "Regulated or SLA-bearing data"
-      ],
-      "when_not": [
-        "A single team owning the whole chain"
-      ],
       "implementations": [
         "hook-schema-change-check",
         "hook-pre-deployment-dq-check",
@@ -28744,7 +28759,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -28798,7 +28813,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -28910,7 +28925,7 @@
       },
       "url": "/patterns/contracts-quality-gate",
       "stale": false,
-      "stale_days": 22
+      "stale_days": 24
     },
     {
       "id": "pattern-cost-guardrails",
@@ -28921,6 +28936,13 @@
       "tagline": null,
       "description": "A working pipeline silently becomes expensive and nobody notices until the invoice.",
       "summary": "A working pipeline silently becomes expensive and nobody notices until the invoice.",
+      "when_to_use": [
+        "Any pipeline with variable compute cost",
+        "Multi-team platforms"
+      ],
+      "when_not": [
+        "Negligible fixed-cost workloads"
+      ],
       "purpose": null,
       "problem": "A working pipeline silently becomes expensive and nobody notices until the invoice.",
       "category": "cat-cost-engineering",
@@ -28951,13 +28973,6 @@
         "pro: cheap early detection, no invoice surprises",
         "con: needs metrics plumbing and a baseline to be maintained"
       ],
-      "when_to_use": [
-        "Any pipeline with variable compute cost",
-        "Multi-team platforms"
-      ],
-      "when_not": [
-        "Negligible fixed-cost workloads"
-      ],
       "implementations": [
         "hook-spark-cost-check",
         "skill-cost-unit-economics",
@@ -28986,7 +29001,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -29039,7 +29054,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -29151,7 +29166,7 @@
       },
       "url": "/patterns/cost-guardrails",
       "stale": false,
-      "stale_days": 25
+      "stale_days": 27
     },
     {
       "id": "pattern-dimensional-model",
@@ -29162,6 +29177,14 @@
       "tagline": null,
       "description": "Analysts re-derive the same joins and disagree on metric definitions.",
       "summary": "Analysts re-derive the same joins and disagree on metric definitions.",
+      "when_to_use": [
+        "BI-heavy consumption",
+        "Stable, known query patterns"
+      ],
+      "when_not": [
+        "Rapidly changing source schemas (consider Data Vault)",
+        "Pure event/append analytics"
+      ],
       "purpose": null,
       "problem": "Analysts re-derive the same joins and disagree on metric definitions.",
       "category": "cat-warehouses",
@@ -29192,14 +29215,6 @@
         "pro: fast, intuitive, consistent; BI-friendly",
         "con: less flexible for rare queries; ETL to maintain SCDs"
       ],
-      "when_to_use": [
-        "BI-heavy consumption",
-        "Stable, known query patterns"
-      ],
-      "when_not": [
-        "Rapidly changing source schemas (consider Data Vault)",
-        "Pure event/append analytics"
-      ],
       "implementations": [
         "project-dbt-warehouse-tests",
         "skill-dbt-model-review"
@@ -29227,7 +29242,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -29280,7 +29295,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -29392,7 +29407,7 @@
       },
       "url": "/patterns/dimensional-model",
       "stale": false,
-      "stale_days": 24
+      "stale_days": 26
     },
     {
       "id": "pattern-batch-incremental-watermark",
@@ -29403,6 +29418,15 @@
       "tagline": null,
       "description": "Full reloads are too slow and too expensive once a table grows past millions of rows.",
       "summary": "Full reloads are too slow and too expensive once a table grows past millions of rows.",
+      "when_to_use": [
+        "Append-mostly sources",
+        "Cost-sensitive pipelines",
+        "Deterministic event/updated timestamps"
+      ],
+      "when_not": [
+        "Little history",
+        "Frequently mutating data without a reliable change marker (use CDC)"
+      ],
       "purpose": null,
       "problem": "Full reloads are too slow and too expensive once a table grows past millions of rows.",
       "category": "cat-batch-processing",
@@ -29435,15 +29459,6 @@
         "con: lookback trades correctness for cost; too short loses late rows",
         "watch: a naive is_incremental() without a lookback silently drops late data"
       ],
-      "when_to_use": [
-        "Append-mostly sources",
-        "Cost-sensitive pipelines",
-        "Deterministic event/updated timestamps"
-      ],
-      "when_not": [
-        "Little history",
-        "Frequently mutating data without a reliable change marker (use CDC)"
-      ],
       "implementations": [
         "project-api-s3-spark-parquet",
         "skill-dbt-model-review"
@@ -29471,7 +29486,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -29524,7 +29539,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -29636,7 +29651,7 @@
       },
       "url": "/patterns/batch-incremental-watermark",
       "stale": false,
-      "stale_days": 18
+      "stale_days": 20
     },
     {
       "id": "pattern-quarantine-publish",
@@ -29647,6 +29662,14 @@
       "tagline": null,
       "description": "One bad batch of rows can poison a whole table and every downstream metric.",
       "summary": "One bad batch of rows can poison a whole table and every downstream metric.",
+      "when_to_use": [
+        "External/partner data",
+        "Any table with an SLA",
+        "High-value downstream metrics"
+      ],
+      "when_not": [
+        "Throwaway exploratory pipelines"
+      ],
       "purpose": null,
       "problem": "One bad batch of rows can poison a whole table and every downstream metric.",
       "category": "cat-data-quality",
@@ -29678,14 +29701,6 @@
         "con: extra storage and a reprocessing path to maintain",
         "watch: a quarantine nobody reviews is just a slower data loss"
       ],
-      "when_to_use": [
-        "External/partner data",
-        "Any table with an SLA",
-        "High-value downstream metrics"
-      ],
-      "when_not": [
-        "Throwaway exploratory pipelines"
-      ],
       "implementations": [
         "project-pipeline-dq-quarantine",
         "runbook-data-quality-failure"
@@ -29713,7 +29728,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -29766,7 +29781,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -29878,7 +29893,7 @@
       },
       "url": "/patterns/quarantine-publish",
       "stale": false,
-      "stale_days": 17
+      "stale_days": 19
     },
     {
       "id": "pattern-data-vault",
@@ -29889,6 +29904,13 @@
       "tagline": null,
       "description": "Integrating many changing sources into a warehouse without constant rework.",
       "summary": "Integrating many changing sources into a warehouse without constant rework.",
+      "when_to_use": [
+        "Enterprise integration of many sources",
+        "Strong audit/lineage requirements"
+      ],
+      "when_not": [
+        "A single source feeding a known set of reports"
+      ],
       "purpose": null,
       "problem": "Integrating many changing sources into a warehouse without constant rework.",
       "category": "cat-warehouses",
@@ -29919,13 +29941,6 @@
         "pro: resilient to change, auditable, parallel loads",
         "con: more objects, harder to query directly; needs a downstream marts layer"
       ],
-      "when_to_use": [
-        "Enterprise integration of many sources",
-        "Strong audit/lineage requirements"
-      ],
-      "when_not": [
-        "A single source feeding a known set of reports"
-      ],
       "implementations": [
         "skill-dbt-model-review"
       ],
@@ -29952,7 +29967,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -30004,7 +30019,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -30116,7 +30131,7 @@
       },
       "url": "/patterns/data-vault",
       "stale": false,
-      "stale_days": 30
+      "stale_days": 32
     },
     {
       "id": "pattern-lambda-vs-kappa",
@@ -30127,6 +30142,13 @@
       "tagline": null,
       "description": "Streaming is fast but hard; batch is simple but slow; you need both speed and correctness.",
       "summary": "Streaming is fast but hard; batch is simple but slow; you need both speed and correctness.",
+      "when_to_use": [
+        "Lambda when reprocessing is cheap and latency needs are moderate",
+        "Kappa when streams are replayable and ops budget is limited"
+      ],
+      "when_not": [
+        "Neither, if a nightly batch genuinely meets the SLA — keep it simple"
+      ],
       "purpose": null,
       "problem": "Streaming is fast but hard; batch is simple but slow; you need both speed and correctness.",
       "category": "cat-streaming",
@@ -30159,13 +30181,6 @@
         "lambda pro: batch correctness; con: two implementations to keep consistent",
         "kappa pro: one code path; con: requires long log retention + replay safety"
       ],
-      "when_to_use": [
-        "Lambda when reprocessing is cheap and latency needs are moderate",
-        "Kappa when streams are replayable and ops budget is limited"
-      ],
-      "when_not": [
-        "Neither, if a nightly batch genuinely meets the SLA — keep it simple"
-      ],
       "implementations": [
         "pattern-medallion-zones",
         "pattern-streaming-dedup-upsert"
@@ -30193,7 +30208,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -30245,7 +30260,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -30357,7 +30372,7 @@
       },
       "url": "/patterns/lambda-vs-kappa",
       "stale": false,
-      "stale_days": 27
+      "stale_days": 29
     },
     {
       "id": "pattern-postgres-cdc-lakehouse",
@@ -30368,6 +30383,13 @@
       "tagline": null,
       "description": "Batch extraction from an OLTP database loads it and still misses deletes and mid-day changes.",
       "summary": "Batch extraction from an OLTP database loads it and still misses deletes and mid-day changes.",
+      "when_to_use": [
+        "OLTP → lakehouse with freshness < 15 min",
+        "You need deletes/updates"
+      ],
+      "when_not": [
+        "A nightly batch is sufficient and the source is small"
+      ],
       "purpose": null,
       "problem": "Batch extraction from an OLTP database loads it and still misses deletes and mid-day changes.",
       "category": "cat-cdc",
@@ -30401,13 +30423,6 @@
         "con: operational complexity (slots, connectors, ordering)",
         "watch: a dropped replication slot forces a full re-snapshot"
       ],
-      "when_to_use": [
-        "OLTP → lakehouse with freshness < 15 min",
-        "You need deletes/updates"
-      ],
-      "when_not": [
-        "A nightly batch is sufficient and the source is small"
-      ],
       "implementations": [
         "project-postgres-cdc-kafka-lakehouse",
         "skill-cdc-merge-designer"
@@ -30435,7 +30450,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -30488,7 +30503,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -30600,7 +30615,7 @@
       },
       "url": "/patterns/postgres-cdc-lakehouse",
       "stale": false,
-      "stale_days": 19
+      "stale_days": 21
     },
     {
       "id": "pattern-backfill-safety",
@@ -30611,6 +30626,12 @@
       "tagline": null,
       "description": "Backfills corrupt production or take down the daily run.",
       "summary": "Backfills corrupt production or take down the daily run.",
+      "when_to_use": [
+        "Any historical recompute of a production table"
+      ],
+      "when_not": [
+        "A tiny table you can recompute in one safe step"
+      ],
       "purpose": null,
       "problem": "Backfills corrupt production or take down the daily run.",
       "category": "cat-airflow",
@@ -30641,12 +30662,6 @@
         "pro: reversible, observable, low-blast-radius",
         "con: extra storage and orchestration for the shadow"
       ],
-      "when_to_use": [
-        "Any historical recompute of a production table"
-      ],
-      "when_not": [
-        "A tiny table you can recompute in one safe step"
-      ],
       "implementations": [
         "runbook-backfill-required",
         "skill-backfill-planner",
@@ -30675,7 +30690,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -30728,7 +30743,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -30840,7 +30855,7 @@
       },
       "url": "/patterns/backfill-safety",
       "stale": false,
-      "stale_days": 20
+      "stale_days": 22
     },
     {
       "id": "pattern-streaming-dedup-upsert",
@@ -30851,6 +30866,13 @@
       "tagline": null,
       "description": "Streaming sinks either duplicate on replay or lose rows on failure.",
       "summary": "Streaming sinks either duplicate on replay or lose rows on failure.",
+      "when_to_use": [
+        "Kafka → Delta/Iceberg/warehouse",
+        "Any replay-prone stream"
+      ],
+      "when_not": [
+        "Pure append-only event log with no dedup need"
+      ],
       "purpose": null,
       "problem": "Streaming sinks either duplicate on replay or lose rows on failure.",
       "category": "cat-streaming",
@@ -30882,13 +30904,6 @@
         "pro: correct under replay; no reliance on perfect exactly-once",
         "con: requires a stable business key and event time; state cost"
       ],
-      "when_to_use": [
-        "Kafka → Delta/Iceberg/warehouse",
-        "Any replay-prone stream"
-      ],
-      "when_not": [
-        "Pure append-only event log with no dedup need"
-      ],
       "implementations": [
         "project-kafka-spark-delta",
         "skill-cdc-merge-designer"
@@ -30916,7 +30931,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -30969,7 +30984,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -31081,7 +31096,7 @@
       },
       "url": "/patterns/streaming-dedup-upsert",
       "stale": false,
-      "stale_days": 21
+      "stale_days": 23
     },
     {
       "id": "ref-a-duckdb-database-with-no-data-in-it",
@@ -31127,7 +31142,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -31171,7 +31186,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -31344,7 +31359,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -31388,7 +31403,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -31499,7 +31514,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 16
+      "stale_days": 18
     },
     {
       "id": "ref-airflow-docs",
@@ -31561,7 +31576,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -31605,7 +31620,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -31716,7 +31731,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 15
+      "stale_days": 17
     },
     {
       "id": "ref-iceberg-docs",
@@ -31778,7 +31793,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -31822,7 +31837,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -31933,7 +31948,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 19
+      "stale_days": 21
     },
     {
       "id": "ref-kafka-docs",
@@ -31995,7 +32010,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -32039,7 +32054,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -32150,7 +32165,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 17
+      "stale_days": 19
     },
     {
       "id": "ref-parquet-docs",
@@ -32212,7 +32227,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -32256,7 +32271,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -32367,7 +32382,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 24
+      "stale_days": 26
     },
     {
       "id": "ref-spark-docs",
@@ -32428,7 +32443,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -32472,7 +32487,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -32583,7 +32598,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 16
+      "stale_days": 18
     },
     {
       "id": "ref-glue-docs",
@@ -32645,7 +32660,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -32689,7 +32704,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -32800,7 +32815,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 27
+      "stale_days": 29
     },
     {
       "id": "ref-bigquery-docs",
@@ -32861,7 +32876,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -32905,7 +32920,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -33016,7 +33031,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 23
+      "stale_days": 25
     },
     {
       "id": "ref-cost-effective-etl-with-duckdb-and-amazon-s3-tables-on-aws-glue",
@@ -33062,7 +33077,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -33106,7 +33121,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -33263,7 +33278,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -33307,7 +33322,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -33464,7 +33479,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -33508,7 +33523,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -33681,7 +33696,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -33725,7 +33740,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -33836,7 +33851,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 32
+      "stale_days": 34
     },
     {
       "id": "ref-databricks-docs",
@@ -33898,7 +33913,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -33942,7 +33957,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -34053,7 +34068,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 25
+      "stale_days": 27
     },
     {
       "id": "ref-datahub-docs",
@@ -34115,7 +34130,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -34159,7 +34174,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -34270,7 +34285,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 26
+      "stale_days": 28
     },
     {
       "id": "ref-dbt-best-practices",
@@ -34331,7 +34346,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -34375,7 +34390,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -34486,7 +34501,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 18
+      "stale_days": 20
     },
     {
       "id": "ref-dbt-docs",
@@ -34547,7 +34562,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -34591,7 +34606,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -34702,7 +34717,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 17
+      "stale_days": 19
     },
     {
       "id": "ref-debezium-docs",
@@ -34764,7 +34779,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -34808,7 +34823,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -34919,7 +34934,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 20
+      "stale_days": 22
     },
     {
       "id": "ref-delta-docs",
@@ -34981,7 +34996,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -35025,7 +35040,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -35136,7 +35151,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 18
+      "stale_days": 20
     },
     {
       "id": "ref-ddia",
@@ -35197,7 +35212,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -35241,7 +35256,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -35352,7 +35367,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 32
+      "stale_days": 34
     },
     {
       "id": "ref-duckdb-and-hugging-face-querying-datasets-directly",
@@ -35398,7 +35413,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -35442,7 +35457,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -35615,7 +35630,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -35659,7 +35674,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -35770,7 +35785,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 14
+      "stale_days": 16
     },
     {
       "id": "ref-fundamentals-de",
@@ -35831,7 +35846,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -35875,7 +35890,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -35986,7 +36001,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 32
+      "stale_days": 34
     },
     {
       "id": "ref-gx-docs",
@@ -36047,7 +36062,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -36091,7 +36106,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -36202,7 +36217,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 22
+      "stale_days": 24
     },
     {
       "id": "ref-gsoc-2026-final-blog-how-it-was-to-be-a-contributor-at-jenkins",
@@ -36248,7 +36263,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -36292,7 +36307,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -36449,7 +36464,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -36493,7 +36508,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -36650,7 +36665,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -36694,7 +36709,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -36851,7 +36866,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -36895,7 +36910,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -37052,7 +37067,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -37096,7 +37111,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -37253,7 +37268,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -37297,7 +37312,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -37454,7 +37469,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -37498,7 +37513,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -37670,7 +37685,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -37714,7 +37729,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -37825,7 +37840,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 15
+      "stale_days": 17
     },
     {
       "id": "ref-mcp-spec",
@@ -37887,7 +37902,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -37931,7 +37946,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -38042,7 +38057,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 14
+      "stale_days": 16
     },
     {
       "id": "ref-monitoring-mwaa-orchestrated-etl-pipelines-with-amazon-opensearc",
@@ -38088,7 +38103,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -38132,7 +38147,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -38289,7 +38304,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -38333,7 +38348,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -38506,7 +38521,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -38550,7 +38565,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -38611,10 +38626,10 @@
           "test_coverage": 5,
           "security": 70,
           "documentation": 20,
-          "maintainability": 25,
+          "maintainability": 15,
           "community": null
         },
-        "composite_score": 35.29,
+        "composite_score": 33.86,
         "composite_label": "weak",
         "roadmap_stages": [
           "observability"
@@ -38661,7 +38676,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 28
+      "stale_days": 30
     },
     {
       "id": "ref-optimize-consumer-rebalancing-on-amazon-msk-with-next-generation",
@@ -38707,7 +38722,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -38751,7 +38766,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -38908,7 +38923,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -38952,7 +38967,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -39109,7 +39124,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -39153,7 +39168,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -39325,7 +39340,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -39369,7 +39384,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -39480,7 +39495,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 20
+      "stale_days": 22
     },
     {
       "id": "ref-soda-core",
@@ -39542,7 +39557,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-14T06:33:37.660Z",
+          "at": "2026-10-16T01:57:05.517Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -39586,7 +39601,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-14T06:33:37.660Z",
+            "at": "2026-10-16T01:57:05.517Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -39697,7 +39712,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 30
+      "stale_days": 32
     }
   ]
 }
