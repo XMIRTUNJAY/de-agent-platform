@@ -78,7 +78,6 @@ const analyticsEnabled = import.meta.env.PUBLIC_ANALYTICS_ENABLED === 'true';
             endpoint: '/api/analytics/collect',
             batchSize: 10,
             flushInterval: 5000,
-            debug: import.meta.env.DEV,
           };
         })();
       </script>

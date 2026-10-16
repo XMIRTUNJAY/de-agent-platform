@@ -5,6 +5,7 @@ import { computePopularity } from '../../../../pipelines/lib/popularity.mjs';
 
 // NOTE: votes-db is lazy-imported inside handlers (never top-level):
 // database clients must not initialize during static prerender (`astro build`).
+export const prerender = false;
 // Durable store = libsql (Turso in prod, local file in dev) — better-sqlite3
 // cannot persist on serverless (ephemeral filesystem).
 

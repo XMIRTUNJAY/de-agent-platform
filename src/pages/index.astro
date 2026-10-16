@@ -5,6 +5,7 @@ import ResourceCard from '@/components/ResourceCard.astro';
 import { SITE } from '@/site.config';
 import registry from '@/data/generated/registry.json';
 import stats from '@/data/generated/stats.json';
+import { count as countLabel } from '@/lib/format';
 
 const stages = registry.taxonomy.stages;
 
@@ -111,7 +112,7 @@ const heroLines = ['Learn the pattern.', 'Install the skill.', 'Run the pipeline
         <a href={`/roadmap#${p.stages[0].slug}`} class="card card-pad card-interactive" style="display: flex; flex-direction: column; gap: 0.75rem;">
           <div class="card-header" style="margin-bottom: 0;">
             <span class="mono-label">Phase {String(p.index).padStart(2, '0')}</span>
-            <span class="chip">{p.count} resources</span>
+            <span class="chip">{countLabel(p.count, 'resource')}</span>
           </div>
           <h3 style="font-size: var(--text-2xl); font-weight: 500; color: var(--fg); letter-spacing: -0.01em; margin: 0.25rem 0 0;">{p.name}</h3>
           <p class="card-desc" style="flex: 1;">{p.tagline}</p>

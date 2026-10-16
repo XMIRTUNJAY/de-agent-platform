@@ -4,6 +4,7 @@ import registry from '@/data/generated/registry.json';
 
 // NOTE: votes-db is lazy-imported inside the handler (never top-level):
 // database clients must not initialize during static prerender (`astro build`).
+export const prerender = false;
 
 // First-party engagement counters (install clicks, copy clicks, detail views).
 // Feeds the engagement slice of popularity. Day-bucketed, capped per IP in

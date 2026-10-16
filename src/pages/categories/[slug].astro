@@ -4,6 +4,7 @@ import PageHero from '@/components/PageHero.astro';
 import FilterGroup from '@/components/FilterGroup.astro';
 import ResourceCard from '@/components/ResourceCard.astro';
 import registry from '@/data/generated/registry.json';
+import { count as countLabel } from '@/lib/format';
 
 const cat = registry.taxonomy.categories.find(c => c.slug === Astro.params.slug);
 if (!cat) throw new Error('Category not found');
@@ -29,7 +30,7 @@ export async function getStaticPaths() {
 <BaseLayout title={cat.title} sidebar>
   <PageHero kicker={cat.group} title={cat.title} lede={cat.summary}>
     <div style="margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
-      <span class="chip">{resources.length} resources</span>
+      <span class="chip">{countLabel(resources.length, 'resource')}</span>
       <span class="chip">{types.length} types</span>
     </div>
   </PageHero>

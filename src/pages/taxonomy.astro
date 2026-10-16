@@ -3,6 +3,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import PageHero from '@/components/PageHero.astro';
 import SectionHeader from '@/components/SectionHeader.astro';
 import registry from '@/data/generated/registry.json';
+import { count as countLabel } from '@/lib/format';
 
 const stages = registry.taxonomy.stages;
 const categories = registry.taxonomy.categories.sort((a,b) => a.order - b.order);
@@ -40,7 +41,7 @@ for (const c of categories) (catByStage[c.stage] ??= []).push(c);
                     <h3 style="margin-top: 0.4rem; font-weight: 500;">{cat.title}</h3>
                     <p class="card-desc">{cat.summary}</p>
                     <div class="card-meta">
-                      <span class="chip">{count} resources</span>
+                      <span class="chip">{countLabel(count, 'resource')}</span>
                       {types.slice(0,3).map(t => <span class="chip">{registry.resources.find(r => r.type === t)?.typeLabel ?? t}</span>)}
                     </div>
                   </a>

@@ -7,6 +7,9 @@ const CollectRequestSchema = z.object({
   version: z.string().optional(),
 });
 
+// clientAddress needs a server-rendered route, even in dev.
+export const prerender = false;
+
 export const POST: APIRoute = async ({ request, clientAddress }) => {
   if (!import.meta.env.PUBLIC_ANALYTICS_ENABLED === 'true') {
     return new Response(JSON.stringify({ ok: false, error: 'Analytics disabled' }), {

@@ -4,7 +4,6 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 
 const { res, registry } = Astro.props as { res: any; registry: any };
 
-const cat = registry.taxonomy.categories.find((c: any) => c.id === res.category);
 const techs = res.technologies?.map((t: any) => registry.taxonomy.technologies.find((x: any) => x.id === t)).filter(Boolean) ?? [];
 const prereqs = res.prerequisites?.map((id: any) => registry.resources.find((r: any) => r.id === id)).filter(Boolean) ?? [];
 
@@ -30,21 +29,12 @@ const installCount = mp?.install_count ?? 0;
 const installSuccessRate = mp?.install_success_rate ?? 0;
 
 /** score color helper */
-const scoreColor = (score) => {
+const scoreColor = (score: number) => {
   if (score >= 80) return 'accent';
   if (score >= 65) return 'info';
   if (score >= 45) return 'warn';
   if (score >= 25) return 'danger';
   return 'dim';
-};
-
-/** score label */
-const scoreLabel = (score) => {
-  if (score >= 80) return 'Exemplary';
-  if (score >= 65) return 'Strong';
-  if (score >= 45) return 'Adequate';
-  if (score >= 25) return 'Weak';
-  return 'Unproven';
 };
 ---
 
@@ -228,14 +218,14 @@ const scoreLabel = (score) => {
             if (!widget) return;
             const id = widget.getAttribute('data-resource-id');
             const summary = widget.querySelector('[data-rate-summary]');
-            const render = (avg, count, pop) => {
+            const render = (avg: any, count: any, pop: any) => {
               if (summary)
                 summary.textContent =
                   count > 0
                     ? `★ ${avg} · ${count} vote(s) · popularity ${pop}/100`
                     : `No votes yet · popularity ${pop}/100`;
             };
-            fetch(`/api/marketplace/stats?resource_id=${encodeURIComponent(id)}`)
+            fetch(`/api/marketplace/stats?resource_id=${encodeURIComponent(id ?? '')}`)
               .then((r) => (r.ok ? r.json() : null))
               .then((j) => {
                 if (j?.ok) render(j.data.rating_average, j.data.rating_count, j.data.popularity);
@@ -501,8 +491,17 @@ const scoreLabel = (score) => {
             <div><dt class="text-muted">Verification</dt><dd class="font-mono capitalize">{res.verification}</dd></div>
             {res.evidence_summary && <div><dt class="text-muted">Evidence</dt><dd class="font-mono text-xs">{Object.values(res.evidence_summary.checks).filter((c: any) => c.status === 'passed').length}/10 checks · earned {res.evidence_summary.earned}</dd></div>}
             {res.stale && <div class="text-warn"><dt class="text-muted">Stale</dt><dd>Last verified {res.stale_days} days ago (>180 days)</dd></div>}
-            {res.source_file && <div><dt class="text-muted">Source File</dt><dd class="font-mono text-xs">{res.source_file}</dd></div>}
-            {res.publisher_source && <div><dt class="text-muted">Publisher Data</dt><dd class="font-mono text-xs">{JSON.stringify(res.publisher_source).slice(0,200)}</dd></div>}
+            {res.source_file && <div><dt class="text-muted">Source File</dt><dd class="font-mono text-xs">{String(res.source_file).replace(/\\/g, '/')}</dd></div>}
+            {res.publisher_source && typeof res.publisher_source === 'object' && (
+              <div>
+                <dt class="text-muted">Upstream</dt>
+                <dd class="font-mono text-xs">
+                  {res.publisher_source.unreachable
+                    ? `Repo unreachable (checked ${(res.publisher_source.checked_at ?? '').slice(0, 10)})`
+                    : `${res.publisher_source.repo ?? 'repo'} · pushed ${(res.publisher_source.pushed_at ?? '').slice(0, 10) || 'unknown'}`}
+                </dd>
+              </div>
+            )}
           </dl>
         </section>
 
@@ -605,7 +604,7 @@ const scoreLabel = (score) => {
             <h3 class="mono-label mb-3">Marketplace Quality Score</h3>
             <div class="mb-4">
               <div class="flex items-center gap-3 mb-2">
-                <span class="chip" style="color: var(--color-{scoreColor(compositeScore)})">{compositeLabel} ({compositeScore}/100)</span>
+                <span class="chip" style={`color: var(--color-${scoreColor(compositeScore)})`}>{compositeLabel} ({compositeScore}/100)</span>
                 {ratingCount > 0 && (
                   <span class="chip" style="color: var(--color-accent);">
                     {ratingAvg.toFixed(1)}/5 ({ratingCount} reviews)
@@ -626,10 +625,10 @@ const scoreLabel = (score) => {
                 <div>
                   <div class="flex justify-between text-sm mb-1">
                     <span class="capitalize">{dim.replace(/_/g, ' ')}</span>
-                    <span class="font-mono" style="color: var(--color-{scoreColor(score)})">{score}/100</span>
+                    <span class="font-mono" style={`color: var(--color-${scoreColor(Number(score))})`}>{score}/100</span>
                   </div>
                   <div class="h-2 bg-muted rounded-full overflow-hidden">
-                    <div class="h-full rounded-full" style="width: {score}%; background-color: var(--color-{scoreColor(score)})"></div>
+                    <div class="h-full rounded-full" style={`width: ${score}%; background-color: var(--color-${scoreColor(Number(score))})`}></div>
                   </div>
                 </div>
               ))}
@@ -663,36 +662,23 @@ const scoreLabel = (score) => {
               <div><dt class="text-muted">Requirements</dt><dd>{mp.install_manifest.requirements?.join(', ') ?? 'None'}</dd></div>
               <div><dt class="text-muted">Commands</dt><dd class="font-mono text-xs">{mp.install_manifest.commands?.map((c: any) => c.argv.join(' ')).join(' ; ') ?? 'None'}</dd></div>
             </dl>
-            <p class="text-sm text-muted mt-2">Run <code>node pipelines/execute.mjs --manifest <path></code> to execute the install manifest.</p>
+            <p class="text-sm text-muted mt-2">Run <code>node pipelines/execute.mjs --manifest &lt;file&gt; --backend local --local-i-understand</code> to execute the install manifest.</p>
           </section>
         )}
 
-        <!-- Install & Rate Actions -->
-        <section class="card card-pad mount">
-          <h3 class="mono-label mb-3">Install & Review</h3>
-          <div class="space-y-4">
-            {mp?.install_manifest && (
-              <div>
-                <p class="text-sm text-muted mb-2">Run the installation manifest to install this artifact:</p>
-                <button id="install-btn" class="btn btn-accent" onclick="installResource('{res.id}')">
-                  Install {res.title}
-                </button>
-                <div id="install-result" class="mt-3 hidden"></div>
-              </div>
-            )}
+        <!-- Install manifest action (rating lives in the Rating widget above) -->
+        {mp?.install_manifest && (
+          <section class="card card-pad mount">
+            <h3 class="mono-label mb-3">Install</h3>
             <div>
-              <p class="text-sm text-muted mb-2">Rate and review this artifact (requires verified install):</p>
-              <div class="flex gap-2 flex-wrap" id="rating-stars">
-                {Array.from({length: 5}, (_, i) => (
-                  <button type="button" class="rating-star text-2xl" data-rating={i + 1} onclick="setRating({i + 1})">☆</button>
-                ))}
-              </div>
-              <textarea id="review-text" class="mt-2 w-full p-2 border rounded" placeholder="Optional: Share your experience..." rows="3"></textarea>
-              <button class="btn btn-sm mt-2" onclick="submitRating('{res.id}')">Submit Rating</button>
-              <div id="rating-result" class="mt-2 hidden"></div>
+              <p class="text-sm text-muted mb-2">Run the installation manifest to install this artifact:</p>
+              <button id="install-btn" class="btn btn-accent" onclick="installResource('{res.id}')">
+                Install {res.title}
+              </button>
+              <div id="install-result" class="mt-3 hidden"></div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
       </aside>
     </div>
     <Feedback resourceId={res.id} resourceTitle={res.title} />
@@ -700,17 +686,6 @@ const scoreLabel = (score) => {
 </BaseLayout>
 
 <script is:inline>
-  let currentRating = 0;
-
-  function setRating(rating) {
-    currentRating = rating;
-    const stars = document.querySelectorAll('#rating-stars .rating-star');
-    stars.forEach((star, i) => {
-      star.textContent = i < rating ? '★' : '☆';
-      star.style.color = i < rating ? 'var(--color-accent)' : 'var(--color-dim)';
-    });
-  }
-
   async function installResource(resourceId) {
     const btn = document.getElementById('install-btn');
     const resultDiv = document.getElementById('install-result');
@@ -751,55 +726,6 @@ const scoreLabel = (score) => {
       resultDiv.innerHTML = `<span class="text-danger">Error: ${err.message}</span>`;
       btn.disabled = false;
       btn.textContent = 'Retry';
-    }
-  }
-
-  async function submitRating(resourceId) {
-    const reviewText = document.getElementById('review-text')?.value ?? '';
-    const resultDiv = document.getElementById('rating-result');
-    const submitBtn = document.querySelector('button[onclick^="submitRating"]');
-
-    if (currentRating === 0) {
-      alert('Please select a rating (1-5 stars)');
-      return;
-    }
-
-    if (!submitBtn || !resultDiv) return;
-
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Submitting...';
-    resultDiv.hidden = true;
-
-    try {
-      const resp = await fetch('/api/marketplace/rate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          resource_id: resourceId,
-          rating: currentRating,
-          review_text: reviewText,
-          user_id: 'anonymous', // In production: get from auth context
-        }),
-      });
-      if (!resp.ok) {
-        throw new Error('Rating service unavailable (static preview).');
-      }
-      const data = await resp.json();
-
-      if (!data.ok) {
-        throw new Error(data.error ?? 'Failed to submit rating');
-      }
-
-      resultDiv.hidden = false;
-      resultDiv.innerHTML = '<span class="text-accent">✓ Rating submitted successfully!</span>';
-      submitBtn.textContent = 'Submitted';
-      document.querySelectorAll('.rating-star').forEach(s => s.disabled = true);
-      document.getElementById('review-text')!.disabled = true;
-    } catch (err) {
-      resultDiv.hidden = false;
-      resultDiv.innerHTML = `<span class="text-danger">Error: ${err.message}</span>`;
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Retry';
     }
   }
 </script>
