@@ -127,6 +127,22 @@ step('GITHUB ENRICHMENT', async () => {
   return null;
 });
 
+// SECRET SCAN — hardcoded-credential sweep (local curated tree + top remote
+// repos). Findings merge in-memory; clean scans earn vulnerability_scan_at,
+// which the marketplace security score rewards. Never modifies curated YAML.
+step('SECRET SCAN', async () => {
+  try {
+    const { scanResources } = await import('./scan-secrets.mjs');
+    const { scanned, skipped, dirty } = await scanResources(resources);
+    info(`Secret scan: ${scanned} scanned, ${skipped} skipped (no token or unreachable)`);
+    for (const d of dirty.slice(0, 10)) warn(`  ! secrets in ${d.id} (${d.hits} non-example hits)`);
+    if (dirty.length > 10) warn(`  ! ...and ${dirty.length - 10} more`);
+  } catch (err) {
+    warn('Secret scan skipped: ' + err.message);
+  }
+  return null;
+});
+
 // MARKETPLACE SCORE
 step('MARKETPLACE SCORE', () => {
   // Load execution results for performance scoring
