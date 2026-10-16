@@ -15,6 +15,7 @@ const catByStage: Record<string, typeof categories> = {};
 
 /** byStage counts keyed by stage id */
 const stageCounts = stats.byStage as Record<string, number>;
+const stageReading = (stats.byStageReading ?? {}) as Record<string, number>;
 for (const c of categories) (catByStage[c.stage] ??= []).push(c);
 ---
 
@@ -41,7 +42,7 @@ for (const c of categories) (catByStage[c.stage] ??= []).push(c);
                 <span style="display: block; font-size: var(--text-2xl); font-weight: 500;">{stage.title}</span>
                 <span style="display: block; color: var(--fg-muted); margin-top: 0.35rem;">{stage.summary}</span>
               </span>
-              <span class="chip">{count} resources</span>
+              <span class="chip">{count} guides & tools{(stageReading[stage.id] ?? 0) > 0 ? ` · ${stageReading[stage.id]} further reading` : ''}</span>
             </a>
             {gate && (
               <div class="mono-teach" style="padding: 0 0.5rem 1.25rem 4.25rem; color: var(--fg-muted); font-size: var(--text-sm);">

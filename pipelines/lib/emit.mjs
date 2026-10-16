@@ -82,13 +82,18 @@ function buildStats(resources, taxonomy) {
   const byDifficulty = {};
   const byVerification = {};
   const byStage = {};
+  const byStageReading = {};
   const byCategory = {};
   let secure = 0;
+  const SUBSTANCE_TYPES = new Set(['skill', 'mcp', 'plugin', 'agent', 'hook', 'template', 'starter', 'runbook', 'architecture', 'tutorial', 'policy', 'rule_pack', 'config_template', 'governance_pack']);
   for (const r of resources) {
     byType[r.type] = (byType[r.type] ?? 0) + 1;
     if (r.difficulty) byDifficulty[r.difficulty] = (byDifficulty[r.difficulty] ?? 0) + 1;
-    byVerification[r.verification] = (byVerification[r.verification] ?? 0) + 1;
-    if (r.stage) byStage[r.stage] = (byStage[r.stage] ?? 0) + 1;
+    if (r.verification) byVerification[r.verification] = (byVerification[r.verification] ?? 0) + 1;
+    if (r.stage) {
+      if (SUBSTANCE_TYPES.has(r.type)) byStage[r.stage] = (byStage[r.stage] ?? 0) + 1;
+      else byStageReading[r.stage] = (byStageReading[r.stage] ?? 0) + 1;
+    }
     if (r.category) byCategory[r.category] = (byCategory[r.category] ?? 0) + 1;
     if (!r.security_flags) secure++;
   }
@@ -133,6 +138,7 @@ function buildStats(resources, taxonomy) {
     freshness,
     depth,
     byStage,
+    byStageReading,
     byCategory,
     readability: {
       read_only: resources.filter((r) => !r.security_flags).length,

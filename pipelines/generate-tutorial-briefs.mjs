@@ -67,6 +67,15 @@ function scoreCandidate(r, steps) {
 const tutorialStages = new Set(resources.filter((r) => r.type === 'tutorial').map((r) => r.stage));
 const briefs = [];
 
+// Stages with no step-bearing artifact need an ORIGINAL, not a tutorial:
+// tutorials rearrange steps, they cannot invent them. Suggest the type whose
+// required structure fits the stage, with the auto-gates it must clear.
+const ORIGINAL_SUGGESTIONS = {
+  foundations: { type: 'skill', why: 'Stage 1 needs checkable rules (numbered body rules become tutorial steps).', needs: ['body with 3+ numbered rules', 'learning_objectives', 'evaluation or worked example'] },
+  'system-design': { type: 'architecture', why: 'Design stages need a worked solution with tradeoffs, not a procedure.', needs: ['solution', 'tradeoffs', 'when_to_use + when_not'] },
+  agentic: { type: 'agent', why: 'The capstone stage needs an end-to-end procedure (workflow becomes tutorial steps).', needs: ['workflow (3-8 steps)', 'outputs', 'evaluation'] },
+};
+
 for (const stage of mainPath) {
   if (tutorialStages.has(stage)) continue;
   const inStage = resources.filter((r) => r.stage === stage && r.type !== 'tutorial' && r.type !== 'reference');
@@ -76,7 +85,8 @@ for (const stage of mainPath) {
     .map((c) => ({ ...c, score: scoreCandidate(c.r, c.steps) }))
     .sort((a, b) => b.score - a.score);
   if (scored.length === 0) {
-    briefs.push({ stage, status: 'no-step-source', note: 'No in-stage artifact with 3+ verbatim steps yet.' });
+    const suggestion = ORIGINAL_SUGGESTIONS[stage] ?? { type: 'skill', why: 'No step-bearing artifact in this stage yet.', needs: ['workflow or numbered rules', 'evaluation'] };
+    briefs.push({ stage, status: 'needs-original', original: suggestion });
     continue;
   }
   const best = scored[0].r;
@@ -94,19 +104,34 @@ for (const stage of mainPath) {
 }
 
 const outDir = join(ROOT, 'data', 'drafts', 'tutorials');
+const creationDir = join(ROOT, 'data', 'drafts', 'creation');
 mkdirSync(outDir, { recursive: true });
+mkdirSync(creationDir, { recursive: true });
 const day = new Date().toISOString().slice(0, 10);
 
 for (const b of briefs) {
+  const isCreation = b.status === 'needs-original';
   const lines = [
-    '# DRAFT tutorial brief — NOT served. Curator: verify every step against',
-    '# the cited source field, then copy into data/curated/tutorials/ as type: tutorial.',
+    isCreation
+      ? '# DRAFT creation brief — author the original artifact first; the tutorial brief follows automatically.'
+      : '# DRAFT tutorial brief — NOT served. Verify every step against the cited source field,',
+    isCreation
+      ? '# then promote the new record through auto-gates into data/curated/.'
+      : '# then copy into data/curated/tutorials/ as type: tutorial.',
     `# stage: ${b.stage}`,
     `# status: ${b.status}`,
     '',
   ];
-  if (b.status === 'no-step-source') {
-    lines.push(b.note, '');
+  if (b.status === 'needs-original') {
+    const o = b.original;
+    lines.push(`NEEDS-ORIGINAL: author a new ${o.type} for this stage before a tutorial is possible.`, '',
+      `why: ${o.why}`, `suggested_type: ${o.type}`, '',
+      'The new record must clear auto-gates on promotion: 500+ servable words,',
+      'per-type required structure, install surface, no gatekeeping words,',
+      'no placeholders, secret-scan clean. Absence fails — never pad.', '',
+      'must_have:');
+    for (const n of o.needs) lines.push(`- ${n}`);
+    lines.push('');
   } else {
     lines.push(`proposed_title: Learn with ${b.source_title}`, `source: ${b.source_id} (${b.source_type})`,
       `difficulty: ${b.difficulty ?? 'unspecified'}`, `alternates: ${(b.alternates ?? []).join(', ') || 'none'}`, '',
@@ -118,9 +143,9 @@ for (const b of briefs) {
     for (const c of b.checks.length > 0 ? b.checks : ['(none stated in source — leave empty, do not invent)']) lines.push(`- ${c}`);
     lines.push('', `gatekeeping_scan: ${b.status === 'blocked-gatekeeping' ? 'FAIL — re-source before promoting' : 'pass'}`, '');
   }
-  writeFileSync(join(outDir, `${day}-${b.stage}.md`), lines.join('\n'));
+  writeFileSync(join(b.status === 'needs-original' ? creationDir : outDir, `${day}-${b.stage}.md`), lines.join('\n'));
 }
 
 const drafts = briefs.filter((b) => b.status === 'draft').length;
-console.log(`[Tutorial Briefs] stages: ${mainPath.length}, drafts: ${drafts}, blocked: ${briefs.filter((b) => b.status === 'blocked-gatekeeping').length}, no-source: ${briefs.filter((b) => b.status === 'no-step-source').length}`);
+console.log(`[Tutorial Briefs] stages: ${mainPath.length}, drafts: ${drafts}, blocked: ${briefs.filter((b) => b.status === 'blocked-gatekeeping').length}, needs-original: ${briefs.filter((b) => b.status === 'needs-original').length}`);
 for (const b of briefs) console.log(`  ${b.stage}: ${b.status}${b.source_id ? ` <- ${b.source_id}` : ''}`);
