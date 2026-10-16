@@ -15,11 +15,13 @@ export const REQUIRED_BY_TYPE = {
   runbook: ['symptoms', 'diagnosis', 'fix'],
   architecture: ['solution', 'tradeoffs'],
   reference: ['url', 'publisher'],
+  tutorial: ['steps', 'source_refs'],
 };
 const VERIFICATION = ['community', 'reviewed', 'tested', 'verified'];
 const DIFFICULTY = ['beginner', 'intermediate', 'advanced'];
-// docs/style-guide.md rule 6 — gatekeeping words, warn-only
-const GATEKEEPING = /\b(simply|obviously|trivial(?:ly)?|of course|as we all know)\b/i;
+// docs/style-guide.md rule 6 — gatekeeping words, warn-only.
+// Beginner-friendly tutorials must never talk down; briefs generator reuses this.
+export const GATEKEEPING = /\b(simply|obviously|trivial(?:ly)?|of course|as we all know)\b/i;
 
 export function validate({ resources, taxonomy, meta }) {
   const errors = [];
@@ -104,6 +106,20 @@ export function validate({ resources, taxonomy, meta }) {
     }
     for (const key of ['skills', 'hooks', 'mcp', 'agent_skills', 'agents', 'implementations']) {
       for (const target of r[key] ?? []) checkRef(r.id, target, key);
+    }
+    // Tutorial provenance: every step must cite a real source record.
+    // A step pointing nowhere is indistinguishable from invented content.
+    if (r.type === 'tutorial') {
+      for (const s of r.source_refs ?? []) {
+        if (!find(s)) errors.push(`${r.id}: source_ref references unknown id "${s}"`);
+      }
+      for (const [n, step] of (r.steps ?? []).entries()) {
+        if (!step || typeof step.text !== 'string' || !step.from_id || !step.from_field) {
+          errors.push(`${r.id}: step ${n + 1} needs text + from_id + from_field`);
+        } else if (!find(step.from_id)) {
+          errors.push(`${r.id}: step ${n + 1} cites unknown id "${step.from_id}"`);
+        }
+      }
     }
   }
 

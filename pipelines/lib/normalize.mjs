@@ -161,6 +161,13 @@ function typePayload(r) {
         workflow: r.workflow ?? [], outputs: r.outputs ?? [], guardrails: r.guardrails ?? [],
         example: r.example ?? null, evaluation: r.evaluation ?? null,
       };
+    case 'tutorial':
+      // Steps stay verbatim with source provenance; beginner-friendliness
+      // comes from structure (need/steps/check), never from rephrasing.
+      return {
+        steps: r.steps ?? [], what_you_need: r.what_you_need ?? [],
+        check_yourself: r.check_yourself ?? [], source_refs: r.source_refs ?? [],
+      };
     case 'hook':
       return {
         trigger: r.trigger ?? null, implementation: r.implementation ?? null,

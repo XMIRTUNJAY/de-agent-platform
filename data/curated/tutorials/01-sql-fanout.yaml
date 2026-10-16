@@ -1,0 +1,50 @@
+# Tutorials — beginner-friendly arrangements of artifact content.
+# Every step is verbatim from the cited source field. Structure (need, steps,
+# check) is ours; wording is the source's.
+- id: tutorial-sql-fanout-review
+  slug: sql-fanout-review
+  type: tutorial
+  title: Review SQL for fan-out joins
+  description: >-
+    Follow the SQL Reviewer agent's four-step pass over a real query: read the
+    diff and its context, establish the grain of every result set, apply the
+    SQL Review skill's five rules while stopping at the first fan-out, and
+    emit findings with file positions plus a rewritten clause you can verify
+    against the twelve-case evaluation fixture.
+  category: cat-sql
+  difficulty: beginner
+  tags: [tutorial, sql, review, joins, correctness, beginner]
+  learning_objectives:
+    - Prove a join cannot fan out before writing it
+    - Spot NULL-unsafe `NOT IN` and `=` predicates
+    - State the grain of a result set in one sentence
+  what_you_need:
+    - A pull request or a .sql file
+    - The target dialect (postgres/duckdb/snowflake)
+    - Install: amp skill add de-agent/sql-review
+  steps:
+    - text: Read the diff and the file context.
+      from_id: agent-sql-reviewer
+      from_field: workflow
+    - text: Establish the grain of every result set.
+      from_id: agent-sql-reviewer
+      from_field: workflow
+    - text: Apply the SQL review rules; stop at the first fan-out.
+      from_id: agent-sql-reviewer
+      from_field: workflow
+    - text: Emit findings with file:line and a rewritten clause.
+      from_id: agent-sql-reviewer
+      from_field: workflow
+  check_yourself:
+    - On a 12-case fixture of known-bad SQL, correctly identifies 11 correctness bugs and 0 false positives.
+    - Reviewing a PR that joins orders to a non-unique customer snapshot — flags fan-out and proposes a dedupe CTE.
+  source_refs: [agent-sql-reviewer, skill-sql-review]
+  version: 0.1.0
+  license: Apache-2.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/sql-fanout-review
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: 2026-10-16
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }

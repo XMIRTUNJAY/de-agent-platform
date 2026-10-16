@@ -48,7 +48,14 @@ for (const c of categories) (catByStage[c.stage] ??= []).push(c);
                 <span><strong style="color: var(--fg); font-weight: 500;">Gate:</strong> {gate.gate ?? '—'}</span>
                 {gate.artifact && <>
                   <span style="margin: 0 0.5rem; color: var(--fg-dim);">·</span>
-                  <code class="icode">{gate.artifact}</code>
+                  {(() => {
+                    const target = resources.find((r: any) => r.id === gate.artifact);
+                    return target?.url ? (
+                      <a href={target.url}>Deliverable: {target.title}</a>
+                    ) : (
+                      <code class="icode">{gate.artifact}</code>
+                    );
+                  })()}
                 </>}
               </div>
             )}

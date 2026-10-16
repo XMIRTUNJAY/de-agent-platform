@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const VERIFICATION_LEVELS = ['community', 'reviewed', 'tested', 'verified'] as const;
-export const RESOURCE_TYPES = ['skill', 'mcp', 'plugin', 'hook', 'agent', 'template', 'starter', 'runbook', 'architecture', 'reference', 'policy', 'rule_pack', 'config_template', 'governance_pack'] as const;
+export const RESOURCE_TYPES = ['skill', 'mcp', 'plugin', 'hook', 'agent', 'template', 'starter', 'runbook', 'architecture', 'reference', 'tutorial', 'policy', 'rule_pack', 'config_template', 'governance_pack'] as const;
 export const DIFFICULTY_LEVELS = ['beginner', 'intermediate', 'advanced'] as const;
 export const EVIDENCE_CHECKS = [
   'source_reachable',
@@ -101,6 +101,14 @@ export const ResourceSchema = z.object({
   summary: z.string().optional(),
   when_to_use: z.union([z.string(), z.array(z.string())]).optional(),
   when_not: z.array(z.string()).optional(),
+  steps: z.array(z.object({
+    text: z.string(),
+    from_id: z.string(),
+    from_field: z.string(),
+  })).optional(),
+  what_you_need: z.array(z.string()).optional(),
+  check_yourself: z.array(z.string()).optional(),
+  source_refs: z.array(z.string()).optional(),
   editorial: z
     .object({
       rating: z.number().min(0).max(5).optional(),

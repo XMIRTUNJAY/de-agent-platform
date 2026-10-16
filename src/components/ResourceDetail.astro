@@ -154,6 +154,61 @@ const scoreLabel = (score) => {
             )}
           </section>
         )}
+        {(res.what_you_need ?? []).length > 0 && (
+          <section class="mount">
+            <h2>What you need</h2>
+            <ul>
+              {res.what_you_need.map((w: any) => (
+                <li>{w}</li>
+              ))}
+            </ul>
+          </section>
+        )}
+        {(res.steps ?? []).length > 0 && (
+          <section class="mount">
+            <h2>Steps</h2>
+            <ol>
+              {res.steps.map((s: any) => (
+                <li>
+                  {s.text}
+                  {s.from_id && (
+                    <span>
+                      {' '}(from{' '}
+                      <a href={registry.resources.find((r: any) => r.id === s.from_id)?.url ?? `/resources/${s.from_id}`}>
+                        {s.from_id}
+                      </a>
+                      )
+                    </span>
+                  )}
+                </li>
+              ))}
+            </ol>
+          </section>
+        )}
+        {(res.check_yourself ?? []).length > 0 && (
+          <section class="mount">
+            <h2>Check yourself</h2>
+            <ul>
+              {res.check_yourself.map((c: any) => (
+                <li>{c}</li>
+              ))}
+            </ul>
+          </section>
+        )}
+        {(res.source_refs ?? []).length > 0 && (
+          <section class="mount">
+            <h2>Sourced from</h2>
+            <ul>
+              {res.source_refs.map((id: any) => (
+                <li>
+                  <a href={registry.resources.find((r: any) => r.id === id)?.url ?? `/resources/${id}`}>
+                    {registry.resources.find((r: any) => r.id === id)?.title ?? id}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
         <section class="mount" data-rate-widget data-resource-id={res.id}>
           <h2>Rating</h2>
           <p data-rate-summary>

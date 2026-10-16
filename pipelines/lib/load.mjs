@@ -25,6 +25,7 @@ export const TYPED_DIRS = {
   patterns: 'architecture',
   runbooks: 'runbook',
   references: 'reference',
+  tutorials: 'tutorial',
   policies: 'policy',
   'rule-packs': 'rule_pack',
   'config-templates': 'config_template',
