@@ -16,6 +16,9 @@ const catByStage: Record<string, typeof categories> = {};
 /** byStage counts keyed by stage id */
 const stageCounts = stats.byStage as Record<string, number>;
 const stageReading = (stats.byStageReading ?? {}) as Record<string, number>;
+const gaps = ((stats as any).roadmapGaps ?? []) as { stage: string; needsOriginal: string | null }[];
+const gapByStage: Record<string, { stage: string; needsOriginal: string | null }> = {};
+for (const g of gaps) gapByStage[g.stage] = g;
 for (const c of categories) (catByStage[c.stage] ??= []).push(c);
 ---
 
@@ -43,6 +46,11 @@ for (const c of categories) (catByStage[c.stage] ??= []).push(c);
                 <span style="display: block; color: var(--fg-muted); margin-top: 0.35rem;">{stage.summary}</span>
               </span>
               <span class="chip">{count} guides & tools{(stageReading[stage.id] ?? 0) > 0 ? ` · ${stageReading[stage.id]} further reading` : ''}</span>
+              {gapByStage[stage.id] && (
+                <span class="chip" title="Queued in the heartbeat loop — not yet published, never indexed until it clears auto-gates">
+                  upcoming: {gapByStage[stage.id].needsOriginal ? `${gapByStage[stage.id].needsOriginal} + tutorial` : 'tutorial'}
+                </span>
+              )}
             </a>
             {gate && (
               <div class="mono-teach" style="padding: 0 0.5rem 1.25rem 4.25rem; color: var(--fg-muted); font-size: var(--text-sm);">

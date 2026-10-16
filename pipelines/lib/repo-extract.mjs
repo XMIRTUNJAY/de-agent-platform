@@ -43,6 +43,7 @@ export async function fetchRepoTree(owner, repo, branch) {
 }
 
 const SKILL_MARKERS = ['SKILL.md', 'skills/', '.claude/skills/', '.agents/skills/'];
+const AGENT_MARKERS = ['AGENT.md', 'agents/', 'agent.yaml', 'agent.yml', 'workflows/'];
 const PLUGIN_MARKERS = ['.claude-plugin/plugin.json', 'plugin.json', 'manifest.json'];
 const MCP_MARKERS = ['mcp', 'server.py', 'server.ts', 'server.js', 'src/index.ts'];
 
@@ -60,6 +61,7 @@ export function hasExecutables(paths) {
 /** Best-effort type hint from repo layout; classifier still decides. */
 export function hintTypeFromTree(paths) {
   if (hasMarker(paths, SKILL_MARKERS)) return 'skill';
+  if (hasMarker(paths, AGENT_MARKERS)) return 'agent';
   if (hasMarker(paths, PLUGIN_MARKERS)) return 'plugin';
   if (hasMarker(paths, MCP_MARKERS)) return 'mcp';
   return null;

@@ -52,16 +52,19 @@ function toCurated(record) {
   const dir = TYPE_TO_DIR[record.type];
   if (!dir) return { ok: false, reason: `no curated dir for type "${record.type}"` };
   const { draft_kind, curation_state, install_candidates, skill_files, executables, ...kept } = record;
+  // Security block, set honestly by type nature (not verified behavior):
+  // agent/mcp/hook/plugin/starter execute by nature; docs-only skills (the only
+  // kind that can pass the executables gate) don't. Anything else never reaches
+  // promotion — missing workflow/outputs fails structure gates first.
+  const executes = ['agent', 'mcp', 'hook', 'plugin', 'starter'].includes(record.type);
   const promoted = {
     ...kept,
     curation_state: 'auto-promoted',
     promoted_at: DAY,
     promoted_by: 'auto-gates',
     last_verified: DAY,
-    // Valid ONLY because the executables gate passed above: docs-only skills
-    // don't execute code. Anything else never reaches this line.
     security: {
-      runs_code: false, network_access: false, credentials: false,
+      runs_code: executes, network_access: false, credentials: false,
       filesystem_access: true, external_apis: false,
     },
   };

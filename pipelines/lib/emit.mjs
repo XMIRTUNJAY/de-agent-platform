@@ -2,7 +2,7 @@
  * PUBLISH — write the generated registry, the search index and the knowledge
  * graph. Everything the site reads is produced here; nothing is hand-edited.
  */
-import { writeFileSync, existsSync, mkdirSync, readdirSync } from 'node:fs';
+import { writeFileSync, existsSync, mkdirSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { GENERATED, ROOT } from './load.mjs';
 import { buildSkillMd } from './skill-md.mjs';
@@ -32,6 +32,11 @@ export function emit(ctx) {
   }));
 
   const stats = buildStats(enriched, taxonomy);
+
+  // Roadmap gaps ("upcoming" cards): stages without a tutorial, and stages
+  // needing an original first. Read from committed briefs, not the registry —
+  // gaps are intentions, and intentions must never become indexed pages.
+  stats.roadmapGaps = buildRoadmapGaps(enriched, roadmap);
 
   write('registry.json', {
     generated_at,
@@ -72,6 +77,27 @@ export function emit(ctx) {
 
 function ensure(dir) {
   if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
+}
+
+function buildRoadmapGaps(resources, roadmap) {
+  const mainPath = roadmap?.roadmap?.main_path ?? roadmap?.main_path ?? [];
+  const tutorialStages = new Set(
+    resources.filter((r) => r.type === 'tutorial' && r.stage).map((r) => r.stage),
+  );
+  const originals = {};
+  try {
+    const dir = join(ROOT, 'data', 'drafts', 'creation');
+    for (const f of readdirSync(dir)) {
+      if (!f.endsWith('.md')) continue;
+      const text = readFileSync(join(dir, f), 'utf8');
+      const stage = text.match(/^# stage: (\S+)/m)?.[1];
+      const type = text.match(/^suggested_type: (\S+)/m)?.[1];
+      if (stage) originals[stage] = type ?? 'skill';
+    }
+  } catch { /* no creation briefs yet — no gaps claimed */ }
+  return mainPath
+    .filter((stage) => !tutorialStages.has(stage))
+    .map((stage) => ({ stage, needsOriginal: originals[stage] ?? null }));
 }
 function write(name, data) {
   writeFileSync(join(GENERATED, name), JSON.stringify(data, null, 0) + '\n', 'utf8');

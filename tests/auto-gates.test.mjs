@@ -45,6 +45,7 @@ describe('repo-extract pure helpers', () => {
 
   it('hints types from tree layout', () => {
     assert.equal(hintTypeFromTree(['SKILL.md', 'README.md']), 'skill');
+    assert.equal(hintTypeFromTree(['agents/reviewer.md', 'README.md']), 'agent');
     assert.equal(hintTypeFromTree(['.claude-plugin/plugin.json']), 'plugin');
     assert.equal(hintTypeFromTree(['src/server.ts']), 'mcp');
     assert.equal(hintTypeFromTree(['docs/guide.md']), null);

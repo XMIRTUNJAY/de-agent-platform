@@ -44,4 +44,16 @@ describe('roadmap coverage', () => {
     console.log(`  tutorial coverage: ${mainPath.length - missing.length}/${mainPath.length}` +
       (missing.length > 0 ? ` — missing: ${missing.join(', ')}` : ''));
   });
+
+  it('emits upcoming gaps for exactly the uncovered stages (never as pages)', () => {
+    const stats = JSON.parse(readFileSync(join(ROOT, 'src', 'data', 'generated', 'stats.json'), 'utf8'));
+    const gaps = stats.roadmapGaps ?? [];
+    const covered = new Set(resources.filter((r) => r.type === 'tutorial').map((r) => r.stage));
+    assert.equal(gaps.length, mainPath.filter((s) => !covered.has(s)).length);
+    for (const g of gaps) {
+      assert.ok(mainPath.includes(g.stage));
+      assert.ok(!covered.has(g.stage));
+      assert.ok(!resources.some((r) => r.id === `upcoming-${g.stage}`), 'gaps must not be registry records');
+    }
+  });
 });
