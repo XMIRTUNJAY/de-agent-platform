@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-16T01:57:05.565Z",
+  "generated_at": "2026-10-16T02:39:35.555Z",
   "counts": {
     "total": 156,
     "byType": {
@@ -2203,7 +2203,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -2247,7 +2247,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -2309,10 +2309,14 @@
           "security": 90,
           "documentation": 25,
           "maintainability": 10,
-          "community": null
+          "community": 94
         },
         "composite_score": 41.14,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "python-sql"
         ],
@@ -2720,7 +2724,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -2764,7 +2768,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -2830,6 +2834,10 @@
         },
         "composite_score": 44.57,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "reliability"
         ],
@@ -3078,7 +3086,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -3122,7 +3130,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -3188,6 +3196,10 @@
         },
         "composite_score": 38.36,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "reliability"
         ],
@@ -3491,7 +3503,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -3535,7 +3547,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -3601,6 +3613,10 @@
         },
         "composite_score": 40.29,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "cloud"
         ],
@@ -3746,7 +3762,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -3798,7 +3814,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -3864,6 +3880,10 @@
         },
         "composite_score": 57.14,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "warehousing"
         ],
@@ -3987,7 +4007,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -4036,7 +4056,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -4102,6 +4122,10 @@
         },
         "composite_score": 54.86,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "reliability"
         ],
@@ -4232,7 +4256,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -4281,7 +4305,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -4347,6 +4371,10 @@
         },
         "composite_score": 56.29,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "python-sql"
         ],
@@ -4472,7 +4500,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -4524,7 +4552,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -4590,6 +4618,10 @@
         },
         "composite_score": 57.14,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "orchestration"
         ],
@@ -4716,7 +4748,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -4766,7 +4798,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -4832,6 +4864,10 @@
         },
         "composite_score": 44.86,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "cloud"
         ],
@@ -4960,7 +4996,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -5010,7 +5046,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -5076,6 +5112,10 @@
         },
         "composite_score": 51.43,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "cloud"
         ],
@@ -5201,7 +5241,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -5250,7 +5290,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -5316,6 +5356,10 @@
         },
         "composite_score": 40.57,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "reliability"
         ],
@@ -5442,7 +5486,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -5491,7 +5535,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -5557,6 +5601,10 @@
         },
         "composite_score": 54.29,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "data-quality"
         ],
@@ -5683,7 +5731,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -5736,7 +5784,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -5802,6 +5850,10 @@
         },
         "composite_score": 57.14,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "warehousing"
         ],
@@ -5926,7 +5978,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -5976,7 +6028,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -6042,6 +6094,10 @@
         },
         "composite_score": 47,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "lakehouse"
         ],
@@ -6168,7 +6224,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -6217,7 +6273,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -6283,6 +6339,10 @@
         },
         "composite_score": 47.86,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "observability"
         ],
@@ -6408,7 +6468,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -6457,7 +6517,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -6523,6 +6583,10 @@
         },
         "composite_score": 46.29,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "reliability"
         ],
@@ -6652,7 +6716,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -6702,7 +6766,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -6768,6 +6832,10 @@
         },
         "composite_score": 51.43,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "reliability"
         ],
@@ -6894,7 +6962,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -6944,7 +7012,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -7010,6 +7078,10 @@
         },
         "composite_score": 57.14,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "data-quality"
         ],
@@ -7138,7 +7210,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -7191,7 +7263,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -7257,6 +7329,10 @@
         },
         "composite_score": 57.86,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "data-processing"
         ],
@@ -7384,7 +7460,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -7433,7 +7509,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -7499,6 +7575,10 @@
         },
         "composite_score": 55.71,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "python-sql"
         ],
@@ -7626,7 +7706,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -7676,7 +7756,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -7742,6 +7822,10 @@
         },
         "composite_score": 57.14,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "orchestration"
         ],
@@ -7870,7 +7954,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -7920,7 +8004,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -7986,6 +8070,10 @@
         },
         "composite_score": 55.71,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "streaming"
         ],
@@ -8112,7 +8200,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -8162,7 +8250,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -8228,6 +8316,10 @@
         },
         "composite_score": 49.29,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "lakehouse"
         ],
@@ -8354,7 +8446,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -8403,7 +8495,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -8469,6 +8561,10 @@
         },
         "composite_score": 46.43,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "streaming"
         ],
@@ -8595,7 +8691,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -8645,7 +8741,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -8711,6 +8807,10 @@
         },
         "composite_score": 55,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "agentic"
         ],
@@ -8838,7 +8938,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -8888,7 +8988,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -8954,6 +9054,10 @@
         },
         "composite_score": 50,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "reliability"
         ],
@@ -9081,7 +9185,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -9133,7 +9237,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -9199,6 +9303,10 @@
         },
         "composite_score": 53.57,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "data-processing"
         ],
@@ -9327,7 +9435,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -9376,7 +9484,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -9442,6 +9550,10 @@
         },
         "composite_score": 50.71,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "warehousing"
         ],
@@ -9587,7 +9699,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -9636,7 +9748,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -9702,6 +9814,10 @@
         },
         "composite_score": 50,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "python-sql"
         ],
@@ -9837,7 +9953,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -9886,7 +10002,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -9952,6 +10068,10 @@
         },
         "composite_score": 45.71,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "agentic"
         ],
@@ -10096,7 +10216,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -10144,7 +10264,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -10210,6 +10330,10 @@
         },
         "composite_score": 50,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "agentic"
         ],
@@ -10353,7 +10477,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -10402,7 +10526,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -10468,6 +10592,10 @@
         },
         "composite_score": 50,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "agentic"
         ],
@@ -10622,7 +10750,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -10671,7 +10799,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -10737,6 +10865,10 @@
         },
         "composite_score": 39.29,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "agentic"
         ],
@@ -10882,7 +11014,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -10931,7 +11063,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -10997,6 +11129,10 @@
         },
         "composite_score": 43.57,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "data-processing"
         ],
@@ -11143,7 +11279,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -11192,7 +11328,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -11258,6 +11394,10 @@
         },
         "composite_score": 37.14,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "cloud"
         ],
@@ -11411,7 +11551,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -11460,7 +11600,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -11526,6 +11666,10 @@
         },
         "composite_score": 43.57,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "observability"
         ],
@@ -11680,7 +11824,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -11729,7 +11873,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -11795,6 +11939,10 @@
         },
         "composite_score": 37.14,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "warehousing"
         ],
@@ -11957,7 +12105,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -12006,7 +12154,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -12072,6 +12220,10 @@
         },
         "composite_score": 37.14,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "cloud"
         ],
@@ -12225,7 +12377,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -12274,7 +12426,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -12340,6 +12492,10 @@
         },
         "composite_score": 35,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "cloud"
         ],
@@ -12500,7 +12656,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -12549,7 +12705,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -12615,6 +12771,10 @@
         },
         "composite_score": 42.14,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "streaming"
         ],
@@ -12755,7 +12915,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -12806,7 +12966,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -12872,6 +13032,10 @@
         },
         "composite_score": 43.71,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "agentic"
         ],
@@ -13007,7 +13171,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -13058,7 +13222,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -13124,6 +13288,10 @@
         },
         "composite_score": 48,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "reliability"
         ],
@@ -13262,7 +13430,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -13313,7 +13481,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -13379,6 +13547,10 @@
         },
         "composite_score": 43.71,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "data-quality"
         ],
@@ -13517,7 +13689,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -13568,7 +13740,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -13634,6 +13806,10 @@
         },
         "composite_score": 35.14,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "warehousing"
         ],
@@ -13768,7 +13944,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -13819,7 +13995,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -13885,6 +14061,10 @@
         },
         "composite_score": 37.29,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "observability"
         ],
@@ -14019,7 +14199,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -14070,7 +14250,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -14136,6 +14316,10 @@
         },
         "composite_score": 37.29,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "warehousing"
         ],
@@ -14275,7 +14459,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -14326,7 +14510,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -14392,6 +14576,10 @@
         },
         "composite_score": 33,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "reliability"
         ],
@@ -14528,7 +14716,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -14579,7 +14767,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -14645,6 +14833,10 @@
         },
         "composite_score": 37.29,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "streaming"
         ],
@@ -14779,7 +14971,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -14830,7 +15022,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -14896,6 +15088,10 @@
         },
         "composite_score": 37.29,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "lakehouse"
         ],
@@ -15032,7 +15228,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -15083,7 +15279,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -15149,6 +15345,10 @@
         },
         "composite_score": 43.71,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "data-processing"
         ],
@@ -15258,7 +15458,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -15307,7 +15507,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -15373,6 +15573,10 @@
         },
         "composite_score": 47.29,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "reliability"
         ],
@@ -15482,7 +15686,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -15531,7 +15735,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -15597,6 +15801,10 @@
         },
         "composite_score": 47.29,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "reliability"
         ],
@@ -15706,7 +15914,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -15755,7 +15963,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -15821,6 +16029,10 @@
         },
         "composite_score": 40.86,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "reliability"
         ],
@@ -15930,7 +16142,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -15979,7 +16191,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -16045,6 +16257,10 @@
         },
         "composite_score": 45.14,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "warehousing"
         ],
@@ -16154,7 +16370,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -16203,7 +16419,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -16269,6 +16485,10 @@
         },
         "composite_score": 40.86,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "observability"
         ],
@@ -16378,7 +16598,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -16427,7 +16647,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -16493,6 +16713,10 @@
         },
         "composite_score": 32.29,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "data-quality"
         ],
@@ -16602,7 +16826,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -16651,7 +16875,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -16717,6 +16941,10 @@
         },
         "composite_score": 40.86,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "data-quality"
         ],
@@ -16826,7 +17054,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -16875,7 +17103,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -16941,6 +17169,10 @@
         },
         "composite_score": 47.29,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "orchestration"
         ],
@@ -17050,7 +17282,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -17099,7 +17331,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -17165,6 +17397,10 @@
         },
         "composite_score": 40.86,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "reliability"
         ],
@@ -17280,7 +17516,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -17329,7 +17565,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -17395,6 +17631,10 @@
         },
         "composite_score": 40.86,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "reliability"
         ],
@@ -17536,7 +17776,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -17587,7 +17827,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -17653,6 +17893,10 @@
         },
         "composite_score": 38.57,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "observability"
         ],
@@ -17793,7 +18037,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -17844,7 +18088,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -17910,6 +18154,10 @@
         },
         "composite_score": 46.43,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "python-sql"
         ],
@@ -18053,7 +18301,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -18105,7 +18353,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -18171,6 +18419,10 @@
         },
         "composite_score": 42.14,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "data-quality"
         ],
@@ -18316,7 +18568,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -18367,7 +18619,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -18433,6 +18685,10 @@
         },
         "composite_score": 37.86,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "reliability"
         ],
@@ -18578,7 +18834,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -18629,7 +18885,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -18695,6 +18951,10 @@
         },
         "composite_score": 46.43,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "orchestration"
         ],
@@ -18838,7 +19098,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -18889,7 +19149,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -18955,6 +19215,10 @@
         },
         "composite_score": 46.43,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "data-quality"
         ],
@@ -19099,7 +19363,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -19150,7 +19414,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -19216,6 +19480,10 @@
         },
         "composite_score": 37.86,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "cloud"
         ],
@@ -19360,7 +19628,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -19411,7 +19679,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -19477,6 +19745,10 @@
         },
         "composite_score": 37.86,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "orchestration"
         ],
@@ -19622,7 +19894,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -19673,7 +19945,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -19739,6 +20011,10 @@
         },
         "composite_score": 30,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "reliability"
         ],
@@ -19882,7 +20158,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -19933,7 +20209,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -19999,6 +20275,10 @@
         },
         "composite_score": 46.43,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "cloud"
         ],
@@ -20141,7 +20421,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -20192,7 +20472,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -20258,6 +20538,10 @@
         },
         "composite_score": 40,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "streaming"
         ],
@@ -20402,7 +20686,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -20453,7 +20737,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -20519,6 +20803,10 @@
         },
         "composite_score": 46.43,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "data-processing"
         ],
@@ -20629,7 +20917,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -20678,7 +20966,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -20744,6 +21032,10 @@
         },
         "composite_score": 35.14,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "warehousing"
         ],
@@ -20855,7 +21147,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -20904,7 +21196,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -20970,6 +21262,10 @@
         },
         "composite_score": 43.71,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "cloud"
         ],
@@ -21078,7 +21374,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -21127,7 +21423,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -21193,6 +21489,10 @@
         },
         "composite_score": 35.14,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "orchestration"
         ],
@@ -21301,7 +21601,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -21350,7 +21650,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -21416,6 +21716,10 @@
         },
         "composite_score": 43.71,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "data-quality"
         ],
@@ -21529,7 +21833,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -21578,7 +21882,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -21644,6 +21948,10 @@
         },
         "composite_score": 43.71,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "data-processing"
         ],
@@ -21755,7 +22063,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -21804,7 +22112,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -21870,6 +22178,10 @@
         },
         "composite_score": 35.14,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "streaming"
         ],
@@ -21984,7 +22296,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -22033,7 +22345,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -22099,6 +22411,10 @@
         },
         "composite_score": 33,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "cloud"
         ],
@@ -22245,7 +22561,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -22294,7 +22610,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -22360,6 +22676,10 @@
         },
         "composite_score": 41.64,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "warehousing"
         ],
@@ -22507,7 +22827,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -22556,7 +22876,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -22622,6 +22942,10 @@
         },
         "composite_score": 40.93,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "data-processing"
         ],
@@ -22758,7 +23082,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -22807,7 +23131,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -22873,6 +23197,10 @@
         },
         "composite_score": 50.21,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "data-quality"
         ],
@@ -23013,7 +23341,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -23062,7 +23390,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -23128,6 +23456,10 @@
         },
         "composite_score": 39.5,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "cloud"
         ],
@@ -23266,7 +23598,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -23315,7 +23647,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -23381,6 +23713,10 @@
         },
         "composite_score": 41.64,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "streaming"
         ],
@@ -23525,7 +23861,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -23574,7 +23910,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -23640,6 +23976,10 @@
         },
         "composite_score": 43.07,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "streaming"
         ],
@@ -23778,7 +24118,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -23827,7 +24167,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -23893,6 +24233,10 @@
         },
         "composite_score": 36.07,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "reliability"
         ],
@@ -24031,7 +24375,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -24080,7 +24424,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -24146,6 +24490,10 @@
         },
         "composite_score": 42.5,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "cloud"
         ],
@@ -24281,7 +24629,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -24330,7 +24678,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -24396,6 +24744,10 @@
         },
         "composite_score": 43.21,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "data-quality"
         ],
@@ -24539,7 +24891,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -24588,7 +24940,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -24654,6 +25006,10 @@
         },
         "composite_score": 44.64,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "data-quality"
         ],
@@ -24789,7 +25145,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -24838,7 +25194,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -24904,6 +25260,10 @@
         },
         "composite_score": 46.79,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "data-quality"
         ],
@@ -25039,7 +25399,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -25088,7 +25448,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -25154,6 +25514,10 @@
         },
         "composite_score": 38.21,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "data-processing"
         ],
@@ -25288,7 +25652,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -25337,7 +25701,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -25403,6 +25767,10 @@
         },
         "composite_score": 36.79,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "data-processing"
         ],
@@ -25540,7 +25908,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -25589,7 +25957,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -25655,6 +26023,10 @@
         },
         "composite_score": 44.64,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "data-quality"
         ],
@@ -25791,7 +26163,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -25840,7 +26212,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -25906,6 +26278,10 @@
         },
         "composite_score": 38.21,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "lakehouse"
         ],
@@ -26038,7 +26414,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -26086,7 +26462,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -26152,6 +26528,10 @@
         },
         "composite_score": 38.21,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "warehousing"
         ],
@@ -26288,7 +26668,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -26337,7 +26717,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -26403,6 +26783,10 @@
         },
         "composite_score": 38.21,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "orchestration"
         ],
@@ -26540,7 +26924,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -26589,7 +26973,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -26655,6 +27039,10 @@
         },
         "composite_score": 38.21,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "streaming"
         ],
@@ -26796,7 +27184,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -26845,7 +27233,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -26911,6 +27299,10 @@
         },
         "composite_score": 38.21,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "streaming"
         ],
@@ -27057,7 +27449,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -27106,7 +27498,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -27172,6 +27564,10 @@
         },
         "composite_score": 49.64,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "data-processing"
         ],
@@ -27311,7 +27707,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -27360,7 +27756,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -27426,6 +27822,10 @@
         },
         "composite_score": 49.64,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "reliability"
         ],
@@ -27549,7 +27949,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -27603,7 +28003,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -27669,6 +28069,10 @@
         },
         "composite_score": 50.36,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "warehousing"
         ],
@@ -27790,7 +28194,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -27843,7 +28247,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -27909,6 +28313,10 @@
         },
         "composite_score": 50.36,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "data-processing"
         ],
@@ -28034,7 +28442,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -28087,7 +28495,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -28153,6 +28561,10 @@
         },
         "composite_score": 52.5,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "lakehouse"
         ],
@@ -28276,7 +28688,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -28330,7 +28742,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -28396,6 +28808,10 @@
         },
         "composite_score": 50.36,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "agentic"
         ],
@@ -28518,7 +28934,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -28571,7 +28987,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -28637,6 +29053,10 @@
         },
         "composite_score": 37.5,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "lakehouse"
         ],
@@ -28759,7 +29179,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -28813,7 +29233,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -28879,6 +29299,10 @@
         },
         "composite_score": 50.36,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "data-quality"
         ],
@@ -29001,7 +29425,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -29054,7 +29478,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -29120,6 +29544,10 @@
         },
         "composite_score": 39.64,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "reliability"
         ],
@@ -29242,7 +29670,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -29295,7 +29723,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -29361,6 +29789,10 @@
         },
         "composite_score": 50.36,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "warehousing"
         ],
@@ -29486,7 +29918,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -29539,7 +29971,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -29605,6 +30037,10 @@
         },
         "composite_score": 52.5,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "data-processing"
         ],
@@ -29728,7 +30164,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -29781,7 +30217,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -29847,6 +30283,10 @@
         },
         "composite_score": 52.5,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "data-quality"
         ],
@@ -29967,7 +30407,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -30019,7 +30459,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -30085,6 +30525,10 @@
         },
         "composite_score": 48.93,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "warehousing"
         ],
@@ -30208,7 +30652,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -30260,7 +30704,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -30326,6 +30770,10 @@
         },
         "composite_score": 50.36,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "streaming"
         ],
@@ -30450,7 +30898,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -30503,7 +30951,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -30569,6 +31017,10 @@
         },
         "composite_score": 43.93,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "streaming"
         ],
@@ -30690,7 +31142,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -30743,7 +31195,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -30809,6 +31261,10 @@
         },
         "composite_score": 50.36,
         "composite_label": "adequate",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "orchestration"
         ],
@@ -30931,7 +31387,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -30984,7 +31440,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -31050,6 +31506,10 @@
         },
         "composite_score": 41.79,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "streaming"
         ],
@@ -31142,7 +31602,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -31186,7 +31646,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -31252,6 +31712,10 @@
         },
         "composite_score": 29.36,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "lakehouse"
         ],
@@ -31359,7 +31823,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -31403,7 +31867,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -31469,6 +31933,10 @@
         },
         "composite_score": 35.29,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "agentic"
         ],
@@ -31576,7 +32044,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -31620,7 +32088,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -31686,6 +32154,10 @@
         },
         "composite_score": 35.29,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "orchestration"
         ],
@@ -31793,7 +32265,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -31837,7 +32309,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -31903,6 +32375,10 @@
         },
         "composite_score": 35.29,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "lakehouse"
         ],
@@ -32010,7 +32486,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -32054,7 +32530,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -32120,6 +32596,10 @@
         },
         "composite_score": 35.29,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "streaming"
         ],
@@ -32227,7 +32707,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -32271,7 +32751,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -32337,6 +32817,10 @@
         },
         "composite_score": 35.29,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "foundations"
         ],
@@ -32443,7 +32927,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -32487,7 +32971,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -32553,6 +33037,10 @@
         },
         "composite_score": 35.29,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "data-processing"
         ],
@@ -32660,7 +33148,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -32704,7 +33192,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -32770,6 +33258,10 @@
         },
         "composite_score": 35.29,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "cloud"
         ],
@@ -32876,7 +33368,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -32920,7 +33412,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -32986,6 +33478,10 @@
         },
         "composite_score": 35.29,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "cloud"
         ],
@@ -33077,7 +33573,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -33121,7 +33617,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -33187,6 +33683,10 @@
         },
         "composite_score": 29.36,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "cloud"
         ],
@@ -33278,7 +33778,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -33322,7 +33822,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -33388,6 +33888,10 @@
         },
         "composite_score": 29.36,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "agentic"
         ],
@@ -33479,7 +33983,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -33523,7 +34027,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -33589,6 +34093,10 @@
         },
         "composite_score": 29.36,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "streaming"
         ],
@@ -33696,7 +34204,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -33740,7 +34248,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -33806,6 +34314,10 @@
         },
         "composite_score": 33.86,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "reliability"
         ],
@@ -33913,7 +34425,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -33957,7 +34469,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -34023,6 +34535,10 @@
         },
         "composite_score": 35.29,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "cloud"
         ],
@@ -34130,7 +34646,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -34174,7 +34690,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -34240,6 +34756,10 @@
         },
         "composite_score": 35.29,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "observability"
         ],
@@ -34346,7 +34866,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -34390,7 +34910,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -34456,6 +34976,10 @@
         },
         "composite_score": 35.29,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "warehousing"
         ],
@@ -34562,7 +35086,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -34606,7 +35130,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -34672,6 +35196,10 @@
         },
         "composite_score": 35.29,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "warehousing"
         ],
@@ -34779,7 +35307,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -34823,7 +35351,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -34889,6 +35417,10 @@
         },
         "composite_score": 35.29,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "streaming"
         ],
@@ -34996,7 +35528,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -35040,7 +35572,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -35106,6 +35638,10 @@
         },
         "composite_score": 35.29,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "lakehouse"
         ],
@@ -35212,7 +35748,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -35256,7 +35792,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -35322,6 +35858,10 @@
         },
         "composite_score": 33.86,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "system-design"
         ],
@@ -35413,7 +35953,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -35457,7 +35997,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -35523,6 +36063,10 @@
         },
         "composite_score": 29.36,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "data-processing"
         ],
@@ -35630,7 +36174,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -35674,7 +36218,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -35740,6 +36284,10 @@
         },
         "composite_score": 35.29,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "python-sql"
         ],
@@ -35846,7 +36394,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -35890,7 +36438,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -35956,6 +36504,10 @@
         },
         "composite_score": 33.86,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "foundations"
         ],
@@ -36062,7 +36614,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -36106,7 +36658,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -36172,6 +36724,10 @@
         },
         "composite_score": 35.29,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "data-quality"
         ],
@@ -36263,7 +36819,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -36307,7 +36863,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -36373,6 +36929,10 @@
         },
         "composite_score": 29.36,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "agentic"
         ],
@@ -36464,7 +37024,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -36508,7 +37068,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -36574,6 +37134,10 @@
         },
         "composite_score": 29.36,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "data-processing"
         ],
@@ -36665,7 +37229,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -36709,7 +37273,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -36775,6 +37339,10 @@
         },
         "composite_score": 29.36,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "cloud"
         ],
@@ -36866,7 +37434,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -36910,7 +37478,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -36976,6 +37544,10 @@
         },
         "composite_score": 29.36,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "agentic"
         ],
@@ -37067,7 +37639,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -37111,7 +37683,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -37177,6 +37749,10 @@
         },
         "composite_score": 29.36,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "python-sql"
         ],
@@ -37268,7 +37844,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -37312,7 +37888,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -37378,6 +37954,10 @@
         },
         "composite_score": 29.36,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "agentic"
         ],
@@ -37469,7 +38049,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -37513,7 +38093,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -37579,6 +38159,10 @@
         },
         "composite_score": 29.36,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "cloud"
         ],
@@ -37685,7 +38269,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -37729,7 +38313,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -37795,6 +38379,10 @@
         },
         "composite_score": 35.29,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "agentic"
         ],
@@ -37902,7 +38490,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -37946,7 +38534,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -38012,6 +38600,10 @@
         },
         "composite_score": 35.29,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "agentic"
         ],
@@ -38103,7 +38695,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -38147,7 +38739,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -38213,6 +38805,10 @@
         },
         "composite_score": 29.36,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "agentic"
         ],
@@ -38304,7 +38900,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -38348,7 +38944,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -38414,6 +39010,10 @@
         },
         "composite_score": 29.36,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "agentic"
         ],
@@ -38521,7 +39121,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -38565,7 +39165,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -38631,6 +39231,10 @@
         },
         "composite_score": 33.86,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "observability"
         ],
@@ -38722,7 +39326,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -38766,7 +39370,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -38832,6 +39436,10 @@
         },
         "composite_score": 29.36,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "streaming"
         ],
@@ -38923,7 +39531,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -38967,7 +39575,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -39033,6 +39641,10 @@
         },
         "composite_score": 29.36,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "lakehouse"
         ],
@@ -39124,7 +39736,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -39168,7 +39780,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -39234,6 +39846,10 @@
         },
         "composite_score": 29.36,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "reliability"
         ],
@@ -39340,7 +39956,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -39384,7 +40000,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -39450,6 +40066,10 @@
         },
         "composite_score": 35.29,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "cloud"
         ],
@@ -39557,7 +40177,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-16T01:57:05.517Z",
+          "at": "2026-10-16T02:39:35.413Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -39601,7 +40221,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-16T01:57:05.517Z",
+            "at": "2026-10-16T02:39:35.413Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -39667,6 +40287,10 @@
         },
         "composite_score": 33.86,
         "composite_label": "weak",
+        "popularity_base": 0,
+        "popularity_inputs": {
+          "github_community": null
+        },
         "roadmap_stages": [
           "data-quality"
         ],

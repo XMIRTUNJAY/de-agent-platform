@@ -154,6 +154,54 @@ const scoreLabel = (score) => {
             )}
           </section>
         )}
+        <section class="mount" data-rate-widget data-resource-id={res.id}>
+          <h2>Rating</h2>
+          <p data-rate-summary>
+            {res.marketplace?.popularity_base !== undefined &&
+              `Popularity ${res.marketplace.popularity_base}/100`}
+          </p>
+          <div data-rate-stars>
+            {[1, 2, 3, 4, 5].map((n: any) => (
+              <button type="button" data-rate-value={n} aria-label={`Rate ${n} stars`}>★</button>
+            ))}
+          </div>
+          <p data-rate-note>Votes are stored under our editorial rating, not the source.</p>
+        </section>
+        <script>
+          (() => {
+            const widget = document.querySelector('[data-rate-widget]');
+            if (!widget) return;
+            const id = widget.getAttribute('data-resource-id');
+            const summary = widget.querySelector('[data-rate-summary]');
+            const render = (avg, count, pop) => {
+              if (summary)
+                summary.textContent =
+                  count > 0
+                    ? `★ ${avg} · ${count} vote(s) · popularity ${pop}/100`
+                    : `No votes yet · popularity ${pop}/100`;
+            };
+            fetch(`/api/marketplace/stats?resource_id=${encodeURIComponent(id)}`)
+              .then((r) => (r.ok ? r.json() : null))
+              .then((j) => {
+                if (j?.ok) render(j.data.rating_average, j.data.rating_count, j.data.popularity);
+              })
+              .catch(() => {});
+            widget.querySelectorAll('[data-rate-value]').forEach((btn) => {
+              btn.addEventListener('click', () => {
+                fetch('/api/marketplace/rate', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ resource_id: id, rating: Number(btn.getAttribute('data-rate-value')) }),
+                })
+                  .then((r) => (r.ok ? r.json() : null))
+                  .then((j) => {
+                    if (j?.ok) render(j.rating_average, j.rating_count, j.popularity);
+                  })
+                  .catch(() => {});
+              });
+            });
+          })();
+        </script>
         {(res.vulnerability_scan_at || (res.secret_findings ?? []).length > 0) && (
           <section class="mount">
             <h2>Security scan</h2>

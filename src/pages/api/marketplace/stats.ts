@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
 import registry from '@/data/generated/registry.json';
+import { computePopularity } from '../../../../pipelines/lib/popularity.mjs';
 
 // NOTE: @/lib/db is lazy-imported inside the handler (never top-level):
 // better-sqlite3's native init segfaults `astro build` static prerender.
@@ -30,6 +31,33 @@ export const GET: APIRoute = async ({ request }) => {
     const stats = getResourceStatsDb(resourceId);
     const { attempts: recentInstalls } = getInstallAttemptsDb(resourceId, 1, 5);
 
+    // Live overlay: durable votes + engagement (Turso/file). If the votes DB
+    // is unreachable (cold start, static copy), fall back to build snapshot.
+    let live = null;
+    try {
+      const { getRatingStats, getEngagementTotals } = await import('@/lib/votes-db.mjs');
+      const rating = await getRatingStats(resourceId);
+      const eng = await getEngagementTotals(resourceId);
+      const community =
+        mp?.popularity_inputs?.github_community ?? mp?.quality_scores?.community ?? 0;
+      live = {
+        rating_average: rating.average,
+        rating_count: rating.count,
+        rating_distribution: rating.distribution,
+        engagement: eng,
+        popularity: computePopularity({
+          community,
+          ratingAvg: rating.average,
+          ratingCount: rating.count,
+          installs: eng.installs,
+          copies: eng.copies,
+          views: eng.views,
+        }),
+      };
+    } catch (err) {
+      console.warn('[Marketplace Stats] votes DB unreachable, using snapshot:', err);
+    }
+
     return new Response(JSON.stringify({
       ok: true,
       data: {
@@ -43,9 +71,12 @@ export const GET: APIRoute = async ({ request }) => {
         install_count: stats?.install_count ?? mp.install_count ?? 0,
         install_success_rate: stats?.install_success_rate ?? mp.install_success_rate ?? 0,
         last_installed_at: stats?.last_installed_at ?? mp.last_installed_at ?? null,
-        rating_average: stats?.rating_average ?? mp.rating_average ?? 0,
-        rating_count: stats?.rating_count ?? mp.rating_count ?? 0,
-        rating_distribution: stats?.rating_distribution ?? mp.rating_distribution ?? {},
+        rating_average: live?.rating_average ?? stats?.rating_average ?? mp.rating_average ?? 0,
+        rating_count: live?.rating_count ?? stats?.rating_count ?? mp.rating_count ?? 0,
+        rating_distribution: live?.rating_distribution ?? stats?.rating_distribution ?? mp.rating_distribution ?? {},
+        engagement: live?.engagement ?? { installs: 0, copies: 0, views: 0 },
+        popularity: live?.popularity ?? mp.popularity_base ?? null,
+        popularity_base: mp.popularity_base ?? null,
         roadmap_stages: mp.roadmap_stages ?? [],
         roadmap_phase: mp.roadmap_phase ?? null,
         is_featured: mp.is_featured ?? false,

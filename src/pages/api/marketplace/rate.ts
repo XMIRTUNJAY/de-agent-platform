@@ -1,27 +1,31 @@
 import type { APIRoute } from 'astro';
 import { z } from 'zod';
 import registry from '@/data/generated/registry.json';
+import { computePopularity } from '../../../../pipelines/lib/popularity.mjs';
 
-// NOTE: @/lib/db is lazy-imported inside handlers (never top-level):
-// better-sqlite3's native init segfaults `astro build` static prerender.
+// NOTE: votes-db is lazy-imported inside handlers (never top-level):
+// database clients must not initialize during static prerender (`astro build`).
+// Durable store = libsql (Turso in prod, local file in dev) — better-sqlite3
+// cannot persist on serverless (ephemeral filesystem).
 
-// Rating submission: 1-5 stars + optional review text
-// Requires verified install (enforced via install_attempt_id or user_id tracking)
+// Rating submission: 1-5 stars + optional review text.
+// Identity = server-side hash of (salt, IP, resource): one vote per voter per
+// resource (repeats update), 10 votes/hour per IP. No login required.
 const RateSchema = z.object({
   resource_id: z.string().min(1),
   rating: z.number().int().min(1).max(5),
   review_text: z.string().max(2000).optional(),
-  user_id: z.string().min(1), // authenticated user
-  install_attempt_id: z.string().optional(), // link to successful install
+  install_attempt_id: z.string().optional(), // link to successful install (verified flag)
 });
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, clientAddress }) => {
   try {
-    const { createRating, upsertResourceStats } = await import('@/lib/db');
+    const { submitVote, voterHash, ipHash, countRecentVotes, getEngagementTotals } =
+      await import('@/lib/votes-db.mjs');
     const body = await request.json();
     const parsed = RateSchema.parse(body);
 
-    const resource = registry.resources.find(r => r.id === parsed.resource_id);
+    const resource = (registry as any).resources.find((r: any) => r.id === parsed.resource_id);
     if (!resource) {
       return new Response(JSON.stringify({ ok: false, error: 'Resource not found' }), {
         status: 404,
@@ -29,40 +33,48 @@ export const POST: APIRoute = async ({ request }) => {
       });
     }
 
-    // Check if user has verified install for this resource
-    // For now: allow but log - in production verify against install_attempts
-    const isVerifiedInstall = !!parsed.install_attempt_id;
+    const ip = clientAddress ?? 'unknown';
+    const ip_hash = ipHash(ip);
+    if (await countRecentVotes(ip_hash, 1) >= 10) {
+      return new Response(JSON.stringify({ ok: false, error: 'Rate limit: 10 votes/hour' }), {
+        status: 429,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
 
-    // Create rating in database
-    const ratingId = createRating({
+    const stats = await submitVote({
       resource_id: parsed.resource_id,
-      resource_type: resource.type,
-      rating: parsed.rating,
-      review_text: parsed.review_text,
-      user_id: parsed.user_id,
-      install_attempt_id: parsed.install_attempt_id,
-      is_verified_install: isVerifiedInstall,
-    });
-
-    // Log rating event
-    console.log('[MARKETPLACE_RATE]', JSON.stringify({
-      resource_id: parsed.resource_id,
-      resource_type: resource.type,
-      rating: parsed.rating,
+      score: parsed.rating,
+      voter_hash: voterHash(ip, parsed.resource_id),
+      ip_hash,
       review_text: parsed.review_text ?? null,
-      user_id: parsed.user_id,
-      install_attempt_id: parsed.install_attempt_id,
-      is_verified_install: isVerifiedInstall,
-      submitted_at: new Date().toISOString(),
-    }));
-
-    return new Response(JSON.stringify({ ok: true, rating_id: ratingId }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' },
+      verified: !!parsed.install_attempt_id,
     });
+
+    const eng = await getEngagementTotals(parsed.resource_id);
+    const mp = resource.marketplace ?? {};
+    const popularity = computePopularity({
+      community: mp?.popularity_inputs?.github_community ?? mp?.quality_scores?.community ?? 0,
+      ratingAvg: stats.average,
+      ratingCount: stats.count,
+      installs: eng.installs,
+      copies: eng.copies,
+      views: eng.views,
+    });
+
+    return new Response(
+      JSON.stringify({
+        ok: true,
+        rating_average: stats.average,
+        rating_count: stats.count,
+        popularity,
+        popularity_base: mp.popularity_base ?? null,
+      }),
+      { status: 200, headers: { 'Content-Type': 'application/json' } },
+    );
   } catch (err) {
     if (err instanceof z.ZodError) {
-      return new Response(JSON.stringify({ ok: false, error: 'Invalid payload', details: err.errors }), {
+      return new Response(JSON.stringify({ ok: false, error: 'Invalid payload', details: err.issues }), {
         status: 400,
         headers: { 'Content-Type': 'application/json' },
       });
@@ -78,7 +90,7 @@ export const POST: APIRoute = async ({ request }) => {
 // Get reviews for a resource
 export const GET: APIRoute = async ({ request }) => {
   try {
-    const { getResourceStatsDb, getRatingsDb } = await import('@/lib/db');
+    const { getRatingStats, getReviews } = await import('@/lib/votes-db.mjs');
     const url = new URL(request.url);
     const resourceId = url.searchParams.get('resource_id');
     const page = parseInt(url.searchParams.get('page') ?? '1', 10);
@@ -91,7 +103,7 @@ export const GET: APIRoute = async ({ request }) => {
       });
     }
 
-    const resource = registry.resources.find(r => r.id === resourceId);
+    const resource = (registry as any).resources.find((r: any) => r.id === resourceId);
     if (!resource) {
       return new Response(JSON.stringify({ ok: false, error: 'Resource not found' }), {
         status: 404,
@@ -99,23 +111,22 @@ export const GET: APIRoute = async ({ request }) => {
       });
     }
 
-    // Get stats from database
-    const stats = getResourceStatsDb(resourceId);
-    const { ratings, total } = getRatingsDb(resourceId, page, perPage);
+    const summary = await getRatingStats(resourceId);
+    const { reviews, total } = await getReviews(resourceId, page, perPage);
 
-    return new Response(JSON.stringify({
-      ok: true,
-      data: ratings,
-      pagination: { page, per_page: perPage, total, total_pages: Math.ceil(total / perPage) },
-      summary: {
-        average: stats?.rating_average ?? resource.marketplace?.rating_average ?? 0,
-        count: stats?.rating_count ?? resource.marketplace?.rating_count ?? 0,
-        distribution: stats?.rating_distribution ?? resource.marketplace?.rating_distribution ?? {},
-      },
-    }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({
+        ok: true,
+        data: reviews,
+        pagination: { page, per_page: perPage, total, total_pages: Math.ceil(total / perPage) },
+        summary: {
+          average: summary.average,
+          count: summary.count,
+          distribution: summary.distribution,
+        },
+      }),
+      { status: 200, headers: { 'Content-Type': 'application/json' } },
+    );
   } catch (err) {
     console.error('[Marketplace Reviews GET] Error:', err);
     return new Response(JSON.stringify({ ok: false, error: 'Internal error' }), {

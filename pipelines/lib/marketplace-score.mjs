@@ -5,6 +5,7 @@
  */
 
 import { CHECKS } from './evidence.mjs';
+import { computePopularity } from './popularity.mjs';
 
 // Scoring weights (sum = 1.0)
 export const MARKETPLACE_WEIGHTS = {
@@ -91,6 +92,8 @@ export function computeMarketplaceScores(resources, meta, executions = {}) {
       quality_scores: scores,
       composite_score: Math.round(composite * 100) / 100,
       composite_label: compositeLabel,
+      popularity_base: computePopularity({ community: scores.community ?? 0 }),
+      popularity_inputs: { github_community: scores.community ?? null },
       roadmap_stages: computeRoadmapStages(r),
       roadmap_phase: roadmapPhase,
       is_featured: false,

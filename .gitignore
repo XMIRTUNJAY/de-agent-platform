@@ -23,6 +23,9 @@ build-log.txt
 .DS_Store
 Thumbs.db
 
+# Local votes DB (gitignored)
+.data/
+
 # Environment
 .env
 .env.local
