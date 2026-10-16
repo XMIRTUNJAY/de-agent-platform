@@ -143,6 +143,21 @@ step('SECRET SCAN', async () => {
   return null;
 });
 
+// INSTALL MANIFESTS — propose install commands for top resources lacking
+// them. Drafts ONLY (data/drafts/install-manifests/): manifests execute on
+// user machines, so a curator tests each on a clean machine and copies the
+// block into the curated record by hand. Never auto-merges.
+step('INSTALL MANIFESTS', async () => {
+  try {
+    const { proposeInstallManifests } = await import('./generate-install-manifests.mjs');
+    const { proposed, skipped, noToken } = await proposeInstallManifests(resources);
+    info(`Install manifests: ${proposed} drafts proposed, ${skipped} skipped${noToken ? ' (no token)' : ''}`);
+  } catch (err) {
+    warn('Install manifests skipped: ' + err.message);
+  }
+  return null;
+});
+
 // MARKETPLACE SCORE
 step('MARKETPLACE SCORE', () => {
   // Load execution results for performance scoring
