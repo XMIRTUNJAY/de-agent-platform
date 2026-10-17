@@ -798,16 +798,20 @@
   z-index: 50;
   width: 300px;
   transform: translateX(-100%);
+  /* visibility (not display) keeps the slide transition and removes the
+     closed drawer from the a11y tree + tab order */
+  visibility: hidden;
+  transition: transform var(--duration-slow) var(--ease-spring), visibility 0s linear var(--duration-slow);
   overflow-y: auto;
+  overscroll-behavior: contain;
   border-right: 1px solid var(--border);
   padding-bottom: 4rem;
   padding-top: 3.5rem;
-  transition: transform var(--duration-slow) var(--ease-spring);
   background: var(--shell);
 }
-.sidebar.open { transform: translateX(0); }
+.sidebar.open { transform: translateX(0); visibility: visible; transition-delay: 0s, 0s; }
 @media (min-width: 1024px) {
-  .sidebar { position: sticky; top: 3.5rem; z-index: 30; height: calc(100vh - 3.5rem); transform: none; background: transparent; }
+  .sidebar { position: sticky; top: 3.5rem; z-index: 30; height: calc(100vh - 3.5rem); transform: none; visibility: visible; transition: none; background: transparent; }
 }
 
 .sidebar-scrim {

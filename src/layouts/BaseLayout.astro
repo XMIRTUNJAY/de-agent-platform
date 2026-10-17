@@ -23,7 +23,9 @@ interface Props {
 const {
   title,
   description = SITE.description,
-  sidebar = false,
+  // Persistent shell: every page except the landing home carries the left
+  // rail so the frame never jumps between routes (audit P1-1).
+  sidebar = true,
   ogType = 'website',
   keywords = [],
   noindex = false,
@@ -107,12 +109,11 @@ const analyticsEnabled = import.meta.env.PUBLIC_ANALYTICS_ENABLED === 'true';
     {sidebar && <div id="sidebar-scrim" class="sidebar-scrim" aria-hidden="true"></div>}
     <div class="mx-auto flex max-w-[1600px]">
       {sidebar && <SidebarNav />}
-      {sidebar && <div id="sidebar-scrim" class="sidebar-scrim" aria-hidden="true"></div>}
       <main id="main" class="min-w-0 flex-1">
         <slot />
       </main>
     </div>
-    {!sidebar && <Footer />}
+    <Footer />
 
     <script is:inline>
       (function () {
@@ -143,6 +144,14 @@ const analyticsEnabled = import.meta.env.PUBLIC_ANALYTICS_ENABLED === 'true';
           sb.classList.toggle('open', open);
           if (scrim) scrim.classList.toggle('visible', open);
           if (toggle) toggle.setAttribute('aria-expanded', String(open));
+          // visibility:hidden (CSS) removes the closed drawer from the a11y
+          // tree and tab order; focus management here.
+          if (open) {
+            var first = sb.querySelector('a');
+            if (first) first.focus();
+          } else if (document.activeElement && sb.contains(document.activeElement) && toggle) {
+            toggle.focus();
+          }
         }
         if (toggle) toggle.addEventListener('click', function () {
           setSidebar(!sb.classList.contains('open'));

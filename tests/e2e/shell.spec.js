@@ -34,3 +34,21 @@ test('P0-2: no horizontal overflow at tablet width across shell routes', async (
     expect(overflow, `${path} overflows by ${overflow}px at 768px`).toBeLessThanOrEqual(1);
   }
 });
+
+test('P1-2: every mobile drawer item has an icon', async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 667 });
+  await page.goto('/marketplace', { waitUntil: 'domcontentloaded' });
+  await page.click('[data-sidebar-toggle]');
+  await expect(page.locator('#sidebar.open')).toBeVisible();
+  const total = await page.locator('#sidebar a').count();
+  const withIcon = await page.locator('#sidebar a:has(svg)').count();
+  expect(total).toBeGreaterThan(20);
+  expect(withIcon).toBe(total);
+  await page.keyboard.press('Escape');
+  await expect(page.locator('#sidebar.open')).toHaveCount(0);
+});
+
+test('P1-1: footer renders on sidebar pages too', async ({ page }) => {
+  await page.goto('/skills', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('footer')).toBeVisible();
+});

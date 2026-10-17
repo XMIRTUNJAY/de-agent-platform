@@ -1,5 +1,7 @@
 ---
 import { SIDEBAR } from '@/site.config';
+import Icon from './Icon.astro';
+
 const path = Astro.url.pathname;
 const norm = (p: string) => (p.length > 1 && p.endsWith('/') ? p.slice(0, -1) : p);
 const isActive = (href: string) => norm(path) === norm(href);
@@ -7,21 +9,24 @@ const isActive = (href: string) => norm(path) === norm(href);
 <nav
   id="sidebar"
   class="sidebar"
-  aria-label="Documentation"
+  aria-label="Site navigation"
 >
-  <div class="px-3">
-    {SIDEBAR.map((group, gi) => (
+  <div class="px-3 pb-8">
+    {SIDEBAR.map((group) => (
       <div class="mb-5">
         <p class="mono-label px-2 pb-1.5">{group.title}</p>
         <ul class="space-y-px">
-          {group.items.map((item, ii) => (
+          {group.items.map((item) => (
             <li>
               {item.badge === 'soon' ? (
                 <span
                   class="flex items-center justify-between gap-2 rounded-md px-2 py-2 font-mono text-sm leading-5 text-muted opacity-50 cursor-default"
                   aria-disabled="true"
                 >
-                  <span class="truncate">{item.label}</span>
+                  <span class="flex min-w-0 items-center gap-2">
+                    <span class="grid w-4 shrink-0 place-items-center text-dim"><Icon name={item.icon ?? 'docs'} size={14} /></span>
+                    <span class="truncate">{item.label}</span>
+                  </span>
                   <span class="chip">soon</span>
                 </span>
               ) : (
@@ -35,7 +40,12 @@ const isActive = (href: string) => norm(path) === norm(href);
                   ]}
                   aria-current={isActive(item.href) ? 'page' : undefined}
                 >
-                  <span class="truncate">{item.label}</span>
+                  <span class="flex min-w-0 items-center gap-2">
+                    <span class="grid w-4 shrink-0 place-items-center" class:list={[isActive(item.href) ? 'text-accent' : 'text-dim']}>
+                      <Icon name={item.icon ?? 'docs'} size={14} />
+                    </span>
+                    <span class="truncate">{item.label}</span>
+                  </span>
                   {item.badge && <span class="chip">{item.badge}</span>}
                 </a>
               )}
