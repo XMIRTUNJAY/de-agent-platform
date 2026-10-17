@@ -2,6 +2,8 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import PageHero from '@/components/PageHero.astro';
 import ResourceCard from '@/components/ResourceCard.astro';
+import FilterPanel from '@/components/FilterPanel.astro';
+import Icon from '@/components/Icon.astro';
 import registry from '@/data/generated/registry.json';
 
 const types = ['skill', 'mcp', 'plugin', 'agent', 'hook', 'template', 'starter', 'runbook', 'architecture', 'reference', 'policy', 'rule_pack', 'config_template', 'governance_pack'];
@@ -76,6 +78,19 @@ const stageOptions = stages.map(s => ({
   label: s.title,
   count: registry.resources.filter(r => r.stage === s.id).length
 }));
+
+// Single source for FilterPanel — key order matches filter-state.mjs.
+const filters = [
+  { label: 'Type', key: 'type', options: typeOptions },
+  { label: 'Category', key: 'category', options: categoryOptions },
+  { label: 'Difficulty', key: 'difficulty', options: difficultyOptions },
+  { label: 'Verification', key: 'verification', options: verificationOptions },
+  { label: 'Agent Compatibility', key: 'agent', options: agentOptions },
+  { label: 'Security', key: 'security', options: securityOptions },
+  { label: 'Technology', key: 'technology', options: technologyOptions },
+  { label: 'Stage', key: 'stage', options: stageOptions },
+  { label: 'Quality Score', key: 'quality', options: compositeLabelOptions },
+];
 ---
 
 <BaseLayout title="Marketplace · DE//AGENT" sidebar>
@@ -88,138 +103,14 @@ const stageOptions = stages.map(s => ({
   <div class="col section-sm" style="padding-top: 2.5rem;">
     <div class="grid gap-8 lg:grid-cols-[280px_1fr]">
       <!-- Filters sidebar -->
-      <aside class="sticky top-16 space-y-6 self-start" style="max-height: calc(100vh - 5rem); overflow-y: auto; overscroll-behavior: contain; scrollbar-gutter: stable; padding-bottom: 1rem;">
-        <details class="card card-pad-sm" open>
-          <summary class="mono-label cursor-pointer">Type <span class="text-dim">({typeOptions.filter(o => o.count > 0).length})</span></summary>
-          <ul class="mt-3 space-y-2">
-            {typeOptions.filter(o => o.count > 0).map((opt) => (
-              <li>
-                <label class="flex items-center gap-2 cursor-pointer">
-                  <input type="checkbox" name="type" value={opt.value} class="checkbox" />
-                  <span class="text-sm text-muted">{opt.label}</span>
-                  <span class="ml-auto font-mono text-2xs text-dim">({opt.count})</span>
-                </label>
-              </li>
-            ))}
-          </ul>
-        </details>
-        <details class="card card-pad-sm" open>
-          <summary class="mono-label cursor-pointer">Category <span class="text-dim">({categoryOptions.filter(o => o.count > 0).length})</span></summary>
-          <ul class="mt-3 space-y-2">
-            {categoryOptions.filter(o => o.count > 0).map((opt) => (
-              <li>
-                <label class="flex items-center gap-2 cursor-pointer">
-                  <input type="checkbox" name="category" value={opt.value} class="checkbox" />
-                  <span class="text-sm text-muted">{opt.label}</span>
-                  <span class="ml-auto font-mono text-2xs text-dim">({opt.count})</span>
-                </label>
-              </li>
-            ))}
-          </ul>
-        </details>
-        <details class="card card-pad-sm" open>
-          <summary class="mono-label cursor-pointer">Difficulty <span class="text-dim">({difficultyOptions.filter(o => o.count > 0).length})</span></summary>
-          <ul class="mt-3 space-y-2">
-            {difficultyOptions.filter(o => o.count > 0).map((opt) => (
-              <li>
-                <label class="flex items-center gap-2 cursor-pointer">
-                  <input type="checkbox" name="difficulty" value={opt.value} class="checkbox" />
-                  <span class="text-sm text-muted">{opt.label}</span>
-                  <span class="ml-auto font-mono text-2xs text-dim">({opt.count})</span>
-                </label>
-              </li>
-            ))}
-          </ul>
-        </details>
-        <details class="card card-pad-sm" open>
-          <summary class="mono-label cursor-pointer">Verification <span class="text-dim">({verificationOptions.filter(o => o.count > 0).length})</span></summary>
-          <ul class="mt-3 space-y-2">
-            {verificationOptions.filter(o => o.count > 0).map((opt) => (
-              <li>
-                <label class="flex items-center gap-2 cursor-pointer">
-                  <input type="checkbox" name="verification" value={opt.value} class="checkbox" />
-                  <span class="text-sm text-muted">{opt.label}</span>
-                  <span class="ml-auto font-mono text-2xs text-dim">({opt.count})</span>
-                </label>
-              </li>
-            ))}
-          </ul>
-        </details>
-        <details class="card card-pad-sm" open>
-          <summary class="mono-label cursor-pointer">Agent Compatibility <span class="text-dim">({agentOptions.filter(o => o.count > 0).length})</span></summary>
-          <ul class="mt-3 space-y-2">
-            {agentOptions.filter(o => o.count > 0).map((opt) => (
-              <li>
-                <label class="flex items-center gap-2 cursor-pointer">
-                  <input type="checkbox" name="agent" value={opt.value} class="checkbox" />
-                  <span class="text-sm text-muted">{opt.label}</span>
-                  <span class="ml-auto font-mono text-2xs text-dim">({opt.count})</span>
-                </label>
-              </li>
-            ))}
-          </ul>
-        </details>
-        <details class="card card-pad-sm" open>
-          <summary class="mono-label cursor-pointer">Security <span class="text-dim">({securityOptions.filter(o => o.count > 0).length})</span></summary>
-          <ul class="mt-3 space-y-2">
-            {securityOptions.filter(o => o.count > 0).map((opt) => (
-              <li>
-                <label class="flex items-center gap-2 cursor-pointer">
-                  <input type="checkbox" name="security" value={opt.value} class="checkbox" />
-                  <span class="text-sm text-muted">{opt.label}</span>
-                  <span class="ml-auto font-mono text-2xs text-dim">({opt.count})</span>
-                </label>
-              </li>
-            ))}
-          </ul>
-        </details>
-        <details class="card card-pad-sm" open>
-          <summary class="mono-label cursor-pointer">Technology <span class="text-dim">({technologyOptions.filter(o => o.count > 0).length})</span></summary>
-          <ul class="mt-3 space-y-2">
-            {technologyOptions.filter(o => o.count > 0).map((opt) => (
-              <li>
-                <label class="flex items-center gap-2 cursor-pointer">
-                  <input type="checkbox" name="technology" value={opt.value} class="checkbox" />
-                  <span class="text-sm text-muted">{opt.label}</span>
-                  <span class="ml-auto font-mono text-2xs text-dim">({opt.count})</span>
-                </label>
-              </li>
-            ))}
-          </ul>
-        </details>
-        <details class="card card-pad-sm" open>
-          <summary class="mono-label cursor-pointer">Stage <span class="text-dim">({stageOptions.filter(o => o.count > 0).length})</span></summary>
-          <ul class="mt-3 space-y-2">
-            {stageOptions.filter(o => o.count > 0).map((opt) => (
-              <li>
-                <label class="flex items-center gap-2 cursor-pointer">
-                  <input type="checkbox" name="stage" value={opt.value} class="checkbox" />
-                  <span class="text-sm text-muted">{opt.label}</span>
-                  <span class="ml-auto font-mono text-2xs text-dim">({opt.count})</span>
-                </label>
-              </li>
-            ))}
-          </ul>
-        </details>
-        <details class="card card-pad-sm" open>
-          <summary class="mono-label cursor-pointer">Quality Score <span class="text-dim">({compositeLabelOptions.filter(o => o.count > 0).length})</span></summary>
-          <ul class="mt-3 space-y-2">
-            {compositeLabelOptions.filter(o => o.count > 0).map((opt) => (
-              <li>
-                <label class="flex items-center gap-2 cursor-pointer">
-                  <input type="checkbox" name="quality" value={opt.value} class="checkbox" />
-                  <span class="text-sm text-muted">{opt.label}</span>
-                  <span class="ml-auto font-mono text-2xs text-dim">({opt.count})</span>
-                </label>
-              </li>
-            ))}
-          </ul>
-        </details>
-      </aside>
+      <button type="button" data-filter-toggle class="btn btn-sm mb-4 gap-2 lg:hidden" aria-expanded="false" aria-controls="filters">
+        <Icon name="categories" size={14} /> Filters
+      </button>
+      <FilterPanel filters={filters} id="filters" />
 
       <!-- Results grid -->
       <section>
-        <div class="flex gap-4 mb-4 flex-wrap">
+        <div class="flex items-center gap-4 mb-4 flex-wrap">
           <label class="flex items-center gap-2">
             <span class="text-sm text-muted">Sort by:</span>
             <select id="sort-select" class="select select-sm">
@@ -230,15 +121,31 @@ const stageOptions = stages.map(s => ({
               <option value="verification-desc">Verification Level</option>
             </select>
           </label>
+          <p id="result-count" class="ml-auto font-mono text-2xs text-dim" style="margin: 0;"></p>
         </div>
+        <div id="active-chips" class="filter-chips" hidden></div>
         <div id="results" class="card-grid stagger">
           {registry.resources.filter((r) => (r.page_eligibility?.state ?? 'eligible') !== 'internal_only').map((r) => (
-            <div data-type={r.type} data-category={r.categorySlug ?? ''} data-difficulty={r.difficulty ?? ''} data-verification={r.verification} data-technology={(r.technologies ?? []).join(',')} data-stage={r.stage ?? ''} data-agents={r.compatible_agents?.join(',') ?? ''} data-security={[
-              r.security_flags === 0 && 'read-only',
-              r.security?.credentials && 'needs-credentials',
-              r.security?.network_access && 'network',
-              r.security?.runs_code && 'runs-code',
-            ].filter(Boolean).join(',')}>
+            <div
+              data-type={r.type}
+              data-category={r.categorySlug ?? ''}
+              data-difficulty={r.difficulty ?? ''}
+              data-verification={r.verification}
+              data-technology={(r.technologies ?? []).join(',')}
+              data-stage={r.stage ?? ''}
+              data-agent={r.compatible_agents?.join(',') ?? ''}
+              data-composite={r.marketplace?.composite_score ?? 0}
+              data-rating={r.marketplace?.rating_average ?? 0}
+              data-installs={r.marketplace?.install_count ?? 0}
+              data-updated={r.last_verified || r.freshness?.pushed_at || ''}
+              data-quality={r.marketplace?.composite_label ?? ''}
+              data-security={[
+                r.security_flags === 0 && 'read-only',
+                r.security?.credentials && 'needs-credentials',
+                r.security?.network_access && 'network',
+                r.security?.runs_code && 'runs-code',
+              ].filter(Boolean).join(',')}
+            >
               <ResourceCard resource={r} />
             </div>
           ))}
@@ -248,90 +155,169 @@ const stageOptions = stages.map(s => ({
     </div>
 
     <script>
+      import {
+        stateFromParams,
+        paramsFromState,
+        activeCount,
+        chipList,
+        withoutChip,
+        DEFAULT_SORT,
+      } from '@/lib/filter-state.mjs';
+
       (function () {
         const results = document.getElementById('results') as HTMLElement | null;
         const empty = document.getElementById('empty') as HTMLElement | null;
         if (!results) return;
         const cards = Array.from(results.children) as HTMLElement[];
-        const checkboxes = document.querySelectorAll('aside input[type="checkbox"]') as NodeListOf<HTMLInputElement>;
+        const panel = document.getElementById('filters') as HTMLElement | null;
+        const checkboxes = document.querySelectorAll('#filters input[type="checkbox"]') as NodeListOf<HTMLInputElement>;
         const sortSelect = document.getElementById('sort-select') as HTMLSelectElement | null;
-        const active = new Map<string, Set<string>>();
-        checkboxes.forEach((cb) => { active.set(cb.name, new Set()); });
-        let currentSort = 'composite-desc';
+        const chipsRow = document.getElementById('active-chips') as HTMLElement | null;
+        const countEl = document.getElementById('result-count') as HTMLElement | null;
+        const filterCount = panel?.querySelector('[data-filter-count]') as HTMLElement | null;
+        const scrim = document.getElementById('sidebar-scrim');
+        const toggleBtn = document.querySelector('[data-filter-toggle]') as HTMLButtonElement | null;
+        const closeBtn = panel?.querySelector('[data-filter-close]') as HTMLButtonElement | null;
+        const clearBtn = panel?.querySelector('[data-filter-clear]') as HTMLButtonElement | null;
 
-        function apply() {
+        let state = stateFromParams(new URLSearchParams(location.search)) as Record<string, string[]>;
+        let currentSort = sortSelect?.value ?? DEFAULT_SORT;
+        const urlSort = new URLSearchParams(location.search).get('sort');
+        if (urlSort && sortSelect) sortSelect.value = urlSort;
+        currentSort = sortSelect?.value ?? DEFAULT_SORT;
+
+        function syncCheckboxes() {
+          checkboxes.forEach((cb) => {
+            cb.checked = (state[cb.name] ?? []).includes(cb.value);
+          });
+        }
+
+        function closeDrawer() {
+          if (!panel || !panel.classList.contains('open')) return;
+          panel.classList.remove('open');
+          scrim?.classList.remove('show');
+          toggleBtn?.setAttribute('aria-expanded', 'false');
+        }
+
+        function apply(pushUrl: boolean) {
+          syncCheckboxes();
+
           let visible = 0;
-          const cardsArray = Array.from(cards);
-          
-          // Filter
-          for (const card of cardsArray) {
+          for (const card of cards) {
             let show = true;
-            for (const [key, values] of active) {
-              if (values.size === 0) continue;
+            for (const [key, values] of Object.entries(state)) {
+              if (!values || values.length === 0) continue;
               const val = card.dataset[key];
               if (!val) { show = false; break; }
-              if (key === 'category' || key === 'type') {
-                if (!values.has(val)) { show = false; break; }
-              } else if (key === 'agent' || key === 'security' || key === 'technology' || key === 'quality') {
-                const has = val.split(',').some((v: string) => values.has(v));
-                if (!has) { show = false; break; }
-              } else {
-                if (!values.has(val)) { show = false; break; }
+              if (key === 'agent' || key === 'security' || key === 'technology' || key === 'quality') {
+                if (!val.split(',').some((v) => values.includes(v))) { show = false; break; }
+              } else if (!values.includes(val)) {
+                show = false;
+                break;
               }
             }
             card.hidden = !show;
             if (show) visible++;
           }
 
-          // Sort visible cards
-          if (sortSelect) currentSort = sortSelect.value;
-          const visibleCards = cardsArray.filter(c => !c.hidden);
+          const visibleCards = cards.filter((c) => !c.hidden);
+          const num = (el: HTMLElement, k: string) => Number.parseFloat(el.dataset[k] ?? '0') || 0;
           visibleCards.sort((a, b) => {
-            const getScore = (card: HTMLElement) => {
-              const mp = card.dataset.marketplace ? JSON.parse(card.dataset.marketplace) : null;
-              return mp;
-            };
-            const mpA = getScore(a);
-            const mpB = getScore(b);
-            
             switch (currentSort) {
-              case 'composite-desc':
-                return (mpB?.composite_score ?? 0) - (mpA?.composite_score ?? 0);
-              case 'rating-desc':
-                return (mpB?.rating_average ?? 0) - (mpA?.rating_average ?? 0);
-              case 'installs-desc':
-                return (mpB?.install_count ?? 0) - (mpA?.install_count ?? 0);
+              case 'rating-desc': return num(b, 'rating') - num(a, 'rating');
+              case 'installs-desc': return num(b, 'installs') - num(a, 'installs');
               case 'updated-desc':
                 return new Date(b.dataset.updated ?? 0).getTime() - new Date(a.dataset.updated ?? 0).getTime();
-              case 'verification-desc':
-                const vRank: Record<string, number> = { verified: 4, tested: 3, reviewed: 2, community: 1 };
-                return (vRank[b.dataset.verification ?? ''] ?? 0) - (vRank[a.dataset.verification ?? ''] ?? 0);
-              default:
-                return 0;
+              case 'verification-desc': {
+                const rank: Record<string, number> = { verified: 4, tested: 3, reviewed: 2, community: 1 };
+                return (rank[b.dataset.verification ?? ''] ?? 0) - (rank[a.dataset.verification ?? ''] ?? 0);
+              }
+              default: return num(b, 'composite') - num(a, 'composite');
             }
           });
-          
-          // Re-append in sorted order
-          const results = document.getElementById('results');
-          if (results) {
-            visibleCards.forEach(c => results.appendChild(c));
-          }
+          visibleCards.forEach((c) => results!.appendChild(c));
 
           if (empty) empty.hidden = visible > 0;
+          if (countEl) countEl.textContent = `${visible} resource${visible === 1 ? '' : 's'}`;
+
+          // Active-filter chips
+          const count = activeCount(state);
+          if (filterCount) {
+            filterCount.textContent = String(count);
+            filterCount.hidden = count === 0;
+          }
+          if (chipsRow) {
+            chipsRow.hidden = count === 0;
+            chipsRow.innerHTML = '';
+            for (const chip of chipList(state)) {
+              const el = document.createElement('span');
+              el.className = 'filter-chip';
+              el.append(`${chip.key}: ${chip.value}`);
+              const x = document.createElement('button');
+              x.type = 'button';
+              x.setAttribute('aria-label', `Remove filter ${chip.key}: ${chip.value}`);
+              x.textContent = '\u00d7';
+              x.addEventListener('click', () => {
+                state = withoutChip(state, chip.key, chip.value);
+                apply(true);
+              });
+              el.appendChild(x);
+              chipsRow.appendChild(el);
+            }
+          }
+
+          // URL sync — replaceState for direct edits, push for popstate replay
+          const params = paramsFromState(state, currentSort);
+          const qs = params.toString();
+          const url = `${location.pathname}${qs ? `?${qs}` : ''}`;
+          if (pushUrl) history.pushState(state, '', url);
+          else history.replaceState(state, '', url);
         }
 
         checkboxes.forEach((cb) => {
           cb.addEventListener('change', () => {
-            const set = active.get(cb.name)!;
-            if (cb.checked) set.add(cb.value);
-            else set.delete(cb.value);
-            apply();
+            const values = state[cb.name] ? [...state[cb.name]] : [];
+            const idx = values.indexOf(cb.value);
+            if (cb.checked && idx === -1) values.push(cb.value);
+            if (!cb.checked && idx !== -1) values.splice(idx, 1);
+            if (values.length) state[cb.name] = values;
+            else delete state[cb.name];
+            apply(true);
           });
         });
 
-        if (sortSelect) {
-          sortSelect.addEventListener('change', apply);
-        }
+        sortSelect?.addEventListener('change', () => {
+          currentSort = sortSelect.value;
+          apply(true);
+        });
+
+        clearBtn?.addEventListener('click', () => {
+          state = {};
+          apply(true);
+        });
+
+        toggleBtn?.addEventListener('click', () => {
+          if (!panel) return;
+          const open = !panel.classList.contains('open');
+          panel.classList.toggle('open', open);
+          scrim?.classList.toggle('show', open);
+          toggleBtn.setAttribute('aria-expanded', String(open));
+          if (open) (panel.querySelector('input, button, summary') as HTMLElement | null)?.focus();
+        });
+        closeBtn?.addEventListener('click', closeDrawer);
+        scrim?.addEventListener('click', closeDrawer);
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') closeDrawer();
+        });
+        window.addEventListener('popstate', () => {
+          state = stateFromParams(new URLSearchParams(location.search)) as Record<string, string[]>;
+          const urlSort = new URLSearchParams(location.search).get('sort');
+          if (sortSelect) sortSelect.value = urlSort ?? DEFAULT_SORT;
+          currentSort = sortSelect?.value ?? DEFAULT_SORT;
+          apply(false);
+        });
+
+        apply(false);
       })();
     </script>
   </div>

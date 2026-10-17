@@ -1,0 +1,62 @@
+---
+// Reusable filter panel — grouped, count-labeled, URL-synced via the page's
+// script. Below lg it becomes an off-canvas drawer (Filters button opens it).
+import Icon from './Icon.astro';
+
+interface FilterOption {
+  value: string;
+  label: string;
+  count: number;
+}
+interface FilterDef {
+  label: string;
+  key: string;
+  options: FilterOption[];
+}
+interface Props {
+  filters: FilterDef[];
+  id?: string;
+  openByDefault?: string[];
+}
+const { filters, id = 'filters', openByDefault = ['type', 'category'] } = Astro.props;
+---
+
+<aside id={id} class="filter-panel" aria-label="Filter resources">
+  <div class="filter-panel-head">
+    <p class="mono-label" style="margin: 0;">
+      Filters
+      <span data-filter-count class="chip chip-accent" hidden>0</span>
+    </p>
+    <span class="flex items-center gap-1">
+      <button type="button" data-filter-clear class="filter-clear">Clear all</button>
+      <button
+        type="button"
+        data-filter-close
+        class="btn-ghost grid h-8 w-8 place-items-center rounded-md lg:hidden"
+        aria-label="Close filters"
+      >
+        <Icon name="close" size={16} />
+      </button>
+    </span>
+  </div>
+
+  {filters.map((f) => (
+    <details class="filter-group" open={openByDefault.includes(f.key) ? true : undefined}>
+      <summary class="mono-label">
+        {f.label}
+        <span class="text-dim">({f.options.filter((o) => o.count > 0).length})</span>
+      </summary>
+      <ul class="filter-options">
+        {f.options.filter((o) => o.count > 0).map((opt) => (
+          <li>
+            <label class="filter-option">
+              <input type="checkbox" name={f.key} value={opt.value} class="checkbox" />
+              <span class="filter-option-label">{opt.label}</span>
+              <span class="filter-option-count">{opt.count}</span>
+            </label>
+          </li>
+        ))}
+      </ul>
+    </details>
+  ))}
+</aside>
