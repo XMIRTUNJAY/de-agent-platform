@@ -539,7 +539,11 @@
   border: 1px solid var(--border);
   background: var(--surface-2);
   color: var(--fg-muted);
-  white-space: nowrap;
+  /* wrap instead of pushing layout: long provider-track chips (roadmap)
+     previously forced 220px of horizontal scroll on mobile (audit P0-3) */
+  white-space: normal;
+  overflow-wrap: anywhere;
+  min-width: 0;
   transition: border-color var(--duration-fast), background-color var(--duration-fast), color var(--duration-fast), transform var(--duration-fast);
 }
 .chip:hover { border-color: var(--border-strong); background: var(--surface-3); color: var(--fg); transform: translateY(-1px); }
@@ -670,6 +674,7 @@
   padding-top: 1rem;
   border-top: 1px solid var(--border);
 }
+.card-meta > * { max-width: 100%; }
 
 /* Code blocks */
 .codeblock {
