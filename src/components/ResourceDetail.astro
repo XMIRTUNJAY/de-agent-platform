@@ -78,7 +78,7 @@ const scoreColor = (score: number) => {
     </header>
 
     <div class="grid gap-8 lg:grid-cols-[1fr_320px]">
-      <section class="prose-de space-y-8">
+      <section class="prose-de prose-measure space-y-8">
         {res.purpose && (
           <section class="mount">
             <h2>Purpose</h2>
@@ -265,7 +265,7 @@ const scoreColor = (score: number) => {
         {res.body && (
           <section class="mount">
             <h2>Details</h2>
-            <div class="prose-de" set:html={marked.parse(res.body)} />
+            <div class="prose-de prose-measure" set:html={marked.parse(res.body)} />
           </section>
         )}
         {res.context && (

@@ -1114,6 +1114,17 @@
 }
 @media (min-width: 768px) { .col { padding-inline: 2rem; } }
 
+/* Reading measure — article bodies inside the shell column (Task 7 / P1-4).
+   72ch keeps line length comfortable. Centered variant for detail-page grid
+   columns; left variant aligns flush with the PageHero above it. */
+.prose-measure {
+  max-width: 72ch;
+  margin-inline: auto;
+}
+.prose-measure-l {
+  max-width: 72ch;
+}
+
 /* Skip link */
 .skip-link {
   position: absolute;

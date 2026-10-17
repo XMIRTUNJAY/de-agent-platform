@@ -103,3 +103,36 @@ test.describe(() => {
     expect(checked).toBe(0);
   });
 });
+
+test.describe(() => {
+  test.setTimeout(60000);
+
+  test('P1-4: detail prose sits in a centered 72ch measure at 1440', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('/skills/sql-review', { waitUntil: 'load' });
+    const prose = page.locator('.prose-measure').first();
+    await expect(prose).toBeVisible();
+    const { width, offset } = await prose.evaluate((el) => {
+      const r = el.getBoundingClientRect();
+      // center within its grid column (main minus the 320px aside + gap)
+      const grid = el.closest('.grid').getBoundingClientRect();
+      const aside = el.closest('.grid').querySelector('aside');
+      const asideW = aside ? aside.getBoundingClientRect().width + 32 : 0;
+      const colLeft = grid.left;
+      const colRight = grid.right - asideW;
+      return { width: r.width, offset: Math.abs(r.left - colLeft - (colRight - colLeft - r.width) / 2) };
+    });
+    // 72ch at 16px ≈ 720-780px depending on the font; allow slack
+    expect(width).toBeLessThanOrEqual(800);
+    expect(offset, `centered within column: offset ${offset}px`).toBeLessThanOrEqual(32);
+  });
+
+  test('P1-4: docs body uses a 72ch measure aligned with the hero', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('/docs/how-it-works', { waitUntil: 'load' });
+    const article = page.locator('article.prose-measure-l');
+    await expect(article).toBeVisible();
+    const width = await article.evaluate((el) => el.getBoundingClientRect().width);
+    expect(width).toBeLessThanOrEqual(800);
+  });
+});

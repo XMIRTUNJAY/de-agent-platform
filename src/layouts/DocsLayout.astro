@@ -19,7 +19,7 @@ const { frontmatter } = Astro.props;
     title={frontmatter.title}
     lede={frontmatter.description}
   />
-  <article class="col prose-de section" style="padding-bottom: 6rem;">
+  <article class="col prose-de prose-measure-l section" style="padding-bottom: 6rem;">
     <slot />
   </article>
 </BaseLayout>
