@@ -6,6 +6,7 @@ import { SITE } from '@/site.config';
 import registry from '@/data/generated/registry.json';
 import stats from '@/data/generated/stats.json';
 import { count as countLabel } from '@/lib/format';
+import { PHASES, type Phase } from '@/lib/phases';
 
 const stages = registry.taxonomy.stages;
 
@@ -13,17 +14,11 @@ const stages = registry.taxonomy.stages;
 const stageCounts = stats.byStage as Record<string, number>;
 
 interface Stage { id: string; order: number; title: string; slug: string; }
-const PHASE_SLUGS: [string, string, string[]][] = [
-  ['Foundations', 'Storage, compute, and the primitives everything else builds on.', ['foundations', 'python-sql', 'data-processing']],
-  ['Platforms', 'Warehouses, lakehouses, streaming backbones, and the cloud they run on.', ['warehousing', 'lakehouse', 'cloud', 'streaming']],
-  ['Trust & Operations', 'Make data reliable: quality checks, observability, orchestration, reliability.', ['data-quality', 'observability', 'orchestration', 'reliability']],
-  ['Advanced & Agentic', 'System design judgment and AI agents as first-class data workers.', ['system-design', 'agentic']],
-];
 const stageById = new Map((stages as unknown as Stage[]).map((s) => [s.id, s] as const));
-const phases = PHASE_SLUGS.map(([name, tagline, ids], i) => {
-  const sts = ids.map((id) => stageById.get(id)).filter((s): s is Stage => !!s)
+const phases = PHASES.map((phase: Phase) => {
+  const sts = phase.stageIds.map((id) => stageById.get(id)).filter((s): s is Stage => !!s)
     .sort((a, b) => a.order - b.order);
-  return { index: i + 1, name, tagline, stages: sts, count: sts.reduce((n, s) => n + (stageCounts[s.id] ?? 0), 0) };
+  return { index: phase.index, name: phase.name, tagline: phase.tagline, stages: sts, count: sts.reduce((n, s) => n + (stageCounts[s.id] ?? 0), 0) };
 });
 
 // Feature cards — real data, five amp-style cards
