@@ -212,12 +212,14 @@ const scoreColor = (score: number) => {
           </p>
           <div data-rate-stars>
             {[1, 2, 3, 4, 5].map((n: any) => (
-              <button type="button" data-rate-value={n} aria-label={`Rate ${n} stars`}>★</button>
+              <button type="button" data-rate-value={n} aria-label={`Rate ${n} ${n === 1 ? 'star' : 'stars'}`}>★</button>
             ))}
           </div>
           <p data-rate-note>Votes are stored under our editorial rating, not the source.</p>
         </section>
         <script>
+          import { plural } from '@/lib/format';
+
           (() => {
             const widget = document.querySelector('[data-rate-widget]');
             if (!widget) return;
@@ -227,7 +229,7 @@ const scoreColor = (score: number) => {
               if (summary)
                 summary.textContent =
                   count > 0
-                    ? `★ ${avg} · ${count} vote(s) · popularity ${pop}/100`
+                    ? `★ ${avg} · ${count} ${plural(count, 'vote')} · popularity ${pop}/100`
                     : `No votes yet · popularity ${pop}/100`;
             };
             fetch(`/api/marketplace/stats?resource_id=${encodeURIComponent(id ?? '')}`)

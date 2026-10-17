@@ -819,6 +819,37 @@
   line-height: 1;
 }
 
+/* Rating widget — 44px touch targets, visible focus (Task 8) */
+[data-rate-stars] {
+  display: flex;
+  gap: 0.25rem;
+  margin-top: 0.5rem;
+}
+[data-rate-stars] button {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  font-size: var(--text-xl);
+  color: var(--fg-dim);
+  border-radius: var(--radius-sm);
+  transition: color var(--duration-fast), background-color var(--duration-fast), transform var(--duration-fast);
+}
+[data-rate-stars] button:hover {
+  color: var(--accent);
+  background: var(--surface-2);
+  transform: translateY(-1px);
+}
+[data-rate-stars] button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+[data-rate-note] {
+  margin-top: 0.5rem;
+  font-size: var(--text-2xs);
+  color: var(--fg-dim);
+}
+
 /* Selected-filter chips row */
 .filter-chips {
   display: flex;

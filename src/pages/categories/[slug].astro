@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import PageHero from '@/components/PageHero.astro';
-import FilterGroup from '@/components/FilterGroup.astro';
+import FilterPanel from '@/components/FilterPanel.astro';
 import ResourceCard from '@/components/ResourceCard.astro';
 import registry from '@/data/generated/registry.json';
 import { count as countLabel } from '@/lib/format';
@@ -35,11 +35,12 @@ export async function getStaticPaths() {
     </div>
   </PageHero>
 
-  <div class="col section-sm" style="padding-top: 2.5rem;">
+    <div class="col section-sm" style="padding-top: 2.5rem;">
     <div class="grid gap-8 lg:grid-cols-[280px_1fr]">
-      <aside class="sticky top-16 space-y-6 self-start" style="max-height: calc(100vh - 5rem); overflow-y: auto; overscroll-behavior: contain; scrollbar-gutter: stable; padding-bottom: 1rem;">
-        {filters.map((filter) => <FilterGroup filter={filter} />)}
-      </aside>
+      <button type="button" data-filter-toggle class="btn btn-sm mb-4 gap-2 lg:hidden" aria-expanded="false" aria-controls="filters">
+        Filters
+      </button>
+      <FilterPanel filters={filters} id="filters" />
 
       <section>
         <div id="results" class="card-grid">
@@ -87,6 +88,35 @@ export async function getStaticPaths() {
             else set.delete(cb.value);
             apply();
           });
+        });
+
+        const panel = document.getElementById('filters');
+        const toggleBtn = document.querySelector('[data-filter-toggle]') as HTMLButtonElement | null;
+        const closeBtn = panel?.querySelector('[data-filter-close]') as HTMLButtonElement | null;
+        const scrim = document.getElementById('sidebar-scrim');
+        toggleBtn?.addEventListener('click', () => {
+          if (!panel) return;
+          const open = !panel.classList.contains('open');
+          panel.classList.toggle('open', open);
+          scrim?.classList.toggle('show', open);
+          toggleBtn.setAttribute('aria-expanded', String(open));
+        });
+        closeBtn?.addEventListener('click', () => {
+          panel?.classList.remove('open');
+          scrim?.classList.remove('show');
+          toggleBtn?.setAttribute('aria-expanded', 'false');
+        });
+        scrim?.addEventListener('click', () => {
+          panel?.classList.remove('open');
+          scrim?.classList.remove('show');
+          toggleBtn?.setAttribute('aria-expanded', 'false');
+        });
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && panel?.classList.contains('open')) {
+            panel.classList.remove('open');
+            scrim?.classList.remove('show');
+            toggleBtn?.setAttribute('aria-expanded', 'false');
+          }
         });
       })();
     </script>
