@@ -18,7 +18,7 @@ const filters = [
   { label: 'Type', key: 'type', options: types.map(t => ({ value: t, label: registry.resources.find(r => r.type === t)?.typeLabel ?? t, count: resources.filter(r => r.type === t).length })) },
   { label: 'Difficulty', key: 'difficulty', options: difficulties.map(d => ({ value: d, label: d, count: resources.filter(r => r.difficulty === d).length })) },
   { label: 'Verification', key: 'verification', options: verifications.map(v => ({ value: v, label: v.charAt(0).toUpperCase() + v.slice(1), count: resources.filter(r => r.verification === v).length })) },
-  { label: 'Technology', key: 'technology', options: [...new Set(resources.flatMap(r => r.technologies ?? []))].sort().map(t => ({ value: t, label: registry.taxonomy.technologies.find(x => x.id === t)?.name ?? t, count: resources.filter(r => (r.technologies ?? []).includes(t)).length })) },
+  { label: 'Technology', key: 'technology', options: [...new Set(resources.flatMap(r => r.technologies ?? []))].sort().map(t => ({ value: t, label: registry.taxonomy.technologies.find(x => x.id === t)?.name ?? t, count: resources.filter(r => ((r.technologies ?? []) as string[]).includes(t)).length })) },
   { label: 'Stage', key: 'stage', options: [...new Set(resources.map(r => r.stage).filter(Boolean))].sort().map(s => ({ value: s, label: registry.taxonomy.stages.find(x => x.id === s)?.title ?? s, count: resources.filter(r => r.stage === s).length })) },
 ];
 

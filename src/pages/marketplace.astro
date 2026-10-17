@@ -62,13 +62,13 @@ const compositeLabelOptions = compositeLabels.map(l => ({
   count: registry.resources.filter(r => r.marketplace?.composite_label === l).length
 }));
 
-const technologies = registry.taxonomy.technologies.filter(t => registry.resources.some(r => (r.technologies ?? []).includes(t.id)));
+const technologies = registry.taxonomy.technologies.filter(t => registry.resources.some(r => ((r.technologies ?? []) as string[]).includes(t.id)));
 const stages = registry.taxonomy.stages.filter(s => registry.resources.some(r => r.stage === s.id));
 
 const technologyOptions = technologies.map(t => ({
   value: t.id,
   label: t.name,
-  count: registry.resources.filter(r => (r.technologies ?? []).includes(t.id)).length
+  count: registry.resources.filter(r => ((r.technologies ?? []) as string[]).includes(t.id)).length
 }));
 
 const stageOptions = stages.map(s => ({
@@ -287,7 +287,7 @@ const stageOptions = stages.map(s => ({
           if (sortSelect) currentSort = sortSelect.value;
           const visibleCards = cardsArray.filter(c => !c.hidden);
           visibleCards.sort((a, b) => {
-            const getScore = (card) => {
+            const getScore = (card: HTMLElement) => {
               const mp = card.dataset.marketplace ? JSON.parse(card.dataset.marketplace) : null;
               return mp;
             };
@@ -304,8 +304,8 @@ const stageOptions = stages.map(s => ({
               case 'updated-desc':
                 return new Date(b.dataset.updated ?? 0).getTime() - new Date(a.dataset.updated ?? 0).getTime();
               case 'verification-desc':
-                const vRank = { verified: 4, tested: 3, reviewed: 2, community: 1 };
-                return (vRank[b.dataset.verification] ?? 0) - (vRank[a.dataset.verification] ?? 0);
+                const vRank: Record<string, number> = { verified: 4, tested: 3, reviewed: 2, community: 1 };
+                return (vRank[b.dataset.verification ?? ''] ?? 0) - (vRank[a.dataset.verification ?? ''] ?? 0);
               default:
                 return 0;
             }

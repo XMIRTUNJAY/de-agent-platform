@@ -33,8 +33,9 @@ const runbook = registry.resources.find(r => r.type === 'runbook');
 const arch = registry.resources.find(r => r.type === 'architecture');
 const starter = registry.resources.find(r => r.type === 'starter');
 const skill2 = registry.resources.find(r => r.type === 'skill' && r.id !== skill?.id && r.install_command);
-const verifiedCount = (stats.counts.byVerification.reviewed ?? 0) + (stats.counts.byVerification.tested ?? 0) + (stats.counts.byVerification.verified ?? 0);
-const communityCount = stats.counts.byVerification.community ?? 0;
+const byVerification = stats.counts.byVerification as Record<string, number>;
+const verifiedCount = (byVerification.reviewed ?? 0) + (byVerification.tested ?? 0) + (byVerification.verified ?? 0);
+const communityCount = byVerification.community ?? 0;
 
 // Learn by building — starters + architectures
 const builders = registry.resources
@@ -44,7 +45,7 @@ const builders = registry.resources
 // Fresh from the registry — newest by last_verified
 const fresh = registry.resources
   .filter(r => r.last_verified)
-  .sort((a, b) => b.last_verified.localeCompare(a.last_verified))
+  .sort((a, b) => (b.last_verified ?? '').localeCompare(a.last_verified ?? ''))
   .slice(0, 6);
 
 const securityFlags = (r: any) => r

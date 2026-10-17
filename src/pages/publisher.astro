@@ -44,9 +44,9 @@ import registry from '@/data/generated/registry.json';
     </div>
   </div>
 
-  <script>
-    // Simple auth state (in production: use proper auth)
-    let currentUser = null;
+<script>
+// Simple auth state (in production: use proper auth)
+let currentUser: { id: string; login: string; name: string; avatar_url: string; claimedCount?: number } | null = null;
     
     function initPublisherPortal() {
       // Check for existing session
@@ -164,7 +164,8 @@ import registry from '@/data/generated/registry.json';
       claimResource(resourceId);
     }
 
-    async function claimResource(resourceId) {
+    async function claimResource(resourceId: string) {
+      if (!currentUser) return;
       try {
         const resp = await fetch('/api/marketplace/publisher', {
           method: 'POST',
@@ -183,7 +184,7 @@ import registry from '@/data/generated/registry.json';
           alert('Error: ' + (data.error ?? 'Failed to claim resource'));
         }
       } catch (err) {
-        alert('Error: ' + err.message);
+        alert('Error: ' + (err instanceof Error ? err.message : String(err)));
       }
     }
 

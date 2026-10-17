@@ -70,16 +70,23 @@ const { resourceId, resourceTitle } = Astro.props;
 </div>
 
 <script>
+  declare global {
+    interface Window {
+      trackEvent?: (event: string, payload: Record<string, unknown>) => void;
+    }
+  }
+  export {};
+
   (function () {
     const card = document.getElementById('feedback');
     if (!card) return;
 
     const resourceId = '{resourceId}';
-    const buttons = card.querySelectorAll('.feedback-btn');
+    const buttons = card.querySelectorAll('.feedback-btn') as NodeListOf<HTMLButtonElement>;
     const commentSection = card.querySelector('#feedback-comment');
-    const commentText = card.querySelector('#feedback-text');
-    const submitBtn = card.querySelector('.feedback-submit');
-    const cancelBtn = card.querySelector('.feedback-cancel');
+    const commentText = card.querySelector('#feedback-text') as HTMLTextAreaElement | null;
+    const submitBtn = card.querySelector('.feedback-submit') as HTMLButtonElement | null;
+    const cancelBtn = card.querySelector('.feedback-cancel') as HTMLButtonElement | null;
     const thanksSection = card.querySelector('#feedback-thanks');
 
     let selectedFeedback: 'yes' | 'partial' | 'no' | null = null;

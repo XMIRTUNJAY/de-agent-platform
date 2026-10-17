@@ -17,6 +17,7 @@ try {
     pageStates = JSON.parse(readFileSync('./src/data/generated/page-eligibility.json', 'utf8')).states ?? {};
   }
 } catch { pageStates = {}; }
+/** @param {string} u */
 const strip = (u) => String(u).replace(/\/+$/, '') || '/';
 
 // https://astro.build/config
