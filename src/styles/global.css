@@ -775,6 +775,50 @@
   color: var(--fg-dim);
   font-variant-numeric: tabular-nums;
 }
+/* Score meter — card header composite score (Task 6). Label/tone derive from
+   the registry's real composite_score + composite_label. */
+.score-meter {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-shrink: 0;
+  --tone-color: var(--color-dim);
+}
+.score-meter[data-tone='accent'] { --tone-color: var(--color-accent); }
+.score-meter[data-tone='info'] { --tone-color: var(--color-info); }
+.score-meter[data-tone='warn'] { --tone-color: var(--color-warn); }
+.score-meter[data-tone='danger'] { --tone-color: var(--color-danger); }
+.score-meter-track {
+  width: 2.75rem;
+  height: 0.25rem;
+  border-radius: 999px;
+  background: var(--surface-2);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.score-meter-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--tone-color);
+}
+.score-meter-value {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--fg);
+  line-height: 1;
+}
+.score-meter-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--fg-muted);
+  line-height: 1;
+}
+
 /* Selected-filter chips row */
 .filter-chips {
   display: flex;

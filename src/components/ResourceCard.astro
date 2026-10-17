@@ -1,5 +1,7 @@
 ---
 // ResourceCard — registry resource summary card (amp hairline-card grammar).
+import { formatScore, scoreBand } from '@/lib/format';
+
 interface Props {
   resource: any;
 }
@@ -11,21 +13,13 @@ const isEarnedVerification = ['reviewed', 'tested', 'verified'].includes(r.verif
 
 // Marketplace data
 const mp = r.marketplace;
-const compositeScore = mp?.composite_score ?? 0;
-const compositeLabel = mp?.composite_label ?? 'unproven';
+const compositeScore: number | null = mp?.composite_score ?? null;
+const band = scoreBand(compositeScore);
+const compositeLabel = mp?.composite_label || band.label;
 const ratingAvg = mp?.rating_average ?? 0;
 const ratingCount = mp?.rating_count ?? 0;
 const installCount = mp?.install_count ?? 0;
 const installSuccessRate = mp?.install_success_rate ?? 0;
-
-// Score color
-const scoreColor = (score: number) => {
-  if (score >= 80) return 'accent';
-  if (score >= 65) return 'info';
-  if (score >= 45) return 'warn';
-  if (score >= 25) return 'danger';
-  return 'dim';
-};
 
 // Star rating helper (returns string for template)
 function starRatingHtml(avg: number, count: number) {
@@ -42,11 +36,21 @@ function starRatingHtml(avg: number, count: number) {
 }
 ---
 
-<a href={r.url} class="card card-pad card-interactive" style="display: flex; flex-direction: column; height: 100%; content-visibility: auto; contain-intrinsic-size: auto 220px;" data-marketplace={JSON.stringify(mp)}>
-  <div class="card-header" style="margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center;">
+<a href={r.url} class="card card-pad card-interactive" style="display: flex; flex-direction: column; height: 100%; content-visibility: auto; contain-intrinsic-size: auto 220px;">
+  <div class="card-header" style="margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center; gap: 0.75rem;">
     <span class="mono-label">{r.typeLabel}{r.categoryTitle && ` / ${r.categoryTitle}`}</span>
-    {compositeScore > 0 && (
-      <span class="chip" style={`color: var(--color-${scoreColor(compositeScore)})`}>{compositeLabel} ({compositeScore})</span>
+    {mp && (
+      <span
+        class="score-meter"
+        data-tone={band.tone}
+        title={`Composite score ${formatScore(compositeScore)} · ${compositeLabel}`}
+      >
+        <span class="score-meter-track" aria-hidden="true">
+          <span class="score-meter-fill" style={`width: ${band.pct}%`}></span>
+        </span>
+        <span class="score-meter-value">{formatScore(compositeScore)}</span>
+        <span class="score-meter-label">{compositeLabel}</span>
+      </span>
     )}
   </div>
   <h3 style="font-size: var(--text-xl); font-weight: 500; line-height: 1.3; color: var(--fg);">{r.title}</h3>
