@@ -37,3 +37,6 @@ Thumbs.db
 .env.*.local
 
 .vercel
+
+# SDD scratch
+.superpowers/

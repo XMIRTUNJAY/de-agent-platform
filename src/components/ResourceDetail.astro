@@ -1,6 +1,11 @@
 ---
 import Feedback from '@/components/Feedback.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import { marked } from 'marked';
+
+// Resource bodies are human-gated curated YAML — trusted input, rendered
+// server-side with GFM so tables/checklists in skill docs work.
+marked.setOptions({ gfm: true, breaks: false });
 
 const { res, registry } = Astro.props as { res: any; registry: any };
 
@@ -260,7 +265,7 @@ const scoreColor = (score: number) => {
         {res.body && (
           <section class="mount">
             <h2>Details</h2>
-            <div class="prose-de">{res.body}</div>
+            <div class="prose-de" set:html={marked.parse(res.body)} />
           </section>
         )}
         {res.context && (
