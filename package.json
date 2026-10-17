@@ -13,7 +13,7 @@
     "build": "npm run packages:build && node pipelines/run.mjs && astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "test": "node --test \"tests/**/*.test.mjs\"",
+    "test": "node --test --experimental-strip-types \"tests/**/*.test.mjs\"",
     "serve": "astro preview --host",
     "packages:build": "npm run build --workspaces --if-present"
   },

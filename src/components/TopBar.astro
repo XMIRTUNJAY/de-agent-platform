@@ -1,54 +1,66 @@
 ---
-import { TOP_NAV, SITE } from '@/site.config';
+import { TOP_NAV, SITE, NAV_SECTION_MAP } from '@/site.config';
 import Logo from './Logo.astro';
+import Icon from './Icon.astro';
 
 const path = Astro.url.pathname;
 const isActive = (href: string) =>
   href === '/' ? path === '/' : path === href || path.startsWith(href + '/');
+
+// Section-aware active state: detail pages (/skills/sql-review) highlight
+// their owning nav entry instead of leaving the header contextless (audit P2).
+const sectionHref = NAV_SECTION_MAP.find(([prefix]) => path.startsWith(prefix))?.[1];
+const activeHref = TOP_NAV.find((item) => isActive(item.href))?.href ?? sectionHref;
+const activeSection = TOP_NAV.find((item) => item.href === activeHref);
 ---
 <header
   class="sticky top-0 z-40 border-b border-line backdrop-blur-sm"
   style="background: color-mix(in oklab, var(--shell) 88%, transparent);"
 >
   <div class="mx-auto flex h-14 max-w-[1600px] items-center gap-3 px-4 sm:px-6">
-    <!-- mobile sidebar trigger -->
+    <!-- mobile drawer trigger -->
     <button
       type="button"
       data-sidebar-toggle
       class="btn-ghost -ml-1 grid h-9 w-9 place-items-center rounded-md lg:hidden"
       aria-label="Open navigation" aria-expanded="false"
     >
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round"/></svg>
+      <Icon name="menu" size={18} />
     </button>
 
     <a href="/" class="flex items-center gap-2 rounded-md pr-2" aria-label={`${SITE.name} home`}>
       <Logo />
     </a>
 
-    <nav class="hidden items-center gap-0.5 md:flex" aria-label="Main navigation">
+    <!-- Full nav at lg+ only: at md (768px) the 4-6 items + right cluster
+         overflowed by 54px on every page (audit P0-2). -->
+    <nav class="hidden items-center gap-0.5 lg:flex" aria-label="Main navigation">
       {TOP_NAV.map((item) => (
         <a
           href={item.href}
           class:list={[
-            'rounded-md px-2.5 py-1.5 font-mono text-sm transition-colors',
-            isActive(item.href) ? 'text-fg bg-surface-2' : 'text-muted hover:text-fg hover:bg-surface-2',
+            'flex items-center gap-1.5 rounded-md px-2.5 py-1.5 font-mono text-sm transition-colors',
+            activeSection?.href === item.href ? 'text-fg bg-surface-2' : 'text-muted hover:text-fg hover:bg-surface-2',
           ]}
-          aria-current={isActive(item.href) ? 'page' : undefined}
-        >{item.label}</a>
+          aria-current={activeSection?.href === item.href ? 'page' : undefined}
+        >
+          <Icon name={item.icon ?? 'docs'} size={15} />
+          {item.label}
+        </a>
       ))}
     </nav>
 
-    <div class="ml-auto flex items-center gap-2">
+    <div class="ml-auto flex items-center gap-1.5">
       <button
         type="button"
         data-cmd-palette-open
-        class="btn btn-sm gap-2 pr-2 text-muted"
+        class="btn btn-sm gap-1.5 text-muted"
         aria-label="Open command palette"
-        title="Open command palette (⌘K)"
+        title="Open command palette (Ctrl/⌘K)"
       >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5" stroke-linecap="round"/></svg>
-        <span class="hidden sm:inline">Search</span>
-        <span class="hidden items-center gap-0.5 sm:inline-flex">
+        <Icon name="search" size={14} />
+        <span class="hidden xl:inline">Search</span>
+        <span class="hidden items-center gap-0.5 xl:inline-flex">
           <kbd class="kbd">⌘K</kbd>
         </span>
       </button>
