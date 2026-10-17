@@ -1,20 +1,21 @@
 import type { APIRoute } from 'astro';
 import { z } from 'zod';
 import registry from '@/data/generated/registry.json';
+export const prerender = false;
 
-// NOTE: @/lib/db is lazy-imported inside handlers (never top-level):
-// better-sqlite3's native init segfaults `astro build` static prerender.
+// NOTE: votes-db is lazy-imported inside handlers (never top-level):
+// database clients must not initialize during static prerender (`astro build`).
 
 // Publisher claim a resource
 const ClaimSchema = z.object({
   resource_id: z.string().min(1),
   user_id: z.string().min(1),
-  evidence: z.record(z.unknown()).optional(),
+  evidence: z.record(z.string(), z.unknown()).optional(),
 });
 
 export const POST: APIRoute = async ({ request }) => {
   try {
-    const { createPublisherClaim, getPublisherClaimByResource } = await import('@/lib/db');
+    const { createPublisherClaim, getPublisherClaimByResource } = await import('@/lib/votes-db.mjs');
     const body = await request.json();
     const parsed = ClaimSchema.parse(body);
 
@@ -27,7 +28,7 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     // Check if already claimed
-    const existing = getPublisherClaimByResource(parsed.resource_id);
+    const existing = await getPublisherClaimByResource(parsed.resource_id);
     if (existing) {
       return new Response(JSON.stringify({ ok: false, error: 'Resource already claimed', claim: existing }), {
         status: 409,
@@ -35,7 +36,7 @@ export const POST: APIRoute = async ({ request }) => {
       });
     }
 
-    const claimId = createPublisherClaim(parsed.resource_id, parsed.user_id, parsed.evidence);
+    const claimId = await createPublisherClaim(parsed.resource_id, parsed.user_id, parsed.evidence);
 
     return new Response(JSON.stringify({ 
       ok: true, 
@@ -46,7 +47,7 @@ export const POST: APIRoute = async ({ request }) => {
     });
   } catch (err) {
     if (err instanceof z.ZodError) {
-      return new Response(JSON.stringify({ ok: false, error: 'Invalid payload', details: err.errors }), {
+      return new Response(JSON.stringify({ ok: false, error: 'Invalid payload', details: err.issues }), {
         status: 400,
         headers: { 'Content-Type': 'application/json' },
       });
@@ -62,13 +63,13 @@ export const POST: APIRoute = async ({ request }) => {
 // Get publisher claims for a user
 export const GET: APIRoute = async ({ request }) => {
   try {
-    const { getPublisherClaimByResource, getPublisherClaimsByUser } = await import('@/lib/db');
+    const { getPublisherClaimByResource, getPublisherClaimsByUser } = await import('@/lib/votes-db.mjs');
     const url = new URL(request.url);
     const userId = url.searchParams.get('user_id');
     const resourceId = url.searchParams.get('resource_id');
 
     if (resourceId) {
-      const claim = getPublisherClaimByResource(resourceId);
+      const claim = await getPublisherClaimByResource(resourceId);
       return new Response(JSON.stringify({ ok: true, claim }), {
         status: 200,
         headers: { 'Content-Type': 'application/json' },
@@ -82,7 +83,7 @@ export const GET: APIRoute = async ({ request }) => {
       });
     }
 
-    const claims = getPublisherClaimsByUser(userId);
+    const claims = await getPublisherClaimsByUser(userId);
     return new Response(JSON.stringify({ ok: true, claims }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
@@ -104,11 +105,11 @@ const VerifyClaimSchema = z.object({
 
 export const PATCH: APIRoute = async ({ request }) => {
   try {
-    const { verifyPublisherClaim, createResourceVersion, getResourceVersionsDb } = await import('@/lib/db');
+    const { verifyPublisherClaim, createResourceVersion, getResourceVersionsDb } = await import('@/lib/votes-db.mjs');
     const body = await request.json();
     const parsed = VerifyClaimSchema.parse(body);
 
-    verifyPublisherClaim(parsed.claim_id, parsed.verified);
+    await verifyPublisherClaim(parsed.claim_id, parsed.verified);
 
     return new Response(JSON.stringify({ ok: true }), {
       status: 200,
@@ -116,7 +117,7 @@ export const PATCH: APIRoute = async ({ request }) => {
     });
   } catch (err) {
     if (err instanceof z.ZodError) {
-      return new Response(JSON.stringify({ ok: false, error: 'Invalid payload', details: err.errors }), {
+      return new Response(JSON.stringify({ ok: false, error: 'Invalid payload', details: err.issues }), {
         status: 400,
         headers: { 'Content-Type': 'application/json' },
       });

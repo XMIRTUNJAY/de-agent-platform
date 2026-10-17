@@ -6,11 +6,24 @@ import {
   submitVote,
   getRatingStats,
   getReviews,
+  getVotesByUser,
   recordEngagement,
   getEngagementTotals,
   countRecentVotes,
   voterHash,
   ipHash,
+  createInstallAttempt,
+  completeInstallAttempt,
+  addInstallCommands,
+  getInstallAttempts,
+  getUserInstalls,
+  getResourceInstallStats,
+  createPublisherClaim,
+  getPublisherClaimByResource,
+  getPublisherClaimsByUser,
+  verifyPublisherClaim,
+  createResourceVersion,
+  getResourceVersionsDb,
 } from '../src/lib/votes-db.mjs';
 
 process.env.VOTE_SALT = 'test-salt';
@@ -72,5 +85,49 @@ describe('votes-db', () => {
 
   it('rejects unknown engagement kinds', async () => {
     await assert.rejects(recordEngagement({ resource_id: 'x', kind: 'like', ip_hash: 'ip' }, db));
+  });
+
+  it('links votes to a dashboard user id without trusting it for counting', async () => {
+    await submitVote({ resource_id: 'skill-u', score: 4, voter_hash: 'vh-u1', ip_hash: 'ip-u1', user_id: 'user-1' }, db);
+    const { ratings, total, uniqueResources } = await getVotesByUser('user-1', 1, 10, db);
+    assert.equal(total, 1);
+    assert.equal(uniqueResources, 1);
+    assert.equal(ratings[0].rating, 4);
+    // one-vote-per-voter still keyed by voter_hash, not user_id
+    await submitVote({ resource_id: 'skill-u', score: 2, voter_hash: 'vh-u1', ip_hash: 'ip-u1', user_id: 'user-1' }, db);
+    assert.equal((await getRatingStats('skill-u', db)).count, 1);
+  });
+
+  it('records full install lifecycles with live stats', async () => {
+    const id = await createInstallAttempt({
+      resource_id: 'skill-i', resource_type: 'skill', manifest_version: '0.1.0',
+      backend: 'dry', user_id: 'user-1', requested_at: new Date().toISOString(),
+    }, db);
+    await addInstallCommands(id, [{ name: 'step', argv: ['run'] }], db);
+    await completeInstallAttempt(id, true, 120, 0, 1, null, null, null, db);
+    const stats = await getResourceInstallStats('skill-i', db);
+    assert.equal(stats.install_count, 1);
+    assert.equal(stats.install_success_rate, 1);
+    assert.ok(stats.last_installed_at);
+    const { attempts, total } = await getInstallAttempts('skill-i', 1, 5, db);
+    assert.equal(total, 1);
+    assert.equal(attempts[0].id, id);
+    const mine = await getUserInstalls('user-1', 1, 5, db);
+    assert.equal(mine.total, 1);
+  });
+
+  it('runs the publisher claim + version workflow', async () => {
+    const claimId = await createPublisherClaim('skill-p', 'user-9', { url: 'https://example.com' }, db);
+    const claim = await getPublisherClaimByResource('skill-p', db);
+    assert.equal(claim.id, claimId);
+    assert.equal(claim.status, 'pending');
+    await verifyPublisherClaim(claimId, true, db);
+    assert.equal((await getPublisherClaimByResource('skill-p', db)).status, 'verified');
+    assert.equal((await getPublisherClaimsByUser('user-9', db)).length, 1);
+    const vId = await createResourceVersion({ resource_id: 'skill-p', version: '0.2.0', manifest: { steps: [] }, published_by: 'user-9' }, db);
+    const versions = await getResourceVersionsDb('skill-p', db);
+    assert.equal(versions.length, 1);
+    assert.equal(versions[0].id, vId);
+    assert.deepEqual(versions[0].manifest, { steps: [] });
   });
 });

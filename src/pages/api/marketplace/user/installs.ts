@@ -1,11 +1,12 @@
 import type { APIRoute } from 'astro';
+export const prerender = false;
 
-// NOTE: @/lib/db is lazy-imported inside the handler (never top-level):
-// better-sqlite3's native init segfaults `astro build` static prerender.
+// NOTE: votes-db is lazy-imported inside the handler (never top-level):
+// database clients must not initialize during static prerender (`astro build`).
 
 export const GET: APIRoute = async ({ request }) => {
   try {
-    const { getUserInstalls, getUserRatingsDb } = await import('@/lib/db');
+    const { getUserInstalls } = await import('@/lib/votes-db.mjs');
     const url = new URL(request.url);
     const userId = url.searchParams.get('user_id');
     const page = parseInt(url.searchParams.get('page') ?? '1', 10);
@@ -18,7 +19,7 @@ export const GET: APIRoute = async ({ request }) => {
       });
     }
 
-    const { attempts, total } = getUserInstalls(userId, page, perPage);
+    const { attempts, total } = await getUserInstalls(userId, page, perPage);
 
     return new Response(JSON.stringify({
       ok: true,

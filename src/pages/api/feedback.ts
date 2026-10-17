@@ -1,5 +1,9 @@
 import type { APIRoute } from 'astro';
 import { z } from 'zod';
+export const prerender = false;
+
+// Server-rendered on demand: without this flag, static-output dev treats the
+// request as prerendered and astro strips the query string.
 
 const FeedbackSchema = z.object({
   resource_id: z.string().min(1),
@@ -30,7 +34,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     });
   } catch (err) {
     if (err instanceof z.ZodError) {
-      return new Response(JSON.stringify({ ok: false, error: 'Invalid payload', details: err.errors }), {
+      return new Response(JSON.stringify({ ok: false, error: 'Invalid payload', details: err.issues }), {
         status: 400,
         headers: { 'Content-Type': 'application/json' },
       });

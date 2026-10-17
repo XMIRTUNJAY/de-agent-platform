@@ -6,8 +6,8 @@ import { computePopularity } from '../../../../pipelines/lib/popularity.mjs';
 // NOTE: votes-db is lazy-imported inside handlers (never top-level):
 // database clients must not initialize during static prerender (`astro build`).
 export const prerender = false;
-// Durable store = libsql (Turso in prod, local file in dev) — better-sqlite3
-// cannot persist on serverless (ephemeral filesystem).
+// Durable store = libsql (Turso in prod, local file in dev) — the retired
+// native driver could persist on neither serverless nor Windows builds.
 
 // Rating submission: 1-5 stars + optional review text.
 // Identity = server-side hash of (salt, IP, resource): one vote per voter per
@@ -17,6 +17,7 @@ const RateSchema = z.object({
   rating: z.number().int().min(1).max(5),
   review_text: z.string().max(2000).optional(),
   install_attempt_id: z.string().optional(), // link to successful install (verified flag)
+  user_id: z.string().max(200).optional(), // dashboard identity: links the vote to "my ratings", never trusted for counting
 });
 
 export const POST: APIRoute = async ({ request, clientAddress }) => {
@@ -48,6 +49,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
       score: parsed.rating,
       voter_hash: voterHash(ip, parsed.resource_id),
       ip_hash,
+      user_id: parsed.user_id ?? null,
       review_text: parsed.review_text ?? null,
       verified: !!parsed.install_attempt_id,
     });

@@ -19,8 +19,14 @@ describe('creation queue', () => {
         { cwd: ROOT, timeout: 60000 }).toString();
       assert.match(out, /needs-original: 3/);
       const files = readdirSync(join(ROOT, 'data', 'drafts', 'creation'));
-      assert.equal(files.length, 3);
-      for (const f of files) assert.match(f, /\.md$/);
+      // Date-robust: today’s run adds files dated today; committed history stays.
+      const today = new Date().toISOString().slice(0, 10);
+      const fresh = files.filter((f) => f.startsWith(today));
+      assert.equal(fresh.length, 3);
+      for (const f of fresh) assert.match(f, /\.md$/);
+      for (const stage of ['foundations', 'system-design', 'agentic']) {
+        assert.ok(fresh.some((f) => f.endsWith(`-${stage}.md`), `missing brief for ${stage}`));
+      }
     } finally {
       for (const [dir, before] of [[join(ROOT, 'data', 'drafts', 'tutorials'), beforeT], [join(ROOT, 'data', 'drafts', 'creation'), beforeC]]) {
         for (const f of readdirSync(dir)) {

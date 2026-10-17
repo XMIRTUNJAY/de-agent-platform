@@ -2,8 +2,9 @@ import type { APIRoute } from 'astro';
 import { z } from 'zod';
 import registry from '@/data/generated/registry.json';
 
-// NOTE: @/lib/db is lazy-imported inside the handler (never top-level):
-// better-sqlite3's native init segfaults `astro build` static prerender.
+// NOTE: votes-db is lazy-imported inside the handler (never top-level):
+// database clients must not initialize during static prerender (`astro build`).
+export const prerender = false;
 
 // Install request: record an install attempt, return the manifest
 const InstallRequestSchema = z.object({
@@ -15,7 +16,7 @@ const InstallRequestSchema = z.object({
 
 export const POST: APIRoute = async ({ request }) => {
   try {
-    const { createInstallAttempt, completeInstallAttempt, addInstallCommands } = await import('@/lib/db');
+    const { createInstallAttempt, completeInstallAttempt, addInstallCommands } = await import('@/lib/votes-db.mjs');
     const body = await request.json();
     const parsed = InstallRequestSchema.parse(body);
 
@@ -35,7 +36,7 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     // Create install attempt record
-    const attemptId = createInstallAttempt({
+    const attemptId = await createInstallAttempt({
       resource_id: parsed.resource_id,
       resource_type: resource.type,
       manifest_version: parsed.manifest_version ?? resource.marketplace.install_manifest.version,
@@ -63,7 +64,7 @@ export const POST: APIRoute = async ({ request }) => {
     });
   } catch (err) {
     if (err instanceof z.ZodError) {
-      return new Response(JSON.stringify({ ok: false, error: 'Invalid payload', details: err.errors }), {
+      return new Response(JSON.stringify({ ok: false, error: 'Invalid payload', details: err.issues }), {
         status: 400,
         headers: { 'Content-Type': 'application/json' },
       });

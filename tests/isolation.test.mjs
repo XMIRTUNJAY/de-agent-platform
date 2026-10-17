@@ -32,7 +32,10 @@ test('generated artifacts contain no draft markers', () => {
 
 test('every draft file starts with the DRAFT header comment', () => {
   if (!existsSync(DRAFTS)) return; // nothing to check yet
-  const files = walk(DRAFTS).filter((f) => f.endsWith('.yaml'));
+  const files = walk(DRAFTS).filter((f) => f.endsWith('.yaml'))
+    // test-probe is promote-eligible.test.mjs scaffolding: it exists only for
+    // milliseconds and can be caught mid-write by this parallel walker.
+    .filter((f) => !f.includes('test-probe'));
   for (const f of files) {
     const head = readFileSync(f, 'utf8').slice(0, 40);
     assert.ok(head.startsWith('# DRAFT'), `${f} missing DRAFT header`);

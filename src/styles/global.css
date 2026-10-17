@@ -625,18 +625,20 @@
 .card-pad-sm { padding: 1rem; }
 .card-pad-lg { padding: 2rem; }
 
-/* Card matrices — fixed columns so cards form a perfect grid */
+/* Card matrices — fixed columns so cards form a perfect grid.
+   minmax(0, 1fr) not 1fr: 1fr's auto floor lets long unbreakable content
+   (install-command <pre>) expand the track past the viewport on mobile. */
 .card-grid {
   display: grid;
   gap: 1.25rem;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   align-items: stretch;
 }
-@media (min-width: 640px) { .card-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 1080px) { .card-grid { grid-template-columns: repeat(3, 1fr); } }
-.card-grid > * { height: 100%; }
-.card-grid--2 { grid-template-columns: 1fr; }
-@media (min-width: 900px) { .card-grid--2 { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 640px) { .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1080px) { .card-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.card-grid > * { height: 100%; min-width: 0; }
+.card-grid--2 { grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 900px) { .card-grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
 .card-header {
   display: flex;

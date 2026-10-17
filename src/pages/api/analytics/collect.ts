@@ -1,9 +1,9 @@
 import type { APIRoute } from 'astro';
-import { AllEventSchemas, type AnalyticsEvent, validateEvent } from '@de-agent/analytics/events';
+import { type AnalyticsEvent, validateEvent } from '@de-agent/analytics/events';
 import { z } from 'zod';
 
 const CollectRequestSchema = z.object({
-  events: z.array(AllEventSchemas).min(1).max(100),
+  events: z.array(z.unknown()).min(1).max(100), // per-event validation happens in validateEvent
   version: z.string().optional(),
 });
 
@@ -11,7 +11,7 @@ const CollectRequestSchema = z.object({
 export const prerender = false;
 
 export const POST: APIRoute = async ({ request, clientAddress }) => {
-  if (!import.meta.env.PUBLIC_ANALYTICS_ENABLED === 'true') {
+  if (import.meta.env.PUBLIC_ANALYTICS_ENABLED !== 'true') {
     return new Response(JSON.stringify({ ok: false, error: 'Analytics disabled' }), {
       status: 403,
       headers: { 'Content-Type': 'application/json' },
@@ -58,7 +58,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     });
   } catch (err) {
     if (err instanceof z.ZodError) {
-      return new Response(JSON.stringify({ ok: false, error: 'Invalid payload', details: err.errors }), {
+      return new Response(JSON.stringify({ ok: false, error: 'Invalid payload', details: err.issues }), {
         status: 400,
         headers: { 'Content-Type': 'application/json' },
       });

@@ -2,13 +2,17 @@ import type { APIRoute } from 'astro';
 import registry from '@/data/generated/registry.json';
 import { computePopularity } from '../../../../pipelines/lib/popularity.mjs';
 
-// NOTE: @/lib/db is lazy-imported inside the handler (never top-level):
-// better-sqlite3's native init segfaults `astro build` static prerender.
+// NOTE: votes-db is lazy-imported inside the handler (never top-level):
+// database clients must not initialize during static prerender (`astro build`).
 
 // Get marketplace stats for a resource
+// Server-rendered on demand: without this flag, static-output dev treats the
+// request as prerendered and astro strips the query string (request.js
+// `url.search = ''`), so resource_id never reaches the handler.
+export const prerender = false;
 export const GET: APIRoute = async ({ request }) => {
   try {
-    const { getResourceStatsDb, getInstallAttemptsDb } = await import('@/lib/db');
+    const { getInstallAttempts, getResourceInstallStats } = await import('@/lib/votes-db.mjs');
     const url = new URL(request.url);
     const resourceId = url.searchParams.get('resource_id');
 
@@ -28,8 +32,8 @@ export const GET: APIRoute = async ({ request }) => {
     }
 
     const mp = resource.marketplace ?? {};
-    const stats = getResourceStatsDb(resourceId);
-    const { attempts: recentInstalls } = getInstallAttemptsDb(resourceId, 1, 5);
+    const installStats = await getResourceInstallStats(resourceId);
+    const { attempts: recentInstalls } = await getInstallAttempts(resourceId, 1, 5);
 
     // Live overlay: durable votes + engagement (Turso/file). If the votes DB
     // is unreachable (cold start, static copy), fall back to build snapshot.
@@ -68,12 +72,12 @@ export const GET: APIRoute = async ({ request }) => {
         composite_score: mp.composite_score ?? 0,
         composite_label: mp.composite_label ?? 'unproven',
         quality_scores: mp.quality_scores ?? {},
-        install_count: stats?.install_count ?? mp.install_count ?? 0,
-        install_success_rate: stats?.install_success_rate ?? mp.install_success_rate ?? 0,
-        last_installed_at: stats?.last_installed_at ?? mp.last_installed_at ?? null,
-        rating_average: live?.rating_average ?? stats?.rating_average ?? mp.rating_average ?? 0,
-        rating_count: live?.rating_count ?? stats?.rating_count ?? mp.rating_count ?? 0,
-        rating_distribution: live?.rating_distribution ?? stats?.rating_distribution ?? mp.rating_distribution ?? {},
+        install_count: installStats.install_count,
+        install_success_rate: installStats.install_success_rate,
+        last_installed_at: installStats.last_installed_at ?? mp.last_installed_at ?? null,
+        rating_average: live?.rating_average ?? mp.rating_average ?? 0,
+        rating_count: live?.rating_count ?? mp.rating_count ?? 0,
+        rating_distribution: live?.rating_distribution ?? mp.rating_distribution ?? {},
         engagement: live?.engagement ?? { installs: 0, copies: 0, views: 0 },
         popularity: live?.popularity ?? mp.popularity_base ?? null,
         popularity_base: mp.popularity_base ?? null,
@@ -83,7 +87,7 @@ export const GET: APIRoute = async ({ request }) => {
         is_official: mp.is_official ?? false,
         publisher_tier: mp.publisher_tier ?? 'community',
         has_install_manifest: !!mp.install_manifest,
-        recent_installs: recentInstalls.map(a => ({
+        recent_installs: recentInstalls.map((a: { id: string; backend: string | null; success: number; duration_ms: number | null; requested_at: string }) => ({
           id: a.id,
           backend: a.backend,
           success: a.success,

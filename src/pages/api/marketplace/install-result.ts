@@ -2,8 +2,9 @@ import type { APIRoute } from 'astro';
 import { z } from 'zod';
 import registry from '@/data/generated/registry.json';
 
-// NOTE: @/lib/db is lazy-imported inside the handler (never top-level):
-// better-sqlite3's native init segfaults `astro build` static prerender.
+// NOTE: votes-db is lazy-imported inside the handler (never top-level):
+// database clients must not initialize during static prerender (`astro build`).
+export const prerender = false;
 
 // Install result: receive execution result from CLI/pipeline
 const InstallResultSchema = z.object({
@@ -33,7 +34,7 @@ const InstallResultSchema = z.object({
 
 export const POST: APIRoute = async ({ request }) => {
   try {
-    const { completeInstallAttempt, addInstallCommands } = await import('@/lib/db');
+    const { createInstallAttempt, completeInstallAttempt, addInstallCommands } = await import('@/lib/votes-db.mjs');
     const body = await request.json();
     const parsed = InstallResultSchema.parse(body);
 
@@ -45,20 +46,39 @@ export const POST: APIRoute = async ({ request }) => {
       });
     }
 
-    // Find the most recent install attempt for this resource/user
-    // In production, you'd track attempt_id from the install request
-    // For now, we'll create a new record or find the latest pending one
-    // This is a simplification - in reality you'd pass attempt_id from the install response
-
-    // Update resource stats
-    upsertResourceStats.run(
-      parsed.resource_id,
-      1, // install_count
-      parsed.success ? 1 : 0, // install_success_count
-      parsed.success ? 1 : 0, // install_success_rate (will be averaged)
-      parsed.success ? new Date().toISOString() : null,
-      0, 0, 0, // rating fields
-      JSON.stringify({})
+    // Persist the result as a completed attempt (the old store referenced an
+    // unimported updater here, so results were never actually recorded).
+    const attemptId = await createInstallAttempt({
+      resource_id: parsed.resource_id,
+      resource_type: resource.type,
+      manifest_version: parsed.manifest_version,
+      backend: parsed.backend,
+      user_id: parsed.user_id ?? null,
+      requested_at: new Date().toISOString(),
+    });
+    await completeInstallAttempt(
+      attemptId,
+      parsed.success,
+      parsed.duration_ms,
+      parsed.exit_code,
+      parsed.commands.length,
+      parsed.error_category,
+      parsed.error_message,
+      parsed.log_sha256,
+    );
+    await addInstallCommands(
+      attemptId,
+      parsed.commands.map((c) => ({
+        name: c.name,
+        argv: [],
+        exit_code: c.exit_code,
+        duration_ms: c.duration_ms,
+        timed_out: c.timed_out,
+        output_bytes: c.output_bytes,
+        sha256: c.sha256,
+        failure_category: c.failure?.category,
+        failure_detail: c.failure?.detail,
+      })),
     );
 
     // Log structured event for analytics
@@ -92,7 +112,7 @@ export const POST: APIRoute = async ({ request }) => {
     });
   } catch (err) {
     if (err instanceof z.ZodError) {
-      return new Response(JSON.stringify({ ok: false, error: 'Invalid payload', details: err.errors }), {
+      return new Response(JSON.stringify({ ok: false, error: 'Invalid payload', details: err.issues }), {
         status: 400,
         headers: { 'Content-Type': 'application/json' },
       });
