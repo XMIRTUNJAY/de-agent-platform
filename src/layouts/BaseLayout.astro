@@ -63,6 +63,10 @@ const analyticsEnabled = import.meta.env.PUBLIC_ANALYTICS_ENABLED === 'true';
             t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
           }
           document.documentElement.setAttribute('data-theme', t);
+          // desktop rail collapse preference — applied pre-paint (no FOUC)
+          if (localStorage.getItem('de-sidebar') === 'collapsed') {
+            document.documentElement.setAttribute('data-sidebar', 'collapsed');
+          }
         } catch (e) { /* keep default */ }
       })();
       // Platform-aware shortcut hints (audit P3: ⌘K assumed Mac)
@@ -140,15 +144,29 @@ const analyticsEnabled = import.meta.env.PUBLIC_ANALYTICS_ENABLED === 'true';
           ic.classList.toggle('hidden', ic.getAttribute('data-theme-icon') !== cur);
         });
 
-        // mobile sidebar
+        // nav toggle — drawer on mobile, rail collapse on desktop; one button
         var sb = document.getElementById('sidebar');
         var scrim = document.getElementById('sidebar-scrim');
         var toggle = document.querySelector('[data-sidebar-toggle]');
+        var DESKTOP_MIN = 1024;
+        function isDesktop() { return window.innerWidth >= DESKTOP_MIN; }
+        function railVisible() {
+          return document.documentElement.getAttribute('data-sidebar') !== 'collapsed';
+        }
+        function syncToggleUi(navOpen) {
+          if (!toggle) return;
+          // navOpen: mobile drawer open OR desktop rail visible
+          toggle.setAttribute('aria-expanded', String(navOpen));
+          toggle.setAttribute('aria-label', navOpen ? 'Close navigation' : 'Open navigation');
+          toggle.querySelectorAll('[data-sidebar-icon]').forEach(function (ic) {
+            ic.classList.toggle('hidden', ic.getAttribute('data-sidebar-icon') === (navOpen ? 'closed' : 'open'));
+          });
+        }
         function setSidebar(open) {
           if (!sb) return;
           sb.classList.toggle('open', open);
           if (scrim) scrim.classList.toggle('visible', open);
-          if (toggle) toggle.setAttribute('aria-expanded', String(open));
+          syncToggleUi(open);
           // visibility:hidden (CSS) removes the closed drawer from the a11y
           // tree and tab order; focus management here.
           if (open) {
@@ -158,10 +176,26 @@ const analyticsEnabled = import.meta.env.PUBLIC_ANALYTICS_ENABLED === 'true';
             toggle.focus();
           }
         }
+        function setRail(visible) {
+          if (visible) {
+            document.documentElement.removeAttribute('data-sidebar');
+          } else {
+            document.documentElement.setAttribute('data-sidebar', 'collapsed');
+          }
+          try { localStorage.setItem('de-sidebar', visible ? 'expanded' : 'collapsed'); } catch (err) {}
+          syncToggleUi(visible);
+        }
         if (toggle) toggle.addEventListener('click', function () {
-          setSidebar(!sb.classList.contains('open'));
+          if (isDesktop()) setRail(!railVisible());
+          else setSidebar(!sb.classList.contains('open'));
         });
         if (scrim) scrim.addEventListener('click', function () { setSidebar(false); });
+        // keep state coherent when the viewport crosses the breakpoint
+        window.addEventListener('resize', function () {
+          if (isDesktop()) { sb?.classList.remove('open'); scrim?.classList.remove('visible'); syncToggleUi(railVisible()); }
+        });
+        // initial state: desktop respects the persisted rail preference
+        syncToggleUi(isDesktop() ? railVisible() : false);
 
         // Command Palette
         var palette = document.getElementById('cmd-palette');

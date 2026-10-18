@@ -349,3 +349,32 @@ test('S3.1: docs pages build a TOC rail with scroll-spy targets', async ({ page 
   await page.waitForTimeout(600);
   expect(await page.locator('#toc-list a.toc-active').count()).toBe(1);
 });
+
+test('S4: nav toggle — drawer on mobile, rail collapse on desktop', async ({ page }) => {
+  // desktop: same hamburger collapses the rail, persists across reload
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/docs/how-it-works', { waitUntil: 'domcontentloaded' });
+  const toggle = page.locator('[data-sidebar-toggle]');
+  await expect(toggle).toBeVisible();
+  await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+  await expect(page.locator('#sidebar')).toBeVisible();
+  await toggle.click();
+  await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+  await expect(page.locator('#sidebar')).toBeHidden();
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#sidebar')).toBeHidden();
+  await page.locator('[data-sidebar-toggle]').click();
+  await expect(page.locator('#sidebar')).toBeVisible();
+
+  // mobile: same button opens the drawer, label flips, closes again
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.waitForTimeout(250);
+  const t2 = page.locator('[data-sidebar-toggle]');
+  await t2.click();
+  await expect(t2).toHaveAttribute('aria-expanded', 'true');
+  await expect(t2).toHaveAttribute('aria-label', 'Close navigation');
+  await expect(page.locator('#sidebar')).toBeVisible();
+  await t2.click();
+  await expect(t2).toHaveAttribute('aria-expanded', 'false');
+  await expect(page.locator('#sidebar')).toBeHidden();
+});

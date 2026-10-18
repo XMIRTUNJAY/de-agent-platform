@@ -1161,7 +1161,7 @@ html:not([data-platform]) .kbd-mac { display: inline; }
   top: 0;
   bottom: 0;
   left: 0;
-  z-index: 50;
+  z-index: 30;
   width: 300px;
   transform: translateX(-100%);
   /* visibility (not display) keeps the slide transition and removes the
@@ -1176,12 +1176,19 @@ html:not([data-platform]) .kbd-mac { display: inline; }
   background: var(--shell);
 }
 .sidebar.open { transform: translateX(0); visibility: visible; transition-delay: 0s, 0s; }
+/* mobile drawer slides UNDER the sticky header so the hamburger/✕ toggle
+   stays clickable above it; content clears the 3.5rem bar */
+@media (max-width: 1023.5px) {
+  .sidebar { padding-top: 3.5rem; }
+}
 @media (min-width: 1024px) {
   .sidebar { position: sticky; top: 3.5rem; z-index: 30; height: calc(100vh - 3.5rem); transform: none; visibility: visible; transition: none; background: transparent; }
+  /* desktop rail collapse (hamburger toggle): hide + let main take the width */
+  html[data-sidebar='collapsed'] .sidebar { display: none; }
 }
 
 .sidebar-scrim {
-  position: fixed; inset: 0; z-index: 40;
+  position: fixed; inset: 0; z-index: 25;
   background: rgba(0, 0, 0, 0.6);
   backdrop-blur: 8px;
   opacity: 0; pointer-events: none;
