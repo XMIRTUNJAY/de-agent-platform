@@ -1,7 +1,10 @@
 ---
-// ListingPage — shared template: PageHero + stat chips + ResourceCard grid.
+// ListingPage — shared type-listing template: PageHero + derived stat chips +
+// ResourceCard grid + honest empty state. Hero stats derive from the registry
+// (brief §D); large types stay scannable via the same card grid.
 import PageHero from '@/components/PageHero.astro';
 import ResourceCard from '@/components/ResourceCard.astro';
+import { count as countLabel } from '@/lib/format';
 
 interface Props {
   kicker: string;
@@ -10,22 +13,37 @@ interface Props {
   resources: any[];
 }
 const { kicker, title, lede, resources } = Astro.props;
-const verified = resources.filter(r => r.verification === 'reviewed' || r.verification === 'tested').length;
+
+const visible = resources.filter((r) => (r.page_eligibility?.state ?? 'eligible') !== 'internal_only');
+const verified = visible.filter((r) => r.verification === 'reviewed' || r.verification === 'tested' || r.verification === 'verified').length;
+const scored = visible.filter((r) => (r.marketplace?.composite_score ?? 0) > 0);
+const avgScore = scored.length
+  ? Math.round(scored.reduce((a, r) => a + (r.marketplace?.composite_score ?? 0), 0) / scored.length)
+  : null;
+const difficulties = [...new Set(visible.map((r) => r.difficulty).filter(Boolean))];
+const categories = [...new Set(visible.map((r) => r.categoryTitle ?? r.category).filter(Boolean))];
 ---
 
 <PageHero kicker={kicker} title={title} lede={lede}>
   <div style="margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
-    <span class="chip">{resources.length} entries</span>
-    <span class="chip chip-accent">{verified} reviewed or tested</span>
+    <span class="chip">{countLabel(visible.length, 'entry', 'entries')}</span>
+    {verified > 0 && <span class="chip chip-accent">{verified} reviewed, tested, or verified</span>}
+    {avgScore !== null && <span class="chip">avg composite {avgScore}</span>}
+    {difficulties.length > 0 && <span class="chip">{difficulties.join(' · ')}</span>}
     <slot name="chips" />
   </div>
+  {categories.length > 0 && (
+    <div style="margin-top: 0.75rem; display: flex; flex-wrap: wrap; gap: 0.35rem;">
+      {categories.slice(0, 6).map((c) => <span class="font-mono text-2xs text-dim">{c}</span>)}
+    </div>
+  )}
 </PageHero>
 
 <section class="col section-sm" style="padding-top: 2.5rem;">
   <div class="card-grid stagger" style="margin-top: 0;">
-    {resources.filter((r) => (r.page_eligibility?.state ?? 'eligible') !== 'internal_only').map((r) => <ResourceCard resource={r} />)}
+    {visible.map((r) => <ResourceCard resource={r} />)}
   </div>
-  {resources.length === 0 && (
+  {visible.length === 0 && (
     <div class="card card-pad" style="max-width: 560px; margin: 3rem auto; text-align: center;">
       <p class="mono-label" style="margin: 0 0 0.5rem;">Nothing published yet</p>
       <p class="text-muted" style="margin: 0 0 1rem;">This listing is empty right now. The registry grows continuously — check the roadmap or browse all categories meanwhile.</p>

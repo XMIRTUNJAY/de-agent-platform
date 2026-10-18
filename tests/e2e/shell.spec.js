@@ -264,3 +264,15 @@ test('P2-guide: guides index derives from markdown frontmatter', async ({ page }
     expect(res.status(), href).toBe(200);
   }
 });
+
+test('P2-list: type listings show derived, differentiated hero stats', async ({ page }) => {
+  await page.goto('/skills', { waitUntil: 'load' });
+  const skillsChips = await page.locator('main .chip').allTextContents();
+  expect(skillsChips.some((c) => /avg composite/.test(c))).toBe(true);
+  expect(skillsChips.some((c) => /entries/.test(c))).toBe(true);
+
+  await page.goto('/references', { waitUntil: 'load' });
+  const refChips = await page.locator('main .chip').allTextContents();
+  // different type, different derived numbers — pages are not clones
+  expect(refChips.join(' ')).not.toBe(skillsChips.join(' '));
+});
