@@ -28,7 +28,7 @@ for (const c of categories) (catByStage[c.stage] ??= []).push(c);
   <PageHero
     kicker="Learning roadmap"
     title="The Data Engineering Roadmap"
-    lede="13 stages from Foundations to Agentic Data Engineering. Each has an exit gate you can prove and a deliverable artifact."
+    lede={`${countLabel(registry.taxonomy.stages.length, 'stage')} from Foundations to Agentic Data Engineering. Each has an exit gate you can prove and a deliverable artifact.`}
   />
 
   <!-- Main path — chapter timeline with stable anchors -->

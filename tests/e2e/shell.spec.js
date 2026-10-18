@@ -136,3 +136,68 @@ test.describe(() => {
     expect(width).toBeLessThanOrEqual(800);
   });
 });
+
+// P2 — /categories catalogue contract (brief §7): URL-synced search/filter/sort,
+// full catalogue always in static HTML, no hard-coded totals.
+
+test.describe(() => {
+  test.setTimeout(90000);
+
+  test('P2-cat: catalogue filters sync to URL and survive reload', async ({ page }) => {
+    await page.goto('/categories', { waitUntil: 'load' });
+
+    // full catalogue present regardless of client filtering
+    const totalRows = await page.locator('.catalogue-row').count();
+    expect(totalRows).toBeGreaterThanOrEqual(35);
+
+    await page.locator('#cat-q').fill('lake');
+    await expect(page).toHaveURL(/categories\?q=lake/);
+    const visible = await page.locator('.catalogue-row:visible').count();
+    expect(visible).toBeGreaterThan(0);
+    expect(visible).toBeLessThan(totalRows);
+
+    await page.reload({ waitUntil: 'load' });
+    await expect(page.locator('#cat-q')).toHaveValue('lake');
+    expect(await page.locator('.catalogue-row:visible').count()).toBeLessThan(totalRows);
+
+    // phase filter combines with q
+    await page.locator('#cat-phase').selectOption('4');
+    await expect(page).toHaveURL(/q=lake&phase=4/);
+    await expect(page.locator('#cat-empty')).toBeVisible();
+
+    // clear restores everything
+    await page.locator('#cat-empty-clear').click();
+    await expect(page).toHaveURL(/categories/);
+    expect(await page.locator('.catalogue-row:visible').count()).toBe(totalRows);
+
+    // back returns to the filtered state
+    await page.goBack();
+    await expect(page).toHaveURL(/q=lake&phase=4/);
+  });
+
+  test('P2-cat: Escape in the search box clears and blurs, no keyboard trap', async ({ page }) => {
+    await page.goto('/categories?q=sql', { waitUntil: 'load' });
+    const q = page.locator('#cat-q');
+    await q.focus();
+    await page.keyboard.press('Escape');
+    await expect(q).toHaveValue('');
+    await expect(page).toHaveURL(/categories\/?.*$/);
+    const visible = await page.locator('.catalogue-row:visible').count();
+    expect(visible).toBeGreaterThanOrEqual(35);
+  });
+
+  test('P2-cat: stage sections link to roadmap anchors that exist', async ({ page }) => {
+    await page.goto('/categories', { waitUntil: 'load' });
+    const hrefs = await page.locator('.stage-group a[href^="/roadmap#"]').evaluateAll((els) => els.map((e) => e.getAttribute('href')));
+    expect(hrefs.length).toBeGreaterThanOrEqual(13);
+    const unique = [...new Set(hrefs)];
+    expect(unique.length).toBeGreaterThanOrEqual(13);
+    for (const href of unique) expect(href, 'well-formed stage anchor').toMatch(/^\/roadmap#[a-z0-9-]+$/);
+    // targets exist on the roadmap page
+    await page.goto('/roadmap', { waitUntil: 'load' });
+    for (const href of unique) {
+      const id = href.split('#')[1];
+      expect(await page.locator(`#${id}`).count(), href).toBeGreaterThan(0);
+    }
+  });
+});

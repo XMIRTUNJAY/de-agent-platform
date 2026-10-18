@@ -16,7 +16,7 @@ for (const c of categories) (catByStage[c.stage] ??= []).push(c);
   <PageHero
     kicker="Canonical taxonomy"
     title="Data engineering taxonomy"
-    lede="38 categories grouped into 13 roadmap stages. Every resource maps to exactly one category; categories map to stages. This is the spine for the roadmap, the registry and search."
+    lede={`${countLabel(categories.length, 'category')} grouped into ${countLabel(stages.length, 'roadmap stage', 'roadmap stages')}. Every resource maps to exactly one category; categories map to stages. This is the spine for the roadmap, the registry and search.`}
   />
 
   <section class="col section">

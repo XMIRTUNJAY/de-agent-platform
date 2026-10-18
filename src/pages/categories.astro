@@ -1,42 +1,279 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import PageHero from '@/components/PageHero.astro';
+import Icon from '@/components/Icon.astro';
 import registry from '@/data/generated/registry.json';
 import stats from '@/data/generated/stats.json';
 import { count as countLabel } from '@/lib/format';
+import { PHASES } from '@/lib/phases';
 
+// Canonical catalogue — every count derived (brief §D: never hard-code totals).
 const categories = registry.taxonomy.categories.slice().sort((a, b) => a.order - b.order);
 const stagesById: Record<string, any> = registry.taxonomy.stagesById;
 const countByCategory: Record<string, number> = {};
 for (const r of registry.resources) countByCategory[r.category] = (countByCategory[r.category] ?? 0) + 1;
+
+const stageById = new Map(registry.taxonomy.stages.map((s: any) => [s.id, s]));
+const phaseOfStage: Record<string, number> = {};
+PHASES.forEach((phase) => phase.stageIds.forEach((id) => { phaseOfStage[id] = phase.index; }));
+
+// Phase → stage → categories, all derived; rows carry data-* for the client filter.
+const phaseGroups = PHASES.map((phase) => {
+  const sts = phase.stageIds
+    .map((id) => stageById.get(id))
+    .filter((s): s is any => Boolean(s))
+    .sort((a: any, b: any) => a.order - b.order)
+    .map((stage: any) => {
+      const cats = categories.filter((c: any) => c.stage === stage.id);
+      return { stage, cats, count: cats.reduce((n, c: any) => n + (countByCategory[c.id] ?? 0), 0) };
+    });
+  return { phase, sts, count: sts.reduce((n, s) => n + s.count, 0) };
+});
+
+const totalCategories = categories.length;
+const totalResources = stats.counts.total;
+const totalStages = registry.taxonomy.stages.length;
 ---
 
 <BaseLayout title="All categories · DE//AGENT" sidebar>
   <PageHero
     kicker="Learn"
     title="All categories"
-    lede="The 38 canonical categories of the registry, in roadmap order. Each one is a curated neighbourhood: everything inside it answers the same kind of question."
+    lede="The canonical categories of the registry, grouped by the four roadmap phases and thirteen stages. Each one is a curated neighbourhood: everything inside it answers the same kind of question."
   >
     <div style="margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
-      <span class="chip">{categories.length} categories</span>
-      <span class="chip">{countLabel(stats.counts.total, 'resource')}</span>
-      <span class="chip">{stats.counts.stages} stages</span>
+      <span class="chip">{countLabel(totalCategories, 'category')}</span>
+      <span class="chip">{countLabel(totalResources, 'resource')}</span>
+      <span class="chip">{countLabel(totalStages, 'stage')}</span>
     </div>
   </PageHero>
 
-  <section class="col section">
-    <div class="card-grid stagger" style="margin-top: 0;">
-      {categories.map((cat: any) => (
-        <a href={`/categories/${cat.slug}`} class="card card-pad card-interactive">
-          <p class="mono-label">{stagesById[cat.stage]?.title ?? cat.stage}</p>
-          <h3 style="margin-top: 0.4rem; font-weight: 500;">{cat.title}</h3>
-          <p class="card-desc">{cat.summary}</p>
-          <div class="card-meta">
-            <span class="chip">{countLabel(countByCategory[cat.id] ?? 0, 'resource')}</span>
-            <span class="chip">{cat.group}</span>
+  <section class="col section" style="padding-top: 2rem;">
+    <!-- Discovery controls — URL-synced, progressive enhancement only -->
+    <div class="catalogue-controls card card-pad" role="search" style="display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center;">
+      <label class="flex items-center gap-2" style="flex: 1 1 220px;">
+        <span class="sr-only">Search categories</span>
+        <input
+          type="search"
+          id="cat-q"
+          class="input"
+          placeholder="Search categories, summaries, groups…"
+          autocomplete="off"
+          style="width: 100%;"
+        />
+      </label>
+      <label class="flex items-center gap-2">
+        <span class="mono-label" style="margin: 0;">Phase</span>
+        <select id="cat-phase" class="select select-sm">
+          <option value="">All</option>
+          {PHASES.map((p) => <option value={String(p.index)}>{p.index}. {p.name}</option>)}
+        </select>
+      </label>
+      <label class="flex items-center gap-2">
+        <span class="mono-label" style="margin: 0;">Sort</span>
+        <select id="cat-sort" class="select select-sm">
+          <option value="roadmap">Roadmap order</option>
+          <option value="alpha">A → Z</option>
+          <option value="resources">Most resources</option>
+        </select>
+      </label>
+      <button type="button" id="cat-clear" class="btn-ghost rounded-md px-2 py-1 font-mono text-xs text-muted hover:text-fg" hidden>Clear</button>
+      <p id="cat-count" class="ml-auto font-mono text-2xs text-dim" style="margin: 0;" aria-live="polite"></p>
+    </div>
+
+    <!-- Phase → stage → category catalogue (full index stays in static HTML) -->
+    <div id="catalogue">
+      {phaseGroups.map(({ phase, sts, count }) => (
+        <section class="phase-group" data-phase={String(phase.index)} style="margin-top: 2.5rem;">
+          <div class="flex items-baseline gap-3" style="margin-bottom: 0.35rem;">
+            <h2 class="display" style="font-size: var(--text-2xl);">{phase.index}. {phase.name}</h2>
+            <span class="font-mono text-2xs text-dim">{countLabel(count, 'resource')}</span>
           </div>
-        </a>
+          <p class="text-muted" style="margin-bottom: 1rem; max-width: 62ch;">{phase.tagline}</p>
+
+          {sts.map(({ stage, cats, count: stageCount }) => (
+            <div class="stage-group" data-stage={stage.id} style="margin-top: 1.75rem;">
+              <div class="flex items-center gap-3" style="margin-bottom: 0.5rem;">
+                <span class="chapter-num" aria-hidden="true">{String(stage.order).padStart(2, '0')}</span>
+                <h3 style="font-size: var(--text-lg); font-weight: 500; margin: 0;">{stage.title}</h3>
+                <span class="font-mono text-2xs text-dim">{countLabel(stageCount, 'resource')}</span>
+                <a href={`/roadmap#${stage.id}`} class="link-arrow" style="margin-left: auto; font-size: var(--text-xs);">
+                  Stage {String(stage.order).padStart(2, '0')} on the roadmap <span aria-hidden="true">→</span>
+                </a>
+              </div>
+              <p class="text-dim text-sm" style="max-width: 72ch; margin-bottom: 0.65rem;">{stage.summary}</p>
+
+              <ul class="catalogue-list" style="list-style: none; margin: 0; padding: 0; display: grid; gap: 0.4rem;">
+                {cats.map((cat: any) => (
+                  <li>
+                    <a
+                      href={`/categories/${cat.slug}`}
+                      class="catalogue-row"
+                      data-id={cat.id}
+                      data-title={cat.title}
+                      data-summary={cat.summary}
+                      data-group={cat.group}
+                      data-stage={cat.stage}
+                      data-phase={String(phaseOfStage[cat.stage] ?? 0)}
+                      data-count={countByCategory[cat.id] ?? 0}
+                      data-order={cat.order}
+                    >
+                      <span class="catalogue-row-main">
+                        <span class="catalogue-row-title">{cat.title}</span>
+                        <span class="catalogue-row-summary">{cat.summary}</span>
+                      </span>
+                      <span class="catalogue-row-meta">
+                        <span class="chip">{countLabel(countByCategory[cat.id] ?? 0, 'resource')}</span>
+                        <span class="chip">{cat.group}</span>
+                        <Icon name="categories" size={14} />
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </section>
       ))}
     </div>
+
+    <p id="cat-empty" hidden class="mt-8 text-center text-muted py-8">
+      No categories match the current search. <button type="button" class="link-arrow" id="cat-empty-clear">Clear filters</button>
+    </p>
+    <script type="application/json" id="cat-phase-map" set:html={JSON.stringify(phaseOfStage)} />
   </section>
+
+  <style>
+    .catalogue-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.6rem 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--surface);
+      transition: border-color var(--duration-fast), background-color var(--duration-fast);
+    }
+    .catalogue-row:hover { border-color: var(--border-strong); background: var(--surface-2); }
+    .catalogue-row:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .catalogue-row-main { display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; }
+    .catalogue-row-title { font-weight: 500; color: var(--fg); }
+    .catalogue-row-summary { font-size: var(--text-sm); color: var(--fg-muted); overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; }
+    .catalogue-row-meta { display: flex; align-items: center; gap: 0.35rem; flex-shrink: 0; color: var(--fg-dim); }
+    @media (max-width: 640px) {
+      .catalogue-row { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+      .catalogue-row-meta { margin-left: 0; }
+    }
+    .catalogue-list > li[hidden] { display: none; }
+    .stage-group.subset > .flex { opacity: 0.55; }
+  </style>
+
+  <script>
+    import {
+      categoryStateFromParams,
+      categoryParamsFromState,
+      filterCategories,
+    } from '@/lib/category-filters.mjs';
+
+    (function () {
+      const rows = Array.from(document.querySelectorAll('.catalogue-row')) as HTMLElement[];
+      if (!rows.length) return;
+      const qInput = document.getElementById('cat-q') as HTMLInputElement | null;
+      const phaseSel = document.getElementById('cat-phase') as HTMLSelectElement | null;
+      const sortSel = document.getElementById('cat-sort') as HTMLSelectElement | null;
+      const clearBtn = document.getElementById('cat-clear') as HTMLButtonElement | null;
+      const countEl = document.getElementById('cat-count') as HTMLElement | null;
+      const emptyEl = document.getElementById('cat-empty') as HTMLElement | null;
+      const emptyClear = document.getElementById('cat-empty-clear') as HTMLButtonElement | null;
+
+      // phase index per stage id, rendered from the same canonical source
+      const phaseOfStage: Record<string, number> = JSON.parse(
+        document.getElementById('cat-phase-map')?.textContent ?? '{}',
+      );
+
+      let state: Record<string, any> = categoryStateFromParams(new URLSearchParams(location.search)) as Record<string, any>;
+
+      function syncControls() {
+        if (qInput) qInput.value = state.q ?? '';
+        if (phaseSel) phaseSel.value = state.phase ? String(state.phase) : '';
+        if (sortSel) sortSel.value = state.sort ?? 'roadmap';
+      }
+
+      function apply(push: boolean) {
+        syncControls();
+        const counts: Record<string, number> = {};
+        for (const row of rows) counts[row.dataset.id!] = Number(row.dataset.count ?? 0);
+        const visible = filterCategories(
+          rows.map((row) => ({
+            id: row.dataset.id!,
+            title: row.dataset.title ?? '',
+            summary: row.dataset.summary ?? '',
+            group: row.dataset.group ?? '',
+            stage: row.dataset.stage ?? '',
+            order: Number(row.dataset.order ?? 0),
+          })),
+          state,
+          counts,
+          phaseOfStage,
+        );
+        const visibleIds = new Set(visible.map((c) => c.id));
+
+        let shown = 0;
+        for (const row of rows) {
+          const hit = visibleIds.has(row.dataset.id!);
+          (row.parentElement as HTMLElement).hidden = !hit;
+          if (hit) shown++;
+        }
+        // hide emptied stage/phase groups
+        document.querySelectorAll('.stage-group').forEach((el) => {
+          const anyVisible = el.querySelectorAll('.catalogue-list > li:not([hidden])').length > 0;
+          (el as HTMLElement).hidden = !anyVisible;
+        });
+        document.querySelectorAll('.phase-group').forEach((el) => {
+          const anyVisible = el.querySelectorAll('.stage-group:not([hidden])').length > 0;
+          (el as HTMLElement).hidden = !anyVisible;
+        });
+
+        if (countEl) countEl.textContent = `${shown} of ${rows.length} categories`;
+        if (emptyEl) emptyEl.hidden = shown > 0;
+        if (clearBtn) clearBtn.hidden = !(state.q || state.phase || (state.sort && state.sort !== 'roadmap'));
+
+        const params = categoryParamsFromState(state);
+        const qs = params.toString();
+        const url = `${location.pathname}${qs ? `?${qs}` : ''}`;
+        if (push) history.pushState(state, '', url);
+        else history.replaceState(state, '', url);
+      }
+
+      function stateFromControls() {
+        return {
+          q: qInput?.value.trim() ?? '',
+          phase: phaseSel?.value ? Number(phaseSel.value) : undefined,
+          sort: sortSel?.value ?? 'roadmap',
+        };
+      }
+
+      qInput?.addEventListener('input', () => { state = stateFromControls(); apply(true); });
+      phaseSel?.addEventListener('change', () => { state = stateFromControls(); apply(true); });
+      sortSel?.addEventListener('change', () => { state = stateFromControls(); apply(true); });
+      const clearAll = () => { state = {}; apply(true); };
+      clearBtn?.addEventListener('click', clearAll);
+      emptyClear?.addEventListener('click', clearAll);
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && document.activeElement === qInput && qInput) {
+          qInput.value = '';
+          state = stateFromControls();
+          apply(true);
+          qInput.blur();
+        }
+      });
+      window.addEventListener('popstate', () => {
+        state = categoryStateFromParams(new URLSearchParams(location.search));
+        apply(false);
+      });
+
+      apply(false);
+    })();
+  </script>
 </BaseLayout>
