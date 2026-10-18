@@ -429,6 +429,8 @@
    Component Classes (plain CSS)
    ========================================================================= */
 
+
+@layer components {
 /* Typography */
 .mono-label {
   font-family: var(--font-mono);
@@ -698,7 +700,7 @@
   border-right: 1px solid var(--border);
 }
 .filter-panel.open { transform: none; visibility: visible; transition-delay: 0s, 0s; }
-@media (min-width: 1024px) {
+@media (min-width: 1200px) {
   .filter-panel {
     position: sticky;
     top: 4rem;
@@ -1317,4 +1319,6 @@ html:not([data-platform]) .kbd-mac { display: inline; }
   font-style: var(--shiki-dark-font-style) !important;
   font-weight: var(--shiki-dark-font-weight) !important;
   text-decoration: var(--shiki-dark-text-decoration) !important;
+}
+
 }

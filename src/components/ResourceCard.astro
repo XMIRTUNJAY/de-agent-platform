@@ -38,7 +38,7 @@ function starRatingHtml(avg: number, count: number) {
 
 <a href={r.url} class="card card-pad card-interactive" style="display: flex; flex-direction: column; height: 100%; content-visibility: auto; contain-intrinsic-size: auto 220px;">
   <div class="card-header" style="margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center; gap: 0.75rem;">
-    <span class="mono-label">{r.typeLabel}{r.categoryTitle && ` / ${r.categoryTitle}`}</span>
+    <span class="mono-label" style="min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{r.typeLabel}{r.categoryTitle && ` / ${r.categoryTitle}`}</span>
     {mp && (
       <span
         class="score-meter"

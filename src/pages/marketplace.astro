@@ -101,7 +101,7 @@ const filters = [
   />
 
   <div class="col section-sm" style="padding-top: 2.5rem;">
-    <div class="grid gap-8 lg:grid-cols-[280px_1fr]">
+    <div class="grid gap-8 min-[1200px]:grid-cols-[280px_1fr]">
       <!-- Filters sidebar -->
       <button type="button" data-filter-toggle class="btn btn-sm mb-4 gap-2 lg:hidden" aria-expanded="false" aria-controls="filters">
         <Icon name="categories" size={14} /> Filters
@@ -111,7 +111,7 @@ const filters = [
       <!-- Results grid -->
       <section>
         <div class="flex items-center gap-4 mb-4 flex-wrap">
-          <label class="flex items-center gap-2">
+          <label class="flex items-center gap-2" style="white-space: nowrap;">
             <span class="text-sm text-muted">Sort by:</span>
             <select id="sort-select" class="select select-sm">
               <option value="composite-desc">Quality Score ↓</option>
@@ -121,7 +121,7 @@ const filters = [
               <option value="verification-desc">Verification Level</option>
             </select>
           </label>
-          <p id="result-count" class="ml-auto font-mono text-2xs text-dim" style="margin: 0;"></p>
+          <p id="result-count" class="ml-auto font-mono text-2xs text-dim" style="margin: 0; white-space: nowrap;"></p>
         </div>
         <div id="active-chips" class="filter-chips" hidden></div>
         <div id="results" class="card-grid stagger">

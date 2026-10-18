@@ -228,7 +228,8 @@ test('P3-shell: reduced-motion users get no reveal transforms', async ({ page })
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/taxonomy', { waitUntil: 'load' });
   const duration = await page.locator('.reveal').first().evaluate((el) => getComputedStyle(el).transitionDuration);
-  expect(duration === '0s' || duration === '0.01ms' || duration === '').toBe(true);
+  // Chromium serializes 0.01ms as '1e-05s'; accept any sub-frame duration or none
+  expect(duration === '' || duration === '0s' || parseFloat(duration) < 0.005).toBe(true);
 });
 
 test('P2-road: roadmap journey rail links to phase anchors that exist', async ({ page }) => {
