@@ -244,3 +244,23 @@ test('P2-road: roadmap journey rail links to phase anchors that exist', async ({
   const stageLinks = await page.locator('.chapter-stage[href^="#"]').evaluateAll((els) => els.map((e) => e.getAttribute('href')));
   expect(new Set(stageLinks).size).toBeGreaterThanOrEqual(13);
 });
+
+test('P2-tut: tutorials distinguish editorial walkthroughs from practicum', async ({ page }) => {
+  await page.goto('/tutorials', { waitUntil: 'load' });
+  await expect(page.locator('h1')).toContainText('tutorials');
+  // derived totals rendered (no hardcoded counts)
+  const chips = await page.locator('main .chip').allTextContents();
+  expect(chips.some((c) => /entries/.test(c))).toBe(true);
+  expect(chips.some((c) => /learning objectives/.test(c))).toBe(true);
+});
+
+test('P2-guide: guides index derives from markdown frontmatter', async ({ page }) => {
+  await page.goto('/guides', { waitUntil: 'load' });
+  const links = await page.locator('a[href^="/guides/"]:not([href="/guides"])').evaluateAll((els) => els.map((e) => e.getAttribute('href')));
+  expect(links.length).toBeGreaterThanOrEqual(4);
+  // every linked guide page exists
+  for (const href of [...new Set(links)]) {
+    const res = await page.request.get(href);
+    expect(res.status(), href).toBe(200);
+  }
+});

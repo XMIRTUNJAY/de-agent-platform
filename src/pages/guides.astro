@@ -3,34 +3,28 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import PageHero from '@/components/PageHero.astro';
 import SectionHeader from '@/components/SectionHeader.astro';
 
-const GUIDES = [
-  {
-    slug: 'dq-starter-kit',
-    title: 'Data Quality Starter Kit',
-    description: 'Quarantine bad rows instead of losing them: a starter pattern with a runnable demo, dbt tests, and review skills.',
-    badge: 'runnable demo',
-  },
-  {
-    slug: 'kafka-lakehouse-ingest',
-    title: 'Kafka to Lakehouse Ingestion',
-    description: 'Stream events from Kafka into a lakehouse with deduplication, checkpointing, and lag triage.',
-    badge: 'design guide',
-  },
-  {
-    slug: 'dbt-warehouse-testing',
-    title: 'Testing a dbt Warehouse',
-    description: 'Grain-key tests, relationship tests, and review skills that catch warehouse bugs early.',
-    badge: 'design guide',
-  },
-];
-const COMPARISONS = [
-  {
-    slug: 'compare-delta-iceberg',
-    title: 'Delta Lake vs Apache Iceberg',
-    description: 'Choosing an open table format: guarantees, differences, and which constraints should decide.',
-    badge: 'evidence-grounded',
-  },
-];
+// Guide entries derive from the markdown frontmatter — one source of truth
+// (brief §D/§11: keep content data separate from presentation, no duplication).
+const modules = import.meta.glob('./guides/*.md', { eager: true });
+const guides = Object.entries(modules)
+  .map(([path, mod]) => {
+    const slug = path.split('/').pop()!.replace(/\.md$/, '');
+    const fm = ((mod as any).frontmatter ?? {}) as Record<string, any>;
+    return {
+      slug,
+      title: fm.title as string,
+      description: fm.description as string,
+      badge: fm.badge as string | undefined,
+      kicker: fm.kicker as string | undefined,
+      kind: fm.kind as string | undefined,
+      validation: fm.validation as { result?: string } | undefined,
+    };
+  })
+  .filter((g) => !g.slug.startsWith('_') && g.title);
+
+const runnable = guides.filter((g) => (g.kicker ?? '').includes('Build'));
+const designGuides = guides.filter((g) => (g.kicker ?? '').includes('Design'));
+const comparisons = guides.filter((g) => (g.kicker ?? '').includes('Decide') || g.kind === 'comparison');
 ---
 
 <BaseLayout title="Guides · DE//AGENT" sidebar>
@@ -40,29 +34,49 @@ const COMPARISONS = [
     lede="Small, honest guides that connect registry resources into working outcomes. Every runnable step says what executed it; everything else says what it needs."
   />
 
-  <section class="col section">
-    <SectionHeader kicker="Guides" title="Start here" lede="Two exemplars. More arrive when they earn their validation." />
-    <div class="card-grid card-grid--2" style="margin-top: 1.75rem;">
-      {GUIDES.map((g) => (
-        <a href={`/guides/${g.slug}`} class="card card-pad card-interactive">
-          <p class="mono-label">{g.badge}</p>
-          <h3 style="font-size: var(--text-xl); font-weight: 500; margin-top: 0.5rem;">{g.title}</h3>
-          <p class="card-desc" style="margin-top: 0.5rem;">{g.description}</p>
-        </a>
-      ))}
-    </div>
-  </section>
+  {runnable.length > 0 && (
+    <section class="col section">
+      <SectionHeader kicker="Guides" title="Start here" lede="Runnable-first guides. Validation evidence is in the page header of each." />
+      <div class="card-grid card-grid--2" style="margin-top: 1.75rem;">
+        {runnable.map((g) => (
+          <a href={`/guides/${g.slug}`} class="card card-pad card-interactive">
+            <p class="mono-label">{(g.kicker || 'guide').split('·').pop()?.trim()}</p>
+            <h3 style="font-size: var(--text-xl); font-weight: 500; margin-top: 0.5rem;">{g.title}</h3>
+            <p class="card-desc" style="margin-top: 0.5rem;">{g.description}</p>
+            {g.validation && <p class="font-mono text-2xs text-dim" style="margin-top: 0.5rem;">validation: {g.validation.result}</p>}
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
 
-  <section class="col section">
-    <SectionHeader kicker="Decide" title="Comparisons" lede="Evidence-grounded decisions under constraints — never universal winners." />
-    <div class="card-grid card-grid--2" style="margin-top: 1.75rem;">
-      {COMPARISONS.map((g) => (
-        <a href={`/guides/${g.slug}`} class="card card-pad card-interactive">
-          <p class="mono-label">{g.badge}</p>
-          <h3 style="font-size: var(--text-xl); font-weight: 500; margin-top: 0.5rem;">{g.title}</h3>
-          <p class="card-desc" style="margin-top: 0.5rem;">{g.description}</p>
-        </a>
-      ))}
-    </div>
-  </section>
+  {designGuides.length > 0 && (
+    <section class="col section">
+      <SectionHeader kicker="Design" title="Design guides" lede="Architecture decisions grounded in the registry's pattern library." />
+      <div class="card-grid card-grid--2" style="margin-top: 1.75rem;">
+        {designGuides.map((g) => (
+          <a href={`/guides/${g.slug}`} class="card card-pad card-interactive">
+            <p class="mono-label">{(g.kicker || 'Design').split('·').pop()?.trim()}</p>
+            <h3 style="font-size: var(--text-xl); font-weight: 500; margin-top: 0.5rem;">{g.title}</h3>
+            <p class="card-desc" style="margin-top: 0.5rem;">{g.description}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+
+  {comparisons.length > 0 && (
+    <section class="col section">
+      <SectionHeader kicker="Decide" title="Comparisons" lede="Evidence-grounded decisions under constraints — never universal winners." />
+      <div class="card-grid card-grid--2" style="margin-top: 1.75rem;">
+        {comparisons.map((g) => (
+          <a href={`/guides/${g.slug}`} class="card card-pad card-interactive">
+            <p class="mono-label">{(g.kicker || 'Decide').split('·').pop()?.trim()}</p>
+            <h3 style="font-size: var(--text-xl); font-weight: 500; margin-top: 0.5rem;">{g.title}</h3>
+            <p class="card-desc" style="margin-top: 0.5rem;">{g.description}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
 </BaseLayout>

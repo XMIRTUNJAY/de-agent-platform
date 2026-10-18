@@ -4,14 +4,21 @@ import PageHero from '@/components/PageHero.astro';
 import SectionHeader from '@/components/SectionHeader.astro';
 import ResourceCard from '@/components/ResourceCard.astro';
 import registry from '@/data/generated/registry.json';
+import { count as countLabel } from '@/lib/format';
 
-// "Learning by doing": skills and starter projects carry explicit learning objectives.
-const resources = registry.resources.filter(r => r.learning_objectives?.length > 0);
+// Tutorials are a real type with entries carrying learning objectives. Skills
+// and starters that teach are included, but the page labels each entry's type
+// so tutorials are never confused with registry tooling (brief §8).
 const LEVELS = [
   { id: 'beginner', title: 'Beginner', blurb: 'No assumptions. Start here if the vocabulary is new.' },
   { id: 'intermediate', title: 'Intermediate', blurb: 'For working data engineers sharpening a specific skill.' },
   { id: 'advanced', title: 'Advanced', blurb: 'Deep mechanics: internals, failure modes and trade-offs.' },
 ];
+
+const teaching = registry.resources.filter(r => r.learning_objectives?.length > 0 && (r.page_eligibility?.state ?? 'eligible') !== 'internal_only');
+const editorial = teaching.filter(r => r.type === 'tutorial');
+const practicum = teaching.filter(r => r.type !== 'tutorial');
+const totalObjectives = teaching.reduce((a, r) => a + (r.learning_objectives?.length ?? 0), 0);
 ---
 
 <BaseLayout title="Tutorials · DE//AGENT" sidebar>
@@ -21,13 +28,26 @@ const LEVELS = [
     lede="Every entry below carries explicit learning objectives — skills you practise with an agent and starter projects you build end to end. Ordered from first principles to production depth."
   >
     <div style="margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
-      <span class="chip">{resources.length} tutorials</span>
-      <span class="chip chip-accent">{resources.filter(r => r.learning_objectives.length).reduce((a, r) => a + r.learning_objectives.length, 0)} learning objectives</span>
+      <span class="chip">{countLabel(teaching.length, 'entry', 'entries')}</span>
+      <span class="chip chip-accent">{countLabel(totalObjectives, 'learning objective')}</span>
     </div>
   </PageHero>
 
+  {editorial.length > 0 && (
+    <section class="col section" style="padding-top: 2rem;">
+      <SectionHeader
+        kicker="Editorial tutorials"
+        title="Walkthroughs, start to finish"
+        lede="Full written walkthroughs with checkpoints and validation — the registry's teaching-grade material."
+      />
+      <div class="card-grid stagger" style="margin-top: 1.75rem;">
+        {editorial.map((r) => <ResourceCard resource={r} />)}
+      </div>
+    </section>
+  )}
+
   {LEVELS.map((level, i) => {
-    const items = resources.filter(r => (r.difficulty ?? 'beginner') === level.id);
+    const items = practicum.filter(r => (r.difficulty ?? 'beginner') === level.id);
     if (!items.length) return null;
     return (
       <section class="col section">
