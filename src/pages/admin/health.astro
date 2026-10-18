@@ -88,7 +88,7 @@ const overClaims = (stats as any).over_claims as number | undefined;
       {HEALTH.map((h) => (
         <div class="card card-pad">
           <p class="mono-label">{h.label}</p>
-          <p class="display" style="font-size: var(--text-3xl, 2rem); letter-spacing: -0.02em;" style="margin-top: 0.5rem;">{h.value}</p>
+          <p class="display" style="font-size: var(--text-3xl, 2rem); letter-spacing: -0.02em; margin-top: 0.5rem;">{h.value}</p>
           <p class="card-desc" style="margin-top: 0.25rem;">{h.note}</p>
         </div>
       ))}
@@ -114,7 +114,7 @@ const overClaims = (stats as any).over_claims as number | undefined;
         </div>
         <div class="card card-pad">
           <p class="mono-label">over-claimed</p>
-          <p class="display" style="font-size: var(--text-3xl, 2rem); letter-spacing: -0.02em;" style="margin-top: 0.5rem;">{overClaims ?? 0}</p>
+          <p class="display" style="font-size: var(--text-3xl, 2rem); letter-spacing: -0.02em; margin-top: 0.5rem;">{overClaims ?? 0}</p>
           <p class="card-desc" style="margin-top: 0.25rem;">claim more than evidence supports; backfill evidence to clear the gap</p>
         </div>
       </div>
@@ -145,7 +145,7 @@ const overClaims = (stats as any).over_claims as number | undefined;
         </div>
         <div class="card card-pad">
           <p class="mono-label">thin pages</p>
-          <p class="display" style="font-size: var(--text-3xl, 2rem); letter-spacing: -0.02em;" style="margin-top: 0.5rem;">{depth.thin ?? 0}</p>
+          <p class="display" style="font-size: var(--text-3xl, 2rem); letter-spacing: -0.02em; margin-top: 0.5rem;">{depth.thin ?? 0}</p>
           <p class="card-desc" style="margin-top: 0.25rem;">need deepening before they earn crawling; the thin list ships in depth.json</p>
         </div>
       </div>
@@ -250,7 +250,7 @@ const overClaims = (stats as any).over_claims as number | undefined;
       {TRUST.map((t) => (
         <div class="card card-pad">
           <p class="mono-label">{t.label}</p>
-          <p class="display" style="font-size: var(--text-3xl, 2rem); letter-spacing: -0.02em;" style="margin-top: 0.5rem;">{t.value}</p>
+          <p class="display" style="font-size: var(--text-3xl, 2rem); letter-spacing: -0.02em; margin-top: 0.5rem;">{t.value}</p>
           <p class="card-desc" style="margin-top: 0.25rem;">{t.note}</p>
         </div>
       ))}
@@ -273,15 +273,21 @@ const overClaims = (stats as any).over_claims as number | undefined;
           {healthErr > 0 && <span class="chip">{healthErr} failing</span>}
           <span class="chip">updated {new Date((sourceHealth as { generated_at: string }).generated_at).toISOString().slice(0, 10)}</span>
         </div>
-        <div class="card-grid card-grid--2" style="margin-top: 1.75rem;">
-          {healthEntries.map(([id, s]) => (
-            <div class="card card-pad-sm" style="display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;">
-              <span style="font-size: var(--text-sm);">{id}</span>
-              <span class="text-muted" style="font-size: var(--text-sm); font-variant-numeric: tabular-nums;">
-                {s.last_status === 'ok' ? `ok · ${s.last_items ?? 0} items` : `error ×${s.consecutive_failures} · ${s.last_error ?? 'unknown'}`}
-              </span>
-            </div>
-          ))}
+        <div class="prose-measure-l" style="margin-top: 1.75rem;">
+          <table class="table">
+            <thead>
+              <tr><th scope="col">Source</th><th scope="col">Status</th><th scope="col">Detail</th></tr>
+            </thead>
+            <tbody>
+              {healthEntries.map(([id, s]) => (
+                <tr>
+                  <td class="font-mono" style="color: var(--fg);">{id}</td>
+                  <td class="font-mono">{s.last_status === 'ok' ? 'ok' : `error ×${s.consecutive_failures}`}</td>
+                  <td>{s.last_status === 'ok' ? `${s.last_items ?? 0} items` : (s.last_error ?? 'unknown')}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </>
     )}
