@@ -10,8 +10,9 @@ import { PHASES } from '@/lib/phases';
 const stages = registry.taxonomy.stages;
 const categories = registry.taxonomy.categories;
 const resources = registry.resources;
-const roadmapStages = ((registry as any).roadmap.stages ?? {}) as Record<string, { gate?: string; artifact?: string }>;
-const tracks = ((registry as any).roadmap.tracks ?? []) as { title: string; description: string; path: string[] }[];
+const roadmapData = (registry as any).roadmap?.roadmap ?? {};
+const roadmapStages = (roadmapData.stages ?? {}) as Record<string, { gate?: string; artifact?: string; teaches?: string; can_do?: string[] }>;
+const tracks = (roadmapData.tracks ?? []) as { title: string; description: string; path: string[] }[];
 
 const catByStage: Record<string, typeof categories> = {};
 
@@ -49,16 +50,19 @@ const journey = PHASES.map((phase) => {
     lede={`${countLabel(registry.taxonomy.stages.length, 'stage')} from Foundations to Agentic Data Engineering. Each has an exit gate you can prove and a deliverable artifact.`}
   />
 
-  <!-- Phase timeline — the journey rail (brief §8: connected journey, not a card wall) -->
+  <!-- Phase stepper — connected journey rail (audit S2.2) -->
   <section class="col section" aria-label="Roadmap phases" style="padding-top: 2rem;">
-    <ol class="phase-rail" style="list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem; counter-reset: phase;">
+    <ol class="phase-stepper" style="list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem;">
       {journey.map(({ phase, count }, i) => (
-        <li>
-          <a href={`#phase-${phase.index}`} class="card card-pad-sm card-interactive" style="display: flex; flex-direction: column; gap: 0.35rem; height: 100%;">
-            <span class="mono-label" style="margin: 0;">Phase {phase.index} of {PHASES.length}</span>
-            <span style="font-weight: 500; color: var(--fg);">{phase.name}</span>
-            <span class="text-dim font-mono" style="font-size: var(--text-2xs);">{countLabel(count, 'resource')} · {phase.stageIds.length} stages</span>
+        <li style="position: relative;">
+          <a href={`#phase-${phase.index}`} class="stepper-step card card-pad-sm card-interactive" style="display: flex; align-items: flex-start; gap: 0.65rem; height: 100%;">
+            <span class="stepper-num" aria-hidden="true">{phase.index}</span>
+            <span style="display: flex; flex-direction: column; gap: 0.15rem; min-width: 0;">
+              <span style="font-weight: 500; color: var(--fg);">{phase.name}</span>
+              <span class="text-dim font-mono text-2xs">{countLabel(count, 'resource')} · {phase.stageIds.length} stages</span>
+            </span>
           </a>
+          {i < journey.length - 1 && <span class="stepper-connector" aria-hidden="true"></span>}
         </li>
       ))}
     </ol>
@@ -93,8 +97,9 @@ const journey = PHASES.map((phase) => {
                   )}
                 </a>
                 {gate && (
-                  <div class="mono-teach" style="padding: 0 0.5rem 1.25rem 4.25rem; color: var(--fg-muted); font-size: var(--text-sm);">
-                    <span><strong style="color: var(--fg); font-weight: 500;">Gate:</strong> {gate.gate ?? '—'}</span>
+                  <div class="gate-callout" style="margin: 0 0.5rem 1.25rem 4.25rem;">
+                    <span class="gate-tag">Gate</span>
+                    <span style="color: var(--fg);">{gate.gate ?? '—'}</span>
                     {gate.artifact && <>
                       <span style="margin: 0 0.5rem; color: var(--fg-dim);">·</span>
                       {(() => {
@@ -167,4 +172,54 @@ const journey = PHASES.map((phase) => {
 <style>
   .chapter-stage { border-top: 1px solid var(--border); padding-top: 2rem; }
   .mono-teach { border-left: 2px solid var(--border); margin-left: 1rem; }
+
+  /* Phase stepper (audit S2.2) — numbered steps with connector line */
+  .stepper-step { position: relative; z-index: 1; }
+  .stepper-num {
+    display: grid;
+    place-items: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    flex-shrink: 0;
+    border-radius: 999px;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    background: var(--accent-soft);
+  }
+  .stepper-connector {
+    position: absolute;
+    top: 1.6rem;
+    left: calc(50% + 1.6rem);
+    right: calc(-50% + 1.6rem);
+    height: 1px;
+    background: var(--border-strong);
+  }
+  /* Exit-gate callout (audit S2.2) */
+  .gate-callout {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem;
+    padding: 0.65rem 0.85rem;
+    border: 1px solid var(--accent-soft);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius-sm);
+    background: var(--accent-soft);
+    color: var(--fg-muted);
+    font-size: var(--text-sm);
+  }
+  .gate-tag {
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  @media (max-width: 767px) {
+    .stepper-connector { display: none; }
+  }
 </style>

@@ -234,7 +234,7 @@ test('P3-shell: reduced-motion users get no reveal transforms', async ({ page })
 
 test('P2-road: roadmap journey rail links to phase anchors that exist', async ({ page }) => {
   await page.goto('/roadmap', { waitUntil: 'load' });
-  const railLinks = page.locator('.phase-rail a[href^="#phase-"]');
+  const railLinks = page.locator('.stepper-step[href^="#phase-"]');
   expect(await railLinks.count()).toBe(4);
   for (let i = 1; i <= 4; i++) {
     expect(await page.locator(`#phase-${i}`).count()).toBe(1);
@@ -297,4 +297,39 @@ test('P2-op: architecture patterns render the canvas diagram', async ({ page }) 
   await page.goto(href, { waitUntil: 'load' });
   const svg = page.locator('svg[aria-labelledby^="arch-title"]');
   await expect(svg).toBeVisible();
+});
+
+test('S2.1: runbook triage bar filters by severity and syncs URL', async ({ page }) => {
+  await page.goto('/runbooks', { waitUntil: 'load' });
+  const total = await page.locator('[data-runbook-severity]').count();
+  expect(total).toBeGreaterThanOrEqual(15);
+
+  await page.locator('[data-severity-filter="critical"]').click();
+  await expect(page).toHaveURL(/runbooks\?severity=critical/);
+  const visible = await page.locator('[data-runbook-severity]:not([hidden])').count();
+  expect(visible).toBeGreaterThan(0);
+  expect(visible).toBeLessThan(total);
+
+  await page.reload({ waitUntil: 'load' });
+  expect(await page.locator('[data-runbook-severity]:not([hidden])').count()).toBe(visible);
+  await expect(page.locator('[data-severity-filter="critical"]')).toHaveAttribute('aria-pressed', 'true');
+
+  await page.locator('[data-severity-filter=""]').click();
+  await expect(page).toHaveURL(/runbooks\/?$/);
+  expect(await page.locator('[data-runbook-severity]:not([hidden])').count()).toBe(total);
+  // incident assistant link present
+  await expect(page.locator('main a[href="/agents/incident-assistant"]').first()).toBeVisible();
+});
+
+test('S2.2: roadmap stepper links phases with numbered steps', async ({ page }) => {
+  await page.goto('/roadmap', { waitUntil: 'load' });
+  const steps = page.locator('.stepper-step');
+  await expect(steps).toHaveCount(4);
+  const nums = await page.locator('.stepper-num').allTextContents();
+  expect(nums).toEqual(['1', '2', '3', '4']);
+  for (let i = 1; i <= 4; i++) {
+    expect(await page.locator(`#phase-${i}`).count()).toBe(1);
+  }
+  const gates = await page.locator('.gate-callout').count();
+  expect(gates).toBeGreaterThanOrEqual(10);
 });

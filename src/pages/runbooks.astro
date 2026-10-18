@@ -1,16 +1,125 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import ListingPage from '@/components/ListingPage.astro';
+import PageHero from '@/components/PageHero.astro';
+import ResourceCard from '@/components/ResourceCard.astro';
 import registry from '@/data/generated/registry.json';
+import { count as countLabel } from '@/lib/format';
 
-const resources = registry.resources.filter(r => r.type === 'runbook');
+// Triage console (audit S2.1): severity quick-filters with derived counts,
+// symptom-first cards, direct line to the incident assistant agent.
+const runbooks = registry.resources.filter(r => r.type === 'runbook');
+const incidentAssistant = registry.resources.find(r => r.slug === 'incident-assistant' || r.id === 'agent-incident-assistant');
+
+const severities = ['critical', 'high', 'medium'];
+const bySeverity = Object.fromEntries(severities.map((s) => [s, runbooks.filter((r) => r.severity === s).length]));
 ---
 
 <BaseLayout title="Runbooks · DE//AGENT" sidebar>
-  <ListingPage
+  <PageHero
     kicker="Operate"
     title="Production runbooks"
-    lede="Symptom → diagnosis → fix for the fifteen most common incidents — each with commands, prevention and monitoring."
-    resources={resources}
-  />
+    lede="Symptom → diagnosis → recovery → prevention for the most common incidents. Triage by severity; every runbook carries commands, prevention and monitoring."
+  >
+    <div style="margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+      <span class="chip">{countLabel(runbooks.length, 'runbook')}</span>
+      {severities.map((s) => (
+        <span class="chip severity-chip" data-severity={s}>{bySeverity[s]} {s}</span>
+      ))}
+      {incidentAssistant && (
+        <a href={incidentAssistant.url} class="chip chip-accent" style="text-decoration: none;">
+          Triage with the incident assistant <span aria-hidden="true">→</span>
+        </a>
+      )}
+    </div>
+  </PageHero>
+
+  <section class="col section-sm" style="padding-top: 2.5rem;">
+    <!-- Severity triage bar — URL-synced, progressive enhancement -->
+    <div class="triage-bar card card-pad-sm" style="display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; margin-bottom: 1.5rem;">
+      <span class="mono-label" style="margin: 0;">Severity</span>
+      <button type="button" class="triage-chip" data-severity-filter="" aria-pressed="true">All ({runbooks.length})</button>
+      {severities.map((s) => (
+        <button
+          type="button"
+          class="triage-chip"
+          data-severity-filter={s}
+          aria-pressed="false"
+        >
+          <span class="severity-dot" data-severity={s} aria-hidden="true"></span>
+          {s} ({bySeverity[s]})
+        </button>
+      ))}
+      <p id="triage-count" class="ml-auto font-mono text-2xs text-dim" style="margin: 0;" aria-live="polite"></p>
+    </div>
+
+    <div id="runbook-grid" class="card-grid stagger" style="margin-top: 0;">
+      {runbooks.map((r) => (
+        <div data-runbook-severity={r.severity ?? ''} style="display: flex; flex-direction: column; height: 100%;">
+          <ResourceCard resource={r} />
+        </div>
+      ))}
+    </div>
+    <p id="triage-empty" hidden class="mt-8 text-center text-muted py-8">No runbooks at this severity.</p>
+  </section>
+
+  <script>
+    (function () {
+      const items = Array.from(document.querySelectorAll('[data-runbook-severity]')) as HTMLElement[];
+      if (!items.length) return;
+      const chips = document.querySelectorAll('[data-severity-filter]') as NodeListOf<HTMLButtonElement>;
+      const countEl = document.getElementById('triage-count');
+      const emptyEl = document.getElementById('triage-empty');
+      let current = new URLSearchParams(location.search).get('severity') ?? '';
+
+      function apply(push: boolean) {
+        let shown = 0;
+        for (const el of items) {
+          const hit = !current || el.dataset.runbookSeverity === current;
+          el.hidden = !hit;
+          if (hit) shown++;
+        }
+        chips.forEach((c) => c.setAttribute('aria-pressed', String((c.dataset.severityFilter ?? '') === current)));
+        if (countEl) countEl.textContent = `${shown} of ${items.length}`;
+        if (emptyEl) emptyEl.hidden = shown > 0;
+        const qs = current ? `?severity=${current}` : '';
+        const url = `${location.pathname}${qs}`;
+        if (push) history.pushState({}, '', url);
+        else history.replaceState({}, '', url);
+      }
+
+      chips.forEach((chip) => {
+        chip.addEventListener('click', () => {
+          current = chip.dataset.severityFilter ?? '';
+          apply(true);
+        });
+      });
+      window.addEventListener('popstate', () => {
+        current = new URLSearchParams(location.search).get('severity') ?? '';
+        apply(false);
+      });
+
+      apply(false);
+    })();
+  </script>
+
+  <style>
+    .triage-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--font-mono);
+      font-size: var(--text-2xs);
+      padding: 0.35rem 0.6rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--fg-muted);
+      transition: color var(--duration-fast), border-color var(--duration-fast), background-color var(--duration-fast);
+    }
+    .triage-chip:hover { color: var(--fg); border-color: var(--border-strong); }
+    .triage-chip[aria-pressed='true'] { color: var(--fg); border-color: var(--accent); background: var(--accent-soft); }
+    .triage-chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .severity-dot { width: 7px; height: 7px; border-radius: 999px; background: var(--fg-dim); }
+    .severity-dot[data-severity='critical'] { background: var(--color-danger); }
+    .severity-dot[data-severity='high'] { background: var(--color-warn); }
+  </style>
 </BaseLayout>
