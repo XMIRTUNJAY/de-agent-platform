@@ -5,6 +5,7 @@ import SectionHeader from '@/components/SectionHeader.astro';
 import registry from '@/data/generated/registry.json';
 import stats from '@/data/generated/stats.json';
 import { count as countLabel } from '@/lib/format';
+import { PHASES } from '@/lib/phases';
 
 const stages = registry.taxonomy.stages;
 const categories = registry.taxonomy.categories;
@@ -21,6 +22,23 @@ const gaps = ((stats as any).roadmapGaps ?? []) as { stage: string; needsOrigina
 const gapByStage: Record<string, { stage: string; needsOriginal: string | null }> = {};
 for (const g of gaps) gapByStage[g.stage] = g;
 for (const c of categories) (catByStage[c.stage] ??= []).push(c);
+
+const stageById = new Map(stages.map((s: any) => [s.id, s]));
+// Journey: phases -> stages (canonical module), with rendered extras attached
+const journey = PHASES.map((phase) => {
+  const sts = phase.stageIds
+    .map((id) => stageById.get(id))
+    .filter((s): s is any => Boolean(s))
+    .sort((a: any, b: any) => a.order - b.order)
+    .map((stage: any) => ({
+      stage,
+      count: stageCounts[stage.id] ?? 0,
+      reading: stageReading[stage.id] ?? 0,
+      gate: roadmapStages[stage.id],
+      gap: gapByStage[stage.id],
+    }));
+  return { phase, sts, count: sts.reduce((n, s) => n + s.count, 0) };
+});
 ---
 
 <BaseLayout title="Roadmap · DE//AGENT" sidebar>
@@ -31,64 +49,95 @@ for (const c of categories) (catByStage[c.stage] ??= []).push(c);
     lede={`${countLabel(registry.taxonomy.stages.length, 'stage')} from Foundations to Agentic Data Engineering. Each has an exit gate you can prove and a deliverable artifact.`}
   />
 
-  <!-- Main path — chapter timeline with stable anchors -->
-  <section class="col section">
-    <ol style="list-style: none; padding: 0; margin: 0;">
-      {stages.map((stage, i) => {
-        const cats = (catByStage[stage.id] ?? []).sort((a: any, b: any) => a.order - b.order);
-        const count = stageCounts[stage.id] ?? 0;
-        const gate = roadmapStages[stage.id];
-        return (
-          <li id={stage.slug ?? stage.id} class:list={['reveal']} style="padding-top: 1rem;">
-            <a href={`#${stage.slug ?? stage.id}`} class="chapter-row chapter-stage">
-              <span class="chapter-num">{String(stage.order).padStart(2, '0')}</span>
-              <span style="flex: 1; min-width: 0;">
-                <span style="display: block; font-size: var(--text-2xl); font-weight: 500;">{stage.title}</span>
-                <span style="display: block; color: var(--fg-muted); margin-top: 0.35rem;">{stage.summary}</span>
-              </span>
-              <span class="chip">{countLabel(count, 'guide & tool', 'guides & tools')}{(stageReading[stage.id] ?? 0) > 0 ? ` · ${stageReading[stage.id]} further reading` : ''}</span>
-              {gapByStage[stage.id] && (
-                <span class="chip" title="Queued in the heartbeat loop — not yet published, never indexed until it clears auto-gates">
-                  upcoming: {gapByStage[stage.id].needsOriginal ? `${gapByStage[stage.id].needsOriginal} + tutorial` : 'tutorial'}
-                </span>
-              )}
-            </a>
-            {gate && (
-              <div class="mono-teach" style="padding: 0 0.5rem 1.25rem 4.25rem; color: var(--fg-muted); font-size: var(--text-sm);">
-                <span><strong style="color: var(--fg); font-weight: 500;">Gate:</strong> {gate.gate ?? '—'}</span>
-                {gate.artifact && <>
-                  <span style="margin: 0 0.5rem; color: var(--fg-dim);">·</span>
-                  {(() => {
-                    const target = resources.find((r: any) => r.id === gate.artifact);
-                    return target?.url ? (
-                      <a href={target.url}>Deliverable: {target.title}</a>
-                    ) : (
-                      <code class="icode">{gate.artifact}</code>
-                    );
-                  })()}
-                </>}
-              </div>
-            )}
-            <div style="padding: 0 0.5rem 2rem 4.25rem; display: grid; gap: 0.75rem; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));">
-              {cats.map((cat: any) => {
-                const catCount = resources.filter(r => r.category === cat.id).length;
-                // Empty categories stay in the taxonomy but don't get a card:
-                // a card to an empty page is a dead end, not navigation.
-                if (catCount === 0) return null;
-                return (
-                  <a href={`/categories/${cat.slug}`} class="card card-pad card-interactive">
-                    <p class="mono-label">{cat.group}</p>
-                    <h4 style="margin-top: 0.4rem; font-weight: 500;">{cat.title}</h4>
-                    <p style="margin-top: 0.4rem; font-size: var(--text-sm); color: var(--fg-muted);">{cat.summary}</p>
-                    <p style="margin-top: 0.6rem; font-size: var(--text-xs); color: var(--fg-dim); font-family: var(--font-mono);">{countLabel(catCount, 'resource')}</p>
-                  </a>
-                );
-              })}
-            </div>
-          </li>
-        );
-      })}
+  <!-- Phase timeline — the journey rail (brief §8: connected journey, not a card wall) -->
+  <section class="col section" aria-label="Roadmap phases" style="padding-top: 2rem;">
+    <ol class="phase-rail" style="list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem; counter-reset: phase;">
+      {journey.map(({ phase, count }, i) => (
+        <li>
+          <a href={`#phase-${phase.index}`} class="card card-pad-sm card-interactive" style="display: flex; flex-direction: column; gap: 0.35rem; height: 100%;">
+            <span class="mono-label" style="margin: 0;">Phase {phase.index} of {PHASES.length}</span>
+            <span style="font-weight: 500; color: var(--fg);">{phase.name}</span>
+            <span class="text-dim font-mono" style="font-size: var(--text-2xs);">{countLabel(count, 'resource')} · {phase.stageIds.length} stages</span>
+          </a>
+        </li>
+      ))}
     </ol>
+  </section>
+
+  <hr class="hairline col" />
+
+  <!-- Main path — phases → stages, stable anchors, exit gates -->
+  <section class="col section">
+    {journey.map(({ phase, sts }) => (
+      <div id={`phase-${phase.index}`} style="margin-bottom: 2rem;">
+        <div class="flex items-baseline gap-3" style="margin: 1rem 0 0.25rem;">
+          <h2 class="display" style="font-size: var(--text-2xl); margin: 0;">Phase {phase.index} — {phase.name}</h2>
+        </div>
+        <p class="text-muted" style="max-width: 62ch; margin-bottom: 0.5rem;">{phase.tagline}</p>
+        <ol style="list-style: none; padding: 0; margin: 0;">
+          {sts.map(({ stage, count, reading, gate, gap }) => {
+            const cats = (catByStage[stage.id] ?? []).sort((a: any, b: any) => a.order - b.order);
+            return (
+              <li id={stage.slug ?? stage.id} class:list={['reveal']} style="padding-top: 1rem;">
+                <a href={`#${stage.slug ?? stage.id}`} class="chapter-row chapter-stage">
+                  <span class="chapter-num">{String(stage.order).padStart(2, '0')}</span>
+                  <span style="flex: 1; min-width: 0;">
+                    <span style="display: block; font-size: var(--text-2xl); font-weight: 500;">{stage.title}</span>
+                    <span style="display: block; color: var(--fg-muted); margin-top: 0.35rem;">{stage.summary}</span>
+                  </span>
+                  <span class="chip">{countLabel(count, 'guide & tool', 'guides & tools')}{reading > 0 ? ` · ${reading} further reading` : ''}</span>
+                  {gap && (
+                    <span class="chip" title="Queued in the heartbeat loop — not yet published, never indexed until it clears auto-gates">
+                      upcoming: {gap.needsOriginal ? `${gap.needsOriginal} + tutorial` : 'tutorial'}
+                    </span>
+                  )}
+                </a>
+                {gate && (
+                  <div class="mono-teach" style="padding: 0 0.5rem 1.25rem 4.25rem; color: var(--fg-muted); font-size: var(--text-sm);">
+                    <span><strong style="color: var(--fg); font-weight: 500;">Gate:</strong> {gate.gate ?? '—'}</span>
+                    {gate.artifact && <>
+                      <span style="margin: 0 0.5rem; color: var(--fg-dim);">·</span>
+                      {(() => {
+                        const target = resources.find((r: any) => r.id === gate.artifact);
+                        return target?.url ? (
+                          <a href={target.url}>Deliverable: {target.title}</a>
+                        ) : (
+                          <code class="icode">{gate.artifact}</code>
+                        );
+                      })()}
+                    </>}
+                  </div>
+                )}
+                {stage.outcomes?.length > 0 && (
+                  <div style="padding: 0 0.5rem 0 4.25rem;">
+                    <p class="mono-label" style="margin: 0 0 0.35rem;">You can, after this stage</p>
+                    <ul style="list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: 0.4rem;">
+                      {stage.outcomes.map((o: string) => <li class="chip" style="font-size: var(--text-2xs);">{o}</li>)}
+                    </ul>
+                  </div>
+                )}
+                <div style="padding: 0 0.5rem 2rem 4.25rem; display: grid; gap: 0.75rem; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));">
+                  {cats.map((cat: any) => {
+                    const catCount = resources.filter(r => r.category === cat.id).length;
+                    // Empty categories stay in the taxonomy but don't get a card:
+                    // a card to an empty page is a dead end, not navigation.
+                    if (catCount === 0) return null;
+                    return (
+                      <a href={`/categories/${cat.slug}`} class="card card-pad card-interactive">
+                        <p class="mono-label">{cat.group}</p>
+                        <h4 style="margin-top: 0.4rem; font-weight: 500;">{cat.title}</h4>
+                        <p style="margin-top: 0.4rem; font-size: var(--text-sm); color: var(--fg-muted);">{cat.summary}</p>
+                        <p style="margin-top: 0.6rem; font-size: var(--text-xs); color: var(--fg-dim); font-family: var(--font-mono);">{countLabel(catCount, 'resource')}</p>
+                      </a>
+                    );
+                  })}
+                </div>
+              </li>
+            );
+          })}
+        </ol>
+      </div>
+    ))}
   </section>
 
   <hr class="hairline col" />

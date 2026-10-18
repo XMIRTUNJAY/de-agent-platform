@@ -230,3 +230,17 @@ test('P3-shell: reduced-motion users get no reveal transforms', async ({ page })
   const duration = await page.locator('.reveal').first().evaluate((el) => getComputedStyle(el).transitionDuration);
   expect(duration === '0s' || duration === '0.01ms' || duration === '').toBe(true);
 });
+
+test('P2-road: roadmap journey rail links to phase anchors that exist', async ({ page }) => {
+  await page.goto('/roadmap', { waitUntil: 'load' });
+  const railLinks = page.locator('.phase-rail a[href^="#phase-"]');
+  expect(await railLinks.count()).toBe(4);
+  for (let i = 1; i <= 4; i++) {
+    expect(await page.locator(`#phase-${i}`).count()).toBe(1);
+  }
+  // outcomes chips render (data-backed, no fabricated prerequisites)
+  expect(await page.locator('text=You can, after this stage').count()).toBeGreaterThan(10);
+  // all 13 stage anchors still resolve
+  const stageLinks = await page.locator('.chapter-stage[href^="#"]').evaluateAll((els) => els.map((e) => e.getAttribute('href')));
+  expect(new Set(stageLinks).size).toBeGreaterThanOrEqual(13);
+});
