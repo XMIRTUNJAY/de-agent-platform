@@ -110,8 +110,10 @@ const filters = [
 
       <!-- Results grid -->
       <section>
-        <div class="flex items-center gap-4 mb-4 flex-wrap">
-          <label class="flex items-center gap-2" style="white-space: nowrap;">
+        <div class="results-toolbar" style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem;">
+          <p id="result-count" class="font-mono text-2xs text-dim" style="margin: 0; white-space: nowrap;"></p>
+          <div id="active-chips" class="filter-chips" style="margin-bottom: 0; flex: 1; min-width: 0;"></div>
+          <label class="flex items-center gap-2" style="white-space: nowrap; margin-left: auto;">
             <span class="text-sm text-muted">Sort by:</span>
             <select id="sort-select" class="select select-sm">
               <option value="composite-desc">Quality Score ↓</option>
@@ -121,9 +123,7 @@ const filters = [
               <option value="verification-desc">Verification Level</option>
             </select>
           </label>
-          <p id="result-count" class="ml-auto font-mono text-2xs text-dim" style="margin: 0; white-space: nowrap;"></p>
         </div>
-        <div id="active-chips" class="filter-chips" hidden></div>
         <div id="results" class="card-grid stagger">
           {registry.resources.filter((r) => (r.page_eligibility?.state ?? 'eligible') !== 'internal_only').map((r) => (
             <div
@@ -240,7 +240,7 @@ const filters = [
           if (empty) empty.hidden = visible > 0;
           if (countEl) countEl.textContent = `${visible} resource${visible === 1 ? '' : 's'}`;
 
-          // Active-filter chips
+          // Active-filter chips — inline in the toolbar (audit S2.3)
           const count = activeCount(state);
           if (filterCount) {
             filterCount.textContent = String(count);
