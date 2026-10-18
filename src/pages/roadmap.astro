@@ -114,14 +114,14 @@ const journey = PHASES.map((phase) => {
                   </div>
                 )}
                 {stage.outcomes?.length > 0 && (
-                  <div style="padding: 0 0.5rem 0 4.25rem;">
+                  <div class="stage-indent" style="padding: 0 0.5rem 0 4.25rem;">
                     <p class="mono-label" style="margin: 0 0 0.35rem;">You can, after this stage</p>
                     <ul style="list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: 0.4rem;">
                       {stage.outcomes.map((o: string) => <li class="chip" style="font-size: var(--text-2xs);">{o}</li>)}
                     </ul>
                   </div>
                 )}
-                <div style="padding: 0 0.5rem 2rem 4.25rem; display: grid; gap: 0.75rem; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));">
+                <div class="stage-indent" style="padding: 0 0.5rem 2rem 4.25rem; display: grid; gap: 0.75rem; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));">
                   {cats.map((cat: any) => {
                     const catCount = resources.filter(r => r.category === cat.id).length;
                     // Empty categories stay in the taxonomy but don't get a card:
@@ -223,5 +223,12 @@ const journey = PHASES.map((phase) => {
     text-transform: uppercase;
     color: var(--accent);
     font-weight: 600;
+  }
+  /* narrow screens: the 4.25rem stage indent + 240px card min overflow 320px;
+     drop the indent, go single column */
+  @media (max-width: 480px) {
+    .stage-indent { padding-left: 0.5rem; padding-right: 0.5rem; }
+    .stage-indent[style*='grid-template-columns'] { grid-template-columns: 1fr !important; }
+    .mono-teach { margin-left: 0.5rem; }
   }
 </style>

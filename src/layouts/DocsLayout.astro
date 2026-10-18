@@ -21,7 +21,7 @@ const { frontmatter } = Astro.props;
     lede={frontmatter.description}
   />
   <div class="docs-body-grid">
-    <article class="col prose-de prose-measure-l section" style="padding-bottom: 6rem; grid-column: 1;">
+    <article class="col prose-de prose-measure-l section min-w-0" style="padding-bottom: 6rem; grid-column: 1;">
       <slot />
     </article>
     <nav class="toc-rail" aria-label="On this page">
@@ -33,7 +33,7 @@ const { frontmatter } = Astro.props;
   <style>
     .docs-body-grid {
       display: grid;
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
       max-width: 1120px;
       margin-inline: auto;
       padding-inline: 1.25rem;

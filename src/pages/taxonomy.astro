@@ -60,7 +60,7 @@ const structureTiers = [
       title="The full mapping"
       lede="Every stage, its categories, and the resource types that live in each — all counts derived from the registry."
     />
-    <div class="prose-measure-l" style="margin-top: 2rem; display: grid; gap: 2rem;">
+    <div class="prose-measure-l" style="margin-top: 2rem; display: grid; grid-template-columns: minmax(0, 1fr); gap: 2rem;">
       {stages.map((stage: any) => {
         const cats = catByStage[stage.id] ?? [];
         if (!cats.length) return null;
@@ -71,7 +71,7 @@ const structureTiers = [
               <h2 style="font-size: var(--text-xl); font-weight: 500; margin: 0;">{stage.title}</h2>
               <a href={`/roadmap#${stage.id}`} class="link-arrow" style="margin-left: auto; font-size: var(--text-xs);">roadmap <span aria-hidden="true">→</span></a>
             </div>
-            <table class="table">
+            <div class="table-wrap"><table class="table">
               <thead>
                 <tr><th scope="col">Category</th><th scope="col">Resources</th><th scope="col">Types present</th></tr>
               </thead>
@@ -93,7 +93,7 @@ const structureTiers = [
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </table></div>
           </section>
         );
       })}
@@ -109,7 +109,7 @@ const structureTiers = [
       lede="Technology references used by resources across the registry, with derived usage counts."
     />
     <div class="prose-measure-l" style="margin-top: 2rem;">
-      <table class="table">
+      <div class="table-wrap"><table class="table">
         <thead>
           <tr><th scope="col">Technology</th><th scope="col">Domain</th><th scope="col">Resources</th><th scope="col">Reference</th></tr>
         </thead>
@@ -127,7 +127,7 @@ const structureTiers = [
             </tr>
           ))}
         </tbody>
-      </table>
+      </table></div>
     </div>
   </section>
 </BaseLayout>

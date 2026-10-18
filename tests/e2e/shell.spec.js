@@ -378,3 +378,28 @@ test('S4: nav toggle — drawer on mobile, rail collapse on desktop', async ({ p
   await expect(t2).toHaveAttribute('aria-expanded', 'false');
   await expect(page.locator('#sidebar')).toBeHidden();
 });
+
+test('S5: 320px narrow mobile — no horizontal overflow on key routes', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 640 });
+  for (const route of ['/', '/marketplace', '/roadmap', '/runbooks', '/taxonomy', '/skills/sql-review', '/docs/scoring']) {
+    await page.goto(route, { waitUntil: 'domcontentloaded' });
+    await page.waitForTimeout(250);
+    const sw = await page.evaluate(() => document.documentElement.scrollWidth);
+    const vw = await page.evaluate(() => document.documentElement.clientWidth);
+    expect(sw, route).toBeLessThanOrEqual(vw + 1);
+  }
+});
+
+test('S6: command palette highlights matches and groups by category', async ({ page }) => {
+  await page.goto('/marketplace', { waitUntil: 'domcontentloaded' });
+  await page.click('[data-cmd-palette-open]');
+  await page.fill('.cmd-input', 'sql');
+  await page.waitForTimeout(400);
+  const marks = await page.locator('.cmd-item mark').count();
+  expect(marks).toBeGreaterThan(0);
+  const cats = await page.locator('.cmd-cat').count();
+  expect(cats).toBeGreaterThan(0);
+  // highlighted text is the query itself
+  const markText = await page.locator('.cmd-item mark').first().textContent();
+  expect(markText?.toLowerCase()).toContain('sql');
+});

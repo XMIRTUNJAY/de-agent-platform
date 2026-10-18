@@ -259,16 +259,36 @@ const analyticsEnabled = import.meta.env.PUBLIC_ANALYTICS_ENABLED === 'true';
             .slice(0, 10);
 
           if (!results.length) {
-            paletteResults.innerHTML = '<div class="px-4 py-8 text-center text-dim">No matches for "' + q + '"</div>';
+            paletteResults.innerHTML = '<div class="px-4 py-8 text-center text-dim">No matches for "' + q.replace(/</g, '&lt;') + '"</div>';
             return;
           }
+
+          // escape then highlight matched terms in the title (audit S-palette)
+          function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+          function hl(text, terms) {
+            var safe = esc(text);
+            if (!terms.length) return safe;
+            try {
+              var re = new RegExp('(' + terms.map(function(t){ return t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }).join('|') + ')', 'gi');
+              return safe.replace(re, '<mark>$1</mark>');
+            } catch (e) { return safe; }
+          }
+
+          // group by resource type with small category headers
+          var lastCat = null;
           paletteResults.innerHTML = results.map(function(x) {
             var r = x.r;
             var verificationLabel = r.verification === 'verified' ? '✓ Verified' : r.verification === 'tested' ? '✓ Tested' : r.verification === 'reviewed' ? '✓ Reviewed' : 'Community';
             var verificationColor = r.verification === 'verified' ? 'accent' : r.verification === 'tested' ? 'info' : r.verification === 'reviewed' ? 'warn' : 'dim';
-            return '<div class="cmd-item" data-url="' + r.url + '" role="option" tabindex="0">' +
-              '<span class="chip">' + r.typeLabel + '</span>' +
-              '<span class="flex-1 min-w-0 truncate">' + r.title + '</span>' +
+            var cat = (r.categoryTitle || r.typeLabel || '');
+            var catHeader = cat !== lastCat
+              ? '<div class="cmd-cat">' + esc(cat) + '</div>'
+              : '';
+            lastCat = cat;
+            return catHeader +
+              '<div class="cmd-item" data-url="' + r.url + '" role="option" tabindex="0">' +
+              '<span class="chip">' + esc(r.typeLabel) + '</span>' +
+              '<span class="flex-1 min-w-0 truncate">' + hl(r.title, q.split(/\s+/).filter(Boolean)) + '</span>' +
               '<span class="chip" style="color: var(--color-' + verificationColor + ')">' + verificationLabel + '</span>' +
               '<kbd class="kbd ml-auto">Enter</kbd>' +
             '</div>';

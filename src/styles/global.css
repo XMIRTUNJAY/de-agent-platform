@@ -591,6 +591,8 @@
   border: 1px solid var(--border);
   color: var(--fg);
   white-space: nowrap;
+  /* long mono tokens must break inside prose at narrow widths */
+  overflow-wrap: anywhere;
 }
 
 .link {
@@ -1233,6 +1235,19 @@ html:not([data-platform]) .kbd-mac { display: inline; }
 .cmd-palette .cmd-input:focus { outline: none; }
 
 .cmd-results { max-height: 50vh; overflow-y: auto; }
+.cmd-cat {
+  padding: 0.5rem 1rem 0.25rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+.cmd-item mark {
+  background: transparent;
+  color: var(--accent);
+  font-weight: 600;
+}
 .cmd-item {
   display: flex;
   align-items: center;

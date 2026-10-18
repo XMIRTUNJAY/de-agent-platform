@@ -104,8 +104,10 @@ const scoreColor = (score: number) => {
       )}
     </header>
 
-    <div class="grid gap-8 min-[1200px]:grid-cols-[1fr_320px]">
-      <section class="prose-de prose-measure space-y-8">
+    <div class="grid grid-cols-[minmax(0,1fr)] gap-8 min-[1200px]:grid-cols-[minmax(0,1fr)_320px]">
+      <!-- min-w-0: grid item's automatic minimum would otherwise be sized by
+           unbroken code lines and overflow narrow viewports -->
+      <section class="prose-de prose-measure min-w-0 space-y-8">
         {res.purpose && (
           <section class="mount">
             <h2>Purpose</h2>
