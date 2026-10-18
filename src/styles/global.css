@@ -14,33 +14,33 @@
   color-scheme: dark;
 
   /* Core surfaces — shell sits clearly below cards so panels read as objects */
-  --shell: #050706;
-  --surface: #16231e;
-  --surface-2: #1d2e26;
-  --surface-3: #253932;
-  --surface-hover: #2a3f36;
+  --shell: #06080a;
+  --surface: #101613;
+  --surface-2: #161e1a;
+  --surface-3: #1d2621;
+  --surface-hover: #222c27;
 
   /* Semantic color layer */
   --card: var(--surface);
   --card-hover: var(--surface-hover);
-  --card-border: rgba(255, 255, 255, 0.19);
+  --card-border: rgba(255, 255, 255, 0.22);
   --card-border-hover: rgba(74, 222, 128, 0.55);
   --primary: #4ade80;
   --primary-strong: #22c55e;
   --primary-fg: #05170c;
   --secondary: #141f1c;
   --secondary-hover: #1e2c29;
-  --muted: #9aa59b;
+  --muted: #a4afa6;
   --ring: rgba(74, 222, 128, 0.5);
 
   /* Borders */
-  --border: rgba(255, 255, 255, 0.06);
-  --border-strong: rgba(255, 255, 255, 0.12);
+  --border: rgba(255, 255, 255, 0.09);
+  --border-strong: rgba(255, 255, 255, 0.16);
 
   /* Text */
-  --fg: #e8ebe3;
-  --fg-muted: #9aa59b;
-  --fg-dim: #66726a;
+  --fg: #eef2ea;
+  --fg-muted: #a4afa6;
+  --fg-dim: #74817a;
   --fg-inverse: #05170c;
 
   /* Accent (green) */
@@ -58,8 +58,8 @@
   --cream: #dfdfc1;
 
   /* Code */
-  --code-bg: #091312;
-  --code-border: rgba(255, 255, 255, 0.06);
+  --code-bg: #090e0c;
+  --code-border: rgba(255, 255, 255, 0.08);
 
   /* Rail grid */
   --rail: rgba(232, 235, 227, 0.08);
@@ -90,30 +90,30 @@
 [data-theme='light'] {
   color-scheme: light;
 
-  --shell: #dfe3d8;
+  --shell: #f4f5f2;
   --surface: #ffffff;
-  --surface-2: #f0f3ea;
-  --surface-3: #e4e9dd;
-  --surface-hover: #dde4d6;
+  --surface-2: #eef0eb;
+  --surface-3: #e3e7df;
+  --surface-hover: #e7eae3;
 
   --card: var(--surface);
-  --card-hover: #f4f7f0;
-  --card-border: rgba(11, 13, 11, 0.22);
+  --card-hover: #f7f9f5;
+  --card-border: rgba(16, 22, 19, 0.28);
   --card-border-hover: rgba(21, 128, 61, 0.55);
   --primary: #15803d;
   --primary-strong: #166534;
   --primary-fg: #f3fff8;
-  --secondary: #f1f5ee;
-  --secondary-hover: #e6ede2;
-  --muted: #4c574e;
+  --secondary: #f1f4ef;
+  --secondary-hover: #e6ece2;
+  --muted: #3f4a42;
   --ring: rgba(21, 128, 61, 0.4);
 
-  --border: rgba(11, 13, 11, 0.08);
-  --border-strong: rgba(11, 13, 11, 0.16);
+  --border: rgba(16, 22, 19, 0.1);
+  --border-strong: rgba(16, 22, 19, 0.19);
 
-  --fg: #0f1712;
-  --fg-muted: #4c574e;
-  --fg-dim: #78857b;
+  --fg: #101613;
+  --fg-muted: #3f4a42;
+  --fg-dim: #636f66;
   --fg-inverse: #f3fff8;
 
   --accent: #15803d;
@@ -128,11 +128,11 @@
   --info: #155e75;
   --cream: #4a554a;
 
-  --code-bg: #f3f7f1;
-  --code-border: rgba(11, 13, 11, 0.08);
+  --code-bg: #f7f9f5;
+  --code-border: rgba(16, 22, 19, 0.1);
 
-  --rail: rgba(11, 13, 11, 0.07);
-  --grid: rgba(11, 13, 11, 0.04);
+  --rail: rgba(16, 22, 19, 0.08);
+  --grid: rgba(16, 22, 19, 0.045);
 
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05), 0 1px 0 rgba(0, 0, 0, 0.02);
   --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.06), 0 4px 16px rgba(0, 0, 0, 0.04);
@@ -881,6 +881,82 @@ html:not([data-platform]) .kbd-mac { display: inline; }
 .severity-chip[data-severity='high'] { color: var(--color-warn); border-color: var(--color-warn); }
 .severity-chip[data-severity='medium'] { color: var(--fg-muted); }
 
+/* Score gauge — SVG ring replacing the text meter (audit S1.2) */
+.score-gauge {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  --tone-color: var(--color-dim);
+}
+.score-gauge[data-tone='accent'] { --tone-color: var(--color-accent); }
+.score-gauge[data-tone='info'] { --tone-color: var(--color-info); }
+.score-gauge[data-tone='warn'] { --tone-color: var(--color-warn); }
+.score-gauge[data-tone='danger'] { --tone-color: var(--color-danger); }
+.gauge-track { stroke: var(--surface-3); }
+.gauge-arc { stroke: var(--tone-color); transform: rotate(-90deg); transform-origin: center; }
+.gauge-value {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--fg);
+}
+
+/* Per-type badges — scannable type identity (audit S1.3); restrained tinted
+   dot + label, neutral fallback for unknown types */
+.type-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.type-badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  background: var(--fg-dim);
+  flex-shrink: 0;
+}
+.type-badge[data-type='skill'] .type-badge-dot { background: var(--color-accent); }
+.type-badge[data-type='mcp'] .type-badge-dot { background: var(--color-info); }
+.type-badge[data-type='hook'] .type-badge-dot { background: var(--color-warn); }
+.type-badge[data-type='agent'] .type-badge-dot { background: var(--color-violet, #a78bfa); }
+.type-badge[data-type='runbook'] .type-badge-dot { background: var(--color-danger); }
+.type-badge[data-type='starter'] .type-badge-dot { background: var(--cream); }
+.type-badge[data-type='architecture'] .type-badge-dot { background: var(--cream); }
+
+/* Copy-install — card footer, real command only (audit S1.4) */
+.copy-install {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.6rem;
+  align-self: flex-start;
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  color: var(--fg-dim);
+  padding: 0.3rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  transition: color var(--duration-fast), border-color var(--duration-fast), background-color var(--duration-fast);
+}
+.copy-install:hover { color: var(--fg); border-color: var(--border-strong); background: var(--surface-2); }
+.copy-install:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.copy-install.copied { color: var(--color-accent); border-color: var(--color-accent); }
+.copy-install-label { max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
 /* Selected-filter chips row */
 .filter-chips {
   display: flex;
@@ -922,9 +998,32 @@ html:not([data-platform]) .kbd-mac { display: inline; }
   border-radius: var(--radius-md);
   overflow: hidden;
 }
+/* Terminal chrome (audit S1.5) — header strip with window dots; copy sits in it */
+.codeblock::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2.25rem;
+  border-bottom: 1px solid var(--code-border);
+  background: color-mix(in oklab, var(--surface-2) 55%, transparent);
+  pointer-events: none;
+}
+.codeblock::after {
+  content: '●  ●  ●';
+  position: absolute;
+  top: 0.7rem;
+  left: 0.9rem;
+  font-size: 0.45rem;
+  letter-spacing: 0.28rem;
+  color: var(--fg-dim);
+  opacity: 0.7;
+  pointer-events: none;
+}
 .codeblock pre {
   margin: 0;
-  padding: 1.25rem 1.5rem;
+  padding: 3.1rem 1.5rem 1.25rem;
   overflow-x: auto;
   font-size: var(--text-sm);
   line-height: 1.65;
@@ -933,14 +1032,13 @@ html:not([data-platform]) .kbd-mac { display: inline; }
 .codeblock pre code { font-size: inherit; }
 .codeblock .copy-btn {
   position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
-  opacity: 0;
-  transition: opacity var(--duration-fast), transform var(--duration-fast);
-  transform: translateY(-4px);
+  top: 0.4rem;
+  right: 0.55rem;
+  opacity: 0.55;
+  transition: opacity var(--duration-fast);
 }
-.codeblock:hover .copy-btn { opacity: 1; transform: translateY(0); }
-.codeblock .copy-btn:focus-visible { opacity: 1; transform: translateY(0); }
+.codeblock:hover .copy-btn { opacity: 1; }
+.codeblock .copy-btn:focus-visible { opacity: 1; }
 
 /* Rail grid */
 .rail-grid {

@@ -21,6 +21,15 @@ const ratingCount = mp?.rating_count ?? 0;
 const installCount = mp?.install_count ?? 0;
 const installSuccessRate = mp?.install_success_rate ?? 0;
 
+// Score gauge geometry (r=15.5 → circumference ≈ 97.39)
+const C = 97.39;
+const arc = Math.max(0, Math.min(100, band.pct)) * (C / 100);
+
+// Copy-install label: first tokens of the REAL command (never invented)
+const cmdFirstLine = (r.install_command ?? '').split('\n')[0];
+const cmdPrefix = cmdFirstLine.split(' ').slice(0, 3).join(' ');
+const cmdIsComment = cmdFirstLine.startsWith('#');
+
 // Star rating helper (returns string for template)
 function starRatingHtml(avg: number, count: number) {
   if (count === 0) return '<span class="text-dim text-2xs">No ratings</span>';
@@ -37,19 +46,31 @@ function starRatingHtml(avg: number, count: number) {
 ---
 
 <a href={r.url} class="card card-pad card-interactive" style="display: flex; flex-direction: column; height: 100%; content-visibility: auto; contain-intrinsic-size: auto 220px;">
-  <div class="card-header" style="margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center; gap: 0.75rem;">
-    <span class="mono-label" style="min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{r.typeLabel}{r.categoryTitle && ` / ${r.categoryTitle}`}</span>
+  <div class="card-header" style="margin-bottom: 0.6rem; display: flex; justify-content: space-between; align-items: center; gap: 0.6rem;">
+    <span class="type-badge" data-type={r.type}>
+      <span class="type-badge-dot" aria-hidden="true"></span>
+      {r.typeLabel}
+    </span>
     {mp && (
       <span
-        class="score-meter"
+        class="score-gauge"
         data-tone={band.tone}
         title={`Composite score ${formatScore(compositeScore)} · ${compositeLabel}`}
       >
-        <span class="score-meter-track" aria-hidden="true">
-          <span class="score-meter-fill" style={`width: ${band.pct}%`}></span>
-        </span>
-        <span class="score-meter-value">{formatScore(compositeScore)}</span>
-        <span class="score-meter-label">{compositeLabel}</span>
+        <svg viewBox="0 0 36 36" width="30" height="30" aria-hidden="true">
+          <circle class="gauge-track" cx="18" cy="18" r="15.5" stroke-width="3.5" fill="none" />
+          <circle
+            class="gauge-arc"
+            cx="18"
+            cy="18"
+            r="15.5"
+            stroke-width="3.5"
+            fill="none"
+            stroke-linecap="round"
+            stroke-dasharray={`${arc.toFixed(2)} ${C.toFixed(2)}`}
+          />
+        </svg>
+        <span class="gauge-value">{formatScore(compositeScore)}</span>
       </span>
     )}
   </div>
@@ -77,4 +98,20 @@ function starRatingHtml(avg: number, count: number) {
       <span class="chip" style="margin-left: auto; font-size: var(--text-2xs);">community</span>
     )}
   </div>
+  {r.install_command && !cmdIsComment && (
+    <button
+      type="button"
+      class="copy-install"
+      data-cmd={r.install_command}
+      title={`Copy: ${cmdFirstLine}`}
+      aria-label={`Copy install command for ${r.title}`}
+      onclick="event.preventDefault(); event.stopPropagation(); navigator.clipboard.writeText(this.dataset.cmd); this.classList.add('copied'); setTimeout(() => this.classList.remove('copied'), 1400);"
+    >
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+        <rect x="9" y="9" width="12" height="12" rx="2" />
+        <path d="M5 15V5a2 2 0 0 1 2-2h10" stroke-linecap="round" />
+      </svg>
+      <span class="copy-install-label">{cmdPrefix}</span>
+    </button>
+  )}
 </a>
