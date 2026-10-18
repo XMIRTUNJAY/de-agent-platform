@@ -65,6 +65,11 @@ const analyticsEnabled = import.meta.env.PUBLIC_ANALYTICS_ENABLED === 'true';
           document.documentElement.setAttribute('data-theme', t);
         } catch (e) { /* keep default */ }
       })();
+      // Platform-aware shortcut hints (audit P3: ⌘K assumed Mac)
+      (function () {
+        var mac = /Mac|iPhone|iPad/i.test(navigator.platform || navigator.userAgent);
+        document.documentElement.setAttribute('data-platform', mac ? 'mac' : 'other');
+      })();
     </script>
     <title>{pageTitle}</title>
     <meta name="description" content={description} />

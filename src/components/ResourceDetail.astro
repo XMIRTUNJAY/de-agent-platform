@@ -1,6 +1,7 @@
 ---
 import Feedback from '@/components/Feedback.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
 import { marked } from 'marked';
 
 // Resource bodies are human-gated curated YAML — trusted input, rendered
@@ -45,15 +46,15 @@ const scoreColor = (score: number) => {
 
 <BaseLayout title={res.title} sidebar noindex={(res.page_eligibility?.state ?? 'eligible') !== 'eligible'}>
   <main class="mx-auto max-w-[1600px] px-4 py-8 sm:px-6">
-    <nav class="mb-6 text-sm text-muted" aria-label="Breadcrumb">
-      <ol class="flex items-center gap-1.5">
-        <li><a href="/" class="link">Home</a></li>
-        <li class="text-dim">/</li>
-        <li><a href={res.url.split('/').slice(0, -1).join('/') || '/'} class="link">{res.typeLabel}s</a></li>
-        <li class="text-dim">/</li>
-        <li aria-current="page">{res.title}</li>
-      </ol>
-    </nav>
+    <div class="mb-6">
+      <Breadcrumbs
+        items={[
+          { label: 'Home', href: '/' },
+          { label: registry.taxonomy.categories.find((c: any) => c.id === res.category)?.title ?? res.categoryTitle ?? 'Registry', href: res.categorySlug ? `/categories/${res.categorySlug}` : undefined },
+          { label: res.title },
+        ].filter((c: any) => c.href || c.label === res.title)}
+      />
+    </div>
 
     <header class="mb-8 mount">
       <div class="flex flex-wrap items-center gap-2 mb-3">

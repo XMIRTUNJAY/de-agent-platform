@@ -850,6 +850,25 @@
   color: var(--fg-dim);
 }
 
+/* Platform-aware shortcut hints: html[data-platform] picks the glyph (P3) */
+html[data-platform='other'] .kbd-mac { display: none; }
+html[data-platform='mac'] .kbd-other { display: none; }
+html:not([data-platform]) .kbd-other { display: none; }
+html:not([data-platform]) .kbd-mac { display: inline; }
+
+/* Reduced motion — brief §A/§10: restrained motion, WCAG 2.2 AA */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal { transform: none !important; opacity: 1 !important; }
+}
+
 /* Selected-filter chips row */
 .filter-chips {
   display: flex;

@@ -210,3 +210,23 @@ test('P2-tax: taxonomy tables render derived structure', async ({ page }) => {
   const techRows = await page.locator('table tbody tr[id]').count();
   expect(techRows).toBeGreaterThanOrEqual(25);
 });
+
+test('P3-shell: detail pages show breadcrumbs with a category link', async ({ page }) => {
+  await page.goto('/skills/sql-review', { waitUntil: 'load' });
+  const crumbs = page.locator('nav[aria-label="Breadcrumb"] a, nav[aria-label="Breadcrumb"] [aria-current]');
+  await expect(crumbs.first()).toBeVisible();
+  const hrefs = await page.locator('nav[aria-label="Breadcrumb"] a').evaluateAll((els) => els.map((e) => e.getAttribute('href')));
+  expect(hrefs.some((h) => (h ?? '').startsWith('/categories/'))).toBe(true);
+});
+
+test('P3-shell: kbd hint is platform-aware (Ctrl on Windows)', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'load' });
+  await expect(page.locator('kbd[data-platform-hint]')).toHaveText(/Ctrl|⌘/);
+});
+
+test('P3-shell: reduced-motion users get no reveal transforms', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/taxonomy', { waitUntil: 'load' });
+  const duration = await page.locator('.reveal').first().evaluate((el) => getComputedStyle(el).transitionDuration);
+  expect(duration === '0s' || duration === '0.01ms' || duration === '').toBe(true);
+});

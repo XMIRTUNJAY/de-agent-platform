@@ -61,7 +61,10 @@ const activeSection = TOP_NAV.find((item) => item.href === activeHref);
         <Icon name="search" size={14} />
         <span class="hidden xl:inline">Search</span>
         <span class="hidden items-center gap-0.5 xl:inline-flex">
-          <kbd class="kbd">⌘K</kbd>
+          <kbd class="kbd" data-platform-hint>
+            <span class="kbd-mac">⌘K</span>
+            <span class="kbd-other">Ctrl K</span>
+          </kbd>
         </span>
       </button>
 
@@ -99,6 +102,6 @@ const activeSection = TOP_NAV.find((item) => item.href === activeHref);
   </div>
   <div class="cmd-results" id="cmd-results" role="listbox"></div>
   <div class="px-4 py-2 border-t border-line text-xs text-dim font-mono">
-    <kbd class="kbd">⌘K</kbd> to open · <kbd class="kbd">↑</kbd><kbd class="kbd">↓</kbd> to navigate · <kbd class="kbd">Enter</kbd> to select · <kbd class="kbd">Esc</kbd> to close
+    <kbd class="kbd"><span class="kbd-mac">⌘K</span><span class="kbd-other">Ctrl K</span></kbd> to open · <kbd class="kbd">↑</kbd><kbd class="kbd">↓</kbd> to navigate · <kbd class="kbd">Enter</kbd> to select · <kbd class="kbd">Esc</kbd> to close
   </div>
 </div>

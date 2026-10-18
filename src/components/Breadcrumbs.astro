@@ -1,0 +1,47 @@
+---
+// Breadcrumbs — nav trail for deeply nested pages (brief §5). Last item is
+// aria-current="location"; render inside the page header area.
+interface Crumb {
+  label: string;
+  href?: string;
+}
+interface Props {
+  items: Crumb[];
+}
+const { items } = Astro.props;
+---
+
+<nav aria-label="Breadcrumb" class="breadcrumbs">
+  <ol>
+    {items.map((item, i) => (
+      <li>
+        {i > 0 && <span class="crumb-sep" aria-hidden="true">/</span>}
+        {item.href && i < items.length - 1 ? (
+          <a href={item.href}>{item.label}</a>
+        ) : (
+          <span aria-current="location">{item.label}</span>
+        )}
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<style>
+  .breadcrumbs ol {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+  }
+  .breadcrumbs li { display: inline-flex; align-items: center; gap: 0.4rem; }
+  .breadcrumbs a { color: var(--fg-muted); transition: color var(--duration-fast); }
+  .breadcrumbs a:hover { color: var(--fg); }
+  .breadcrumbs a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .breadcrumbs [aria-current] { color: var(--fg-dim); }
+  .crumb-sep { color: var(--fg-dim); user-select: none; }
+</style>
