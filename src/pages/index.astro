@@ -190,32 +190,33 @@ const heroLines = ['Learn the pattern.', 'Install the skill.', 'Run the pipeline
     </div>
   </section>
 
-  <!-- 5. Trust & verification — accurate status distinctions, evidence language -->
+  <!-- 5. Trust pipeline — verification as an active tiering ladder (audit S3.2) -->
   <section class="hairline-block">
     <div class="col section">
       <SectionHeader
         kicker="Trust, not vibes"
         title="Every claim carries evidence"
-        lede="Verification levels are policy-defined. Each entry shows its provenance, license, last-checked date and known limitations — absence of evidence is rendered as absence."
+        lede="Verification is a pipeline, not a badge: entries enter as community submissions and earn each tier by passing checks. Counts are live from the registry — absence of evidence is rendered as absence."
         linkHref="/docs/verification"
         linkLabel="How verification works"
       />
-      <div class="card-grid" style="margin-top: 2.5rem; gap: 0.75rem;">
+      <ol class="trust-pipeline" style="list-style: none; padding: 0; margin: 2.5rem 0 0; display: grid; gap: 0.75rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
         {[
-          { label: 'community', n: byVerification.community ?? 0, note: 'Submitted with provenance; not yet reviewed.' },
-          { label: 'reviewed', n: byVerification.reviewed ?? 0, note: 'Human review of source, license and claims.' },
-          { label: 'tested', n: byVerification.tested ?? 0, note: 'Checks executed in isolated environments.' },
-          { label: 'verified', n: byVerification.verified ?? 0, note: 'Full evidence chain on file.' },
+          { label: 'community', tier: 1, n: byVerification.community ?? 0, note: 'Entered the registry with provenance and license on file.' },
+          { label: 'reviewed', tier: 2, n: byVerification.reviewed ?? 0, note: 'A human reviewed source, claims and license.' },
+          { label: 'tested', tier: 3, n: byVerification.tested ?? 0, note: 'Checks executed in an isolated environment.' },
+          { label: 'verified', tier: 4, n: byVerification.verified ?? 0, note: 'Full evidence chain on file, re-checked continuously.' },
         ].map((lvl) => (
-          <div class="card card-pad-sm reveal">
-            <div class="flex items-center justify-between">
+          <li class="card card-pad-sm trust-tier reveal" data-tier={lvl.tier}>
+            <div class="flex items-center justify-between gap-2">
               <span class="chip">{lvl.label}</span>
               <span class="font-mono text-dim" style="font-size: var(--text-lg);">{lvl.n}</span>
             </div>
             <p class="text-dim text-xs" style="margin-top: 0.5rem;">{lvl.note}</p>
-          </div>
+            <p class="mono-label" style="margin: 0.6rem 0 0;">Tier {lvl.tier} of 4</p>
+          </li>
         ))}
-      </div>
+      </ol>
     </div>
   </section>
 

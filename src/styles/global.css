@@ -957,6 +957,24 @@ html:not([data-platform]) .kbd-mac { display: inline; }
 .copy-install.copied { color: var(--color-accent); border-color: var(--color-accent); }
 .copy-install-label { max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
+/* Trust pipeline (audit S3.2) — tier ladder accent */
+.trust-tier { position: relative; }
+.trust-tier::after {
+  content: '→';
+  position: absolute;
+  right: -0.65rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--fg-dim);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  z-index: 1;
+}
+.trust-tier:last-child::after { content: none; }
+@media (max-width: 767px) {
+  .trust-tier::after { content: '↓'; right: 50%; top: auto; bottom: -1.1rem; transform: translateX(50%); }
+}
+
 /* Selected-filter chips row */
 .filter-chips {
   display: flex;
