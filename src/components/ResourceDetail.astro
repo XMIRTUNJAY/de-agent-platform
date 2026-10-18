@@ -2,6 +2,7 @@
 import Feedback from '@/components/Feedback.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import ArchitectureCanvas from '@/components/diagrams/ArchitectureCanvas.astro';
 import { marked } from 'marked';
 
 // Resource bodies are human-gated curated YAML — trusted input, rendered
@@ -65,10 +66,35 @@ const scoreColor = (score: number) => {
           <span class="chip" style="color: var(--color-{res.verification === 'verified' ? 'accent' : res.verification === 'tested' ? 'info' : res.verification === 'reviewed' ? 'warn' : 'dim'})">{res.verification}</span>
         )}
         {res.difficulty && <span class="chip">{res.difficulty}</span>}
+        {res.severity && (
+          <span
+            class="chip severity-chip"
+            data-severity={res.severity}
+            title={`Incident severity: ${res.severity}`}
+          >
+            {res.severity === 'critical' ? (
+              <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2 2 21h20L12 2Zm0 7v6m0 3v.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            ) : (
+              <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="9" />
+                <path d="M12 8v5m0 3v.5" stroke-linecap="round" />
+              </svg>
+            )}
+            severity: {res.severity}
+          </span>
+        )}
       </div>
       <h1 class="display text-3xl sm:text-4xl">{res.title}</h1>
       {res.tagline && <p class="mt-2 text-muted">{res.tagline}</p>}
       <p class="mt-3 max-w-3xl">{res.description}</p>
+
+      {res.type === 'architecture' && (
+        <div class="mt-5">
+          <ArchitectureCanvas />
+        </div>
+      )}
 
       {res.install_command && (
         <div class="mt-4 codeblock">
@@ -283,10 +309,22 @@ const scoreColor = (score: number) => {
             <ul>{res.forces.map((f: any) => <li>{f}</li>)}</ul>
           </section>
         )}
+        {res.symptoms && res.symptoms.length > 0 && (
+          <section class="mount">
+            <h2>Symptoms</h2>
+            <ol style="padding-left: 1.25rem; color: var(--fg-muted);">{res.symptoms.map((s: any) => <li style="margin-block: 0.3rem;">{typeof s === 'string' ? s : Object.values(s)[0]}</li>)}</ol>
+          </section>
+        )}
         {res.diagnosis && res.diagnosis.length && (
           <section class="mount">
             <h2>Diagnosis</h2>
-            <ul>{res.diagnosis.map((d: any) => <li>{d}</li>)}</ul>
+            <ul>{res.diagnosis.map((d: any) => <li>{typeof d === 'string' ? d : Object.entries(d).map(([k, v]) => `${k}: ${v}`).join(' — ')}</li>)}</ul>
+          </section>
+        )}
+        {res.possible_causes && res.possible_causes.length > 0 && (
+          <section class="mount">
+            <h2>Possible causes</h2>
+            <ul>{res.possible_causes.map((c: any) => <li>{typeof c === 'string' ? c : Object.values(c)[0]}</li>)}</ul>
           </section>
         )}
         {res.commands && res.commands.length && (

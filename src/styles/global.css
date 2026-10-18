@@ -869,6 +869,16 @@ html:not([data-platform]) .kbd-mac { display: inline; }
   .reveal { transform: none !important; opacity: 1 !important; }
 }
 
+/* Severity chip — never color alone (brief §8/§10): icon + word always render */
+.severity-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.severity-chip[data-severity='critical'] { color: var(--color-danger); border-color: var(--color-danger); }
+.severity-chip[data-severity='high'] { color: var(--color-warn); border-color: var(--color-warn); }
+.severity-chip[data-severity='medium'] { color: var(--fg-muted); }
+
 /* Selected-filter chips row */
 .filter-chips {
   display: flex;

@@ -1,0 +1,82 @@
+---
+// ArchitectureCanvas — original inline SVG for architecture patterns:
+// sources → processing stages → data contract → destinations, with a failure
+// path. Explains the shape shared by the registry's `architecture` resources
+// (brief §4G/§10). Static, accessible, no interaction dependency.
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<svg
+  class={className}
+  viewBox="0 0 640 300"
+  role="img"
+  aria-labelledby="arch-title arch-desc"
+  style="width: 100%; height: auto; display: block;"
+>
+  <title id="arch-title">Reference architecture canvas</title>
+  <desc id="arch-desc">
+    Sources feed processing stages; a data contract sits between processing and
+    destinations; a failure path routes invalid output to a dead-letter zone.
+  </desc>
+  <defs>
+    <marker id="arch-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0 L8 4 L0 8 z" fill="var(--fg-dim)" />
+    </marker>
+  </defs>
+
+  <g stroke="var(--fg-dim)" stroke-width="1.2" fill="none">
+    <path d="M112 88 H148" marker-end="url(#arch-arrow)" />
+    <path d="M112 200 H148" marker-end="url(#arch-arrow)" />
+    <path d="M278 144 H314" marker-end="url(#arch-arrow)" />
+    <path d="M466 144 H502" marker-end="url(#arch-arrow)" />
+    <!-- failure path -->
+    <path d="M396 208 V252 H470" marker-end="url(#arch-arrow)" stroke-dasharray="4 3" />
+  </g>
+
+  <!-- sources -->
+  <g font-family="var(--font-mono)" font-size="11">
+    <rect x="20" y="66" width="92" height="42" rx="6" fill="var(--surface-2)" stroke="var(--border)" />
+    <text x="66" y="84" text-anchor="middle" fill="var(--fg)">OLTP DBs</text>
+    <text x="66" y="98" text-anchor="middle" fill="var(--fg-dim)">cdc</text>
+    <rect x="20" y="178" width="92" height="42" rx="6" fill="var(--surface-2)" stroke="var(--border)" />
+    <text x="66" y="196" text-anchor="middle" fill="var(--fg)">Event log</text>
+    <text x="66" y="210" text-anchor="middle" fill="var(--fg-dim)">stream</text>
+  </g>
+
+  <!-- processing -->
+  <g font-family="var(--font-mono)" font-size="11">
+    <rect x="150" y="88" width="128" height="120" rx="6" fill="var(--surface)" stroke="var(--border-strong)" />
+    <text x="214" y="114" text-anchor="middle" fill="var(--fg)">Processing</text>
+    <text x="214" y="136" text-anchor="middle" fill="var(--fg-dim)">transform · model</text>
+    <text x="214" y="162" text-anchor="middle" fill="var(--fg-dim)">idempotent writes</text>
+    <text x="214" y="188" text-anchor="middle" fill="var(--accent)">versioned code</text>
+  </g>
+
+  <!-- contract -->
+  <g font-family="var(--font-mono)" font-size="11">
+    <rect x="316" y="106" width="148" height="102" rx="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.3" />
+    <text x="390" y="132" text-anchor="middle" fill="var(--fg)">Data contract</text>
+    <text x="390" y="154" text-anchor="middle" fill="var(--fg-dim)">schema · grain · SLA</text>
+    <text x="390" y="180" text-anchor="middle" fill="var(--accent)">validated at boundary</text>
+  </g>
+
+  <!-- destinations -->
+  <g font-family="var(--font-mono)" font-size="11">
+    <rect x="504" y="88" width="112" height="42" rx="6" fill="var(--surface-2)" stroke="var(--border)" />
+    <text x="560" y="106" text-anchor="middle" fill="var(--fg)">Warehouse</text>
+    <text x="560" y="120" text-anchor="middle" fill="var(--fg-dim)">analytics</text>
+    <rect x="504" y="158" width="112" height="42" rx="6" fill="var(--surface-2)" stroke="var(--border)" />
+    <text x="560" y="176" text-anchor="middle" fill="var(--fg)">Feature/API</text>
+    <text x="560" y="190" text-anchor="middle" fill="var(--fg-dim)">agents · apps</text>
+  </g>
+
+  <!-- dead letter -->
+  <g font-family="var(--font-mono)" font-size="11">
+    <rect x="472" y="236" width="128" height="40" rx="6" fill="var(--surface-2)" stroke="var(--border)" stroke-dasharray="4 3" />
+    <text x="536" y="254" text-anchor="middle" fill="var(--fg)">Dead letter</text>
+    <text x="536" y="268" text-anchor="middle" fill="var(--fg-dim)">quarantined output</text>
+  </g>
+</svg>

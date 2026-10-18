@@ -276,3 +276,24 @@ test('P2-list: type listings show derived, differentiated hero stats', async ({ 
   // different type, different derived numbers — pages are not clones
   expect(refChips.join(' ')).not.toBe(skillsChips.join(' '));
 });
+
+test('P2-op: runbooks show severity with icon + text, symptoms section', async ({ page }) => {
+  await page.goto('/runbooks', { waitUntil: 'load' });
+  const runbookHref = page.locator('a[href^="/runbooks/"]').first();
+  const href = await runbookHref.getAttribute('href');
+  await page.goto(href, { waitUntil: 'load' });
+  const sev = page.locator('.severity-chip');
+  await expect(sev).toBeVisible();
+  const text = (await sev.textContent()) ?? '';
+  expect(text).toMatch(/severity:\s*(critical|high|medium|low)/);
+  expect(await sev.locator('svg').count()).toBe(1);
+  await expect(page.locator('h2', { hasText: 'Symptoms' })).toBeVisible();
+});
+
+test('P2-op: architecture patterns render the canvas diagram', async ({ page }) => {
+  await page.goto('/patterns', { waitUntil: 'load' });
+  const href = await page.locator('a[href^="/patterns/"]').first().getAttribute('href');
+  await page.goto(href, { waitUntil: 'load' });
+  const svg = page.locator('svg[aria-labelledby^="arch-title"]');
+  await expect(svg).toBeVisible();
+});
