@@ -1,0 +1,102 @@
+---
+// PipelineDiagram — original inline SVG: sources → ingestion → transformation
+// → quality/quarantine → publication. Explains what the registry's patterns
+// and skills operate on (brief §6/§10). Static, accessible, no animation.
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<svg
+  class={className}
+  viewBox="0 0 640 360"
+  role="img"
+  aria-labelledby="pipe-title pipe-desc"
+  style="width: 100%; height: auto; display: block;"
+>
+  <title id="pipe-title">Agent-native data pipeline</title>
+  <desc id="pipe-desc">
+    Sources on the left flow through ingestion, transformation, and quality
+    checks; failed rows route to quarantine, clean data is published to the
+    warehouse, and coding agents operate on every stage.
+  </desc>
+  <defs>
+    <marker id="pipe-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0 L8 4 L0 8 z" fill="var(--fg-dim)" />
+    </marker>
+  </defs>
+
+  <!-- connectors -->
+  <g stroke="var(--fg-dim)" stroke-width="1.2" fill="none">
+    <path d="M118 80 H158" marker-end="url(#pipe-arrow)" />
+    <path d="M118 180 H158" marker-end="url(#pipe-arrow)" />
+    <path d="M118 280 H158" marker-end="url(#pipe-arrow)" />
+    <path d="M288 180 H328" marker-end="url(#pipe-arrow)" />
+    <path d="M458 150 H498" marker-end="url(#pipe-arrow)" />
+    <!-- quarantine branch -->
+    <path d="M394 216 V268 H438" marker-end="url(#pipe-arrow)" stroke-dasharray="4 3" />
+  </g>
+
+  <!-- stage: sources -->
+  <g font-family="var(--font-mono)" font-size="11">
+    <rect x="24" y="56" width="94" height="44" rx="6" fill="var(--surface-2)" stroke="var(--border)" />
+    <text x="71" y="75" text-anchor="middle" fill="var(--fg)">Postgres</text>
+    <text x="71" y="90" text-anchor="middle" fill="var(--fg-dim)">source</text>
+    <rect x="24" y="158" width="94" height="44" rx="6" fill="var(--surface-2)" stroke="var(--border)" />
+    <text x="71" y="177" text-anchor="middle" fill="var(--fg)">S3 events</text>
+    <text x="71" y="192" text-anchor="middle" fill="var(--fg-dim)">source</text>
+    <rect x="24" y="258" width="94" height="44" rx="6" fill="var(--surface-2)" stroke="var(--border)" />
+    <text x="71" y="277" text-anchor="middle" fill="var(--fg)">Kafka</text>
+    <text x="71" y="292" text-anchor="middle" fill="var(--fg-dim)">stream</text>
+  </g>
+
+  <!-- stage: ingestion -->
+  <g font-family="var(--font-mono)" font-size="11">
+    <rect x="160" y="112" width="128" height="136" rx="6" fill="var(--surface)" stroke="var(--border-strong)" />
+    <text x="224" y="140" text-anchor="middle" fill="var(--fg)">Ingestion</text>
+    <text x="224" y="160" text-anchor="middle" fill="var(--fg-dim)">CDC · batches</text>
+    <text x="224" y="186" text-anchor="middle" fill="var(--accent)">skill: cdc-merge</text>
+    <text x="224" y="206" text-anchor="middle" fill="var(--accent)">skill: backfill</text>
+    <text x="224" y="232" text-anchor="middle" fill="var(--fg-dim)">idempotent writes</text>
+  </g>
+
+  <!-- stage: transformation -->
+  <g font-family="var(--font-mono)" font-size="11">
+    <rect x="330" y="112" width="128" height="104" rx="6" fill="var(--surface)" stroke="var(--border-strong)" />
+    <text x="394" y="140" text-anchor="middle" fill="var(--fg)">Transformation</text>
+    <text x="394" y="160" text-anchor="middle" fill="var(--fg-dim)">SQL models</text>
+    <text x="394" y="186" text-anchor="middle" fill="var(--accent)">skill: dbt-review</text>
+    <text x="394" y="206" text-anchor="middle" fill="var(--fg-dim)">contracts checked</text>
+  </g>
+
+  <!-- stage: quality -->
+  <g font-family="var(--font-mono)" font-size="11">
+    <rect x="330" y="232" width="128" height="70" rx="6" fill="var(--surface)" stroke="var(--warn, #d97706)" />
+    <text x="394" y="258" text-anchor="middle" fill="var(--fg)">Quality gate</text>
+    <text x="394" y="278" text-anchor="middle" fill="var(--fg-dim)">tests · freshness</text>
+  </g>
+
+  <!-- quarantine -->
+  <g font-family="var(--font-mono)" font-size="11">
+    <rect x="440" y="248" width="118" height="40" rx="6" fill="var(--surface-2)" stroke="var(--border)" stroke-dasharray="4 3" />
+    <text x="499" y="266" text-anchor="middle" fill="var(--fg)">Quarantine</text>
+    <text x="499" y="280" text-anchor="middle" fill="var(--fg-dim)">bad rows parked</text>
+  </g>
+
+  <!-- stage: publication -->
+  <g font-family="var(--font-mono)" font-size="11">
+    <rect x="500" y="118" width="116" height="64" rx="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.4" />
+    <text x="558" y="142" text-anchor="middle" fill="var(--fg)">Publication</text>
+    <text x="558" y="162" text-anchor="middle" fill="var(--accent)">warehouse · API</text>
+  </g>
+
+  <!-- agent lane -->
+  <g font-family="var(--font-mono)" font-size="11">
+    <rect x="160" y="300" width="456" height="38" rx="6" fill="transparent" stroke="var(--border)" />
+    <text x="388" y="323" text-anchor="middle" fill="var(--fg-muted)">
+      coding agents operate every stage — skills + MCP + runbooks from the registry
+    </text>
+  </g>
+  <path d="M388 300 V236" stroke="var(--fg-dim)" stroke-width="1.2" stroke-dasharray="3 3" fill="none" marker-end="url(#pipe-arrow)" />
+</svg>

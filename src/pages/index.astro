@@ -2,6 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import SectionHeader from '@/components/SectionHeader.astro';
 import ResourceCard from '@/components/ResourceCard.astro';
+import PipelineDiagram from '@/components/diagrams/PipelineDiagram.astro';
 import { SITE } from '@/site.config';
 import registry from '@/data/generated/registry.json';
 import stats from '@/data/generated/stats.json';
@@ -21,16 +22,9 @@ const phases = PHASES.map((phase: Phase) => {
   return { index: phase.index, name: phase.name, tagline: phase.tagline, stages: sts, count: sts.reduce((n, s) => n + (stageCounts[s.id] ?? 0), 0) };
 });
 
-// Feature cards — real data, five amp-style cards
+// Hero install example — a real skill with a real install command
 const skill = registry.resources.find(r => r.type === 'skill' && r.install_command)!;
-const mcp = registry.resources.find(r => r.type === 'mcp');
-const runbook = registry.resources.find(r => r.type === 'runbook');
-const arch = registry.resources.find(r => r.type === 'architecture');
-const starter = registry.resources.find(r => r.type === 'starter');
-const skill2 = registry.resources.find(r => r.type === 'skill' && r.id !== skill?.id && r.install_command);
 const byVerification = stats.counts.byVerification as Record<string, number>;
-const verifiedCount = (byVerification.reviewed ?? 0) + (byVerification.tested ?? 0) + (byVerification.verified ?? 0);
-const communityCount = byVerification.community ?? 0;
 
 // Learn by building — starters + architectures
 const builders = registry.resources
@@ -38,37 +32,54 @@ const builders = registry.resources
   .slice(0, 6);
 
 // Fresh from the registry — newest by last_verified
+
 const fresh = registry.resources
   .filter(r => r.last_verified)
   .sort((a, b) => (b.last_verified ?? '').localeCompare(a.last_verified ?? ''))
   .slice(0, 6);
 
-const securityFlags = (r: any) => r
-  ? ['runs_code', 'network_access', 'credentials', 'filesystem_access', 'external_apis']
-      .filter(k => r.security?.[k]).length
-  : 0;
+// Top-rated entries — derived from real composite scores (no editorial picks)
+const topRated = registry.resources
+  .filter(r => (r.marketplace?.composite_score ?? 0) > 0 && (r.page_eligibility?.state ?? 'eligible') !== 'internal_only')
+  .sort((a, b) => (b.marketplace?.composite_score ?? 0) - (a.marketplace?.composite_score ?? 0))
+  .slice(0, 3);
+
+// Learn / Build / Install / Operate — the platform's four verbs
+const verbs = [
+  { label: 'Learn', href: '/roadmap', note: 'A 13-stage roadmap with exit gates you can prove — foundations to agentic data engineering.' },
+  { label: 'Build', href: '/projects', note: 'Starter projects and reference architectures you can run locally end-to-end.' },
+  { label: 'Install', href: '/marketplace', note: 'Agent skills and MCP servers, each with install commands and a machine-readable security posture.' },
+  { label: 'Operate', href: '/runbooks', note: 'Production runbooks for incidents: symptom, diagnosis, recovery, validation.' },
+];
 
 const heroLines = ['Learn the pattern.', 'Install the skill.', 'Run the pipeline.', 'Ship agent-native data.'];
 ---
 
 <BaseLayout title={SITE.longName} sidebar={false}>
 
-  <!-- 1. Hero — amp grammar: kicker, rotating serif headline, lede, actions -->
+  <!-- 1. Split technical hero — editorial left, pipeline diagram right -->
   <section class="col section">
-    <p class="kicker mount">Data engineering for the agent era</p>
-    <h1 class="display-hero mount mount-delay-1" id="hero-headline" style="margin-top: 1.25rem;">
-      {heroLines.map((line, i) => (
-        <span class:list={['hero-line', i > 0 && 'hero-line-hidden']} data-hero-line={i}>{line}</span>
-      ))}
-    </h1>
-    <p class="lede mount mount-delay-2" style="margin-top: 1.5rem;">
-      An open registry and learning platform: tutorials, architecture patterns,
-      agent skills, MCP servers, agents, hooks and production runbooks — each with
-      provenance, license, compatibility and verification status.
-    </p>
-    <div class="mount mount-delay-3" style="margin-top: 2rem; display: flex; flex-wrap: wrap; gap: 0.75rem;">
-      <a href="/roadmap" class="btn btn-accent btn-lg">Explore the roadmap</a>
-      <a href="/marketplace" class="btn btn-lg">Browse the marketplace</a>
+    <div style="display: grid; gap: 2.5rem; align-items: center;" class="hero-split">
+      <div>
+        <p class="kicker mount">Data engineering for the agent era</p>
+        <h1 class="display-hero mount mount-delay-1" id="hero-headline" style="margin-top: 1.25rem;">
+          {heroLines.map((line, i) => (
+            <span class:list={['hero-line', i > 0 && 'hero-line-hidden']} data-hero-line={i}>{line}</span>
+          ))}
+        </h1>
+        <p class="lede mount mount-delay-2" style="margin-top: 1.5rem;">
+          An open registry and learning platform: tutorials, architecture patterns,
+          agent skills, MCP servers, agents, hooks and production runbooks — each with
+          provenance, license, compatibility and verification status.
+        </p>
+        <div class="mount mount-delay-3" style="margin-top: 2rem; display: flex; flex-wrap: wrap; gap: 0.75rem;">
+          <a href="/roadmap" class="btn btn-accent btn-lg">Explore the roadmap</a>
+          <a href="/marketplace" class="btn btn-lg">Browse the marketplace</a>
+        </div>
+      </div>
+      <div class="mount mount-delay-2">
+        <PipelineDiagram />
+      </div>
     </div>
     <script is:inline>
       (function () {
@@ -89,6 +100,7 @@ const heroLines = ['Learn the pattern.', 'Install the skill.', 'Run the pipeline
       .hero-line-hidden { display: none; }
       @keyframes hero-fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
       @media (prefers-reduced-motion: reduce) { .hero-line { animation: none; } }
+      @media (min-width: 1024px) { .hero-split { grid-template-columns: minmax(0, 1fr) minmax(0, 480px); } }
     </style>
   </section>
 
@@ -127,77 +139,40 @@ const heroLines = ['Learn the pattern.', 'Install the skill.', 'Run the pipeline
 
   <hr class="hairline col" />
 
-  <!-- 3. Five feature cards with real data -->
+  <!-- 3. Learn / Build / Install / Operate -->
   <section class="col section">
     <SectionHeader
-      kicker="What's inside"
-      title="Built for agents, trusted by pipelines"
+      kicker="How the platform works"
+      title="Four verbs, one registry"
+      lede="Everything in DE//AGENT maps to one of four moves — each backed by the same canonical data."
     />
-    <div class="card-grid reveal" style="margin-top: 3rem;">
-
-      <!-- One command -->
-      <div class="card card-pad-lg" style="display: flex; flex-direction: column; gap: 1rem;">
-        <p class="mono-label">One command</p>
-        <h3 style="font-size: var(--text-2xl); font-weight: 500;">{skill.title}</h3>
-        <p class="card-desc">{skill.tagline}</p>
-        <div class="codeblock">
-          <pre style="margin: 0; padding: 0.9rem 1.1rem; font-size: var(--text-sm); overflow-x: auto;"><code>{skill.install_command}</code></pre>
-        </div>
-        <a href={skill.url} class="link-arrow" style="margin-top: auto;">View in registry <span class="arrow" aria-hidden="true">→</span></a>
-      </div>
-
-      <!-- Verification -->
-      <div class="card card-pad-lg" style="display: flex; flex-direction: column; gap: 1rem;">
-        <p class="mono-label">Verification</p>
-        <h3 style="font-size: var(--text-2xl); font-weight: 500;">{skill2?.title ?? 'Community-verified entries'}</h3>
-        <p class="card-desc">{skill2?.tagline ?? 'Every entry carries provenance, license and verification status.'}</p>
-        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-          <span class="chip">{skill2?.verification ?? 'community'}</span>
-          {skill2?.last_verified && <span class="chip">last checked {skill2.last_verified}</span>}
-          <span class="chip">license: {skill2?.license ?? 'Apache-2.0'}</span>
-        </div>
-        <a href={skill2?.url ?? '/marketplace'} class="link-arrow" style="margin-top: auto;">Inspect the entry <span class="arrow" aria-hidden="true">→</span></a>
-      </div>
-
-      <!-- Security posture -->
-      <div class="card card-pad-lg" style="display: flex; flex-direction: column; gap: 1rem;">
-        <p class="mono-label">Security posture</p>
-        <h3 style="font-size: var(--text-2xl); font-weight: 500;">{mcp?.title ?? 'Least-privilege by default'}</h3>
-        <p class="card-desc">{mcp?.tagline ?? 'Machine-readable security posture for every MCP server.'}</p>
-        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; font-size: var(--text-xs);">
-          <span class:list={['chip', mcp?.security?.runs_code ? 'chip-warn' : 'chip-accent']}>{mcp?.security?.runs_code ? 'runs code' : 'no code'}</span>
-          <span class:list={['chip', mcp?.security?.network_access ? 'chip-warn' : 'chip-accent']}>{mcp?.security?.network_access ? 'network' : 'offline'}</span>
-          <span class:list={['chip', mcp?.security?.credentials ? 'chip-warn' : 'chip-accent']}>{mcp?.security?.credentials ? 'credentials' : 'no creds'}</span>
-          <span class="chip">{securityFlags(mcp)} flags</span>
-        </div>
-        <a href={mcp?.url ?? '/mcp'} class="link-arrow" style="margin-top: auto;">See the posture <span class="arrow" aria-hidden="true">→</span></a>
-      </div>
-
-      <!-- Runbooks -->
-      <div class="card card-pad-lg" style="display: flex; flex-direction: column; gap: 1rem;">
-        <p class="mono-label">Operate</p>
-        <h3 style="font-size: var(--text-2xl); font-weight: 500;">{runbook?.title ?? 'Production runbooks'}</h3>
-        <p class="card-desc">{runbook?.tagline ?? runbook?.description ?? 'Symptom → diagnosis → fix for the most common incidents.'}</p>
-        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-          {runbook?.difficulty && <span class="chip">{runbook.difficulty}</span>}
-          {runbook?.severity && <span class="chip chip-danger">{runbook.severity}</span>}
-          <span class="chip">{stats.counts.byType.runbook} runbooks</span>
-        </div>
-        <a href="/runbooks" class="link-arrow" style="margin-top: auto;">Browse runbooks <span class="arrow" aria-hidden="true">→</span></a>
-      </div>
-
-      <!-- Architecture -->
-      <div class="card card-pad-lg" style="display: flex; flex-direction: column; gap: 1rem;">
-        <p class="mono-label">Design</p>
-        <h3 style="font-size: var(--text-2xl); font-weight: 500;">{arch?.title ?? 'Architecture patterns'}</h3>
-        <p class="card-desc">{arch?.tagline ?? arch?.description ?? 'Reference architectures with pros, cons and agg tradeoffs.'}</p>
-        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-          {(arch?.tags ?? []).slice(0, 4).map((t) => <span class="chip">{t}</span>)}
-        </div>
-        <a href={arch?.url ?? '/taxonomy'} class="link-arrow" style="margin-top: auto;">Read the pattern <span class="arrow" aria-hidden="true">→</span></a>
-      </div>
+    <div class="card-grid card-grid--2 reveal" style="margin-top: 3rem;">
+      {verbs.map((v) => (
+        <a href={v.href} class="card card-pad card-interactive" style="display: flex; flex-direction: column; gap: 0.6rem;">
+          <p class="mono-label" style="margin: 0;">{v.label}</p>
+          <p class="card-desc" style="flex: 1; margin: 0;">{v.note}</p>
+          <span class="link-arrow">Go to {v.label.toLowerCase()} <span class="arrow" aria-hidden="true">→</span></span>
+        </a>
+      ))}
     </div>
   </section>
+
+  <hr class="hairline col" />
+
+  <!-- 4. Top-rated entries — derived from real composite scores -->
+  <section class="col section">
+    <SectionHeader
+      kicker="Registry highlights"
+      title="Top-rated entries"
+      lede="The strongest composite scores in the registry right now — every score derives from the published scoring rubric, never editorial taste."
+      linkHref="/marketplace"
+      linkLabel="Browse everything"
+    />
+    <div class="card-grid stagger" style="margin-top: 3rem;">
+      {topRated.map((r) => <ResourceCard resource={r} />)}
+    </div>
+  </section>
+
 
   <hr class="hairline col" />
 
@@ -215,23 +190,32 @@ const heroLines = ['Learn the pattern.', 'Install the skill.', 'Run the pipeline
     </div>
   </section>
 
-  <!-- 5. Registry in numbers -->
+  <!-- 5. Trust & verification — accurate status distinctions, evidence language -->
   <section class="hairline-block">
-    <div class="col section" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 2rem;">
-      {[
-        { n: stats.counts.total, label: 'Resources' },
-        { n: verifiedCount, label: 'Reviewed, tested, or verified' },
-        { n: communityCount, label: 'Community verified' },
-        { n: stats.counts.byType.skill, label: 'Agent skills' },
-        { n: stats.counts.byType.mcp, label: 'MCP servers' },
-        { n: stats.counts.stages, label: 'Learning stages' },
-        { n: stats.counts.categories, label: 'Categories' },
-      ].map((s) => (
-        <div class="reveal">
-          <p style="font-size: var(--text-5xl); font-family: var(--font-display); line-height: 1;">{s.n}</p>
-          <p class="mono-label" style="margin-top: 0.5rem;">{s.label}</p>
-        </div>
-      ))}
+    <div class="col section">
+      <SectionHeader
+        kicker="Trust, not vibes"
+        title="Every claim carries evidence"
+        lede="Verification levels are policy-defined. Each entry shows its provenance, license, last-checked date and known limitations — absence of evidence is rendered as absence."
+        linkHref="/docs/verification"
+        linkLabel="How verification works"
+      />
+      <div class="card-grid" style="margin-top: 2.5rem; gap: 0.75rem;">
+        {[
+          { label: 'community', n: byVerification.community ?? 0, note: 'Submitted with provenance; not yet reviewed.' },
+          { label: 'reviewed', n: byVerification.reviewed ?? 0, note: 'Human review of source, license and claims.' },
+          { label: 'tested', n: byVerification.tested ?? 0, note: 'Checks executed in isolated environments.' },
+          { label: 'verified', n: byVerification.verified ?? 0, note: 'Full evidence chain on file.' },
+        ].map((lvl) => (
+          <div class="card card-pad-sm reveal">
+            <div class="flex items-center justify-between">
+              <span class="chip">{lvl.label}</span>
+              <span class="font-mono text-dim" style="font-size: var(--text-lg);">{lvl.n}</span>
+            </div>
+            <p class="text-dim text-xs" style="margin-top: 0.5rem;">{lvl.note}</p>
+          </div>
+        ))}
+      </div>
     </div>
   </section>
 
@@ -260,6 +244,23 @@ const heroLines = ['Learn the pattern.', 'Install the skill.', 'Run the pipeline
     />
     <div class="card-grid stagger" style="margin-top: 3rem;">
       {fresh.map((r) => <ResourceCard resource={r} />)}
+    </div>
+  </section>
+
+  <hr class="hairline col" />
+
+  <!-- 8. Contribution invitation -->
+  <section class="col section" style="text-align: center;">
+    <p class="kicker">Contribute</p>
+    <h2 class="display-section" style="margin-top: 0.75rem;">Publish your patterns</h2>
+    <p class="lede" style="margin: 1.25rem auto 0; max-width: 58ch;">
+      The registry grows by contribution: submit a skill, an MCP server, a runbook
+      or an architecture pattern. Every submission carries its source, license and
+      security posture from day one.
+    </p>
+    <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap;">
+      <a href={SITE.repo} target="_blank" rel="noopener" class="btn btn-accent btn-lg">Contribute on GitHub <span aria-hidden="true">↗</span></a>
+      <a href="/publisher" class="btn btn-lg">Publisher portal</a>
     </div>
   </section>
 
