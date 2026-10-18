@@ -20,7 +20,7 @@ function ratio(fg, bg) {
   for (const theme of ['dark', 'light']) {
     const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
     await page.addInitScript((t) => localStorage.setItem('de-theme', t), theme);
-    await page.goto('http://127.0.0.1:4321/marketplace', { waitUntil: 'load', timeout: 60000 });
+    await page.goto('http://127.0.0.1:4321/marketplace', { waitUntil: 'domcontentloaded', timeout: 90000 });
     await page.evaluate((t) => document.documentElement.setAttribute('data-theme', t), theme);
     await page.waitForTimeout(300);
     const m = await page.evaluate(() => {

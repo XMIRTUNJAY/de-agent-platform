@@ -190,12 +190,17 @@ const journey = PHASES.map((phase) => {
     background: var(--accent-soft);
   }
   .stepper-connector {
+    display: none;
     position: absolute;
     top: 1.6rem;
     left: calc(50% + 1.6rem);
     right: calc(-50% + 1.6rem);
     height: 1px;
     background: var(--border-strong);
+  }
+  /* connectors only where the grid is guaranteed single-row */
+  @media (min-width: 1200px) {
+    .stepper-connector { display: block; }
   }
   /* Exit-gate callout (audit S2.2) */
   .gate-callout {
@@ -218,8 +223,5 @@ const journey = PHASES.map((phase) => {
     text-transform: uppercase;
     color: var(--accent);
     font-weight: 600;
-  }
-  @media (max-width: 767px) {
-    .stepper-connector { display: none; }
   }
 </style>
