@@ -14,11 +14,15 @@ const countByCategory: Record<string, number> = {};
 const typesByCategory: Record<string, string[]> = {};
 const countByTechnology: Record<string, number> = {};
 const typeLabels: Record<string, string> = {};
+// type → real section route, derived from resource urls (ground truth —
+// naive pluralization produced /policys, /rule_packs, /starters…)
+const typeSections: Record<string, string> = {};
 for (const r of registry.resources) {
   countByCategory[r.category] = (countByCategory[r.category] ?? 0) + 1;
   (typesByCategory[r.category] ??= []).push(r.type);
   for (const t of r.technologies ?? []) countByTechnology[t] = (countByTechnology[t] ?? 0) + 1;
   typeLabels[r.type] = r.typeLabel;
+  typeSections[r.type] ??= '/' + r.url.split('/')[1];
 }
 const catByStage: Record<string, any[]> = {};
 for (const c of categories) (catByStage[c.stage] ??= []).push(c);
@@ -86,7 +90,7 @@ const structureTiers = [
                     <td>
                       <div class="flex flex-wrap gap-1">
                         {[...new Set(typesByCategory[cat.id] ?? [])].slice(0, 4).map((t) => (
-                          <a href={`/${t === 'mcp' ? 'mcp' : `${t}s`}`} class="chip">{typeLabels[t] ?? t}</a>
+                          <a href={typeSections[t] ?? '/marketplace'} class="chip">{typeLabels[t] ?? t}</a>
                         ))}
                       </div>
                     </td>
