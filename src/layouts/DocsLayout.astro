@@ -1,5 +1,6 @@
 ---
-// DocsLayout — reading layout for docs pages: PageHero + prose column.
+// DocsLayout — reading layout for docs pages: PageHero + prose column +
+// right-rail "On this page" TOC (audit S3.1, ≥1200px only).
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import PageHero from '@/components/PageHero.astro';
 
@@ -19,7 +20,90 @@ const { frontmatter } = Astro.props;
     title={frontmatter.title}
     lede={frontmatter.description}
   />
-  <article class="col prose-de prose-measure-l section" style="padding-bottom: 6rem;">
-    <slot />
-  </article>
+  <div class="docs-body-grid">
+    <article class="col prose-de prose-measure-l section" style="padding-bottom: 6rem; grid-column: 1;">
+      <slot />
+    </article>
+    <nav class="toc-rail" aria-label="On this page">
+      <p class="mono-label">On this page</p>
+      <ol id="toc-list" style="list-style: none; padding: 0; margin: 0.75rem 0 0; display: grid; gap: 0.35rem;"></ol>
+    </nav>
+  </div>
+
+  <style>
+    .docs-body-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      max-width: 1120px;
+      margin-inline: auto;
+      padding-inline: 1.25rem;
+    }
+    .docs-body-grid article.col {
+      max-width: none;
+      margin-inline: 0;
+    }
+    .toc-rail { display: none; }
+    @media (min-width: 1200px) {
+      .docs-body-grid { grid-template-columns: minmax(0, 72ch) 220px; gap: 2.5rem; align-items: start; padding-inline: 2rem; }
+      .toc-rail {
+        display: block;
+        position: sticky;
+        top: 5rem;
+        max-height: calc(100vh - 7rem);
+        overflow-y: auto;
+        font-size: var(--text-xs);
+        padding-top: 3.5rem;
+      }
+    }
+    .toc-rail a {
+      display: block;
+      color: var(--fg-dim);
+      padding: 0.15rem 0 0.15rem 0.75rem;
+      border-left: 2px solid var(--border);
+      transition: color var(--duration-fast), border-color var(--duration-fast);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .toc-rail a:hover { color: var(--fg); }
+    .toc-rail a:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+    .toc-rail a.toc-active { color: var(--accent); border-left-color: var(--accent); }
+    .toc-rail a.toc-h3 { padding-left: 1.5rem; }
+  </style>
+
+  <script>
+    (function () {
+      const article = document.querySelector('.docs-body-grid article');
+      const list = document.getElementById('toc-list');
+      if (!article || !list) return;
+      const headings = Array.from(article.querySelectorAll('h2, h3')) as HTMLElement[];
+      if (headings.length < 2) { (list.closest('.toc-rail') as HTMLElement).style.display = 'none'; return; }
+
+      const links: HTMLAnchorElement[] = [];
+      headings.forEach((h, i) => {
+        if (!h.id) h.id = `section-${i}`;
+        const a = document.createElement('a');
+        a.href = `#${h.id}`;
+        a.textContent = h.textContent ?? '';
+        if (h.tagName === 'H3') a.classList.add('toc-h3');
+        list.appendChild(a);
+        links.push(a);
+      });
+
+      const setActive = () => {
+        const fromTop = window.scrollY + 100;
+        let activeIdx = 0;
+        headings.forEach((h, i) => { if (h.offsetTop <= fromTop) activeIdx = i; });
+        links.forEach((a, i) => a.classList.toggle('toc-active', i === activeIdx));
+      };
+      let ticking = false;
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          window.requestAnimationFrame(() => { setActive(); ticking = false; });
+          ticking = true;
+        }
+      }, { passive: true });
+      setActive();
+    })();
+  </script>
 </BaseLayout>

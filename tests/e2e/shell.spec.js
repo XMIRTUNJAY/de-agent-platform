@@ -333,3 +333,19 @@ test('S2.2: roadmap stepper links phases with numbered steps', async ({ page }) 
   const gates = await page.locator('.gate-callout').count();
   expect(gates).toBeGreaterThanOrEqual(10);
 });
+
+test('S3.1: docs pages build a TOC rail with scroll-spy targets', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/docs/how-it-works', { waitUntil: 'load' });
+  const items = await page.locator('#toc-list a').count();
+  expect(items).toBeGreaterThanOrEqual(2);
+  // every TOC link target exists
+  const hrefs = await page.locator('#toc-list a').evaluateAll((els) => els.map((e) => e.getAttribute('href')));
+  for (const href of hrefs) {
+    expect(await page.locator(href).count(), href).toBe(1);
+  }
+  // scroll-spy activates a link
+  await page.locator('#toc-list a').last().click();
+  await page.waitForTimeout(600);
+  expect(await page.locator('#toc-list a.toc-active').count()).toBe(1);
+});
