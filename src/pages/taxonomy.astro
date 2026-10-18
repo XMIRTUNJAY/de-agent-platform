@@ -5,11 +5,31 @@ import SectionHeader from '@/components/SectionHeader.astro';
 import registry from '@/data/generated/registry.json';
 import { count as countLabel } from '@/lib/format';
 
-const stages = registry.taxonomy.stages;
-const categories = registry.taxonomy.categories.sort((a,b) => a.order - b.order);
+const stages = registry.taxonomy.stages.slice().sort((a: any, b: any) => a.order - b.order);
+const categories = registry.taxonomy.categories.slice().sort((a: any, b: any) => a.order - b.order);
 const technologies = registry.taxonomy.technologies;
-const catByStage: Record<string, typeof categories> = {};
+
+// Derive everything once (brief §D) — no per-row resource scans.
+const countByCategory: Record<string, number> = {};
+const typesByCategory: Record<string, string[]> = {};
+const countByTechnology: Record<string, number> = {};
+const typeLabels: Record<string, string> = {};
+for (const r of registry.resources) {
+  countByCategory[r.category] = (countByCategory[r.category] ?? 0) + 1;
+  (typesByCategory[r.category] ??= []).push(r.type);
+  for (const t of r.technologies ?? []) countByTechnology[t] = (countByTechnology[t] ?? 0) + 1;
+  typeLabels[r.type] = r.typeLabel;
+}
+const catByStage: Record<string, any[]> = {};
 for (const c of categories) (catByStage[c.stage] ??= []).push(c);
+
+const typeCount = Object.keys(typeLabels).length;
+const structureTiers = [
+  { label: 'Resource types', value: typeCount, note: 'skills, MCP servers, plugins, agents, hooks, runbooks…' },
+  { label: 'Categories', value: categories.length, note: 'exactly one per resource' },
+  { label: 'Roadmap stages', value: stages.length, note: 'categories group into stages' },
+  { label: 'Technologies', value: technologies.length, note: 'first-class references' },
+];
 ---
 
 <BaseLayout title="Taxonomy · DE//AGENT" sidebar>
@@ -19,35 +39,61 @@ for (const c of categories) (catByStage[c.stage] ??= []).push(c);
     lede={`${countLabel(categories.length, 'category')} grouped into ${countLabel(stages.length, 'roadmap stage', 'roadmap stages')}. Every resource maps to exactly one category; categories map to stages. This is the spine for the roadmap, the registry and search.`}
   />
 
+  <section class="col section" style="padding-top: 2rem;">
+    <!-- Structure explainer — derived tiers -->
+    <div class="card-grid" style="gap: 0.75rem;">
+      {structureTiers.map((tier) => (
+        <div class="card card-pad-sm">
+          <p class="mono-label">{tier.label}</p>
+          <p class="display" style="font-size: var(--text-3xl); margin-top: 0.35rem;">{tier.value}</p>
+          <p class="text-dim text-xs" style="margin-top: 0.25rem;">{tier.note}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <hr class="hairline col" />
+
   <section class="col section">
-    <div style="display: grid; gap: 4rem;">
-      {stages.map((stage) => {
+    <SectionHeader
+      kicker="Stages & categories"
+      title="The full mapping"
+      lede="Every stage, its categories, and the resource types that live in each — all counts derived from the registry."
+    />
+    <div class="prose-measure-l" style="margin-top: 2rem; display: grid; gap: 2rem;">
+      {stages.map((stage: any) => {
         const cats = catByStage[stage.id] ?? [];
         if (!cats.length) return null;
         return (
-          <section class="reveal">
-            <SectionHeader
-              kicker={`Stage ${String(stage.order).padStart(2, '0')}`}
-              title={stage.title}
-              lede={stage.summary}
-            />
-            <div class="card-grid stagger" style="margin-top: 1.75rem;">
-              {cats.map((cat: any) => {
-                const count = registry.resources.filter(r => r.category === cat.id).length;
-                const types = [...new Set(registry.resources.filter(r => r.category === cat.id).map(r => r.type))];
-                return (
-                  <a href={`/categories/${cat.slug}`} class="card card-pad card-interactive">
-                    <p class="mono-label">{cat.group}</p>
-                    <h3 style="margin-top: 0.4rem; font-weight: 500;">{cat.title}</h3>
-                    <p class="card-desc">{cat.summary}</p>
-                    <div class="card-meta">
-                      <span class="chip">{countLabel(count, 'resource')}</span>
-                      {types.slice(0,3).map(t => <span class="chip">{registry.resources.find(r => r.type === t)?.typeLabel ?? t}</span>)}
-                    </div>
-                  </a>
-                );
-              })}
+          <section id={stage.id}>
+            <div class="flex items-center gap-3" style="margin-bottom: 0.5rem;">
+              <span class="chapter-num" aria-hidden="true">{String(stage.order).padStart(2, '0')}</span>
+              <h2 style="font-size: var(--text-xl); font-weight: 500; margin: 0;">{stage.title}</h2>
+              <a href={`/roadmap#${stage.id}`} class="link-arrow" style="margin-left: auto; font-size: var(--text-xs);">roadmap <span aria-hidden="true">→</span></a>
             </div>
+            <table class="table">
+              <thead>
+                <tr><th scope="col">Category</th><th scope="col">Resources</th><th scope="col">Types present</th></tr>
+              </thead>
+              <tbody>
+                {cats.map((cat: any) => (
+                  <tr>
+                    <td>
+                      <a href={`/categories/${cat.slug}`} style="color: var(--fg);">{cat.title}</a>
+                      <span class="text-dim text-xs" style="display: block;">{cat.summary}</span>
+                    </td>
+                    <td class="font-mono">{countByCategory[cat.id] ?? 0}</td>
+                    <td>
+                      <div class="flex flex-wrap gap-1">
+                        {[...new Set(typesByCategory[cat.id] ?? [])].slice(0, 4).map((t) => (
+                          <a href={`/${t === 'mcp' ? 'mcp' : `${t}s`}`} class="chip">{typeLabels[t] ?? t}</a>
+                        ))}
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </section>
         );
       })}
@@ -60,15 +106,28 @@ for (const c of categories) (catByStage[c.stage] ??= []).push(c);
     <SectionHeader
       kicker="Technologies"
       title="First-class references"
-      lede="Technology references used by resources across the registry."
+      lede="Technology references used by resources across the registry, with derived usage counts."
     />
-    <div class="card-grid stagger" style="margin-top: 2rem; gap: 0.75rem;">
-      {technologies.map((t) => (
-        <a id={t.slug} href={t.homepage ?? '#'} target={t.homepage ? '_blank' : undefined} rel="noopener" class="card card-pad-sm card-interactive">
-          <h3 style="font-weight: 500;">{t.name}</h3>
-          <p style="font-size: var(--text-sm); color: var(--fg-muted); margin-top: 0.2rem;">{t.category}</p>
-        </a>
-      ))}
+    <div class="prose-measure-l" style="margin-top: 2rem;">
+      <table class="table">
+        <thead>
+          <tr><th scope="col">Technology</th><th scope="col">Domain</th><th scope="col">Resources</th><th scope="col">Reference</th></tr>
+        </thead>
+        <tbody>
+          {technologies.map((t: any) => (
+            <tr id={t.slug}>
+              <td class="font-mono" style="color: var(--fg);">{t.name}</td>
+              <td>{t.category}</td>
+              <td class="font-mono">{countByTechnology[t.id] ?? 0}</td>
+              <td>
+                {t.homepage
+                  ? <a href={t.homepage} target="_blank" rel="noopener">docs <span aria-hidden="true">↗</span></a>
+                  : <span class="text-dim">—</span>}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   </section>
 </BaseLayout>

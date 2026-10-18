@@ -201,3 +201,12 @@ test.describe(() => {
     }
   });
 });
+
+test('P2-tax: taxonomy tables render derived structure', async ({ page }) => {
+  await page.goto('/taxonomy', { waitUntil: 'load' });
+  await expect(page.locator('h1')).toContainText('taxonomy');
+  const catRows = await page.locator('table tbody tr a[href^="/categories/"]').count();
+  expect(catRows).toBeGreaterThanOrEqual(35);
+  const techRows = await page.locator('table tbody tr[id]').count();
+  expect(techRows).toBeGreaterThanOrEqual(25);
+});
