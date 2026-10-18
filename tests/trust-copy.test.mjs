@@ -31,7 +31,12 @@ describe('no fabricated trust claims in templates', () => {
     const offenders = [];
     for (const file of walk('src/pages').concat(walk('src/components'))) {
       const src = readFileSync(file, 'utf8');
-      const stripped = src.replace(/\{[^}]*\}/g, '').replace(/<!--[\s\S]*?-->/g, '');
+      // strip JS/TS expressions, HTML comments AND CSS comments — only
+      // user-facing text is gated
+      const stripped = src
+        .replace(/\{[^}]*\}/g, '')
+        .replace(/<!--[\s\S]*?-->/g, '')
+        .replace(/\/\*[\s\S]*?\*\//g, '');
       for (const re of BANNED) {
         const m = stripped.match(re);
         if (m) offenders.push(`${file}: ${m[0]}`);
