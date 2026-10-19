@@ -53,7 +53,9 @@ const MAX_FILE_BYTES = 400_000;
 const args = process.argv.slice(2);
 const ONLY = args.includes('--resource') ? args[args.indexOf('--resource') + 1] : null;
 const REMOTE = args.includes('--remote');
-const REMOTE_LIMIT = Number(args.includes('--remote-limit') ? args[args.indexOf('--remote-limit') + 1] : 25);
+// default covers every remote-eligible resource (each repo costs ~7 API calls
+// against 5000/hr with GITHUB_TOKEN); override only to cap a debug run
+const REMOTE_LIMIT = Number(args.includes('--remote-limit') ? args[args.indexOf('--remote-limit') + 1] : 150);
 // remote: same file triage as scan-secrets — small text files, risky names first
 const REMOTE_FILE_BYTES = 100_000;
 const REMOTE_MAX_FILES = 6;

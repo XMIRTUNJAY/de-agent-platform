@@ -85,3 +85,61 @@ verdicts:
       outside the artifact's blast radius.
     decided_by: "agent-judge (chat session; evidence: tuannvm/kafka-mcp-server HEAD, .github/workflows/cursor.yml line 33)"
     decided_at: 2026-10-19
+
+  - id: "/resources/opa-data-access-policy::secret-token-assign::docs/docs/deploy/aws/ec2.mdx"
+    verdict: benign-in-context
+    scope: docs
+    explanation: >-
+      Both hits are credential placeholders inside OPA's deployment documentation
+      for AWS EC2 — instructions a human follows to provision their own instance,
+      not shipped credentials or runtime code.
+    decided_by: "agent-judge (chat session; evidence: open-policy-agent/opa HEAD, docs/docs/deploy/aws/ec2.mdx lines 103/137)"
+    decided_at: 2026-10-19
+
+  - id: "/resources/opa-data-access-policy::unix-crontab-persistence::docs/docs/deploy/aws/ec2.mdx"
+    verdict: benign-in-context
+    scope: docs
+    explanation: >-
+      `systemctl enable/start opa.service` is the documented, deliberate install
+      step for OPA — a policy daemon whose entire purpose is to run as a service.
+      Operator-run documentation, not hidden persistence.
+    decided_by: "agent-judge (chat session; evidence: open-policy-agent/opa HEAD, docs/docs/deploy/aws/ec2.mdx lines 179-180)"
+    decided_at: 2026-10-19
+
+  - id: "/mcp/snowflake::perm-sudo-in-artifact::.github/workflows/publish-mcp.yml"
+    verdict: benign-in-context
+    scope: publisher-ci
+    explanation: >-
+      `sudo mv` installs the MCP publisher binary inside the publisher's release
+      workflow — CI plumbing outside the artifact runtime, same class as the
+      kafka CI verdict.
+    decided_by: "agent-judge (chat session; evidence: snowflake-labs/mcp HEAD, .github/workflows/publish-mcp.yml line 61)"
+    decided_at: 2026-10-19
+
+  - id: "/mcp/snowflake::sql-drop-table-unscoped::README.md"
+    verdict: benign-in-context
+    scope: docs
+    explanation: >-
+      The hit is a capability-matrix row in the README (operations the server can
+      execute on request), not a live destructive statement. The capability is
+      honestly disclosed; our marketplace security card already records that this
+      server can modify data — review before granting write credentials.
+    decided_by: "agent-judge (chat session; evidence: snowflake-labs/mcp HEAD, README.md line 515)"
+    decided_at: 2026-10-19
+
+  - id: "/mcp/snowflake::sql-truncate-delete-unbounded::README.md"
+    verdict: benign-in-context
+    scope: docs
+    explanation: >-
+      Same capability matrix as the DROP verdict — documentation of supported
+      operations, not executable DML in the run path.
+    decided_by: "agent-judge (chat session; evidence: snowflake-labs/mcp HEAD, README.md line 522)"
+    decided_at: 2026-10-19
+  - id: "/resources/opa-data-access-policy::secret-token-assign::docs/docs/deploy/azure/container-apps.mdx"
+    verdict: benign-in-context
+    scope: docs
+    explanation: >-
+      Same class as the EC2 deployment-doc verdicts: credential placeholders in
+      OPA's Azure Container Apps deployment documentation, operator-run.
+    decided_by: "agent-judge (chat session; evidence: open-policy-agent/opa HEAD, docs/docs/deploy/azure/container-apps.mdx line 78)"
+    decided_at: 2026-10-19

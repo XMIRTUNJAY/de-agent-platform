@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-18T22:34:38.624Z",
+  "generated_at": "2026-10-19T22:27:00.722Z",
   "counts": {
     "total": 157,
     "byType": {
@@ -2204,7 +2204,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -2248,7 +2248,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -2725,7 +2725,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -2769,7 +2769,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -2831,7 +2831,7 @@
           "security": 100,
           "documentation": 25,
           "maintainability": 10,
-          "community": 95
+          "community": null
         },
         "composite_score": 44.57,
         "composite_label": "weak",
@@ -3087,7 +3087,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -3131,7 +3131,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -3193,7 +3193,7 @@
           "security": 70,
           "documentation": 25,
           "maintainability": 10,
-          "community": 95
+          "community": null
         },
         "composite_score": 38.36,
         "composite_label": "weak",
@@ -3504,7 +3504,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -3548,7 +3548,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -3775,7 +3775,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -3819,7 +3819,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -3881,7 +3881,7 @@
           "security": 100,
           "documentation": 20,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 48.93,
         "composite_label": "adequate",
@@ -3935,7 +3935,7 @@
       },
       "url": "/tutorials/sql-fanout-review",
       "stale": false,
-      "stale_days": 3
+      "stale_days": 4
     },
     {
       "id": "skill-dbt-test-writer",
@@ -4008,7 +4008,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -4060,7 +4060,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -4122,7 +4122,7 @@
           "security": 90,
           "documentation": 55,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 57.14,
         "composite_label": "adequate",
@@ -4176,7 +4176,7 @@
       },
       "url": "/skills/dbt-test-writer",
       "stale": false,
-      "stale_days": 21
+      "stale_days": 22
     },
     {
       "id": "skill-incident-postmortem-writer",
@@ -4248,7 +4248,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -4297,7 +4297,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -4359,7 +4359,7 @@
           "security": 90,
           "documentation": 45,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 54.86,
         "composite_label": "adequate",
@@ -4413,7 +4413,7 @@
       },
       "url": "/skills/incident-postmortem-writer",
       "stale": false,
-      "stale_days": 24
+      "stale_days": 25
     },
     {
       "id": "skill-sql-review",
@@ -4492,7 +4492,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -4541,7 +4541,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -4603,7 +4603,7 @@
           "security": 90,
           "documentation": 55,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 56.29,
         "composite_label": "adequate",
@@ -4657,7 +4657,7 @@
       },
       "url": "/skills/sql-review",
       "stale": false,
-      "stale_days": 19
+      "stale_days": 20
     },
     {
       "id": "skill-airflow-dag-reviewer",
@@ -4731,7 +4731,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -4783,7 +4783,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -4845,7 +4845,7 @@
           "security": 90,
           "documentation": 55,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 57.14,
         "composite_label": "adequate",
@@ -4899,7 +4899,7 @@
       },
       "url": "/skills/airflow-dag-reviewer",
       "stale": false,
-      "stale_days": 25
+      "stale_days": 26
     },
     {
       "id": "skill-athena-partition-advisor",
@@ -4974,7 +4974,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -5024,7 +5024,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -5086,7 +5086,7 @@
           "security": 50,
           "documentation": 45,
           "maintainability": 40,
-          "community": 26
+          "community": null
         },
         "composite_score": 44.86,
         "composite_label": "weak",
@@ -5140,7 +5140,7 @@
       },
       "url": "/skills/athena-partition-advisor",
       "stale": false,
-      "stale_days": 37
+      "stale_days": 38
     },
     {
       "id": "skill-aws-glue-reviewer",
@@ -5217,7 +5217,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -5267,7 +5267,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -5329,7 +5329,7 @@
           "security": 70,
           "documentation": 45,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 51.43,
         "composite_label": "adequate",
@@ -5383,7 +5383,7 @@
       },
       "url": "/skills/aws-glue-job-reviewer",
       "stale": false,
-      "stale_days": 28
+      "stale_days": 29
     },
     {
       "id": "skill-cost-unit-economics",
@@ -5457,7 +5457,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -5506,7 +5506,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -5568,7 +5568,7 @@
           "security": 30,
           "documentation": 45,
           "maintainability": 40,
-          "community": 26
+          "community": null
         },
         "composite_score": 40.57,
         "composite_label": "weak",
@@ -5622,7 +5622,7 @@
       },
       "url": "/skills/cost-unit-economics-reporter",
       "stale": false,
-      "stale_days": 38
+      "stale_days": 39
     },
     {
       "id": "skill-data-contract-author",
@@ -5697,7 +5697,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -5746,7 +5746,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -5808,7 +5808,7 @@
           "security": 90,
           "documentation": 45,
           "maintainability": 40,
-          "community": 26
+          "community": null
         },
         "composite_score": 54.29,
         "composite_label": "adequate",
@@ -5862,7 +5862,7 @@
       },
       "url": "/skills/data-contract-author",
       "stale": false,
-      "stale_days": 36
+      "stale_days": 37
     },
     {
       "id": "skill-dbt-model-review",
@@ -5937,7 +5937,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -5990,7 +5990,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -6052,7 +6052,7 @@
           "security": 90,
           "documentation": 55,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 57.14,
         "composite_label": "adequate",
@@ -6106,7 +6106,7 @@
       },
       "url": "/skills/dbt-model-review",
       "stale": false,
-      "stale_days": 21
+      "stale_days": 22
     },
     {
       "id": "skill-delta-optimizer",
@@ -6179,7 +6179,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -6229,7 +6229,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -6291,7 +6291,7 @@
           "security": 60,
           "documentation": 45,
           "maintainability": 40,
-          "community": 26
+          "community": null
         },
         "composite_score": 47,
         "composite_label": "adequate",
@@ -6345,7 +6345,7 @@
       },
       "url": "/skills/delta-optimization-advisor",
       "stale": false,
-      "stale_days": 35
+      "stale_days": 36
     },
     {
       "id": "skill-lineage-explainer",
@@ -6420,7 +6420,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -6469,7 +6469,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -6531,7 +6531,7 @@
           "security": 60,
           "documentation": 45,
           "maintainability": 40,
-          "community": 26
+          "community": null
         },
         "composite_score": 47.86,
         "composite_label": "adequate",
@@ -6585,7 +6585,7 @@
       },
       "url": "/skills/lineage-explainer",
       "stale": false,
-      "stale_days": 37
+      "stale_days": 38
     },
     {
       "id": "skill-pii-classifier",
@@ -6659,7 +6659,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -6708,7 +6708,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -6770,7 +6770,7 @@
           "security": 50,
           "documentation": 55,
           "maintainability": 40,
-          "community": 26
+          "community": null
         },
         "composite_score": 46.29,
         "composite_label": "adequate",
@@ -6824,7 +6824,7 @@
       },
       "url": "/skills/pii-classifier",
       "stale": false,
-      "stale_days": 39
+      "stale_days": 40
     },
     {
       "id": "skill-pipeline-test-author",
@@ -6902,7 +6902,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -6952,7 +6952,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -7014,7 +7014,7 @@
           "security": 70,
           "documentation": 45,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 51.43,
         "composite_label": "adequate",
@@ -7068,7 +7068,7 @@
       },
       "url": "/skills/pipeline-test-author",
       "stale": false,
-      "stale_days": 22
+      "stale_days": 23
     },
     {
       "id": "skill-schema-change-contract-review",
@@ -7143,7 +7143,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -7193,7 +7193,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -7255,7 +7255,7 @@
           "security": 90,
           "documentation": 55,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 57.14,
         "composite_label": "adequate",
@@ -7309,7 +7309,7 @@
       },
       "url": "/skills/schema-change-contract-review",
       "stale": false,
-      "stale_days": 23
+      "stale_days": 24
     },
     {
       "id": "skill-spark-data-quality-review",
@@ -7386,7 +7386,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -7439,7 +7439,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -7501,7 +7501,7 @@
           "security": 90,
           "documentation": 60,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 57.86,
         "composite_label": "adequate",
@@ -7555,7 +7555,7 @@
       },
       "url": "/skills/spark-data-quality-review",
       "stale": false,
-      "stale_days": 19
+      "stale_days": 20
     },
     {
       "id": "skill-sql-query-plan",
@@ -7631,7 +7631,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -7680,7 +7680,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -7742,7 +7742,7 @@
           "security": 90,
           "documentation": 45,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 55.71,
         "composite_label": "adequate",
@@ -7796,7 +7796,7 @@
       },
       "url": "/skills/sql-query-plan-explainer",
       "stale": false,
-      "stale_days": 27
+      "stale_days": 28
     },
     {
       "id": "skill-backfill-planner",
@@ -7872,7 +7872,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -7922,7 +7922,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -7983,10 +7983,10 @@
           "test_coverage": 5,
           "security": 90,
           "documentation": 55,
-          "maintainability": 50,
-          "community": 26
+          "maintainability": 40,
+          "community": null
         },
-        "composite_score": 57.14,
+        "composite_score": 55.71,
         "composite_label": "adequate",
         "popularity_base": 0,
         "popularity_inputs": {
@@ -8038,7 +8038,7 @@
       },
       "url": "/skills/backfill-planner",
       "stale": false,
-      "stale_days": 30
+      "stale_days": 31
     },
     {
       "id": "skill-cdc-merge-designer",
@@ -8115,7 +8115,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -8165,7 +8165,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -8227,7 +8227,7 @@
           "security": 90,
           "documentation": 55,
           "maintainability": 40,
-          "community": 26
+          "community": null
         },
         "composite_score": 55.71,
         "composite_label": "adequate",
@@ -8281,7 +8281,7 @@
       },
       "url": "/skills/cdc-merge-designer",
       "stale": false,
-      "stale_days": 34
+      "stale_days": 35
     },
     {
       "id": "skill-iceberg-maintenance",
@@ -8356,7 +8356,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -8406,7 +8406,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -8468,7 +8468,7 @@
           "security": 60,
           "documentation": 55,
           "maintainability": 40,
-          "community": 26
+          "community": null
         },
         "composite_score": 49.29,
         "composite_label": "adequate",
@@ -8522,7 +8522,7 @@
       },
       "url": "/skills/iceberg-table-maintenance",
       "stale": false,
-      "stale_days": 33
+      "stale_days": 34
     },
     {
       "id": "skill-kafka-lag-triage",
@@ -8597,7 +8597,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -8646,7 +8646,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -8708,7 +8708,7 @@
           "security": 40,
           "documentation": 55,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 46.43,
         "composite_label": "adequate",
@@ -8762,7 +8762,7 @@
       },
       "url": "/skills/kafka-consumer-lag-triage",
       "stale": false,
-      "stale_days": 29
+      "stale_days": 30
     },
     {
       "id": "skill-mcp-tool-contract-auditor",
@@ -8837,7 +8837,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -8887,7 +8887,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -8949,7 +8949,7 @@
           "security": 80,
           "documentation": 55,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 55,
         "composite_label": "adequate",
@@ -9003,7 +9003,7 @@
       },
       "url": "/skills/mcp-tool-contract-auditor",
       "stale": false,
-      "stale_days": 20
+      "stale_days": 21
     },
     {
       "id": "skill-spark-cost-regression-guard",
@@ -9079,7 +9079,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -9129,7 +9129,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -9191,7 +9191,7 @@
           "security": 70,
           "documentation": 45,
           "maintainability": 40,
-          "community": 26
+          "community": null
         },
         "composite_score": 50,
         "composite_label": "adequate",
@@ -9245,7 +9245,7 @@
       },
       "url": "/skills/spark-cost-regression-guard",
       "stale": false,
-      "stale_days": 35
+      "stale_days": 36
     },
     {
       "id": "skill-spark-skew-diagnosis",
@@ -9321,7 +9321,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -9373,7 +9373,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -9435,7 +9435,7 @@
           "security": 70,
           "documentation": 60,
           "maintainability": 40,
-          "community": 26
+          "community": null
         },
         "composite_score": 52.14,
         "composite_label": "adequate",
@@ -9489,7 +9489,7 @@
       },
       "url": "/skills/spark-skew-diagnosis",
       "stale": false,
-      "stale_days": 31
+      "stale_days": 32
     },
     {
       "id": "skill-warehouse-clustering-advisor",
@@ -9566,7 +9566,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -9615,7 +9615,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -9677,7 +9677,7 @@
           "security": 60,
           "documentation": 55,
           "maintainability": 40,
-          "community": 26
+          "community": null
         },
         "composite_score": 49.29,
         "composite_label": "adequate",
@@ -9731,7 +9731,7 @@
       },
       "url": "/skills/warehouse-clustering-advisor",
       "stale": false,
-      "stale_days": 32
+      "stale_days": 33
     },
     {
       "id": "mcp-duckdb",
@@ -9830,7 +9830,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -9879,7 +9879,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -9941,7 +9941,7 @@
           "security": 90,
           "documentation": 35,
           "maintainability": 50,
-          "community": 64
+          "community": null
         },
         "composite_score": 50,
         "composite_label": "adequate",
@@ -9995,7 +9995,7 @@
       },
       "url": "/mcp/duckdb",
       "stale": false,
-      "stale_days": 21
+      "stale_days": 22
     },
     {
       "id": "mcp-fetch",
@@ -10084,7 +10084,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -10133,7 +10133,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -10195,7 +10195,7 @@
           "security": 70,
           "documentation": 35,
           "maintainability": 50,
-          "community": 95
+          "community": null
         },
         "composite_score": 45.71,
         "composite_label": "adequate",
@@ -10249,7 +10249,7 @@
       },
       "url": "/mcp/fetch",
       "stale": false,
-      "stale_days": 19
+      "stale_days": 20
     },
     {
       "id": "mcp-filesystem",
@@ -10347,7 +10347,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -10395,7 +10395,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -10457,7 +10457,7 @@
           "security": 90,
           "documentation": 35,
           "maintainability": 50,
-          "community": 95
+          "community": null
         },
         "composite_score": 50,
         "composite_label": "adequate",
@@ -10511,7 +10511,7 @@
       },
       "url": "/mcp/filesystem",
       "stale": false,
-      "stale_days": 19
+      "stale_days": 20
     },
     {
       "id": "mcp-git",
@@ -10608,7 +10608,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -10657,7 +10657,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -10719,7 +10719,7 @@
           "security": 90,
           "documentation": 35,
           "maintainability": 50,
-          "community": 95
+          "community": null
         },
         "composite_score": 50,
         "composite_label": "adequate",
@@ -10773,7 +10773,7 @@
       },
       "url": "/mcp/git",
       "stale": false,
-      "stale_days": 19
+      "stale_days": 20
     },
     {
       "id": "mcp-github",
@@ -10881,7 +10881,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -10930,7 +10930,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -10992,7 +10992,7 @@
           "security": 50,
           "documentation": 35,
           "maintainability": 35,
-          "community": 90
+          "community": null
         },
         "composite_score": 39.29,
         "composite_label": "weak",
@@ -11046,7 +11046,7 @@
       },
       "url": "/mcp/github",
       "stale": false,
-      "stale_days": 20
+      "stale_days": 21
     },
     {
       "id": "mcp-postgres",
@@ -11145,7 +11145,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -11194,7 +11194,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -11256,7 +11256,7 @@
           "security": 60,
           "documentation": 35,
           "maintainability": 50,
-          "community": 95
+          "community": null
         },
         "composite_score": 43.57,
         "composite_label": "weak",
@@ -11310,7 +11310,7 @@
       },
       "url": "/mcp/postgres",
       "stale": false,
-      "stale_days": 19
+      "stale_days": 20
     },
     {
       "id": "mcp-bigquery",
@@ -11410,7 +11410,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -11459,7 +11459,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -11521,7 +11521,7 @@
           "security": 30,
           "documentation": 35,
           "maintainability": 50,
-          "community": 33
+          "community": null
         },
         "composite_score": 37.14,
         "composite_label": "weak",
@@ -11575,7 +11575,7 @@
       },
       "url": "/mcp/bigquery",
       "stale": false,
-      "stale_days": 29
+      "stale_days": 30
     },
     {
       "id": "mcp-datahub",
@@ -11682,7 +11682,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -11731,7 +11731,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -11793,7 +11793,7 @@
           "security": 60,
           "documentation": 35,
           "maintainability": 50,
-          "community": 61
+          "community": null
         },
         "composite_score": 43.57,
         "composite_label": "weak",
@@ -11847,7 +11847,7 @@
       },
       "url": "/mcp/datahub",
       "stale": false,
-      "stale_days": 9
+      "stale_days": 10
     },
     {
       "id": "mcp-dbt",
@@ -11955,7 +11955,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -12004,7 +12004,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -12066,7 +12066,7 @@
           "security": 30,
           "documentation": 35,
           "maintainability": 50,
-          "community": 75
+          "community": null
         },
         "composite_score": 37.14,
         "composite_label": "weak",
@@ -12120,7 +12120,7 @@
       },
       "url": "/mcp/dbt",
       "stale": false,
-      "stale_days": 9
+      "stale_days": 10
     },
     {
       "id": "mcp-snowflake",
@@ -12236,7 +12236,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -12285,7 +12285,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -12347,7 +12347,7 @@
           "security": 30,
           "documentation": 35,
           "maintainability": 50,
-          "community": 55
+          "community": null
         },
         "composite_score": 37.14,
         "composite_label": "weak",
@@ -12401,7 +12401,7 @@
       },
       "url": "/mcp/snowflake",
       "stale": false,
-      "stale_days": 22
+      "stale_days": 23
     },
     {
       "id": "mcp-aws",
@@ -12508,7 +12508,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -12557,7 +12557,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -12673,7 +12673,7 @@
       },
       "url": "/mcp/aws",
       "stale": false,
-      "stale_days": 9
+      "stale_days": 10
     },
     {
       "id": "mcp-kafka",
@@ -12787,7 +12787,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -12836,7 +12836,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -12952,7 +12952,7 @@
       },
       "url": "/mcp/kafka",
       "stale": false,
-      "stale_days": 34
+      "stale_days": 35
     },
     {
       "id": "plugin-de-data-toolkit",
@@ -13046,7 +13046,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -13097,7 +13097,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -13159,7 +13159,7 @@
           "security": 70,
           "documentation": 15,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 43.71,
         "composite_label": "weak",
@@ -13213,7 +13213,7 @@
       },
       "url": "/plugins/de-data-toolkit",
       "stale": false,
-      "stale_days": 19
+      "stale_days": 20
     },
     {
       "id": "plugin-runbook-runner",
@@ -13302,7 +13302,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -13353,7 +13353,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -13415,7 +13415,7 @@
           "security": 90,
           "documentation": 15,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 48,
         "composite_label": "adequate",
@@ -13469,7 +13469,7 @@
       },
       "url": "/plugins/runbook-runner",
       "stale": false,
-      "stale_days": 24
+      "stale_days": 25
     },
     {
       "id": "plugin-contract-kit",
@@ -13561,7 +13561,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -13612,7 +13612,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -13674,7 +13674,7 @@
           "security": 70,
           "documentation": 15,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 43.71,
         "composite_label": "weak",
@@ -13728,7 +13728,7 @@
       },
       "url": "/plugins/contract-kit",
       "stale": false,
-      "stale_days": 22
+      "stale_days": 23
     },
     {
       "id": "plugin-dbt-workbench",
@@ -13820,7 +13820,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -13871,7 +13871,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -13933,7 +13933,7 @@
           "security": 30,
           "documentation": 15,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 35.14,
         "composite_label": "weak",
@@ -13987,7 +13987,7 @@
       },
       "url": "/plugins/dbt-workbench",
       "stale": false,
-      "stale_days": 21
+      "stale_days": 22
     },
     {
       "id": "plugin-lineage-graph",
@@ -14075,7 +14075,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -14126,7 +14126,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -14188,7 +14188,7 @@
           "security": 40,
           "documentation": 15,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 37.29,
         "composite_label": "weak",
@@ -14242,7 +14242,7 @@
       },
       "url": "/plugins/lineage-graph",
       "stale": false,
-      "stale_days": 29
+      "stale_days": 30
     },
     {
       "id": "plugin-warehouse-explorer",
@@ -14330,7 +14330,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -14381,7 +14381,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -14443,7 +14443,7 @@
           "security": 40,
           "documentation": 15,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 37.29,
         "composite_label": "weak",
@@ -14497,7 +14497,7 @@
       },
       "url": "/plugins/warehouse-explorer",
       "stale": false,
-      "stale_days": 26
+      "stale_days": 27
     },
     {
       "id": "plugin-cost-lens",
@@ -14590,7 +14590,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -14641,7 +14641,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -14703,7 +14703,7 @@
           "security": 20,
           "documentation": 15,
           "maintainability": 40,
-          "community": 26
+          "community": null
         },
         "composite_score": 31.57,
         "composite_label": "weak",
@@ -14757,7 +14757,7 @@
       },
       "url": "/plugins/cost-lens",
       "stale": false,
-      "stale_days": 32
+      "stale_days": 33
     },
     {
       "id": "plugin-kafka-console",
@@ -14847,7 +14847,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -14898,7 +14898,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -14960,7 +14960,7 @@
           "security": 40,
           "documentation": 15,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 37.29,
         "composite_label": "weak",
@@ -15014,7 +15014,7 @@
       },
       "url": "/plugins/kafka-console",
       "stale": false,
-      "stale_days": 28
+      "stale_days": 29
     },
     {
       "id": "plugin-lakehouse-guard",
@@ -15102,7 +15102,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -15153,7 +15153,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -15214,10 +15214,10 @@
           "test_coverage": 5,
           "security": 40,
           "documentation": 15,
-          "maintainability": 50,
-          "community": 26
+          "maintainability": 40,
+          "community": null
         },
-        "composite_score": 37.29,
+        "composite_score": 35.86,
         "composite_label": "weak",
         "popularity_base": 0,
         "popularity_inputs": {
@@ -15269,7 +15269,7 @@
       },
       "url": "/plugins/lakehouse-guard",
       "stale": false,
-      "stale_days": 30
+      "stale_days": 31
     },
     {
       "id": "plugin-spark-lens",
@@ -15359,7 +15359,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -15410,7 +15410,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -15472,7 +15472,7 @@
           "security": 70,
           "documentation": 15,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 43.71,
         "composite_label": "weak",
@@ -15526,7 +15526,7 @@
       },
       "url": "/plugins/spark-lens",
       "stale": false,
-      "stale_days": 23
+      "stale_days": 24
     },
     {
       "id": "hook-destructive-sql-guard",
@@ -15589,7 +15589,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -15638,7 +15638,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -15700,7 +15700,7 @@
           "security": 100,
           "documentation": 10,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 47.29,
         "composite_label": "adequate",
@@ -15754,7 +15754,7 @@
       },
       "url": "/hooks/destructive-sql-guard",
       "stale": false,
-      "stale_days": 20
+      "stale_days": 21
     },
     {
       "id": "hook-prod-write-confirm",
@@ -15817,7 +15817,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -15866,7 +15866,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -15928,7 +15928,7 @@
           "security": 100,
           "documentation": 10,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 47.29,
         "composite_label": "adequate",
@@ -15982,7 +15982,7 @@
       },
       "url": "/hooks/prod-write-confirm",
       "stale": false,
-      "stale_days": 24
+      "stale_days": 25
     },
     {
       "id": "hook-secret-scan-commit",
@@ -16045,7 +16045,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -16094,7 +16094,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -16156,7 +16156,7 @@
           "security": 70,
           "documentation": 10,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 40.86,
         "composite_label": "weak",
@@ -16210,7 +16210,7 @@
       },
       "url": "/hooks/secret-scan-commit",
       "stale": false,
-      "stale_days": 23
+      "stale_days": 24
     },
     {
       "id": "hook-dbt-full-refresh-guard",
@@ -16273,7 +16273,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -16322,7 +16322,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -16384,7 +16384,7 @@
           "security": 90,
           "documentation": 10,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 45.14,
         "composite_label": "adequate",
@@ -16438,7 +16438,7 @@
       },
       "url": "/hooks/dbt-full-refresh-guard",
       "stale": false,
-      "stale_days": 28
+      "stale_days": 29
     },
     {
       "id": "hook-freshness-pre-merge",
@@ -16501,7 +16501,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -16550,7 +16550,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -16612,7 +16612,7 @@
           "security": 70,
           "documentation": 10,
           "maintainability": 40,
-          "community": 26
+          "community": null
         },
         "composite_score": 39.43,
         "composite_label": "weak",
@@ -16666,7 +16666,7 @@
       },
       "url": "/hooks/freshness-pre-merge",
       "stale": false,
-      "stale_days": 31
+      "stale_days": 32
     },
     {
       "id": "hook-pre-deployment-dq-check",
@@ -16729,7 +16729,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -16778,7 +16778,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -16840,7 +16840,7 @@
           "security": 30,
           "documentation": 10,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 32.29,
         "composite_label": "weak",
@@ -16894,7 +16894,7 @@
       },
       "url": "/hooks/pre-deployment-dq-check",
       "stale": false,
-      "stale_days": 22
+      "stale_days": 23
     },
     {
       "id": "hook-schema-change-check",
@@ -16957,7 +16957,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -17006,7 +17006,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -17068,7 +17068,7 @@
           "security": 70,
           "documentation": 10,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 40.86,
         "composite_label": "weak",
@@ -17122,7 +17122,7 @@
       },
       "url": "/hooks/schema-change-check",
       "stale": false,
-      "stale_days": 21
+      "stale_days": 22
     },
     {
       "id": "hook-backfill-safety-check",
@@ -17185,7 +17185,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -17234,7 +17234,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -17296,7 +17296,7 @@
           "security": 100,
           "documentation": 10,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 47.29,
         "composite_label": "adequate",
@@ -17350,7 +17350,7 @@
       },
       "url": "/hooks/backfill-safety-check",
       "stale": false,
-      "stale_days": 27
+      "stale_days": 28
     },
     {
       "id": "hook-pii-leak-guard",
@@ -17413,7 +17413,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -17462,7 +17462,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -17524,7 +17524,7 @@
           "security": 70,
           "documentation": 10,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 40.86,
         "composite_label": "weak",
@@ -17578,7 +17578,7 @@
       },
       "url": "/hooks/pii-leak-guard",
       "stale": false,
-      "stale_days": 29
+      "stale_days": 30
     },
     {
       "id": "hook-spark-cost-check",
@@ -17647,7 +17647,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -17696,7 +17696,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -17758,7 +17758,7 @@
           "security": 70,
           "documentation": 10,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 40.86,
         "composite_label": "weak",
@@ -17812,7 +17812,7 @@
       },
       "url": "/hooks/spark-cost-check",
       "stale": false,
-      "stale_days": 25
+      "stale_days": 26
     },
     {
       "id": "agent-data-catalog-assistant",
@@ -17907,7 +17907,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -17958,7 +17958,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -18020,7 +18020,7 @@
           "security": 60,
           "documentation": 10,
           "maintainability": 40,
-          "community": 26
+          "community": null
         },
         "composite_score": 38.57,
         "composite_label": "weak",
@@ -18074,7 +18074,7 @@
       },
       "url": "/agents/data-catalog-assistant",
       "stale": false,
-      "stale_days": 37
+      "stale_days": 38
     },
     {
       "id": "agent-sql-reviewer",
@@ -18168,7 +18168,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -18219,7 +18219,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -18281,7 +18281,7 @@
           "security": 90,
           "documentation": 10,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 46.43,
         "composite_label": "adequate",
@@ -18335,7 +18335,7 @@
       },
       "url": "/agents/sql-reviewer",
       "stale": false,
-      "stale_days": 19
+      "stale_days": 20
     },
     {
       "id": "agent-data-quality-reviewer",
@@ -18432,7 +18432,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -18484,7 +18484,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -18546,7 +18546,7 @@
           "security": 70,
           "documentation": 10,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 42.14,
         "composite_label": "weak",
@@ -18600,7 +18600,7 @@
       },
       "url": "/agents/data-quality-reviewer",
       "stale": false,
-      "stale_days": 23
+      "stale_days": 24
     },
     {
       "id": "agent-incident-assistant",
@@ -18699,7 +18699,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -18750,7 +18750,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -18812,7 +18812,7 @@
           "security": 50,
           "documentation": 10,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 37.86,
         "composite_label": "weak",
@@ -18866,7 +18866,7 @@
       },
       "url": "/agents/incident-assistant",
       "stale": false,
-      "stale_days": 24
+      "stale_days": 25
     },
     {
       "id": "agent-pipeline-reviewer",
@@ -18965,7 +18965,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -19016,7 +19016,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -19078,7 +19078,7 @@
           "security": 90,
           "documentation": 10,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 46.43,
         "composite_label": "adequate",
@@ -19132,7 +19132,7 @@
       },
       "url": "/agents/pipeline-reviewer",
       "stale": false,
-      "stale_days": 26
+      "stale_days": 27
     },
     {
       "id": "agent-schema-reviewer",
@@ -19229,7 +19229,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -19280,7 +19280,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -19342,7 +19342,7 @@
           "security": 90,
           "documentation": 10,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 46.43,
         "composite_label": "adequate",
@@ -19396,7 +19396,7 @@
       },
       "url": "/agents/schema-reviewer",
       "stale": false,
-      "stale_days": 25
+      "stale_days": 26
     },
     {
       "id": "agent-aws-architecture-reviewer",
@@ -19494,7 +19494,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -19545,7 +19545,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -19607,7 +19607,7 @@
           "security": 50,
           "documentation": 10,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 37.86,
         "composite_label": "weak",
@@ -19661,7 +19661,7 @@
       },
       "url": "/agents/aws-architecture-reviewer",
       "stale": false,
-      "stale_days": 28
+      "stale_days": 29
     },
     {
       "id": "agent-backfill-planner",
@@ -19759,7 +19759,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -19810,7 +19810,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -19871,10 +19871,10 @@
           "test_coverage": 5,
           "security": 50,
           "documentation": 10,
-          "maintainability": 50,
-          "community": 26
+          "maintainability": 40,
+          "community": null
         },
-        "composite_score": 37.86,
+        "composite_score": 36.43,
         "composite_label": "weak",
         "popularity_base": 0,
         "popularity_inputs": {
@@ -19926,7 +19926,7 @@
       },
       "url": "/agents/backfill-planner-agent",
       "stale": false,
-      "stale_days": 30
+      "stale_days": 31
     },
     {
       "id": "agent-cost-optimizer",
@@ -20025,7 +20025,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -20076,7 +20076,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -20138,7 +20138,7 @@
           "security": 20,
           "documentation": 10,
           "maintainability": 40,
-          "community": 26
+          "community": null
         },
         "composite_score": 30,
         "composite_label": "weak",
@@ -20192,7 +20192,7 @@
       },
       "url": "/agents/cost-optimizer",
       "stale": false,
-      "stale_days": 33
+      "stale_days": 34
     },
     {
       "id": "agent-databricks-reviewer",
@@ -20289,7 +20289,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -20340,7 +20340,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -20402,7 +20402,7 @@
           "security": 90,
           "documentation": 10,
           "maintainability": 40,
-          "community": 26
+          "community": null
         },
         "composite_score": 45,
         "composite_label": "adequate",
@@ -20456,7 +20456,7 @@
       },
       "url": "/agents/databricks-reviewer",
       "stale": false,
-      "stale_days": 31
+      "stale_days": 32
     },
     {
       "id": "agent-kafka-troubleshooter",
@@ -20552,7 +20552,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -20603,7 +20603,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -20665,7 +20665,7 @@
           "security": 60,
           "documentation": 10,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 40,
         "composite_label": "weak",
@@ -20719,7 +20719,7 @@
       },
       "url": "/agents/kafka-troubleshooter",
       "stale": false,
-      "stale_days": 29
+      "stale_days": 30
     },
     {
       "id": "agent-spark-optimizer",
@@ -20817,7 +20817,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -20868,7 +20868,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -20930,7 +20930,7 @@
           "security": 90,
           "documentation": 10,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 46.43,
         "composite_label": "adequate",
@@ -20984,7 +20984,7 @@
       },
       "url": "/agents/spark-optimizer",
       "stale": false,
-      "stale_days": 21
+      "stale_days": 22
     },
     {
       "id": "tpl-dbt-project",
@@ -21048,7 +21048,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -21097,7 +21097,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -21159,7 +21159,7 @@
           "security": 30,
           "documentation": 15,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 35.14,
         "composite_label": "weak",
@@ -21213,7 +21213,7 @@
       },
       "url": "/templates/dbt-project",
       "stale": false,
-      "stale_days": 22
+      "stale_days": 23
     },
     {
       "id": "tpl-docker-local-stack",
@@ -21278,7 +21278,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -21327,7 +21327,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -21389,7 +21389,7 @@
           "security": 70,
           "documentation": 15,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 43.71,
         "composite_label": "weak",
@@ -21443,7 +21443,7 @@
       },
       "url": "/templates/docker-local-stack",
       "stale": false,
-      "stale_days": 19
+      "stale_days": 20
     },
     {
       "id": "tpl-airflow-dag",
@@ -21505,7 +21505,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -21554,7 +21554,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -21616,7 +21616,7 @@
           "security": 30,
           "documentation": 15,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 35.14,
         "composite_label": "weak",
@@ -21670,7 +21670,7 @@
       },
       "url": "/templates/airflow-dag",
       "stale": false,
-      "stale_days": 25
+      "stale_days": 26
     },
     {
       "id": "tpl-data-contract",
@@ -21732,7 +21732,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -21781,7 +21781,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -21843,7 +21843,7 @@
           "security": 70,
           "documentation": 15,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 43.71,
         "composite_label": "weak",
@@ -21897,7 +21897,7 @@
       },
       "url": "/templates/data-contract-template",
       "stale": false,
-      "stale_days": 26
+      "stale_days": 27
     },
     {
       "id": "tpl-pyspark-project",
@@ -21964,7 +21964,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -22013,7 +22013,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -22075,7 +22075,7 @@
           "security": 70,
           "documentation": 15,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 43.71,
         "composite_label": "weak",
@@ -22129,7 +22129,7 @@
       },
       "url": "/templates/pyspark-project",
       "stale": false,
-      "stale_days": 21
+      "stale_days": 22
     },
     {
       "id": "tpl-kafka-streaming",
@@ -22194,7 +22194,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -22243,7 +22243,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -22305,7 +22305,7 @@
           "security": 30,
           "documentation": 15,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 35.14,
         "composite_label": "weak",
@@ -22359,7 +22359,7 @@
       },
       "url": "/templates/kafka-streaming",
       "stale": false,
-      "stale_days": 28
+      "stale_days": 29
     },
     {
       "id": "tpl-terraform-aws-data",
@@ -22427,7 +22427,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -22476,7 +22476,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -22538,7 +22538,7 @@
           "security": 20,
           "documentation": 15,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 33,
         "composite_label": "weak",
@@ -22592,7 +22592,7 @@
       },
       "url": "/templates/terraform-aws-data-platform",
       "stale": false,
-      "stale_days": 29
+      "stale_days": 30
     },
     {
       "id": "project-dbt-warehouse-tests",
@@ -22692,7 +22692,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -22741,7 +22741,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -22803,7 +22803,7 @@
           "security": 30,
           "documentation": 45,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 41.64,
         "composite_label": "weak",
@@ -22857,7 +22857,7 @@
       },
       "url": "/projects/dbt-warehouse-tests",
       "stale": false,
-      "stale_days": 22
+      "stale_days": 23
     },
     {
       "id": "project-api-s3-spark-parquet",
@@ -22958,7 +22958,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -23007,7 +23007,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -23069,7 +23069,7 @@
           "security": 20,
           "documentation": 55,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 40.93,
         "composite_label": "weak",
@@ -23123,7 +23123,7 @@
       },
       "url": "/projects/api-s3-spark-parquet",
       "stale": false,
-      "stale_days": 21
+      "stale_days": 22
     },
     {
       "id": "project-pipeline-dq-quarantine",
@@ -23213,7 +23213,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -23262,7 +23262,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -23324,7 +23324,7 @@
           "security": 70,
           "documentation": 45,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 50.21,
         "composite_label": "adequate",
@@ -23378,7 +23378,7 @@
       },
       "url": "/projects/pipeline-dq-quarantine",
       "stale": false,
-      "stale_days": 23
+      "stale_days": 24
     },
     {
       "id": "project-s3-glue-athena",
@@ -23472,7 +23472,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -23521,7 +23521,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -23583,7 +23583,7 @@
           "security": 20,
           "documentation": 45,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 39.5,
         "composite_label": "weak",
@@ -23637,7 +23637,7 @@
       },
       "url": "/projects/s3-glue-athena",
       "stale": false,
-      "stale_days": 27
+      "stale_days": 28
     },
     {
       "id": "project-kafka-spark-delta",
@@ -23729,7 +23729,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -23778,7 +23778,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -23840,7 +23840,7 @@
           "security": 30,
           "documentation": 45,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 41.64,
         "composite_label": "weak",
@@ -23894,7 +23894,7 @@
       },
       "url": "/projects/kafka-spark-delta",
       "stale": false,
-      "stale_days": 26
+      "stale_days": 27
     },
     {
       "id": "project-postgres-cdc-kafka-lakehouse",
@@ -23992,7 +23992,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -24041,7 +24041,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -24103,7 +24103,7 @@
           "security": 30,
           "documentation": 55,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 43.07,
         "composite_label": "weak",
@@ -24157,7 +24157,7 @@
       },
       "url": "/projects/postgres-cdc-kafka-lakehouse",
       "stale": false,
-      "stale_days": 24
+      "stale_days": 25
     },
     {
       "id": "runbook-pipeline-failed",
@@ -24249,7 +24249,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -24298,7 +24298,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -24360,7 +24360,7 @@
           "security": 30,
           "documentation": 35,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 36.07,
         "composite_label": "weak",
@@ -24414,7 +24414,7 @@
       },
       "url": "/runbooks/pipeline-failed",
       "stale": false,
-      "stale_days": 20
+      "stale_days": 21
     },
     {
       "id": "runbook-bad-deployment",
@@ -24506,7 +24506,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -24555,7 +24555,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -24617,7 +24617,7 @@
           "security": 60,
           "documentation": 35,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 42.5,
         "composite_label": "weak",
@@ -24671,7 +24671,7 @@
       },
       "url": "/runbooks/bad-deployment",
       "stale": false,
-      "stale_days": 29
+      "stale_days": 30
     },
     {
       "id": "runbook-data-contract-broken",
@@ -24760,7 +24760,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -24809,7 +24809,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -24871,7 +24871,7 @@
           "security": 60,
           "documentation": 40,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 43.21,
         "composite_label": "weak",
@@ -24925,7 +24925,7 @@
       },
       "url": "/runbooks/data-contract-broken",
       "stale": false,
-      "stale_days": 28
+      "stale_days": 29
     },
     {
       "id": "runbook-data-quality-failure",
@@ -25022,7 +25022,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -25071,7 +25071,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -25133,7 +25133,7 @@
           "security": 70,
           "documentation": 35,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 44.64,
         "composite_label": "weak",
@@ -25187,7 +25187,7 @@
       },
       "url": "/runbooks/data-quality-failure",
       "stale": false,
-      "stale_days": 22
+      "stale_days": 23
     },
     {
       "id": "runbook-duplicate-records",
@@ -25276,7 +25276,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -25325,7 +25325,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -25387,7 +25387,7 @@
           "security": 80,
           "documentation": 35,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 46.79,
         "composite_label": "adequate",
@@ -25441,7 +25441,7 @@
       },
       "url": "/runbooks/duplicate-records",
       "stale": false,
-      "stale_days": 26
+      "stale_days": 27
     },
     {
       "id": "runbook-late-files",
@@ -25530,7 +25530,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -25579,7 +25579,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -25640,10 +25640,10 @@
           "test_coverage": 5,
           "security": 40,
           "documentation": 35,
-          "maintainability": 50,
-          "community": 26
+          "maintainability": 40,
+          "community": null
         },
-        "composite_score": 38.21,
+        "composite_score": 36.79,
         "composite_label": "weak",
         "popularity_base": 0,
         "popularity_inputs": {
@@ -25695,7 +25695,7 @@
       },
       "url": "/runbooks/late-files",
       "stale": false,
-      "stale_days": 30
+      "stale_days": 31
     },
     {
       "id": "runbook-missing-partition",
@@ -25783,7 +25783,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -25832,7 +25832,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -25894,7 +25894,7 @@
           "security": 40,
           "documentation": 35,
           "maintainability": 40,
-          "community": 26
+          "community": null
         },
         "composite_score": 36.79,
         "composite_label": "weak",
@@ -25948,7 +25948,7 @@
       },
       "url": "/runbooks/missing-partition",
       "stale": false,
-      "stale_days": 33
+      "stale_days": 34
     },
     {
       "id": "runbook-schema-drift",
@@ -26039,7 +26039,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -26088,7 +26088,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -26150,7 +26150,7 @@
           "security": 70,
           "documentation": 35,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 44.64,
         "composite_label": "weak",
@@ -26204,7 +26204,7 @@
       },
       "url": "/runbooks/schema-drift",
       "stale": false,
-      "stale_days": 23
+      "stale_days": 24
     },
     {
       "id": "runbook-small-files-explosion",
@@ -26294,7 +26294,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -26343,7 +26343,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -26405,7 +26405,7 @@
           "security": 40,
           "documentation": 35,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 38.21,
         "composite_label": "weak",
@@ -26459,7 +26459,7 @@
       },
       "url": "/runbooks/small-files-explosion",
       "stale": false,
-      "stale_days": 27
+      "stale_days": 28
     },
     {
       "id": "runbook-warehouse-query-slow",
@@ -26545,7 +26545,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -26593,7 +26593,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -26655,7 +26655,7 @@
           "security": 40,
           "documentation": 35,
           "maintainability": 40,
-          "community": 26
+          "community": null
         },
         "composite_score": 36.79,
         "composite_label": "weak",
@@ -26709,7 +26709,7 @@
       },
       "url": "/runbooks/warehouse-query-slow",
       "stale": false,
-      "stale_days": 31
+      "stale_days": 32
     },
     {
       "id": "runbook-backfill-required",
@@ -26799,7 +26799,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -26848,7 +26848,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -26910,7 +26910,7 @@
           "security": 40,
           "documentation": 35,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 38.21,
         "composite_label": "weak",
@@ -26964,7 +26964,7 @@
       },
       "url": "/runbooks/backfill-required",
       "stale": false,
-      "stale_days": 24
+      "stale_days": 25
     },
     {
       "id": "runbook-cdc-stopped",
@@ -27055,7 +27055,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -27104,7 +27104,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -27166,7 +27166,7 @@
           "security": 40,
           "documentation": 35,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 38.21,
         "composite_label": "weak",
@@ -27220,7 +27220,7 @@
       },
       "url": "/runbooks/cdc-stopped",
       "stale": false,
-      "stale_days": 25
+      "stale_days": 26
     },
     {
       "id": "runbook-kafka-consumer-lagging",
@@ -27315,7 +27315,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -27364,7 +27364,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -27426,7 +27426,7 @@
           "security": 40,
           "documentation": 35,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 38.21,
         "composite_label": "weak",
@@ -27480,7 +27480,7 @@
       },
       "url": "/runbooks/kafka-consumer-lagging",
       "stale": false,
-      "stale_days": 22
+      "stale_days": 23
     },
     {
       "id": "runbook-spark-job-slow",
@@ -27580,7 +27580,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -27629,7 +27629,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -27691,7 +27691,7 @@
           "security": 90,
           "documentation": 40,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 49.64,
         "composite_label": "adequate",
@@ -27745,7 +27745,7 @@
       },
       "url": "/runbooks/spark-job-slow",
       "stale": false,
-      "stale_days": 21
+      "stale_days": 22
     },
     {
       "id": "runbook-spark-job-suddenly-costs-4x",
@@ -27838,7 +27838,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -27887,7 +27887,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -27949,7 +27949,7 @@
           "security": 90,
           "documentation": 40,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 49.64,
         "composite_label": "adequate",
@@ -28003,7 +28003,7 @@
       },
       "url": "/runbooks/spark-job-suddenly-costs-4x",
       "stale": false,
-      "stale_days": 24
+      "stale_days": 25
     },
     {
       "id": "pattern-dbt-tests-docs",
@@ -28080,7 +28080,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -28134,7 +28134,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -28196,7 +28196,7 @@
           "security": 100,
           "documentation": 30,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 50.36,
         "composite_label": "adequate",
@@ -28250,7 +28250,7 @@
       },
       "url": "/patterns/dbt-tests-docs",
       "stale": false,
-      "stale_days": 23
+      "stale_days": 24
     },
     {
       "id": "pattern-idempotent-partition-overwrite",
@@ -28325,7 +28325,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -28378,7 +28378,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -28440,7 +28440,7 @@
           "security": 100,
           "documentation": 30,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 50.36,
         "composite_label": "adequate",
@@ -28494,7 +28494,7 @@
       },
       "url": "/patterns/idempotent-partition-overwrite",
       "stale": false,
-      "stale_days": 25
+      "stale_days": 26
     },
     {
       "id": "pattern-medallion-zones",
@@ -28573,7 +28573,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -28626,7 +28626,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -28688,7 +28688,7 @@
           "security": 100,
           "documentation": 45,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 52.5,
         "composite_label": "adequate",
@@ -28742,7 +28742,7 @@
       },
       "url": "/patterns/medallion-zones",
       "stale": false,
-      "stale_days": 21
+      "stale_days": 22
     },
     {
       "id": "pattern-agent-in-the-loop-review",
@@ -28819,7 +28819,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -28873,7 +28873,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -28935,7 +28935,7 @@
           "security": 100,
           "documentation": 30,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 50.36,
         "composite_label": "adequate",
@@ -28989,7 +28989,7 @@
       },
       "url": "/patterns/agent-in-the-loop-review",
       "stale": false,
-      "stale_days": 20
+      "stale_days": 21
     },
     {
       "id": "pattern-small-files-compaction",
@@ -29065,7 +29065,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -29118,7 +29118,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -29180,7 +29180,7 @@
           "security": 40,
           "documentation": 30,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 37.5,
         "composite_label": "weak",
@@ -29234,7 +29234,7 @@
       },
       "url": "/patterns/small-files-compaction",
       "stale": false,
-      "stale_days": 27
+      "stale_days": 28
     },
     {
       "id": "pattern-contracts-quality-gate",
@@ -29310,7 +29310,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -29364,7 +29364,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -29426,7 +29426,7 @@
           "security": 100,
           "documentation": 30,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 50.36,
         "composite_label": "adequate",
@@ -29480,7 +29480,7 @@
       },
       "url": "/patterns/contracts-quality-gate",
       "stale": false,
-      "stale_days": 27
+      "stale_days": 28
     },
     {
       "id": "pattern-cost-guardrails",
@@ -29556,7 +29556,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -29609,7 +29609,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -29670,10 +29670,10 @@
           "test_coverage": 5,
           "security": 50,
           "documentation": 30,
-          "maintainability": 50,
-          "community": 26
+          "maintainability": 40,
+          "community": null
         },
-        "composite_score": 39.64,
+        "composite_score": 38.21,
         "composite_label": "weak",
         "popularity_base": 0,
         "popularity_inputs": {
@@ -29725,7 +29725,7 @@
       },
       "url": "/patterns/cost-guardrails",
       "stale": false,
-      "stale_days": 30
+      "stale_days": 31
     },
     {
       "id": "pattern-dimensional-model",
@@ -29801,7 +29801,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -29854,7 +29854,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -29916,7 +29916,7 @@
           "security": 100,
           "documentation": 30,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 50.36,
         "composite_label": "adequate",
@@ -29970,7 +29970,7 @@
       },
       "url": "/patterns/dimensional-model",
       "stale": false,
-      "stale_days": 29
+      "stale_days": 30
     },
     {
       "id": "pattern-batch-incremental-watermark",
@@ -30049,7 +30049,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -30102,7 +30102,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -30164,7 +30164,7 @@
           "security": 100,
           "documentation": 45,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 52.5,
         "composite_label": "adequate",
@@ -30218,7 +30218,7 @@
       },
       "url": "/patterns/batch-incremental-watermark",
       "stale": false,
-      "stale_days": 23
+      "stale_days": 24
     },
     {
       "id": "pattern-quarantine-publish",
@@ -30295,7 +30295,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -30348,7 +30348,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -30410,7 +30410,7 @@
           "security": 100,
           "documentation": 45,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 52.5,
         "composite_label": "adequate",
@@ -30464,7 +30464,7 @@
       },
       "url": "/patterns/quarantine-publish",
       "stale": false,
-      "stale_days": 22
+      "stale_days": 23
     },
     {
       "id": "pattern-data-vault",
@@ -30538,7 +30538,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -30590,7 +30590,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -30652,7 +30652,7 @@
           "security": 100,
           "documentation": 30,
           "maintainability": 40,
-          "community": 26
+          "community": null
         },
         "composite_score": 48.93,
         "composite_label": "adequate",
@@ -30706,7 +30706,7 @@
       },
       "url": "/patterns/data-vault",
       "stale": false,
-      "stale_days": 35
+      "stale_days": 36
     },
     {
       "id": "pattern-lambda-vs-kappa",
@@ -30783,7 +30783,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -30835,7 +30835,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -30897,7 +30897,7 @@
           "security": 100,
           "documentation": 30,
           "maintainability": 40,
-          "community": 26
+          "community": null
         },
         "composite_score": 48.93,
         "composite_label": "adequate",
@@ -30951,7 +30951,7 @@
       },
       "url": "/patterns/lambda-vs-kappa",
       "stale": false,
-      "stale_days": 32
+      "stale_days": 33
     },
     {
       "id": "pattern-postgres-cdc-lakehouse",
@@ -31029,7 +31029,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -31082,7 +31082,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -31144,7 +31144,7 @@
           "security": 60,
           "documentation": 45,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 43.93,
         "composite_label": "weak",
@@ -31198,7 +31198,7 @@
       },
       "url": "/patterns/postgres-cdc-lakehouse",
       "stale": false,
-      "stale_days": 24
+      "stale_days": 25
     },
     {
       "id": "pattern-backfill-safety",
@@ -31273,7 +31273,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -31326,7 +31326,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -31388,7 +31388,7 @@
           "security": 100,
           "documentation": 30,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 50.36,
         "composite_label": "adequate",
@@ -31442,7 +31442,7 @@
       },
       "url": "/patterns/backfill-safety",
       "stale": false,
-      "stale_days": 25
+      "stale_days": 26
     },
     {
       "id": "pattern-streaming-dedup-upsert",
@@ -31518,7 +31518,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -31571,7 +31571,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -31633,7 +31633,7 @@
           "security": 60,
           "documentation": 30,
           "maintainability": 50,
-          "community": 26
+          "community": null
         },
         "composite_score": 41.79,
         "composite_label": "weak",
@@ -31687,7 +31687,7 @@
       },
       "url": "/patterns/streaming-dedup-upsert",
       "stale": false,
-      "stale_days": 26
+      "stale_days": 27
     },
     {
       "id": "ref-a-duckdb-database-with-no-data-in-it",
@@ -31733,7 +31733,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -31777,7 +31777,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -31954,7 +31954,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -31998,7 +31998,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -32113,7 +32113,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 21
+      "stale_days": 22
     },
     {
       "id": "ref-airflow-docs",
@@ -32175,7 +32175,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -32219,7 +32219,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -32334,7 +32334,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 20
+      "stale_days": 21
     },
     {
       "id": "ref-iceberg-docs",
@@ -32396,7 +32396,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -32440,7 +32440,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -32555,7 +32555,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 24
+      "stale_days": 25
     },
     {
       "id": "ref-kafka-docs",
@@ -32617,7 +32617,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -32661,7 +32661,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -32776,7 +32776,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 22
+      "stale_days": 23
     },
     {
       "id": "ref-parquet-docs",
@@ -32838,7 +32838,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -32882,7 +32882,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -32997,7 +32997,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 29
+      "stale_days": 30
     },
     {
       "id": "ref-spark-docs",
@@ -33058,7 +33058,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -33102,7 +33102,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -33217,7 +33217,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 21
+      "stale_days": 22
     },
     {
       "id": "ref-glue-docs",
@@ -33279,7 +33279,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -33323,7 +33323,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -33438,7 +33438,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 32
+      "stale_days": 33
     },
     {
       "id": "ref-bigquery-docs",
@@ -33499,7 +33499,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -33543,7 +33543,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -33658,7 +33658,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 28
+      "stale_days": 29
     },
     {
       "id": "ref-cost-effective-etl-with-duckdb-and-amazon-s3-tables-on-aws-glue",
@@ -33704,7 +33704,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -33748,7 +33748,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -33909,7 +33909,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -33953,7 +33953,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -34114,7 +34114,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -34158,7 +34158,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -34335,7 +34335,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -34379,7 +34379,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -34494,7 +34494,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 37
+      "stale_days": 38
     },
     {
       "id": "ref-databricks-docs",
@@ -34556,7 +34556,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -34600,7 +34600,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -34661,10 +34661,10 @@
           "test_coverage": 5,
           "security": 70,
           "documentation": 20,
-          "maintainability": 25,
+          "maintainability": 15,
           "community": null
         },
-        "composite_score": 35.29,
+        "composite_score": 33.86,
         "composite_label": "weak",
         "popularity_base": 0,
         "popularity_inputs": {
@@ -34715,7 +34715,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 30
+      "stale_days": 31
     },
     {
       "id": "ref-datahub-docs",
@@ -34777,7 +34777,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -34821,7 +34821,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -34936,7 +34936,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 31
+      "stale_days": 32
     },
     {
       "id": "ref-dbt-best-practices",
@@ -34997,7 +34997,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -35041,7 +35041,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -35156,7 +35156,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 23
+      "stale_days": 24
     },
     {
       "id": "ref-dbt-docs",
@@ -35217,7 +35217,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -35261,7 +35261,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -35376,7 +35376,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 22
+      "stale_days": 23
     },
     {
       "id": "ref-debezium-docs",
@@ -35438,7 +35438,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -35482,7 +35482,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -35597,7 +35597,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 25
+      "stale_days": 26
     },
     {
       "id": "ref-delta-docs",
@@ -35659,7 +35659,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -35703,7 +35703,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -35818,7 +35818,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 23
+      "stale_days": 24
     },
     {
       "id": "ref-ddia",
@@ -35879,7 +35879,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -35923,7 +35923,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -36038,7 +36038,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 37
+      "stale_days": 38
     },
     {
       "id": "ref-duckdb-and-hugging-face-querying-datasets-directly",
@@ -36084,7 +36084,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -36128,7 +36128,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -36305,7 +36305,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -36349,7 +36349,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -36464,7 +36464,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 19
+      "stale_days": 20
     },
     {
       "id": "ref-fundamentals-de",
@@ -36525,7 +36525,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -36569,7 +36569,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -36684,7 +36684,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 37
+      "stale_days": 38
     },
     {
       "id": "ref-gx-docs",
@@ -36745,7 +36745,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -36789,7 +36789,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -36904,7 +36904,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 27
+      "stale_days": 28
     },
     {
       "id": "ref-gsoc-2026-final-blog-how-it-was-to-be-a-contributor-at-jenkins",
@@ -36950,7 +36950,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -36994,7 +36994,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -37155,7 +37155,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -37199,7 +37199,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -37360,7 +37360,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -37404,7 +37404,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -37565,7 +37565,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -37609,7 +37609,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -37770,7 +37770,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -37814,7 +37814,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -37975,7 +37975,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -38019,7 +38019,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -38180,7 +38180,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -38224,7 +38224,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -38400,7 +38400,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -38444,7 +38444,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -38559,7 +38559,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 20
+      "stale_days": 21
     },
     {
       "id": "ref-mcp-spec",
@@ -38621,7 +38621,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -38665,7 +38665,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -38780,7 +38780,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 19
+      "stale_days": 20
     },
     {
       "id": "ref-monitoring-mwaa-orchestrated-etl-pipelines-with-amazon-opensearc",
@@ -38826,7 +38826,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -38870,7 +38870,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -39031,7 +39031,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -39075,7 +39075,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -39252,7 +39252,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -39296,7 +39296,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -39411,7 +39411,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 33
+      "stale_days": 34
     },
     {
       "id": "ref-optimize-consumer-rebalancing-on-amazon-msk-with-next-generation",
@@ -39457,7 +39457,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -39501,7 +39501,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -39662,7 +39662,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -39706,7 +39706,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -39867,7 +39867,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -39911,7 +39911,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -40087,7 +40087,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -40131,7 +40131,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -40246,7 +40246,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 25
+      "stale_days": 26
     },
     {
       "id": "ref-soda-core",
@@ -40308,7 +40308,7 @@
         {
           "check": "metadata_validated",
           "status": "passed",
-          "at": "2026-10-18T22:34:35.357Z",
+          "at": "2026-10-19T22:26:57.860Z",
           "by": "pipeline",
           "tool": "de-agent-pipeline",
           "version": "0.1.0",
@@ -40352,7 +40352,7 @@
           },
           "metadata_validated": {
             "status": "passed",
-            "at": "2026-10-18T22:34:35.357Z",
+            "at": "2026-10-19T22:26:57.860Z",
             "by": "pipeline"
           },
           "license_reviewed": {
@@ -40467,7 +40467,7 @@
         "unreachable": false
       },
       "stale": false,
-      "stale_days": 35
+      "stale_days": 36
     }
   ]
 }

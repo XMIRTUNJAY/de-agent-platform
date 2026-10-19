@@ -546,3 +546,245 @@ sources:
 # - every draft carries source_url + extracted_at + source authority
 # - items from sources with usage: summarize-link are Reference drafts only
 # - anything below classification confidence → safe default + human assigns
+
+  # ── artifact sources: data-engineering vertical (one-stop registry) ──
+  - id: gh-topic-dbt-packages
+    name: GitHub topic — dbt packages
+    kind: github-search
+    url: https://api.github.com/search/repositories?q=topic:dbt-package+sort:updated&per_page=15
+    domain: api.github.com
+    authority: 3
+    cadence: weekly
+    usage: metadata-link
+    default_category: cat-data-quality
+
+  - id: gh-topic-airflow-providers
+    name: GitHub topic — airflow providers
+    kind: github-search
+    url: https://api.github.com/search/repositories?q=topic:airflow-provider+sort:updated&per_page=15
+    domain: api.github.com
+    authority: 3
+    cadence: weekly
+    usage: metadata-link
+    default_category: cat-airflow
+
+  - id: gh-topic-iceberg
+    name: GitHub topic — Iceberg tooling
+    kind: github-search
+    url: https://api.github.com/search/repositories?q=topic:apache-iceberg+sort:updated&per_page=15
+    domain: api.github.com
+    authority: 3
+    cadence: weekly
+    usage: metadata-link
+    default_category: cat-lakehouse
+
+  - id: gh-topic-delta-lake
+    name: GitHub topic — Delta Lake tooling
+    kind: github-search
+    url: https://api.github.com/search/repositories?q=topic:delta-lake+sort:updated&per_page=15
+    domain: api.github.com
+    authority: 3
+    cadence: weekly
+    usage: metadata-link
+    default_category: cat-lakehouse
+
+  - id: gh-topic-duckdb
+    name: GitHub topic — DuckDB tooling
+    kind: github-search
+    url: https://api.github.com/search/repositories?q=topic:duckdb+sort:updated&per_page=15
+    domain: api.github.com
+    authority: 3
+    cadence: weekly
+    usage: metadata-link
+    default_category: cat-warehouses
+
+  - id: gh-topic-trino
+    name: GitHub topic — Trino tooling
+    kind: github-search
+    url: https://api.github.com/search/repositories?q=topic:trino+sort:updated&per_page=15
+    domain: api.github.com
+    authority: 3
+    cadence: weekly
+    usage: metadata-link
+    default_category: cat-warehouses
+
+  - id: gh-topic-data-quality
+    name: GitHub topic — data quality frameworks
+    kind: github-search
+    url: https://api.github.com/search/repositories?q=topic:data-quality+sort:updated&per_page=15
+    domain: api.github.com
+    authority: 3
+    cadence: weekly
+    usage: metadata-link
+    default_category: cat-data-quality
+
+  - id: gh-topic-data-contracts
+    name: GitHub topic — data contracts
+    kind: github-search
+    url: https://api.github.com/search/repositories?q=topic:data-contracts+sort:updated&per_page=15
+    domain: api.github.com
+    authority: 3
+    cadence: weekly
+    usage: metadata-link
+    default_category: cat-governance
+
+  - id: gh-topic-data-lineage
+    name: GitHub topic — data lineage
+    kind: github-search
+    url: https://api.github.com/search/repositories?q=topic:data-lineage+sort:updated&per_page=15
+    domain: api.github.com
+    authority: 3
+    cadence: weekly
+    usage: metadata-link
+    default_category: cat-data-observability
+
+  - id: gh-topic-data-observability
+    name: GitHub topic — data observability
+    kind: github-search
+    url: https://api.github.com/search/repositories?q=topic:data-observability+sort:updated&per_page=15
+    domain: api.github.com
+    authority: 3
+    cadence: weekly
+    usage: metadata-link
+    default_category: cat-data-observability
+
+  - id: gh-topic-kafka-connect
+    name: GitHub topic — Kafka connectors
+    kind: github-search
+    url: https://api.github.com/search/repositories?q=topic:kafka-connect+sort:updated&per_page=15
+    domain: api.github.com
+    authority: 3
+    cadence: weekly
+    usage: metadata-link
+    default_category: cat-streaming
+
+  - id: gh-topic-great-expectations
+    name: GitHub topic — Great Expectations ecosystem
+    kind: github-search
+    url: https://api.github.com/search/repositories?q=topic:great-expectations+sort:updated&per_page=15
+    domain: api.github.com
+    authority: 3
+    cadence: weekly
+    usage: metadata-link
+    default_category: cat-data-quality
+
+  - id: gh-topic-mcp-tools
+    name: GitHub topic — MCP tools
+    kind: github-search
+    url: https://api.github.com/search/repositories?q=topic:mcp-tool+sort:updated&per_page=15
+    domain: api.github.com
+    authority: 3
+    cadence: weekly
+    usage: metadata-link
+    default_category: cat-agentic
+
+  - id: gh-topic-agent-hooks
+    name: GitHub topic — agent hooks
+    kind: github-search
+    url: https://api.github.com/search/repositories?q=topic:agent-hooks+sort:updated&per_page=15
+    domain: api.github.com
+    authority: 3
+    cadence: weekly
+    usage: metadata-link
+    default_category: cat-agentic
+
+  - id: gh-topic-claude-skills
+    name: GitHub topic — Claude skills
+    kind: github-search
+    url: https://api.github.com/search/repositories?q=topic:claude-skills+sort:updated&per_page=15
+    domain: api.github.com
+    authority: 3
+    cadence: weekly
+    usage: metadata-link
+    default_category: cat-agentic
+
+  - id: gh-topic-sql-linting
+    name: GitHub topic — SQL linting & review
+    kind: github-search
+    url: https://api.github.com/search/repositories?q=topic:sql-linter+sort:updated&per_page=15
+    domain: api.github.com
+    authority: 3
+    cadence: weekly
+    usage: metadata-link
+    default_category: cat-sql
+
+  - id: gh-topic-pytest-fixtures-data
+    name: GitHub topic — data test tooling
+    kind: github-search
+    url: https://api.github.com/search/repositories?q=topic:data-tests+sort:updated&per_page=15
+    domain: api.github.com
+    authority: 3
+    cadence: weekly
+    usage: metadata-link
+    default_category: cat-testing
+
+  - id: gh-topic-terraform-data
+    name: GitHub topic — data infra terraform modules
+    kind: github-search
+    url: https://api.github.com/search/repositories?q=topic:terraform-data+sort:updated&per_page=15
+    domain: api.github.com
+    authority: 3
+    cadence: weekly
+    usage: metadata-link
+    default_category: cat-infrastructure
+
+  - id: gh-org-modelcontextprotocol
+    name: GitHub org — modelcontextprotocol
+    kind: github-org
+    url: https://api.github.com/orgs/modelcontextprotocol/repos?sort=updated&per_page=20
+    domain: api.github.com
+    authority: 5
+    cadence: weekly
+    usage: metadata-link
+    default_category: cat-agentic
+
+  - id: gh-org-delta-io
+    name: GitHub org — delta-io
+    kind: github-org
+    url: https://api.github.com/orgs/delta-io/repos?sort=updated&per_page=20
+    domain: api.github.com
+    authority: 5
+    cadence: weekly
+    usage: metadata-link
+    default_category: cat-lakehouse
+
+  - id: gh-org-GreatExpectations
+    name: GitHub org — Great Expectations
+    kind: github-org
+    url: https://api.github.com/orgs/great-expectations/repos?sort=updated&per_page=20
+    domain: api.github.com
+    authority: 5
+    cadence: weekly
+    usage: metadata-link
+    default_category: cat-data-quality
+
+  - id: gh-org-sodadata
+    name: GitHub org — Soda
+    kind: github-org
+    url: https://api.github.com/orgs/sodadata/repos?sort=updated&per_page=20
+    domain: api.github.com
+    authority: 4
+    cadence: weekly
+    usage: metadata-link
+    default_category: cat-data-quality
+
+  - id: gh-org-trinodb
+    name: GitHub org — TrinoDB
+    kind: github-org
+    url: https://api.github.com/orgs/trinodb/repos?sort=updated&per_page=20
+    domain: api.github.com
+    authority: 5
+    cadence: weekly
+    usage: metadata-link
+    default_category: cat-warehouses
+
+  - id: gh-org-duckdb
+    name: GitHub org — DuckDB
+    kind: github-org
+    url: https://api.github.com/orgs/duckdb/repos?sort=updated&per_page=20
+    domain: api.github.com
+    authority: 5
+    cadence: weekly
+    usage: metadata-link
+    default_category: cat-warehouses
+
