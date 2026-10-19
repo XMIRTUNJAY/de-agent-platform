@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-zhitongblog-unterm
+  slug: zhitongblog-unterm
+  type: reference
+  title: zhitongblog/unterm
+  description: The terminal AI agents can drive — and the cockpit to run them
+    from. 151 MCP methods, agent Inbox, git-worktree fleets, diff review &
+    rollback, one-click updates. macOS / Linux / Windows, local-first,
+  category: cat-agentic
+  tags: []
+  url: https://github.com/zhitongblog/unterm
+  publisher: GitHub topic — mcp-server
+  kind: blog
+  why: null
+  source_url: https://github.com/zhitongblog/unterm
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: gh-topic-mcp-server
+    extracted_at: 2026-10-19T11:47:29.727Z
+    published: 2026-10-19T11:46:09Z
+  classification:
+    backend: rules
+    confidence: high
+    suggested_categories:
+      - cat-agentic
+      - cat-streaming
+    suggested_type: null

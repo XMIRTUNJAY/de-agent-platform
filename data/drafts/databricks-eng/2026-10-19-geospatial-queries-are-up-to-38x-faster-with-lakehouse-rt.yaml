@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-geospatial-queries-are-up-to-38x-faster-with-lakehouse-rt
+  slug: geospatial-queries-are-up-to-38x-faster-with-lakehouse-rt
+  type: reference
+  title: Geospatial queries are up to 38X faster with Lakehouse//RT
+  description: Spatial SQL and spatial joins now run on Lakehouse//RT and they're
+    up to 38X faster...
+  category: cat-sql
+  tags: []
+  url: https://www.databricks.com/blog/geospatial-queries-are-38x-faster-lakehousert
+  publisher: Databricks Engineering Blog
+  kind: blog
+  why: null
+  source_url: https://www.databricks.com/blog/geospatial-queries-are-38x-faster-lakehousert
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: databricks-eng
+    extracted_at: 2026-10-19T11:45:53.154Z
+    published: Thu, 15 Oct 2026 17:31:02 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-sql
+      - cat-lakehouse
+    suggested_type: null

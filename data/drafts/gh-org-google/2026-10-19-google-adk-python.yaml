@@ -1,0 +1,43 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-google-adk-python
+  slug: google-adk-python
+  type: skill
+  title: google/adk-python
+  description: An open-source, code-first Python toolkit for building, evaluating,
+    and deploying sophisticated AI agents with flexibility and control.
+  category: cat-agentic
+  tags:
+    - agent
+    - agentic
+    - agentic-ai
+    - agents
+    - agents-sdk
+    - ai
+    - ai-agents
+    - aiagentframework
+  url: https://github.com/google/adk-python
+  publisher: GitHub org — Google (incl. Gemini samples)
+  source_url: https://github.com/google/adk-python
+  github_url: https://github.com/google/adk-python
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - .agents/skills/adk-agent-builder/SKILL.md
+    - .agents/skills/adk-architecture/SKILL.md
+    - .agents/skills/adk-debug/SKILL.md
+    - .agents/skills/adk-git/SKILL.md
+    - .agents/skills/adk-review/SKILL.md
+    - .agents/skills/adk-sample-creator/SKILL.md
+    - .agents/skills/adk-setup/SKILL.md
+    - .agents/skills/adk-style/SKILL.md
+    - .agents/skills/adk-unit-design/SKILL.md
+    - .agents/skills/adk-unit-guide/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-google
+    extracted_at: 2026-10-19T11:46:41.640Z
+    lane: extract

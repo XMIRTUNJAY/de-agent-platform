@@ -1,0 +1,33 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-a-duckdb-database-with-no-data-in-it
+  slug: a-duckdb-database-with-no-data-in-it
+  type: reference
+  title: A DuckDB Database with No Data in It
+  description: A DuckDB database file does not have to hold any data. It can store
+    nothing but view definitions that point at Parquet files on object storage,
+    so a few hundred kilobytes behave like a shared catalog over a whole data
+    lake. This post shows how to build one, host it, and attach it
+  category: cat-lakes
+  tags: []
+  url: https://duckdb.org/2026/10/07/view-only-mode.html
+  publisher: DuckDB News
+  kind: blog
+  why: null
+  source_url: https://duckdb.org/2026/10/07/view-only-mode.html
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: duckdb
+    extracted_at: 2026-10-19T11:45:56.124Z
+    published: 2026-10-07T00:00:00+00:00
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-lakes
+      - cat-data-formats
+      - cat-databases
+    suggested_type: tutorial

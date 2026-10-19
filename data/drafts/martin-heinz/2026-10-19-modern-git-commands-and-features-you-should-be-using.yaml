@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-modern-git-commands-and-features-you-should-be-using
+  slug: modern-git-commands-and-features-you-should-be-using
+  type: reference
+  title: Modern Git Commands and Features You Should Be Using
+  description: All of us - software engineers - use git every day, however most
+    people only ever touch the most basic of commands, such as "add", "commit",
+    "push" or "pull", like it's still 2005. Git however, introduced many
+    features since then, and using them can make your life so much easier,
+  category: null
+  tags: []
+  url: https://martinheinz.dev/blog/109
+  publisher: Martin Heinz (Practical Data Science)
+  kind: blog
+  why: null
+  source_url: https://martinheinz.dev/blog/109
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: martin-heinz
+    extracted_at: 2026-10-19T11:46:17.115Z
+    published: Mon, 04 Mar 2024 16:00:00 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: tutorial

@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-faster-string-aggregations-with-dimension-tables
+  slug: faster-string-aggregations-with-dimension-tables
+  type: reference
+  title: Faster String Aggregations with Dimension Tables
+  description: When a query groups on long, repeated strings, move the strings
+    into a small dimension table with sorted, narrow integer keys. Aggregate on
+    the keys, then join the strings back in at the very end. The query works as
+    before, though on small fixed-width integers instead of variable
+  category: cat-databases
+  tags: []
+  url: https://duckdb.org/2026/10/02/dimension-tables.html
+  publisher: DuckDB News
+  kind: blog
+  why: null
+  source_url: https://duckdb.org/2026/10/02/dimension-tables.html
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: duckdb
+    extracted_at: 2026-10-19T11:45:56.125Z
+    published: 2026-10-02T00:00:00+00:00
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

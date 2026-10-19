@@ -1,0 +1,44 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-theonly1me-shadowclone
+  slug: theonly1me-shadowclone
+  type: skill
+  title: theonly1me/shadowclone
+  description: Your engineering taste, in every coding agent. Shadowclone learns
+    your rules and delivers them as skills to Claude Code, Codex, Cursor, Pi,
+    and Antigravity, and as a GitHub cloud bot.
+  category: cat-agentic
+  tags:
+    - agent-skills
+    - agents-md
+    - ai-agents
+    - ai-coding
+    - antigravity
+    - bun
+    - claude-code
+    - claude-skills
+  url: https://github.com/theonly1me/shadowclone
+  publisher: GitHub topic — mcp-server
+  source_url: https://github.com/theonly1me/shadowclone
+  github_url: https://github.com/theonly1me/shadowclone
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - .agents/skills/choose-by-consequence/SKILL.md
+    - .agents/skills/design-deep-modules/SKILL.md
+    - .agents/skills/diagnose-before-editing/SKILL.md
+    - .agents/skills/plan-with-review-page/SKILL.md
+    - .agents/skills/research-primary-sources/SKILL.md
+    - .agents/skills/resolve-conflicts-by-intent/SKILL.md
+    - .agents/skills/scope-confirmed-changes/SKILL.md
+    - .agents/skills/shadowclone-build-preferences/SKILL.md
+    - .agents/skills/shadowclone-review/SKILL.md
+    - .agents/skills/shadowclone-work/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-mcp-server
+    extracted_at: 2026-10-19T11:47:29.522Z
+    lane: extract

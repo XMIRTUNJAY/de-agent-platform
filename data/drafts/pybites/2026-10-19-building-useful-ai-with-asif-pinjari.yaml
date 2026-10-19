@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-building-useful-ai-with-asif-pinjari
+  slug: building-useful-ai-with-asif-pinjari
+  type: reference
+  title: Building Useful AI with Asif Pinjari
+  description: I interview a lot of professionals and developers, from 20-year
+    veterans to people just starting out on their Python journey. But my
+    conversation with Asif Pinjari was different. Asif is still a student (and a
+    Teaching Assistant) at Northern Arizona University. Usually, when I ta
+  category: cat-python
+  tags: []
+  url: https://pybit.es/articles/building-useful-ai-with-asif-pinjari/
+  publisher: PyBites (Python practice + coaching)
+  kind: blog
+  why: null
+  source_url: https://pybit.es/articles/building-useful-ai-with-asif-pinjari/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: pybites
+    extracted_at: 2026-10-19T11:46:12.224Z
+    published: Thu, 05 Feb 2026 10:20:30 +0000
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-python
+    suggested_type: tutorial

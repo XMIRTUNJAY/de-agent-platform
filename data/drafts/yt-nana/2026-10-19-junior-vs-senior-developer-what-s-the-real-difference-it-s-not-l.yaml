@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-junior-vs-senior-developer-what-s-the-real-difference-it-s-not-l
+  slug: junior-vs-senior-developer-what-s-the-real-difference-it-s-not-l
+  type: reference
+  title: "Junior vs Senior Developer: What’s the Real Difference? 💡 (It’s NOT
+    lines of code)"
+  description: Summary pending review — see the source.
+  category: null
+  tags: []
+  url: https://www.youtube.com/shorts/tPN5w3f8WqE
+  publisher: TechWorld with Nana (devops/data infra)
+  kind: blog
+  why: null
+  source_url: https://www.youtube.com/shorts/tPN5w3f8WqE
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: yt-nana
+    extracted_at: 2026-10-19T11:46:22.067Z
+    published: 2026-09-22T16:00:12+00:00
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: tutorial

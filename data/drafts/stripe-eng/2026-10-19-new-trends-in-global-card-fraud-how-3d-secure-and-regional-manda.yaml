@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-new-trends-in-global-card-fraud-how-3d-secure-and-regional-manda
+  slug: new-trends-in-global-card-fraud-how-3d-secure-and-regional-manda
+  type: reference
+  title: "New trends in global card fraud: How 3D Secure and regional mandates are
+    affecting risk"
+  description: We analyzed billions of transactions on Stripe from January 2022 to
+    March 2026 to understand how card fraud patterns differ by region and
+    country, what's driving those differences, and how businesses can respond.
+  category: null
+  tags: []
+  url: https://stripe.com/blog/new-trends-in-global-card-fraud-how-3d-secure-and-regional-mandates-are-affecting-risk
+  publisher: Stripe Engineering Blog
+  kind: blog
+  why: null
+  source_url: https://stripe.com/blog/new-trends-in-global-card-fraud-how-3d-secure-and-regional-mandates-are-affecting-risk
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: stripe-eng
+    extracted_at: 2026-10-19T11:46:00.281Z
+    published: Tue, 22 Sep 2026 00:00:00 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

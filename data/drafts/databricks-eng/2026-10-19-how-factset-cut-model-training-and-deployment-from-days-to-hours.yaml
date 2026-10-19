@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-how-factset-cut-model-training-and-deployment-from-days-to-hours
+  slug: how-factset-cut-model-training-and-deployment-from-days-to-hours
+  type: reference
+  title: How FactSet cut model training and deployment from days to hours with
+    Databricks AI Runtime
+  description: "FactSet’s Text-to-Formula (TTF) system has a deceptively difficult
+    job: take a natural-language..."
+  category: cat-databricks
+  tags: []
+  url: https://www.databricks.com/blog/how-factset-cut-model-training-and-deployment-days-hours-databricks-ai-runtime
+  publisher: Databricks Engineering Blog
+  kind: blog
+  why: null
+  source_url: https://www.databricks.com/blog/how-factset-cut-model-training-and-deployment-days-hours-databricks-ai-runtime
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: databricks-eng
+    extracted_at: 2026-10-19T11:45:53.157Z
+    published: Wed, 14 Oct 2026 22:55:41 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-databricks
+    suggested_type: null

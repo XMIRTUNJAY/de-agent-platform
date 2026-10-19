@@ -1,0 +1,32 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-cloudera-and-mistral-partner-to-bring-specialized-sovereign-inte
+  slug: cloudera-and-mistral-partner-to-bring-specialized-sovereign-inte
+  type: reference
+  title: Cloudera and Mistral Partner to Bring Specialized, Sovereign Intelligence
+    to Enterprise Data
+  description: Cloudera and Mistral join forces to bring specialized, sovereign AI
+    intelligence to enterprise data, helping regulated industries innovate on
+    their own terms.
+  category: cat-agentic
+  tags: []
+  url: https://mistral.ai/news/mistral-x-cloudera/
+  publisher: Mistral AI News
+  kind: blog
+  why: null
+  source_url: https://mistral.ai/news/mistral-x-cloudera/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: mistral-news
+    extracted_at: 2026-10-19T11:46:03.209Z
+    published: Thu, 10 Sep 2026 10:42:55 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-data-formats
+      - cat-agentic
+    suggested_type: null

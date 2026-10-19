@@ -1,0 +1,29 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-bringing-gpt-rosalind-to-academic-research-labs
+  slug: bringing-gpt-rosalind-to-academic-research-labs
+  type: reference
+  title: Bringing GPT-Rosalind to academic research labs
+  description: Introducing the Rosalind Academic Plan, offering eligible academic
+    labs sponsored access to GPT-Rosalind and tools to advance life sciences
+    research.
+  category: cat-agentic
+  tags: []
+  url: https://openai.com/index/introducing-the-rosalind-academic-plan
+  publisher: OpenAI News
+  kind: blog
+  why: null
+  source_url: https://openai.com/index/introducing-the-rosalind-academic-plan
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: openai-news
+    extracted_at: 2026-10-19T11:46:02.723Z
+    published: Thu, 15 Oct 2026 19:00:00 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

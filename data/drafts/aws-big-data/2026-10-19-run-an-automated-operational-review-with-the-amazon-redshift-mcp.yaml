@@ -1,0 +1,33 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-run-an-automated-operational-review-with-the-amazon-redshift-mcp
+  slug: run-an-automated-operational-review-with-the-amazon-redshift-mcp
+  type: reference
+  title: Run an automated operational review with the Amazon Redshift MCP server
+  description: Amazon Redshift automates much of its own tuning, but periodic
+    operational reviews still pay off. Learn how the review_cluster tool in the
+    open-source Amazon Redshift MCP server runs a full cluster diagnostic from
+    one natural-language request, evaluating 12 diagnostic areas and r
+  category: cat-warehouses
+  tags: []
+  url: https://aws.amazon.com/blogs/big-data/run-an-automated-operational-review-with-the-amazon-redshift-mcp-server/
+  publisher: AWS Big Data Blog
+  kind: blog
+  why: null
+  source_url: https://aws.amazon.com/blogs/big-data/run-an-automated-operational-review-with-the-amazon-redshift-mcp-server/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: aws-big-data
+    extracted_at: 2026-10-19T11:45:49.030Z
+    published: Mon, 05 Oct 2026 15:44:45 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-warehouses
+      - cat-aws
+      - cat-agentic
+    suggested_type: tutorial

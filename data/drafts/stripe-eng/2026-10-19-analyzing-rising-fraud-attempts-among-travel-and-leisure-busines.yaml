@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-analyzing-rising-fraud-attempts-among-travel-and-leisure-busines
+  slug: analyzing-rising-fraud-attempts-among-travel-and-leisure-busines
+  type: reference
+  title: Analyzing rising fraud attempts among travel and leisure businesses on Stripe
+  description: "Last year, Stripe data shows fraud attempts against travel and
+    leisure businesses hit a four-year high. We analyzed payment activity from
+    more than 200,000 active travel and leisure businesses on Stripe to
+    understand where fraud is rising, how effectively it’s being blocked, and "
+  category: null
+  tags: []
+  url: https://stripe.com/blog/analyzing-rising-fraud-attempts-among-travel-and-leisure-businesses-on-stripe
+  publisher: Stripe Engineering Blog
+  kind: blog
+  why: null
+  source_url: https://stripe.com/blog/analyzing-rising-fraud-attempts-among-travel-and-leisure-businesses-on-stripe
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: stripe-eng
+    extracted_at: 2026-10-19T11:46:00.282Z
+    published: Fri, 18 Sep 2026 00:00:00 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

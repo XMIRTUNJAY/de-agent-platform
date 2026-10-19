@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-closing-the-binary-blind-spot-domain-knowledge-injection-for-llm
+  slug: closing-the-binary-blind-spot-domain-knowledge-injection-for-llm
+  type: reference
+  title: "Closing the Binary Blind Spot: Domain-Knowledge Injection for LLM
+    Malware Triage in npm Packages"
+  description: IntroductionSupply chain attacks on package registries have grown
+    in volume and sophistication [1]...
+  category: cat-agentic
+  tags: []
+  url: https://www.databricks.com/blog/closing-binary-blind-spot-domain-knowledge-injection-llm-malware-triage-npm-packages
+  publisher: Databricks Engineering Blog
+  kind: blog
+  why: null
+  source_url: https://www.databricks.com/blog/closing-binary-blind-spot-domain-knowledge-injection-llm-malware-triage-npm-packages
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: databricks-eng
+    extracted_at: 2026-10-19T11:45:53.151Z
+    published: Fri, 16 Oct 2026 15:37:00 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

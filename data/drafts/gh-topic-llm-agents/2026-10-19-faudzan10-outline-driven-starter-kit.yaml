@@ -1,0 +1,27 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-faudzan10-outline-driven-starter-kit
+  slug: faudzan10-outline-driven-starter-kit
+  type: reference
+  title: Faudzan10/outline-driven-starter-kit
+  description: One-Click AI Dev Environment Setup 2026 – Outline-Driven CLI Instant Init
+  category: cat-agentic
+  tags: []
+  url: https://github.com/Faudzan10/outline-driven-starter-kit
+  publisher: GitHub topic — llm agents
+  kind: blog
+  why: null
+  source_url: https://github.com/Faudzan10/outline-driven-starter-kit
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: gh-topic-llm-agents
+    extracted_at: 2026-10-19T11:47:40.749Z
+    published: 2026-10-19T11:36:20Z
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

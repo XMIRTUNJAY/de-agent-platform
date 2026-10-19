@@ -1,0 +1,27 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-welcome-beam-a-501b-open-model-you-can-own-customize-and-scale
+  slug: welcome-beam-a-501b-open-model-you-can-own-customize-and-scale
+  type: reference
+  title: "Welcome Beam: a 501B open model you can own, customize, and scale"
+  description: Summary pending review — see the source.
+  category: cat-agentic
+  tags: []
+  url: https://huggingface.co/blog/reflection-beam
+  publisher: Hugging Face Blog
+  kind: blog
+  why: null
+  source_url: https://huggingface.co/blog/reflection-beam
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: huggingface-blog
+    extracted_at: 2026-10-19T11:46:03.821Z
+    published: Fri, 16 Oct 2026 00:00:00 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

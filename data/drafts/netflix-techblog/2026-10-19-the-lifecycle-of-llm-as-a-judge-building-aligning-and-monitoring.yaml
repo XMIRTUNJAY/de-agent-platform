@@ -1,0 +1,29 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-the-lifecycle-of-llm-as-a-judge-building-aligning-and-monitoring
+  slug: the-lifecycle-of-llm-as-a-judge-building-aligning-and-monitoring
+  type: reference
+  title: "The Lifecycle of LLM-as-a-Judge: Building, Aligning, and Monitoring at
+    scale"
+  description: Summary pending review — see the source.
+  category: cat-agentic
+  tags: []
+  url: https://netflixtechblog.com/the-lifecycle-of-llm-as-a-judge-building-aligning-and-monitoring-at-scale-c95bd8283508?source=rss----2615bd06b42e---4
+  publisher: Netflix TechBlog (data platform posts)
+  kind: blog
+  why: null
+  source_url: https://netflixtechblog.com/the-lifecycle-of-llm-as-a-judge-building-aligning-and-monitoring-at-scale-c95bd8283508?source=rss----2615bd06b42e---4
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: netflix-techblog
+    extracted_at: 2026-10-19T11:45:59.169Z
+    published: Wed, 14 Oct 2026 19:48:49 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

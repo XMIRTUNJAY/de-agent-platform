@@ -1,0 +1,33 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-building-agents-that-transact-with-anchor-browser-and-agentcore-
+  slug: building-agents-that-transact-with-anchor-browser-and-agentcore-
+  type: reference
+  title: Building agents that transact with Anchor Browser and AgentCore payments
+  description: "Learn how the AWS Generative AI Innovation Center Partner Agent
+    Factory and Anchor Browser built AI agents that autonomously pay for
+    x402-protected web resources and APIs. Amazon Bedrock AgentCore payments
+    checks budgets, signs transactions, and retries requests without exposing "
+  category: cat-agentic
+  tags: []
+  url: https://aws.amazon.com/blogs/machine-learning/building-agents-that-transact-with-anchor-browser-and-agentcore-payments/
+  publisher: AWS Machine Learning Blog
+  kind: blog
+  why: null
+  source_url: https://aws.amazon.com/blogs/machine-learning/building-agents-that-transact-with-anchor-browser-and-agentcore-payments/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: aws-machine-learning
+    extracted_at: 2026-10-19T11:45:49.534Z
+    published: Tue, 13 Oct 2026 20:10:33 +0000
+  classification:
+    backend: rules
+    confidence: high
+    suggested_categories:
+      - cat-agentic
+      - cat-aws
+      - cat-security
+    suggested_type: tutorial

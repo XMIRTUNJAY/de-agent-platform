@@ -1,0 +1,42 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-validatorsdao-slv
+  slug: validatorsdao-slv
+  type: skill
+  title: ValidatorsDAO/slv
+  description: The AI Agent Kit for Solana Devs
+  category: cat-agentic
+  tags:
+    - agent
+    - ai
+    - ai-agents
+    - blockchain
+    - claude
+    - claude-code
+    - claudecode
+    - codex
+  url: https://github.com/ValidatorsDAO/slv
+  publisher: GitHub topic — claude-code
+  source_url: https://github.com/ValidatorsDAO/slv
+  github_url: https://github.com/ValidatorsDAO/slv
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - dist/oss-skills/slv-app/SKILL.md
+    - dist/oss-skills/slv-backup/SKILL.md
+    - dist/oss-skills/slv-benchmark/SKILL.md
+    - dist/oss-skills/slv-bot-trade-app/SKILL.md
+    - dist/oss-skills/slv-firewall/SKILL.md
+    - dist/oss-skills/slv-grpc-geyser/SKILL.md
+    - dist/oss-skills/slv-rpc/SKILL.md
+    - dist/oss-skills/slv-server-procurement/SKILL.md
+    - dist/oss-skills/slv-validator/SKILL.md
+    - dist/oss-skills/slv-wireguard/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-claude-code
+    extracted_at: 2026-10-19T11:47:21.684Z
+    lane: extract

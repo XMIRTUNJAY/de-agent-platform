@@ -1,0 +1,35 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-modernizing-unstructured-data-workflows-alteryx-live-query-meets
+  slug: modernizing-unstructured-data-workflows-alteryx-live-query-meets
+  type: reference
+  title: "Modernizing Unstructured Data Workflows: Alteryx Live Query meets Google
+    Cloud BigQuery"
+  description: Alteryx One Live Query and Google Cloud BigQuery redefine how
+    enterprises handle complex, unstructured data at scale by reducing reliance
+    on disconnected tools, minimizing data movement, and enabling
+    warehouse-native execution. Live Query provides an intuitive, browser-based
+    envi
+  category: cat-agentic
+  tags: []
+  url: https://cloud.google.com/blog/products/data-analytics/modernize-unstructured-data-workloads-with-alteryx-and-bigquery/
+  publisher: Google Cloud — Data Analytics blog
+  kind: blog
+  why: null
+  source_url: https://cloud.google.com/blog/products/data-analytics/modernize-unstructured-data-workloads-with-alteryx-and-bigquery/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: gcp-data-analytics
+    extracted_at: 2026-10-19T11:45:51.642Z
+    published: Fri, 09 Oct 2026 16:00:00 +0000
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+      - cat-gcp
+      - cat-sql
+    suggested_type: tutorial

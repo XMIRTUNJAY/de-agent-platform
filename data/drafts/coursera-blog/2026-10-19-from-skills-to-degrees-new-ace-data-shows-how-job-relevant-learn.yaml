@@ -1,0 +1,32 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-from-skills-to-degrees-new-ace-data-shows-how-job-relevant-learn
+  slug: from-skills-to-degrees-new-ace-data-shows-how-job-relevant-learn
+  type: reference
+  title: "From skills to degrees: New ACE data shows how job-relevant learning can
+    help reduce the cost of college"
+  description: Since launching our first Professional Certificates, one of
+    Coursera s goals has been to make high-quality education more accessible by
+    helping learners build job-ready skills while creating flexible pathways to
+    a degree. Today I’m excited to share new insights from our partnersh
+  category: cat-cost-engineering
+  tags: []
+  url: https://blog.coursera.org/new-ace-data-shows-how-job-relevant-learning-can-help-reduce-the-cost-of-college/
+  publisher: Coursera Blog
+  kind: blog
+  why: null
+  source_url: https://blog.coursera.org/new-ace-data-shows-how-job-relevant-learning-can-help-reduce-the-cost-of-college/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: coursera-blog
+    extracted_at: 2026-10-19T11:46:07.822Z
+    published: Wed, 16 Sep 2026 13:00:00 +0000
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-cost-engineering
+    suggested_type: tutorial

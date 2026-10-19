@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-kcp-how-to-migrate-to-confluent-cloud-in-days-not-weeks
+  slug: kcp-how-to-migrate-to-confluent-cloud-in-days-not-weeks
+  type: reference
+  title: "KCP: How to Migrate to Confluent Cloud in Days, Not Weeks"
+  description: Use KCP to automate Kafka migration with infrastructure generation,
+    ACL and schema mapping, and offset-preserving data replication.
+  category: cat-streaming
+  tags: []
+  url: https://www.confluent.io/blog/automate-kafka-migration-with-kcp/
+  publisher: Confluent Blog (Kafka/Flink/Streaming)
+  kind: blog
+  why: null
+  source_url: https://www.confluent.io/blog/automate-kafka-migration-with-kcp/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: confluent
+    extracted_at: 2026-10-19T11:45:54.605Z
+    published: Mon, 14 Sep 2026 07:00:00 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-kafka
+      - cat-infrastructure
+    suggested_type: tutorial

@@ -1,0 +1,29 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-scaling-ai-is-easy-trusting-it-is-hard
+  slug: scaling-ai-is-easy-trusting-it-is-hard
+  type: reference
+  title: Scaling AI is easy. Trusting it is hard.
+  description: As AI scales, cracks in data trust and governance start to show.
+    Here's what breaks first, and what it takes to fix it.
+  category: cat-governance
+  tags: []
+  url: https://www.getdbt.com/blog/scaling-ai-is-easy-trusting-it-is-hard
+  publisher: dbt Labs Blog
+  kind: blog
+  why: null
+  source_url: https://www.getdbt.com/blog/scaling-ai-is-easy-trusting-it-is-hard
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: dbt-labs
+    extracted_at: 2026-10-19T11:45:55.594Z
+    published: Tue, 25 Aug 2026 23:01:00 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-governance
+    suggested_type: null

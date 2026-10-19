@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-i-reran-my-python-3-14-jit-benchmarks-on-python-3-15
+  slug: i-reran-my-python-3-14-jit-benchmarks-on-python-3-15
+  type: reference
+  title: I Reran My Python 3.14 JIT Benchmarks on Python 3.15
+  description: The same three workloads show a much stronger JIT, but it still
+    doesn't help every program The post I Reran My Python 3.14 JIT Benchmarks on
+    Python 3.15 appeared first on Towards Data Science .
+  category: cat-python
+  tags: []
+  url: https://towardsdatascience.com/i-reran-my-python-314-jit-benchmarks-on-python-315/
+  publisher: Towards Data Science
+  kind: blog
+  why: null
+  source_url: https://towardsdatascience.com/i-reran-my-python-314-jit-benchmarks-on-python-315/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: towards-data-science
+    extracted_at: 2026-10-19T11:46:10.494Z
+    published: Fri, 16 Oct 2026 11:00:00 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-python
+    suggested_type: tutorial

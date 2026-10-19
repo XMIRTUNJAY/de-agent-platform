@@ -1,0 +1,27 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-why-you-re-stuck-as-a-junior-developer-fix-this-fast
+  slug: why-you-re-stuck-as-a-junior-developer-fix-this-fast
+  type: reference
+  title: Why You’re STUCK as a Junior Developer 😳 (Fix This Fast!)
+  description: Summary pending review — see the source.
+  category: null
+  tags: []
+  url: https://www.youtube.com/shorts/6970Bdcvc2E
+  publisher: TechWorld with Nana (devops/data infra)
+  kind: blog
+  why: null
+  source_url: https://www.youtube.com/shorts/6970Bdcvc2E
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: yt-nana
+    extracted_at: 2026-10-19T11:46:22.068Z
+    published: 2026-08-24T16:00:04+00:00
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: tutorial

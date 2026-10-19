@@ -1,0 +1,27 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-how-to-get-a-job-in-data-science-machine-learning-with-no-previo
+  slug: how-to-get-a-job-in-data-science-machine-learning-with-no-previo
+  type: reference
+  title: How to Get A Job in Data Science/Machine Learning With No Previous Experience
+  description: Take charge of your job search Continue reading on TDS Archive »
+  category: null
+  tags: []
+  url: https://medium.com/data-science/how-to-get-a-job-in-data-science-machine-learning-with-no-previous-experience-996cfc41e53e?source=rss----7f60cf5620c9---4
+  publisher: Medium — Data Science tag
+  kind: blog
+  why: null
+  source_url: https://medium.com/data-science/how-to-get-a-job-in-data-science-machine-learning-with-no-previous-experience-996cfc41e53e?source=rss----7f60cf5620c9---4
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: medium-data-science
+    extracted_at: 2026-10-19T11:46:11.239Z
+    published: Mon, 03 Feb 2025 17:32:01 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: tutorial

@@ -1,0 +1,29 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-when-eeg-models-see-the-same-people-in-training-and-testing
+  slug: when-eeg-models-see-the-same-people-in-training-and-testing
+  type: reference
+  title: When EEG Models See the Same People in Training and Testing
+  description: How participant-aware evaluation changed performance across three
+    machine-learning models The post When EEG Models See the Same People in
+    Training and Testing appeared first on Towards Data Science .
+  category: null
+  tags: []
+  url: https://towardsdatascience.com/when-eeg-models-see-the-same-people-in-training-and-testing/
+  publisher: Towards Data Science
+  kind: blog
+  why: null
+  source_url: https://towardsdatascience.com/when-eeg-models-see-the-same-people-in-training-and-testing/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: towards-data-science
+    extracted_at: 2026-10-19T11:46:10.492Z
+    published: Sat, 17 Oct 2026 12:00:00 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: tutorial

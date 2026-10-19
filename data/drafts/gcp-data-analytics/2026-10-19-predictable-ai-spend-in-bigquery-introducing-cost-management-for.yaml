@@ -1,0 +1,34 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-predictable-ai-spend-in-bigquery-introducing-cost-management-for
+  slug: predictable-ai-spend-in-bigquery-introducing-cost-management-for
+  type: reference
+  title: "Predictable AI spend in BigQuery: Introducing cost management for
+    generative AI functions"
+  description: The generative AI functions in BigQuery ( AI.GENERATE , AI.IF ,
+    AI.CLASSIFY , AI.SCORE , and more) bring large language models (LLMs)
+    directly into your SQL, so a single query can classify millions of support
+    tickets or score each product review for sentiment. However, because th
+  category: cat-agentic
+  tags: []
+  url: https://cloud.google.com/blog/products/data-analytics/using-bigquerys-generative-ai-cost-management-features/
+  publisher: Google Cloud — Data Analytics blog
+  kind: blog
+  why: null
+  source_url: https://cloud.google.com/blog/products/data-analytics/using-bigquerys-generative-ai-cost-management-features/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: gcp-data-analytics
+    extracted_at: 2026-10-19T11:45:51.634Z
+    published: Wed, 14 Oct 2026 16:00:00 +0000
+  classification:
+    backend: rules
+    confidence: high
+    suggested_categories:
+      - cat-agentic
+      - cat-gcp
+      - cat-sql
+    suggested_type: tutorial

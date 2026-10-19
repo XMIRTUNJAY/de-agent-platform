@@ -1,0 +1,29 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-image-captioning-paper-walkthrough-show-and-tell
+  slug: image-captioning-paper-walkthrough-show-and-tell
+  type: reference
+  title: "Image Captioning Paper Walkthrough: Show and Tell"
+  description: Implementing one of the earliest neural image caption generator
+    models with PyTorch. Continue reading on TDS Archive »
+  category: cat-data-formats
+  tags: []
+  url: https://medium.com/data-science/show-and-tell-e1a1142456e2?source=rss----7f60cf5620c9---4
+  publisher: Medium — Data Science tag
+  kind: blog
+  why: null
+  source_url: https://medium.com/data-science/show-and-tell-e1a1142456e2?source=rss----7f60cf5620c9---4
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: medium-data-science
+    extracted_at: 2026-10-19T11:46:11.239Z
+    published: Mon, 03 Feb 2025 16:30:24 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-data-formats
+    suggested_type: tutorial

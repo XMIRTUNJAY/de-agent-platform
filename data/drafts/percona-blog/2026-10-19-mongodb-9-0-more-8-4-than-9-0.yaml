@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-mongodb-9-0-more-8-4-than-9-0
+  slug: mongodb-9-0-more-8-4-than-9-0
+  type: reference
+  title: "MongoDB 9.0: More 8.4 than 9.0?"
+  description: MongoDB 9.0 is here. Strip away the marketing around AI, Atlas, and
+    “the best version ever built”, and MongoDB 9.0 starts to look a lot like
+    MongoDB 8.4. Sure, there are some useful changes, but I don’t see a single
+    feature that fundamentally changes how we run MongoDB. First, th
+  category: cat-databases
+  tags: []
+  url: https://www.percona.com/blog/mongodb-9-0-more-8-4-than-9-0/
+  publisher: Percona Database Performance Blog
+  kind: blog
+  why: null
+  source_url: https://www.percona.com/blog/mongodb-9-0-more-8-4-than-9-0/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: percona-blog
+    extracted_at: 2026-10-19T11:46:20.783Z
+    published: Fri, 09 Oct 2026 17:04:39 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

@@ -1,0 +1,33 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-introducing-reflection-beam-an-open-weight-model-for-agentic-cod
+  slug: introducing-reflection-beam-an-open-weight-model-for-agentic-cod
+  type: reference
+  title: "Introducing Reflection Beam: an open-weight model for agentic coding on AWS"
+  description: "Reflection AI's Beam is an open-weight model for agentic coding
+    and long-horizon tasks. This post shows how to deploy Beam on AWS: start
+    with an Amazon SageMaker JumpStart real-time endpoint, or use Amazon
+    SageMaker HyperPod Inference with JumpStart, SGLang, or vLLM for Kubernete"
+  category: cat-agentic
+  tags: []
+  url: https://aws.amazon.com/blogs/machine-learning/introducing-reflection-beam-an-open-weight-model-for-agentic-coding-on-aws/
+  publisher: AWS Machine Learning Blog
+  kind: blog
+  why: null
+  source_url: https://aws.amazon.com/blogs/machine-learning/introducing-reflection-beam-an-open-weight-model-for-agentic-coding-on-aws/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: aws-machine-learning
+    extracted_at: 2026-10-19T11:45:49.527Z
+    published: Fri, 16 Oct 2026 15:23:10 +0000
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+      - cat-infrastructure
+      - cat-aws
+    suggested_type: tutorial

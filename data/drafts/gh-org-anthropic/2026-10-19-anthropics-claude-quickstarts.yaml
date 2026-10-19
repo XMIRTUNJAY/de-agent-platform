@@ -1,0 +1,28 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-anthropics-claude-quickstarts
+  slug: anthropics-claude-quickstarts
+  type: skill
+  title: anthropics/claude-quickstarts
+  description: A collection of projects designed to help developers quickly get
+    started with building deployable applications using the Claude API
+  category: cat-agentic
+  tags: []
+  url: https://github.com/anthropics/claude-quickstarts
+  publisher: GitHub org — Anthropic (claude, agents, skills)
+  source_url: https://github.com/anthropics/claude-quickstarts
+  github_url: https://github.com/anthropics/claude-quickstarts
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - computer-use-best-practices/.claude/skills/first-run/SKILL.md
+    - computer-use-demo/.claude/skills/verify/SKILL.md
+    - managed-agents/copilot-kit-ag-ui/.claude/skills/verify/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-anthropic
+    extracted_at: 2026-10-19T11:46:24.422Z
+    lane: extract

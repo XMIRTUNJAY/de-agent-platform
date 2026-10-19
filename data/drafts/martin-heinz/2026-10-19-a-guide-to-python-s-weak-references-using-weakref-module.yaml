@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-a-guide-to-python-s-weak-references-using-weakref-module
+  slug: a-guide-to-python-s-weak-references-using-weakref-module
+  type: reference
+  title: A Guide to Python's Weak References Using weakref Module
+  description: "Chances are that you never touched and maybe haven't even heard
+    about Python's `weakref` module. While it might not be commonly used in your
+    code, it's fundamental to inner workings of many libraries, frameworks and
+    even Python itself. So, in this article we will explore what it "
+  category: cat-python
+  tags: []
+  url: https://martinheinz.dev/blog/112
+  publisher: Martin Heinz (Practical Data Science)
+  kind: blog
+  why: null
+  source_url: https://martinheinz.dev/blog/112
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: martin-heinz
+    extracted_at: 2026-10-19T11:46:17.112Z
+    published: Tue, 25 Jun 2024 16:00:00 +0000
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-python
+    suggested_type: tutorial

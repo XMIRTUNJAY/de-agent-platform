@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-under-the-hood-off-the-hot-path-how-d1-scales-to-millions-of-dat
+  slug: under-the-hood-off-the-hot-path-how-d1-scales-to-millions-of-dat
+  type: reference
+  title: "Under the hood, off the hot path: How D1 scales to millions of databases"
+  description: A deep dive into how D1 architected its control plane to scale and
+    manage millions of databases, while keeping data plane query operations at
+    the edge. We share guiding principles on how to build on the Developer
+    Platform effectively.
+  category: null
+  tags: []
+  url: https://blog.cloudflare.com/d1-control-plane/
+  publisher: Cloudflare Blog (platform + data infra)
+  kind: blog
+  why: null
+  source_url: https://blog.cloudflare.com/d1-control-plane/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: cloudflare
+    extracted_at: 2026-10-19T11:45:56.597Z
+    published: Tue, 13 Oct 2026 16:20:18 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: tutorial

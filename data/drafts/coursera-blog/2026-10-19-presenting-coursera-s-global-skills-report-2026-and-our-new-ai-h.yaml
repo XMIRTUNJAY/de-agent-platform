@@ -1,0 +1,32 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-presenting-coursera-s-global-skills-report-2026-and-our-new-ai-h
+  slug: presenting-coursera-s-global-skills-report-2026-and-our-new-ai-h
+  type: reference
+  title: Presenting Coursera’s Global Skills Report 2026, and our new AI-Human
+    Skills Synergy Index—the first of its kind in the world
+  description: By Anthony Salcito, SVP President, Enterprise, Coursera The rate of
+    AI deployment is outpacing the rate at which people are gaining the skills
+    needed to use it effectively. According to Deloitte, 43% of leaders say
+    their organization is highly prepared when it comes to their tech
+  category: cat-infrastructure
+  tags: []
+  url: https://blog.coursera.org/global-skills-report-2026/
+  publisher: Coursera Blog
+  kind: blog
+  why: null
+  source_url: https://blog.coursera.org/global-skills-report-2026/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: coursera-blog
+    extracted_at: 2026-10-19T11:46:07.821Z
+    published: Tue, 29 Sep 2026 06:45:37 +0000
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-infrastructure
+    suggested_type: tutorial

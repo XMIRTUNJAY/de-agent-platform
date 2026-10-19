@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-a-collection-of-docker-images-to-solve-all-your-debugging-needs
+  slug: a-collection-of-docker-images-to-solve-all-your-debugging-needs
+  type: reference
+  title: A Collection of Docker Images To Solve All Your Debugging Needs
+  description: Whenever I troubleshoot anything container-related, I look for a
+    good container image that contains all the right tools to troubleshoot
+    and/or solve the problem. However, finding such an image, or assembling my
+    own is time-consuming and honestly just way too much effort. So, to s
+  category: cat-infrastructure
+  tags: []
+  url: https://martinheinz.dev/blog/104
+  publisher: Martin Heinz (Practical Data Science)
+  kind: blog
+  why: null
+  source_url: https://martinheinz.dev/blog/104
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: martin-heinz
+    extracted_at: 2026-10-19T11:46:17.119Z
+    published: Mon, 04 Sep 2023 16:00:00 +0000
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-infrastructure
+    suggested_type: tutorial

@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-nazmussayad-skills
+  slug: nazmussayad-skills
+  type: reference
+  title: NazmusSayad/skills
+  description: Agent skills for nerdy software developers. Stupid simple skills for agnets.
+  category: cat-agentic
+  tags: []
+  url: https://github.com/NazmusSayad/skills
+  publisher: GitHub topic — claude-code
+  kind: blog
+  why: null
+  source_url: https://github.com/NazmusSayad/skills
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: gh-topic-claude-code
+    extracted_at: 2026-10-19T11:47:18.897Z
+    published: 2026-10-19T11:47:00Z
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

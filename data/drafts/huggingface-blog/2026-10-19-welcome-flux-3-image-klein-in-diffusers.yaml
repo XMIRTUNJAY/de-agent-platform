@@ -1,0 +1,27 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-welcome-flux-3-image-klein-in-diffusers
+  slug: welcome-flux-3-image-klein-in-diffusers
+  type: reference
+  title: Welcome FLUX.3 Image Klein in Diffusers
+  description: Summary pending review — see the source.
+  category: cat-agentic
+  tags: []
+  url: https://huggingface.co/blog/flux-3
+  publisher: Hugging Face Blog
+  kind: blog
+  why: null
+  source_url: https://huggingface.co/blog/flux-3
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: huggingface-blog
+    extracted_at: 2026-10-19T11:46:03.822Z
+    published: Thu, 15 Oct 2026 00:00:00 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

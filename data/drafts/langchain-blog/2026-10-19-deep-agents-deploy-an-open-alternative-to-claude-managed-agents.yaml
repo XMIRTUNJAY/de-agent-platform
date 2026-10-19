@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-deep-agents-deploy-an-open-alternative-to-claude-managed-agents
+  slug: deep-agents-deploy-an-open-alternative-to-claude-managed-agents
+  type: reference
+  title: "Deep Agents Deploy: an open alternative to Claude Managed Agents"
+  description: Today we’re launching Deep Agents deploy in beta. Deep Agents
+    deploy is the fastest way to deploy a model agnostic, open source agent
+    harness in a production ready way.
+  category: cat-agentic
+  tags: []
+  url: https://www.langchain.com/blog/deep-agents-deploy-an-open-alternative-to-claude-managed-agents
+  publisher: LangChain Blog
+  kind: blog
+  why: null
+  source_url: https://www.langchain.com/blog/deep-agents-deploy-an-open-alternative-to-claude-managed-agents
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: langchain-blog
+    extracted_at: 2026-10-19T11:46:06.083Z
+    published: Tue, 13 Oct 2026 19:56:07 GMT
+  classification:
+    backend: rules
+    confidence: high
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-seasontemple-venturing-into-the-unmanned-unknown
+  slug: seasontemple-venturing-into-the-unmanned-unknown
+  type: reference
+  title: SeasonTemple/Venturing-into-the-Unmanned-Unknown
+  description: "Venturing into the Unmanned Unknown: An AI-Native Software
+    Engineering Guidebook — 迈向无人区：AI 原生软件工程指南"
+  category: cat-agentic
+  tags: []
+  url: https://github.com/SeasonTemple/Venturing-into-the-Unmanned-Unknown
+  publisher: GitHub topic — agent-skills
+  kind: blog
+  why: null
+  source_url: https://github.com/SeasonTemple/Venturing-into-the-Unmanned-Unknown
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: gh-topic-agent-skills
+    extracted_at: 2026-10-19T11:47:34.533Z
+    published: 2026-10-19T11:47:04Z
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-making-global-data-easier-to-explore
+  slug: making-global-data-easier-to-explore
+  type: reference
+  title: Making global data easier to explore
+  description: Google and the UN system have launched the UN System Data Commons,
+    a new open platform making global statistics accessible and easy to search.
+  category: cat-agentic
+  tags: []
+  url: https://blog.google/innovation-and-ai/technology/ai/google-un-data-commons-platform/
+  publisher: Google Blog — AI
+  kind: blog
+  why: null
+  source_url: https://blog.google/innovation-and-ai/technology/ai/google-un-data-commons-platform/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: google-ai-blog
+    extracted_at: 2026-10-19T11:46:04.507Z
+    published: Thu, 17 Sep 2026 20:00:00 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

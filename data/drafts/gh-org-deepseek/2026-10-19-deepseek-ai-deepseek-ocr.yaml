@@ -1,0 +1,24 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ref-deepseek-ai-deepseek-ocr
+  slug: deepseek-ai-deepseek-ocr
+  type: reference
+  title: deepseek-ai/DeepSeek-OCR
+  description: Contexts Optical Compression
+  category: cat-agentic
+  tags: []
+  url: https://github.com/deepseek-ai/DeepSeek-OCR
+  publisher: GitHub org — DeepSeek
+  source_url: https://github.com/deepseek-ai/DeepSeek-OCR
+  github_url: https://github.com/deepseek-ai/DeepSeek-OCR
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-deepseek
+    extracted_at: 2026-10-19T11:46:48.165Z
+    lane: extract

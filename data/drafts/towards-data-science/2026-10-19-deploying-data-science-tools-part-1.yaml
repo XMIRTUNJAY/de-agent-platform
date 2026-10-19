@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-deploying-data-science-tools-part-1
+  slug: deploying-data-science-tools-part-1
+  type: reference
+  title: "Deploying Data Science Tools: Part 1"
+  description: "Getting your data science code running anywhere The post Deploying
+    Data Science Tools: Part 1 appeared first on Towards Data Science ."
+  category: null
+  tags: []
+  url: https://towardsdatascience.com/deploying-data-science-tools-part-1/
+  publisher: Towards Data Science
+  kind: blog
+  why: null
+  source_url: https://towardsdatascience.com/deploying-data-science-tools-part-1/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: towards-data-science
+    extracted_at: 2026-10-19T11:46:10.493Z
+    published: Fri, 16 Oct 2026 12:30:00 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: tutorial

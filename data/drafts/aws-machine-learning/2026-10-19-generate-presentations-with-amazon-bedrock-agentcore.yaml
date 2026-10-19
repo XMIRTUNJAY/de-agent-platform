@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-generate-presentations-with-amazon-bedrock-agentcore
+  slug: generate-presentations-with-amazon-bedrock-agentcore
+  type: reference
+  title: Generate presentations with Amazon Bedrock AgentCore
+  description: This post walks you through building an AI agent system with Amazon
+    Bedrock AgentCore that automates PowerPoint presentation creation from
+    enterprise documents. A supervisor agent, Retrieval Augmented Generation,
+    and Amazon Bedrock Guardrails generate grounded presentations in un
+  category: cat-agentic
+  tags: []
+  url: https://aws.amazon.com/blogs/machine-learning/generate-presentations-with-amazon-bedrock-agentcore/
+  publisher: AWS Machine Learning Blog
+  kind: blog
+  why: null
+  source_url: https://aws.amazon.com/blogs/machine-learning/generate-presentations-with-amazon-bedrock-agentcore/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: aws-machine-learning
+    extracted_at: 2026-10-19T11:45:49.530Z
+    published: Wed, 14 Oct 2026 13:58:43 +0000
+  classification:
+    backend: rules
+    confidence: high
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

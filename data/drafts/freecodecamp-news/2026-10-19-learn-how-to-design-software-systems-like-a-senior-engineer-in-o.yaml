@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-learn-how-to-design-software-systems-like-a-senior-engineer-in-o
+  slug: learn-how-to-design-software-systems-like-a-senior-engineer-in-o
+  type: reference
+  title: Learn How to Design Software Systems Like a Senior Engineer in Our New Course
+  description: System design is one of the most important skills for software
+    engineers today. Whether you're applying for senior or staff-level positions
+    or just looking to level up your architectural knowledge, un
+  category: cat-system-design
+  tags: []
+  url: https://www.freecodecamp.org/news/learn-how-to-design-software-systems-like-a-senior-engineer-in-our-new-course/
+  publisher: freeCodeCamp News
+  kind: blog
+  why: null
+  source_url: https://www.freecodecamp.org/news/learn-how-to-design-software-systems-like-a-senior-engineer-in-our-new-course/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: freecodecamp-news
+    extracted_at: 2026-10-19T11:46:08.685Z
+    published: Fri, 16 Oct 2026 11:34:26 +0000
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-system-design
+    suggested_type: tutorial

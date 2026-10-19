@@ -1,0 +1,27 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-netflix-stratum-media-processing-automated-container-right-sizin
+  slug: netflix-stratum-media-processing-automated-container-right-sizin
+  type: reference
+  title: "Netflix Stratum Media Processing: Automated Container Right-Sizing"
+  description: Summary pending review — see the source.
+  category: null
+  tags: []
+  url: https://netflixtechblog.com/netflix-stratum-media-processing-automated-container-right-sizing-ddf9aa68a801?source=rss----2615bd06b42e---4
+  publisher: Netflix TechBlog (data platform posts)
+  kind: blog
+  why: null
+  source_url: https://netflixtechblog.com/netflix-stratum-media-processing-automated-container-right-sizing-ddf9aa68a801?source=rss----2615bd06b42e---4
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: netflix-techblog
+    extracted_at: 2026-10-19T11:45:59.169Z
+    published: Wed, 14 Oct 2026 19:48:20 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

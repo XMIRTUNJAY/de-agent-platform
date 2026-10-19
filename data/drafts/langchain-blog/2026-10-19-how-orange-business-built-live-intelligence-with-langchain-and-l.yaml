@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-how-orange-business-built-live-intelligence-with-langchain-and-l
+  slug: how-orange-business-built-live-intelligence-with-langchain-and-l
+  type: reference
+  title: How Orange Business Built Live Intelligence with LangChain and LangSmith
+  description: Learn how Orange Business used LangChain and LangSmith to build
+    Live Intelligence, a governed AI platform for agents, evals, observability,
+    and production scale.
+  category: cat-agentic
+  tags: []
+  url: https://www.langchain.com/blog/how-orange-business-built-live-intelligence-on-langchain-and-langsmith
+  publisher: LangChain Blog
+  kind: blog
+  why: null
+  source_url: https://www.langchain.com/blog/how-orange-business-built-live-intelligence-on-langchain-and-langsmith
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: langchain-blog
+    extracted_at: 2026-10-19T11:46:06.082Z
+    published: Tue, 13 Oct 2026 19:56:07 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+      - cat-data-observability
+    suggested_type: tutorial

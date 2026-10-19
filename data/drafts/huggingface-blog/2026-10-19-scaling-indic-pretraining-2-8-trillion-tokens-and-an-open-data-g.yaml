@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-scaling-indic-pretraining-2-8-trillion-tokens-and-an-open-data-g
+  slug: scaling-indic-pretraining-2-8-trillion-tokens-and-an-open-data-g
+  type: reference
+  title: "Scaling Indic Pretraining: 2.8 Trillion Tokens and an Open Data
+    Generation Pipeline"
+  description: Summary pending review — see the source.
+  category: cat-agentic
+  tags: []
+  url: https://huggingface.co/blog/nvidia/scaling-indic-pretraining
+  publisher: Hugging Face Blog
+  kind: blog
+  why: null
+  source_url: https://huggingface.co/blog/nvidia/scaling-indic-pretraining
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: huggingface-blog
+    extracted_at: 2026-10-19T11:46:03.820Z
+    published: Fri, 16 Oct 2026 01:44:47 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

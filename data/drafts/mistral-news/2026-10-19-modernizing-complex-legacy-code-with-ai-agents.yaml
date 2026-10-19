@@ -1,0 +1,29 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-modernizing-complex-legacy-code-with-ai-agents
+  slug: modernizing-complex-legacy-code-with-ai-agents
+  type: reference
+  title: Modernizing complex legacy code with AI agents.
+  description: Mistral helped a European energy operator migrate 40,000 lines of
+    Fortran 77 to C++. Learn how it was done, and the lessons to carry forward.
+  category: cat-agentic
+  tags: []
+  url: https://mistral.ai/news/legacy-code-modernization/
+  publisher: Mistral AI News
+  kind: blog
+  why: null
+  source_url: https://mistral.ai/news/legacy-code-modernization/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: mistral-news
+    extracted_at: 2026-10-19T11:46:03.209Z
+    published: Wed, 09 Sep 2026 12:00:46 GMT
+  classification:
+    backend: rules
+    confidence: high
+    suggested_categories:
+      - cat-agentic
+    suggested_type: tutorial

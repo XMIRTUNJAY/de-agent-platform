@@ -1,0 +1,34 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-moonshotai-kimi-code
+  slug: moonshotai-kimi-code
+  type: skill
+  title: MoonshotAI/kimi-code
+  description: Kimi Code CLI  —  The Starting Point for Next-Gen Agents
+  category: cat-agentic
+  tags: []
+  url: https://github.com/MoonshotAI/kimi-code
+  publisher: GitHub org — MoonshotAI (Kimi)
+  source_url: https://github.com/MoonshotAI/kimi-code
+  github_url: https://github.com/MoonshotAI/kimi-code
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - .agents/skills/gen-changesets/SKILL.md
+    - .agents/skills/gen-docs/SKILL.md
+    - .agents/skills/pre-changelog/SKILL.md
+    - .agents/skills/review-pr/SKILL.md
+    - .agents/skills/sync-changelog/SKILL.md
+    - .agents/skills/translate-docs/SKILL.md
+    - .agents/skills/write-pr/SKILL.md
+    - .agents/skills/write-tui/SKILL.md
+    - packages/agent-core-v2/src/features/skill/catalog/builtin/sub-skill/SKILL.md
+    - packages/agent-core-v2/src/features/skill/catalog/builtin/sub-skill/consolidate/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-kimi
+    extracted_at: 2026-10-19T11:46:50.191Z
+    lane: extract

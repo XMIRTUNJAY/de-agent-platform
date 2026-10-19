@@ -1,0 +1,24 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ref-google-deepmind-alphafold
+  slug: google-deepmind-alphafold
+  type: reference
+  title: google-deepmind/alphafold
+  description: Open source code for AlphaFold 2.
+  category: cat-agentic
+  tags: []
+  url: https://github.com/google-deepmind/alphafold
+  publisher: GitHub org — Google DeepMind
+  source_url: https://github.com/google-deepmind/alphafold
+  github_url: https://github.com/google-deepmind/alphafold
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-deepmind
+    extracted_at: 2026-10-19T11:46:33.941Z
+    lane: extract

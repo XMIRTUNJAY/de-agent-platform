@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-how-dependency-injection-makes-your-fastapi-code-better-testable
+  slug: how-dependency-injection-makes-your-fastapi-code-better-testable
+  type: reference
+  title: How Dependency Injection makes your FastAPI Code Better Testable
+  description: Most Python web frameworks make you choose between testability and
+    convenience. You either have clean code with complex test setup, or you use
+    global state and hope your tests don t interfere with each other. FastAPI s
+    Depends() solves this elegantly. Here is an example how you w
+  category: cat-python
+  tags: []
+  url: https://pybit.es/articles/dependency-injection-more-testable-code/
+  publisher: PyBites (Python practice + coaching)
+  kind: blog
+  why: null
+  source_url: https://pybit.es/articles/dependency-injection-more-testable-code/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: pybites
+    extracted_at: 2026-10-19T11:46:12.224Z
+    published: Mon, 09 Feb 2026 12:57:59 +0000
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-python
+    suggested_type: tutorial

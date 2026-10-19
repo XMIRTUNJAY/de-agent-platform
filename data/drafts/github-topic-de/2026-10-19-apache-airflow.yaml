@@ -1,0 +1,43 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-apache-airflow
+  slug: apache-airflow
+  type: skill
+  title: apache/airflow
+  description: Apache Airflow - A platform to programmatically author, schedule,
+    and monitor workflows
+  category: cat-airflow
+  tags:
+    - airflow
+    - apache
+    - apache-airflow
+    - automation
+    - dag
+    - data-engineering
+    - data-integration
+    - data-orchestrator
+  url: https://github.com/apache/airflow
+  publisher: GitHub topic — data-engineering
+  source_url: https://github.com/apache/airflow
+  github_url: https://github.com/apache/airflow
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - .agents/skills/aip-user-stories/SKILL.md
+    - .agents/skills/airflow-java-sdk/SKILL.md
+    - .agents/skills/airflow-new-sdk/SKILL.md
+    - .agents/skills/airflow-pr-draft-summary/SKILL.md
+    - .agents/skills/airflow-publish-changes/SKILL.md
+    - .agents/skills/airflow-translations/SKILL.md
+    - .agents/skills/prepare-providers-documentation/SKILL.md
+    - .agents/skills/upgrade-fab-provider/SKILL.md
+    - providers/common/ai/src/airflow/providers/common/ai/example_dags/skills/aip-tracker/SKILL.md
+    - providers/common/ai/src/airflow/providers/common/ai/example_dags/skills/sql-reporting/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: github-topic-de
+    extracted_at: 2026-10-19T11:47:44.480Z
+    lane: extract

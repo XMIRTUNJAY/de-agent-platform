@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-how-to-build-disaster-simulations-on-a-real-map-animated-canvas-
+  slug: how-to-build-disaster-simulations-on-a-real-map-animated-canvas-
+  type: reference
+  title: "How to Build Disaster Simulations on a Real Map: Animated Canvas Layers
+    and Collapsing 3D Buildings with Mapbox GL JS and Three.js"
+  description: "At some point, a map project needs more than markers and polygons.
+    You want something to happen on the map: water moving up a street, smoke
+    drifting with the wind, or a shockwave spreading out from a"
+  category: null
+  tags: []
+  url: https://www.freecodecamp.org/news/disaster-simulation-real-map-mapbox-three-js/
+  publisher: freeCodeCamp News
+  kind: blog
+  why: null
+  source_url: https://www.freecodecamp.org/news/disaster-simulation-real-map-mapbox-three-js/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: freecodecamp-news
+    extracted_at: 2026-10-19T11:46:08.687Z
+    published: Thu, 15 Oct 2026 04:40:21 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: tutorial

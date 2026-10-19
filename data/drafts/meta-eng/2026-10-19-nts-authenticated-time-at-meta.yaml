@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-nts-authenticated-time-at-meta
+  slug: nts-authenticated-time-at-meta
+  type: reference
+  title: "NTS: Authenticated Time at Meta"
+  description: "Meta’s public time service now speaks NTS (Network Time Security,
+    RFC 8915) at nts.meta.com. Packets are authenticated, so a device can verify
+    the time came from us and was not modified on the way. Our NTS servers hold
+    no per-client state. Cookie keys are derived, not stored and "
+  category: null
+  tags: []
+  url: https://engineering.fb.com/2026/10/06/production-engineering/nts-authenticated-time-at-meta/
+  publisher: Meta Engineering Blog
+  kind: blog
+  why: null
+  source_url: https://engineering.fb.com/2026/10/06/production-engineering/nts-authenticated-time-at-meta/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: meta-eng
+    extracted_at: 2026-10-19T11:45:58.457Z
+    published: Tue, 06 Oct 2026 16:00:06 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

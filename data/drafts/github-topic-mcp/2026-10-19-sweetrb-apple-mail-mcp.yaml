@@ -1,0 +1,36 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-sweetrb-apple-mail-mcp
+  slug: sweetrb-apple-mail-mcp
+  type: skill
+  title: sweetrb/apple-mail-mcp
+  description: MCP server for Apple Mail - read, search, send, and manage emails
+    via Claude and other AI assistants
+  category: cat-agentic
+  tags:
+    - apple
+    - apple-mail
+    - applescript
+    - claude
+    - codex
+    - email
+    - macos
+    - mcp
+  url: https://github.com/sweetrb/apple-mail-mcp
+  publisher: GitHub topic — mcp
+  source_url: https://github.com/sweetrb/apple-mail-mcp
+  github_url: https://github.com/sweetrb/apple-mail-mcp
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - .antigravity-plugin/skills/apple-mail/SKILL.md
+    - codex/skills/apple-mail/SKILL.md
+    - skills/apple-mail/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: github-topic-mcp
+    extracted_at: 2026-10-19T11:47:50.751Z
+    lane: extract

@@ -1,0 +1,32 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-2026-world-cup-breaking-records-spiky-charts-and-reliability-at-
+  slug: 2026-world-cup-breaking-records-spiky-charts-and-reliability-at-
+  type: reference
+  title: "2026 World Cup: Breaking Records, Spiky Charts and Reliability at Scale"
+  description: Every four years, the World Cup becomes the largest planned stress
+    test of our infrastructure. This year it also set an all-time record! There
+    are a few moments throughout the year, like New Years Eve, that really let
+    us see the collective impact of everything we’ve built — but n
+  category: cat-reliability
+  tags: []
+  url: https://engineering.fb.com/2026/10/15/production-engineering/2026-world-cup-record-traffic-reliability-at-scale/
+  publisher: Meta Engineering Blog
+  kind: blog
+  why: null
+  source_url: https://engineering.fb.com/2026/10/15/production-engineering/2026-world-cup-record-traffic-reliability-at-scale/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: meta-eng
+    extracted_at: 2026-10-19T11:45:58.454Z
+    published: Thu, 15 Oct 2026 18:30:29 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-reliability
+      - cat-infrastructure
+    suggested_type: null

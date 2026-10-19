@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-how-third-moment-research-runs-10-000-agents-for-36-hours
+  slug: how-third-moment-research-runs-10-000-agents-for-36-hours
+  type: reference
+  title: How Third Moment Research runs 10,000 agents for 36+ hours
+  description: With GPT-6 Astra and GPT-6.1 Sol, Codex, and Daybreak for
+    cybersecurity, this AI lab builds agents that focus for days and improve
+    with use.
+  category: cat-agentic
+  tags: []
+  url: https://openai.com/index/third-moment-research
+  publisher: OpenAI News
+  kind: blog
+  why: null
+  source_url: https://openai.com/index/third-moment-research
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: openai-news
+    extracted_at: 2026-10-19T11:46:02.724Z
+    published: Wed, 14 Oct 2026 07:00:00 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

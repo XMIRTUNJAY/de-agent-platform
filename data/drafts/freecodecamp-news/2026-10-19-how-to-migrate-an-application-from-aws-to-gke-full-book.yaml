@@ -1,0 +1,32 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-how-to-migrate-an-application-from-aws-to-gke-full-book
+  slug: how-to-migrate-an-application-from-aws-to-gke-full-book
+  type: reference
+  title: How to Migrate an Application from AWS to GKE [Full Book]
+  description: This guided lab walks you through migrating a small payments app,
+    with a React UI and Express API running on a single AWS EC2 instance, while
+    PostgreSQL stays on AWS. You’ll move the UI and API to Goo
+  category: cat-sql
+  tags: []
+  url: https://www.freecodecamp.org/news/how-to-migrate-an-application-from-aws-to-gke-full-book/
+  publisher: freeCodeCamp News
+  kind: blog
+  why: null
+  source_url: https://www.freecodecamp.org/news/how-to-migrate-an-application-from-aws-to-gke-full-book/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: freecodecamp-news
+    extracted_at: 2026-10-19T11:46:08.684Z
+    published: Fri, 16 Oct 2026 15:40:39 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-sql
+      - cat-databases
+      - cat-aws
+    suggested_type: tutorial

@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-jev-your-engines-seven-open-decision-models-vs-a-generative-llm
+  slug: jev-your-engines-seven-open-decision-models-vs-a-generative-llm
+  type: reference
+  title: "Jev Your Engines: Seven Open Decision Models vs. a Generative LLM"
+  description: "A hands-on Jev repo comparison of routing accuracy, latency, and
+    output reliability The post Jev Your Engines: Seven Open Decision Models vs.
+    a Generative LLM appeared first on Towards Data Science ."
+  category: cat-reliability
+  tags: []
+  url: https://towardsdatascience.com/jev-your-engines-seven-open-decision-models-vs-a-generative-llm/
+  publisher: Towards Data Science
+  kind: blog
+  why: null
+  source_url: https://towardsdatascience.com/jev-your-engines-seven-open-decision-models-vs-a-generative-llm/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: towards-data-science
+    extracted_at: 2026-10-19T11:46:10.494Z
+    published: Thu, 15 Oct 2026 15:30:00 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-reliability
+      - cat-agentic
+    suggested_type: tutorial

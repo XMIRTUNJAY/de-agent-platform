@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-snowflake-privatelink-connectivity-account-authorization-endpoin
+  slug: snowflake-privatelink-connectivity-account-authorization-endpoin
+  type: reference
+  title: "Snowflake PrivateLink Connectivity: Account Authorization, Endpoint
+    Pinning, and Network Policies"
+  description: Summary pending review — see the source.
+  category: cat-warehouses
+  tags: []
+  url: https://medium.com/snowflake/snowflake-privatelink-connectivity-account-authorization-endpoint-pinning-and-network-policies-1a782a7ef5f5?source=rss----34b6daafc07---4
+  publisher: Snowflake Engineering Blog
+  kind: blog
+  why: null
+  source_url: https://medium.com/snowflake/snowflake-privatelink-connectivity-account-authorization-endpoint-pinning-and-network-policies-1a782a7ef5f5?source=rss----34b6daafc07---4
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: snowflake-eng
+    extracted_at: 2026-10-19T11:45:53.930Z
+    published: Tue, 13 Oct 2026 19:01:02 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-warehouses
+      - cat-snowflake
+    suggested_type: null

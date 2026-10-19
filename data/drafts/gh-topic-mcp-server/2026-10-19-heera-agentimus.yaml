@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-heera-agentimus
+  slug: heera-agentimus
+  type: reference
+  title: heera/agentimus
+  description: "Agentimus — make any WordPress site legible to AI agents and
+    crawlers. Reference implementation of the WP_Discovery Protocol: llms.txt,
+    full-text edition, markdown delivery, JSON-LD, content-signal ro"
+  category: cat-agentic
+  tags: []
+  url: https://github.com/heera/agentimus
+  publisher: GitHub topic — mcp-server
+  kind: blog
+  why: null
+  source_url: https://github.com/heera/agentimus
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: gh-topic-mcp-server
+    extracted_at: 2026-10-19T11:47:28.204Z
+    published: 2026-10-19T11:46:52Z
+  classification:
+    backend: rules
+    confidence: high
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

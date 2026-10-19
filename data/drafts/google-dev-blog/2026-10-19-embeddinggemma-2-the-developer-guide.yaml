@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-embeddinggemma-2-the-developer-guide
+  slug: embeddinggemma-2-the-developer-guide
+  type: reference
+  title: "EmbeddingGemma 2: The Developer Guide"
+  description: "EmbeddingGemma 2 is a compact, open-source multimodal embedding
+    model that maps text, code, images, video, and audio into a unified
+    768-dimensional space. Developers can use the sentence-transformers library
+    to selectively load modular modality encoders—ranging from 270M to 740M "
+  category: cat-agentic
+  tags: []
+  url: https://developers.googleblog.com/embeddinggemma-2-the-developer-guide/
+  publisher: Google Developers Blog
+  kind: blog
+  why: null
+  source_url: https://developers.googleblog.com/embeddinggemma-2-the-developer-guide/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: google-dev-blog
+    extracted_at: 2026-10-19T11:45:52.608Z
+    published: null
+  classification:
+    backend: rules
+    confidence: high
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

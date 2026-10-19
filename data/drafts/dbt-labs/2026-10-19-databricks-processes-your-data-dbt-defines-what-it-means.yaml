@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-databricks-processes-your-data-dbt-defines-what-it-means
+  slug: databricks-processes-your-data-dbt-defines-what-it-means
+  type: reference
+  title: Databricks processes your data. dbt defines what it means
+  description: Your compute platform and your transformation logic are two
+    separate decisions. Most executives approve them as one.
+  category: cat-dbt
+  tags: []
+  url: https://www.getdbt.com/blog/databricks-processes-your-data-dbt-defines-what-it-means
+  publisher: dbt Labs Blog
+  kind: blog
+  why: null
+  source_url: https://www.getdbt.com/blog/databricks-processes-your-data-dbt-defines-what-it-means
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: dbt-labs
+    extracted_at: 2026-10-19T11:45:55.594Z
+    published: Mon, 17 Aug 2026 16:47:00 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-dbt
+      - cat-databricks
+    suggested_type: null

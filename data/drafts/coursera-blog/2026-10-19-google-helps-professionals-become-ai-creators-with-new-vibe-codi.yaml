@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-google-helps-professionals-become-ai-creators-with-new-vibe-codi
+  slug: google-helps-professionals-become-ai-creators-with-new-vibe-codi
+  type: reference
+  title: Google helps professionals become AI creators with new vibe coding course
+    on Coursera
+  description: "Today, Google is expanding its AI Professional Certificate on
+    Coursera with their newest course on vibe coding that helps learners move
+    from AI users to AI builders. For decades, building software required
+    learning to code. But now, with vibe coding, AI is making it possible for "
+  category: null
+  tags: []
+  url: https://blog.coursera.org/google-helps-professionals-with-new-vibe-coding-course/
+  publisher: Coursera Blog
+  kind: blog
+  why: null
+  source_url: https://blog.coursera.org/google-helps-professionals-with-new-vibe-coding-course/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: coursera-blog
+    extracted_at: 2026-10-19T11:46:07.823Z
+    published: Wed, 12 Aug 2026 16:05:32 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: tutorial

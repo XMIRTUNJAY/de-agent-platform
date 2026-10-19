@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-manage-private-pricing-offers-for-amazon-bedrock-with-managed-en
+  slug: manage-private-pricing-offers-for-amazon-bedrock-with-managed-en
+  type: reference
+  title: Manage private pricing offers for Amazon Bedrock with managed entitlements
+  description: "Managing AI model access across dozens or hundreds of AWS accounts
+    creates friction when each account must accept AWS Marketplace Private
+    Pricing Offers individually. This post shows two ways to activate MPPO
+    entitlements in AWS License Manager: a lightweight script for a one-tim"
+  category: cat-aws
+  tags: []
+  url: https://aws.amazon.com/blogs/machine-learning/manage-private-pricing-offers-for-amazon-bedrock-with-managed-entitlements/
+  publisher: AWS Machine Learning Blog
+  kind: blog
+  why: null
+  source_url: https://aws.amazon.com/blogs/machine-learning/manage-private-pricing-offers-for-amazon-bedrock-with-managed-entitlements/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: aws-machine-learning
+    extracted_at: 2026-10-19T11:45:49.535Z
+    published: Tue, 13 Oct 2026 17:17:25 +0000
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-aws
+    suggested_type: null

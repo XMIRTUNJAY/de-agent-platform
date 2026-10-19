@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-new-experts-join-google-s-ai-economy-team
+  slug: new-experts-join-google-s-ai-economy-team
+  type: reference
+  title: New experts join Google’s AI & Economy team
+  description: We are expanding our AI & Economy team with world-class academic
+    advisors, fellows, and core internal researchers.
+  category: cat-agentic
+  tags: []
+  url: https://blog.google/innovation-and-ai/technology/ai/expanding-ai-economy-research-bench/
+  publisher: Google Blog — AI
+  kind: blog
+  why: null
+  source_url: https://blog.google/innovation-and-ai/technology/ai/expanding-ai-economy-research-bench/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: google-ai-blog
+    extracted_at: 2026-10-19T11:46:04.506Z
+    published: Fri, 18 Sep 2026 14:00:00 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

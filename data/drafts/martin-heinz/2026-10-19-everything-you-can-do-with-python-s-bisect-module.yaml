@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-everything-you-can-do-with-python-s-bisect-module
+  slug: everything-you-can-do-with-python-s-bisect-module
+  type: reference
+  title: Everything You Can Do with Python's bisect Module
+  description: While Python's `bisect` module is very simple - containing really
+    just 2 functions - there's a lot one can do with it, including searching
+    data efficiently, keeping any data sorted, and much more - and in this
+    article we will explore all of it!
+  category: cat-python
+  tags: []
+  url: https://martinheinz.dev/blog/106
+  publisher: Martin Heinz (Practical Data Science)
+  kind: blog
+  why: null
+  source_url: https://martinheinz.dev/blog/106
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: martin-heinz
+    extracted_at: 2026-10-19T11:46:17.117Z
+    published: Wed, 08 Nov 2023 16:00:00 +0000
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-python
+    suggested_type: tutorial

@@ -1,0 +1,43 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-altimateai-altimate-code
+  slug: altimateai-altimate-code
+  type: skill
+  title: AltimateAI/altimate-code
+  description: Open-source agentic data engineering harness for dbt, SQL, and
+    cloud warehouses. 100+ tools, 10 warehouses, AI-powered.
+  category: cat-agentic
+  tags:
+    - agent
+    - agentic-data-engineering
+    - ai
+    - analytics-engineering
+    - bigquery
+    - cli
+    - data-engineering
+    - databricks
+  url: https://github.com/AltimateAI/altimate-code
+  publisher: GitHub topic — dbt
+  source_url: https://github.com/AltimateAI/altimate-code
+  github_url: https://github.com/AltimateAI/altimate-code
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - .opencode/skills/altimate-setup/SKILL.md
+    - .opencode/skills/cost-report/SKILL.md
+    - .opencode/skills/data-parity/SKILL.md
+    - .opencode/skills/data-question/SKILL.md
+    - .opencode/skills/data-viz/SKILL.md
+    - .opencode/skills/dbt-analyze/SKILL.md
+    - .opencode/skills/dbt-develop/SKILL.md
+    - .opencode/skills/dbt-docs/SKILL.md
+    - .opencode/skills/dbt-pr-review/SKILL.md
+    - .opencode/skills/dbt-schema-verify/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: github-topic-dbt
+    extracted_at: 2026-10-19T11:47:58.368Z
+    lane: extract

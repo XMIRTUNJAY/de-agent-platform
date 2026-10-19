@@ -1,0 +1,33 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-lyc2248622657-ai-game-assistant
+  slug: lyc2248622657-ai-game-assistant
+  type: agent
+  title: lyc2248622657/ai-game-assistant
+  description: 基于 LangGraph 的多智能体游戏问答助手：支持原神/明日方舟知识库、RAG 混合检索、11 个 Function
+    Calling 工具、SSE 决策链路可视化与 React 前端，官方 wiki 数据优先、可溯源防幻觉。
+  category: cat-agentic
+  tags:
+    - agent-skills
+    - ai-assistants
+    - arknights
+    - chromadb
+    - deepseek
+    - fastapi
+    - genshin-impact
+    - langgraph
+  url: https://github.com/lyc2248622657/ai-game-assistant
+  publisher: GitHub topic — agent-skills
+  source_url: https://github.com/lyc2248622657/ai-game-assistant
+  github_url: https://github.com/lyc2248622657/ai-game-assistant
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-agent-skills
+    extracted_at: 2026-10-19T11:47:34.367Z
+    lane: extract

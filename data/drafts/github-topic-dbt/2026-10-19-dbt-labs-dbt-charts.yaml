@@ -1,0 +1,43 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-dbt-labs-dbt-charts
+  slug: dbt-labs-dbt-charts
+  type: skill
+  title: dbt-labs/dbt-charts
+  description: "Declarative YAML around SQL for dbt-native dashboards: easy for
+    agents to write, easy for humans to audit."
+  category: cat-agentic
+  tags:
+    - ai-agents
+    - analytics
+    - analytics-engineering
+    - business-intelligence
+    - charts
+    - dashboards
+    - dashboards-as-code
+    - data-visualization
+  url: https://github.com/dbt-labs/dbt-charts
+  publisher: GitHub topic — dbt
+  source_url: https://github.com/dbt-labs/dbt-charts
+  github_url: https://github.com/dbt-labs/dbt-charts
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - plugins/dbt-charts/skills/analyst-runbook/SKILL.md
+    - plugins/dbt-charts/skills/before-after-comparison/SKILL.md
+    - plugins/dbt-charts/skills/board-build/SKILL.md
+    - plugins/dbt-charts/skills/board-design/SKILL.md
+    - plugins/dbt-charts/skills/board-replicate/SKILL.md
+    - plugins/dbt-charts/skills/board-review/SKILL.md
+    - plugins/dbt-charts/skills/board-structural-review/SKILL.md
+    - plugins/dbt-charts/skills/board-visual-review/SKILL.md
+    - plugins/dbt-charts/skills/chart/SKILL.md
+    - plugins/dbt-charts/skills/custom-chart-build/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: github-topic-dbt
+    extracted_at: 2026-10-19T11:47:59.280Z
+    lane: extract

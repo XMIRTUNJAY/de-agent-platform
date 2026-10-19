@@ -1,0 +1,26 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ref-zai-org-open-autoglm
+  slug: zai-org-open-autoglm
+  type: reference
+  title: zai-org/Open-AutoGLM
+  description: An Open Phone Agent Model & Framework. Unlocking the AI Phone for Everyone
+  category: cat-agentic
+  tags:
+    - agent
+    - phone-use-agent
+  url: https://github.com/zai-org/Open-AutoGLM
+  publisher: GitHub org — Zhipu AI (GLM — moved to zai-org)
+  source_url: https://github.com/zai-org/Open-AutoGLM
+  github_url: https://github.com/zai-org/Open-AutoGLM
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-zhipu
+    extracted_at: 2026-10-19T11:46:58.661Z
+    lane: extract

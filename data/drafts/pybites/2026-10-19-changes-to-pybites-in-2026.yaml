@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-changes-to-pybites-in-2026
+  slug: changes-to-pybites-in-2026
+  type: reference
+  title: Changes to Pybites in 2026
+  description: "TLDR After almost 6 years of coaching together through Pybites, we
+    ve decided to sunset the PDI and PDM Programs. We re choosing to focus on
+    our unique strengths and provide our own coaching services outside of
+    Pybites: We ll be better coaches when we each go deep on our own thin"
+  category: cat-python
+  tags: []
+  url: https://pybit.es/articles/changes-to-pybites-in-2026/
+  publisher: PyBites (Python practice + coaching)
+  kind: blog
+  why: null
+  source_url: https://pybit.es/articles/changes-to-pybites-in-2026/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: pybites
+    extracted_at: 2026-10-19T11:46:12.221Z
+    published: Fri, 20 Mar 2026 10:25:32 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: tutorial

@@ -1,0 +1,31 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-astronomer-astronomer-cosmos
+  slug: astronomer-astronomer-cosmos
+  type: agent
+  title: astronomer/astronomer-cosmos
+  description: Run your dbt Core or dbt Fusion projects as Apache Airflow DAGs and
+    Task Groups with a few lines of code
+  category: cat-dbt
+  tags:
+    - airflow
+    - airflow-operators
+    - apache-airflow
+    - dbt
+    - python
+    - workflow
+  url: https://github.com/astronomer/astronomer-cosmos
+  publisher: GitHub topic — dbt
+  source_url: https://github.com/astronomer/astronomer-cosmos
+  github_url: https://github.com/astronomer/astronomer-cosmos
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: github-topic-dbt
+    extracted_at: 2026-10-19T11:47:54.987Z
+    lane: extract

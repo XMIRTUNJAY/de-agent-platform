@@ -1,0 +1,32 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-optimize-consumer-rebalancing-on-amazon-msk-with-next-generation
+  slug: optimize-consumer-rebalancing-on-amazon-msk-with-next-generation
+  type: reference
+  title: Optimize consumer rebalancing on Amazon MSK with next generation protocol
+  description: "The KIP-848 consumer protocol in Apache Kafka 4.0 redesigns
+    consumer group rebalancing to eliminate stop-the-world pauses. This post
+    explains how the consumer protocol works on Amazon MSK, how to enable it on
+    MSK Standard and Express brokers, and how to diagnose and resolve slow "
+  category: cat-kafka
+  tags: []
+  url: https://aws.amazon.com/blogs/big-data/optimize-consumer-rebalancing-on-amazon-msk-with-next-generation-protocol/
+  publisher: AWS Big Data Blog
+  kind: blog
+  why: null
+  source_url: https://aws.amazon.com/blogs/big-data/optimize-consumer-rebalancing-on-amazon-msk-with-next-generation-protocol/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: aws-big-data
+    extracted_at: 2026-10-19T11:45:49.031Z
+    published: Thu, 01 Oct 2026 16:43:54 +0000
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-kafka
+      - cat-production-operations
+    suggested_type: tutorial

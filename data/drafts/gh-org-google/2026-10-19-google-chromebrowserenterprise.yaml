@@ -1,0 +1,24 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-google-chromebrowserenterprise
+  slug: google-chromebrowserenterprise
+  type: mcp
+  title: google/ChromeBrowserEnterprise
+  description: Google Chrome Browser Enterprise APIs
+  category: cat-agentic
+  tags: []
+  url: https://github.com/google/ChromeBrowserEnterprise
+  publisher: GitHub org — Google (incl. Gemini samples)
+  source_url: https://github.com/google/ChromeBrowserEnterprise
+  github_url: https://github.com/google/ChromeBrowserEnterprise
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-google
+    extracted_at: 2026-10-19T11:46:37.177Z
+    lane: extract

@@ -1,0 +1,35 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-scoutme-milk
+  slug: scoutme-milk
+  type: agent
+  title: scoutme/milk
+  description: Switch models, not context. Terminal agent host that routes each
+    prompt between a cheap primary and a deep escalation agent (local, Bedrock,
+    Claude Code, aider, …) with full context handoff — plus tools, MCP,
+    multi-agent workflows, persistent memory, loop detection, and milk eval.
+  category: cat-agentic
+  tags:
+    - agent-evaluation
+    - agent-orchestration
+    - ai
+    - ai-agents
+    - aws-bedrock
+    - bubbletea
+    - claude-code
+    - cli
+  url: https://github.com/scoutme/milk
+  publisher: GitHub topic — llm agents
+  source_url: https://github.com/scoutme/milk
+  github_url: https://github.com/scoutme/milk
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-llm-agents
+    extracted_at: 2026-10-19T11:47:39.203Z
+    lane: extract

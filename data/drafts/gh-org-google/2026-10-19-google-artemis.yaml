@@ -1,0 +1,32 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-google-artemis
+  slug: google-artemis
+  type: agent
+  title: google/artemis
+  description: ARTEMIS turns natural-language instructions into reliable Android
+    automation. It automates end-to-end workflows, captures logs, and integrates
+    seamlessly with AI coding assistants such as Antigravity, Codex, and Claude
+    Code.  It also achieves 99%+ success rate on AndroidWorld Benchmark.
+  category: cat-agentic
+  tags:
+    - ai-agents
+    - android
+    - google
+    - test-automation
+    - testing
+  url: https://github.com/google/artemis
+  publisher: GitHub org — Google (incl. Gemini samples)
+  source_url: https://github.com/google/artemis
+  github_url: https://github.com/google/artemis
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-google
+    extracted_at: 2026-10-19T11:46:39.831Z
+    lane: extract

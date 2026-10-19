@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-how-to-give-an-ai-agent-safe-access-to-an-internal-api-with-mcp
+  slug: how-to-give-an-ai-agent-safe-access-to-an-internal-api-with-mcp
+  type: reference
+  title: How to Give an AI Agent Safe Access to an Internal API with MCP
+  description: Our on-call team keeps a small internal notes API. The web app in
+    front of it shows who's holding the pager, which days are frozen for
+    deploys, and where the runbooks live. A developer on that team wa
+  category: cat-agentic
+  tags: []
+  url: https://www.freecodecamp.org/news/how-to-give-ai-agent-safe-access-internal-api-mcp/
+  publisher: freeCodeCamp News
+  kind: blog
+  why: null
+  source_url: https://www.freecodecamp.org/news/how-to-give-ai-agent-safe-access-internal-api-mcp/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: freecodecamp-news
+    extracted_at: 2026-10-19T11:46:08.686Z
+    published: Thu, 15 Oct 2026 05:02:26 +0000
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+      - cat-production-operations
+    suggested_type: tutorial

@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-sync-real-time-stripe-data-to-postgres-with-stripe-data-pipeline
+  slug: sync-real-time-stripe-data-to-postgres-with-stripe-data-pipeline
+  type: reference
+  title: Sync real-time Stripe data to Postgres with Stripe Data Pipeline
+  description: Applications rely on current Stripe data to fulfill orders, update
+    customer accounts, and manage access to paid features. Until now, developers
+    have had to build and maintain custom integrations to keep application
+    databases in sync with Stripe. We’re introducing real-time sync t
+  category: cat-databases
+  tags: []
+  url: https://stripe.com/blog/real-time-stripe-data-postgres
+  publisher: Stripe Engineering Blog
+  kind: blog
+  why: null
+  source_url: https://stripe.com/blog/real-time-stripe-data-postgres
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: stripe-eng
+    extracted_at: 2026-10-19T11:46:00.279Z
+    published: Thu, 15 Oct 2026 00:00:00 +0000
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-databases
+    suggested_type: null

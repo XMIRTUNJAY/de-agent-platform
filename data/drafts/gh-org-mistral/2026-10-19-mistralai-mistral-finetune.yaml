@@ -1,0 +1,24 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ref-mistralai-mistral-finetune
+  slug: mistralai-mistral-finetune
+  type: reference
+  title: mistralai/mistral-finetune
+  description: See the source repository.
+  category: cat-agentic
+  tags: []
+  url: https://github.com/mistralai/mistral-finetune
+  publisher: GitHub org — Mistral AI
+  source_url: https://github.com/mistralai/mistral-finetune
+  github_url: https://github.com/mistralai/mistral-finetune
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-mistral
+    extracted_at: 2026-10-19T11:47:04.519Z
+    lane: extract

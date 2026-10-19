@@ -1,0 +1,36 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-google-oss-fuzz
+  slug: google-oss-fuzz
+  type: skill
+  title: google/oss-fuzz
+  description: OSS-Fuzz - continuous fuzzing for open source software.
+  category: cat-agentic
+  tags:
+    - fuzz-testing
+    - fuzzing
+    - oss-fuzz
+    - security
+    - stability
+    - vulnerabilities
+  url: https://github.com/google/oss-fuzz
+  publisher: GitHub org — Google (incl. Gemini samples)
+  source_url: https://github.com/google/oss-fuzz
+  github_url: https://github.com/google/oss-fuzz
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - infra/experimental/agent-skills/fuzzing-go-expert/SKILL.md
+    - infra/experimental/agent-skills/fuzzing-jvm-expert/SKILL.md
+    - infra/experimental/agent-skills/fuzzing-memory-unsafe-expert/SKILL.md
+    - infra/experimental/agent-skills/fuzzing-python-expert/SKILL.md
+    - infra/experimental/agent-skills/fuzzing-rust-expert/SKILL.md
+    - infra/experimental/agent-skills/oss-fuzz-engineer/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-google
+    extracted_at: 2026-10-19T11:46:38.150Z
+    lane: extract

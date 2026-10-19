@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-pgo-or-not-pgo-this-is-the-dilemma-step-2
+  slug: pgo-or-not-pgo-this-is-the-dilemma-step-2
+  type: reference
+  title: PGO or not PGO this is the dilemma. Step 2
+  description: "Step 2: How it works Given the topic complexity and the length of
+    this article I have split it in 3 three different blog-post: What is PGO How
+    PGO it works Why my sysbench-trained build loses and how to do it right. How
+    PGO works: PGO is a two-pass build. First pass compiles with"
+  category: cat-databases
+  tags: []
+  url: https://www.percona.com/blog/pgo-or-not-pgo-this-is-the-dilemma-step-2/
+  publisher: Percona Database Performance Blog
+  kind: blog
+  why: null
+  source_url: https://www.percona.com/blog/pgo-or-not-pgo-this-is-the-dilemma-step-2/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: percona-blog
+    extracted_at: 2026-10-19T11:46:20.788Z
+    published: Fri, 09 Oct 2026 11:47:32 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: tutorial

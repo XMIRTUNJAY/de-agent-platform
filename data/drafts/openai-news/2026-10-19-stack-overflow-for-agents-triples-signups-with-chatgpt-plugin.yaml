@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-stack-overflow-for-agents-triples-signups-with-chatgpt-plugin
+  slug: stack-overflow-for-agents-triples-signups-with-chatgpt-plugin
+  type: reference
+  title: Stack Overflow for Agents triples signups with ChatGPT plugin
+  description: Two engineers shipped Stack Overflow for Agents in a few weeks with
+    Codex, and its ChatGPT plugin helped drive up to 10× growth in agent
+    creation.
+  category: cat-agentic
+  tags: []
+  url: https://openai.com/index/stack-overflow-chatgpt-plugin
+  publisher: OpenAI News
+  kind: blog
+  why: null
+  source_url: https://openai.com/index/stack-overflow-chatgpt-plugin
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: openai-news
+    extracted_at: 2026-10-19T11:46:02.723Z
+    published: Fri, 16 Oct 2026 00:00:00 GMT
+  classification:
+    backend: rules
+    confidence: high
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

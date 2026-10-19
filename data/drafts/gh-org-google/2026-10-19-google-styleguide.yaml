@@ -1,0 +1,27 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-google-styleguide
+  slug: google-styleguide
+  type: reference
+  title: google/styleguide
+  description: Style guides for Google-originated open-source projects
+  category: cat-agentic
+  tags: []
+  url: https://github.com/google/styleguide
+  publisher: GitHub org — Google (incl. Gemini samples)
+  kind: blog
+  why: null
+  source_url: https://github.com/google/styleguide
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: gh-org-google
+    extracted_at: 2026-10-19T11:46:39.317Z
+    published: 2026-10-18T04:16:25Z
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: tutorial

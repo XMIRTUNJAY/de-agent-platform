@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-how-one-simple-devops-change-saved-thousands
+  slug: how-one-simple-devops-change-saved-thousands
+  type: reference
+  title: How ONE Simple DevOps Change Saved Thousands! 💰
+  description: Summary pending review — see the source.
+  category: cat-infrastructure
+  tags: []
+  url: https://www.youtube.com/shorts/dLXqdZPk_oc
+  publisher: TechWorld with Nana (devops/data infra)
+  kind: blog
+  why: null
+  source_url: https://www.youtube.com/shorts/dLXqdZPk_oc
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: yt-nana
+    extracted_at: 2026-10-19T11:46:22.070Z
+    published: 2026-08-06T16:00:18+00:00
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-infrastructure
+    suggested_type: tutorial

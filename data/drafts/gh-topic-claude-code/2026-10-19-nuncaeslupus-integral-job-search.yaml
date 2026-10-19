@@ -1,0 +1,43 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-nuncaeslupus-integral-job-search
+  slug: nuncaeslupus-integral-job-search
+  type: skill
+  title: nuncaeslupus/integral-job-search
+  description: "Candidate-centred job search in Claude Code: one dimension model
+    from what you need to the advert, CV, interview."
+  category: cat-agentic
+  tags:
+    - agent-skills
+    - agentic-ai
+    - ai-agents
+    - career
+    - claude
+    - claude-code
+    - cover-letter
+    - cv
+  url: https://github.com/nuncaeslupus/integral-job-search
+  publisher: GitHub topic — claude-code
+  source_url: https://github.com/nuncaeslupus/integral-job-search
+  github_url: https://github.com/nuncaeslupus/integral-job-search
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - .claude/skills/connector-new/SKILL.md
+    - .claude/skills/coverage-gaps/SKILL.md
+    - .claude/skills/dep-upgrade/SKILL.md
+    - .claude/skills/design/SKILL.md
+    - .claude/skills/execution/SKILL.md
+    - .claude/skills/explore-idea/SKILL.md
+    - .claude/skills/gate-check/SKILL.md
+    - .claude/skills/github/SKILL.md
+    - .claude/skills/har/SKILL.md
+    - .claude/skills/init/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-claude-code
+    extracted_at: 2026-10-19T11:47:23.746Z
+    lane: extract

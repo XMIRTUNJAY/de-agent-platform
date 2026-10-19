@@ -1,0 +1,34 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-accelerating-analytics-paypal-s-journey-with-managed-service-for
+  slug: accelerating-analytics-paypal-s-journey-with-managed-service-for
+  type: reference
+  title: "Accelerating analytics: PayPal’s journey with Managed Service for Apache
+    Spark"
+  description: In a data-driven world, PayPal’s ability to deliver timely and
+    actionable insights is central to staying ahead. At PayPal, data powers
+    everything from fraud detection to user experience enhancements. Data is
+    also central to unleashing the potential of agentic solutions and experi
+  category: cat-gcp
+  tags: []
+  url: https://cloud.google.com/blog/products/data-analytics/paypals-journey-with-managed-service-for-apache-spark/
+  publisher: Google Cloud — Data Analytics blog
+  kind: blog
+  why: null
+  source_url: https://cloud.google.com/blog/products/data-analytics/paypals-journey-with-managed-service-for-apache-spark/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: gcp-data-analytics
+    extracted_at: 2026-10-19T11:45:51.645Z
+    published: Thu, 01 Oct 2026 16:00:00 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-agentic
+      - cat-gcp
+      - cat-python
+    suggested_type: tutorial

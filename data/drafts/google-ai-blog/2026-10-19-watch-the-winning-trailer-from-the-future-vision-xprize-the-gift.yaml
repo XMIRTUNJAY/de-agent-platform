@@ -1,0 +1,27 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-watch-the-winning-trailer-from-the-future-vision-xprize-the-gift
+  slug: watch-the-winning-trailer-from-the-future-vision-xprize-the-gift
+  type: reference
+  title: Watch the winning trailer from the Future Vision XPRIZE, The Gifted.
+  description: Watch the winning trailer from the Future Vision XPRIZE, The Gifted.
+  category: cat-agentic
+  tags: []
+  url: https://blog.google/innovation-and-ai/technology/ai/winner-future-vision-xprize/
+  publisher: Google Blog — AI
+  kind: blog
+  why: null
+  source_url: https://blog.google/innovation-and-ai/technology/ai/winner-future-vision-xprize/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: google-ai-blog
+    extracted_at: 2026-10-19T11:46:04.506Z
+    published: Mon, 28 Sep 2026 19:00:00 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

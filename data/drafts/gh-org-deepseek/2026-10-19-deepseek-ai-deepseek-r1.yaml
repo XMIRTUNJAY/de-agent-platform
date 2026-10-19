@@ -1,0 +1,24 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-deepseek-ai-deepseek-r1
+  slug: deepseek-ai-deepseek-r1
+  type: agent
+  title: deepseek-ai/DeepSeek-R1
+  description: See the source repository.
+  category: cat-agentic
+  tags: []
+  url: https://github.com/deepseek-ai/DeepSeek-R1
+  publisher: GitHub org — DeepSeek
+  source_url: https://github.com/deepseek-ai/DeepSeek-R1
+  github_url: https://github.com/deepseek-ai/DeepSeek-R1
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: false
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-deepseek
+    extracted_at: 2026-10-19T11:46:45.850Z
+    lane: extract

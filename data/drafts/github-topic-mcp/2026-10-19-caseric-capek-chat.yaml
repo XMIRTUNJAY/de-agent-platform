@@ -1,0 +1,27 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-caseric-capek-chat
+  slug: caseric-capek-chat
+  type: reference
+  title: Caseric/capek-chat
+  description: "🤖 Capek Alternative 2026: Self-Hosted AI Chat Platform | Open-Source"
+  category: cat-agentic
+  tags: []
+  url: https://github.com/Caseric/capek-chat
+  publisher: GitHub topic — mcp
+  kind: blog
+  why: null
+  source_url: https://github.com/Caseric/capek-chat
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: github-topic-mcp
+    extracted_at: 2026-10-19T11:47:50.101Z
+    published: 2026-10-19T11:47:40Z
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

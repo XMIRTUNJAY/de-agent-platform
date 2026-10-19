@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-evolving-pinterest-s-embedding-retrieval-platform
+  slug: evolving-pinterest-s-embedding-retrieval-platform
+  type: reference
+  title: Evolving Pinterest’s Embedding Retrieval Platform
+  description: Summary pending review — see the source.
+  category: cat-agentic
+  tags: []
+  url: https://medium.com/pinterest-engineering/evolving-pinterests-embedding-retrieval-platform-aede4e831e01?source=rss----4c5a5f6279b6---4
+  publisher: Pinterest Engineering
+  kind: blog
+  why: null
+  source_url: https://medium.com/pinterest-engineering/evolving-pinterests-embedding-retrieval-platform-aede4e831e01?source=rss----4c5a5f6279b6---4
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: pinterest-eng
+    extracted_at: 2026-10-19T11:46:01.444Z
+    published: Fri, 11 Sep 2026 15:01:03 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

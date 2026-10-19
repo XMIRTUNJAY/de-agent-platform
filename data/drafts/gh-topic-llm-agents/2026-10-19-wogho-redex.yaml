@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-wogho-redex
+  slug: wogho-redex
+  type: reference
+  title: wogho/redex
+  description: "Redex — autonomous offensive security console (fork of ARTEX,
+    AGPL-3.0). Dangerous tool: authorized targets only."
+  category: cat-agentic
+  tags: []
+  url: https://github.com/wogho/redex
+  publisher: GitHub topic — llm agents
+  kind: blog
+  why: null
+  source_url: https://github.com/wogho/redex
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: gh-topic-llm-agents
+    extracted_at: 2026-10-19T11:47:41.623Z
+    published: 2026-10-19T11:33:29Z
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

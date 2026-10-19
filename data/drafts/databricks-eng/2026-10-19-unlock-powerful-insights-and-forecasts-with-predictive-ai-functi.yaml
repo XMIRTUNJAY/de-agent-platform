@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-unlock-powerful-insights-and-forecasts-with-predictive-ai-functi
+  slug: unlock-powerful-insights-and-forecasts-with-predictive-ai-functi
+  type: reference
+  title: Unlock powerful insights and forecasts with Predictive AI Functions
+  description: 'Data teams all get asked the same questions: "what will sales be
+    next quarter?,"...'
+  category: null
+  tags: []
+  url: https://www.databricks.com/blog/unlock-powerful-insights-and-forecasts-predictive-ai-functions
+  publisher: Databricks Engineering Blog
+  kind: blog
+  why: null
+  source_url: https://www.databricks.com/blog/unlock-powerful-insights-and-forecasts-predictive-ai-functions
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: databricks-eng
+    extracted_at: 2026-10-19T11:45:53.156Z
+    published: Wed, 14 Oct 2026 23:30:00 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

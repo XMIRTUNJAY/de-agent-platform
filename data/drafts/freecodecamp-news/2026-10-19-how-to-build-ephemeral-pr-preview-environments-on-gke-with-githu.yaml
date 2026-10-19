@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-how-to-build-ephemeral-pr-preview-environments-on-gke-with-githu
+  slug: how-to-build-ephemeral-pr-preview-environments-on-gke-with-githu
+  type: reference
+  title: How to Build Ephemeral PR Preview Environments on GKE with GitHub
+    Actions, Ingress, and Automatic TLS
+  description: Every team that ships software eventually builds a staging
+    environment. And every team that builds a staging environment eventually
+    discovers the same problem. Staging is shared. One environment, many
+  category: null
+  tags: []
+  url: https://www.freecodecamp.org/news/build-ephemeral-pr-preview-environments-on-gke-with-github-actions-ingress-automatic-tls/
+  publisher: freeCodeCamp News
+  kind: blog
+  why: null
+  source_url: https://www.freecodecamp.org/news/build-ephemeral-pr-preview-environments-on-gke-with-github-actions-ingress-automatic-tls/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: freecodecamp-news
+    extracted_at: 2026-10-19T11:46:08.686Z
+    published: Thu, 15 Oct 2026 13:35:48 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: tutorial

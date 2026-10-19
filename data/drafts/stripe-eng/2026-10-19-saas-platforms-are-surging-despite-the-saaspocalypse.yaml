@@ -1,0 +1,29 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-saas-platforms-are-surging-despite-the-saaspocalypse
+  slug: saas-platforms-are-surging-despite-the-saaspocalypse
+  type: reference
+  title: SaaS platforms are surging despite the SaaSpocalypse
+  description: The SaaSpocalypse was a useful warning for the software industry,
+    but SaaS platforms that help businesses run core operations are more deeply
+    embedded. New platform businesses on Stripe are up 182% year over year.
+  category: null
+  tags: []
+  url: https://stripe.com/blog/saas-platforms-are-surging-despite-the-saaspocalypse
+  publisher: Stripe Engineering Blog
+  kind: blog
+  why: null
+  source_url: https://stripe.com/blog/saas-platforms-are-surging-despite-the-saaspocalypse
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: stripe-eng
+    extracted_at: 2026-10-19T11:46:00.282Z
+    published: Thu, 17 Sep 2026 00:00:00 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

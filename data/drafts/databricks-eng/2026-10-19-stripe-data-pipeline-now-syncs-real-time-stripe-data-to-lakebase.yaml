@@ -1,0 +1,29 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-stripe-data-pipeline-now-syncs-real-time-stripe-data-to-lakebase
+  slug: stripe-data-pipeline-now-syncs-real-time-stripe-data-to-lakebase
+  type: reference
+  title: Stripe Data Pipeline now syncs real-time Stripe data to Lakebase Postgres
+  description: If your business runs on Stripe, your application needs access to
+    Stripe data at...
+  category: cat-databases
+  tags: []
+  url: https://www.databricks.com/blog/stripe-data-pipeline-now-syncs-real-time-stripe-data-lakebase-postgres
+  publisher: Databricks Engineering Blog
+  kind: blog
+  why: null
+  source_url: https://www.databricks.com/blog/stripe-data-pipeline-now-syncs-real-time-stripe-data-lakebase-postgres
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: databricks-eng
+    extracted_at: 2026-10-19T11:45:53.153Z
+    published: Thu, 15 Oct 2026 21:08:14 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-databases
+    suggested_type: null

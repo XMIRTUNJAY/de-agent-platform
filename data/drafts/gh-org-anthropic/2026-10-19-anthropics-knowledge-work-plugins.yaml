@@ -1,0 +1,35 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-anthropics-knowledge-work-plugins
+  slug: anthropics-knowledge-work-plugins
+  type: skill
+  title: anthropics/knowledge-work-plugins
+  description: Open source repository of plugins primarily intended for knowledge
+    workers to use in Claude Cowork
+  category: cat-agentic
+  tags: []
+  url: https://github.com/anthropics/knowledge-work-plugins
+  publisher: GitHub org — Anthropic (claude, agents, skills)
+  source_url: https://github.com/anthropics/knowledge-work-plugins
+  github_url: https://github.com/anthropics/knowledge-work-plugins
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - bio-research/skills/instrument-data-to-allotrope/SKILL.md
+    - bio-research/skills/nextflow-development/SKILL.md
+    - bio-research/skills/scientific-problem-selection/SKILL.md
+    - bio-research/skills/scvi-tools/SKILL.md
+    - bio-research/skills/single-cell-rna-qc/SKILL.md
+    - bio-research/skills/start/SKILL.md
+    - cowork-plugin-management/skills/cowork-plugin-customizer/SKILL.md
+    - cowork-plugin-management/skills/create-cowork-plugin/SKILL.md
+    - customer-support/skills/customer-escalation/SKILL.md
+    - customer-support/skills/customer-research/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-anthropic
+    extracted_at: 2026-10-19T11:46:25.264Z
+    lane: extract

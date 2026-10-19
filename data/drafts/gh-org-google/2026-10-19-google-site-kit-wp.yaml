@@ -1,0 +1,37 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-google-site-kit-wp
+  slug: google-site-kit-wp
+  type: skill
+  title: google/site-kit-wp
+  description: Site Kit is a one-stop solution for WordPress users to use
+    everything Google has to offer to make them successful on the web.
+  category: cat-agentic
+  tags:
+    - site-kit
+    - wordpress
+  url: https://github.com/google/site-kit-wp
+  publisher: GitHub org — Google (incl. Gemini samples)
+  source_url: https://github.com/google/site-kit-wp
+  github_url: https://github.com/google/site-kit-wp
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - .agents/skills/check-pr-failures/SKILL.md
+    - .agents/skills/implement-issue/SKILL.md
+    - .agents/skills/review-pr/SKILL.md
+    - .agents/skills/write-context-doc/SKILL.md
+    - .agents/skills/write-implementation-brief/SKILL.md
+    - .agents/skills/write-issue-requirements/SKILL.md
+    - .claude/skills/check-pr-failures/SKILL.md
+    - .claude/skills/implement-issue/SKILL.md
+    - .claude/skills/review-pr/SKILL.md
+    - .claude/skills/write-context-doc/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-google
+    extracted_at: 2026-10-19T11:46:40.930Z
+    lane: extract

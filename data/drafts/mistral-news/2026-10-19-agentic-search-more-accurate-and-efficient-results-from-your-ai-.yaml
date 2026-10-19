@@ -1,0 +1,29 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-agentic-search-more-accurate-and-efficient-results-from-your-ai-
+  slug: agentic-search-more-accurate-and-efficient-results-from-your-ai-
+  type: reference
+  title: Agentic Search. More accurate and efficient results from your AI systems.
+  description: The retrieval layer that helps AI systems navigate, read, and
+    verify information inside even the most complex documents
+  category: cat-agentic
+  tags: []
+  url: https://mistral.ai/news/agentic-search/
+  publisher: Mistral AI News
+  kind: blog
+  why: null
+  source_url: https://mistral.ai/news/agentic-search/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: mistral-news
+    extracted_at: 2026-10-19T11:46:03.210Z
+    published: Thu, 20 Aug 2026 12:00:17 GMT
+  classification:
+    backend: rules
+    confidence: high
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

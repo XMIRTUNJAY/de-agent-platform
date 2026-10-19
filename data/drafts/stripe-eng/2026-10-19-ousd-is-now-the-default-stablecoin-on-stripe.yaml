@@ -1,0 +1,29 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-ousd-is-now-the-default-stablecoin-on-stripe
+  slug: ousd-is-now-the-default-stablecoin-on-stripe
+  type: reference
+  title: OUSD is now the default stablecoin on Stripe
+  description: Open USD (OUSD), a stablecoin built for global money movement, is
+    now available across Stripe. Businesses can use OUSD to manage funds, make
+    payments, and offer new financial services.
+  category: null
+  tags: []
+  url: https://stripe.com/blog/ousd-now-live-on-stripe
+  publisher: Stripe Engineering Blog
+  kind: blog
+  why: null
+  source_url: https://stripe.com/blog/ousd-now-live-on-stripe
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: stripe-eng
+    extracted_at: 2026-10-19T11:46:00.280Z
+    published: Wed, 30 Sep 2026 00:00:00 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

@@ -1,0 +1,32 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-apache-superset
+  slug: apache-superset
+  type: agent
+  title: apache/superset
+  description: Apache Superset is a Data Visualization and Data Exploration Platform
+  category: null
+  tags:
+    - analytics
+    - apache
+    - apache-superset
+    - asf
+    - bi
+    - business-analytics
+    - business-intelligence
+    - data-analysis
+  url: https://github.com/apache/superset
+  publisher: GitHub topic — data-engineering
+  source_url: https://github.com/apache/superset
+  github_url: https://github.com/apache/superset
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: github-topic-de
+    extracted_at: 2026-10-19T11:47:47.932Z
+    lane: extract

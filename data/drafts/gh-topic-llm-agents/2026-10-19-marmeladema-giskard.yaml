@@ -1,0 +1,33 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-marmeladema-giskard
+  slug: marmeladema-giskard
+  type: agent
+  title: marmeladema/Giskard
+  description: Self-hosted web UI for Codex CLI and other agentic coding CLIs. One
+    Rust binary, no npm/Node.
+  category: cat-agentic
+  tags:
+    - axum
+    - codex
+    - coding-agent
+    - llm-agents
+    - rust
+    - self-contained
+    - tokio
+    - web-ui
+  url: https://github.com/marmeladema/Giskard
+  publisher: GitHub topic — llm agents
+  source_url: https://github.com/marmeladema/Giskard
+  github_url: https://github.com/marmeladema/Giskard
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-llm-agents
+    extracted_at: 2026-10-19T11:47:38.675Z
+    lane: extract

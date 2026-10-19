@@ -1,0 +1,29 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-mcp-standardized-tools-now-we-need-the-infrastructure-around-the
+  slug: mcp-standardized-tools-now-we-need-the-infrastructure-around-the
+  type: reference
+  title: MCP standardized tools. Now we need the infrastructure around them.
+  description: Summary pending review — see the source.
+  category: cat-agentic
+  tags: []
+  url: https://stackoverflow.blog/2026/10/15/mcp-standardized-tools-now-we-need-the-infrastructure-around-them/
+  publisher: Stack Overflow Blog (AI + devops essays)
+  kind: blog
+  why: null
+  source_url: https://stackoverflow.blog/2026/10/15/mcp-standardized-tools-now-we-need-the-infrastructure-around-them/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: stackoverflow-blog
+    extracted_at: 2026-10-19T11:46:06.827Z
+    published: Thu, 15 Oct 2026 20:39:29 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-agentic
+      - cat-infrastructure
+    suggested_type: null

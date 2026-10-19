@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-travel-s-ai-dilemma-at-skift-global-forum
+  slug: travel-s-ai-dilemma-at-skift-global-forum
+  type: reference
+  title: Travel’s AI dilemma at Skift Global Forum
+  description: At the “great recalibration”-themed travel conference, Airbnb CEO
+    Brian Chesky called AI “an existential risk” to his company and “literally
+    the best thing to ever happen” to it in the same discussion. That sums up
+    many travel leaders’ push-and-pull relationship with AI.
+  category: null
+  tags: []
+  url: https://stripe.com/blog/travels-ai-dilemma-at-skift-global-forum
+  publisher: Stripe Engineering Blog
+  kind: blog
+  why: null
+  source_url: https://stripe.com/blog/travels-ai-dilemma-at-skift-global-forum
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: stripe-eng
+    extracted_at: 2026-10-19T11:46:00.281Z
+    published: Mon, 28 Sep 2026 00:00:00 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

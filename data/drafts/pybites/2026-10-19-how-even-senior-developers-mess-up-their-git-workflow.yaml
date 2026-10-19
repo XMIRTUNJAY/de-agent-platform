@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-how-even-senior-developers-mess-up-their-git-workflow
+  slug: how-even-senior-developers-mess-up-their-git-workflow
+  type: reference
+  title: How Even Senior Developers Mess Up Their Git Workflow
+  description: "There are few things in software engineering that induce panic
+    quite like a massive git merge conflict. You pull down the latest code, open
+    your editor, and suddenly your screen is bleeding with HEAD markers. Your
+    logic is tangled with someone else s, the CSS is conflicting, and "
+  category: cat-python
+  tags: []
+  url: https://pybit.es/articles/how-even-senior-developers-mess-up-their-git-workflow/
+  publisher: PyBites (Python practice + coaching)
+  kind: blog
+  why: null
+  source_url: https://pybit.es/articles/how-even-senior-developers-mess-up-their-git-workflow/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: pybites
+    extracted_at: 2026-10-19T11:46:12.222Z
+    published: Thu, 19 Feb 2026 22:39:36 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: tutorial

@@ -1,0 +1,33 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-rimio-ai-rimz
+  slug: rimio-ai-rimz
+  type: agent
+  title: rimio-ai/rimz
+  description: RimZ is a realtime dashboard and control room for harnessing
+    agentic coding, build on tmux and Zellij.
+  category: cat-agentic
+  tags:
+    - agent-orchestration
+    - agentic-ai
+    - agentic-coding
+    - ai-agents
+    - ai-coding
+    - anthropic
+    - claude-code
+    - codex
+  url: https://github.com/rimio-ai/rimz
+  publisher: GitHub topic — llm agents
+  source_url: https://github.com/rimio-ai/rimz
+  github_url: https://github.com/rimio-ai/rimz
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-llm-agents
+    extracted_at: 2026-10-19T11:47:41.397Z
+    lane: extract

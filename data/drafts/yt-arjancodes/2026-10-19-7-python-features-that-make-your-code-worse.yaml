@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-7-python-features-that-make-your-code-worse
+  slug: 7-python-features-that-make-your-code-worse
+  type: reference
+  title: 7 Python Features That Make Your Code Worse
+  description: Summary pending review — see the source.
+  category: cat-python
+  tags: []
+  url: https://www.youtube.com/watch?v=RHCyTWaRZSk
+  publisher: ArjanCodes (software design, Python)
+  kind: blog
+  why: null
+  source_url: https://www.youtube.com/watch?v=RHCyTWaRZSk
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: yt-arjancodes
+    extracted_at: 2026-10-19T11:46:21.236Z
+    published: 2026-10-16T15:00:35+00:00
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-python
+    suggested_type: tutorial

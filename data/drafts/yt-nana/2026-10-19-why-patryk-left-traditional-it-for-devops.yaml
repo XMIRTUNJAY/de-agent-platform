@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-why-patryk-left-traditional-it-for-devops
+  slug: why-patryk-left-traditional-it-for-devops
+  type: reference
+  title: Why Patryk Left Traditional IT for DevOps! 🚀
+  description: Summary pending review — see the source.
+  category: cat-infrastructure
+  tags: []
+  url: https://www.youtube.com/shorts/H1XSbH_hsh0
+  publisher: TechWorld with Nana (devops/data infra)
+  kind: blog
+  why: null
+  source_url: https://www.youtube.com/shorts/H1XSbH_hsh0
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: yt-nana
+    extracted_at: 2026-10-19T11:46:22.068Z
+    published: 2026-08-27T16:00:07+00:00
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-infrastructure
+    suggested_type: tutorial

@@ -1,0 +1,32 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-building-trust-in-ai-agents-a-production-ready-evaluation-framew
+  slug: building-trust-in-ai-agents-a-production-ready-evaluation-framew
+  type: reference
+  title: "Building trust in AI agents: A production-ready evaluation framework
+    with Amazon Bedrock AgentCore"
+  description: "Autonomous AI agents fail softly: latency stays flat while answer
+    quality quietly erodes. This post shares a nine-stage evaluation framework,
+    built on Amazon Bedrock AgentCore, that catches silent quality regressions
+    across the full agent lifecycle, from first commit to live prod"
+  category: cat-agentic
+  tags: []
+  url: https://aws.amazon.com/blogs/machine-learning/building-trust-in-ai-agents-a-production-ready-evaluation-framework-with-amazon-bedrock-agentcore/
+  publisher: AWS Machine Learning Blog
+  kind: blog
+  why: null
+  source_url: https://aws.amazon.com/blogs/machine-learning/building-trust-in-ai-agents-a-production-ready-evaluation-framework-with-amazon-bedrock-agentcore/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: aws-machine-learning
+    extracted_at: 2026-10-19T11:45:49.526Z
+    published: Fri, 16 Oct 2026 20:48:16 +0000
+  classification:
+    backend: rules
+    confidence: high
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

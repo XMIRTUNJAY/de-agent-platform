@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-bringing-private-processing-to-meta-ai-glasses
+  slug: bringing-private-processing-to-meta-ai-glasses
+  type: reference
+  title: Bringing Private Processing to Meta AI Glasses
+  description: "We believe glasses are the best form factor for having AI help
+    throughout your day. They can understand your personal context better than
+    other kinds of devices and keep you present without picking up a mobile
+    phone. Most of the time, glasses are helping you see well, protecting "
+  category: null
+  tags: []
+  url: https://engineering.fb.com/2026/09/23/security/private-processing-meta-ai-glasses/
+  publisher: Meta Engineering Blog
+  kind: blog
+  why: null
+  source_url: https://engineering.fb.com/2026/09/23/security/private-processing-meta-ai-glasses/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: meta-eng
+    extracted_at: 2026-10-19T11:45:58.457Z
+    published: Thu, 24 Sep 2026 00:00:00 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

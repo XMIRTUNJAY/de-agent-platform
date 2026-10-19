@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-api-evangelist-system-initiative
+  slug: api-evangelist-system-initiative
+  type: reference
+  title: api-evangelist/system-initiative
+  description: System Initiative — independent third-party profile of a public API
+    surface, by API Evangelist. System Initiative is an AI-native infrastructure
+    automation platform. It builds an interactive digital t
+  category: cat-agentic
+  tags: []
+  url: https://github.com/api-evangelist/system-initiative
+  publisher: GitHub topic — mcp
+  kind: blog
+  why: null
+  source_url: https://github.com/api-evangelist/system-initiative
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: github-topic-mcp
+    extracted_at: 2026-10-19T11:47:49.905Z
+    published: 2026-10-19T11:47:41Z
+  classification:
+    backend: rules
+    confidence: high
+    suggested_categories:
+      - cat-agentic
+      - cat-infrastructure
+    suggested_type: null

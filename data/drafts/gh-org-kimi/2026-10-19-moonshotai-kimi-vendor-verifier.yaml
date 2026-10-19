@@ -1,0 +1,24 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ref-moonshotai-kimi-vendor-verifier
+  slug: moonshotai-kimi-vendor-verifier
+  type: reference
+  title: MoonshotAI/Kimi-Vendor-Verifier
+  description: Kimi-Vendor-Verifier
+  category: cat-agentic
+  tags: []
+  url: https://github.com/MoonshotAI/Kimi-Vendor-Verifier
+  publisher: GitHub org — MoonshotAI (Kimi)
+  source_url: https://github.com/MoonshotAI/Kimi-Vendor-Verifier
+  github_url: https://github.com/MoonshotAI/Kimi-Vendor-Verifier
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-kimi
+    extracted_at: 2026-10-19T11:46:53.418Z
+    lane: extract

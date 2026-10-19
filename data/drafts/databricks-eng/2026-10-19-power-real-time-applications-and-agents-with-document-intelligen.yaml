@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-power-real-time-applications-and-agents-with-document-intelligen
+  slug: power-real-time-applications-and-agents-with-document-intelligen
+  type: reference
+  title: Power real-time applications and agents with Document Intelligence
+  description: At Databricks, our enterprise customers receive millions of
+    documents every single...
+  category: cat-agentic
+  tags: []
+  url: https://www.databricks.com/blog/power-real-time-applications-and-agents-document-intelligence
+  publisher: Databricks Engineering Blog
+  kind: blog
+  why: null
+  source_url: https://www.databricks.com/blog/power-real-time-applications-and-agents-document-intelligence
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: databricks-eng
+    extracted_at: 2026-10-19T11:45:53.158Z
+    published: Wed, 14 Oct 2026 20:00:00 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+      - cat-databricks
+    suggested_type: null

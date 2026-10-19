@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-october-2026-langchain-newsletter-everything-we-shipped-at-inter
+  slug: october-2026-langchain-newsletter-everything-we-shipped-at-inter
+  type: reference
+  title: "October 2026 LangChain Newsletter: Everything we shipped at Interrupt
+    NYC & London"
+  description: "What we shipped at Interrupt NYC and London: LangSmith AI Search,
+    Engine v2, Trajectories, Custom Apps, Fine-Tuning, and Managed Deep Agents
+    v0.9."
+  category: cat-agentic
+  tags: []
+  url: https://www.langchain.com/blog/october-2026-langchain-newsletter
+  publisher: LangChain Blog
+  kind: blog
+  why: null
+  source_url: https://www.langchain.com/blog/october-2026-langchain-newsletter
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: langchain-blog
+    extracted_at: 2026-10-19T11:46:06.081Z
+    published: Thu, 15 Oct 2026 17:02:58 GMT
+  classification:
+    backend: rules
+    confidence: high
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

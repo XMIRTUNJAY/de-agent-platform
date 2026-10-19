@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-techmefr-mentis
+  slug: techmefr-mentis
+  type: reference
+  title: techmefr/mentis
+  description: "Agent-and-skill framework for Claude Code covering the whole dev
+    cycle, brainstorm to ship: 105 skills, 35 agents, per-stack reviewers, a
+    fresh-context gate where default = failure, and a business lay"
+  category: cat-agentic
+  tags: []
+  url: https://github.com/techmefr/mentis
+  publisher: GitHub topic — claude-code
+  kind: blog
+  why: null
+  source_url: https://github.com/techmefr/mentis
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: gh-topic-claude-code
+    extracted_at: 2026-10-19T11:47:18.686Z
+    published: 2026-10-19T11:47:14Z
+  classification:
+    backend: rules
+    confidence: high
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

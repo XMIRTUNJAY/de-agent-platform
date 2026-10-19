@@ -1,0 +1,33 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-the-outer-loop-insights-first-an-ambient-quality-agent-that-diag
+  slug: the-outer-loop-insights-first-an-ambient-quality-agent-that-diag
+  type: reference
+  title: "The Outer Loop, Insights First: An Ambient Quality Agent That Diagnoses
+    Your Production Agent"
+  description: How do you keep improving an AI agent after the first 80%, once it
+    serves real production traffic and silent quality regressions return HTTP
+    200 OK? We are open-sourcing AQuA (Ambient Quality Agent), a reference
+    implementation that runs beside your production agent in Google Clou
+  category: cat-agentic
+  tags: []
+  url: https://developers.googleblog.com/the-outer-loop-insights-first-an-ambient-quality-agent-that-diagnoses-your-production-agent/
+  publisher: Google Developers Blog
+  kind: blog
+  why: null
+  source_url: https://developers.googleblog.com/the-outer-loop-insights-first-an-ambient-quality-agent-that-diagnoses-your-production-agent/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: google-dev-blog
+    extracted_at: 2026-10-19T11:45:52.606Z
+    published: null
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+      - cat-gcp
+    suggested_type: null

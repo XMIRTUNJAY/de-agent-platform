@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-new-in-confluent-intelligence-and-ai-tools-making-agents-native-
+  slug: new-in-confluent-intelligence-and-ai-tools-making-agents-native-
+  type: reference
+  title: "New in Confluent Intelligence and AI Tools: Making Agents Native to the
+    Stream, Expanded Model Support, New Agent Skills, and Confluent Assistant"
+  description: "Explore new AI features and AI tools: support for IBM Granite Time
+    Series models and TimesFM models (EA), enhanced Real-Time Context Engine
+    experience, new Agent Skills, Confluent Assistant"
+  category: cat-agentic
+  tags: []
+  url: https://www.confluent.io/blog/2026-q3-confluent-intelligence-ai-update/
+  publisher: Confluent Blog (Kafka/Flink/Streaming)
+  kind: blog
+  why: null
+  source_url: https://www.confluent.io/blog/2026-q3-confluent-intelligence-ai-update/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: confluent
+    extracted_at: 2026-10-19T11:45:54.608Z
+    published: Tue, 18 Aug 2026 14:00:10 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

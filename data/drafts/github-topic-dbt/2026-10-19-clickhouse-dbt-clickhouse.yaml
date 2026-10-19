@@ -1,0 +1,27 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-clickhouse-dbt-clickhouse
+  slug: clickhouse-dbt-clickhouse
+  type: agent
+  title: ClickHouse/dbt-clickhouse
+  description: The Clickhouse plugin for dbt (data build tool)
+  category: cat-dbt
+  tags:
+    - clickhouse
+    - database
+    - dbt
+  url: https://github.com/ClickHouse/dbt-clickhouse
+  publisher: GitHub topic — dbt
+  source_url: https://github.com/ClickHouse/dbt-clickhouse
+  github_url: https://github.com/ClickHouse/dbt-clickhouse
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: github-topic-dbt
+    extracted_at: 2026-10-19T11:47:55.838Z
+    lane: extract

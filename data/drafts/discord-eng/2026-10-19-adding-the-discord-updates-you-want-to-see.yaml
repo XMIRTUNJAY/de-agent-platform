@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-adding-the-discord-updates-you-want-to-see
+  slug: adding-the-discord-updates-you-want-to-see
+  type: reference
+  title: Adding the Discord Updates YOU Want to See
+  description: For Discord’s birthday, we wanted to celebrate YOU, so we asked you
+    what you wanted to see… and we cooked up new things that you all asked for!
+  category: null
+  tags: []
+  url: https://discord.com/blog/adding-the-discord-updates-you-want-to-see
+  publisher: Discord Engineering Blog
+  kind: blog
+  why: null
+  source_url: https://discord.com/blog/adding-the-discord-updates-you-want-to-see
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: discord-eng
+    extracted_at: 2026-10-19T11:46:00.782Z
+    published: Wed, 16 Sep 2026 00:00:00 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-deepseek-ai-awesome-deepseek-agent
+  slug: deepseek-ai-awesome-deepseek-agent
+  type: reference
+  title: deepseek-ai/awesome-deepseek-agent
+  description: Summary pending review — see the source.
+  category: cat-agentic
+  tags: []
+  url: https://github.com/deepseek-ai/awesome-deepseek-agent
+  publisher: GitHub org — DeepSeek
+  kind: blog
+  why: null
+  source_url: https://github.com/deepseek-ai/awesome-deepseek-agent
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: gh-org-deepseek
+    extracted_at: 2026-10-19T11:46:47.692Z
+    published: 2026-09-17T03:21:52Z
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

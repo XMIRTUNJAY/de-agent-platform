@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-cloudflare-and-openai-making-ai-discovery-better-for-everyone
+  slug: cloudflare-and-openai-making-ai-discovery-better-for-everyone
+  type: reference
+  title: "Cloudflare and OpenAI: Making AI discovery better for everyone"
+  description: How Cloudflare and OpenAI are working together to help AI find
+    useful content, keep up with changes, and make fewer wasted requests —
+    making the experience better for users and website owners alike.
+  category: cat-agentic
+  tags: []
+  url: https://blog.cloudflare.com/cloudflare-openai-discovery-agentic-web/
+  publisher: Cloudflare Blog (platform + data infra)
+  kind: blog
+  why: null
+  source_url: https://blog.cloudflare.com/cloudflare-openai-discovery-agentic-web/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: cloudflare
+    extracted_at: 2026-10-19T11:45:56.596Z
+    published: Thu, 15 Oct 2026 13:00:00 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

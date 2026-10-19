@@ -1,0 +1,31 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-leejianrong-semula
+  slug: leejianrong-semula
+  type: skill
+  title: leejianrong/semula
+  description: "A record-replay fake LLM server: OpenAI-compatible, answered once
+    by your coding agent, replayed for free."
+  category: cat-agentic
+  tags:
+    - llm
+    - mcp
+    - openai
+    - record-replay
+    - testing
+  url: https://github.com/leejianrong/semula
+  publisher: GitHub topic — mcp
+  source_url: https://github.com/leejianrong/semula
+  github_url: https://github.com/leejianrong/semula
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - docs/agents/claude-code-skill/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: github-topic-mcp
+    extracted_at: 2026-10-19T11:47:52.761Z
+    lane: extract

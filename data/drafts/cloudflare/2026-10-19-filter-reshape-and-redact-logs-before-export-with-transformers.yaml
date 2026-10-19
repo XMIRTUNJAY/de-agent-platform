@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-filter-reshape-and-redact-logs-before-export-with-transformers
+  slug: filter-reshape-and-redact-logs-before-export-with-transformers
+  type: reference
+  title: Filter, reshape, and redact logs before export with Transformers
+  description: Logpush now supports Transformers, allowing teams to filter,
+    redact, and reshape log streams using SQL before export. Powered by Apache
+    DataFusion and Apache Arrow, Transformers apply those changes directly to
+    log data before it reaches the destination.
+  category: cat-sql
+  tags: []
+  url: https://blog.cloudflare.com/transformers-on-logpush/
+  publisher: Cloudflare Blog (platform + data infra)
+  kind: blog
+  why: null
+  source_url: https://blog.cloudflare.com/transformers-on-logpush/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: cloudflare
+    extracted_at: 2026-10-19T11:45:56.597Z
+    published: Mon, 12 Oct 2026 14:44:59 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-sql
+    suggested_type: null

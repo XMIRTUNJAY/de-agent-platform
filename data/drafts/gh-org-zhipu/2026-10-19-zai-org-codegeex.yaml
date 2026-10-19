@@ -1,0 +1,27 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ref-zai-org-codegeex
+  slug: zai-org-codegeex
+  type: reference
+  title: zai-org/CodeGeeX
+  description: "CodeGeeX: An Open Multilingual Code Generation Model (KDD 2023)"
+  category: cat-agentic
+  tags:
+    - code-generation
+    - pretrained-models
+    - tools
+  url: https://github.com/zai-org/CodeGeeX
+  publisher: GitHub org — Zhipu AI (GLM — moved to zai-org)
+  source_url: https://github.com/zai-org/CodeGeeX
+  github_url: https://github.com/zai-org/CodeGeeX
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-zhipu
+    extracted_at: 2026-10-19T11:47:01.255Z
+    lane: extract

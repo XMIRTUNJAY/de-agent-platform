@@ -1,0 +1,29 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-teaching-students-to-think-and-learn-through-questions
+  slug: teaching-students-to-think-and-learn-through-questions
+  type: reference
+  title: Teaching students to think and learn through questions
+  description: Celebrate Teachers’ Day with AI for Educators in Brazilian
+    Portuguese and see how Study Mode can help teachers support active,
+    step-by-step learning.
+  category: cat-agentic
+  tags: []
+  url: https://openai.com/index/teaching-students-to-think-and-learn-through-questions
+  publisher: OpenAI News
+  kind: blog
+  why: null
+  source_url: https://openai.com/index/teaching-students-to-think-and-learn-through-questions
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: openai-news
+    extracted_at: 2026-10-19T11:46:02.723Z
+    published: Thu, 15 Oct 2026 13:00:00 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: tutorial

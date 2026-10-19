@@ -1,0 +1,27 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-introducing-falcon-asr
+  slug: introducing-falcon-asr
+  type: reference
+  title: Introducing Falcon ASR
+  description: Summary pending review — see the source.
+  category: cat-agentic
+  tags: []
+  url: https://huggingface.co/blog/tiiuae/falcon-asr
+  publisher: Hugging Face Blog
+  kind: blog
+  why: null
+  source_url: https://huggingface.co/blog/tiiuae/falcon-asr
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: huggingface-blog
+    extracted_at: 2026-10-19T11:46:03.823Z
+    published: Wed, 07 Oct 2026 13:21:03 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

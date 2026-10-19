@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-should-your-sql-server-database-use-foreign-key-constraints
+  slug: should-your-sql-server-database-use-foreign-key-constraints
+  type: reference
+  title: Should your SQL Server database use foreign key constraints?
+  description: Should SQL Server databases enforce foreign key constraints? A
+    veteran DBA breaks down the real arguments The post Should your SQL Server
+    database use foreign key constraints? appeared first on SQLServerCentral .
+  category: cat-sql
+  tags: []
+  url: https://www.sqlservercentral.com/articles/should-your-sql-server-database-use-foreign-key-constraints
+  publisher: SQLServerCentral (tutorials)
+  kind: blog
+  why: null
+  source_url: https://www.sqlservercentral.com/articles/should-your-sql-server-database-use-foreign-key-constraints
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: sql-server-central
+    extracted_at: 2026-10-19T11:46:18.982Z
+    published: Wed, 14 Oct 2026 00:00:03 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-sql
+      - cat-data-formats
+    suggested_type: tutorial

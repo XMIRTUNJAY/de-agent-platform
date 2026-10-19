@@ -1,0 +1,32 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-agentic-ai-reliability-build-a-testing-harness-for-tool-use-guar
+  slug: agentic-ai-reliability-build-a-testing-harness-for-tool-use-guar
+  type: reference
+  title: "Agentic AI Reliability: Build a Testing Harness for Tool Use,
+    Guardrails, Loops, & Workflow Outcomes [Full Book]"
+  description: A good final answer doesn't prove that an agentic AI workflow was
+    correct. This book develops a code-backed method for verifying execution and
+    business outcomes from authoritative state and using that
+  category: cat-agentic
+  tags: []
+  url: https://www.freecodecamp.org/news/agentic-ai-reliability-book-build-a-testing-harness/
+  publisher: freeCodeCamp News
+  kind: blog
+  why: null
+  source_url: https://www.freecodecamp.org/news/agentic-ai-reliability-book-build-a-testing-harness/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: freecodecamp-news
+    extracted_at: 2026-10-19T11:46:08.685Z
+    published: Fri, 16 Oct 2026 15:15:53 +0000
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+      - cat-reliability
+    suggested_type: tutorial

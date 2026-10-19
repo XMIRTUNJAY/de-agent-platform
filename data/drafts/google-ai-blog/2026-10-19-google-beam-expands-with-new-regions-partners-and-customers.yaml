@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-google-beam-expands-with-new-regions-partners-and-customers
+  slug: google-beam-expands-with-new-regions-partners-and-customers
+  type: reference
+  title: Google Beam expands with new regions, partners, and customers
+  description: We’re expanding Google Beam to five new countries, and partnering
+    with Industrious for an extended network.
+  category: cat-agentic
+  tags: []
+  url: https://blog.google/innovation-and-ai/technology/research/google-beam-expansion/
+  publisher: Google Blog — AI
+  kind: blog
+  why: null
+  source_url: https://blog.google/innovation-and-ai/technology/research/google-beam-expansion/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: google-ai-blog
+    extracted_at: 2026-10-19T11:46:04.506Z
+    published: Wed, 23 Sep 2026 18:00:00 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

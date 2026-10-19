@@ -1,0 +1,34 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-anthropics-cwc-workshops
+  slug: anthropics-cwc-workshops
+  type: skill
+  title: anthropics/cwc-workshops
+  description: See the source repository.
+  category: cat-agentic
+  tags: []
+  url: https://github.com/anthropics/cwc-workshops
+  publisher: GitHub org — Anthropic (claude, agents, skills)
+  source_url: https://github.com/anthropics/cwc-workshops
+  github_url: https://github.com/anthropics/cwc-workshops
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - agent-battle/skills/mining/SKILL.md
+    - agent-decomposition/.claude/skills/forecasting/SKILL.md
+    - agent-decomposition/.claude/skills/notify-templates/SKILL.md
+    - agent-decomposition/.claude/skills/reorder-policy/SKILL.md
+    - agent-decomposition/.claude/skills/submit-solution/SKILL.md
+    - agent-decomposition/.claude/skills/supplier-selection/SKILL.md
+    - agent-decomposition/.claude/skills/weekly-report/SKILL.md
+    - research-desk/.claude/skills/workshop/SKILL.md
+    - research-desk/skills/edgartools/SKILL.md
+    - rightmodel/.claude/skills/eval-audit-and-sweep/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-anthropic
+    extracted_at: 2026-10-19T11:46:26.141Z
+    lane: extract

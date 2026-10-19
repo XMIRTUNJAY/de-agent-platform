@@ -1,0 +1,27 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-measuring-the-impact-of-personalized-recommendations
+  slug: measuring-the-impact-of-personalized-recommendations
+  type: reference
+  title: Measuring the Impact of Personalized Recommendations
+  description: Summary pending review — see the source.
+  category: null
+  tags: []
+  url: https://netflixtechblog.com/measuring-the-impact-of-personalized-recommendations-4c26be3a4d96?source=rss----2615bd06b42e---4
+  publisher: Netflix TechBlog (data platform posts)
+  kind: blog
+  why: null
+  source_url: https://netflixtechblog.com/measuring-the-impact-of-personalized-recommendations-4c26be3a4d96?source=rss----2615bd06b42e---4
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: netflix-techblog
+    extracted_at: 2026-10-19T11:45:59.167Z
+    published: Wed, 14 Oct 2026 19:57:43 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

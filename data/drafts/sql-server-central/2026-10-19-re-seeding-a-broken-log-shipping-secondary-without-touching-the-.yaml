@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-re-seeding-a-broken-log-shipping-secondary-without-touching-the-
+  slug: re-seeding-a-broken-log-shipping-secondary-without-touching-the-
+  type: reference
+  title: Re-Seeding a Broken Log Shipping Secondary (Without Touching the Primary)
+  description: A SQL Server upgrade left a log shipping secondary unable to accept
+    transaction logs. Re-seeding it without touching the primary or its mirror
+    is straightforward in principle — drop, restore full + diff + log with
+    NORECOVERY, hand back to the job — but three undocumented traps wi
+  category: cat-sql
+  tags: []
+  url: https://www.sqlservercentral.com/articles/re-seeding-a-broken-log-shipping-secondary-without-touching-the-primary
+  publisher: SQLServerCentral (tutorials)
+  kind: blog
+  why: null
+  source_url: https://www.sqlservercentral.com/articles/re-seeding-a-broken-log-shipping-secondary-without-touching-the-primary
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: sql-server-central
+    extracted_at: 2026-10-19T11:46:18.981Z
+    published: Wed, 14 Oct 2026 00:00:44 +0000
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-sql
+    suggested_type: tutorial

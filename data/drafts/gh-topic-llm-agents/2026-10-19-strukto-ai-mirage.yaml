@@ -1,0 +1,34 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-strukto-ai-mirage
+  slug: strukto-ai-mirage
+  type: skill
+  title: strukto-ai/mirage
+  description: The World's First Virtual Terminal for AI Agents
+  category: cat-agentic
+  tags:
+    - agent-sandbox
+    - agent-tools
+    - ai-agents
+    - bash
+    - claude-code
+    - dsh
+    - dsh-plugin
+    - fuse
+  url: https://github.com/strukto-ai/mirage
+  publisher: GitHub topic — llm agents
+  source_url: https://github.com/strukto-ai/mirage
+  github_url: https://github.com/strukto-ai/mirage
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - plugins/mirage/skills/mirage-filesystem/SKILL.md
+    - plugins/mirage/skills/mirage-vfs-authoring/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-llm-agents
+    extracted_at: 2026-10-19T11:47:38.048Z
+    lane: extract

@@ -1,0 +1,29 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-rewinding-the-exponential-how-we-keep-hardware-usage-down
+  slug: rewinding-the-exponential-how-we-keep-hardware-usage-down
+  type: reference
+  title: "Rewinding the exponential: How we keep hardware usage down"
+  description: Our strategies to optimize our data pipeline throughput without
+    compromising data quality.
+  category: cat-data-quality
+  tags: []
+  url: https://blog.cloudflare.com/rewinding-the-exponential/
+  publisher: Cloudflare Blog (platform + data infra)
+  kind: blog
+  why: null
+  source_url: https://blog.cloudflare.com/rewinding-the-exponential/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: cloudflare
+    extracted_at: 2026-10-19T11:45:56.597Z
+    published: Tue, 13 Oct 2026 15:51:41 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-data-quality
+    suggested_type: null

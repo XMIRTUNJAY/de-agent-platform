@@ -1,0 +1,32 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-in-region-inference-open-models-and-new-european-infrastructure-
+  slug: in-region-inference-open-models-and-new-european-infrastructure-
+  type: reference
+  title: In-region inference, open models, and new European infrastructure for
+    sovereign AI.
+  description: Mistral is bringing together the inference infrastructure, open
+    models, and long-term commitments Europe needs to control its AI future, and
+    setting a roadmap for the world.
+  category: cat-agentic
+  tags: []
+  url: https://mistral.ai/news/regional-inference-open-models-new-compute/
+  publisher: Mistral AI News
+  kind: blog
+  why: null
+  source_url: https://mistral.ai/news/regional-inference-open-models-new-compute/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: mistral-news
+    extracted_at: 2026-10-19T11:46:03.211Z
+    published: Tue, 11 Aug 2026 12:00:27 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-agentic
+      - cat-infrastructure
+    suggested_type: null

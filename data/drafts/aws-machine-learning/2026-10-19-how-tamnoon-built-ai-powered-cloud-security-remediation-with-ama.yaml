@@ -1,0 +1,32 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-how-tamnoon-built-ai-powered-cloud-security-remediation-with-ama
+  slug: how-tamnoon-built-ai-powered-cloud-security-remediation-with-ama
+  type: reference
+  title: How Tamnoon built AI-powered cloud security remediation with Amazon Bedrock
+  description: Learn how Tamnoon built Tami, an agentic cloud remediation
+    orchestrator on Amazon Bedrock that autonomously investigates and safely
+    remediates cloud security findings from CNAPP and cloud-native sources. The
+    approach drove a 90%+ reduction in critical cloud exposure in 90 days wi
+  category: cat-agentic
+  tags: []
+  url: https://aws.amazon.com/blogs/machine-learning/how-tamnoon-built-ai-powered-cloud-security-remediation-with-amazon-bedrock/
+  publisher: AWS Machine Learning Blog
+  kind: blog
+  why: null
+  source_url: https://aws.amazon.com/blogs/machine-learning/how-tamnoon-built-ai-powered-cloud-security-remediation-with-amazon-bedrock/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: aws-machine-learning
+    extracted_at: 2026-10-19T11:45:49.531Z
+    published: Wed, 14 Oct 2026 13:53:33 +0000
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+      - cat-data-formats
+    suggested_type: tutorial

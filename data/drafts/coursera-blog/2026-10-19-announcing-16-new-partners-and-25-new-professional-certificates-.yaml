@@ -1,0 +1,32 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-announcing-16-new-partners-and-25-new-professional-certificates-
+  slug: announcing-16-new-partners-and-25-new-professional-certificates-
+  type: reference
+  title: Announcing 16 new partners and 25 new Professional Certificates for the
+    age of AI
+  description: Today at our annual FWD customer event, we announced a major
+    expansion of our partner and instructor ecosystem, helping learners
+    worldwide gain and advance their skills for the AI era. We welcomed 16
+    leading universities and industry educators to Coursera, thousands of new
+    instru
+  category: null
+  tags: []
+  url: https://blog.coursera.org/announcing-new-partners-and-more-for-the-age-of-ai/
+  publisher: Coursera Blog
+  kind: blog
+  why: null
+  source_url: https://blog.coursera.org/announcing-new-partners-and-more-for-the-age-of-ai/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: coursera-blog
+    extracted_at: 2026-10-19T11:46:07.822Z
+    published: Wed, 09 Sep 2026 15:15:00 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: tutorial

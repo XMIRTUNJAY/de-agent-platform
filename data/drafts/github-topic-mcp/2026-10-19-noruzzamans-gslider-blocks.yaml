@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-noruzzamans-gslider-blocks
+  slug: noruzzamans-gslider-blocks
+  type: reference
+  title: noruzzamans/gslider-blocks
+  description: "Modern WordPress Gutenberg slider & carousel blocks with Swiper.js
+    & Headless API. 🎨 Storybook: https://noruzzamans.github.io/gslider-blocks/"
+  category: cat-agentic
+  tags: []
+  url: https://github.com/noruzzamans/gslider-blocks
+  publisher: GitHub topic — mcp
+  kind: blog
+  why: null
+  source_url: https://github.com/noruzzamans/gslider-blocks
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: github-topic-mcp
+    extracted_at: 2026-10-19T11:47:50.965Z
+    published: 2026-10-19T11:47:37Z
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

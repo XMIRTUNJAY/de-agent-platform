@@ -1,0 +1,29 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-modelcontextprotocol-python-sdk
+  slug: modelcontextprotocol-python-sdk
+  type: skill
+  title: modelcontextprotocol/python-sdk
+  description: The official Python SDK for Model Context Protocol servers and clients
+  category: cat-agentic
+  tags:
+    - mcp
+    - mcp-client
+    - mcp-server
+    - python
+  url: https://github.com/modelcontextprotocol/python-sdk
+  publisher: GitHub org — Model Context Protocol
+  source_url: https://github.com/modelcontextprotocol/python-sdk
+  github_url: https://github.com/modelcontextprotocol/python-sdk
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - .claude/skills/test-quality/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-mcp
+    extracted_at: 2026-10-19T11:47:15.983Z
+    lane: extract

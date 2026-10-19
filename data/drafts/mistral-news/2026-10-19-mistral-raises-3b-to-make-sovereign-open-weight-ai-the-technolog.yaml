@@ -1,0 +1,29 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-mistral-raises-3b-to-make-sovereign-open-weight-ai-the-technolog
+  slug: mistral-raises-3b-to-make-sovereign-open-weight-ai-the-technolog
+  type: reference
+  title: Mistral raises €3B to make sovereign, open-weight AI the technology frontier
+  description: Mistral today announced that it has raised €3 billion in a Series D
+    funding round at a post-money valuation of more than €21 billion.
+  category: cat-agentic
+  tags: []
+  url: https://mistral.ai/news/mistral-makes-sovereign-open-weight-ai-to-frontier/
+  publisher: Mistral AI News
+  kind: blog
+  why: null
+  source_url: https://mistral.ai/news/mistral-makes-sovereign-open-weight-ai-to-frontier/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: mistral-news
+    extracted_at: 2026-10-19T11:46:03.209Z
+    published: Tue, 08 Sep 2026 12:00:22 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-gsoc-2026-final-term-ai-chatbot-to-guide-user-workflow
+  slug: gsoc-2026-final-term-ai-chatbot-to-guide-user-workflow
+  type: reference
+  title: "GSoC 2026 Final term: AI Chatbot to Guide User Workflow"
+  description: Hi everyone 👋, I m Daniele, the Google Summer of Code 2026
+    contributor who worked this summer on creating the AI Chatbot to Guide User
+    Workflow plugin. The extended period of my project is coming to an end, and
+    I want to share a bit about this brand-new plugin and my journey thr
+  category: cat-agentic
+  tags: []
+  url: https://www.jenkins.io/blog/2026/09/08/daniele-caldarigi-gsoc-final-blog-post/
+  publisher: Continuous Coalition (DE blog via Feedburner)
+  kind: blog
+  why: null
+  source_url: https://www.jenkins.io/blog/2026/09/08/daniele-caldarigi-gsoc-final-blog-post/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: databricks-continuous
+    extracted_at: 2026-10-19T11:46:02.194Z
+    published: 2026-09-08T00:00:00+00:00
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+    suggested_type: tutorial

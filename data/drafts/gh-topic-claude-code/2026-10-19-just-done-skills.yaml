@@ -1,0 +1,35 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-just-done-skills
+  slug: just-done-skills
+  type: skill
+  title: just-done/skills
+  description: "Claude Code and Cowork plugin from Just: find a name and a domain
+    for the business you are building, and register it on justdomain.ai"
+  category: cat-agentic
+  tags:
+    - agent-skills
+    - claude-code
+    - claude-code-plugin
+    - claude-plugin
+    - domain-names
+    - domains
+    - mcp
+  url: https://github.com/just-done/skills
+  publisher: GitHub topic — claude-code
+  source_url: https://github.com/just-done/skills
+  github_url: https://github.com/just-done/skills
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - skills/find-a-name/SKILL.md
+    - skills/just-domain/SKILL.md
+    - skills/just-publish/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-claude-code
+    extracted_at: 2026-10-19T11:47:20.753Z
+    lane: extract

@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-beyond-the-ai-noise-how-stack-overflow-is-rethinking-tech-hiring
+  slug: beyond-the-ai-noise-how-stack-overflow-is-rethinking-tech-hiring
+  type: reference
+  title: "Beyond the AI noise: How Stack Overflow is rethinking tech hiring"
+  description: It’s gotten exponentially harder to identify talent that we feel is
+    a good fit for our teams at the top of the application funnel.
+  category: null
+  tags: []
+  url: https://stackoverflow.blog/2026/10/12/beyond-the-ai-noise-how-stack-overflow-is-rethinking-tech-hiring/
+  publisher: Stack Overflow Blog (AI + devops essays)
+  kind: blog
+  why: null
+  source_url: https://stackoverflow.blog/2026/10/12/beyond-the-ai-noise-how-stack-overflow-is-rethinking-tech-hiring/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: stackoverflow-blog
+    extracted_at: 2026-10-19T11:46:06.829Z
+    published: Mon, 12 Oct 2026 14:00:00 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

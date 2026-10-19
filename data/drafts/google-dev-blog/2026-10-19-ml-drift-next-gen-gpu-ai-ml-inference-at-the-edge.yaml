@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-ml-drift-next-gen-gpu-ai-ml-inference-at-the-edge
+  slug: ml-drift-next-gen-gpu-ai-ml-inference-at-the-edge
+  type: reference
+  title: "ML Drift: Next-Gen GPU AI/ML Inference at the Edge"
+  description: Google AI Edge has introduced ML Drift, a high-performance,
+    universal GPU compute framework designed to accelerate on-device AI and
+    machine learning inference. By abstracting the complexities of hardware and
+    low-level APIs—including OpenGL ES, OpenCL, Metal, and WebGPU—ML Drift e
+  category: null
+  tags: []
+  url: https://developers.googleblog.com/ml-drift-next-gen-gpu-aiml-inference-at-the-edge/
+  publisher: Google Developers Blog
+  kind: blog
+  why: null
+  source_url: https://developers.googleblog.com/ml-drift-next-gen-gpu-aiml-inference-at-the-edge/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: google-dev-blog
+    extracted_at: 2026-10-19T11:45:52.605Z
+    published: null
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

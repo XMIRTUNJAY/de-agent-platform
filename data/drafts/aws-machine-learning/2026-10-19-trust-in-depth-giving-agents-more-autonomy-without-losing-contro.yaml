@@ -1,0 +1,32 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-trust-in-depth-giving-agents-more-autonomy-without-losing-contro
+  slug: trust-in-depth-giving-agents-more-autonomy-without-losing-contro
+  type: reference
+  title: "Trust in Depth: Giving agents more autonomy without losing control"
+  description: Enterprise leaders want AI agents to take on more work but don't
+    fully trust them to act correctly every time. Trust in Depth is AWS's
+    layered approach-scope, know, bound, observe, and prove-that lets agents act
+    on their own when their actions can be verified, reserving human jud
+  category: cat-agentic
+  tags: []
+  url: https://aws.amazon.com/blogs/machine-learning/trust-in-depth-giving-agents-more-autonomy-without-losing-control/
+  publisher: AWS Machine Learning Blog
+  kind: blog
+  why: null
+  source_url: https://aws.amazon.com/blogs/machine-learning/trust-in-depth-giving-agents-more-autonomy-without-losing-control/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: aws-machine-learning
+    extracted_at: 2026-10-19T11:45:49.528Z
+    published: Thu, 15 Oct 2026 15:05:35 +0000
+  classification:
+    backend: rules
+    confidence: high
+    suggested_categories:
+      - cat-agentic
+      - cat-aws
+    suggested_type: null

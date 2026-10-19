@@ -1,0 +1,27 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-rudderlabs-rudder-server
+  slug: rudderlabs-rudder-server
+  type: reference
+  title: rudderlabs/rudder-server
+  description: "Privacy and Security focused Segment-alternative, in Golang and React  "
+  category: null
+  tags: []
+  url: https://github.com/rudderlabs/rudder-server
+  publisher: GitHub topic — data-engineering
+  kind: blog
+  why: null
+  source_url: https://github.com/rudderlabs/rudder-server
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: github-topic-de
+    extracted_at: 2026-10-19T11:47:45.772Z
+    published: 2026-10-19T11:31:09Z
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

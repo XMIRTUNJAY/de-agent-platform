@@ -1,0 +1,33 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-announcing-mcp-support-in-apigee-hybrid-agentic-tools-that-run-i
+  slug: announcing-mcp-support-in-apigee-hybrid-agentic-tools-that-run-i
+  type: reference
+  title: "Announcing MCP support in Apigee hybrid: agentic tools that run in your
+    own cluster"
+  description: Apigee hybrid 1.17.0 introduces native Model Context Protocol (MCP)
+    support, enabling the MCP data plane to run directly within your own
+    Kubernetes cluster. This architecture ensures that AI agent request traffic
+    and tool execution remain entirely inside your infrastructure while
+  category: cat-agentic
+  tags: []
+  url: https://developers.googleblog.com/announcing-mcp-support-in-apigee-hybrid-agentic-tools-that-run-in-your-own-cluster/
+  publisher: Google Developers Blog
+  kind: blog
+  why: null
+  source_url: https://developers.googleblog.com/announcing-mcp-support-in-apigee-hybrid-agentic-tools-that-run-in-your-own-cluster/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: google-dev-blog
+    extracted_at: 2026-10-19T11:45:52.602Z
+    published: null
+  classification:
+    backend: rules
+    confidence: high
+    suggested_categories:
+      - cat-agentic
+      - cat-infrastructure
+    suggested_type: tutorial

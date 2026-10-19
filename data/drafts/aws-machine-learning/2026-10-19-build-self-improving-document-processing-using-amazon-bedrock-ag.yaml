@@ -1,0 +1,32 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-build-self-improving-document-processing-using-amazon-bedrock-ag
+  slug: build-self-improving-document-processing-using-amazon-bedrock-ag
+  type: reference
+  title: Build self-improving document processing using Amazon Bedrock AgentCore
+  description: "Learn how to build an agentic intelligent document processing
+    (IDP) system using Amazon Bedrock AgentCore that classifies, extracts,
+    validates, and learns from business documents with minimal human
+    intervention, automatically handling new document formats without manual
+    template "
+  category: cat-agentic
+  tags: []
+  url: https://aws.amazon.com/blogs/machine-learning/build-self-improving-document-processing-using-amazon-bedrock-agentcore/
+  publisher: AWS Machine Learning Blog
+  kind: blog
+  why: null
+  source_url: https://aws.amazon.com/blogs/machine-learning/build-self-improving-document-processing-using-amazon-bedrock-agentcore/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: aws-machine-learning
+    extracted_at: 2026-10-19T11:45:49.529Z
+    published: Wed, 14 Oct 2026 16:24:07 +0000
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+    suggested_type: tutorial

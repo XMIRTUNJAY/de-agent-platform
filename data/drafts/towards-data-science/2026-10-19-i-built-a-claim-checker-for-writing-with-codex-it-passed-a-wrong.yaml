@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-i-built-a-claim-checker-for-writing-with-codex-it-passed-a-wrong
+  slug: i-built-a-claim-checker-for-writing-with-codex-it-passed-a-wrong
+  type: reference
+  title: I Built a Claim-Checker for Writing With Codex. It Passed a Wrong Claim.
+  description: The tool found the right passage but missed the mismatch, and the
+    audit shows where rule-based checks break down. The post I Built a
+    Claim-Checker for Writing With Codex. It Passed a Wrong Claim. appeared
+    first on Towards Data Science .
+  category: null
+  tags: []
+  url: https://towardsdatascience.com/i-built-a-claim-checker-for-writing-with-codex-it-passed-a-wrong-claim/
+  publisher: Towards Data Science
+  kind: blog
+  why: null
+  source_url: https://towardsdatascience.com/i-built-a-claim-checker-for-writing-with-codex-it-passed-a-wrong-claim/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: towards-data-science
+    extracted_at: 2026-10-19T11:46:10.493Z
+    published: Fri, 16 Oct 2026 14:00:00 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: tutorial

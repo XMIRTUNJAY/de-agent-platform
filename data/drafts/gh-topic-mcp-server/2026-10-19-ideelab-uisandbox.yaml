@@ -1,0 +1,34 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-ideelab-uisandbox
+  slug: ideelab-uisandbox
+  type: skill
+  title: Ideelab/uisandbox
+  description: Restyle your app without rebuilding it. Your built web app, 1:1,
+    with its own knobs. MIT.
+  category: cat-agentic
+  tags:
+    - css
+    - design-review
+    - design-system
+    - design-tokens
+    - design-tool
+    - developer-tools
+    - mcp
+    - mcp-server
+  url: https://github.com/Ideelab/uisandbox
+  publisher: GitHub topic — mcp-server
+  source_url: https://github.com/Ideelab/uisandbox
+  github_url: https://github.com/Ideelab/uisandbox
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - skills/uisandbox/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-mcp-server
+    extracted_at: 2026-10-19T11:47:28.005Z
+    lane: extract

@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-inside-hyperdrive-how-we-solved-a-rare-hyperdrive-mysql-caching-
+  slug: inside-hyperdrive-how-we-solved-a-rare-hyperdrive-mysql-caching-
+  type: reference
+  title: "Inside Hyperdrive: How we solved a rare Hyperdrive MySQL caching bug"
+  description: While adding MySQL support to Hyperdrive, we found a subtle
+    protocol bug when caching query results. Here is how we tracked down a
+    0.001% rate error and made Hyperdrive MySQL generally available.
+  category: cat-sql
+  tags: []
+  url: https://blog.cloudflare.com/hyperdrive-mysql/
+  publisher: Cloudflare Blog (platform + data infra)
+  kind: blog
+  why: null
+  source_url: https://blog.cloudflare.com/hyperdrive-mysql/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: cloudflare
+    extracted_at: 2026-10-19T11:45:56.596Z
+    published: Wed, 14 Oct 2026 13:00:00 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-sql
+      - cat-databases
+    suggested_type: null

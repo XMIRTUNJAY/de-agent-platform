@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-modelcontextprotocol-registry
+  slug: modelcontextprotocol-registry
+  type: reference
+  title: modelcontextprotocol/registry
+  description: A community driven registry service for Model Context Protocol (MCP) servers.
+  category: cat-agentic
+  tags: []
+  url: https://github.com/modelcontextprotocol/registry
+  publisher: GitHub org — Model Context Protocol
+  kind: blog
+  why: null
+  source_url: https://github.com/modelcontextprotocol/registry
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: gh-org-mcp
+    extracted_at: 2026-10-19T11:47:17.504Z
+    published: 2026-10-14T23:34:50Z
+  classification:
+    backend: rules
+    confidence: high
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

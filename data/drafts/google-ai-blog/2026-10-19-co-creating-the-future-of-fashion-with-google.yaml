@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-co-creating-the-future-of-fashion-with-google
+  slug: co-creating-the-future-of-fashion-with-google
+  type: reference
+  title: Co-creating the future of fashion with Google
+  description: Google worked side-by-side with designers Jane Wade and Sergio
+    Hudson to custom-design Google Flow tools to prep for NYFW.
+  category: cat-agentic
+  tags: []
+  url: https://blog.google/innovation-and-ai/technology/ai/google-flow-fashion-week/
+  publisher: Google Blog — AI
+  kind: blog
+  why: null
+  source_url: https://blog.google/innovation-and-ai/technology/ai/google-flow-fashion-week/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: google-ai-blog
+    extracted_at: 2026-10-19T11:46:04.506Z
+    published: Fri, 18 Sep 2026 13:00:00 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

@@ -1,0 +1,27 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-your-data-pipelines-just-got-faster-and-smarter-meet-adaptive-wa
+  slug: your-data-pipelines-just-got-faster-and-smarter-meet-adaptive-wa
+  type: reference
+  title: "Your Data Pipelines Just Got Faster and Smarter: Meet Adaptive Warehouses"
+  description: Summary pending review — see the source.
+  category: null
+  tags: []
+  url: https://medium.com/snowflake/your-data-pipelines-just-got-faster-and-smarter-meet-adaptive-warehouses-1b7ba6f9d7d5?source=rss----34b6daafc07---4
+  publisher: Snowflake Engineering Blog
+  kind: blog
+  why: null
+  source_url: https://medium.com/snowflake/your-data-pipelines-just-got-faster-and-smarter-meet-adaptive-warehouses-1b7ba6f9d7d5?source=rss----34b6daafc07---4
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: snowflake-eng
+    extracted_at: 2026-10-19T11:45:53.925Z
+    published: Fri, 16 Oct 2026 14:01:04 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

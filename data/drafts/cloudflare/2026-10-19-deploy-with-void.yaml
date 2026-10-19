@@ -1,0 +1,29 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-deploy-with-void
+  slug: deploy-with-void
+  type: reference
+  title: Deploy with Void
+  description: "Introducing Void: an open-source SDK, CLI, and self-hosted
+    platform for building full-stack Vite apps and deploying them to
+    Cloudflare."
+  category: null
+  tags: []
+  url: https://blog.cloudflare.com/deploy-with-void/
+  publisher: Cloudflare Blog (platform + data infra)
+  kind: blog
+  why: null
+  source_url: https://blog.cloudflare.com/deploy-with-void/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: cloudflare
+    extracted_at: 2026-10-19T11:45:56.595Z
+    published: Thu, 15 Oct 2026 14:00:00 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

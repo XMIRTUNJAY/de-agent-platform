@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-mistral-and-mozilla-are-bringing-open-private-and-multilingual-a
+  slug: mistral-and-mozilla-are-bringing-open-private-and-multilingual-a
+  type: reference
+  title: Mistral and Mozilla are bringing open, private and multilingual AI to
+    your web browser
+  description: Open, private and multilingual AI is coming to your web browser.
+    Mistral and Mozilla team up to put powerful, trustworthy AI where you
+    already browse.
+  category: cat-agentic
+  tags: []
+  url: https://mistral.ai/news/mistral-x-mozilla/
+  publisher: Mistral AI News
+  kind: blog
+  why: null
+  source_url: https://mistral.ai/news/mistral-x-mozilla/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: mistral-news
+    extracted_at: 2026-10-19T11:46:03.208Z
+    published: Wed, 16 Sep 2026 12:00:00 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

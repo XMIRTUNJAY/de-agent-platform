@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-link-discord-and-wow-to-keep-the-guild-chatting-wherever-you-are
+  slug: link-discord-and-wow-to-keep-the-guild-chatting-wherever-you-are
+  type: reference
+  title: Link Discord and WoW to Keep the Guild Chatting Wherever You Are
+  description: Gather your guildmates! Link your Discord and Battle.net accounts
+    to unlock synced guild chat across Discord and World of Warcraft.
+  category: null
+  tags: []
+  url: https://discord.com/blog/link-world-of-warcraft-with-discord
+  publisher: Discord Engineering Blog
+  kind: blog
+  why: null
+  source_url: https://discord.com/blog/link-world-of-warcraft-with-discord
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: discord-eng
+    extracted_at: 2026-10-19T11:46:00.783Z
+    published: Tue, 11 Aug 2026 00:00:00 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

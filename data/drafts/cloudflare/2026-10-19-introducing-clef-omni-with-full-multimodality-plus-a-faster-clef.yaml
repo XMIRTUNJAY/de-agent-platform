@@ -1,0 +1,32 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-introducing-clef-omni-with-full-multimodality-plus-a-faster-clef
+  slug: introducing-clef-omni-with-full-multimodality-plus-a-faster-clef
+  type: reference
+  title: Introducing Clef-omni with full multimodality, plus a faster Clef and a
+    cheaper Clef-flash
+  description: We are expanding the Clef decision model family with Clef-omni,
+    natively processing audio, video, images, and text in a single pipeline.
+    We’ve also lowered Clef-flash pricing and boosted Clef inference speeds by
+    up to 2.0x.
+  category: cat-agentic
+  tags: []
+  url: https://blog.cloudflare.com/clef-faster-cheaper-multimodal/
+  publisher: Cloudflare Blog (platform + data infra)
+  kind: blog
+  why: null
+  source_url: https://blog.cloudflare.com/clef-faster-cheaper-multimodal/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: cloudflare
+    extracted_at: 2026-10-19T11:45:56.598Z
+    published: Fri, 09 Oct 2026 18:27:34 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

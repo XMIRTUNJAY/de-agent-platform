@@ -1,0 +1,33 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-snooptheone-desu-ai-plugins
+  slug: snooptheone-desu-ai-plugins
+  type: skill
+  title: snooptheone/desu-ai-plugins
+  description: "Claude Code plugins. shunt-agy: routes bulk file reads and codegen
+    to a cheaper model via agy — an unofficial, unaffiliated adaptation of
+    Spotify's shunt."
+  category: cat-agentic
+  tags:
+    - agy
+    - antigravity-cli
+    - claude-code
+    - claude-code-plugin
+  url: https://github.com/snooptheone/desu-ai-plugins
+  publisher: GitHub topic — claude-code
+  source_url: https://github.com/snooptheone/desu-ai-plugins
+  github_url: https://github.com/snooptheone/desu-ai-plugins
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - plugins/shunt-agy/skills/bulk-reader/SKILL.md
+    - plugins/shunt-agy/skills/code-writer/SKILL.md
+    - plugins/unifi/skills/unifi/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-claude-code
+    extracted_at: 2026-10-19T11:47:24.375Z
+    lane: extract

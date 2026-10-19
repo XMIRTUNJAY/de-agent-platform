@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-crewaiinc-template-conversational-flow-ui
+  slug: crewaiinc-template-conversational-flow-ui
+  type: reference
+  title: crewAIInc/template_conversational_flow_ui
+  description: Summary pending review — see the source.
+  category: cat-agentic
+  tags: []
+  url: https://github.com/crewAIInc/template_conversational_flow_ui
+  publisher: GitHub org — CrewAI
+  kind: blog
+  why: null
+  source_url: https://github.com/crewAIInc/template_conversational_flow_ui
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: gh-org-crewai
+    extracted_at: 2026-10-19T11:47:13.775Z
+    published: 2026-10-14T19:10:17Z
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

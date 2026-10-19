@@ -1,0 +1,32 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-your-galera-cluster-8217-s-hardest-problem-was-never-the-replica
+  slug: your-galera-cluster-8217-s-hardest-problem-was-never-the-replica
+  type: reference
+  title: Your Galera cluster&#8217;s hardest problem was never the replication library
+  description: "Ask anyone who runs a multi-node MySQL Galera Cluster in
+    production about their worst night. Almost nobody says write-set replication
+    was wrong. They say something closer to this: All queries piling up… no
+    error messages in logs. Twenty minutes of downtime, ended only when a huma"
+  category: cat-databases
+  tags: []
+  url: https://www.percona.com/blog/your-galera-clusters-hardest-problem-was-never-the-replication-library/
+  publisher: Percona Database Performance Blog
+  kind: blog
+  why: null
+  source_url: https://www.percona.com/blog/your-galera-clusters-hardest-problem-was-never-the-replication-library/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: percona-blog
+    extracted_at: 2026-10-19T11:46:20.792Z
+    published: Thu, 08 Oct 2026 16:07:52 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-sql
+      - cat-databases
+    suggested_type: null

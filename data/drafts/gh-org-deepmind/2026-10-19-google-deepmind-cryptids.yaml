@@ -1,0 +1,24 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-google-deepmind-cryptids
+  slug: google-deepmind-cryptids
+  type: agent
+  title: google-deepmind/cryptids
+  description: Some Cryptids and Lean proofs
+  category: cat-agentic
+  tags: []
+  url: https://github.com/google-deepmind/cryptids
+  publisher: GitHub org — Google DeepMind
+  source_url: https://github.com/google-deepmind/cryptids
+  github_url: https://github.com/google-deepmind/cryptids
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-deepmind
+    extracted_at: 2026-10-19T11:46:35.030Z
+    lane: extract

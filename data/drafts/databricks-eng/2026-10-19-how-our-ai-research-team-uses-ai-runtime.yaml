@@ -1,0 +1,29 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-how-our-ai-research-team-uses-ai-runtime
+  slug: how-our-ai-research-team-uses-ai-runtime
+  type: reference
+  title: How our AI Research team uses AI Runtime
+  description: At Databricks, we continuously develop and evaluate new AI research
+    techniques to...
+  category: cat-databricks
+  tags: []
+  url: https://www.databricks.com/blog/how-our-ai-research-team-uses-ai-runtime
+  publisher: Databricks Engineering Blog
+  kind: blog
+  why: null
+  source_url: https://www.databricks.com/blog/how-our-ai-research-team-uses-ai-runtime
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: databricks-eng
+    extracted_at: 2026-10-19T11:45:53.152Z
+    published: Thu, 15 Oct 2026 21:37:44 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-databricks
+    suggested_type: null

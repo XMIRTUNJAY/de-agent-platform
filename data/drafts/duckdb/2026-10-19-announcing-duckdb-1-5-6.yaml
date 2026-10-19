@@ -1,0 +1,29 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-announcing-duckdb-1-5-6
+  slug: announcing-duckdb-1-5-6
+  type: reference
+  title: Announcing DuckDB 1.5.6
+  description: Today we are releasing DuckDB 1.5.6 with bugfixes and performance
+    improvements.
+  category: cat-databases
+  tags: []
+  url: https://duckdb.org/2026/09/28/announcing-duckdb-156.html
+  publisher: DuckDB News
+  kind: blog
+  why: null
+  source_url: https://duckdb.org/2026/09/28/announcing-duckdb-156.html
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: duckdb
+    extracted_at: 2026-10-19T11:45:56.125Z
+    published: 2026-09-28T00:00:00+00:00
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-databases
+    suggested_type: null

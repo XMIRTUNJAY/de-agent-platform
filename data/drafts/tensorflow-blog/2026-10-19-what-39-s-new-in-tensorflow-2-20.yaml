@@ -1,0 +1,33 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-what-39-s-new-in-tensorflow-2-20
+  slug: what-39-s-new-in-tensorflow-2-20
+  type: reference
+  title: What&#39;s new in TensorFlow 2.20
+  description: Posted by the TensorFlow team TensorFlow 2.20 has been released!
+    For ongoing updates related to the multi-backend Keras, please note that all
+    news and releases, starting with Keras 3.0, are now published directly on
+    keras.io . You can find a complete list of all changes in the fu
+  category: cat-agentic
+  tags: []
+  url: https://blog.tensorflow.org/2025/08/whats-new-in-tensorflow-2-20.html
+  publisher: TensorFlow Blog (Google)
+  kind: blog
+  why: null
+  source_url: https://blog.tensorflow.org/2025/08/whats-new-in-tensorflow-2-20.html
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: tensorflow-blog
+    extracted_at: 2026-10-19T11:46:05.302Z
+    published: 2025-08-19T09:00:00.000-07:00
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-gcp
+      - cat-python
+      - cat-agentic
+    suggested_type: tutorial

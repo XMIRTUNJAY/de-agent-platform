@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-10-examples-why-curl-is-an-awesome-cli-tool
+  slug: 10-examples-why-curl-is-an-awesome-cli-tool
+  type: reference
+  title: 10 Examples Why cURL is an Awesome CLI Tool
+  description: Whether you're developer, DevOps engineer, SysAdmin, QA or in any
+    other technical role, you're surely familiar with cURL - _the command line
+    tool and library for transferring data with URLs_ (as described in docs).
+    Most of the time however, we all really only use `curl` for simpl
+  category: cat-infrastructure
+  tags: []
+  url: https://martinheinz.dev/blog/113
+  publisher: Martin Heinz (Practical Data Science)
+  kind: blog
+  why: null
+  source_url: https://martinheinz.dev/blog/113
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: martin-heinz
+    extracted_at: 2026-10-19T11:46:17.110Z
+    published: Tue, 25 Jun 2024 16:00:00 +0000
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-infrastructure
+    suggested_type: tutorial

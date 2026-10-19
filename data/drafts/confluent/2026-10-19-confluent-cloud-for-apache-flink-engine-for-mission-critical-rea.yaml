@@ -1,0 +1,33 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-confluent-cloud-for-apache-flink-engine-for-mission-critical-rea
+  slug: confluent-cloud-for-apache-flink-engine-for-mission-critical-rea
+  type: reference
+  title: "Confluent Cloud for Apache Flink: Engine for Mission-Critical, Real-Time
+    Operational Systems and dbt/SQL-Native Home for Data Science and AI"
+  description: Flink now acts as a robust engine for developers through Table API,
+    UDFs, and PTFs while offering a SQL-native, dbt-integrated platform for data
+    science and AI teams.
+  category: cat-streaming
+  tags: []
+  url: https://www.confluent.io/blog/flink-mission-critical-operations-data-engg/
+  publisher: Confluent Blog (Kafka/Flink/Streaming)
+  kind: blog
+  why: null
+  source_url: https://www.confluent.io/blog/flink-mission-critical-operations-data-engg/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: confluent
+    extracted_at: 2026-10-19T11:45:54.609Z
+    published: Tue, 18 Aug 2026 02:20:00 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-sql
+      - cat-dbt
+      - cat-streaming
+    suggested_type: null

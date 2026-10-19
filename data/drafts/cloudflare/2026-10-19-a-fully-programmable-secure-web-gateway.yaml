@@ -1,0 +1,29 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-a-fully-programmable-secure-web-gateway
+  slug: a-fully-programmable-secure-web-gateway
+  type: reference
+  title: A fully programmable secure web gateway
+  description: Cloudflare Gateway and Data Loss Prevention have inherited the
+    flexibility and power of Cloudflare Workers through our full-stack
+    integration with the Cloudflare Developer platform.
+  category: null
+  tags: []
+  url: https://blog.cloudflare.com/programmable-gateway-dlp/
+  publisher: Cloudflare Blog (platform + data infra)
+  kind: blog
+  why: null
+  source_url: https://blog.cloudflare.com/programmable-gateway-dlp/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: cloudflare
+    extracted_at: 2026-10-19T11:45:56.595Z
+    published: Thu, 15 Oct 2026 17:11:12 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

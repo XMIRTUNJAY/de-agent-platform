@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-evaluating-ai-agents-moving-past-the-vibe-check
+  slug: evaluating-ai-agents-moving-past-the-vibe-check
+  type: architecture
+  title: "Evaluating AI agents: moving past the vibe check"
+  description: A practical engineering guide and reference architecture for
+    establishing continuous evaluation pipelines for multi-turn AI agents using
+    Gemini Enterprise Agent Platform, Google ADK, and OpenInference standards.
+  category: cat-agentic
+  tags: []
+  url: https://developers.googleblog.com/evaluating-ai-agents-moving-past-the-vibe-check/
+  publisher: Google Developers Blog
+  kind: blog
+  why: null
+  source_url: https://developers.googleblog.com/evaluating-ai-agents-moving-past-the-vibe-check/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: google-dev-blog
+    extracted_at: 2026-10-19T11:45:52.601Z
+    published: null
+  classification:
+    backend: rules
+    confidence: high
+    suggested_categories:
+      - cat-agentic
+    suggested_type: architecture

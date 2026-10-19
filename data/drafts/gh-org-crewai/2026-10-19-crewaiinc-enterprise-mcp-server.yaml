@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-crewaiinc-enterprise-mcp-server
+  slug: crewaiinc-enterprise-mcp-server
+  type: reference
+  title: crewAIInc/enterprise-mcp-server
+  description: MCP Server for kicking off and getting status of your crew deployments
+  category: cat-agentic
+  tags: []
+  url: https://github.com/crewAIInc/enterprise-mcp-server
+  publisher: GitHub org — CrewAI
+  kind: blog
+  why: null
+  source_url: https://github.com/crewAIInc/enterprise-mcp-server
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: gh-org-crewai
+    extracted_at: 2026-10-19T11:47:13.971Z
+    published: 2025-03-19T18:06:04Z
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

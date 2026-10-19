@@ -1,0 +1,32 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-plugin-of-the-month-october-2026-kubernetes-plugin
+  slug: plugin-of-the-month-october-2026-kubernetes-plugin
+  type: architecture
+  title: "Plugin of the Month – October 2026: Kubernetes Plugin"
+  description: "Welcome back to the Plugin of the Month series, where we highlight
+    useful and impactful tools from the Jenkins ecosystem. As Halloween
+    approaches, Jenkins builds don t need to haunt a fleet of idle agents. This
+    October, we re featuring the Kubernetes Plugin, which conjures build "
+  category: cat-agentic
+  tags: []
+  url: https://www.jenkins.io/blog/2026/10/18/plugin_month_october/
+  publisher: Continuous Coalition (DE blog via Feedburner)
+  kind: blog
+  why: null
+  source_url: https://www.jenkins.io/blog/2026/10/18/plugin_month_october/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: databricks-continuous
+    extracted_at: 2026-10-19T11:46:02.190Z
+    published: 2026-10-18T00:00:00+00:00
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+      - cat-infrastructure
+    suggested_type: architecture

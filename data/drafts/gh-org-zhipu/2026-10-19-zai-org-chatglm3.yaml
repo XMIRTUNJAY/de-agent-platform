@@ -1,0 +1,24 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-zai-org-chatglm3
+  slug: zai-org-chatglm3
+  type: mcp
+  title: zai-org/ChatGLM3
+  description: "ChatGLM3 series: Open Bilingual Chat LLMs | 开源双语对话语言模型"
+  category: cat-agentic
+  tags: []
+  url: https://github.com/zai-org/ChatGLM3
+  publisher: GitHub org — Zhipu AI (GLM — moved to zai-org)
+  source_url: https://github.com/zai-org/ChatGLM3
+  github_url: https://github.com/zai-org/ChatGLM3
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-zhipu
+    extracted_at: 2026-10-19T11:46:59.160Z
+    lane: extract

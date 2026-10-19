@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-turning-opportunistic-ai-inference-capacity-into-better-ads-reco
+  slug: turning-opportunistic-ai-inference-capacity-into-better-ads-reco
+  type: reference
+  title: Turning Opportunistic AI Inference Capacity Into Better Ads Recommendations
+  description: At Meta, we’ve built a system that enhances ads recommendations by
+    leveraging idle inference capacity in our fleet. Two elasticity levers in
+    the system allow ads recommendation work to expand across opportunistic
+    capacity, without compromising baseline performance. This post desc
+  category: cat-agentic
+  tags: []
+  url: https://engineering.fb.com/2026/10/12/ml-applications/turning-opportunistic-ai-inference-capacity-into-better-ads-recommendations/
+  publisher: Meta Engineering Blog
+  kind: blog
+  why: null
+  source_url: https://engineering.fb.com/2026/10/12/ml-applications/turning-opportunistic-ai-inference-capacity-into-better-ads-recommendations/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: meta-eng
+    extracted_at: 2026-10-19T11:45:58.457Z
+    published: Mon, 12 Oct 2026 16:00:50 +0000
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

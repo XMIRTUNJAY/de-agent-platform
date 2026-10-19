@@ -1,0 +1,32 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-meta-s-generative-ads-model-gem-scaling-the-central-model-and-co
+  slug: meta-s-generative-ads-model-gem-scaling-the-central-model-and-co
+  type: reference
+  title: "Meta’s Generative Ads Model (GEM): Scaling the Central Model and Compute
+    Engine for Frontier Ads AI"
+  description: Last year, we introduced GEM, the industry’s largest recommendation
+    system (RecSys) foundation model. GEM established Meta s first LLM-inspired
+    paradigm for ads recommendation, driving major performance gains. Building
+    on this foundation, our next goal is to further scale both co
+  category: cat-agentic
+  tags: []
+  url: https://engineering.fb.com/2026/10/13/ml-applications/generative-ads-model-gem-scaling-frontier-ads-ai/
+  publisher: Meta Engineering Blog
+  kind: blog
+  why: null
+  source_url: https://engineering.fb.com/2026/10/13/ml-applications/generative-ads-model-gem-scaling-frontier-ads-ai/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: meta-eng
+    extracted_at: 2026-10-19T11:45:58.455Z
+    published: Tue, 13 Oct 2026 16:01:00 +0000
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

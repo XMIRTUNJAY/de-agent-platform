@@ -1,0 +1,29 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-hiro-acev2-simulating-extreme-weather-at-3-km-resolution-for-a-f
+  slug: hiro-acev2-simulating-extreme-weather-at-3-km-resolution-for-a-f
+  type: reference
+  title: "HiRO-ACEv2: Simulating extreme weather at 3 km resolution for a fraction
+    of the cost"
+  description: Summary pending review — see the source.
+  category: cat-cost-engineering
+  tags: []
+  url: https://huggingface.co/blog/allenai/hiro-acev2
+  publisher: Hugging Face Blog
+  kind: blog
+  why: null
+  source_url: https://huggingface.co/blog/allenai/hiro-acev2
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: huggingface-blog
+    extracted_at: 2026-10-19T11:46:03.822Z
+    published: Wed, 14 Oct 2026 16:12:42 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-cost-engineering
+    suggested_type: null

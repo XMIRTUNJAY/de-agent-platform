@@ -1,0 +1,37 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-anthropics-claude-plugins-official
+  slug: anthropics-claude-plugins-official
+  type: skill
+  title: anthropics/claude-plugins-official
+  description: Official, Anthropic-managed directory of high quality Claude Code Plugins.
+  category: cat-agentic
+  tags:
+    - claude-code
+    - mcp
+    - skills
+  url: https://github.com/anthropics/claude-plugins-official
+  publisher: GitHub org — Anthropic (claude, agents, skills)
+  source_url: https://github.com/anthropics/claude-plugins-official
+  github_url: https://github.com/anthropics/claude-plugins-official
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - external_plugins/discord/skills/access/SKILL.md
+    - external_plugins/discord/skills/configure/SKILL.md
+    - external_plugins/imessage/skills/access/SKILL.md
+    - external_plugins/imessage/skills/configure/SKILL.md
+    - external_plugins/telegram/skills/access/SKILL.md
+    - external_plugins/telegram/skills/configure/SKILL.md
+    - plugins/claude-code-setup/skills/claude-automation-recommender/SKILL.md
+    - plugins/claude-md-management/skills/claude-md-improver/SKILL.md
+    - plugins/claude-security/skills/claude-security/SKILL.md
+    - plugins/cwc-makers/skills/cardputer-buddy/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-anthropic
+    extracted_at: 2026-10-19T11:46:27.372Z
+    lane: extract

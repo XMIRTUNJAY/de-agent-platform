@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-partition-finalization-in-pinterest-s-next-generation-db-ingesti
+  slug: partition-finalization-in-pinterest-s-next-generation-db-ingesti
+  type: reference
+  title: Partition Finalization in Pinterest’s Next-Generation DB Ingestion Framework
+  description: Summary pending review — see the source.
+  category: cat-ingestion
+  tags: []
+  url: https://medium.com/pinterest-engineering/partition-finalization-in-pinterests-next-generation-db-ingestion-framework-4c7da6e4cc8f?source=rss----4c5a5f6279b6---4
+  publisher: Pinterest Engineering
+  kind: blog
+  why: null
+  source_url: https://medium.com/pinterest-engineering/partition-finalization-in-pinterests-next-generation-db-ingestion-framework-4c7da6e4cc8f?source=rss----4c5a5f6279b6---4
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: pinterest-eng
+    extracted_at: 2026-10-19T11:46:01.443Z
+    published: Fri, 25 Sep 2026 15:01:03 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-ingestion
+    suggested_type: null

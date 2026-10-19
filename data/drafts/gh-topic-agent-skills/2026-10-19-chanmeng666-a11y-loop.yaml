@@ -1,0 +1,36 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-chanmeng666-a11y-loop
+  slug: chanmeng666-a11y-loop
+  type: skill
+  title: ChanMeng666/a11y-loop
+  description: 【Be a star, give a star!⭐️】 Makes AI coding agents write accessible
+    UI by default, then proves what it can prove with a real browser audit — and
+    tells you exactly what it could not check.
+  category: cat-agentic
+  tags:
+    - a11y
+    - accessibility
+    - agent-skills
+    - ai-agents
+    - audit-tool
+    - axe-core
+    - claude-code
+    - claude-code-plugin
+  url: https://github.com/ChanMeng666/a11y-loop
+  publisher: GitHub topic — agent-skills
+  source_url: https://github.com/ChanMeng666/a11y-loop
+  github_url: https://github.com/ChanMeng666/a11y-loop
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - plugin/skills/a11y-loop/SKILL.md
+    - skills/a11y-loop/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-agent-skills
+    extracted_at: 2026-10-19T11:47:32.585Z
+    lane: extract

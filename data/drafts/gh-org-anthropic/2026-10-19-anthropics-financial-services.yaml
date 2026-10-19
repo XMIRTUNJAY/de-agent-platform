@@ -1,0 +1,34 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-anthropics-financial-services
+  slug: anthropics-financial-services
+  type: skill
+  title: anthropics/financial-services
+  description: See the source repository.
+  category: cat-agentic
+  tags: []
+  url: https://github.com/anthropics/financial-services
+  publisher: GitHub org — Anthropic (claude, agents, skills)
+  source_url: https://github.com/anthropics/financial-services
+  github_url: https://github.com/anthropics/financial-services
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - claude-for-msft-365-install/.claude/skills/verify/SKILL.md
+    - plugins/agent-plugins/earnings-reviewer/skills/audit-xls/SKILL.md
+    - plugins/agent-plugins/earnings-reviewer/skills/earnings-analysis/SKILL.md
+    - plugins/agent-plugins/earnings-reviewer/skills/earnings-preview/SKILL.md
+    - plugins/agent-plugins/earnings-reviewer/skills/model-update/SKILL.md
+    - plugins/agent-plugins/earnings-reviewer/skills/morning-note/SKILL.md
+    - plugins/agent-plugins/earnings-reviewer/skills/xlsx-author/SKILL.md
+    - plugins/agent-plugins/gl-reconciler/skills/audit-xls/SKILL.md
+    - plugins/agent-plugins/gl-reconciler/skills/break-trace/SKILL.md
+    - plugins/agent-plugins/gl-reconciler/skills/gl-recon/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-anthropic
+    extracted_at: 2026-10-19T11:46:28.607Z
+    lane: extract

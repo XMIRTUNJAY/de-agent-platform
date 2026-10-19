@@ -1,0 +1,32 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-ai-says-you-re-right-formal-methods-say-you-re-wrong
+  slug: ai-says-you-re-right-formal-methods-say-you-re-wrong
+  type: reference
+  title: AI says you’re right, formal methods say you’re wrong
+  description: Ryan is joined by Gabriela Moreira, CEO at Quint, about why formal
+    specification languages like TLA+ are essential for catching system design
+    flaws before writing code, how Quint brings developer-friendly syntax and
+    executability to formal methods, and the ways trace validation a
+  category: cat-system-design
+  tags: []
+  url: https://stackoverflow.blog/2026/10/16/formal-methods-say-you-re-wrong/
+  publisher: Stack Overflow Blog (AI + devops essays)
+  kind: blog
+  why: null
+  source_url: https://stackoverflow.blog/2026/10/16/formal-methods-say-you-re-wrong/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: stackoverflow-blog
+    extracted_at: 2026-10-19T11:46:06.826Z
+    published: Fri, 16 Oct 2026 07:40:00 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-system-design
+      - cat-aws
+    suggested_type: null

@@ -1,0 +1,32 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-daily-life-as-a-jenkins-administrator-2
+  slug: daily-life-as-a-jenkins-administrator-2
+  type: reference
+  title: Daily Life as a Jenkins Administrator
+  description: "Jenkins Kubernetes setup As a team, we introduced Jenkins
+    Kubernetes for every user a few months ago. Our goal was to make it easy to
+    get started with Jenkins — no need for your own agent. We prepared guides on
+    how to use it, which tools are already included in the image used by "
+  category: cat-infrastructure
+  tags: []
+  url: https://www.jenkins.io/blog/2026/09/21/admin-blog_02/
+  publisher: Continuous Coalition (DE blog via Feedburner)
+  kind: blog
+  why: null
+  source_url: https://www.jenkins.io/blog/2026/09/21/admin-blog_02/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: databricks-continuous
+    extracted_at: 2026-10-19T11:46:02.192Z
+    published: 2026-09-21T00:00:00+00:00
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-infrastructure
+      - cat-agentic
+    suggested_type: tutorial

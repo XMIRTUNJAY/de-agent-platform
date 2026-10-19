@@ -1,0 +1,30 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-godatadriven-dbt-bouncer
+  slug: godatadriven-dbt-bouncer
+  type: skill
+  title: godatadriven/dbt-bouncer
+  description: Configure and enforce conventions for your dbt project.
+  category: cat-dbt
+  tags:
+    - ci
+    - dbt
+    - python
+  url: https://github.com/godatadriven/dbt-bouncer
+  publisher: GitHub topic — dbt
+  source_url: https://github.com/godatadriven/dbt-bouncer
+  github_url: https://github.com/godatadriven/dbt-bouncer
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - .agents/skills/build-artifacts/SKILL.md
+    - .agents/skills/new-check/SKILL.md
+    - skills/suggesting-dbt-bouncer-checks/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: github-topic-dbt
+    extracted_at: 2026-10-19T11:47:56.583Z
+    lane: extract

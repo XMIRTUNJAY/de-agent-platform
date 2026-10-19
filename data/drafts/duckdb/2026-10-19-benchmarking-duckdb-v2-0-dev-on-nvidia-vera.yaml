@@ -1,0 +1,29 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-benchmarking-duckdb-v2-0-dev-on-nvidia-vera
+  slug: benchmarking-duckdb-v2-0-dev-on-nvidia-vera
+  type: reference
+  title: Benchmarking DuckDB v2.0-dev on NVIDIA Vera
+  description: We put NVIDIA's new Vera CPU through its paces using the full TPC-H
+    workload on scale factor 1,000.
+  category: cat-databases
+  tags: []
+  url: https://duckdb.org/2026/10/16/nvidia-vera-benchmark.html
+  publisher: DuckDB News
+  kind: blog
+  why: null
+  source_url: https://duckdb.org/2026/10/16/nvidia-vera-benchmark.html
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: duckdb
+    extracted_at: 2026-10-19T11:45:56.123Z
+    published: 2026-10-16T00:00:00+00:00
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-databases
+    suggested_type: null
