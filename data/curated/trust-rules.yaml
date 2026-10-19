@@ -1,0 +1,302 @@
+# TRUST RULES — the rule catalog behind static artifact scanning.
+#
+# Schema (one rule = one failure mode):
+#   id          stable machine id (prefix by family)
+#   family      notebook family: secrets | remote-execution | hidden-instruction |
+#               sql-destructive | data-egress | unix-destructive | platform-destructive |
+#               git-destructive | overbroad-permission | skill-hygiene | rerun-safety
+#   title       human name
+#   definition  written definition — what this rule detects, in plain language
+#   evidence    what the scanner looks for (the proof it cites in findings)
+#   risk        critical | high | medium | low
+#   remediation redemption advice — how an author fixes a finding
+#   patterns    regex list (case-insensitive), matched line-by-line.
+#               Single-quoted YAML: backslashes are literal (write \b, not \\b)
+#               and embedded quotes are doubled ('').
+#
+# Grounding rules:
+#   - Findings cite { rule, file, line } and a trimmed snippet — never secret values.
+#   - A hit is evidence for review, not an automatic verdict; verification stays human.
+#   - Keep definitions honest: a rule matches what `evidence` says it matches.
+
+rules:
+  # ── secrets ──────────────────────────────────────────────────────────────
+  - id: secret-aws-key
+    family: secrets
+    title: Hardcoded AWS access key
+    definition: An AWS access key ID is embedded in a shipped file instead of injected at runtime.
+    evidence: Literal AKIA-prefixed 20-character key id.
+    risk: critical
+    remediation: Move credentials to environment variables or a secrets manager; add the file to .gitignore and rotate the exposed key.
+    patterns: ['\bAKIA[0-9A-Z]{16}\b']
+
+  - id: secret-github-token
+    family: secrets
+    title: Hardcoded GitHub token
+    definition: A GitHub personal access or OAuth token is embedded in a shipped file.
+    evidence: ghp_/gho_/ghu_/ghs_/ghr_ token literal or a fine-grained github_pat_ token.
+    risk: critical
+    remediation: Revoke the token, then read it from the environment at runtime.
+    patterns: ['\b(ghp|gho|ghu|ghs|ghr)_[A-Za-z0-9]{36,}\b', 'github_pat_[A-Za-z0-9_]{80,}']
+
+  - id: secret-private-key
+    family: secrets
+    title: Embedded private key
+    definition: A PEM private key block ships inside the artifact.
+    evidence: -----BEGIN … PRIVATE KEY----- header.
+    risk: critical
+    remediation: Remove the key from the artifact, rotate it, and mount it at runtime from a secret store.
+    patterns: ['-----BEGIN [A-Z ]*PRIVATE KEY-----']
+
+  - id: secret-token-assign
+    family: secrets
+    title: Token or password literal in assignment
+    definition: A password, API key or token is assigned a string literal that looks real.
+    evidence: password/secret/api_key assignment with a long literal value that lacks example markers.
+    risk: high
+    remediation: Replace with a placeholder plus runtime injection; document the required env var.
+    patterns: ['\b(password|passwd|pwd|secret)\s*[:=]\s*[''"][^''"]{4,}[''"]', '\b(api[_-]?key|apikey|token)\s*[:=]\s*[''"][^''"]{8,}[''"]']
+
+  # ── remote execution ─────────────────────────────────────────────────────
+  - id: exec-curl-pipe-shell
+    family: remote-execution
+    title: Curl piped straight into a shell
+    definition: A remote payload is fetched and executed without inspection — the classic supply-chain injection.
+    evidence: curl or wget output piped into sh, bash, zsh or python.
+    risk: critical
+    remediation: Pin a versioned download, verify its checksum, then run an inspected file — never pipe remote content to an interpreter.
+    patterns: ['\b(curl|wget)\b[^|;\n]*\|\s*(sudo\s+)?(ba|z|da)?sh\b', '\b(curl|wget)\b[^|;\n]*\|\s*python3?\b']
+
+  - id: exec-remote-script-download
+    family: remote-execution
+    title: Downloads a script and executes it
+    definition: The artifact fetches code from the network and immediately runs it, even without a pipe.
+    evidence: curl/wget to a .sh/.py target followed by an execution call on the downloaded path.
+    risk: high
+    remediation: Vendor the script, pin its hash, and review it like any other source file.
+    patterns: ['\b(curl|wget)\b[^\n]*\.(sh|py)\b[^\n]*\n\s*(ba|z|da)?sh\b', '\bchmod\s+\+x[^\n]*\.sh\b']
+
+  - id: exec-installer-oneliner
+    family: remote-execution
+    title: Installer one-liner from an external host
+    definition: Bootstraps via an install-script endpoint piped into a shell (get.docker.com patterns).
+    evidence: A well-known installer endpoint invoked through a shell pipe.
+    risk: high
+    remediation: Prefer a pinned package manager install; if the one-liner is required, document manual verification steps.
+    patterns: ['get\.(docker|docker-compose|composer)\.com', 'raw\.githubusercontent\.com[^\n]*\|\s*(ba|z)?sh', 'install\.[a-z]+/[^\n]*\|\s*(ba|z)?sh']
+
+  # ── hidden instruction ───────────────────────────────────────────────────
+  - id: hidden-ignore-instructions
+    family: hidden-instruction
+    title: Prompt-injection directive hidden in prose
+    definition: Documentation or skill text tries to override the agent's instructions at runtime.
+    evidence: Phrases like ignore previous instructions, disregard your rules, you are now, do not tell the user.
+    risk: critical
+    remediation: Remove directive language from prose; skills describe capabilities, they do not command the agent behind the user's back.
+    patterns: ['ignore (all |any |the )?(previous|prior|above) (instructions?|prompts?|rules?)', 'disregard (all |the )?(previous|prior|your) (instructions?|rules?|guidelines)', 'do not tell the user', 'you are now (a|an|the) ', 'act as (if )?you have no ', 'exfiltrate|send (the )?(api[_ -]?key|credentials|tokens) to']
+
+  - id: hidden-obfuscated-commands
+    family: hidden-instruction
+    title: Obfuscated or base64-wrapped commands in prose
+    definition: Encoded payloads hidden in documentation that decode into shell commands.
+    evidence: base64/atob/eval chains inside markdown prose or comments.
+    risk: high
+    remediation: Decode and inline the actual command in plain text so reviewers can see it.
+    patterns: ['\beval\s*\(\s*\(?\s*(atob|base64|decode)', '\becho\s+\S+\s*\|\s*base64\s+(-d|--decode)']
+
+  # ── sql destructive ──────────────────────────────────────────────────────
+  - id: sql-drop-table-unscoped
+    family: sql-destructive
+    title: Unscoped DROP statement
+    definition: DROP TABLE/SCHEMA/DATABASE appears without a guard, scratch schema, or explicit confirmation flow.
+    evidence: DROP keywords in run paths (not in a migration file or quoted documentation).
+    risk: high
+    remediation: Scope destructive DDL to a scratch/dev schema, require an explicit confirmation flag, or move it behind a review gate.
+    patterns: ['\bDROP\s+(TABLE|SCHEMA|DATABASE|CLUSTER)\b']
+
+  - id: sql-truncate-delete-unbounded
+    family: sql-destructive
+    title: TRUNCATE or unbounded DELETE
+    definition: TRUNCATE, or DELETE without a WHERE clause, wipes a table in one statement.
+    evidence: TRUNCATE keyword, or DELETE FROM with no WHERE on the same logical line.
+    risk: high
+    remediation: Bound destructive DML with WHERE, run inside a transaction with a LIMIT pre-check, and print affected row counts.
+    patterns: ['\bTRUNCATE\s+(TABLE\s+)?[A-Za-z_]', '\bDELETE\s+FROM\s+\S+\s*;?\s*$']
+
+  # ── data egress ──────────────────────────────────────────────────────────
+  - id: egress-hardcoded-endpoint
+    family: data-egress
+    title: Hardcoded external endpoint
+    definition: The artifact sends data to a fixed external domain or IP outside the user's infrastructure.
+    evidence: https endpoints that are not localhost or a loopback address.
+    risk: medium
+    remediation: Move endpoints into user-supplied configuration; document every outbound destination and payload.
+    patterns: ['https?://(?!localhost|127\.0\.0\.1|0\.0\.0\.0)[a-z0-9.-]+']
+
+  - id: egress-raw-ip
+    family: data-egress
+    title: Raw IP callout
+    definition: Network calls aimed at a bare IP address — common in exfiltration and C2 patterns.
+    evidence: Dotted-quad literals in connection strings (loopback exempted).
+    risk: medium
+    remediation: Use named, documented hosts configured by the user; raw IPs deserve an explicit justification comment.
+    patterns: ['\b(?!127\.0\.0\.1|0\.0\.0\.0)(\d{1,3}\.){3}\d{1,3}\b']
+
+  - id: egress-cloud-storage-write
+    family: data-egress
+    title: Direct cloud-storage upload
+    definition: Writes data to an external blob store (S3/GCS/Azure) which may leave the tenant boundary.
+    evidence: aws s3 cp/sync, gsutil cp, az storage blob upload patterns.
+    risk: medium
+    remediation: Default writes to user-configured buckets only; print the destination before upload.
+    patterns: ['\baws s3 (cp|sync|mv)\b', '\bgsutil\s+(cp|rsync)\b', '\baz storage blob (upload|copy)\b']
+
+  # ── unix destructive ─────────────────────────────────────────────────────
+  - id: unix-rm-rf-root
+    family: unix-destructive
+    title: rm -rf on root, home, or wildcard paths
+    definition: Recursive force-delete aimed at /, ~, $HOME, or a glob — the classic data-loss bug.
+    evidence: rm with -r and -f flags targeting root/home/glob paths.
+    risk: critical
+    remediation: Constrain deletes to a workdir-relative path; require an explicit confirmation flag; never expand globs in delete paths.
+    patterns: ['\brm\s+(-[a-zA-Z]*[rf][a-zA-Z]*\s+)+(/|~|\$HOME|\*)', '\brm\s+-[a-zA-Z]*r[a-zA-Z]*f[a-zA-Z]*\s+/\s*($|\*)']
+
+  - id: unix-mkfs-dd
+    family: unix-destructive
+    title: Filesystem or disk overwrite
+    definition: mkfs, dd to a device, or a volume-erase — destroys volumes.
+    evidence: mkfs invocations, dd of=/dev/, eraseVolume.
+    risk: critical
+    remediation: Never touch raw devices; if disk work is unavoidable, gate it behind explicit operator confirmation outside the artifact.
+    patterns: ['\bmkfs(\.\w+)?\b', '\bdd\b[^\n]*\bof=/dev/', '\beraseVolume\b']
+
+  - id: unix-chmod-777
+    family: unix-destructive
+    title: World-writable permissions
+    definition: chmod 777 (or 666) opens files or directories to every user — privilege-escalation surface.
+    evidence: chmod with 777/666 modes.
+    risk: medium
+    remediation: Grant the narrowest mode that works (typically 755/644) and to a specific owner.
+    patterns: ['\bchmod\s+(-R\s+)?[76]{3}\b']
+
+  - id: unix-crontab-persistence
+    family: unix-destructive
+    title: Cron/systemd persistence installation
+    definition: The artifact installs scheduled jobs or services — a persistence mechanism unrelated to its stated task.
+    evidence: crontab writes, systemctl enable, launchctl load.
+    risk: high
+    remediation: Ship the schedule as documentation or an optional install step the operator runs knowingly.
+    patterns: ['\bcrontab\s+', '\bsystemctl\s+(enable|start)\b', '\blaunchctl\s+load\b']
+
+  # ── platform destructive ─────────────────────────────────────────────────
+  - id: platform-powershell-destructive
+    family: platform-destructive
+    title: Destructive PowerShell
+    definition: Remove-Item -Recurse -Force, volume formatting, or execution-policy bypass shipped in run paths.
+    evidence: Windows destructive cmdlets with force/recurse flags.
+    risk: high
+    remediation: Scope Remove-Item to an explicit relative path; never ship execution-policy changes in artifacts.
+    patterns: ['Remove-Item\b[^\n]*(-Recurse[^\n]*-Force|-Force[^\n]*-Recurse)', '\bFormat-Volume\b', 'Set-ExecutionPolicy\b.*(Bypass|Unrestricted)']
+
+  - id: platform-kubectl-destructive
+    family: platform-destructive
+    title: Destructive Kubernetes operations
+    definition: kubectl delete namespace/pvc, or drain nodes without guards.
+    evidence: kubectl delete targeting namespaces, PVCs or nodes.
+    risk: high
+    remediation: Target a dedicated dev namespace; require a confirmation flag; never delete shared PVCs.
+    patterns: ['\bkubectl\s+delete\s+(ns|namespace|pvc|node)\b', '\bkubectl\s+drain\b[^\n]*--force']
+
+  - id: platform-cloud-destroy
+    family: platform-destructive
+    title: Cloud resource destroy
+    definition: terraform destroy, EC2 terminate, project/group delete — irreversible cloud ops.
+    evidence: destroy/terminate/delete verbs against cloud providers.
+    risk: critical
+    remediation: Never ship destroy verbs in default paths; require a target guard (workspace/env pin) and typed confirmation.
+    patterns: ['\bterraform\s+destroy\b', '\baws\s+ec2\s+terminate-instances\b', '\bgcloud\s+(projects|compute instances)\s+delete\b', '\baz\s+group\s+delete\b']
+
+  # ── git destructive ──────────────────────────────────────────────────────
+  - id: git-force-push
+    family: git-destructive
+    title: Force push
+    definition: git push --force (or -f) rewrites shared history.
+    evidence: push with force flags — plain --force is the risk, --force-with-lease is the accepted mitigation.
+    risk: high
+    remediation: Use --force-with-lease at most, and only on personal branches; prefer revert commits on shared branches.
+    patterns: ['\bgit\s+push\b[^\n]*(--force(?!-with-lease)|\s-f\b)']
+
+  - id: git-history-rewrite
+    family: git-destructive
+    title: Local history destruction
+    definition: reset --hard, clean -fd, or checkout -- . discard uncommitted work without confirmation.
+    evidence: reset --hard / clean -fd / checkout -- . patterns.
+    risk: medium
+    remediation: Snapshot (stash/branch) before any destructive git op; print what will be discarded first.
+    patterns: ['\bgit\s+reset\s+--hard\b', '\bgit\s+clean\s+-[a-zA-Z]*fd', '\bgit\s+checkout\s+--\s+\.?\s*$']
+
+  # ── overbroad permission ─────────────────────────────────────────────────
+  - id: perm-sudo-in-artifact
+    family: overbroad-permission
+    title: sudo inside the artifact
+    definition: Commands escalate to root without need — an artifact should never require root for its core task.
+    evidence: sudo/su prefixes in run commands.
+    risk: high
+    remediation: Document the one setup step that needs privileges and run everything else unprivileged.
+    patterns: ['\bsudo\b', '\bsu\s+-?\w*\b']
+
+  - id: perm-credential-scope-wide
+    family: overbroad-permission
+    title: Requests admin-scoped credentials
+    definition: Asks for tokens/roles with wildcard scope (e.g. AWS *:* , full org tokens) when a narrow role would do.
+    evidence: wildcard IAM actions, scope=admin, write-all OAuth scopes.
+    risk: high
+    remediation: Request least-privilege scopes and document each permission's purpose next to the request.
+    patterns: ['[''"]Action[''"]\s*:\s*[''"]\*', '\bscope[=:]\s*[''"]?(admin|\*)', '\*:\*']
+
+  # ── skill hygiene ────────────────────────────────────────────────────────
+  - id: hygiene-unpinned-image
+    family: skill-hygiene
+    title: Unpinned container image
+    definition: docker run/pull references :latest or an untagged image — builds are not reproducible and updates are unaudited.
+    evidence: docker run/pull with :latest or missing tags.
+    risk: medium
+    remediation: Pin exact versions (name:tag) and re-verify on upgrade.
+    patterns: ['\bdocker\s+(run|pull)\b[^\n]*:latest\b']
+
+  - id: hygiene-unpinned-dependency
+    family: skill-hygiene
+    title: Unpinned package install
+    definition: npm/pip installs without a version pin — supply-chain drift lands silently.
+    evidence: pip install pkg with no == constraint; npm install at end of line without a version.
+    risk: low
+    remediation: Pin package==1.2.3 (or a lockfile) and re-run the trust scan on upgrades.
+    patterns: ['\bpip\s+install\s+[A-Za-z0-9_-]+(\s|$)', '\bnpm\s+i(nstall)?\s+[^-][^\s]*\s*$']
+
+  # ── rerun safety ─────────────────────────────────────────────────────────
+  - id: rerun-mv-onto-output
+    family: rerun-safety
+    title: Non-idempotent mv onto a fixed target
+    definition: Moving onto a fixed destination unconditionally overwrites prior outputs, so re-runs destroy earlier results.
+    evidence: mv with a fixed destination path and no existence check or versioned name.
+    risk: low
+    remediation: Write to versioned or temp paths and atomically swap; check existence before overwrite.
+    patterns: ['\bmv\s+[^\n]+\s+(out|output|result|final)\.(csv|json|parquet|txt)\s*$']
+
+  - id: rerun-cp-onto-system
+    family: rerun-safety
+    title: Overwrites system files
+    definition: cp/mv onto /etc or other system paths destroys host configuration without backup.
+    evidence: cp/mv targeting /etc/... destinations.
+    risk: high
+    remediation: Write to a temp path, diff, and swap only after showing the operator what changes.
+    patterns: ['\b(cp|mv)\b[^\n]*\s+/etc/(passwd|hosts|sudoers|shadow)\b']
+
+  - id: rerun-append-config
+    family: rerun-safety
+    title: Appends to config on every run
+    definition: Appends output into shell/rc or daemon config on each run — re-running duplicates entries and corrupts the host config.
+    evidence: append redirects into .bashrc/.zshrc/profile or daemon configs.
+    risk: medium
+    remediation: Guard appends with a grep check so re-runs are no-ops.
+    patterns: ['>>\s*[^\n]*(\.bashrc|\.zshrc|\.profile|\.bash_profile|sshd_config|daemon\.json)']

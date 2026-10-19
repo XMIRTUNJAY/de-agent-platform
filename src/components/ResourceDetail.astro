@@ -9,7 +9,7 @@ import { marked } from 'marked';
 // server-side with GFM so tables/checklists in skill docs work.
 marked.setOptions({ gfm: true, breaks: false });
 
-const { res, registry } = Astro.props as { res: any; registry: any };
+const { res, registry, trustScan = null } = Astro.props as { res: any; registry: any; trustScan?: any };
 
 const techs = res.technologies?.map((t: any) => registry.taxonomy.technologies.find((x: any) => x.id === t)).filter(Boolean) ?? [];
 const prereqs = res.prerequisites?.map((id: any) => registry.resources.find((r: any) => r.id === id)).filter(Boolean) ?? [];
@@ -531,6 +531,38 @@ const scoreColor = (score: number) => {
             ))}
           </dl>
         </section>
+
+        <!-- Static trust scan card (pipelines/scan-trust.mjs) -->
+        {trustScan && (
+          <section class="card card-pad mount">
+            <h3 class="mono-label mb-3">Static trust scan</h3>
+            <p class="text-sm text-muted mb-3">
+              {trustScan.rulesApplied} rules across 11 families ran over {trustScan.files_scanned} files.
+              Findings are evidence for review — not an automatic verdict. <a href="/docs/trust-rules" class="link">Rule catalog</a>
+            </p>
+            {trustScan.findings.length === 0 ? (
+              <p class="text-sm" style="color: var(--color-ok);">No static findings.</p>
+            ) : (
+              <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 0.6rem;">
+                {trustScan.findings.map((f: any) => (
+                  <li style="border-left: 2px solid var(--color-{f.risk === 'critical' ? 'danger' : f.risk === 'high' ? 'warn' : 'info'}); padding-left: 0.6rem;">
+                    <div class="flex items-center gap-2 flex-wrap">
+                      <span class={`chip chip-${f.risk === 'critical' ? 'danger' : f.risk === 'high' ? 'warn' : 'info'}`}>{f.risk}</span>
+                      <span class="text-sm" style="color: var(--fg);">{f.title}</span>
+                      {f.likelyExample && <span class="chip" style="color: var(--fg-dim);">docs context</span>}
+                    </div>
+                    <p class="text-xs text-muted" style="margin: 0.25rem 0 0;">{f.definition}</p>
+                    <p class="font-mono text-2xs text-dim" style="margin: 0.15rem 0 0; overflow-wrap: anywhere;">{f.file}:{f.line}</p>
+                    <p class="text-xs" style="margin: 0.2rem 0 0; color: var(--fg-muted);">Fix: {f.remediation}</p>
+                  </li>
+                ))}
+              </ul>
+            )}
+            {trustScan.examples > 0 && (
+              <p class="text-xs text-dim" style="margin-top: 0.6rem;">{trustScan.examples} finding{trustScan.examples === 1 ? '' : 's'} matched only documentation context and do not count against this entry.</p>
+            )}
+          </section>
+        )}
 
         <!-- Provenance card -->
         <section class="card card-pad mount">

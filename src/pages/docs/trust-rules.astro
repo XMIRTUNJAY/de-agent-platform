@@ -1,0 +1,71 @@
+---
+// Trust Rules — the authoritative catalog of the static rule engine.
+// Rendered straight from data/curated/trust-rules.yaml (rules as code):
+// every check ships its written definition, the evidence it looks for, its
+// risk level, and the redemption advice for authors.
+import DocsLayout from '@/layouts/DocsLayout.astro';
+import { readFileSync } from 'node:fs';
+import { parse as parseYaml } from 'yaml';
+
+// The YAML lives in data/curated (source of truth). Pages are prerendered, so
+// frontmatter executes at build time — read + parse there, no bundler loader.
+const rulesYaml = parseYaml(
+  readFileSync(new URL('../../../data/curated/trust-rules.yaml', import.meta.url), 'utf8'),
+);
+
+const rules = (rulesYaml as any).rules ?? [];
+const families = [...new Set(rules.map((r: any) => r.family))];
+const byFamily = families.map((f: any) => ({ family: f, rules: rules.filter((r: any) => r.family === f) }));
+const riskCounts = { critical: 0, high: 0, medium: 0, low: 0 } as Record<string, number>;
+for (const r of rules) riskCounts[r.risk] = (riskCounts[r.risk] ?? 0) + 1;
+
+const riskChip = (risk: string) =>
+  risk === 'critical' ? 'chip chip-danger' : risk === 'high' ? 'chip chip-warn' : risk === 'medium' ? 'chip chip-info' : 'chip';
+---
+
+<DocsLayout frontmatter={{
+  kicker: 'Reference',
+  title: 'Trust rule catalog',
+  description: `The ${rules.length} static checks behind DE//AGENT artifact scanning — definitions, evidence, risk levels and remediation.`,
+}}>
+  <div class="section-sm" style="padding-top: 1rem;">
+    <p>
+      Every registry artifact runs through <code class="icode">pipelines/scan-trust.mjs</code>:
+      {rules.length} deterministic rules across {families.length} families, matched line-by-line against
+      vendored artifact files and curated copy. The scanner is evidence for human review, never an
+      automatic verdict — documentation context is shown but never counted, and secret values are
+      never echoed into findings.
+    </p>
+    <p>
+      Current mix: {riskCounts.critical} critical · {riskCounts.high} high · {riskCounts.medium} medium · {riskCounts.low} low.
+      Findings feed the <a href="/docs/verification">verification</a> and security posture shown on every
+      resource page. To propose a rule, edit <code class="icode">data/curated/trust-rules.yaml</code> —
+      one rule = one failure mode, with all four fields (definition, evidence, risk, remediation).
+    </p>
+
+    {byFamily.map(({ family, rules: fr }) => (
+      <section style="margin-top: 2.5rem;">
+        <h2>{family.replace(/-/g, ' ')}</h2>
+        <p class="text-muted" style="margin-top: -0.5rem;">{fr.length} check{fr.length === 1 ? '' : 's'}</p>
+        {fr.map((r: any) => (
+          <div class="card card-pad-sm" style="margin-top: 1rem;">
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class={riskChip(r.risk)}>{r.risk}</span>
+              <strong>{r.title}</strong>
+              <code class="icode">{r.id}</code>
+            </div>
+            <p style="margin-top: 0.5rem;">{r.definition}</p>
+            <p class="text-sm text-muted" style="margin-top: 0.35rem;"><span style="color: var(--fg); font-weight: 600;">Evidence: </span>{r.evidence}</p>
+            <p class="text-sm text-muted" style="margin-top: 0.35rem;"><span style="color: var(--fg); font-weight: 600;">Redemption: </span>{r.remediation}</p>
+            {r.patterns?.length > 0 && (
+              <details style="margin-top: 0.5rem;">
+                <summary class="text-sm text-muted" style="cursor: pointer;">Match patterns ({r.patterns.length})</summary>
+                <pre class="codeblock" style="margin-top: 0.5rem;"><code>{r.patterns.join('\n')}</code></pre>
+              </details>
+            )}
+          </div>
+        ))}
+      </section>
+    ))}
+  </div>
+</DocsLayout>

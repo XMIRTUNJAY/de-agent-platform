@@ -130,6 +130,7 @@ export const SIDEBAR: NavGroup[] = [
       { label: 'Capabilities overview', href: '/agentic', icon: 'roadmap' },
       { label: 'Skill anatomy', href: '/docs/skill-anatomy', icon: 'docs' },
       { label: 'Tool & MCP contract', href: '/docs/tooling', icon: 'wrench' },
+      { label: 'Trust rule catalog', href: '/docs/trust-rules', icon: 'shield' },
     ],
   },
   {

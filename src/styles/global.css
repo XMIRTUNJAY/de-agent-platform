@@ -568,6 +568,11 @@
   border-color: color-mix(in oklab, var(--warn) 35%, transparent);
   background: var(--warn-soft);
 }
+.chip-info {
+  color: var(--info);
+  border-color: color-mix(in oklab, var(--info) 35%, transparent);
+  background: var(--info-soft);
+}
 
 .chip-danger {
   color: var(--danger);

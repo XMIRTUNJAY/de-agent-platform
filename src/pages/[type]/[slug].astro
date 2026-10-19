@@ -2,6 +2,7 @@
 // Pretty resource URLs: /skills/<slug>, /mcp/<slug>, /plugins/<slug>, etc.
 import ResourceDetail from '@/components/ResourceDetail.astro';
 import registry from '@/data/generated/registry.json';
+import trustScan from '@/data/generated/trust-findings.json';
 import { isRoutable } from '../../../pipelines/lib/eligibility.mjs';
 
 const res = registry.resources.find(r => r.url === `/${Astro.params.type}/${Astro.params.slug}`);
@@ -15,4 +16,4 @@ export async function getStaticPaths() {
 }
 ---
 
-<ResourceDetail res={res} registry={registry} />
+<ResourceDetail res={res} registry={registry} trustScan={(trustScan.resources as Record<string, any>)[res.url] ?? null} />

@@ -1,0 +1,4182 @@
+{
+ "generated_at": "2026-10-19T18:43:52.837Z",
+ "engine": {
+  "rules": 30,
+  "families": {
+   "secrets": 4,
+   "remote-execution": 3,
+   "hidden-instruction": 2,
+   "sql-destructive": 2,
+   "data-egress": 3,
+   "unix-destructive": 4,
+   "platform-destructive": 3,
+   "git-destructive": 2,
+   "overbroad-permission": 2,
+   "skill-hygiene": 2,
+   "rerun-safety": 3
+  }
+ },
+ "stats": {
+  "resources_scanned": 157,
+  "total_findings": 28,
+  "flagged_resources": 0
+ },
+ "resources": {
+  "/resources/sqlfluff-core-rules": {
+   "slug": "sqlfluff-core-rules",
+   "type": "rule_pack",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/resources/data-classification-governance": {
+   "slug": "data-classification-governance",
+   "type": "governance_pack",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/resources/opa-data-access-policy": {
+   "slug": "opa-data-access-policy",
+   "type": "policy",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/resources/snowflake-warehouse-config": {
+   "slug": "snowflake-warehouse-config",
+   "type": "config_template",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/tutorials/sql-fanout-review": {
+   "slug": "sql-fanout-review",
+   "type": "tutorial",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/skills/dbt-test-writer": {
+   "slug": "dbt-test-writer",
+   "type": "skill",
+   "files_scanned": 2,
+   "total": 1,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "actionable": 1,
+   "examples": 0,
+   "maxRisk": "medium",
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": [
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "skills/dbt-test-writer/SKILL.md",
+     "line": 42,
+     "snippet": "Source record: https://emanisha.in/de-agent/skills/dbt-test-writer",
+     "inCode": false,
+     "likelyExample": false
+    }
+   ]
+  },
+  "/skills/incident-postmortem-writer": {
+   "slug": "incident-postmortem-writer",
+   "type": "skill",
+   "files_scanned": 2,
+   "total": 1,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "actionable": 1,
+   "examples": 0,
+   "maxRisk": "medium",
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": [
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "skills/incident-postmortem-writer/SKILL.md",
+     "line": 42,
+     "snippet": "Source record: https://emanisha.in/de-agent/skills/incident-postmortem-wri…",
+     "inCode": false,
+     "likelyExample": false
+    }
+   ]
+  },
+  "/skills/sql-review": {
+   "slug": "sql-review",
+   "type": "skill",
+   "files_scanned": 2,
+   "total": 1,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "actionable": 1,
+   "examples": 0,
+   "maxRisk": "medium",
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": [
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "skills/sql-review/SKILL.md",
+     "line": 44,
+     "snippet": "Source record: https://emanisha.in/de-agent/skills/sql-review",
+     "inCode": false,
+     "likelyExample": false
+    }
+   ]
+  },
+  "/skills/airflow-dag-reviewer": {
+   "slug": "airflow-dag-reviewer",
+   "type": "skill",
+   "files_scanned": 2,
+   "total": 1,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "actionable": 1,
+   "examples": 0,
+   "maxRisk": "medium",
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": [
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "skills/airflow-dag-reviewer/SKILL.md",
+     "line": 42,
+     "snippet": "Source record: https://emanisha.in/de-agent/skills/airflow-dag-reviewer",
+     "inCode": false,
+     "likelyExample": false
+    }
+   ]
+  },
+  "/skills/athena-partition-advisor": {
+   "slug": "athena-partition-advisor",
+   "type": "skill",
+   "files_scanned": 2,
+   "total": 1,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "actionable": 1,
+   "examples": 0,
+   "maxRisk": "medium",
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": [
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "skills/athena-partition-advisor/SKILL.md",
+     "line": 41,
+     "snippet": "Source record: https://emanisha.in/de-agent/skills/athena-partition-adviso…",
+     "inCode": false,
+     "likelyExample": false
+    }
+   ]
+  },
+  "/skills/aws-glue-job-reviewer": {
+   "slug": "aws-glue-job-reviewer",
+   "type": "skill",
+   "files_scanned": 2,
+   "total": 1,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "actionable": 1,
+   "examples": 0,
+   "maxRisk": "medium",
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": [
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "skills/aws-glue-job-reviewer/SKILL.md",
+     "line": 43,
+     "snippet": "Source record: https://emanisha.in/de-agent/skills/aws-glue-job-reviewer",
+     "inCode": false,
+     "likelyExample": false
+    }
+   ]
+  },
+  "/skills/cost-unit-economics-reporter": {
+   "slug": "cost-unit-economics-reporter",
+   "type": "skill",
+   "files_scanned": 2,
+   "total": 1,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "actionable": 1,
+   "examples": 0,
+   "maxRisk": "medium",
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": [
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "skills/cost-unit-economics-reporter/SKILL.md",
+     "line": 40,
+     "snippet": "Source record: https://emanisha.in/de-agent/skills/cost-unit-economics-rep…",
+     "inCode": false,
+     "likelyExample": false
+    }
+   ]
+  },
+  "/skills/data-contract-author": {
+   "slug": "data-contract-author",
+   "type": "skill",
+   "files_scanned": 2,
+   "total": 1,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "actionable": 1,
+   "examples": 0,
+   "maxRisk": "medium",
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": [
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "skills/data-contract-author/SKILL.md",
+     "line": 42,
+     "snippet": "Source record: https://emanisha.in/de-agent/skills/data-contract-author",
+     "inCode": false,
+     "likelyExample": false
+    }
+   ]
+  },
+  "/skills/dbt-model-review": {
+   "slug": "dbt-model-review",
+   "type": "skill",
+   "files_scanned": 2,
+   "total": 1,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "actionable": 1,
+   "examples": 0,
+   "maxRisk": "medium",
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": [
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "skills/dbt-model-review/SKILL.md",
+     "line": 45,
+     "snippet": "Source record: https://emanisha.in/de-agent/skills/dbt-model-review",
+     "inCode": false,
+     "likelyExample": false
+    }
+   ]
+  },
+  "/skills/delta-optimization-advisor": {
+   "slug": "delta-optimization-advisor",
+   "type": "skill",
+   "files_scanned": 2,
+   "total": 1,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "actionable": 1,
+   "examples": 0,
+   "maxRisk": "medium",
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": [
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "skills/delta-optimization-advisor/SKILL.md",
+     "line": 42,
+     "snippet": "Source record: https://emanisha.in/de-agent/skills/delta-optimization-advi…",
+     "inCode": false,
+     "likelyExample": false
+    }
+   ]
+  },
+  "/skills/lineage-explainer": {
+   "slug": "lineage-explainer",
+   "type": "skill",
+   "files_scanned": 2,
+   "total": 1,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "actionable": 1,
+   "examples": 0,
+   "maxRisk": "medium",
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": [
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "skills/lineage-explainer/SKILL.md",
+     "line": 41,
+     "snippet": "Source record: https://emanisha.in/de-agent/skills/lineage-explainer",
+     "inCode": false,
+     "likelyExample": false
+    }
+   ]
+  },
+  "/skills/pii-classifier": {
+   "slug": "pii-classifier",
+   "type": "skill",
+   "files_scanned": 2,
+   "total": 1,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "actionable": 1,
+   "examples": 0,
+   "maxRisk": "medium",
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": [
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "skills/pii-classifier/SKILL.md",
+     "line": 44,
+     "snippet": "Source record: https://emanisha.in/de-agent/skills/pii-classifier",
+     "inCode": false,
+     "likelyExample": false
+    }
+   ]
+  },
+  "/skills/pipeline-test-author": {
+   "slug": "pipeline-test-author",
+   "type": "skill",
+   "files_scanned": 2,
+   "total": 1,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "actionable": 1,
+   "examples": 0,
+   "maxRisk": "medium",
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": [
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "skills/pipeline-test-author/SKILL.md",
+     "line": 44,
+     "snippet": "Source record: https://emanisha.in/de-agent/skills/pipeline-test-author",
+     "inCode": false,
+     "likelyExample": false
+    }
+   ]
+  },
+  "/skills/schema-change-contract-review": {
+   "slug": "schema-change-contract-review",
+   "type": "skill",
+   "files_scanned": 2,
+   "total": 1,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "actionable": 1,
+   "examples": 0,
+   "maxRisk": "medium",
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": [
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "skills/schema-change-contract-review/SKILL.md",
+     "line": 44,
+     "snippet": "Source record: https://emanisha.in/de-agent/skills/schema-change-contract-…",
+     "inCode": false,
+     "likelyExample": false
+    }
+   ]
+  },
+  "/skills/spark-data-quality-review": {
+   "slug": "spark-data-quality-review",
+   "type": "skill",
+   "files_scanned": 2,
+   "total": 1,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "actionable": 1,
+   "examples": 0,
+   "maxRisk": "medium",
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": [
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "skills/spark-data-quality-review/SKILL.md",
+     "line": 48,
+     "snippet": "Source record: https://emanisha.in/de-agent/skills/spark-data-quality-revi…",
+     "inCode": false,
+     "likelyExample": false
+    }
+   ]
+  },
+  "/skills/sql-query-plan-explainer": {
+   "slug": "sql-query-plan-explainer",
+   "type": "skill",
+   "files_scanned": 2,
+   "total": 1,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "actionable": 1,
+   "examples": 0,
+   "maxRisk": "medium",
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": [
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "skills/sql-query-plan-explainer/SKILL.md",
+     "line": 41,
+     "snippet": "Source record: https://emanisha.in/de-agent/skills/sql-query-plan-explaine…",
+     "inCode": false,
+     "likelyExample": false
+    }
+   ]
+  },
+  "/skills/backfill-planner": {
+   "slug": "backfill-planner",
+   "type": "skill",
+   "files_scanned": 2,
+   "total": 1,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "actionable": 1,
+   "examples": 0,
+   "maxRisk": "medium",
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": [
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "skills/backfill-planner/SKILL.md",
+     "line": 41,
+     "snippet": "Source record: https://emanisha.in/de-agent/skills/backfill-planner",
+     "inCode": false,
+     "likelyExample": false
+    }
+   ]
+  },
+  "/skills/cdc-merge-designer": {
+   "slug": "cdc-merge-designer",
+   "type": "skill",
+   "files_scanned": 2,
+   "total": 1,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "actionable": 1,
+   "examples": 0,
+   "maxRisk": "medium",
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": [
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "skills/cdc-merge-designer/SKILL.md",
+     "line": 46,
+     "snippet": "Source record: https://emanisha.in/de-agent/skills/cdc-merge-designer",
+     "inCode": false,
+     "likelyExample": false
+    }
+   ]
+  },
+  "/skills/iceberg-table-maintenance": {
+   "slug": "iceberg-table-maintenance",
+   "type": "skill",
+   "files_scanned": 2,
+   "total": 1,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "actionable": 1,
+   "examples": 0,
+   "maxRisk": "medium",
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": [
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "skills/iceberg-table-maintenance/SKILL.md",
+     "line": 48,
+     "snippet": "Source record: https://emanisha.in/de-agent/skills/iceberg-table-maintenan…",
+     "inCode": false,
+     "likelyExample": false
+    }
+   ]
+  },
+  "/skills/kafka-consumer-lag-triage": {
+   "slug": "kafka-consumer-lag-triage",
+   "type": "skill",
+   "files_scanned": 2,
+   "total": 1,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "actionable": 1,
+   "examples": 0,
+   "maxRisk": "medium",
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": [
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "skills/kafka-consumer-lag-triage/SKILL.md",
+     "line": 45,
+     "snippet": "Source record: https://emanisha.in/de-agent/skills/kafka-consumer-lag-tria…",
+     "inCode": false,
+     "likelyExample": false
+    }
+   ]
+  },
+  "/skills/mcp-tool-contract-auditor": {
+   "slug": "mcp-tool-contract-auditor",
+   "type": "skill",
+   "files_scanned": 2,
+   "total": 5,
+   "byRisk": {
+    "critical": 4,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "actionable": 1,
+   "examples": 4,
+   "maxRisk": "medium",
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": [
+    {
+     "rule": "hidden-ignore-instructions",
+     "family": "hidden-instruction",
+     "title": "Prompt-injection directive hidden in prose",
+     "risk": "critical",
+     "definition": "Documentation or skill text tries to override the agent's instructions at runtime.",
+     "remediation": "Remove directive language from prose; skills describe capabilities, they do not command the agent behind the user's back.",
+     "file": "skills/mcp-tool-contract-auditor/SKILL.md",
+     "line": 3,
+     "snippet": "…ete, spend money or exfiltrate data, and produces a least-privilege co…",
+     "inCode": false,
+     "likelyExample": true
+    },
+    {
+     "rule": "hidden-ignore-instructions",
+     "family": "hidden-instruction",
+     "title": "Prompt-injection directive hidden in prose",
+     "risk": "critical",
+     "definition": "Documentation or skill text tries to override the agent's instructions at runtime.",
+     "remediation": "Remove directive language from prose; skills describe capabilities, they do not command the agent behind the user's back.",
+     "file": "skills/mcp-tool-contract-auditor/SKILL.md",
+     "line": 11,
+     "snippet": "…ete, spend money or exfiltrate data, and produces a least-privilege co…",
+     "inCode": false,
+     "likelyExample": true
+    },
+    {
+     "rule": "hidden-ignore-instructions",
+     "family": "hidden-instruction",
+     "title": "Prompt-injection directive hidden in prose",
+     "risk": "critical",
+     "definition": "Documentation or skill text tries to override the agent's instructions at runtime.",
+     "remediation": "Remove directive language from prose; skills describe capabilities, they do not command the agent behind the user's back.",
+     "file": "skills/mcp-tool-contract-auditor/SKILL.md",
+     "line": 28,
+     "snippet": "- **Exfiltrate** — can send data to an external networ…",
+     "inCode": false,
+     "likelyExample": true
+    },
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "skills/mcp-tool-contract-auditor/SKILL.md",
+     "line": 42,
+     "snippet": "Source record: https://emanisha.in/de-agent/skills/mcp-tool-contract-audit…",
+     "inCode": false,
+     "likelyExample": false
+    },
+    {
+     "rule": "hidden-ignore-instructions",
+     "family": "hidden-instruction",
+     "title": "Prompt-injection directive hidden in prose",
+     "risk": "critical",
+     "definition": "Documentation or skill text tries to override the agent's instructions at runtime.",
+     "remediation": "Remove directive language from prose; skills describe capabilities, they do not command the agent behind the user's back.",
+     "file": "curated:data\\curated\\skills\\12-agentic-observability.yaml#skill-mcp-tool-contract-auditor",
+     "line": 4,
+     "snippet": "…ete, spend money or exfiltrate data, and produces a",
+     "inCode": false,
+     "likelyExample": true
+    }
+   ]
+  },
+  "/skills/spark-cost-regression-guard": {
+   "slug": "spark-cost-regression-guard",
+   "type": "skill",
+   "files_scanned": 2,
+   "total": 1,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "actionable": 1,
+   "examples": 0,
+   "maxRisk": "medium",
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": [
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "skills/spark-cost-regression-guard/SKILL.md",
+     "line": 43,
+     "snippet": "Source record: https://emanisha.in/de-agent/skills/spark-cost-regression-g…",
+     "inCode": false,
+     "likelyExample": false
+    }
+   ]
+  },
+  "/skills/spark-skew-diagnosis": {
+   "slug": "spark-skew-diagnosis",
+   "type": "skill",
+   "files_scanned": 2,
+   "total": 1,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "actionable": 1,
+   "examples": 0,
+   "maxRisk": "medium",
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": [
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "skills/spark-skew-diagnosis/SKILL.md",
+     "line": 46,
+     "snippet": "Source record: https://emanisha.in/de-agent/skills/spark-skew-diagnosis",
+     "inCode": false,
+     "likelyExample": false
+    }
+   ]
+  },
+  "/skills/warehouse-clustering-advisor": {
+   "slug": "warehouse-clustering-advisor",
+   "type": "skill",
+   "files_scanned": 2,
+   "total": 1,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+   },
+   "actionable": 1,
+   "examples": 0,
+   "maxRisk": "medium",
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": [
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "skills/warehouse-clustering-advisor/SKILL.md",
+     "line": 43,
+     "snippet": "Source record: https://emanisha.in/de-agent/skills/warehouse-clustering-ad…",
+     "inCode": false,
+     "likelyExample": false
+    }
+   ]
+  },
+  "/mcp/duckdb": {
+   "slug": "duckdb",
+   "type": "mcp",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/mcp/fetch": {
+   "slug": "fetch",
+   "type": "mcp",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/mcp/filesystem": {
+   "slug": "filesystem",
+   "type": "mcp",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/mcp/git": {
+   "slug": "git",
+   "type": "mcp",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/mcp/github": {
+   "slug": "github",
+   "type": "mcp",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/mcp/postgres": {
+   "slug": "postgres",
+   "type": "mcp",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/mcp/bigquery": {
+   "slug": "bigquery",
+   "type": "mcp",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/mcp/datahub": {
+   "slug": "datahub",
+   "type": "mcp",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/mcp/dbt": {
+   "slug": "dbt",
+   "type": "mcp",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/mcp/snowflake": {
+   "slug": "snowflake",
+   "type": "mcp",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/mcp/aws": {
+   "slug": "aws",
+   "type": "mcp",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/mcp/kafka": {
+   "slug": "kafka",
+   "type": "mcp",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/plugins/de-data-toolkit": {
+   "slug": "de-data-toolkit",
+   "type": "plugin",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/plugins/runbook-runner": {
+   "slug": "runbook-runner",
+   "type": "plugin",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/plugins/contract-kit": {
+   "slug": "contract-kit",
+   "type": "plugin",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/plugins/dbt-workbench": {
+   "slug": "dbt-workbench",
+   "type": "plugin",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/plugins/lineage-graph": {
+   "slug": "lineage-graph",
+   "type": "plugin",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/plugins/warehouse-explorer": {
+   "slug": "warehouse-explorer",
+   "type": "plugin",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/plugins/cost-lens": {
+   "slug": "cost-lens",
+   "type": "plugin",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/plugins/kafka-console": {
+   "slug": "kafka-console",
+   "type": "plugin",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/plugins/lakehouse-guard": {
+   "slug": "lakehouse-guard",
+   "type": "plugin",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/plugins/spark-lens": {
+   "slug": "spark-lens",
+   "type": "plugin",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/hooks/destructive-sql-guard": {
+   "slug": "destructive-sql-guard",
+   "type": "hook",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/hooks/prod-write-confirm": {
+   "slug": "prod-write-confirm",
+   "type": "hook",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/hooks/secret-scan-commit": {
+   "slug": "secret-scan-commit",
+   "type": "hook",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/hooks/dbt-full-refresh-guard": {
+   "slug": "dbt-full-refresh-guard",
+   "type": "hook",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/hooks/freshness-pre-merge": {
+   "slug": "freshness-pre-merge",
+   "type": "hook",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/hooks/pre-deployment-dq-check": {
+   "slug": "pre-deployment-dq-check",
+   "type": "hook",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/hooks/schema-change-check": {
+   "slug": "schema-change-check",
+   "type": "hook",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/hooks/backfill-safety-check": {
+   "slug": "backfill-safety-check",
+   "type": "hook",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/hooks/pii-leak-guard": {
+   "slug": "pii-leak-guard",
+   "type": "hook",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/hooks/spark-cost-check": {
+   "slug": "spark-cost-check",
+   "type": "hook",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/agents/data-catalog-assistant": {
+   "slug": "data-catalog-assistant",
+   "type": "agent",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/agents/sql-reviewer": {
+   "slug": "sql-reviewer",
+   "type": "agent",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/agents/data-quality-reviewer": {
+   "slug": "data-quality-reviewer",
+   "type": "agent",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/agents/incident-assistant": {
+   "slug": "incident-assistant",
+   "type": "agent",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/agents/pipeline-reviewer": {
+   "slug": "pipeline-reviewer",
+   "type": "agent",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/agents/schema-reviewer": {
+   "slug": "schema-reviewer",
+   "type": "agent",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/agents/aws-architecture-reviewer": {
+   "slug": "aws-architecture-reviewer",
+   "type": "agent",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/agents/backfill-planner-agent": {
+   "slug": "backfill-planner-agent",
+   "type": "agent",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/agents/cost-optimizer": {
+   "slug": "cost-optimizer",
+   "type": "agent",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/agents/databricks-reviewer": {
+   "slug": "databricks-reviewer",
+   "type": "agent",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/agents/kafka-troubleshooter": {
+   "slug": "kafka-troubleshooter",
+   "type": "agent",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/agents/spark-optimizer": {
+   "slug": "spark-optimizer",
+   "type": "agent",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/templates/dbt-project": {
+   "slug": "dbt-project",
+   "type": "template",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/templates/docker-local-stack": {
+   "slug": "docker-local-stack",
+   "type": "template",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/templates/airflow-dag": {
+   "slug": "airflow-dag",
+   "type": "template",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/templates/data-contract-template": {
+   "slug": "data-contract-template",
+   "type": "template",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/templates/pyspark-project": {
+   "slug": "pyspark-project",
+   "type": "template",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/templates/kafka-streaming": {
+   "slug": "kafka-streaming",
+   "type": "template",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/templates/terraform-aws-data-platform": {
+   "slug": "terraform-aws-data-platform",
+   "type": "template",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/projects/dbt-warehouse-tests": {
+   "slug": "dbt-warehouse-tests",
+   "type": "starter",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/projects/api-s3-spark-parquet": {
+   "slug": "api-s3-spark-parquet",
+   "type": "starter",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/projects/pipeline-dq-quarantine": {
+   "slug": "pipeline-dq-quarantine",
+   "type": "starter",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/projects/s3-glue-athena": {
+   "slug": "s3-glue-athena",
+   "type": "starter",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/projects/kafka-spark-delta": {
+   "slug": "kafka-spark-delta",
+   "type": "starter",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/projects/postgres-cdc-kafka-lakehouse": {
+   "slug": "postgres-cdc-kafka-lakehouse",
+   "type": "starter",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/runbooks/pipeline-failed": {
+   "slug": "pipeline-failed",
+   "type": "runbook",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/runbooks/bad-deployment": {
+   "slug": "bad-deployment",
+   "type": "runbook",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/runbooks/data-contract-broken": {
+   "slug": "data-contract-broken",
+   "type": "runbook",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/runbooks/data-quality-failure": {
+   "slug": "data-quality-failure",
+   "type": "runbook",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/runbooks/duplicate-records": {
+   "slug": "duplicate-records",
+   "type": "runbook",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/runbooks/late-files": {
+   "slug": "late-files",
+   "type": "runbook",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/runbooks/missing-partition": {
+   "slug": "missing-partition",
+   "type": "runbook",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/runbooks/schema-drift": {
+   "slug": "schema-drift",
+   "type": "runbook",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/runbooks/small-files-explosion": {
+   "slug": "small-files-explosion",
+   "type": "runbook",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/runbooks/warehouse-query-slow": {
+   "slug": "warehouse-query-slow",
+   "type": "runbook",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/runbooks/backfill-required": {
+   "slug": "backfill-required",
+   "type": "runbook",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/runbooks/cdc-stopped": {
+   "slug": "cdc-stopped",
+   "type": "runbook",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/runbooks/kafka-consumer-lagging": {
+   "slug": "kafka-consumer-lagging",
+   "type": "runbook",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/runbooks/spark-job-slow": {
+   "slug": "spark-job-slow",
+   "type": "runbook",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/runbooks/spark-job-suddenly-costs-4x": {
+   "slug": "spark-job-suddenly-costs-4x",
+   "type": "runbook",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/patterns/dbt-tests-docs": {
+   "slug": "dbt-tests-docs",
+   "type": "architecture",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/patterns/idempotent-partition-overwrite": {
+   "slug": "idempotent-partition-overwrite",
+   "type": "architecture",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/patterns/medallion-zones": {
+   "slug": "medallion-zones",
+   "type": "architecture",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/patterns/agent-in-the-loop-review": {
+   "slug": "agent-in-the-loop-review",
+   "type": "architecture",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/patterns/small-files-compaction": {
+   "slug": "small-files-compaction",
+   "type": "architecture",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/patterns/contracts-quality-gate": {
+   "slug": "contracts-quality-gate",
+   "type": "architecture",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/patterns/cost-guardrails": {
+   "slug": "cost-guardrails",
+   "type": "architecture",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/patterns/dimensional-model": {
+   "slug": "dimensional-model",
+   "type": "architecture",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/patterns/batch-incremental-watermark": {
+   "slug": "batch-incremental-watermark",
+   "type": "architecture",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/patterns/quarantine-publish": {
+   "slug": "quarantine-publish",
+   "type": "architecture",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/patterns/data-vault": {
+   "slug": "data-vault",
+   "type": "architecture",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/patterns/lambda-vs-kappa": {
+   "slug": "lambda-vs-kappa",
+   "type": "architecture",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/patterns/postgres-cdc-lakehouse": {
+   "slug": "postgres-cdc-lakehouse",
+   "type": "architecture",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/patterns/backfill-safety": {
+   "slug": "backfill-safety",
+   "type": "architecture",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/patterns/streaming-dedup-upsert": {
+   "slug": "streaming-dedup-upsert",
+   "type": "architecture",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/references/a-duckdb-database-with-no-data-in-it": {
+   "slug": "a-duckdb-database-with-no-data-in-it",
+   "type": "reference",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/references/agent-skills": {
+   "slug": "agent-skills",
+   "type": "reference",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/references/airflow-docs": {
+   "slug": "airflow-docs",
+   "type": "reference",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/references/iceberg-docs": {
+   "slug": "iceberg-docs",
+   "type": "reference",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/references/kafka-docs": {
+   "slug": "kafka-docs",
+   "type": "reference",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/references/parquet-docs": {
+   "slug": "parquet-docs",
+   "type": "reference",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/references/spark-docs": {
+   "slug": "spark-docs",
+   "type": "reference",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/references/aws-glue-docs": {
+   "slug": "aws-glue-docs",
+   "type": "reference",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/references/bigquery-docs": {
+   "slug": "bigquery-docs",
+   "type": "reference",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/references/cost-effective-etl-with-duckdb-and-amazon-s3-tables-on-aws-glue": {
+   "slug": "cost-effective-etl-with-duckdb-and-amazon-s3-tables-on-aws-glue",
+   "type": "reference",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/references/daily-life-as-a-jenkins-administrator-2": {
+   "slug": "daily-life-as-a-jenkins-administrator-2",
+   "type": "reference",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/references/daily-life-as-a-jenkins-administrator": {
+   "slug": "daily-life-as-a-jenkins-administrator",
+   "type": "reference",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/references/data-mesh": {
+   "slug": "data-mesh",
+   "type": "reference",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/references/databricks-docs": {
+   "slug": "databricks-docs",
+   "type": "reference",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/references/datahub-docs": {
+   "slug": "datahub-docs",
+   "type": "reference",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/references/dbt-best-practices": {
+   "slug": "dbt-best-practices",
+   "type": "reference",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/references/dbt-docs": {
+   "slug": "dbt-docs",
+   "type": "reference",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/references/debezium-docs": {
+   "slug": "debezium-docs",
+   "type": "reference",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/references/delta-lake-docs": {
+   "slug": "delta-lake-docs",
+   "type": "reference",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/references/designing-data-intensive-applications": {
+   "slug": "designing-data-intensive-applications",
+   "type": "reference",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/references/duckdb-and-hugging-face-querying-datasets-directly": {
+   "slug": "duckdb-and-hugging-face-querying-datasets-directly",
+   "type": "reference",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/references/duckdb-docs": {
+   "slug": "duckdb-docs",
+   "type": "reference",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/references/fundamentals-of-data-engineering": {
+   "slug": "fundamentals-of-data-engineering",
+   "type": "reference",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/references/great-expectations-docs": {
+   "slug": "great-expectations-docs",
+   "type": "reference",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/references/gsoc-2026-final-blog-how-it-was-to-be-a-contributor-at-jenkins": {
+   "slug": "gsoc-2026-final-blog-how-it-was-to-be-a-contributor-at-jenkins",
+   "type": "reference",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/references/importing-data-using-java-table-functions": {
+   "slug": "importing-data-using-java-table-functions",
+   "type": "reference",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/references/investigating-build-regressions-from-the-last-known-good-build": {
+   "slug": "investigating-build-regressions-from-the-last-known-good-build",
+   "type": "reference",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/references/jenkins-and-ai-agents-the-trusted-engine-for-faster-software-del": {
+   "slug": "jenkins-and-ai-agents-the-trusted-engine-for-faster-software-del",
+   "type": "reference",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/references/jev-and-duckdb-plain-english-conditions-in-sql": {
+   "slug": "jev-and-duckdb-plain-english-conditions-in-sql",
+   "type": "reference",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/references/kitfunso-hippo-memory": {
+   "slug": "kitfunso-hippo-memory",
+   "type": "reference",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/references/materialize-once-query-anywhere-introducing-iceberg-materialized": {
+   "slug": "materialize-once-query-anywhere-introducing-iceberg-materialized",
+   "type": "reference",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/references/mcp-registry": {
+   "slug": "mcp-registry",
+   "type": "reference",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/references/mcp-specification": {
+   "slug": "mcp-specification",
+   "type": "reference",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/references/monitoring-mwaa-orchestrated-etl-pipelines-with-amazon-opensearc": {
+   "slug": "monitoring-mwaa-orchestrated-etl-pipelines-with-amazon-opensearc",
+   "type": "reference",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/references/oaslananka-kicad-mcp-pro": {
+   "slug": "oaslananka-kicad-mcp-pro",
+   "type": "reference",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/references/openlineage-docs": {
+   "slug": "openlineage-docs",
+   "type": "reference",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/references/optimize-consumer-rebalancing-on-amazon-msk-with-next-generation": {
+   "slug": "optimize-consumer-rebalancing-on-amazon-msk-with-next-generation",
+   "type": "reference",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/references/query-across-accounts-and-table-formats-with-multi-catalog-in-am": {
+   "slug": "query-across-accounts-and-table-formats-with-multi-catalog-in-am",
+   "type": "reference",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/references/reading-ci-failures-across-pipelines-not-one-build-at-a-time": {
+   "slug": "reading-ci-failures-across-pipelines-not-one-build-at-a-time",
+   "type": "reference",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/references/snowflake-docs": {
+   "slug": "snowflake-docs",
+   "type": "reference",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  },
+  "/references/soda-core": {
+   "slug": "soda-core",
+   "type": "reference",
+   "files_scanned": 1,
+   "total": 0,
+   "byRisk": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "byRiskActionable": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+   },
+   "actionable": 0,
+   "examples": 0,
+   "maxRisk": null,
+   "rulesApplied": 30,
+   "flags": 0,
+   "findings": []
+  }
+ }
+}
