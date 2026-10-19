@@ -136,6 +136,52 @@ export function scanFiles(files, rules = loadRules()) {
 }
 
 /**
+ * SEMANTIC VERDICTS — apply curated judgments to findings.
+ *
+ * Explicit verdicts (keyed "<url>::<rule>::<file>") win over deterministic
+ * verdict rules. benign-in-context stays visible but never flags;
+ * confirmed-risk counts as scanned; escalated counts as critical.
+ * Mutates findings (adds f.judged), returns the actionable summary.
+ */
+export function applyVerdicts(url, findings, { explicit = new Map(), rules = [] }) {
+  for (const f of findings) {
+    const v = explicit.get(`${url}::${f.rule}::${f.file}`);
+    if (v) {
+      f.judged = { verdict: v.verdict, scope: v.scope, explanation: v.explanation, via: 'explicit' };
+      continue;
+    }
+    const vr = rules.find((r) => matchVerdictRule(r, f));
+    if (vr) {
+      f.judged = { verdict: vr.verdict, scope: vr.scope, explanation: vr.explanation, via: `rule:${vr.id}` };
+    }
+  }
+  const actionable = findings.filter((f) => {
+    if (f.likelyExample) return false;
+    if (f.judged) return f.judged.verdict !== 'benign-in-context';
+    return true;
+  });
+  const byRiskActionable = { critical: 0, high: 0, medium: 0, low: 0 };
+  for (const f of actionable) {
+    const risk = f.judged?.verdict === 'escalated' ? 'critical' : f.risk;
+    byRiskActionable[risk] = (byRiskActionable[risk] ?? 0) + 1;
+  }
+  return {
+    actionableCount: actionable.length,
+    byRiskActionable,
+    maxRisk: actionable[0]?.risk ?? null,
+    flagTotal: (byRiskActionable.critical ?? 0) + (byRiskActionable.high ?? 0),
+  };
+}
+
+function matchVerdictRule(vr, f) {
+  if (!vr.when) return false;
+  if (vr.when.rule && vr.when.rule !== f.rule) return false;
+  if (vr.fileRe && !vr.fileRe.test(f.file ?? '')) return false;
+  if (vr.snippetRe && !vr.snippetRe.test(f.snippet ?? '')) return false;
+  return true;
+}
+
+/**
  * security_flags contribution — the number the registry trust score consumes.
  * Critical and high findings count as flags; medium/low stay advisory; and
  * documentation-context (likelyExample) hits never flag.

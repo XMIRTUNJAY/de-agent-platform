@@ -1,0 +1,87 @@
+# SEMANTIC VERDICTS — judgments over static trust-scan findings.
+#
+# The static engine matches text; a verdict says what the match IS in context.
+# No live LLM API: packets are generated offline (pipelines/semantic-review.mjs),
+# reviewed in chat, and the conclusions are recorded here — versioned, diffable,
+# and grounded in the cited evidence. Anyone can re-verify a verdict by reading
+# the cited file in the upstream repo.
+#
+# Schema (one verdict = one finding signature):
+#   id           "<resource-url>::<rule-id>::<file-path>" — survives line drift
+#   verdict      benign-in-context | confirmed-risk | escalated
+#   scope        publisher-ci | docs | runtime | vendor-bootstrap | unknown
+#   explanation  why — what the evidence shows, in one or two sentences
+#   decided_by   who made the call (human curator / agent-judge chat session)
+#   decided_at   ISO date
+#
+# Merge policy (scan-trust.mjs):
+#   benign-in-context  → finding stays visible, marked judged; excluded from flags
+#   confirmed-risk     → counts toward flags as scanned
+#   escalated          → counts toward flags as critical
+#
+# verdict_rules handle the MECHANICAL classes deterministically (each rule is a
+# published, reviewable pattern — not a judgment call). Explicit verdicts below
+# cover the contextual ones; an explicit verdict always wins over a rule.
+
+verdict_rules:
+  - id: package-metadata-urls
+    when:
+      rule: egress-hardcoded-endpoint
+      file: '(setup\.py|package\.json|Cargo\.toml|pyproject\.toml|LICENSE|README|\.md)$'
+      snippet: '(license|homepage|changelog|releases|repository|bugs|documentation|img\.shields\.io|badge)'
+    verdict: benign-in-context
+    scope: docs
+    explanation: Package or repository metadata (homepage/license/changelog links), not a runtime data destination.
+
+  - id: package-index-ci
+    when:
+      rule: egress-hardcoded-endpoint
+      snippet: '(pypi\.python\.org|registry\.npmjs\.org|PYPI_URL|NPM_REGISTRY|index-url)'
+    verdict: benign-in-context
+    scope: publisher-ci
+    explanation: A package registry index used during dependency installation — standard tooling, not data egress.
+
+  - id: license-header-urls
+    when:
+      rule: egress-hardcoded-endpoint
+      snippet: '(www\.apache\.org/licenses|opensource\.org|spdx\.org)'
+    verdict: benign-in-context
+    scope: docs
+    explanation: License header text, not a network call.
+
+  - id: self-canonical-url
+    when:
+      rule: egress-hardcoded-endpoint
+      snippet: '(emanisha\.in|de-agent-platform\.vercel\.app)'
+    verdict: benign-in-context
+    scope: docs
+    explanation: This registry's own canonical URL cited in the record — a self-reference, not external egress.
+
+  - id: docs-links-and-schema-urls
+    when:
+      rule: egress-hardcoded-endpoint
+      file: '\.(md|mdx|json)$'
+      snippet: '(\[[^\]]*\]\(https?://|"\$schema"|https://unpkg\.com/[^" ]*schema|repo:|homepage:|changelog|project/\d+|/releases/)'
+    verdict: benign-in-context
+    scope: docs
+    explanation: Documentation links, release pointers, or tooling schema references in docs/config files — not runtime network calls.
+
+  - id: local-docker-host
+    when:
+      rule: egress-hardcoded-endpoint
+      snippet: 'host\.docker\.internal'
+    verdict: benign-in-context
+    scope: docs
+    explanation: Default pointing at the local Docker host bridge — local-only configuration example, not external egress.
+
+verdicts:
+  - id: "/mcp/kafka::exec-curl-pipe-shell::.github/workflows/cursor.yml"
+    verdict: benign-in-context
+    scope: publisher-ci
+    explanation: >-
+      The flagged `curl https://cursor.com/install -fsS | bash` line sits in the
+      publisher's own GitHub Actions workflow (CI setup installing the Cursor CLI),
+      not in the MCP server runtime that agents execute. Publisher CI plumbing is
+      outside the artifact's blast radius.
+    decided_by: "agent-judge (chat session; evidence: tuannvm/kafka-mcp-server HEAD, .github/workflows/cursor.yml line 33)"
+    decided_at: 2026-10-19

@@ -61,6 +61,10 @@ jobs:
       - run: npm ci
       - name: Run pipeline to generate registry
         run: node pipelines/run.mjs
+      - name: Trust scan (static rules + remote repos)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node pipelines/scan-trust.mjs --remote --remote-limit 25
       - name: "Build static site - API routes excluded, no server in CI"
         # src/pages/api/* are server endpoints (better-sqlite3). They cannot
         # prerender, so the static audit build drops them — same recipe as

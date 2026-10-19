@@ -550,8 +550,13 @@ const scoreColor = (score: number) => {
                       <span class={`chip chip-${f.risk === 'critical' ? 'danger' : f.risk === 'high' ? 'warn' : 'info'}`}>{f.risk}</span>
                       <span class="text-sm" style="color: var(--fg);">{f.title}</span>
                       {f.likelyExample && <span class="chip" style="color: var(--fg-dim);">docs context</span>}
+                      {f.judged && (
+                        <span class="chip" style={f.judged.verdict === 'benign-in-context' ? 'color: var(--color-ok);' : 'color: var(--color-warn);'} title={f.judged.explanation}>
+                          judged: {f.judged.verdict}
+                        </span>
+                      )}
                     </div>
-                    <p class="text-xs text-muted" style="margin: 0.25rem 0 0;">{f.definition}</p>
+                    <p class="text-xs text-muted" style="margin: 0.25rem 0 0;">{f.judged ? f.judged.explanation : f.definition}</p>
                     <p class="font-mono text-2xs text-dim" style="margin: 0.15rem 0 0; overflow-wrap: anywhere;">{f.file}:{f.line}</p>
                     <p class="text-xs" style="margin: 0.2rem 0 0; color: var(--fg-muted);">Fix: {f.remediation}</p>
                   </li>

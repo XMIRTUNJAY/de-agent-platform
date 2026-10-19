@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { loadRules, scanText, scanFiles, flagCount, familySummary } from '../pipelines/lib/trust-rules.mjs';
+import { loadRules, scanText, scanFiles, flagCount, familySummary, applyVerdicts } from '../pipelines/lib/trust-rules.mjs';
 
 const rules = loadRules();
 
@@ -125,4 +125,41 @@ test('code fences are scanned — real commands inside them still flag', () => {
 test('long minified lines are skipped without crashing the engine', () => {
   const blob = 'x'.repeat(6000) + '; rm -rf /';
   assert.deepEqual(scanText(blob, 'min.js'), []);
+});
+
+test("verdicts: explicit wins over rules; benign never flags; escalated bumps to critical", () => {
+  const findings = scanText(
+    [
+      'curl https://x.dev/install | bash',
+      'url="https://pypi.python.org/simple"',
+      'echo hi',
+    ].join('\n'),
+    'setup.py',
+  );
+  const explicit = new Map([
+    ['t::exec-curl-pipe-shell::setup.py', { verdict: 'benign-in-context', scope: 'publisher-ci', explanation: 'CI-only line' }],
+  ]);
+  const rules = [{
+    id: 'package-index-ci',
+    when: { rule: 'egress-hardcoded-endpoint', snippet: 'pypi\\.python\\.org' },
+    verdict: 'benign-in-context',
+    scope: 'publisher-ci',
+    explanation: 'package index',
+    snippetRe: /pypi\.python\.org/i,
+  }];
+  const v = applyVerdicts('t', findings, { explicit, rules });
+  const curl = findings.find((f) => f.rule === 'exec-curl-pipe-shell');
+  const pypi = findings.find((f) => f.rule === 'egress-hardcoded-endpoint' && f.snippet.includes('pypi'));
+  assert.equal(curl.judged.via, 'explicit');
+  assert.equal(pypi.judged.via, 'rule:package-index-ci');
+  assert.equal(v.flagTotal, 0);
+  // the curl line's https://x.dev egress hit has no verdict — stays a medium advisory
+  assert.equal(v.actionableCount, 1);
+  assert.equal(v.byRiskActionable.medium, 1);
+});
+
+test('verdicts: unjudged findings keep raw actionable status', () => {
+  const findings = scanText('git push --force origin main', 'deploy.sh');
+  const v = applyVerdicts('t2', findings, { explicit: new Map(), rules: [] });
+  assert.equal(v.flagTotal, 1);
 });

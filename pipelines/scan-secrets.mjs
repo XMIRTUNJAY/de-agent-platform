@@ -128,9 +128,9 @@ function attributeLocal(file, bySlugOrId, fileIdMap) {
 }
 
 async function ghJson(url) {
-	const text = await fetchText(url);
-	if (!text) throw new Error('empty response: ' + url);
-	return JSON.parse(text);
+	const res = await fetchText(url);
+	if (!res?.ok || !res.body) throw new Error(`HTTP ${res?.status ?? 'none'}: ${url}`);
+	return JSON.parse(res.body);
 }
 
 /** Remote scan of one repo. Returns findings (file paths are repo-relative). */

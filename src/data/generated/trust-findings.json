@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-19T18:43:52.837Z",
+ "generated_at": "2026-10-19T21:23:30.451Z",
  "engine": {
   "rules": 30,
   "families": {
@@ -18,7 +18,7 @@
  },
  "stats": {
   "resources_scanned": 157,
-  "total_findings": 28,
+  "total_findings": 76,
   "flagged_resources": 0
  },
  "resources": {
@@ -50,7 +50,7 @@
    "slug": "data-classification-governance",
    "type": "governance_pack",
    "files_scanned": 1,
-   "total": 0,
+   "total": 9,
    "byRisk": {
     "critical": 0,
     "high": 0,
@@ -63,12 +63,164 @@
     "medium": 0,
     "low": 0
    },
-   "actionable": 0,
+   "actionable": 3,
    "examples": 0,
    "maxRisk": null,
    "rulesApplied": 30,
    "flags": 0,
-   "findings": []
+   "findings": [
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": ".github/actions/setup-uv-credentials/action.yml",
+     "line": 80,
+     "snippet": "…VANILLA_PYPI_URL: \"https://pypi.python.org/simple\"",
+     "inCode": false,
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "publisher-ci",
+      "explanation": "A package registry index used during dependency installation — standard tooling, not data egress.",
+      "via": "rule:package-index-ci"
+     }
+    },
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "datahub-actions/setup.py",
+     "line": 7,
+     "snippet": "#    http://www.apache.org/licenses/LICENSE-2.0",
+     "inCode": false,
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "Package or repository metadata (homepage/license/changelog links), not a runtime data destination.",
+      "via": "rule:package-metadata-urls"
+     }
+    },
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "datahub-actions/setup.py",
+     "line": 203,
+     "snippet": "url=\"https://datahub.com/\",",
+     "inCode": false,
+     "likelyExample": false
+    },
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "datahub-actions/setup.py",
+     "line": 205,
+     "snippet": "…\"Documentation\": \"https://docs.datahub.com/\",",
+     "inCode": false,
+     "likelyExample": true,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "Package or repository metadata (homepage/license/changelog links), not a runtime data destination.",
+      "via": "rule:package-metadata-urls"
+     }
+    },
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "datahub-actions/setup.py",
+     "line": 206,
+     "snippet": "\"Source\": \"https://github.com/datahub-project/datahub\",",
+     "inCode": false,
+     "likelyExample": true
+    },
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "datahub-actions/setup.py",
+     "line": 207,
+     "snippet": "…\"Changelog\": \"https://github.com/acryldata/datahub/releases\",",
+     "inCode": false,
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "Package or repository metadata (homepage/license/changelog links), not a runtime data destination.",
+      "via": "rule:package-metadata-urls"
+     }
+    },
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "datahub-actions/setup.py",
+     "line": 208,
+     "snippet": "…\"Releases\": \"https://github.com/acryldata/datahub/releases\",",
+     "inCode": false,
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "Package or repository metadata (homepage/license/changelog links), not a runtime data destination.",
+      "via": "rule:package-metadata-urls"
+     }
+    },
+    {
+     "rule": "hygiene-unpinned-dependency",
+     "family": "skill-hygiene",
+     "title": "Unpinned package install",
+     "risk": "low",
+     "definition": "npm/pip installs without a version pin — supply-chain drift lands silently.",
+     "remediation": "Pin package==1.2.3 (or a lockfile) and re-run the trust scan on upgrades.",
+     "file": "datahub-agent-context/examples/google_adk/setup_dev.sh",
+     "line": 22,
+     "snippet": "pip install -r requirements.txt",
+     "inCode": false,
+     "likelyExample": false
+    },
+    {
+     "rule": "hygiene-unpinned-dependency",
+     "family": "skill-hygiene",
+     "title": "Unpinned package install",
+     "risk": "low",
+     "definition": "npm/pip installs without a version pin — supply-chain drift lands silently.",
+     "remediation": "Pin package==1.2.3 (or a lockfile) and re-run the trust scan on upgrades.",
+     "file": "datahub-agent-context/examples/langchain/setup_dev.sh",
+     "line": 22,
+     "snippet": "pip install -r requirements.txt",
+     "inCode": false,
+     "likelyExample": false
+    }
+   ],
+   "remote": {
+    "repo": "datahub-project/datahub",
+    "files_scanned": 6
+   }
   },
   "/resources/opa-data-access-policy": {
    "slug": "opa-data-access-policy",
@@ -156,12 +308,12 @@
    "byRiskActionable": {
     "critical": 0,
     "high": 0,
-    "medium": 1,
+    "medium": 0,
     "low": 0
    },
-   "actionable": 1,
-   "examples": 0,
-   "maxRisk": "medium",
+   "actionable": 0,
+   "examples": 1,
+   "maxRisk": null,
    "rulesApplied": 30,
    "flags": 0,
    "findings": [
@@ -176,7 +328,13 @@
      "line": 42,
      "snippet": "Source record: https://emanisha.in/de-agent/skills/dbt-test-writer",
      "inCode": false,
-     "likelyExample": false
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "This registry's own canonical URL cited in the record — a self-reference, not external egress.",
+      "via": "rule:self-canonical-url"
+     }
     }
    ]
   },
@@ -194,12 +352,12 @@
    "byRiskActionable": {
     "critical": 0,
     "high": 0,
-    "medium": 1,
+    "medium": 0,
     "low": 0
    },
-   "actionable": 1,
-   "examples": 0,
-   "maxRisk": "medium",
+   "actionable": 0,
+   "examples": 1,
+   "maxRisk": null,
    "rulesApplied": 30,
    "flags": 0,
    "findings": [
@@ -214,7 +372,13 @@
      "line": 42,
      "snippet": "Source record: https://emanisha.in/de-agent/skills/incident-postmortem-wri…",
      "inCode": false,
-     "likelyExample": false
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "This registry's own canonical URL cited in the record — a self-reference, not external egress.",
+      "via": "rule:self-canonical-url"
+     }
     }
    ]
   },
@@ -232,12 +396,12 @@
    "byRiskActionable": {
     "critical": 0,
     "high": 0,
-    "medium": 1,
+    "medium": 0,
     "low": 0
    },
-   "actionable": 1,
-   "examples": 0,
-   "maxRisk": "medium",
+   "actionable": 0,
+   "examples": 1,
+   "maxRisk": null,
    "rulesApplied": 30,
    "flags": 0,
    "findings": [
@@ -252,7 +416,13 @@
      "line": 44,
      "snippet": "Source record: https://emanisha.in/de-agent/skills/sql-review",
      "inCode": false,
-     "likelyExample": false
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "This registry's own canonical URL cited in the record — a self-reference, not external egress.",
+      "via": "rule:self-canonical-url"
+     }
     }
    ]
   },
@@ -270,12 +440,12 @@
    "byRiskActionable": {
     "critical": 0,
     "high": 0,
-    "medium": 1,
+    "medium": 0,
     "low": 0
    },
-   "actionable": 1,
-   "examples": 0,
-   "maxRisk": "medium",
+   "actionable": 0,
+   "examples": 1,
+   "maxRisk": null,
    "rulesApplied": 30,
    "flags": 0,
    "findings": [
@@ -290,7 +460,13 @@
      "line": 42,
      "snippet": "Source record: https://emanisha.in/de-agent/skills/airflow-dag-reviewer",
      "inCode": false,
-     "likelyExample": false
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "This registry's own canonical URL cited in the record — a self-reference, not external egress.",
+      "via": "rule:self-canonical-url"
+     }
     }
    ]
   },
@@ -308,12 +484,12 @@
    "byRiskActionable": {
     "critical": 0,
     "high": 0,
-    "medium": 1,
+    "medium": 0,
     "low": 0
    },
-   "actionable": 1,
-   "examples": 0,
-   "maxRisk": "medium",
+   "actionable": 0,
+   "examples": 1,
+   "maxRisk": null,
    "rulesApplied": 30,
    "flags": 0,
    "findings": [
@@ -328,7 +504,13 @@
      "line": 41,
      "snippet": "Source record: https://emanisha.in/de-agent/skills/athena-partition-adviso…",
      "inCode": false,
-     "likelyExample": false
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "This registry's own canonical URL cited in the record — a self-reference, not external egress.",
+      "via": "rule:self-canonical-url"
+     }
     }
    ]
   },
@@ -346,12 +528,12 @@
    "byRiskActionable": {
     "critical": 0,
     "high": 0,
-    "medium": 1,
+    "medium": 0,
     "low": 0
    },
-   "actionable": 1,
-   "examples": 0,
-   "maxRisk": "medium",
+   "actionable": 0,
+   "examples": 1,
+   "maxRisk": null,
    "rulesApplied": 30,
    "flags": 0,
    "findings": [
@@ -366,7 +548,13 @@
      "line": 43,
      "snippet": "Source record: https://emanisha.in/de-agent/skills/aws-glue-job-reviewer",
      "inCode": false,
-     "likelyExample": false
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "This registry's own canonical URL cited in the record — a self-reference, not external egress.",
+      "via": "rule:self-canonical-url"
+     }
     }
    ]
   },
@@ -384,12 +572,12 @@
    "byRiskActionable": {
     "critical": 0,
     "high": 0,
-    "medium": 1,
+    "medium": 0,
     "low": 0
    },
-   "actionable": 1,
-   "examples": 0,
-   "maxRisk": "medium",
+   "actionable": 0,
+   "examples": 1,
+   "maxRisk": null,
    "rulesApplied": 30,
    "flags": 0,
    "findings": [
@@ -404,7 +592,13 @@
      "line": 40,
      "snippet": "Source record: https://emanisha.in/de-agent/skills/cost-unit-economics-rep…",
      "inCode": false,
-     "likelyExample": false
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "This registry's own canonical URL cited in the record — a self-reference, not external egress.",
+      "via": "rule:self-canonical-url"
+     }
     }
    ]
   },
@@ -422,12 +616,12 @@
    "byRiskActionable": {
     "critical": 0,
     "high": 0,
-    "medium": 1,
+    "medium": 0,
     "low": 0
    },
-   "actionable": 1,
-   "examples": 0,
-   "maxRisk": "medium",
+   "actionable": 0,
+   "examples": 1,
+   "maxRisk": null,
    "rulesApplied": 30,
    "flags": 0,
    "findings": [
@@ -442,7 +636,13 @@
      "line": 42,
      "snippet": "Source record: https://emanisha.in/de-agent/skills/data-contract-author",
      "inCode": false,
-     "likelyExample": false
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "This registry's own canonical URL cited in the record — a self-reference, not external egress.",
+      "via": "rule:self-canonical-url"
+     }
     }
    ]
   },
@@ -460,12 +660,12 @@
    "byRiskActionable": {
     "critical": 0,
     "high": 0,
-    "medium": 1,
+    "medium": 0,
     "low": 0
    },
-   "actionable": 1,
-   "examples": 0,
-   "maxRisk": "medium",
+   "actionable": 0,
+   "examples": 1,
+   "maxRisk": null,
    "rulesApplied": 30,
    "flags": 0,
    "findings": [
@@ -480,7 +680,13 @@
      "line": 45,
      "snippet": "Source record: https://emanisha.in/de-agent/skills/dbt-model-review",
      "inCode": false,
-     "likelyExample": false
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "This registry's own canonical URL cited in the record — a self-reference, not external egress.",
+      "via": "rule:self-canonical-url"
+     }
     }
    ]
   },
@@ -498,12 +704,12 @@
    "byRiskActionable": {
     "critical": 0,
     "high": 0,
-    "medium": 1,
+    "medium": 0,
     "low": 0
    },
-   "actionable": 1,
-   "examples": 0,
-   "maxRisk": "medium",
+   "actionable": 0,
+   "examples": 1,
+   "maxRisk": null,
    "rulesApplied": 30,
    "flags": 0,
    "findings": [
@@ -518,7 +724,13 @@
      "line": 42,
      "snippet": "Source record: https://emanisha.in/de-agent/skills/delta-optimization-advi…",
      "inCode": false,
-     "likelyExample": false
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "This registry's own canonical URL cited in the record — a self-reference, not external egress.",
+      "via": "rule:self-canonical-url"
+     }
     }
    ]
   },
@@ -536,12 +748,12 @@
    "byRiskActionable": {
     "critical": 0,
     "high": 0,
-    "medium": 1,
+    "medium": 0,
     "low": 0
    },
-   "actionable": 1,
-   "examples": 0,
-   "maxRisk": "medium",
+   "actionable": 0,
+   "examples": 1,
+   "maxRisk": null,
    "rulesApplied": 30,
    "flags": 0,
    "findings": [
@@ -556,7 +768,13 @@
      "line": 41,
      "snippet": "Source record: https://emanisha.in/de-agent/skills/lineage-explainer",
      "inCode": false,
-     "likelyExample": false
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "This registry's own canonical URL cited in the record — a self-reference, not external egress.",
+      "via": "rule:self-canonical-url"
+     }
     }
    ]
   },
@@ -574,12 +792,12 @@
    "byRiskActionable": {
     "critical": 0,
     "high": 0,
-    "medium": 1,
+    "medium": 0,
     "low": 0
    },
-   "actionable": 1,
-   "examples": 0,
-   "maxRisk": "medium",
+   "actionable": 0,
+   "examples": 1,
+   "maxRisk": null,
    "rulesApplied": 30,
    "flags": 0,
    "findings": [
@@ -594,7 +812,13 @@
      "line": 44,
      "snippet": "Source record: https://emanisha.in/de-agent/skills/pii-classifier",
      "inCode": false,
-     "likelyExample": false
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "This registry's own canonical URL cited in the record — a self-reference, not external egress.",
+      "via": "rule:self-canonical-url"
+     }
     }
    ]
   },
@@ -612,12 +836,12 @@
    "byRiskActionable": {
     "critical": 0,
     "high": 0,
-    "medium": 1,
+    "medium": 0,
     "low": 0
    },
-   "actionable": 1,
-   "examples": 0,
-   "maxRisk": "medium",
+   "actionable": 0,
+   "examples": 1,
+   "maxRisk": null,
    "rulesApplied": 30,
    "flags": 0,
    "findings": [
@@ -632,7 +856,13 @@
      "line": 44,
      "snippet": "Source record: https://emanisha.in/de-agent/skills/pipeline-test-author",
      "inCode": false,
-     "likelyExample": false
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "This registry's own canonical URL cited in the record — a self-reference, not external egress.",
+      "via": "rule:self-canonical-url"
+     }
     }
    ]
   },
@@ -650,12 +880,12 @@
    "byRiskActionable": {
     "critical": 0,
     "high": 0,
-    "medium": 1,
+    "medium": 0,
     "low": 0
    },
-   "actionable": 1,
-   "examples": 0,
-   "maxRisk": "medium",
+   "actionable": 0,
+   "examples": 1,
+   "maxRisk": null,
    "rulesApplied": 30,
    "flags": 0,
    "findings": [
@@ -670,7 +900,13 @@
      "line": 44,
      "snippet": "Source record: https://emanisha.in/de-agent/skills/schema-change-contract-…",
      "inCode": false,
-     "likelyExample": false
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "This registry's own canonical URL cited in the record — a self-reference, not external egress.",
+      "via": "rule:self-canonical-url"
+     }
     }
    ]
   },
@@ -688,12 +924,12 @@
    "byRiskActionable": {
     "critical": 0,
     "high": 0,
-    "medium": 1,
+    "medium": 0,
     "low": 0
    },
-   "actionable": 1,
-   "examples": 0,
-   "maxRisk": "medium",
+   "actionable": 0,
+   "examples": 1,
+   "maxRisk": null,
    "rulesApplied": 30,
    "flags": 0,
    "findings": [
@@ -708,7 +944,13 @@
      "line": 48,
      "snippet": "Source record: https://emanisha.in/de-agent/skills/spark-data-quality-revi…",
      "inCode": false,
-     "likelyExample": false
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "This registry's own canonical URL cited in the record — a self-reference, not external egress.",
+      "via": "rule:self-canonical-url"
+     }
     }
    ]
   },
@@ -726,12 +968,12 @@
    "byRiskActionable": {
     "critical": 0,
     "high": 0,
-    "medium": 1,
+    "medium": 0,
     "low": 0
    },
-   "actionable": 1,
-   "examples": 0,
-   "maxRisk": "medium",
+   "actionable": 0,
+   "examples": 1,
+   "maxRisk": null,
    "rulesApplied": 30,
    "flags": 0,
    "findings": [
@@ -746,7 +988,13 @@
      "line": 41,
      "snippet": "Source record: https://emanisha.in/de-agent/skills/sql-query-plan-explaine…",
      "inCode": false,
-     "likelyExample": false
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "This registry's own canonical URL cited in the record — a self-reference, not external egress.",
+      "via": "rule:self-canonical-url"
+     }
     }
    ]
   },
@@ -764,12 +1012,12 @@
    "byRiskActionable": {
     "critical": 0,
     "high": 0,
-    "medium": 1,
+    "medium": 0,
     "low": 0
    },
-   "actionable": 1,
-   "examples": 0,
-   "maxRisk": "medium",
+   "actionable": 0,
+   "examples": 1,
+   "maxRisk": null,
    "rulesApplied": 30,
    "flags": 0,
    "findings": [
@@ -784,7 +1032,13 @@
      "line": 41,
      "snippet": "Source record: https://emanisha.in/de-agent/skills/backfill-planner",
      "inCode": false,
-     "likelyExample": false
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "This registry's own canonical URL cited in the record — a self-reference, not external egress.",
+      "via": "rule:self-canonical-url"
+     }
     }
    ]
   },
@@ -802,12 +1056,12 @@
    "byRiskActionable": {
     "critical": 0,
     "high": 0,
-    "medium": 1,
+    "medium": 0,
     "low": 0
    },
-   "actionable": 1,
-   "examples": 0,
-   "maxRisk": "medium",
+   "actionable": 0,
+   "examples": 1,
+   "maxRisk": null,
    "rulesApplied": 30,
    "flags": 0,
    "findings": [
@@ -822,7 +1076,13 @@
      "line": 46,
      "snippet": "Source record: https://emanisha.in/de-agent/skills/cdc-merge-designer",
      "inCode": false,
-     "likelyExample": false
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "This registry's own canonical URL cited in the record — a self-reference, not external egress.",
+      "via": "rule:self-canonical-url"
+     }
     }
    ]
   },
@@ -840,12 +1100,12 @@
    "byRiskActionable": {
     "critical": 0,
     "high": 0,
-    "medium": 1,
+    "medium": 0,
     "low": 0
    },
-   "actionable": 1,
-   "examples": 0,
-   "maxRisk": "medium",
+   "actionable": 0,
+   "examples": 1,
+   "maxRisk": null,
    "rulesApplied": 30,
    "flags": 0,
    "findings": [
@@ -860,7 +1120,13 @@
      "line": 48,
      "snippet": "Source record: https://emanisha.in/de-agent/skills/iceberg-table-maintenan…",
      "inCode": false,
-     "likelyExample": false
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "This registry's own canonical URL cited in the record — a self-reference, not external egress.",
+      "via": "rule:self-canonical-url"
+     }
     }
    ]
   },
@@ -878,12 +1144,12 @@
    "byRiskActionable": {
     "critical": 0,
     "high": 0,
-    "medium": 1,
+    "medium": 0,
     "low": 0
    },
-   "actionable": 1,
-   "examples": 0,
-   "maxRisk": "medium",
+   "actionable": 0,
+   "examples": 1,
+   "maxRisk": null,
    "rulesApplied": 30,
    "flags": 0,
    "findings": [
@@ -898,7 +1164,13 @@
      "line": 45,
      "snippet": "Source record: https://emanisha.in/de-agent/skills/kafka-consumer-lag-tria…",
      "inCode": false,
-     "likelyExample": false
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "This registry's own canonical URL cited in the record — a self-reference, not external egress.",
+      "via": "rule:self-canonical-url"
+     }
     }
    ]
   },
@@ -916,12 +1188,12 @@
    "byRiskActionable": {
     "critical": 0,
     "high": 0,
-    "medium": 1,
+    "medium": 0,
     "low": 0
    },
-   "actionable": 1,
-   "examples": 4,
-   "maxRisk": "medium",
+   "actionable": 0,
+   "examples": 5,
+   "maxRisk": null,
    "rulesApplied": 30,
    "flags": 0,
    "findings": [
@@ -975,7 +1247,13 @@
      "line": 42,
      "snippet": "Source record: https://emanisha.in/de-agent/skills/mcp-tool-contract-audit…",
      "inCode": false,
-     "likelyExample": false
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "This registry's own canonical URL cited in the record — a self-reference, not external egress.",
+      "via": "rule:self-canonical-url"
+     }
     },
     {
      "rule": "hidden-ignore-instructions",
@@ -1006,12 +1284,12 @@
    "byRiskActionable": {
     "critical": 0,
     "high": 0,
-    "medium": 1,
+    "medium": 0,
     "low": 0
    },
-   "actionable": 1,
-   "examples": 0,
-   "maxRisk": "medium",
+   "actionable": 0,
+   "examples": 1,
+   "maxRisk": null,
    "rulesApplied": 30,
    "flags": 0,
    "findings": [
@@ -1026,7 +1304,13 @@
      "line": 43,
      "snippet": "Source record: https://emanisha.in/de-agent/skills/spark-cost-regression-g…",
      "inCode": false,
-     "likelyExample": false
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "This registry's own canonical URL cited in the record — a self-reference, not external egress.",
+      "via": "rule:self-canonical-url"
+     }
     }
    ]
   },
@@ -1044,12 +1328,12 @@
    "byRiskActionable": {
     "critical": 0,
     "high": 0,
-    "medium": 1,
+    "medium": 0,
     "low": 0
    },
-   "actionable": 1,
-   "examples": 0,
-   "maxRisk": "medium",
+   "actionable": 0,
+   "examples": 1,
+   "maxRisk": null,
    "rulesApplied": 30,
    "flags": 0,
    "findings": [
@@ -1064,7 +1348,13 @@
      "line": 46,
      "snippet": "Source record: https://emanisha.in/de-agent/skills/spark-skew-diagnosis",
      "inCode": false,
-     "likelyExample": false
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "This registry's own canonical URL cited in the record — a self-reference, not external egress.",
+      "via": "rule:self-canonical-url"
+     }
     }
    ]
   },
@@ -1082,12 +1372,12 @@
    "byRiskActionable": {
     "critical": 0,
     "high": 0,
-    "medium": 1,
+    "medium": 0,
     "low": 0
    },
-   "actionable": 1,
-   "examples": 0,
-   "maxRisk": "medium",
+   "actionable": 0,
+   "examples": 1,
+   "maxRisk": null,
    "rulesApplied": 30,
    "flags": 0,
    "findings": [
@@ -1102,7 +1392,13 @@
      "line": 43,
      "snippet": "Source record: https://emanisha.in/de-agent/skills/warehouse-clustering-ad…",
      "inCode": false,
-     "likelyExample": false
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "This registry's own canonical URL cited in the record — a self-reference, not external egress.",
+      "via": "rule:self-canonical-url"
+     }
     }
    ]
   },
@@ -1110,7 +1406,7 @@
    "slug": "duckdb",
    "type": "mcp",
    "files_scanned": 1,
-   "total": 0,
+   "total": 21,
    "byRisk": {
     "critical": 0,
     "high": 0,
@@ -1123,18 +1419,332 @@
     "medium": 0,
     "low": 0
    },
-   "actionable": 0,
+   "actionable": 9,
    "examples": 0,
    "maxRisk": null,
    "rulesApplied": 30,
    "flags": 0,
-   "findings": []
+   "findings": [
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": ".github/workflows/publish-mcp.yml",
+     "line": 83,
+     "snippet": "\"https://github.com/modelcontextprotocol/registry/releases/…",
+     "inCode": false,
+     "likelyExample": false
+    },
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": ".pre-commit-config.yaml",
+     "line": 2,
+     "snippet": "- repo: https://github.com/astral-sh/ruff-pre-commit",
+     "inCode": false,
+     "likelyExample": false
+    },
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "README.md",
+     "line": 15,
+     "snippet": "…ck Remote MCP docs](https://motherduck.com/docs/sql-reference/mcp/)",
+     "inCode": false,
+     "likelyExample": true
+    },
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "README.md",
+     "line": 19,
+     "snippet": "| | **[Remote MCP](https://motherduck.com/docs/sql-reference/mcp/)** | **Local MC…",
+     "inCode": false,
+     "likelyExample": true,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "Documentation links, release pointers, or tooling schema references in docs/config files — not runtime network calls.",
+      "via": "rule:docs-links-and-schema-urls"
+     }
+    },
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "README.md",
+     "line": 82,
+     "snippet": "….mcpb (MCP Bundle)](https://github.com/motherduckdb/mcp-server-motherduck/rele…",
+     "inCode": false,
+     "likelyExample": false
+    },
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "README.md",
+     "line": 86,
+     "snippet": "…server | [<img src=\"https://cursor.com/deeplink/mcp-install-dark.svg\" alt=\"Ins…",
+     "inCode": false,
+     "likelyExample": false
+    },
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "README.md",
+     "line": 87,
+     "snippet": "…with UV in VS Code](https://img.shields.io/badge/VS_Code-Install-0098FF?style=flat…",
+     "inCode": false,
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "Package or repository metadata (homepage/license/changelog links), not a runtime data destination.",
+      "via": "rule:package-metadata-urls"
+     }
+    },
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "README.md",
+     "line": 88,
+     "snippet": "…) | [![Add to Kiro](https://kiro.dev/images/add-to-kiro.svg)](https://kiro.d…",
+     "inCode": false,
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "Documentation links, release pointers, or tooling schema references in docs/config files — not runtime network calls.",
+      "via": "rule:docs-links-and-schema-urls"
+     }
+    },
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "README.md",
+     "line": 155,
+     "snippet": "…MCP documentation](https://kiro.dev/docs/mcp/) for more details.",
+     "inCode": false,
+     "likelyExample": true,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "Package or repository metadata (homepage/license/changelog links), not a runtime data destination.",
+      "via": "rule:package-metadata-urls"
+     }
+    },
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "README.md",
+     "line": 204,
+     "snippet": "…herDuck Remote MCP](https://motherduck.com/docs/sql-reference/mcp/)** — zero-setup…",
+     "inCode": false,
+     "likelyExample": true
+    },
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "README.md",
+     "line": 206,
+     "snippet": "…**[service account](https://motherduck.com/docs/key-tasks/service-accounts-guide/)…",
+     "inCode": false,
+     "likelyExample": true,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "Documentation links, release pointers, or tooling schema references in docs/config files — not runtime network calls.",
+      "via": "rule:docs-links-and-schema-urls"
+     }
+    },
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "README.md",
+     "line": 208,
+     "snippet": "…uring DuckDB guide](https://duckdb.org/docs/stable/operations_manual/securing_…",
+     "inCode": false,
+     "likelyExample": true
+    },
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "README.md",
+     "line": 245,
+     "snippet": "…AgentCore Runtime](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runti…",
+     "inCode": false,
+     "likelyExample": true
+    },
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "README.md",
+     "line": 268,
+     "snippet": "…MCP Documentation](https://motherduck.com/docs/sql-reference/mcp/)",
+     "inCode": false,
+     "likelyExample": true,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "Package or repository metadata (homepage/license/changelog links), not a runtime data destination.",
+      "via": "rule:package-metadata-urls"
+     }
+    },
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "README.md",
+     "line": 269,
+     "snippet": "…DuckDB & AI (Blog)](https://motherduck.com/blog/faster-data-pipelines-with-mcp-duc…",
+     "inCode": false,
+     "likelyExample": false
+    },
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "README.md",
+     "line": 270,
+     "snippet": "…d DuckDB (YouTube)](https://www.youtube.com/watch?v=yG1mv8ZRxcU)",
+     "inCode": false,
+     "likelyExample": false
+    },
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "manifest.json",
+     "line": 10,
+     "snippet": "\"url\": \"https://motherduck.com\"",
+     "inCode": false,
+     "likelyExample": false
+    },
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "manifest.json",
+     "line": 14,
+     "snippet": "\"url\": \"https://github.com/motherduckdb/mcp-server-motherduck.git\"",
+     "inCode": false,
+     "likelyExample": false
+    },
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "manifest.json",
+     "line": 16,
+     "snippet": "\"homepage\": \"https://github.com/motherduckdb/mcp-server-motherduck\",",
+     "inCode": false,
+     "likelyExample": false
+    },
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "manifest.json",
+     "line": 17,
+     "snippet": "\"documentation\": \"https://github.com/motherduckdb/mcp-server-motherduck#read…",
+     "inCode": false,
+     "likelyExample": true
+    },
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": "manifest.json",
+     "line": 18,
+     "snippet": "\"support\": \"https://github.com/motherduckdb/mcp-server-motherduck/issu…",
+     "inCode": false,
+     "likelyExample": true
+    }
+   ],
+   "remote": {
+    "repo": "motherduckdb/mcp-server-motherduck",
+    "files_scanned": 6
+   }
   },
   "/mcp/fetch": {
    "slug": "fetch",
    "type": "mcp",
    "files_scanned": 1,
-   "total": 0,
+   "total": 3,
    "byRisk": {
     "critical": 0,
     "high": 0,
@@ -1152,13 +1762,75 @@
    "maxRisk": null,
    "rulesApplied": 30,
    "flags": 0,
-   "findings": []
+   "findings": [
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": ".changeset/README.md",
+     "line": 5,
+     "snippet": "[changesets](https://github.com/changesets/changesets). This directory…",
+     "inCode": false,
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "Documentation links, release pointers, or tooling schema references in docs/config files — not runtime network calls.",
+      "via": "rule:docs-links-and-schema-urls"
+     }
+    },
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": ".changeset/config.json",
+     "line": 2,
+     "snippet": "\"$schema\": \"https://unpkg.com/@changesets/config@4.0.1/schema.json\",",
+     "inCode": false,
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "Documentation links, release pointers, or tooling schema references in docs/config files — not runtime network calls.",
+      "via": "rule:docs-links-and-schema-urls"
+     }
+    },
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": ".claude/skills/board-ops/SKILL.md",
+     "line": 26,
+     "snippet": "…[Servers V2 (#43)](https://github.com/orgs/modelcontextprotocol/projects/43)…",
+     "inCode": false,
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "Documentation links, release pointers, or tooling schema references in docs/config files — not runtime network calls.",
+      "via": "rule:docs-links-and-schema-urls"
+     }
+    }
+   ],
+   "remote": {
+    "repo": "modelcontextprotocol/servers",
+    "files_scanned": 6
+   }
   },
   "/mcp/filesystem": {
    "slug": "filesystem",
    "type": "mcp",
    "files_scanned": 1,
-   "total": 0,
+   "total": 3,
    "byRisk": {
     "critical": 0,
     "high": 0,
@@ -1176,13 +1848,75 @@
    "maxRisk": null,
    "rulesApplied": 30,
    "flags": 0,
-   "findings": []
+   "findings": [
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": ".changeset/README.md",
+     "line": 5,
+     "snippet": "[changesets](https://github.com/changesets/changesets). This directory…",
+     "inCode": false,
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "Documentation links, release pointers, or tooling schema references in docs/config files — not runtime network calls.",
+      "via": "rule:docs-links-and-schema-urls"
+     }
+    },
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": ".changeset/config.json",
+     "line": 2,
+     "snippet": "\"$schema\": \"https://unpkg.com/@changesets/config@4.0.1/schema.json\",",
+     "inCode": false,
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "Documentation links, release pointers, or tooling schema references in docs/config files — not runtime network calls.",
+      "via": "rule:docs-links-and-schema-urls"
+     }
+    },
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": ".claude/skills/board-ops/SKILL.md",
+     "line": 26,
+     "snippet": "…[Servers V2 (#43)](https://github.com/orgs/modelcontextprotocol/projects/43)…",
+     "inCode": false,
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "Documentation links, release pointers, or tooling schema references in docs/config files — not runtime network calls.",
+      "via": "rule:docs-links-and-schema-urls"
+     }
+    }
+   ],
+   "remote": {
+    "repo": "modelcontextprotocol/servers",
+    "files_scanned": 6
+   }
   },
   "/mcp/git": {
    "slug": "git",
    "type": "mcp",
    "files_scanned": 1,
-   "total": 0,
+   "total": 3,
    "byRisk": {
     "critical": 0,
     "high": 0,
@@ -1200,7 +1934,69 @@
    "maxRisk": null,
    "rulesApplied": 30,
    "flags": 0,
-   "findings": []
+   "findings": [
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": ".changeset/README.md",
+     "line": 5,
+     "snippet": "[changesets](https://github.com/changesets/changesets). This directory…",
+     "inCode": false,
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "Documentation links, release pointers, or tooling schema references in docs/config files — not runtime network calls.",
+      "via": "rule:docs-links-and-schema-urls"
+     }
+    },
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": ".changeset/config.json",
+     "line": 2,
+     "snippet": "\"$schema\": \"https://unpkg.com/@changesets/config@4.0.1/schema.json\",",
+     "inCode": false,
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "Documentation links, release pointers, or tooling schema references in docs/config files — not runtime network calls.",
+      "via": "rule:docs-links-and-schema-urls"
+     }
+    },
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": ".claude/skills/board-ops/SKILL.md",
+     "line": 26,
+     "snippet": "…[Servers V2 (#43)](https://github.com/orgs/modelcontextprotocol/projects/43)…",
+     "inCode": false,
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "Documentation links, release pointers, or tooling schema references in docs/config files — not runtime network calls.",
+      "via": "rule:docs-links-and-schema-urls"
+     }
+    }
+   ],
+   "remote": {
+    "repo": "modelcontextprotocol/servers",
+    "files_scanned": 6
+   }
   },
   "/mcp/github": {
    "slug": "github",
@@ -1230,7 +2026,7 @@
    "slug": "postgres",
    "type": "mcp",
    "files_scanned": 1,
-   "total": 0,
+   "total": 3,
    "byRisk": {
     "critical": 0,
     "high": 0,
@@ -1248,7 +2044,69 @@
    "maxRisk": null,
    "rulesApplied": 30,
    "flags": 0,
-   "findings": []
+   "findings": [
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": ".changeset/README.md",
+     "line": 5,
+     "snippet": "[changesets](https://github.com/changesets/changesets). This directory…",
+     "inCode": false,
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "Documentation links, release pointers, or tooling schema references in docs/config files — not runtime network calls.",
+      "via": "rule:docs-links-and-schema-urls"
+     }
+    },
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": ".changeset/config.json",
+     "line": 2,
+     "snippet": "\"$schema\": \"https://unpkg.com/@changesets/config@4.0.1/schema.json\",",
+     "inCode": false,
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "Documentation links, release pointers, or tooling schema references in docs/config files — not runtime network calls.",
+      "via": "rule:docs-links-and-schema-urls"
+     }
+    },
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": ".claude/skills/board-ops/SKILL.md",
+     "line": 26,
+     "snippet": "…[Servers V2 (#43)](https://github.com/orgs/modelcontextprotocol/projects/43)…",
+     "inCode": false,
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "Documentation links, release pointers, or tooling schema references in docs/config files — not runtime network calls.",
+      "via": "rule:docs-links-and-schema-urls"
+     }
+    }
+   ],
+   "remote": {
+    "repo": "modelcontextprotocol/servers",
+    "files_scanned": 6
+   }
   },
   "/mcp/bigquery": {
    "slug": "bigquery",
@@ -1278,7 +2136,7 @@
    "slug": "datahub",
    "type": "mcp",
    "files_scanned": 1,
-   "total": 0,
+   "total": 4,
    "byRisk": {
     "critical": 0,
     "high": 0,
@@ -1291,12 +2149,75 @@
     "medium": 0,
     "low": 0
    },
-   "actionable": 0,
+   "actionable": 2,
    "examples": 0,
    "maxRisk": null,
    "rulesApplied": 30,
    "flags": 0,
-   "findings": []
+   "findings": [
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": ".github/workflows/ci.yml",
+     "line": 69,
+     "snippet": "…env DATAHUB_GMS_URL=http://datahub.example \\",
+     "inCode": false,
+     "likelyExample": true
+    },
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": ".github/workflows/ci.yml",
+     "line": 105,
+     "snippet": "…env DATAHUB_GMS_URL=http://host.docker.internal:18080 \\",
+     "inCode": false,
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "docs",
+      "explanation": "Default pointing at the local Docker host bridge — local-only configuration example, not external egress.",
+      "via": "rule:local-docker-host"
+     }
+    },
+    {
+     "rule": "hygiene-unpinned-dependency",
+     "family": "skill-hygiene",
+     "title": "Unpinned package install",
+     "risk": "low",
+     "definition": "npm/pip installs without a version pin — supply-chain drift lands silently.",
+     "remediation": "Pin package==1.2.3 (or a lockfile) and re-run the trust scan on upgrades.",
+     "file": ".github/workflows/ci.yml",
+     "line": 166,
+     "snippet": "python -m pip install --upgrade pip",
+     "inCode": false,
+     "likelyExample": false
+    },
+    {
+     "rule": "hygiene-unpinned-dependency",
+     "family": "skill-hygiene",
+     "title": "Unpinned package install",
+     "risk": "low",
+     "definition": "npm/pip installs without a version pin — supply-chain drift lands silently.",
+     "remediation": "Pin package==1.2.3 (or a lockfile) and re-run the trust scan on upgrades.",
+     "file": ".github/workflows/ci.yml",
+     "line": 167,
+     "snippet": "pip install acryl-datahub",
+     "inCode": false,
+     "likelyExample": false
+    }
+   ],
+   "remote": {
+    "repo": "acryldata/mcp-server-datahub",
+    "files_scanned": 6
+   }
   },
   "/mcp/dbt": {
    "slug": "dbt",
@@ -1374,7 +2295,7 @@
    "slug": "kafka",
    "type": "mcp",
    "files_scanned": 1,
-   "total": 0,
+   "total": 2,
    "byRisk": {
     "critical": 0,
     "high": 0,
@@ -1387,12 +2308,49 @@
     "medium": 0,
     "low": 0
    },
-   "actionable": 0,
+   "actionable": 1,
    "examples": 0,
    "maxRisk": null,
    "rulesApplied": 30,
    "flags": 0,
-   "findings": []
+   "findings": [
+    {
+     "rule": "exec-curl-pipe-shell",
+     "family": "remote-execution",
+     "title": "Curl piped straight into a shell",
+     "risk": "critical",
+     "definition": "A remote payload is fetched and executed without inspection — the classic supply-chain injection.",
+     "remediation": "Pin a versioned download, verify its checksum, then run an inspected file — never pipe remote content to an interpreter.",
+     "file": ".github/workflows/cursor.yml",
+     "line": 33,
+     "snippet": "curl https://cursor.com/install -fsS | bash",
+     "inCode": false,
+     "likelyExample": false,
+     "judged": {
+      "verdict": "benign-in-context",
+      "scope": "publisher-ci",
+      "explanation": "The flagged `curl https://cursor.com/install -fsS | bash` line sits in the publisher's own GitHub Actions workflow (CI setup installing the Cursor CLI), not in the MCP server runtime that agents execute. Publisher CI plumbing is outside the artifact's blast radius.",
+      "via": "explicit"
+     }
+    },
+    {
+     "rule": "egress-hardcoded-endpoint",
+     "family": "data-egress",
+     "title": "Hardcoded external endpoint",
+     "risk": "medium",
+     "definition": "The artifact sends data to a fixed external domain or IP outside the user's infrastructure.",
+     "remediation": "Move endpoints into user-supplied configuration; document every outbound destination and payload.",
+     "file": ".github/workflows/cursor.yml",
+     "line": 33,
+     "snippet": "curl https://cursor.com/install -fsS | bash",
+     "inCode": false,
+     "likelyExample": false
+    }
+   ],
+   "remote": {
+    "repo": "tuannvm/kafka-mcp-server",
+    "files_scanned": 6
+   }
   },
   "/plugins/de-data-toolkit": {
    "slug": "de-data-toolkit",

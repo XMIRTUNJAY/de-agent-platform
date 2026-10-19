@@ -19,9 +19,28 @@
 import { readdirSync, readFileSync, statSync, existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { join, relative, dirname, basename } from 'node:path';
 import { stringify as stringifyYaml } from 'yaml';
+import { parse as parseYaml } from 'yaml';
 import registry from '../src/data/generated/registry.json' with { type: 'json' };
-import { loadRules, scanFiles, flagCount, familySummary } from './lib/trust-rules.mjs';
+import { loadRules, scanText, scanFiles, flagCount, familySummary, applyVerdicts } from './lib/trust-rules.mjs';
+import { fetchText } from './lib/fetch.mjs';
+import { repoIdentity } from './lib/identity.mjs';
 import { ROOT } from './lib/load.mjs';
+
+const VERDICTS_PATH = join(ROOT, 'data', 'curated', 'semantic-verdicts.yaml');
+
+/** Load semantic verdicts: explicit map + deterministic verdict rules. */
+function loadVerdicts() {
+  if (!existsSync(VERDICTS_PATH)) return { explicit: new Map(), rules: [] };
+  const doc = parseYaml(readFileSync(VERDICTS_PATH, 'utf8')) ?? {};
+  const explicit = new Map();
+  for (const v of doc.verdicts ?? []) explicit.set(v.id, v);
+  const rules = (doc.verdict_rules ?? []).map((r) => ({
+    ...r,
+    fileRe: r.when?.file ? new RegExp(r.when.file, 'i') : null,
+    snippetRe: r.when?.snippet ? new RegExp(r.when.snippet, 'i') : null,
+  }));
+  return { explicit, rules };
+}
 
 const PUBLIC = join(ROOT, 'public');
 const OUT = join(ROOT, 'src', 'data', 'generated', 'trust-findings.json');
@@ -33,6 +52,11 @@ const MAX_FILE_BYTES = 400_000;
 
 const args = process.argv.slice(2);
 const ONLY = args.includes('--resource') ? args[args.indexOf('--resource') + 1] : null;
+const REMOTE = args.includes('--remote');
+const REMOTE_LIMIT = Number(args.includes('--remote-limit') ? args[args.indexOf('--remote-limit') + 1] : 25);
+// remote: same file triage as scan-secrets — small text files, risky names first
+const REMOTE_FILE_BYTES = 100_000;
+const REMOTE_MAX_FILES = 6;
 
 /** Vendored artifact tree for a resource: public/skills/<slug>/ etc. */
 const TYPE_DIRS = { skill: 'skills', mcp: 'mcp', plugin: 'plugins', agent: 'agents', hook: 'hooks', runbook: 'runbooks', pattern: 'patterns', reference: 'references', template: 'templates', project: 'projects' };
@@ -54,6 +78,40 @@ function vendoredFiles(type, slug, out = []) {
   return out;
 }
 
+async function ghJson(url) {
+  const res = await fetchText(url);
+  if (!res?.ok || !res.body) throw new Error(`HTTP ${res?.status ?? 'none'}: ${url}`);
+  return JSON.parse(res.body);
+}
+
+const RISKY_REMOTE =
+  /(^|\/)\.env(\.|$)|credentials|secrets?\.(ya?ml|json|toml|ini)|passwd|shadow|\.pem$|\.key$|id_rsa|\.p12$|\.pfx$|service-account|service_account|install|setup|deploy/i;
+
+/** Remote scan of one repo through the full rule engine (not just secrets). */
+async function scanRepoRemote(owner, repo) {
+  const files = [];
+  let tree;
+  try {
+    const t = await ghJson(`https://api.github.com/repos/${owner}/${repo}/git/trees/HEAD?recursive=1`);
+    if (t.message) throw new Error(t.message);
+    tree = (t.tree || []).filter((n) => n.type === 'blob');
+  } catch (err) {
+    return { skipped: String(err.message || err).slice(0, 120) };
+  }
+  const candidates = tree
+    .filter((n) => SCAN_EXT.test(n.path) && (n.size ?? 0) > 0 && (n.size ?? 0) < REMOTE_FILE_BYTES)
+    .sort((a, b) => (RISKY_REMOTE.test(b.path) ? 1 : 0) - (RISKY_REMOTE.test(a.path) ? 1 : 0))
+    .slice(0, REMOTE_MAX_FILES);
+  for (const n of candidates) {
+    try {
+      const blob = await ghJson(`https://api.github.com/repos/${owner}/${repo}/contents/${encodeURIComponent(n.path)}`);
+      if (!blob.content || blob.encoding !== 'base64') continue;
+      files.push({ path: n.path, content: Buffer.from(blob.content, 'base64').toString('utf8') });
+    } catch { /* unreadable file: skip */ }
+  }
+  return scanFiles(files, loadRules(RULES_PATH));
+}
+
 function curatedRecordFiles(r) {
   // the record's own YAML prose — prompt-injection and hygiene live in copy too
   const block = stringifyYaml({
@@ -68,7 +126,14 @@ async function main() {
   console.log('\n  \x1b[1mDE//AGENT trust scan\x1b[0m  \x1b[2m(static rule engine)\x1b[0m\n');
   const rules = loadRules(RULES_PATH);
   const fam = familySummary(rules);
-  console.log(`  rules: ${rules.length} across ${Object.keys(fam).length} families`);
+  const verdicts = loadVerdicts();
+  console.log(`  rules: ${rules.length} across ${Object.keys(fam).length} families · explicit verdicts: ${verdicts.explicit.size} · verdict rules: ${verdicts.rules.length}`);
+
+  /**
+   * Semantic verdicts — applied via the shared lib (see applyVerdicts there
+   * for the merge policy).
+   */
+  const applyVerdictsTo = (url, findings) => applyVerdicts(url, findings, verdicts);
 
   const perResource = {};
   let totalFindings = 0, flagged = 0, scanned = 0;
@@ -84,25 +149,73 @@ async function main() {
     for (const f of result.findings) {
       if (f.file.startsWith('curated:')) f.likelyExample = true;
     }
-    // recompute actionable summary after the policy mark
-    const actionable = result.findings.filter((f) => !f.likelyExample);
-    const byRiskActionable = { critical: 0, high: 0, medium: 0, low: 0 };
-    for (const f of actionable) byRiskActionable[f.risk] = (byRiskActionable[f.risk] ?? 0) + 1;
-    result.summary.byRiskActionable = byRiskActionable;
-    result.summary.actionable = actionable.length;
-    result.summary.examples = result.findings.length - actionable.length;
-    result.summary.maxRisk = actionable[0]?.risk ?? null;
+    const v = applyVerdictsTo(r.url, result.findings);
+    result.summary.byRiskActionable = v.byRiskActionable;
+    result.summary.actionable = v.actionableCount;
+    result.summary.examples = result.findings.length - v.actionableCount;
+    result.summary.maxRisk = v.maxRisk;
     scanned++;
     perResource[r.url] = {
       slug: r.slug,
       type: r.type,
       files_scanned: files.length,
       ...result.summary,
-      flags: (byRiskActionable.critical ?? 0) + (byRiskActionable.high ?? 0),
+      flags: v.flagTotal,
       findings: result.findings.slice(0, 25),
     };
     totalFindings += result.summary.total;
-    if (perResource[r.url].flags > 0) flagged++;
+    if (v.flagTotal > 0) flagged++;
+  }
+
+  if (REMOTE) {
+    const token = !!process.env.GITHUB_TOKEN;
+    if (!token) {
+      console.log('\n  remote pass skipped: GITHUB_TOKEN not set (60/hr anonymous is not enough)');
+    } else {
+      console.log(`\n  remote pass: top ${REMOTE_LIMIT} repos by composite score`);
+      const targets = registry.resources
+        .map((r) => ({ r, s: r.marketplace?.composite_score ?? -1 }))
+        .filter(({ r }) => {
+          const id = repoIdentity(r.github_url ?? '');
+          return id && !/de-agent-platform/i.test(r.github_url ?? '');
+        })
+        .sort((a, b) => b.s - a.s)
+        .slice(0, REMOTE_LIMIT);
+      let remoteScanned = 0, remoteSkipped = 0, remoteFindings = 0;
+      for (const { r } of targets) {
+        const id = repoIdentity(r.github_url);
+        const res = await scanRepoRemote(id.owner, id.repo);
+        if (res.skipped) { remoteSkipped++; continue; }
+        const v = applyVerdictsTo(r.url, res.findings);
+        remoteScanned++;
+        remoteFindings += res.findings.length;
+        const entry = perResource[r.url];
+        if (!entry) {
+          perResource[r.url] = {
+            slug: r.slug, type: r.type, files_scanned: 0,
+            total: res.findings.length,
+            byRisk: res.summary.byRisk, byRiskActionable: v.byRiskActionable,
+            actionable: v.actionableCount,
+            examples: res.findings.length - v.actionableCount,
+            maxRisk: v.maxRisk,
+            rulesApplied: res.summary.rulesApplied,
+            flags: v.flagTotal,
+            findings: res.findings.slice(0, 25),
+            remote: { repo: `${id.owner}/${id.repo}`, files_scanned: REMOTE_MAX_FILES },
+          };
+          if (v.flagTotal > 0) flagged++;
+        } else {
+          entry.findings = [...entry.findings, ...res.findings].slice(0, 40);
+          entry.total += res.findings.length;
+          entry.actionable += v.actionableCount;
+          entry.flags += v.flagTotal;
+          entry.remote = { repo: `${id.owner}/${id.repo}`, files_scanned: REMOTE_MAX_FILES };
+          if (entry.flags > 0) flagged++;
+        }
+      }
+      totalFindings += remoteFindings;
+      console.log(`  remote scanned: ${remoteScanned} · skipped: ${remoteSkipped} · findings: ${remoteFindings}`);
+    }
   }
 
   const payload = {
