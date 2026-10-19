@@ -1,0 +1,22 @@
+{
+ "slug": "cicd",
+ "generated_from": "registry",
+ "counts": {
+  "resources": 2,
+  "types": 2,
+  "technologies": 0
+ },
+ "intro": "It currently holds 2 resources: 1 runbook, 1 reference. Mapped to roadmap stage: Cloud. Verification mix: 2 community — check each entry's evidence before adopting.",
+ "startHere": [
+  {
+   "title": "Bad deployment",
+   "url": "/runbooks/bad-deployment",
+   "composite": 42.5
+  },
+  {
+   "title": "Investigating Build Regressions From the Last Known-Good Build",
+   "url": "/references/investigating-build-regressions-from-the-last-known-good-build",
+   "composite": 29.36
+  }
+ ]
+}

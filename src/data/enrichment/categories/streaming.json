@@ -1,0 +1,27 @@
+{
+ "slug": "streaming",
+ "generated_from": "registry",
+ "counts": {
+  "resources": 5,
+  "types": 4,
+  "technologies": 3
+ },
+ "intro": "It currently holds 5 resources: 2 patterns, 1 template, 1 project. Technologies covered: Apache Kafka, Apache Spark, Delta Lake. Mapped to roadmap stage: Streaming. Verification mix: 5 community — check each entry's evidence before adopting.",
+ "startHere": [
+  {
+   "title": "Lambda vs Kappa (batch + stream)",
+   "url": "/patterns/lambda-vs-kappa",
+   "composite": 48.93
+  },
+  {
+   "title": "Streaming Dedup and Upsert",
+   "url": "/patterns/streaming-dedup-upsert",
+   "composite": 41.79
+  },
+  {
+   "title": "Kafka → Spark Streaming → Delta",
+   "url": "/projects/kafka-spark-delta",
+   "composite": 41.64
+  }
+ ]
+}

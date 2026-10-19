@@ -1,0 +1,18 @@
+{
+ "slug": "python",
+ "generated_from": "registry",
+ "counts": {
+  "resources": 0,
+  "types": 0,
+  "technologies": 0
+ },
+ "intro": "",
+ "startHere": [],
+ "related": [
+  {
+   "title": "SQL",
+   "slug": "sql",
+   "n": 8
+  }
+ ]
+}

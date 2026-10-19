@@ -1,0 +1,27 @@
+{
+ "slug": "dbt",
+ "generated_from": "registry",
+ "counts": {
+  "resources": 10,
+  "types": 8,
+  "technologies": 3
+ },
+ "intro": "It currently holds 10 resources: 2 skills, 2 references, 1 mcp server. Technologies covered: dbt, PostgreSQL, DuckDB. Mapped to roadmap stage: Warehousing. Verification mix: 10 community — check each entry's evidence before adopting.",
+ "startHere": [
+  {
+   "title": "dbt Test Writer",
+   "url": "/skills/dbt-test-writer",
+   "composite": 57.14
+  },
+  {
+   "title": "dbt Model Review",
+   "url": "/skills/dbt-model-review",
+   "composite": 57.14
+  },
+  {
+   "title": "dbt as Models + Tests + Docs",
+   "url": "/patterns/dbt-tests-docs",
+   "composite": 50.36
+  }
+ ]
+}

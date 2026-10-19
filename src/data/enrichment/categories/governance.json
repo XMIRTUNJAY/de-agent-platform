@@ -1,0 +1,27 @@
+{
+ "slug": "governance",
+ "generated_from": "registry",
+ "counts": {
+  "resources": 4,
+  "types": 4,
+  "technologies": 3
+ },
+ "intro": "It currently holds 4 resources: 1 governance pack, 1 policy, 1 hook. Technologies covered: DataHub, Snowflake, BigQuery. Mapped to roadmap stage: Reliability. Verification mix: 4 community — check each entry's evidence before adopting.",
+ "startHere": [
+  {
+   "title": "Data Classification & Tagging Governance Pack",
+   "url": "/resources/data-classification-governance",
+   "composite": 44.57
+  },
+  {
+   "title": "PII Leak Guard",
+   "url": "/hooks/pii-leak-guard",
+   "composite": 40.86
+  },
+  {
+   "title": "OPA Data Access Control Policy",
+   "url": "/resources/opa-data-access-policy",
+   "composite": 38.36
+  }
+ ]
+}

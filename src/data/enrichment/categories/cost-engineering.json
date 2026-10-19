@@ -1,0 +1,27 @@
+{
+ "slug": "cost-engineering",
+ "generated_from": "registry",
+ "counts": {
+  "resources": 7,
+  "types": 6,
+  "technologies": 4
+ },
+ "intro": "It currently holds 7 resources: 2 skills, 1 plugin, 1 hook. Technologies covered: Databricks, Snowflake, AWS, Apache Spark. Mapped to roadmap stage: Reliability. Verification mix: 7 community — check each entry's evidence before adopting.",
+ "startHere": [
+  {
+   "title": "Spark Cost Regression Guard",
+   "url": "/skills/spark-cost-regression-guard",
+   "composite": 50
+  },
+  {
+   "title": "Spark job suddenly costs 4x",
+   "url": "/runbooks/spark-job-suddenly-costs-4x",
+   "composite": 49.64
+  },
+  {
+   "title": "Spark Cost Check",
+   "url": "/hooks/spark-cost-check",
+   "composite": 40.86
+  }
+ ]
+}

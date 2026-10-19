@@ -1,0 +1,27 @@
+{
+ "slug": "sql",
+ "generated_from": "registry",
+ "counts": {
+  "resources": 8,
+  "types": 6,
+  "technologies": 7
+ },
+ "intro": "It currently holds 8 resources: 2 skills, 2 references, 1 rule pack. Technologies covered: SQL, dbt, Apache Spark, Snowflake, BigQuery, DuckDB and 1 more. Mapped to roadmap stage: Python + SQL. Verification mix: 8 community — check each entry's evidence before adopting.",
+ "startHere": [
+  {
+   "title": "SQL Review",
+   "url": "/skills/sql-review",
+   "composite": 56.29
+  },
+  {
+   "title": "SQL Query Plan Explainer",
+   "url": "/skills/sql-query-plan-explainer",
+   "composite": 55.71
+  },
+  {
+   "title": "DuckDB / MotherDuck MCP Server",
+   "url": "/mcp/duckdb",
+   "composite": 50
+  }
+ ]
+}

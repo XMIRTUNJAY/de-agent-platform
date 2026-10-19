@@ -1,0 +1,27 @@
+{
+ "slug": "agentic-data-engineering",
+ "generated_from": "registry",
+ "counts": {
+  "resources": 16,
+  "types": 5,
+  "technologies": 1
+ },
+ "intro": "It currently holds 16 resources: 9 references, 4 mcp servers, 1 skill. Technologies covered: Python. Mapped to roadmap stage: Agentic Data Engineering. Verification mix: 16 community — check each entry's evidence before adopting.",
+ "startHere": [
+  {
+   "title": "MCP Tool Contract Auditor",
+   "url": "/skills/mcp-tool-contract-auditor",
+   "composite": 55
+  },
+  {
+   "title": "Agent-in-the-Loop Review",
+   "url": "/patterns/agent-in-the-loop-review",
+   "composite": 50.36
+  },
+  {
+   "title": "Filesystem MCP Server",
+   "url": "/mcp/filesystem",
+   "composite": 50
+  }
+ ]
+}

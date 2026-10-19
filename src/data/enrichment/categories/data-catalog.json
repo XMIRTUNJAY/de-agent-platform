@@ -1,0 +1,27 @@
+{
+ "slug": "data-catalog",
+ "generated_from": "registry",
+ "counts": {
+  "resources": 3,
+  "types": 3,
+  "technologies": 0
+ },
+ "intro": "It currently holds 3 resources: 1 mcp server, 1 agent, 1 reference. Mapped to roadmap stage: Observability. Verification mix: 3 community — check each entry's evidence before adopting.",
+ "startHere": [
+  {
+   "title": "DataHub MCP Server",
+   "url": "/mcp/datahub",
+   "composite": 43.57
+  },
+  {
+   "title": "Data Catalog Assistant",
+   "url": "/agents/data-catalog-assistant",
+   "composite": 38.57
+  },
+  {
+   "title": "DataHub Documentation",
+   "url": "/references/datahub-docs",
+   "composite": 33.86
+  }
+ ]
+}

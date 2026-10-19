@@ -1,0 +1,22 @@
+{
+ "slug": "databricks",
+ "generated_from": "registry",
+ "counts": {
+  "resources": 2,
+  "types": 2,
+  "technologies": 0
+ },
+ "intro": "It currently holds 2 resources: 1 agent, 1 reference. Mapped to roadmap stage: Cloud. Verification mix: 2 community — check each entry's evidence before adopting.",
+ "startHere": [
+  {
+   "title": "Databricks Reviewer",
+   "url": "/agents/databricks-reviewer",
+   "composite": 45
+  },
+  {
+   "title": "Databricks Documentation",
+   "url": "/references/databricks-docs",
+   "composite": 35.29
+  }
+ ]
+}

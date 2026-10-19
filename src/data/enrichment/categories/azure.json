@@ -1,0 +1,28 @@
+{
+ "slug": "azure",
+ "generated_from": "registry",
+ "counts": {
+  "resources": 0,
+  "types": 0,
+  "technologies": 0
+ },
+ "intro": "",
+ "startHere": [],
+ "related": [
+  {
+   "title": "AWS",
+   "slug": "aws",
+   "n": 9
+  },
+  {
+   "title": "Snowflake",
+   "slug": "snowflake",
+   "n": 3
+  },
+  {
+   "title": "GCP",
+   "slug": "gcp",
+   "n": 2
+  }
+ ]
+}

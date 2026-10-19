@@ -1,0 +1,27 @@
+{
+ "slug": "data-lineage",
+ "generated_from": "registry",
+ "counts": {
+  "resources": 3,
+  "types": 3,
+  "technologies": 2
+ },
+ "intro": "It currently holds 3 resources: 1 skill, 1 plugin, 1 reference. Technologies covered: OpenLineage, DataHub. Mapped to roadmap stage: Observability. Verification mix: 3 community — check each entry's evidence before adopting.",
+ "startHere": [
+  {
+   "title": "Lineage Explainer",
+   "url": "/skills/lineage-explainer",
+   "composite": 47.86
+  },
+  {
+   "title": "Lineage Graph",
+   "url": "/plugins/lineage-graph",
+   "composite": 37.29
+  },
+  {
+   "title": "OpenLineage Documentation",
+   "url": "/references/openlineage-docs",
+   "composite": 33.86
+  }
+ ]
+}

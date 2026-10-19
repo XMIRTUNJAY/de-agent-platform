@@ -1,0 +1,17 @@
+{
+ "slug": "file-ingestion",
+ "generated_from": "registry",
+ "counts": {
+  "resources": 1,
+  "types": 1,
+  "technologies": 0
+ },
+ "intro": "It currently holds 1 resource: 1 runbook. Mapped to roadmap stage: Data Processing. Verification mix: 1 community — check each entry's evidence before adopting.",
+ "startHere": [
+  {
+   "title": "Late files",
+   "url": "/runbooks/late-files",
+   "composite": 38.21
+  }
+ ]
+}

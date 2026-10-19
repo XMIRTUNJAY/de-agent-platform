@@ -1,0 +1,27 @@
+{
+ "slug": "databases",
+ "generated_from": "registry",
+ "counts": {
+  "resources": 3,
+  "types": 2,
+  "technologies": 0
+ },
+ "intro": "It currently holds 3 resources: 2 references, 1 mcp server. Mapped to roadmap stage: Data Processing. Verification mix: 3 community — check each entry's evidence before adopting.",
+ "startHere": [
+  {
+   "title": "PostgreSQL MCP Server",
+   "url": "/mcp/postgres",
+   "composite": 43.57
+  },
+  {
+   "title": "DuckDB and Hugging Face: Querying Datasets Directly",
+   "url": "/references/duckdb-and-hugging-face-querying-datasets-directly",
+   "composite": 29.36
+  },
+  {
+   "title": "Importing Data using Java Table Functions",
+   "url": "/references/importing-data-using-java-table-functions",
+   "composite": 29.36
+  }
+ ]
+}

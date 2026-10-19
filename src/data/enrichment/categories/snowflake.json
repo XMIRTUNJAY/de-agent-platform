@@ -1,0 +1,27 @@
+{
+ "slug": "snowflake",
+ "generated_from": "registry",
+ "counts": {
+  "resources": 3,
+  "types": 3,
+  "technologies": 1
+ },
+ "intro": "It currently holds 3 resources: 1 config template, 1 mcp server, 1 reference. Technologies covered: Snowflake. Mapped to roadmap stage: Cloud. Verification mix: 3 community — check each entry's evidence before adopting.",
+ "startHere": [
+  {
+   "title": "Snowflake Warehouse Configuration Template",
+   "url": "/resources/snowflake-warehouse-config",
+   "composite": 40.29
+  },
+  {
+   "title": "Snowflake MCP Server (Labs)",
+   "url": "/mcp/snowflake",
+   "composite": 37.14
+  },
+  {
+   "title": "Snowflake Documentation",
+   "url": "/references/snowflake-docs",
+   "composite": 35.29
+  }
+ ]
+}

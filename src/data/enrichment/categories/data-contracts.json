@@ -1,0 +1,27 @@
+{
+ "slug": "data-contracts",
+ "generated_from": "registry",
+ "counts": {
+  "resources": 9,
+  "types": 7,
+  "technologies": 2
+ },
+ "intro": "It currently holds 9 resources: 2 skills, 2 runbooks, 1 plugin. Technologies covered: Apache Avro, dbt. Mapped to roadmap stage: Data Quality. Verification mix: 9 community — check each entry's evidence before adopting.",
+ "startHere": [
+  {
+   "title": "Schema Change Contract Review",
+   "url": "/skills/schema-change-contract-review",
+   "composite": 57.14
+  },
+  {
+   "title": "Data Contract Author",
+   "url": "/skills/data-contract-author",
+   "composite": 54.29
+  },
+  {
+   "title": "Contracts as a Quality Gate",
+   "url": "/patterns/contracts-quality-gate",
+   "composite": 50.36
+  }
+ ]
+}

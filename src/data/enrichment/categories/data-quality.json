@@ -1,0 +1,27 @@
+{
+ "slug": "data-quality",
+ "generated_from": "registry",
+ "counts": {
+  "resources": 8,
+  "types": 6,
+  "technologies": 4
+ },
+ "intro": "It currently holds 8 resources: 2 runbooks, 2 references, 1 hook. Technologies covered: Apache Spark, DuckDB, Apache Parquet, Python. Mapped to roadmap stage: Data Quality. Verification mix: 8 community — check each entry's evidence before adopting.",
+ "startHere": [
+  {
+   "title": "Quarantine then Publish",
+   "url": "/patterns/quarantine-publish",
+   "composite": 52.5
+  },
+  {
+   "title": "Pipeline → DQ → quarantine → publish",
+   "url": "/projects/pipeline-dq-quarantine",
+   "composite": 50.21
+  },
+  {
+   "title": "Duplicate records",
+   "url": "/runbooks/duplicate-records",
+   "composite": 46.79
+  }
+ ]
+}

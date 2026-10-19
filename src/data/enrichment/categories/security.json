@@ -1,0 +1,27 @@
+{
+ "slug": "security",
+ "generated_from": "registry",
+ "counts": {
+  "resources": 3,
+  "types": 2,
+  "technologies": 2
+ },
+ "intro": "It currently holds 3 resources: 2 hooks, 1 skill. Technologies covered: Python, Snowflake. Mapped to roadmap stage: Reliability. Verification mix: 3 community — check each entry's evidence before adopting.",
+ "startHere": [
+  {
+   "title": "Destructive SQL Guard",
+   "url": "/hooks/destructive-sql-guard",
+   "composite": 47.29
+  },
+  {
+   "title": "PII Classifier",
+   "url": "/skills/pii-classifier",
+   "composite": 46.29
+  },
+  {
+   "title": "Secret Scan on Commit",
+   "url": "/hooks/secret-scan-commit",
+   "composite": 40.86
+  }
+ ]
+}

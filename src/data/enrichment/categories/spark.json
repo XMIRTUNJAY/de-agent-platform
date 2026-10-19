@@ -1,0 +1,27 @@
+{
+ "slug": "spark",
+ "generated_from": "registry",
+ "counts": {
+  "resources": 7,
+  "types": 6,
+  "technologies": 3
+ },
+ "intro": "It currently holds 7 resources: 2 skills, 1 plugin, 1 agent. Technologies covered: Apache Spark, PySpark, Docker. Mapped to roadmap stage: Data Processing. Verification mix: 7 community — check each entry's evidence before adopting.",
+ "startHere": [
+  {
+   "title": "Spark Data Quality Review",
+   "url": "/skills/spark-data-quality-review",
+   "composite": 57.86
+  },
+  {
+   "title": "Spark Skew Diagnosis",
+   "url": "/skills/spark-skew-diagnosis",
+   "composite": 52.14
+  },
+  {
+   "title": "Spark job is slow",
+   "url": "/runbooks/spark-job-slow",
+   "composite": 49.64
+  }
+ ]
+}

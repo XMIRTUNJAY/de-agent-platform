@@ -1,0 +1,17 @@
+{
+ "slug": "testing",
+ "generated_from": "registry",
+ "counts": {
+  "resources": 1,
+  "types": 1,
+  "technologies": 3
+ },
+ "intro": "It currently holds 1 resource: 1 skill. Technologies covered: Python, DuckDB, Apache Parquet. Mapped to roadmap stage: Reliability. Verification mix: 1 community — check each entry's evidence before adopting.",
+ "startHere": [
+  {
+   "title": "Pipeline Test Author",
+   "url": "/skills/pipeline-test-author",
+   "composite": 51.43
+  }
+ ]
+}

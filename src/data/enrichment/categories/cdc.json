@@ -1,0 +1,27 @@
+{
+ "slug": "cdc",
+ "generated_from": "registry",
+ "counts": {
+  "resources": 5,
+  "types": 5,
+  "technologies": 6
+ },
+ "intro": "It currently holds 5 resources: 1 skill, 1 project, 1 runbook. Technologies covered: Debezium, Delta Lake, Apache Iceberg, PostgreSQL, Apache Kafka, Apache Spark. Mapped to roadmap stage: Streaming. Verification mix: 5 community — check each entry's evidence before adopting.",
+ "startHere": [
+  {
+   "title": "CDC Merge Designer",
+   "url": "/skills/cdc-merge-designer",
+   "composite": 55.71
+  },
+  {
+   "title": "Postgres CDC to Lakehouse",
+   "url": "/patterns/postgres-cdc-lakehouse",
+   "composite": 43.93
+  },
+  {
+   "title": "Postgres → CDC → Kafka → Lakehouse",
+   "url": "/projects/postgres-cdc-kafka-lakehouse",
+   "composite": 43.07
+  }
+ ]
+}

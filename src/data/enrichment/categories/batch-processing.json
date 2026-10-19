@@ -1,0 +1,27 @@
+{
+ "slug": "batch-processing",
+ "generated_from": "registry",
+ "counts": {
+  "resources": 3,
+  "types": 2,
+  "technologies": 0
+ },
+ "intro": "It currently holds 3 resources: 2 patterns, 1 runbook. Mapped to roadmap stage: Data Processing. Verification mix: 3 community — check each entry's evidence before adopting.",
+ "startHere": [
+  {
+   "title": "Incremental Batch with a Watermark",
+   "url": "/patterns/batch-incremental-watermark",
+   "composite": 52.5
+  },
+  {
+   "title": "Idempotent Partition Overwrite",
+   "url": "/patterns/idempotent-partition-overwrite",
+   "composite": 50.36
+  },
+  {
+   "title": "Missing partition",
+   "url": "/runbooks/missing-partition",
+   "composite": 36.79
+  }
+ ]
+}

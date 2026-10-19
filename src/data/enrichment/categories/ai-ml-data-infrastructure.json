@@ -1,0 +1,18 @@
+{
+ "slug": "ai-ml-data-infrastructure",
+ "generated_from": "registry",
+ "counts": {
+  "resources": 0,
+  "types": 0,
+  "technologies": 0
+ },
+ "intro": "",
+ "startHere": [],
+ "related": [
+  {
+   "title": "Agentic Data Engineering",
+   "slug": "agentic-data-engineering",
+   "n": 16
+  }
+ ]
+}

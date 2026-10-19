@@ -1,0 +1,27 @@
+{
+ "slug": "lakehouse",
+ "generated_from": "registry",
+ "counts": {
+  "resources": 8,
+  "types": 5,
+  "technologies": 3
+ },
+ "intro": "It currently holds 8 resources: 3 references, 2 skills, 1 plugin. Technologies covered: Delta Lake, Databricks, Apache Iceberg. Mapped to roadmap stage: Lakehouse. Verification mix: 8 community — check each entry's evidence before adopting.",
+ "startHere": [
+  {
+   "title": "Iceberg Table Maintenance",
+   "url": "/skills/iceberg-table-maintenance",
+   "composite": 49.29
+  },
+  {
+   "title": "Delta Optimization Advisor",
+   "url": "/skills/delta-optimization-advisor",
+   "composite": 47
+  },
+  {
+   "title": "Small files explosion",
+   "url": "/runbooks/small-files-explosion",
+   "composite": 38.21
+  }
+ ]
+}

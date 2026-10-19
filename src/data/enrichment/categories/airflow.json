@@ -1,0 +1,27 @@
+{
+ "slug": "airflow",
+ "generated_from": "registry",
+ "counts": {
+  "resources": 9,
+  "types": 7,
+  "technologies": 3
+ },
+ "intro": "It currently holds 9 resources: 2 skills, 2 agents, 1 hook. Technologies covered: Apache Airflow, Apache Spark, dbt. Mapped to roadmap stage: Orchestration. Verification mix: 9 community — check each entry's evidence before adopting.",
+ "startHere": [
+  {
+   "title": "Airflow DAG Reviewer",
+   "url": "/skills/airflow-dag-reviewer",
+   "composite": 57.14
+  },
+  {
+   "title": "Backfill Planner",
+   "url": "/skills/backfill-planner",
+   "composite": 57.14
+  },
+  {
+   "title": "Safe Backfill",
+   "url": "/patterns/backfill-safety",
+   "composite": 50.36
+  }
+ ]
+}

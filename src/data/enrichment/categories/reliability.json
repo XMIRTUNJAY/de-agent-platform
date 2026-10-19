@@ -1,0 +1,22 @@
+{
+ "slug": "reliability",
+ "generated_from": "registry",
+ "counts": {
+  "resources": 2,
+  "types": 2,
+  "technologies": 1
+ },
+ "intro": "It currently holds 2 resources: 1 skill, 1 agent. Technologies covered: Apache Airflow. Mapped to roadmap stage: Reliability. Verification mix: 2 community — check each entry's evidence before adopting.",
+ "startHere": [
+  {
+   "title": "Incident Postmortem Writer",
+   "url": "/skills/incident-postmortem-writer",
+   "composite": 54.86
+  },
+  {
+   "title": "Incident Assistant",
+   "url": "/agents/incident-assistant",
+   "composite": 37.86
+  }
+ ]
+}

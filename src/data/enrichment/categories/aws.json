@@ -1,0 +1,27 @@
+{
+ "slug": "aws",
+ "generated_from": "registry",
+ "counts": {
+  "resources": 9,
+  "types": 6,
+  "technologies": 6
+ },
+ "intro": "It currently holds 9 resources: 3 references, 2 skills, 1 mcp server. Technologies covered: Amazon Athena, AWS Glue, Amazon S3, Apache Spark, Terraform, Apache Parquet. Mapped to roadmap stage: Cloud. Verification mix: 9 community — check each entry's evidence before adopting.",
+ "startHere": [
+  {
+   "title": "AWS Glue Job Reviewer",
+   "url": "/skills/aws-glue-job-reviewer",
+   "composite": 51.43
+  },
+  {
+   "title": "Athena Partition Advisor",
+   "url": "/skills/athena-partition-advisor",
+   "composite": 44.86
+  },
+  {
+   "title": "S3 → Glue → Athena",
+   "url": "/projects/s3-glue-athena",
+   "composite": 39.5
+  }
+ ]
+}

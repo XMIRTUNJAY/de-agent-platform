@@ -1,0 +1,27 @@
+{
+ "slug": "data-warehouses",
+ "generated_from": "registry",
+ "counts": {
+  "resources": 5,
+  "types": 4,
+  "technologies": 3
+ },
+ "intro": "It currently holds 5 resources: 2 patterns, 1 skill, 1 plugin. Technologies covered: Snowflake, BigQuery, Databricks. Mapped to roadmap stage: Warehousing. Verification mix: 5 community — check each entry's evidence before adopting.",
+ "startHere": [
+  {
+   "title": "Dimensional Model (star schema)",
+   "url": "/patterns/dimensional-model",
+   "composite": 50.36
+  },
+  {
+   "title": "Warehouse Clustering Advisor",
+   "url": "/skills/warehouse-clustering-advisor",
+   "composite": 49.29
+  },
+  {
+   "title": "Data Vault (hubs, links, satellites)",
+   "url": "/patterns/data-vault",
+   "composite": 48.93
+  }
+ ]
+}

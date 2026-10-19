@@ -1,0 +1,27 @@
+{
+ "slug": "production-operations",
+ "generated_from": "registry",
+ "counts": {
+  "resources": 4,
+  "types": 4,
+  "technologies": 0
+ },
+ "intro": "It currently holds 4 resources: 1 plugin, 1 hook, 1 runbook. Mapped to roadmap stage: Reliability. Verification mix: 4 community — check each entry's evidence before adopting.",
+ "startHere": [
+  {
+   "title": "Runbook Runner",
+   "url": "/plugins/runbook-runner",
+   "composite": 48
+  },
+  {
+   "title": "Production Write Confirmation",
+   "url": "/hooks/prod-write-confirm",
+   "composite": 47.29
+  },
+  {
+   "title": "Pipeline failed",
+   "url": "/runbooks/pipeline-failed",
+   "composite": 36.07
+  }
+ ]
+}

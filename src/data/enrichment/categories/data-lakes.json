@@ -1,0 +1,22 @@
+{
+ "slug": "data-lakes",
+ "generated_from": "registry",
+ "counts": {
+  "resources": 2,
+  "types": 2,
+  "technologies": 0
+ },
+ "intro": "It currently holds 2 resources: 1 pattern, 1 reference. Mapped to roadmap stage: Lakehouse. Verification mix: 2 community — check each entry's evidence before adopting.",
+ "startHere": [
+  {
+   "title": "Medallion Zones (raw / curated / serving)",
+   "url": "/patterns/medallion-zones",
+   "composite": 52.5
+  },
+  {
+   "title": "A DuckDB Database with No Data in It",
+   "url": "/references/a-duckdb-database-with-no-data-in-it",
+   "composite": 29.36
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "slug": "gcp",
+ "generated_from": "registry",
+ "counts": {
+  "resources": 2,
+  "types": 2,
+  "technologies": 0
+ },
+ "intro": "It currently holds 2 resources: 1 mcp server, 1 reference. Mapped to roadmap stage: Cloud. Verification mix: 2 community — check each entry's evidence before adopting.",
+ "startHere": [
+  {
+   "title": "BigQuery MCP Server",
+   "url": "/mcp/bigquery",
+   "composite": 37.14
+  },
+  {
+   "title": "BigQuery Documentation",
+   "url": "/references/bigquery-docs",
+   "composite": 35.29
+  }
+ ]
+}

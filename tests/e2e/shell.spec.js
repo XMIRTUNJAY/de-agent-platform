@@ -403,3 +403,54 @@ test('S6: command palette highlights matches and groups by category', async ({ p
   const markText = await page.locator('.cmd-item mark').first().textContent();
   expect(markText?.toLowerCase()).toContain('sql');
 });
+
+test('S7: category page shows grounded overview + honest empty state', async ({ page }) => {
+  // filled category: overview block + start-here links to real resources
+  await page.goto('/categories/agentic-data-engineering', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByText('Inside this category')).toBeVisible();
+  const startLinks = await page.locator('a[href^="/skills/"], a[href^="/patterns/"], a[href^="/mcp/"]').count();
+  expect(startLinks).toBeGreaterThan(0);
+  // zero-resource category: no fake inventory, related categories offered
+  await page.goto('/categories/azure', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByText('No resources yet')).toBeVisible();
+  await expect(page.getByText('Closest filled categories')).toBeVisible();
+});
+
+test('S8: typography hierarchy — prose h2 is the serif section voice, distinct from h3/body', async ({ page }) => {
+  await page.goto('/docs/scoring', { waitUntil: 'domcontentloaded' });
+  const ramp = await page.evaluate(() => {
+    const h2 = document.querySelector('.prose-de h2');
+    const h3 = document.querySelector('.prose-de h3');
+    const p = document.querySelector('.prose-de p');
+    if (!h2 || !p) return null;
+    return {
+      h2Family: getComputedStyle(h2).fontFamily,
+      h2Size: parseFloat(getComputedStyle(h2).fontSize),
+      h3Size: h3 ? parseFloat(getComputedStyle(h3).fontSize) : 0,
+      pSize: parseFloat(getComputedStyle(p).fontSize),
+    };
+  });
+  expect(ramp).not.toBeNull();
+  expect(ramp.h2Size).toBeGreaterThan(ramp.h3Size);
+  expect(ramp.h3Size).toBeGreaterThan(ramp.pSize);
+  expect(ramp.h2Family).toMatch(/serif/i);
+});
+
+test('S9: section dividers carry the accent notch and sections use the band', async ({ page }) => {
+  await page.goto('/taxonomy', { waitUntil: 'domcontentloaded' });
+  const notch = await page.evaluate(() => {
+    const hr = document.querySelector('hr.hairline');
+    if (!hr) return null;
+    const st = getComputedStyle(hr, '::before');
+    return { w: parseFloat(st.width), bg: st.backgroundColor };
+  });
+  expect(notch).not.toBeNull();
+  expect(notch.w).toBeGreaterThan(0);
+  // hairline-block sections get a non-transparent band gradient
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  const band = await page.evaluate(() => {
+    const b = document.querySelector('.hairline-block');
+    return b ? getComputedStyle(b).backgroundImage : null;
+  });
+  expect(band).toContain('linear-gradient');
+});
