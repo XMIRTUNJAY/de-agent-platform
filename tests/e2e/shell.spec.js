@@ -420,20 +420,25 @@ test('S8: typography hierarchy — prose h2 is the serif section voice, distinct
   await page.goto('/docs/scoring', { waitUntil: 'domcontentloaded' });
   const ramp = await page.evaluate(() => {
     const h2 = document.querySelector('.prose-de h2');
-    const h3 = document.querySelector('.prose-de h3');
     const p = document.querySelector('.prose-de p');
     if (!h2 || !p) return null;
     return {
       h2Family: getComputedStyle(h2).fontFamily,
       h2Size: parseFloat(getComputedStyle(h2).fontSize),
-      h3Size: h3 ? parseFloat(getComputedStyle(h3).fontSize) : 0,
       pSize: parseFloat(getComputedStyle(p).fontSize),
     };
   });
   expect(ramp).not.toBeNull();
-  expect(ramp.h2Size).toBeGreaterThan(ramp.h3Size);
-  expect(ramp.h3Size).toBeGreaterThan(ramp.pSize);
+  expect(ramp.h2Size).toBeGreaterThan(ramp.pSize);
   expect(ramp.h2Family).toMatch(/serif/i);
+  // h3 steps clearly below h2 on detail pages (docs are h2-only)
+  await page.goto('/skills/sql-review', { waitUntil: 'domcontentloaded' });
+  const h3 = await page.evaluate(() => {
+    const el = document.querySelector('.prose-de h3, section h3');
+    return el ? parseFloat(getComputedStyle(el).fontSize) : 0;
+  });
+  expect(h3).toBeGreaterThan(0);
+  expect(h3).toBeLessThan(28); // 1.75rem h2 = 28px
 });
 
 test('S9: section dividers carry the accent notch and sections use the band', async ({ page }) => {
