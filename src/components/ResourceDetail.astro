@@ -11,6 +11,9 @@ marked.setOptions({ gfm: true, breaks: false });
 
 const { res, registry, trustScan = null } = Astro.props as { res: any; registry: any; trustScan?: any };
 
+/** ratings + install manifests need the SSR API routes — only present on Vercel deploys */
+const liveWidgets = process.env.VERCEL === '1';
+
 const techs = res.technologies?.map((t: any) => registry.taxonomy.technologies.find((x: any) => x.id === t)).filter(Boolean) ?? [];
 const prereqs = res.prerequisites?.map((id: any) => registry.resources.find((r: any) => r.id === id)).filter(Boolean) ?? [];
 
@@ -107,27 +110,27 @@ const scoreColor = (score: number) => {
     <div class="grid grid-cols-[minmax(0,1fr)] gap-8 min-[1200px]:grid-cols-[minmax(0,1fr)_320px]">
       <!-- min-w-0: grid item's automatic minimum would otherwise be sized by
            unbroken code lines and overflow narrow viewports -->
-      <section class="prose-de prose-measure min-w-0 space-y-8">
+      <section class="prose-de prose-measure min-w-0 space-y-8 detail-sections flex flex-col" data-artifact-type={res.type}>
         {res.purpose && (
-          <section class="mount">
+          <section class="mount" data-section="purpose">
             <h2>Purpose</h2>
             <p>{res.purpose}</p>
           </section>
         )}
         {res.problem && (
-          <section class="mount">
+          <section class="mount" data-section="problem">
             <h2>Problem</h2>
             <p>{res.problem}</p>
           </section>
         )}
         {res.solution && (
-          <section class="mount">
+          <section class="mount" data-section="solution">
             <h2>Solution</h2>
             <p>{res.solution}</p>
           </section>
         )}
         {res.when_to_use && (
-          <section class="mount">
+          <section class="mount" data-section="when-to-use">
             <h2>When to use</h2>
             {Array.isArray(res.when_to_use) ? (
               <ul>
@@ -141,7 +144,7 @@ const scoreColor = (score: number) => {
           </section>
         )}
         {res.when_not?.length > 0 && (
-          <section class="mount">
+          <section class="mount" data-section="when-not-to-use">
             <h2>When not to use</h2>
             <ul>
               {res.when_not.map((w: any) => (
@@ -151,7 +154,7 @@ const scoreColor = (score: number) => {
           </section>
         )}
         {res.editorial && (res.editorial.rating !== undefined || (res.editorial.limitations ?? []).length > 0 || (res.editorial.needs_improvement ?? []).length > 0) && (
-          <section class="mount">
+          <section class="mount" data-section="our-assessment">
             <h2>Our assessment</h2>
             {res.editorial.rating !== undefined && (
               <p>DE//AGENT rating: {res.editorial.rating} / 5</p>
@@ -178,8 +181,18 @@ const scoreColor = (score: number) => {
             )}
           </section>
         )}
+        {(res.learning_objectives ?? []).length > 0 && (
+          <section class="mount" data-section="learning-objectives">
+            <h2>Learning objectives</h2>
+            <ul>
+              {res.learning_objectives.map((o: any) => (
+                <li>{o}</li>
+              ))}
+            </ul>
+          </section>
+        )}
         {(res.what_you_need ?? []).length > 0 && (
-          <section class="mount">
+          <section class="mount" data-section="what-you-need">
             <h2>What you need</h2>
             <ul>
               {res.what_you_need.map((w: any) => (
@@ -189,7 +202,7 @@ const scoreColor = (score: number) => {
           </section>
         )}
         {(res.steps ?? []).length > 0 && (
-          <section class="mount">
+          <section class="mount" data-section="steps">
             <h2>Steps</h2>
             <ol>
               {res.steps.map((s: any) => (
@@ -210,7 +223,7 @@ const scoreColor = (score: number) => {
           </section>
         )}
         {(res.check_yourself ?? []).length > 0 && (
-          <section class="mount">
+          <section class="mount" data-section="check-yourself">
             <h2>Check yourself</h2>
             <ul>
               {res.check_yourself.map((c: any) => (
@@ -220,7 +233,7 @@ const scoreColor = (score: number) => {
           </section>
         )}
         {(res.source_refs ?? []).length > 0 && (
-          <section class="mount">
+          <section class="mount" data-section="sourced-from">
             <h2>Sourced from</h2>
             <ul>
               {res.source_refs.map((id: any) => (
@@ -233,19 +246,22 @@ const scoreColor = (score: number) => {
             </ul>
           </section>
         )}
-        <section class="mount" data-rate-widget data-resource-id={res.id}>
-          <h2>Rating</h2>
-          <p data-rate-summary>
-            {res.marketplace?.popularity_base !== undefined &&
-              `Popularity ${res.marketplace.popularity_base}/100`}
-          </p>
-          <div data-rate-stars>
-            {[1, 2, 3, 4, 5].map((n: any) => (
-              <button type="button" data-rate-value={n} aria-label={`Rate ${n} ${n === 1 ? 'star' : 'stars'}`}>★</button>
-            ))}
-          </div>
-          <p data-rate-note>Votes are stored under our editorial rating, not the source.</p>
-        </section>
+        {liveWidgets && (
+          <section class="mount" data-rate-widget data-resource-id={res.id}>
+            <h2>Rating</h2>
+            <p data-rate-summary>
+              {res.marketplace?.popularity_base !== undefined &&
+                `Popularity ${res.marketplace.popularity_base}/100`}
+            </p>
+            <div data-rate-stars>
+              {[1, 2, 3, 4, 5].map((n: any) => (
+                <button type="button" data-rate-value={n} aria-label={`Rate ${n} ${n === 1 ? 'star' : 'stars'}`}>★</button>
+              ))}
+            </div>
+            <p data-rate-note>Votes are stored under our editorial rating, not the source.</p>
+          </section>
+        )}
+        {liveWidgets && (
         <script>
           import { plural } from '@/lib/format';
 
@@ -254,6 +270,7 @@ const scoreColor = (score: number) => {
             if (!widget) return;
             const id = widget.getAttribute('data-resource-id');
             const summary = widget.querySelector('[data-rate-summary]');
+            const note = widget.querySelector('[data-rate-note]');
             const render = (avg: any, count: any, pop: any) => {
               if (summary)
                 summary.textContent =
@@ -266,7 +283,9 @@ const scoreColor = (score: number) => {
               .then((j) => {
                 if (j?.ok) render(j.data.rating_average, j.data.rating_count, j.data.popularity);
               })
-              .catch(() => {});
+              .catch(() => {
+                if (note) note.textContent = 'Ratings unavailable right now.';
+              });
             widget.querySelectorAll('[data-rate-value]').forEach((btn) => {
               btn.addEventListener('click', () => {
                 fetch('/api/marketplace/rate', {
@@ -278,13 +297,16 @@ const scoreColor = (score: number) => {
                   .then((j) => {
                     if (j?.ok) render(j.rating_average, j.rating_count, j.popularity);
                   })
-                  .catch(() => {});
+                  .catch(() => {
+                    if (note) note.textContent = 'Ratings unavailable right now.';
+                  });
               });
             });
           })();
         </script>
+        )}
         {(res.vulnerability_scan_at || (res.secret_findings ?? []).length > 0) && (
-          <section class="mount">
+          <section class="mount" data-section="security-scan">
             <h2>Security scan</h2>
             <p>
               Last sweep{res.vulnerability_scan_at ? ` ${res.vulnerability_scan_at.slice(0, 10)}` : ''}:
@@ -294,43 +316,43 @@ const scoreColor = (score: number) => {
           </section>
         )}
         {res.body && (
-          <section class="mount">
+          <section class="mount" data-section="details">
             <h2>Details</h2>
             <div class="prose-de prose-measure" set:html={marked.parse(res.body)} />
           </section>
         )}
         {res.context && (
-          <section class="mount">
+          <section class="mount" data-section="context">
             <h2>Context</h2>
             <p>{res.context}</p>
           </section>
         )}
         {res.forces && res.forces.length && (
-          <section class="mount">
+          <section class="mount" data-section="forces">
             <h2>Forces</h2>
             <ul>{res.forces.map((f: any) => <li>{f}</li>)}</ul>
           </section>
         )}
         {res.symptoms && res.symptoms.length > 0 && (
-          <section class="mount">
+          <section class="mount" data-section="symptoms">
             <h2>Symptoms</h2>
-            <ol style="padding-left: 1.25rem; color: var(--fg-muted);">{res.symptoms.map((s: any) => <li style="margin-block: 0.3rem;">{typeof s === 'string' ? s : Object.values(s)[0]}</li>)}</ol>
+            <ol style="padding-left: 1.25rem; color: var(--fg-muted);">{res.symptoms.map((s: any) => <li style="margin-block: 0.3rem;">{typeof s === 'string' ? s : (Object.entries(s).map(([k, v]) => `${k}: ${v}`).join(' — ') as any)}</li>)}</ol>
           </section>
         )}
         {res.diagnosis && res.diagnosis.length && (
-          <section class="mount">
+          <section class="mount" data-section="diagnosis">
             <h2>Diagnosis</h2>
             <ul>{res.diagnosis.map((d: any) => <li>{typeof d === 'string' ? d : Object.entries(d).map(([k, v]) => `${k}: ${v}`).join(' — ')}</li>)}</ul>
           </section>
         )}
         {res.possible_causes && res.possible_causes.length > 0 && (
-          <section class="mount">
+          <section class="mount" data-section="possible-causes">
             <h2>Possible causes</h2>
-            <ul>{res.possible_causes.map((c: any) => <li>{typeof c === 'string' ? c : Object.values(c)[0]}</li>)}</ul>
+            <ul>{res.possible_causes.map((c: any) => <li>{typeof c === 'string' ? c : (Object.entries(c).map(([k, v]) => `${k}: ${v}`).join(' — ') as any)}</li>)}</ul>
           </section>
         )}
         {res.commands && res.commands.length && (
-          <section class="mount">
+          <section class="mount" data-section="commands">
             <h2>Commands</h2>
             {res.commands.map((c: any) => (
               <div class="codeblock my-2">
@@ -341,31 +363,31 @@ const scoreColor = (score: number) => {
           </section>
         )}
         {res.fix && res.fix.length && (
-          <section class="mount">
+          <section class="mount" data-section="fix">
             <h2>Fix</h2>
             <ul>{res.fix.map((f: any) => <li>{f}</li>)}</ul>
           </section>
         )}
         {res.prevention && res.prevention.length && (
-          <section class="mount">
+          <section class="mount" data-section="prevention">
             <h2>Prevention</h2>
             <ul>{res.prevention.map((p: any) => <li>{p}</li>)}</ul>
           </section>
         )}
         {res.monitoring && res.monitoring.length && (
-          <section class="mount">
+          <section class="mount" data-section="monitoring">
             <h2>Monitoring</h2>
             <ul>{res.monitoring.map((m: any) => <li>{m}</li>)}</ul>
           </section>
         )}
         {res.tradeoffs && res.tradeoffs.length && (
-          <section class="mount">
+          <section class="mount" data-section="tradeoffs">
             <h2>Tradeoffs</h2>
             <ul>{res.tradeoffs.map((t: any) => <li>{t}</li>)}</ul>
           </section>
         )}
         {res.implementation && (Array.isArray(res.implementation) ? res.implementation.length : typeof res.implementation === 'string') && (
-          <section class="mount">
+          <section class="mount" data-section="implementation">
             <h2>Implementation</h2>
             {Array.isArray(res.implementation) ? (
               <ul>{res.implementation.map((i: any) => <li>{i}</li>)}</ul>
@@ -375,123 +397,117 @@ const scoreColor = (score: number) => {
           </section>
         )}
         {res.tests && res.tests.length && (
-          <section class="mount">
+          <section class="mount" data-section="tests">
             <h2>Tests</h2>
             <ul>{res.tests.map((t: any) => <li>{t}</li>)}</ul>
           </section>
         )}
         {res.failure_scenarios && res.failure_scenarios.length && (
-          <section class="mount">
+          <section class="mount" data-section="failure-scenarios">
             <h2>Failure Scenarios</h2>
             <ul>{res.failure_scenarios.map((f: any) => <li>{f}</li>)}</ul>
           </section>
         )}
         {res.production_hardening && res.production_hardening.length && (
-          <section class="mount">
+          <section class="mount" data-section="production-hardening">
             <h2>Production Hardening</h2>
             <ul>{res.production_hardening.map((p: any) => <li>{p}</li>)}</ul>
           </section>
         )}
         {res.diagram && (
-          <section class="mount">
+          <section class="mount" data-section="diagram">
             <h2>Diagram</h2>
             <pre class="codeblock"><code>{res.diagram}</code></pre>
           </section>
         )}
         {res.repo_structure && (
-          <section class="mount">
+          <section class="mount" data-section="repository-structure">
             <h2>Repository Structure</h2>
             <pre class="codeblock"><code>{res.repo_structure}</code></pre>
           </section>
         )}
         {res.architecture && (
-          <section class="mount">
+          <section class="mount" data-section="architecture">
             <h2>Architecture</h2>
             <p>{res.architecture}</p>
           </section>
         )}
         {res.setup && res.setup.length && (
-          <section class="mount">
+          <section class="mount" data-section="setup">
             <h2>Setup</h2>
             <ul>{res.setup.map((s: any) => <li>{s}</li>)}</ul>
           </section>
         )}
         {res.sample_data && (
-          <section class="mount">
+          <section class="mount" data-section="sample-data">
             <h2>Sample Data</h2>
             <p>{res.sample_data}</p>
           </section>
         )}
         {res.workflow && res.workflow.length && (
-          <section class="mount">
+          <section class="mount" data-section="workflow">
             <h2>Workflow</h2>
             <ul>{res.workflow.map((w: any) => <li>{w}</li>)}</ul>
           </section>
         )}
         {res.inputs && res.inputs.length && (
-          <section class="mount">
+          <section class="mount" data-section="inputs">
             <h2>Inputs</h2>
             <ul>{res.inputs.map((i: any) => <li>{i}</li>)}</ul>
           </section>
         )}
         {res.outputs && res.outputs.length && (
-          <section class="mount">
+          <section class="mount" data-section="outputs">
             <h2>Outputs</h2>
             <ul>{res.outputs.map((o: any) => <li>{o}</li>)}</ul>
           </section>
         )}
         {res.guardrails && res.guardrails.length && (
-          <section class="mount">
+          <section class="mount" data-section="guardrails">
             <h2>Guardrails</h2>
             <ul>{res.guardrails.map((g: any) => <li>{g}</li>)}</ul>
           </section>
         )}
         {res.example && (
-          <section class="mount">
+          <section class="mount" data-section="example">
             <h2>Example</h2>
             <p>{res.example}</p>
           </section>
         )}
         {res.evaluation && (
-          <section class="mount">
+          <section class="mount" data-section="evaluation">
             <h2>Evaluation</h2>
             <p>{res.evaluation}</p>
           </section>
         )}
         {res.capabilities && res.capabilities.length && (
-          <section class="mount">
+          <section class="mount" data-section="capabilities">
             <h2>Capabilities</h2>
             <ul>{res.capabilities.map((c: any) => <li>{c}</li>)}</ul>
           </section>
         )}
         {res.tools && res.tools.length && (
-          <section class="mount">
+          <section class="mount" data-section="tools">
             <h2>Tools</h2>
             <ul>{res.tools.map((t: any) => <li>{t}</li>)}</ul>
           </section>
         )}
         {res.skills && res.skills.length && (
-          <section class="mount">
+          <section class="mount" data-section="skills">
             <h2>Skills</h2>
-            <ul>{res.skills.map((s: any) => <li><a href={s.url ?? '#'} class="link">{s}</a></li>)}</ul>
+            <ul>{res.skills.map((s: any) => <li><a href={s.url ?? '#'} class="link">{typeof s === 'string' ? s : (s.title ?? s.name ?? s.id ?? JSON.stringify(s))}</a></li>)}</ul>
           </section>
         )}
         {res.hooks && res.hooks.length && (
-          <section class="mount">
+          <section class="mount" data-section="hooks">
             <h2>Hooks</h2>
-            <ul>{res.hooks.map((h: any) => <li><a href={h.url ?? '#'} class="link">{h}</a></li>)}</ul>
+            <ul>{res.hooks.map((h: any) => <li><a href={typeof h === 'string' ? '#' : (h.url ?? '#')} class="link">{typeof h === 'string' ? h : (h.title ?? h.name ?? h.id ?? JSON.stringify(h))}</a></li>)}</ul>
           </section>
         )}
         {res.mcp && res.mcp.length && (
-          <section class="mount">
+          <section class="mount" data-section="mcp-servers">
             <h2>MCP Servers</h2>
-            <ul>{res.mcp.map((m: any) => <li><a href={m.url ?? '#'} class="link">{m}</a></li>)}</ul>
-          </section>
-        )}
-        {res.commands && res.commands.length && (
-          <section class="mount">
-            <h2>Commands</h2>
-            <ul>{res.commands.map((c: any) => <li><code class="icode">{c}</code></li>)}</ul>
+            <ul>{res.mcp.map((m: any) => <li><a href={typeof m === 'string' ? '#' : (m.url ?? '#')} class="link">{typeof m === 'string' ? m : (m.title ?? m.name ?? m.id ?? JSON.stringify(m))}</a></li>)}</ul>
           </section>
         )}
       </section>
@@ -600,7 +616,7 @@ const scoreColor = (score: number) => {
                 {limitations.length > 0 ? (
                   <ul class="space-y-1">
                     {limitations.map((l: any) => (
-                      <li>{typeof l === 'string' ? l : JSON.stringify(l)}</li>
+                      <li>{typeof l === 'string' ? l : (Object.entries(l).map(([k, v]) => `${k}: ${v}`).join(' — ') as any)}</li>
                     ))}
                   </ul>
                 ) : (
@@ -752,7 +768,7 @@ const scoreColor = (score: number) => {
         )}
 
         <!-- Install manifest action (rating lives in the Rating widget above) -->
-        {mp?.install_manifest && (
+        {liveWidgets && mp?.install_manifest && (
           <section class="card card-pad mount">
             <h3 class="mono-label mb-3">Install</h3>
             <div>
@@ -814,3 +830,46 @@ const scoreColor = (score: number) => {
     }
   }
 </script>
+<style>
+  /* Type-specific section ordering (AUD-002): sections carry data-section
+     slugs; per-artifact-type rules pull the type-critical sections to the
+     top while unlisted sections keep DOM order (default order 89). */
+  .detail-sections > section {
+    min-width: 0;
+  }
+  [data-artifact-type='runbook'] [data-section='symptoms'] { order: 10; }
+  [data-artifact-type='runbook'] [data-section='diagnosis'] { order: 20; }
+  [data-artifact-type='runbook'] [data-section='possible-causes'] { order: 30; }
+  [data-artifact-type='runbook'] [data-section='fix'] { order: 40; }
+  [data-artifact-type='runbook'] [data-section='commands'] { order: 50; }
+  [data-artifact-type='runbook'] [data-section='prevention'] { order: 60; }
+  [data-artifact-type='runbook'] [data-section='monitoring'] { order: 70; }
+  [data-artifact-type='runbook'] [data-section='security-scan'] { order: 80; }
+  [data-artifact-type='skill'] [data-section='learning-objectives'] { order: 10; }
+  [data-artifact-type='skill'] [data-section='what-you-need'] { order: 20; }
+  [data-artifact-type='skill'] [data-section='steps'] { order: 30; }
+  [data-artifact-type='skill'] [data-section='inputs'] { order: 40; }
+  [data-artifact-type='skill'] [data-section='outputs'] { order: 50; }
+  [data-artifact-type='skill'] [data-section='tools'] { order: 60; }
+  [data-artifact-type='skill'] [data-section='capabilities'] { order: 70; }
+  [data-artifact-type='tutorial'] [data-section='learning-objectives'] { order: 10; }
+  [data-artifact-type='tutorial'] [data-section='what-you-need'] { order: 20; }
+  [data-artifact-type='tutorial'] [data-section='steps'] { order: 30; }
+  [data-artifact-type='tutorial'] [data-section='check-yourself'] { order: 40; }
+  [data-artifact-type='tutorial'] [data-section='sourced-from'] { order: 50; }
+  [data-artifact-type='architecture'] [data-section='context'] { order: 10; }
+  [data-artifact-type='architecture'] [data-section='problem'] { order: 20; }
+  [data-artifact-type='architecture'] [data-section='forces'] { order: 30; }
+  [data-artifact-type='architecture'] [data-section='solution'] { order: 40; }
+  [data-artifact-type='architecture'] [data-section='diagram'] { order: 50; }
+  [data-artifact-type='architecture'] [data-section='repo-structure'] { order: 60; }
+  [data-artifact-type='architecture'] [data-section='architecture'] { order: 70; }
+  [data-artifact-type='architecture'] [data-section='tradeoffs'] { order: 80; }
+  [data-artifact-type='starter'] [data-section='setup'] { order: 10; }
+  [data-artifact-type='starter'] [data-section='repo-structure'] { order: 20; }
+  [data-artifact-type='starter'] [data-section='sample-data'] { order: 30; }
+  [data-artifact-type='starter'] [data-section='steps'] { order: 40; }
+  [data-artifact-type='starter'] [data-section='tests'] { order: 50; }
+  [data-artifact-type='starter'] [data-section='failure-scenarios'] { order: 60; }
+  [data-artifact-type='starter'] [data-section='production-hardening'] { order: 70; }
+</style>
