@@ -1,31 +1,37 @@
-// Canonical roadmap phase mapping — the single authoritative source for how
-// the thirteen taxonomy stages group into the four established phases
-// (homepage, /categories, /roadmap all consume this; nothing else may
-// hard-code the grouping — brief §D).
-// Kept dependency-free (pure data) so node:test and Astro both import it.
+// Canonical roadmap phase model — built on the single stage→phase table
+// (pipelines/lib/stage-phases.mjs) so the UI and the scoring pipeline can
+// never drift apart. Node tests and Astro both import this.
+import { PHASE_ORDER, PHASE_NAMES, STAGE_PHASE } from '../../pipelines/lib/stage-phases.mjs';
 
 export interface Phase {
   index: number;
+  key: string;
   name: string;
   tagline: string;
   stageIds: string[];
 }
 
-const PHASE_SLUGS: [string, string, string[]][] = [
-  ['Foundations', 'Storage, compute, and the primitives everything else builds on.', ['foundations', 'python-sql', 'data-processing']],
-  ['Platforms', 'Warehouses, lakehouses, streaming backbones, and the cloud they run on.', ['warehousing', 'lakehouse', 'cloud', 'streaming']],
-  ['Trust & Operations', 'Make data reliable: quality checks, observability, orchestration, reliability.', ['data-quality', 'observability', 'orchestration', 'reliability']],
-  ['Advanced & Agentic', 'System design judgment and AI agents as first-class data workers.', ['system-design', 'agentic']],
-];
+const PHASE_TAGLINES: Record<string, string> = {
+  foundations: 'Storage, compute, and the primitives everything else builds on.',
+  platforms: 'Warehouses, lakehouses, streaming backbones, and the cloud they run on.',
+  'trust-operations': 'Make data reliable: quality checks, observability, orchestration, reliability.',
+  'advanced-agentic': 'System design judgment and AI agents as first-class data workers.',
+};
 
-export const PHASES: Phase[] = PHASE_SLUGS.map(([name, tagline, ids], i) => ({
-  index: i + 1,
-  name,
-  tagline,
-  stageIds: ids,
-}));
+export const PHASES: Phase[] = PHASE_ORDER.map((key, i) => {
+  const phaseKey: keyof typeof PHASE_NAMES = key as keyof typeof PHASE_NAMES;
+  return {
+    index: i + 1,
+    key,
+    name: PHASE_NAMES[phaseKey] ?? key,
+    tagline: PHASE_TAGLINES[phaseKey] ?? '',
+    stageIds: Object.entries(STAGE_PHASE)
+      .filter(([, k]) => k === key)
+      .map(([id]) => id),
+  };
+});
 
-const phaseByStage = new Map<string, Phase>();
+const phaseByStage: Map<string, Phase> = new Map<string, Phase>();
 for (const phase of PHASES) {
   for (const id of phase.stageIds) phaseByStage.set(id, phase);
 }

@@ -6,6 +6,8 @@
 
 import { CHECKS } from './evidence.mjs';
 import { computePopularity } from './popularity.mjs';
+import { completenessFor } from './completeness.mjs';
+import { phaseKeyForStage } from './stage-phases.mjs';
 
 // Scoring weights (sum = 1.0)
 export const MARKETPLACE_WEIGHTS = {
@@ -27,23 +29,8 @@ export const COMPOSITE_LABELS = [
   { min: 0, label: 'unproven' },
 ];
 
-// Type-specific required fields for completeness scoring
-const TYPE_REQUIRED_FIELDS = {
-  skill: ['version', 'license', 'verification', 'last_verified', 'install_command', 'supported_agents', 'files'],
-  mcp: ['server', 'transport', 'tools', 'installation'],
-  agent: ['purpose', 'workflow', 'outputs', 'guardrails'],
-  hook: ['trigger', 'implementation', 'failure_behavior'],
-  plugin: ['runtime', 'installation', 'capabilities'],
-  template: ['installation', 'repo_structure', 'contents'],
-  starter: ['architecture', 'repo_structure', 'agent_skills', 'setup', 'implementation'],
-  runbook: ['symptoms', 'diagnosis', 'fix', 'prevention'],
-  architecture: ['solution', 'tradeoffs', 'forces', 'context'],
-  reference: ['url', 'publisher', 'kind'],
-  policy: ['policy_engine', 'policy_language', 'rules'],
-  rule_pack: ['target_tool', 'rules'],
-  config_template: ['target_system', 'parameters'],
-  governance_pack: ['scope', 'tag_taxonomy'],
-};
+// Type-specific required fields for completeness scoring live in
+// completeness.mjs — shared with score.mjs so both score paths agree.
 
 /**
  * Compute all marketplace scores for all resources
@@ -66,21 +53,30 @@ export function computeMarketplaceScores(resources, meta, executions = {}) {
       community: computeCommunityScore(r, meta, existingQualityScores.community),
     };
 
-    // Composite score (weighted average of non-null scores)
-    const validScores = Object.entries(scores).filter(([_, v]) => v !== null);
-    const totalWeight = validScores.reduce((sum, [k]) => sum + MARKETPLACE_WEIGHTS[k], 0);
-    const composite = validScores.length > 0
-      ? validScores.reduce((sum, [k, v]) => sum + v * (MARKETPLACE_WEIGHTS[k] / totalWeight), 0)
-      : 0;
+    // Composite (AUD-008): missing dimensions are NOT forgiven — a null
+    // dimension keeps its weight but contributes 0, so data gaps lower the
+    // score. Unchecked verification claims (evidence gap) multiply down.
+    let composite = 0;
+    for (const [k, v] of Object.entries(scores)) {
+      composite += (v ?? 0) * MARKETPLACE_WEIGHTS[k];
+    }
+    const gap = r.evidence_summary?.gap ?? 0;
+    if (gap > 0) composite *= Math.max(0.25, 1 - gap * 0.25);
+    composite = Math.round(composite * 100) / 100;
 
     // Composite label
     let compositeLabel = 'unproven';
     for (const g of COMPOSITE_LABELS) {
       if (composite >= g.min) { compositeLabel = g.label; break; }
     }
+    // Labels above 'adequate' require earned evidence (community is not proof)
+    const earnedVerification = ['reviewed', 'tested', 'verified'].includes(r.verification);
+    if (compositeLabel !== 'unproven' && !earnedVerification) {
+      compositeLabel = 'adequate';
+    }
 
-    // Roadmap phase from stage
-    const roadmapPhase = computeRoadmapPhase(r);
+    // Roadmap phase from the canonical single table
+    const roadmapPhase = r.stage ? phaseKeyForStage(r.stage) ?? undefined : undefined;
 
     r.marketplace = {
       install_count: 0,
@@ -132,27 +128,11 @@ function computePerformanceScore(resource, executions) {
 }
 
 /**
- * Completeness Score (0-100)
- * How many canonical + type-specific fields are filled
+ * Completeness Score (0-100) — shared implementation (completeness.mjs)
+ * used by both score.mjs and this pipeline, so the numbers agree.
  */
 function computeCompletenessScore(resource) {
-  const canonical = [
-    'description', 'category', 'difficulty', 'tags', 'technologies', 'learning_objectives',
-    'prerequisites', 'source_url', 'license', 'author', 'version', 'last_verified',
-    'compatibility', 'install_command', 'security', 'verification',
-  ];
-
-  const typeSpecific = TYPE_REQUIRED_FIELDS[resource.type] ?? [];
-  const allFields = [...canonical, ...typeSpecific];
-
-  let present = 0;
-  for (const f of allFields) {
-    const v = resource[f];
-    const filled = Array.isArray(v) ? v.length > 0 : v !== null && v !== undefined && v !== '';
-    if (filled) present++;
-  }
-
-  return Math.round((present / allFields.length) * 100);
+  return completenessFor(resource);
 }
 
 /**
@@ -323,28 +303,6 @@ function computeRoadmapStages(resource) {
     // This would need taxonomy lookup - simplified for now
   }
   return [...new Set(stages)];
-}
-
-/**
- * Compute roadmap phase from stage
- */
-function computeRoadmapPhase(resource) {
-  const phaseMap = {
-    'foundations': 'foundations',
-    'python-sql': 'foundations',
-    'data-processing': 'foundations',
-    'warehousing': 'platforms',
-    'lakehouse': 'platforms',
-    'orchestration': 'platforms',
-    'streaming': 'platforms',
-    'cloud': 'platforms',
-    'data-quality': 'trust-operations',
-    'observability': 'trust-operations',
-    'reliability': 'trust-operations',
-    'system-design': 'advanced-agentic',
-    'agentic': 'advanced-agentic',
-  };
-  return resource.stage ? phaseMap[resource.stage] : undefined;
 }
 
 /**

@@ -1,14 +1,11 @@
 /**
  * SCORE — two transparent scores, computed never hand-written.
  *  - quality: the source quality score (references carry explicit components).
- *  - completeness: how much of the canonical object model a resource fills in.
+ *  - completeness: how much of the canonical object model a resource fills in
+ *    (shared contract — completeness.mjs — so both score paths agree).
  * Plus a trust summary derived from the verification level and security flags.
  */
-const CANONICAL_FIELDS = [
-  'description', 'category', 'difficulty', 'tags', 'technologies', 'learning_objectives',
-  'prerequisites', 'source_url', 'license', 'author', 'version', 'last_verified',
-  'compatibility', 'install_command', 'security', 'verification',
-];
+import { completenessFor } from './completeness.mjs';
 
 const RANK = { community: 1, reviewed: 2, tested: 3, verified: 4 };
 
@@ -17,7 +14,7 @@ export function scoreAll(resources, meta) {
   for (const r of resources) {
     r.scores = {
       quality: qualityScore(r),
-      completeness: completenessScore(r),
+      completeness: completenessFor(r),
       trust: trustScore(r),
     };
     r.scores.qualityLabel = labelFor(r.scores.quality, guide);
@@ -32,16 +29,6 @@ function qualityScore(r) {
   if (!vals.length) return null;
   const sum = vals.reduce((a, b) => a + b, 0);
   return round(sum / vals.length);
-}
-
-function completenessScore(r) {
-  let present = 0;
-  for (const f of CANONICAL_FIELDS) {
-    const v = r[f];
-    const filled = Array.isArray(v) ? v.length > 0 : v !== null && v !== undefined && v !== '';
-    if (filled) present++;
-  }
-  return Math.round((present / CANONICAL_FIELDS.length) * 100);
 }
 
 function trustScore(r) {
