@@ -2,7 +2,7 @@
 // Shared by the client script (Vite bundles it) and node tests.
 
 export const FILTER_KEYS = [
-  'type', 'category', 'difficulty', 'verification', 'agent',
+  'type', 'kind', 'category', 'difficulty', 'verification', 'agent',
   'security', 'technology', 'stage', 'quality',
 ];
 
@@ -37,11 +37,18 @@ export function activeCount(state) {
   return Object.values(state).reduce((n, values) => n + (values?.length ?? 0), 0);
 }
 
+/** filter key -> human label used on removable chips */
+export const CHIP_KEY_LABELS = {
+  kind: 'Kind',
+};
+
 /** flat [{ key, value }] list for removable chips, stable key order */
 export function chipList(state) {
   const chips = [];
   for (const key of FILTER_KEYS) {
-    for (const value of state[key] ?? []) chips.push({ key, value });
+    for (const value of state[key] ?? []) {
+      chips.push({ key, value, label: `${CHIP_KEY_LABELS[key] ?? key}: ${value}` });
+    }
   }
   return chips;
 }

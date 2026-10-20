@@ -40,10 +40,20 @@ describe('filter-state', () => {
     const chips = chipList(state);
     // key order follows FILTER_KEYS, not insertion order
     assert.deepEqual(chips, [
-      { key: 'type', value: 'skill' },
-      { key: 'type', value: 'mcp' },
-      { key: 'verification', value: 'community' },
+      { key: 'type', value: 'skill', label: 'type: skill' },
+      { key: 'type', value: 'mcp', label: 'type: mcp' },
+      { key: 'verification', value: 'community', label: 'verification: community' },
     ]);
+  });
+
+  it('kind chips use the human Kind label', () => {
+    const chips = chipList({ kind: ['automation'] });
+    assert.deepEqual(chips, [{ key: 'kind', value: 'automation', label: 'Kind: automation' }]);
+    assert.deepEqual(stateFromParams(new URLSearchParams('kind=automation')), {
+      kind: ['automation'],
+    });
+    // round-trip preserves the additive key
+    assert.deepEqual(stateFromParams(paramsFromState({ kind: ['agents'] })), { kind: ['agents'] });
   });
 
   it('removes a chip and drops emptied keys', () => {

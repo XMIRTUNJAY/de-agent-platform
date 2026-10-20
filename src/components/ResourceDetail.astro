@@ -11,8 +11,9 @@ marked.setOptions({ gfm: true, breaks: false });
 
 const { res, registry, trustScan = null } = Astro.props as { res: any; registry: any; trustScan?: any };
 
-/** ratings + install manifests need the SSR API routes — only present on Vercel deploys */
-const liveWidgets = process.env.VERCEL === '1';
+/** ratings + install manifests need the SSR API routes. Present on Vercel
+ *  deploys and in dev; hidden in the static export (no API, dead widget). */
+const liveWidgets = process.env.VERCEL === '1' || import.meta.env.MODE !== 'production';
 
 const techs = res.technologies?.map((t: any) => registry.taxonomy.technologies.find((x: any) => x.id === t)).filter(Boolean) ?? [];
 const prereqs = res.prerequisites?.map((id: any) => registry.resources.find((r: any) => r.id === id)).filter(Boolean) ?? [];

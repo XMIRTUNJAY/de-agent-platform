@@ -5,7 +5,6 @@ import { join, dirname } from 'node:path';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const read = (p) => readFileSync(join(here, '..', '..', p), 'utf8');
-
 test('AUD-003: res.commands renders exactly once in ResourceDetail template', () => {
   const detail = read('src/components/ResourceDetail.astro');
   const occurrences = detail.split('res.commands && res.commands.length').length - 1;
@@ -60,4 +59,46 @@ test('AUD-009: object-type fields render entries, never bare [object Object]', (
     const re = new RegExp(`typeof ${key} === 'string' \\? ${key} : \\(${key}\\.title \\?\\? ${key}\\.name`);
     if (!re.test(detail)) throw new Error(`link text for '${key}' lacks string-first rendering`);
   }
+});
+
+test('AUD-005: marketplace filters split into 4 primary + collapsed advanced, quality removed', () => {
+  const page = read('src/pages/marketplace.astro');
+  const panel = read('src/components/FilterPanel.astro');
+  const state = read('src/lib/filter-state.mjs');
+
+  // quality group no longer declared as a filter
+  if (page.includes("{ label: 'Quality Score'")) throw new Error('Quality Score filter still declared');
+  // legacy type checkbox group removed in favor of kind super-groups
+  if (page.includes("{ label: 'Type', key: 'type'")) throw new Error('raw Type group still declared');
+  if (!page.includes("key: 'kind'")) throw new Error('kind super-group missing');
+  // primary list = exactly 4 keys
+  const primaryMatch = page.match(/primary=\{\[([^\]]*)\]\}/);
+  if (!primaryMatch) throw new Error('FilterPanel primary prop missing');
+  const keys = primaryMatch[1].split(',').map((s) => s.trim().replace(/'/g, ''));
+  if (keys.length !== 4) throw new Error(`Expected 4 primary groups, got ${keys.length}: ${keys.join(',')}`);
+
+  // FilterPanel collapses non-primary groups behind one advanced toggle
+  if (!panel.includes('primary')) throw new Error('FilterPanel lacks primary prop');
+  if (!panel.includes('filter-advanced')) throw new Error('FilterPanel lacks advanced collapsible');
+
+  // URL compatibility: kind + legacy keys both serializable
+  if (!state.includes("'kind'")) throw new Error('filter-state missing kind key');
+  if (!state.includes("'quality'")) throw new Error('filter-state must keep quality key for legacy URLs');
+});
+
+test('AUD-013: ResourceCard hierarchy — no rating chip, no success %, <=6 visual rows', () => {
+  const card = read('src/components/ResourceCard.astro');
+  if (card.includes('ratingCount > 0')) throw new Error('rating chip still rendered on cards');
+  if (card.includes('% success')) throw new Error('install success % still rendered on cards');
+  if (card.includes('(r.tags || []).slice(0, 3)')) throw new Error('cards still show 3 tag chips');
+  // description fallback chain present
+  for (const marker of ['firstSentence', 'lacksDepth', 'showObjectives']) {
+    if (!card.includes(marker)) throw new Error(`card fallback missing: ${marker}`);
+  }
+});
+
+test('AUD-015: empty state offers clear-all recovery action', () => {
+  const page = read('src/pages/marketplace.astro');
+  if (!page.includes('data-empty-clear')) throw new Error('empty state lacks clear button');
+  if (!page.includes('emptyClear')) throw new Error('empty state clear button not wired');
 });

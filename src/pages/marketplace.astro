@@ -5,13 +5,12 @@ import ResourceCard from '@/components/ResourceCard.astro';
 import FilterPanel from '@/components/FilterPanel.astro';
 import Icon from '@/components/Icon.astro';
 import registry from '@/data/generated/registry.json';
+import { KINDS, kindFor } from '@/lib/type-kinds.mjs';
 
-const types = ['skill', 'mcp', 'plugin', 'agent', 'hook', 'template', 'starter', 'runbook', 'architecture', 'reference', 'policy', 'rule_pack', 'config_template', 'governance_pack'];
 const categories = registry.taxonomy.categories.filter(c => registry.resources.some(r => r.category === c.id));
 const difficulties = ['beginner', 'intermediate', 'advanced'];
 const verifications = ['verified', 'tested', 'reviewed', 'community'];
 const agents = ['claude-code', 'codex', 'cursor', 'amp', 'gemini-cli'];
-const compositeLabels = ['exemplary', 'strong', 'adequate', 'weak', 'unproven'];
 
 const readability = {
   read_only: registry.resources.filter(r => r.security_flags === 0).length,
@@ -21,10 +20,10 @@ const readability = {
 };
 
 // Pre-compute filter options to avoid parser issues
-const typeOptions = types.map(t => ({
-  value: t,
-  label: registry.resources.find(r => r.type === t)?.typeLabel ?? t,
-  count: registry.resources.filter(r => r.type === t).length
+const kindOptions = Object.entries(KINDS).map(([id, def]) => ({
+  value: id,
+  label: def.label,
+  count: registry.resources.filter(r => def.types.includes(r.type)).length,
 }));
 
 const categoryOptions = categories.map(c => ({
@@ -58,12 +57,6 @@ const securityOptions = [
   { value: 'runs-code', label: 'Runs code', count: readability.touches_code },
 ];
 
-const compositeLabelOptions = compositeLabels.map(l => ({
-  value: l,
-  label: l.charAt(0).toUpperCase() + l.slice(1),
-  count: registry.resources.filter(r => r.marketplace?.composite_label === l).length
-}));
-
 const technologies = registry.taxonomy.technologies.filter(t => registry.resources.some(r => ((r.technologies ?? []) as string[]).includes(t.id)));
 const stages = registry.taxonomy.stages.filter(s => registry.resources.some(r => r.stage === s.id));
 
@@ -79,25 +72,32 @@ const stageOptions = stages.map(s => ({
   count: registry.resources.filter(r => r.stage === s.id).length
 }));
 
-// Single source for FilterPanel — key order matches filter-state.mjs.
-const filters = [
-  { label: 'Type', key: 'type', options: typeOptions },
+// Filter split (audit AUD-005): four intent-based primary groups always
+// visible; verification/security/technology/stage collapsed behind one
+// "Advanced filters" toggle. Quality Score is a sort, not a filter. The
+// legacy ?type=<raw> key stays functional via data-type (no checkbox group).
+const primary = [
+  { label: 'Kind of artifact', key: 'kind', options: kindOptions },
   { label: 'Category', key: 'category', options: categoryOptions },
   { label: 'Difficulty', key: 'difficulty', options: difficultyOptions },
-  { label: 'Verification', key: 'verification', options: verificationOptions },
   { label: 'Agent Compatibility', key: 'agent', options: agentOptions },
+];
+
+const advanced = [
+  { label: 'Verification', key: 'verification', options: verificationOptions },
   { label: 'Security', key: 'security', options: securityOptions },
   { label: 'Technology', key: 'technology', options: technologyOptions },
   { label: 'Stage', key: 'stage', options: stageOptions },
-  { label: 'Quality Score', key: 'quality', options: compositeLabelOptions },
 ];
+
+const filters = [...primary, ...advanced];
 ---
 
 <BaseLayout title="Marketplace · DE//AGENT" sidebar>
   <PageHero
     kicker="Marketplace"
     title="Browse the registry"
-    lede="Filter by type, category, difficulty, verification and agent compatibility. Every entry shows its security posture — a listing is never a trust signal."
+    lede="Pick a kind of artifact, narrow by category and difficulty, and open Advanced filters for technology or stage. Every entry shows its security posture — a listing is never a trust signal."
   />
 
   <div class="col section-sm" style="padding-top: 2.5rem;">
@@ -106,7 +106,7 @@ const filters = [
       <button type="button" data-filter-toggle class="btn btn-sm mb-4 gap-2 lg:hidden" aria-expanded="false" aria-controls="filters">
         <Icon name="categories" size={14} /> Filters
       </button>
-      <FilterPanel filters={filters} id="filters" />
+      <FilterPanel filters={filters} primary={['kind', 'category', 'difficulty', 'agent']} openByDefault={['kind', 'category']} id="filters" />
 
       <!-- Results grid -->
       <section>
@@ -128,6 +128,7 @@ const filters = [
           {registry.resources.filter((r) => (r.page_eligibility?.state ?? 'eligible') !== 'internal_only').map((r) => (
             <div
               data-type={r.type}
+              data-kind={kindFor(r.type) ?? ''}
               data-category={r.categorySlug ?? ''}
               data-difficulty={r.difficulty ?? ''}
               data-verification={r.verification}
@@ -150,7 +151,11 @@ const filters = [
             </div>
           ))}
         </div>
-        <p id="empty" class="hidden mt-8 text-center text-muted py-8">No resources match the current filters.</p>
+        <div id="empty" class="hidden mt-8 text-center text-muted py-8">
+          <p>No resources match the current filters.</p>
+          <p class="text-sm text-dim" style="margin-top: 0.25rem;">Try removing a filter — the active chips above are individually removable.</p>
+          <button type="button" data-empty-clear class="btn btn-sm mt-3">Clear all filters</button>
+        </div>
       </section>
     </div>
 
@@ -179,6 +184,7 @@ const filters = [
         const toggleBtn = document.querySelector('[data-filter-toggle]') as HTMLButtonElement | null;
         const closeBtn = panel?.querySelector('[data-filter-close]') as HTMLButtonElement | null;
         const clearBtn = panel?.querySelector('[data-filter-clear]') as HTMLButtonElement | null;
+        const emptyClear = document.querySelector('[data-empty-clear]') as HTMLButtonElement | null;
 
         let state = stateFromParams(new URLSearchParams(location.search)) as Record<string, string[]>;
         let currentSort = sortSelect?.value ?? DEFAULT_SORT;
@@ -252,7 +258,7 @@ const filters = [
             for (const chip of chipList(state)) {
               const el = document.createElement('span');
               el.className = 'filter-chip';
-              el.append(`${chip.key}: ${chip.value}`);
+              el.append(chip.label);
               const x = document.createElement('button');
               x.type = 'button';
               x.setAttribute('aria-label', `Remove filter ${chip.key}: ${chip.value}`);
@@ -292,6 +298,11 @@ const filters = [
         });
 
         clearBtn?.addEventListener('click', () => {
+          state = {};
+          apply(true);
+        });
+
+        emptyClear?.addEventListener('click', () => {
           state = {};
           apply(true);
         });

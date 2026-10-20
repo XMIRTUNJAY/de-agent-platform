@@ -1,6 +1,9 @@
 ---
 // Reusable filter panel — grouped, count-labeled, URL-synced via the page's
 // script. Below lg it becomes an off-canvas drawer (Filters button opens it).
+// Optional `primary` split (AUD-005): keys listed there stay top-level; the
+// rest collapse behind a single "Advanced filters" toggle. Pages that don't
+// pass `primary` keep the original flat behavior.
 import Icon from './Icon.astro';
 
 interface FilterOption {
@@ -17,8 +20,20 @@ interface Props {
   filters: FilterDef[];
   id?: string;
   openByDefault?: string[];
+  primary?: string[] | null;
+  advancedLabel?: string;
 }
-const { filters, id = 'filters', openByDefault = ['type', 'category'] } = Astro.props;
+const {
+  filters,
+  id = 'filters',
+  openByDefault = ['type', 'category'],
+  primary = null,
+  advancedLabel = 'Advanced filters',
+} = Astro.props;
+
+const primaryFilters = primary ? filters.filter((f) => primary.includes(f.key)) : filters;
+const advancedFilters = primary ? filters.filter((f) => !primary.includes(f.key)) : [];
+const anyAdvanced = advancedFilters.some((f) => f.options.some((o) => o.count > 0));
 ---
 
 <aside id={id} class="filter-panel" aria-label="Filter resources">
@@ -40,7 +55,7 @@ const { filters, id = 'filters', openByDefault = ['type', 'category'] } = Astro.
     </span>
   </div>
 
-  {filters.map((f) => (
+  {primaryFilters.map((f) => (
     <details class="filter-group" open={openByDefault.includes(f.key) ? true : undefined}>
       <summary class="mono-label">
         {f.label}
@@ -59,4 +74,44 @@ const { filters, id = 'filters', openByDefault = ['type', 'category'] } = Astro.
       </ul>
     </details>
   ))}
+
+  {primary && anyAdvanced && (
+    <details class="filter-advanced">
+      <summary class="mono-label">{advancedLabel}</summary>
+      {advancedFilters.map((f) => (
+        <details class="filter-group">
+          <summary class="mono-label">
+            {f.label}
+            <span class="text-dim">({f.options.filter((o) => o.count > 0).length})</span>
+          </summary>
+          <ul class="filter-options">
+            {f.options.filter((o) => o.count > 0).map((opt) => (
+              <li>
+                <label class="filter-option">
+                  <input type="checkbox" name={f.key} value={opt.value} class="checkbox" />
+                  <span class="filter-option-label">{opt.label}</span>
+                  <span class="filter-option-count">{opt.count}</span>
+                </label>
+              </li>
+            ))}
+          </ul>
+        </details>
+      ))}
+    </details>
+  )}
 </aside>
+
+<style>
+  .filter-advanced > summary {
+    cursor: pointer;
+    padding-block: 0.5rem;
+  }
+  .filter-advanced[open] > summary {
+    margin-bottom: 0.5rem;
+  }
+  .filter-advanced {
+    margin-top: 0.75rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid color-mix(in srgb, var(--border, #ccc) 60%, transparent);
+  }
+</style>

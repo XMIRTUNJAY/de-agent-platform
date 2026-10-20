@@ -68,29 +68,36 @@ test.describe(() => {
       await expect(page.locator('#filters.open')).toBeVisible();
     }
 
-    const typeBox = page.locator('#filters input[name="type"][value="skill"]');
-    await typeBox.check();
+    const kindBox = page.locator('#filters input[name="kind"][value="automation"]');
+    await kindBox.check();
     if (useDrawer) await page.keyboard.press('Escape');
 
-    await expect(page).toHaveURL(/marketplace\?type=skill/);
+    await expect(page).toHaveURL(/marketplace\?kind=automation/);
     const count = await page.locator('#result-count').textContent();
     expect(Number.parseInt(count ?? '0', 10)).toBeGreaterThan(0);
 
     await page.reload({ waitUntil: 'load' });
-    await expect(page.locator('#filters input[name="type"][value="skill"]')).toBeChecked();
+    await expect(page.locator('#filters input[name="kind"][value="automation"]')).toBeChecked();
 
     if (useDrawer) {
       await toggle.click();
       await expect(page.locator('#filters.open')).toBeVisible();
     }
-    const verificationGroup = page.locator('#filters details', { hasText: 'Verification' }).first();
-    if (!(await verificationGroup.getAttribute('open'))) await verificationGroup.locator('summary').click();
+    // Verification now lives inside the collapsed Advanced filters section
+    const advanced = page.locator('#filters details.filter-advanced');
+    if (!(await advanced.getAttribute('open'))) {
+      await page.locator('#filters details.filter-advanced > summary').click();
+    }
+    const verificationGroup = page
+      .locator('#filters details.filter-advanced details.filter-group', { hasText: 'Verification' })
+      .first();
+    if (!(await verificationGroup.getAttribute('open'))) await verificationGroup.locator('> summary').click();
     await page.locator('#filters input[name="verification"][value="community"]').check();
-    await expect(page).toHaveURL(/type=skill&verification=community/);
+    await expect(page).toHaveURL(/kind=automation&verification=community/);
     if (useDrawer) await page.keyboard.press('Escape');
     await page.goBack();
     await page.waitForLoadState('load');
-    await expect(page).toHaveURL(/marketplace\?type=skill/);
+    await expect(page).toHaveURL(/marketplace\?kind=automation/);
     await expect(page.locator('#filters input[name="verification"][value="community"]')).not.toBeChecked();
 
     if (useDrawer) {
