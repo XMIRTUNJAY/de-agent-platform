@@ -1,0 +1,47 @@
+---
+// /learn/[topic] — a deep, grounded learning page: 10 sections assembled
+// from real registry fields by pipelines/lib/learn-topics.mjs. Static.
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import registry from '@/data/generated/registry.json';
+import { selectTopics, buildTopicPage } from '../../../pipelines/lib/learn-topics.mjs';
+
+export async function getStaticPaths() {
+  return selectTopics(registry).map((topic) => ({ params: { topic: topic.slug } }));
+}
+
+const { topic } = Astro.params;
+const topics = selectTopics(registry);
+const t = topics.find((x) => x.slug === topic);
+if (!t) return Astro.redirect('/learn');
+const page = buildTopicPage(t, registry) as any;
+if (!page) return Astro.redirect('/learn');
+---
+
+<BaseLayout title={`${page.title} — learn with ${page.n} vetted resources`} description={`${page.lede}. Comparison table, cautions, use cases and install commands — all from the DE//AGENT registry.`}>
+  <section class="col section-sm" style="padding-top: 2.5rem; max-width: 76ch;">
+    <p class="kicker">Learn</p>
+    <h1 style="font-size: var(--text-2xl); font-weight: 500; margin-top: 0.5rem;">{page.title}</h1>
+    <p class="text-dim font-mono text-sm" style="margin-top: 0.4rem;">{page.lede}</p>
+
+    {page.sections.map((s: any) => (
+      <section id={s.id} style="margin-top: 2.25rem;">
+        <h2 style="font-size: var(--text-xl); font-weight: 500;">{s.title}</h2>
+        <div class="prose-de" style="margin-top: 0.6rem;" set:html={s.html} />
+      </section>
+    ))}
+
+    <section style="margin-top: 2.25rem;">
+      <h2 style="font-size: var(--text-xl); font-weight: 500;">Full resource list</h2>
+      <div class="table-wrap"><table class="table">
+        <thead><tr><th>Resource</th><th>Type</th><th>Score</th></tr></thead>
+        <tbody>
+          {page.resources.map((r: any) => (
+            <tr><td><a href={r.url}>{r.title}</a></td><td>{r.type}</td><td class="font-mono">{r.composite ?? '—'}</td></tr>
+          ))}
+        </tbody>
+      </table></div>
+    </section>
+
+    <p style="margin-top: 2rem;"><a href="/learn" class="link">← All topics</a></p>
+  </section>
+</BaseLayout>

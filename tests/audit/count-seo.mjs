@@ -1,0 +1,17 @@
+import registry from '../../src/data/generated/registry.json' with { type: 'json' };
+const tags = {};
+for (const r of registry.resources) for (const t of r.tags ?? []) tags[t] = (tags[t] ?? 0) + 1;
+const tagEntries = Object.entries(tags).sort((a, b) => b[1] - a[1]);
+console.log('unique tags:', tagEntries.length);
+console.log('tags with >=2 resources:', tagEntries.filter(([, n]) => n >= 2).length);
+console.log('tags with >=3:', tagEntries.filter(([, n]) => n >= 3).length);
+console.log('top:', JSON.stringify(tagEntries.slice(0, 12)));
+const techs = registry.taxonomy.technologies.length;
+console.log('technologies:', techs, '| stages:', registry.taxonomy.stages.length);
+const withObjectives = registry.resources.filter((r) => r.learning_objectives?.length).length;
+console.log('resources with learning_objectives:', withObjectives, '/', registry.resources.length);
+const techUse = {};
+for (const r of registry.resources) for (const t of r.technologies ?? []) techUse[t] = (techUse[t] ?? 0) + 1;
+console.log('techs used by >=2 resources:', Object.values(techUse).filter((n) => n >= 2).length, '/', techs);
+const withTags = registry.resources.filter((r) => r.tags?.length).length;
+console.log('resources with tags:', withTags);

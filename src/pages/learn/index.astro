@@ -1,0 +1,47 @@
+---
+// /learn hub — every learnable topic in the registry: technologies and tags
+// with real coverage, each linking to a deep, grounded topic page.
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import registry from '@/data/generated/registry.json';
+import { selectTopics, resourcesForTopic } from '../../../pipelines/lib/learn-topics.mjs';
+
+const topics = selectTopics(registry)
+  .map((t: any) => {
+    const resources = resourcesForTopic(t, registry) as any[];
+    const composite = Math.max(0, ...resources.map((r: any) => r.marketplace?.composite_score ?? 0));
+    return { ...t, n: resources.length, composite };
+  })
+  .sort((a, b) => b.n - a.n || b.composite - a.composite);
+
+const techs = topics.filter((t) => t.kind === 'technology');
+const tags = topics.filter((t) => t.kind === 'tag');
+---
+
+<BaseLayout title="Learn — every topic in the registry" description="Deep, grounded learning pages for every technology and practice in the DE//AGENT registry: what the resources do, how they compare, what to trust.">
+  <section class="col section-sm" style="padding-top: 2.5rem;">
+    <p class="kicker">Learn</p>
+    <h1 style="font-size: var(--text-2xl); font-weight: 500; margin-top: 0.5rem;">Every topic the registry teaches</h1>
+    <p style="max-width: 68ch; color: var(--fg-muted); margin-top: 0.75rem; line-height: 1.7;">
+      {topics.length} topics, each a grounded deep-dive assembled from the live registry: what the
+      resources do, a comparison table with real scores, honest cautions, production use cases and
+      install commands. No sponsored placements, no invented claims.
+    </p>
+
+    <h2 style="font-size: var(--text-xl); margin-top: 2.5rem;">Technologies ({techs.length})</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 0.6rem; margin-top: 1rem;">
+      {techs.map((t) => (
+        <a href={`/learn/${t.slug}`} class="card card-pad-sm card-interactive" style="display:block">
+          <span style="font-weight: 600; color: var(--fg);">{t.title}</span>
+          <span class="font-mono text-dim text-xs" style="display:block; margin-top: 0.25rem;">{t.n} resource{t.n === 1 ? '' : 's'}</span>
+        </a>
+      ))}
+    </div>
+
+    <h2 style="font-size: var(--text-xl); margin-top: 2.5rem;">Practices & patterns ({tags.length})</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem;">
+      {tags.map((t) => (
+        <a href={`/learn/${t.slug}`} class="chip">{t.title} <span class="text-dim font-mono" style="font-size: 0.85em;">{t.n}</span></a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
