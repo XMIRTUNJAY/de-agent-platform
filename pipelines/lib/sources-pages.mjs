@@ -46,6 +46,20 @@ export function draftCounts(dir = DRAFTS_DIR) {
 const esc = (s) => String(s ?? '').replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>').replace(/"/g, '"');
 const link = (url, text) => `<a href="${esc(url)}">${esc(text)}</a>`;
 
+/** taxonomy category id -> route slug (cat-streaming -> streaming). Taxonomy
+ *  and sources.yaml both load from data/curated, same cwd pattern. */
+let CATEGORY_SLUGS = null;
+function categorySlug(id) {
+  if (!CATEGORY_SLUGS) {
+    CATEGORY_SLUGS = new Map();
+    try {
+      const taxonomy = parseYaml(readFileSync(join(process.cwd(), 'data', 'curated', 'taxonomy.yaml'), 'utf8'));
+      for (const c of taxonomy?.categories ?? []) if (c.id && c.slug) CATEGORY_SLUGS.set(c.id, c.slug);
+    } catch { /* taxonomy unavailable — ids never become links */ }
+  }
+  return CATEGORY_SLUGS.get(String(id)) ?? null;
+}
+
 export function buildSourcePage(source, counts) {
   const drafts = counts[source.id] ?? 0;
   const sections = [];
@@ -60,7 +74,11 @@ export function buildSourcePage(source, counts) {
     id: 'cadence',
     title: 'Cadence, authority and routing',
     html: `<p>Fetched <strong>${esc(source.cadence ?? 'weekly')}</strong>. Authority weight <strong>${esc(String(source.authority ?? '—'))}/5</strong> feeds the source-quality score, so content from vetted publishers ranks higher before any human review. ` +
-      `Discovered items default to the <a href="/categories/${esc(source.default_category ?? '')}">${esc(source.default_category ?? '—')}</a> category${source.default_category ? '' : ' (not yet routed)'}.</p>`,
+      (source.default_category
+        ? (categorySlug(source.default_category)
+          ? `Discovered items default to the <a href="/categories/${esc(categorySlug(source.default_category))}">${esc(source.default_category)}</a> category.</p>`
+          : `Discovered items default to the <code>${esc(source.default_category)}</code> category (route pending).</p>`)
+        : 'Discovered items are not yet routed to a default category.</p>'),
   });
   sections.push({
     id: 'contribution',
