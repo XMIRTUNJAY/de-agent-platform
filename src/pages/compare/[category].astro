@@ -1,0 +1,28 @@
+---
+// /compare/[category] — honest side-by-side of a category's resources.
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import registry from '@/data/generated/registry.json';
+import { buildComparePage } from '../../../pipelines/lib/stage-compare.mjs';
+
+export async function getStaticPaths() {
+  return (registry.taxonomy.categories ?? [])
+    .map((c: any) => ({ params: { category: c.slug } }));
+}
+const { category } = Astro.params;
+const page = buildComparePage(category, registry) as any;
+if (!page) return Astro.redirect('/categories');
+---
+
+<BaseLayout title={`${page.title}: ${page.n} options compared`} description={`${page.lede}. Side-by-side with real scores, verification and security posture — no sponsored ranking.`}>
+  <section class="col section-sm" style="padding-top: 2.5rem; max-width: 80ch;">
+    <p class="kicker">Compare</p>
+    <h1 style="font-size: var(--text-2xl); font-weight: 500; margin-top: 0.5rem;">{page.title}: {page.n} options</h1>
+    <p class="text-dim font-mono text-sm" style="margin-top: 0.4rem;">{page.lede}</p>
+    {page.sections.map((s: any) => (
+      <section id={s.id} style="margin-top: 2.25rem;">
+        <h2 style="font-size: var(--text-xl); font-weight: 500;">{s.title}</h2>
+        <div class="prose-de" style="margin-top: 0.6rem;" set:html={s.html} />
+      </section>
+    ))}
+  </section>
+</BaseLayout>

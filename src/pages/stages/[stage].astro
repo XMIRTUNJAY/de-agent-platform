@@ -1,0 +1,28 @@
+---
+// /stages/[stage] — deep roadmap stage page (13 pages).
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import registry from '@/data/generated/registry.json';
+import { buildStagePage } from '../../../pipelines/lib/stage-compare.mjs';
+
+export async function getStaticPaths() {
+  return (registry.taxonomy.stages ?? []).map((s: any) => ({ params: { stage: s.id } }));
+}
+const { stage } = Astro.params;
+const page = buildStagePage(stage, registry) as any;
+if (!page) return Astro.redirect('/roadmap');
+---
+
+<BaseLayout title={`${page.title} — roadmap stage ${page.order} of 13`} description={`${page.lede}. Teaches, exit gate, resources and progression — from the DE//AGENT roadmap.`}>
+  <section class="col section-sm" style="padding-top: 2.5rem; max-width: 76ch;">
+    <p class="kicker">Roadmap · stage {page.order}/13</p>
+    <h1 style="font-size: var(--text-2xl); font-weight: 500; margin-top: 0.5rem;">{page.title}</h1>
+    <p class="text-dim font-mono text-sm" style="margin-top: 0.4rem;">{page.lede}</p>
+    {page.sections.map((s: any) => (
+      <section id={s.id} style="margin-top: 2.25rem;">
+        <h2 style="font-size: var(--text-xl); font-weight: 500;">{s.title}</h2>
+        <div class="prose-de" style="margin-top: 0.6rem;" set:html={s.html} />
+      </section>
+    ))}
+    <p style="margin-top: 2rem;"><a href="/roadmap" class="link">← Full roadmap</a> · <a href="/learn" class="link">All learning topics</a></p>
+  </section>
+</BaseLayout>

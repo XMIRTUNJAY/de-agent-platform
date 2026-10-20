@@ -50,3 +50,49 @@ test('topicSlug handles technology ids and tag strings', () => {
   assert.equal(topicSlug('technology', tech.id, techs), tech.slug ?? tech.id.replace(/^tech-/, ''));
   assert.equal(topicSlug('tag', 'Data Quality'), 'data-quality');
 });
+
+test("stage pages: all 13 build with gate + resources + progression", async () => {
+  const { buildStagePage } = await import('../pipelines/lib/stage-compare.mjs');
+  let built = 0;
+  for (const s of registry.taxonomy.stages) {
+    const page = buildStagePage(s.id, registry);
+    assert.ok(page, s.id);
+    built++;
+    assert.ok(page.sections.length >= 5, `${s.id}: ${page.sections.length} sections`);
+    assert.ok(page.sections.some((x) => x.id === "gate"), `${s.id}: no gate section`);
+  }
+  assert.equal(built, 13);
+});
+
+test("compare pages: categories with >=3 resources build with table + trust", async () => {
+  const { buildComparePage } = await import('../pipelines/lib/stage-compare.mjs');
+  let built = 0;
+  for (const c of registry.taxonomy.categories) {
+    const page = buildComparePage(c.slug, registry);
+    if (!page) continue;
+    built++;
+    assert.ok(page.n >= 3);
+    assert.ok(page.sections.some((x) => x.id === "table"));
+    assert.ok(page.sections.some((x) => x.id === "trust"));
+    for (const s of page.sections) {
+      for (const m of s.html.matchAll(/href="(\/[a-z]+\/[a-z0-9-]+)"/g)) {
+        if (/^\/(learn|docs|roadmap|categories|marketplace)/.test(m[1])) continue;
+        assert.ok(registry.resources.some((r) => r.url === m[1]), `broken ${m[1]}`);
+      }
+    }
+  }
+  assert.ok(built >= 20, `only ${built} compare pages`);
+});
+
+test("learn-path pages: slug lookup, guided path + context sections", async () => {
+  const { buildLearnPath } = await import('../pipelines/lib/stage-compare.mjs');
+  let built = 0;
+  for (const c of registry.taxonomy.categories) {
+    const page = buildLearnPath(c.slug, registry);
+    if (!page) continue;
+    built++;
+    assert.ok(page.sections.some((x) => x.id === "path"));
+    assert.ok(page.sections.some((x) => x.id === "context"));
+  }
+  assert.ok(built >= 30, `only ${built} learn-path pages`);
+});
