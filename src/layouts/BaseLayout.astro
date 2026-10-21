@@ -238,14 +238,34 @@ const analyticsEnabled = import.meta.env.PUBLIC_ANALYTICS_ENABLED === 'true';
           }
         });
 
+        // Selection state lives outside renderResults so typing keeps focus in
+        // the input: arrow keys move a VISUAL selection, Enter navigates from
+        // the input. Items never receive DOM focus (that was the bug that made
+        // full words untypeable — renderResults() stole focus per keystroke).
+        var currentUrls = [];
+        var selectedIdx = 0;
+
+        function updateSelection(next) {
+          selectedIdx = next;
+          if (!paletteResults) return;
+          var items = paletteResults.querySelectorAll('.cmd-item');
+          items.forEach(function (item, i) {
+            var on = i === selectedIdx;
+            item.classList.toggle('selected', on);
+            item.setAttribute('aria-selected', on ? 'true' : 'false');
+            if (on && item.scrollIntoView) item.scrollIntoView({ block: 'nearest' });
+          });
+          if (paletteInput) paletteInput.setAttribute('aria-activedescendant', 'cmd-item-' + selectedIdx);
+        }
+
         function renderResults(query) {
           if (!paletteResults) return;
           var q = (query || '').trim().toLowerCase();
           var registry = window.__DE_REGISTRY__ || [];
-          var results = registry
+          var terms = q.split(/\s+/).filter(Boolean);
+          var scored = registry
             .map(function(r) {
               var hay = (r.title + ' ' + (r.tagline || '') + ' ' + (r.description || '') + ' ' + (r.tags || []).join(' ') + ' ' + (r.categoryTitle || '')).toLowerCase();
-              var terms = q.split(/\s+/).filter(Boolean);
               var score = 0;
               for (var i = 0; i < terms.length; i++) {
                 if (r.title.toLowerCase().includes(terms[i])) score += 10;
@@ -255,8 +275,12 @@ const analyticsEnabled = import.meta.env.PUBLIC_ANALYTICS_ENABLED === 'true';
               return { r: r, score: score };
             })
             .filter(function(x) { return x.score > 0; })
-            .sort(function(a,b) { return b.score - a.score; })
-            .slice(0, 10);
+            .sort(function(a,b) { return b.score - a.score; });
+          // Empty query: list the first eligible resources so the palette is
+          // never a dead "No matches" screen on open. (Wrapped as {r, score}
+          // so both branches share the same render path.)
+          var results = (q ? scored : registry.filter(function(r) { return r.eligibility !== 'retired'; }).map(function(r) { return { r: r, score: 0 }; })).slice(0, 10);
+          currentUrls = results.map(function(x) { return x.r.url; });
 
           if (!results.length) {
             paletteResults.innerHTML = '<div class="px-4 py-8 text-center text-dim">No matches for "' + q.replace(/</g, '&lt;') + '"</div>';
@@ -276,7 +300,7 @@ const analyticsEnabled = import.meta.env.PUBLIC_ANALYTICS_ENABLED === 'true';
 
           // group by resource type with small category headers
           var lastCat = null;
-          paletteResults.innerHTML = results.map(function(x) {
+          paletteResults.innerHTML = results.map(function(x, i) {
             var r = x.r;
             var verificationLabel = r.verification === 'verified' ? '✓ Verified' : r.verification === 'tested' ? '✓ Tested' : r.verification === 'reviewed' ? '✓ Reviewed' : 'Community';
             var verificationColor = r.verification === 'verified' ? 'accent' : r.verification === 'tested' ? 'info' : r.verification === 'reviewed' ? 'warn' : 'dim';
@@ -286,40 +310,47 @@ const analyticsEnabled = import.meta.env.PUBLIC_ANALYTICS_ENABLED === 'true';
               : '';
             lastCat = cat;
             return catHeader +
-              '<div class="cmd-item" data-url="' + r.url + '" role="option" tabindex="0">' +
+              '<div class="cmd-item" id="cmd-item-' + i + '" data-url="' + r.url + '" role="option" aria-selected="false" tabindex="-1">' +
               '<span class="chip">' + esc(r.typeLabel) + '</span>' +
-              '<span class="flex-1 min-w-0 truncate">' + hl(r.title, q.split(/\s+/).filter(Boolean)) + '</span>' +
+              '<span class="flex-1 min-w-0 truncate">' + hl(r.title, terms) + '</span>' +
               '<span class="chip" style="color: var(--color-' + verificationColor + ')">' + verificationLabel + '</span>' +
               '<kbd class="kbd ml-auto">Enter</kbd>' +
             '</div>';
           }).join('');
 
-          // keyboard navigation
+          // mouse: click navigates, hover previews selection. DOM focus stays
+          // with the input so typing continues uninterrupted.
           var items = paletteResults.querySelectorAll('.cmd-item');
-          var selected = 0;
           items.forEach(function(item, i) {
             item.addEventListener('click', function() {
               window.location.href = item.dataset.url;
               closePalette();
             });
-            item.addEventListener('keydown', function(ev) {
-              if (ev.key === 'Enter') {
-                window.location.href = item.dataset.url;
-                closePalette();
-              } else if (ev.key === 'ArrowDown') {
-                ev.preventDefault();
-                items[(i + 1) % items.length]?.focus();
-              } else if (ev.key === 'ArrowUp') {
-                ev.preventDefault();
-                items[(i - 1 + items.length) % items.length]?.focus();
-              }
+            item.addEventListener('mousemove', function() {
+              if (selectedIdx !== i) updateSelection(i);
             });
           });
-          if (items.length) items[0].focus();
+          updateSelection(0);
         }
 
         if (paletteInput) {
           paletteInput.addEventListener('input', function() { renderResults(this.value); });
+          paletteInput.addEventListener('keydown', function(e) {
+            var count = currentUrls.length;
+            if (e.key === 'ArrowDown') {
+              e.preventDefault();
+              if (count) updateSelection((selectedIdx + 1) % count);
+            } else if (e.key === 'ArrowUp') {
+              e.preventDefault();
+              if (count) updateSelection((selectedIdx - 1 + count) % count);
+            } else if (e.key === 'Enter') {
+              e.preventDefault();
+              if (currentUrls[selectedIdx]) {
+                window.location.href = currentUrls[selectedIdx];
+                closePalette();
+              }
+            }
+          });
         }
 
         // registry data for command palette

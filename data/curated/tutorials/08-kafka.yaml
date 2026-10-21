@@ -1,0 +1,306 @@
+# Tutorials — beginner-friendly arrangements of artifact content.
+# Every step is verbatim from the cited source field. Structure (need, steps,
+# check) is ours; wording is the source's.
+- id: tutorial-kafka-consumer-lag-triage
+  slug: kafka-lag-triage-drill
+  type: tutorial
+  title: Triage Kafka consumer lag from per-partition offsets
+  description: >-
+    Combine the lag-triage skill's three questions with the lagging-consumer
+    runbook: read per-partition lag to separate capacity from key skew, check
+    the group state history for a rebalance loop, find the one stuck offset
+    that marks a poison message, then apply the matching fix — and never reset
+    offsets.
+  category: cat-kafka
+  difficulty: intermediate
+  tags: [tutorial, kafka, lag, consumer-group, offsets, incidents]
+  learning_objectives:
+    - Read per-partition lag to separate skew from throughput
+    - Detect a rebalance loop from consumer-group state
+    - Find the poison message from retry counts
+  what_you_need:
+    - kafka-consumer-groups CLI access to the cluster
+    - The consumer group's describe output and state
+    - Install: npx de-agent-platform add kafka-consumer-lag-triage
+  steps:
+    - text: Ask the three questions — is lag rising, flat, or falling? Is it even across partitions? Is the consumer group stable?
+      from_id: skill-kafka-lag-triage
+      from_field: body
+    - text: Get per-partition lag — uniform vs skewed tells you capacity vs key skew.
+      from_id: runbook-kafka-consumer-lagging
+      from_field: diagnosis
+    - text: Check the consumer-group state history for `PreparingRebalance`.
+      from_id: runbook-kafka-consumer-lagging
+      from_field: diagnosis
+    - text: Look for one partition whose committed offset is stuck.
+      from_id: runbook-kafka-consumer-lagging
+      from_field: diagnosis
+    - text: Match the signature — lag on one partition only is key skew; all partitions rising with low CPU is a downstream bottleneck; lag resets to zero then climbs is a rebalance loop; one offset stuck while others advance is a poison message.
+      from_id: skill-kafka-lag-triage
+      from_field: body
+    - text: "Fix accordingly — sink-bound: batch/upsert in bulk or scale the sink; key skew: re-key the topic or increase partitions; rebalance: raise session.timeout.ms / max.poll.interval.ms; poison message: route to a DLQ and commit past it."
+      from_id: runbook-kafka-consumer-lagging
+      from_field: fix
+  check_yourself:
+    - Lag confined to two partitions with the rest flat is diagnosed as key skew and fixed by re-keying — not by scaling the fleet.
+    - Offsets are never reset during the incident; a message that keeps failing lands in a DLQ and the group commits past it.
+  when_to_use:
+    - "Consumer-group lag keeps rising and won't recover on its own"
+    - "Downstream tables are going fresh-to-stale"
+  why: Lag compounds — every minute behind is a minute of stale truth downstream, and the sink silently becomes the bottleneck nobody owns.
+  gotchas:
+    - "Never reset offsets to reduce lag; that is silent data loss."
+    - "Uniform lag means capacity; one stuck partition means key skew or a poison message — read per-partition lag before scaling."
+    - "A rebalance loop can look like slowness: check the group state history for PreparingRebalance."
+  production_notes:
+    - "Alert on lag slope, not on an absolute lag number."
+    - "Give messages that fail N times a DLQ instead of an endless retry."
+  diagram: |
+    consumer lag triage
+       |
+       |- lag rising? uniform? group stable?
+       |
+       |- lag uniform --> capacity bound --> scale consumers / sink throughput
+       |
+       |- one partition stuck --> hot key or poison --> re-key, or DLQ + commit past
+       |
+       |- PreparingRebalance looping --> rebalance storm --> raise session.timeout.ms
+       |
+       --> never reset offsets
+  source_refs: [skill-kafka-lag-triage, runbook-kafka-consumer-lagging]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/kafka-lag-triage-drill
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-kafka] }
+- id: tutorial-kafka-troubleshooter-workflow
+  slug: kafka-troubleshooter-workflow
+  type: tutorial
+  title: Troubleshoot a lagging group with the Kafka Troubleshooter
+  description: >-
+    Hand the Kafka Troubleshooter agent the consumer-group describe output,
+    per-partition offsets, and consumer logs, then follow its four-step
+    workflow from lag trend to the least destructive fix. The agent works
+    read-only against the cluster, never resets offsets, and ships every fix
+    with a risk rating.
+  category: cat-kafka
+  difficulty: beginner
+  tags: [tutorial, kafka, agent, incidents, lag, troubleshooting]
+  learning_objectives:
+    - Feed an incident agent the inputs it needs — group describe, offsets, logs
+    - Follow a diagnosis, evidence, fix, prevention loop
+    - Keep destructive shortcuts like offset resets off the table
+  what_you_need:
+    - Consumer-group describe output
+    - Per-partition offsets
+    - Consumer application logs
+    - Install: npx de-agent-platform add kafka-troubleshooter
+  steps:
+    - text: Check lag trend and per-partition distribution.
+      from_id: agent-kafka-troubleshooter
+      from_field: workflow
+    - text: Check group state history for rebalances.
+      from_id: agent-kafka-troubleshooter
+      from_field: workflow
+    - text: Identify poison messages from retry counts.
+      from_id: agent-kafka-troubleshooter
+      from_field: workflow
+    - text: Recommend the least destructive fix.
+      from_id: agent-kafka-troubleshooter
+      from_field: workflow
+    - text: Expect four outputs — diagnosis, evidence, fix with risk rating, prevention measure.
+      from_id: agent-kafka-troubleshooter
+      from_field: outputs
+    - text: Hold the guardrails — never resets offsets, read-only against the cluster.
+      from_id: agent-kafka-troubleshooter
+      from_field: guardrails
+  check_yourself:
+    - The verdict on "lag on partitions 3 and 7 only, others flat" is to re-key the offending key, not scale the fleet — the agent's own worked example.
+    - The final recommendation includes a risk rating and a prevention measure, and no offset reset was proposed at any step.
+  when_to_use:
+    - "An incident needs a diagnosis with evidence, not a guess"
+    - "A fix must be the least destructive option with its risk stated"
+  why: Triage under pressure drifts toward the most destructive shortcut, and a fixed workflow with guardrails keeps the fix reversible and evidenced.
+  gotchas:
+    - "The agent never resets offsets — treat any offset-reset suggestion as out of bounds."
+    - "It stays read-only against the cluster; it will not mutate group state."
+    - "Lag on a few partitions only is key skew, not a capacity problem — the fix is re-keying, not fleet scaling."
+  production_notes:
+    - "Attach consumer-group describe output and application logs to the incident so the diagnosis is evidence-backed."
+    - "File the prevention measure from each diagnosis as a follow-up action so the same lag signature does not recur."
+  diagram: |
+    kafka troubleshooter
+       |
+       |- inputs: describe output + offsets + logs
+       |
+       |- lag trend + per-partition distribution
+       |
+       |- group state history --> rebalances
+       |
+       |- retry counts --> poison messages
+       |
+       |- least destructive fix --> risk rating + prevention
+       |
+       --> guardrails: read-only, never reset offsets
+  source_refs: [agent-kafka-troubleshooter, skill-kafka-lag-triage]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/kafka-troubleshooter-workflow
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-kafka] }
+- id: tutorial-kafka-topics-via-mcp
+  slug: kafka-topics-via-mcp
+  type: tutorial
+  title: Inspect Kafka topics and groups with the Kafka MCP server
+  description: >-
+    Connect an agent to a Kafka cluster through the Kafka MCP server and work
+    through its four tools: list_topics for inventory, describe_topic for a
+    single topic, describe_consumer_group for lag, and consume_messages for
+    sampling — stream debugging from an agent, with the sampling risks called
+    out up front.
+  category: cat-kafka
+  difficulty: beginner
+  tags: [tutorial, kafka, mcp, streaming, debugging, lag]
+  learning_objectives:
+    - Configure the Kafka MCP server against a broker list
+    - Inventory topics and read group lag with the four tools
+    - Sample messages without leaking production PII
+  what_you_need:
+    - KAFKA_BROKERS (comma-separated broker list), optionally SASL credentials
+    - An agent host with kafka-mcp-server installed
+    - A read-only principal scoped to an allow-listed topic
+  steps:
+    - text: Point the server at the cluster — KAFKA_BROKERS holds the comma-separated broker list, and KAFKA_SASL_USER / KAFKA_SASL_PASSWORD are set if the cluster requires it.
+      from_id: mcp-kafka
+      from_field: environment_variables
+    - text: Run list_topics for a topic inventory.
+      from_id: mcp-kafka
+      from_field: tools
+    - text: Run describe_topic and describe_consumer_group to inspect one topic and its consumer-group lag.
+      from_id: mcp-kafka
+      from_field: tools
+    - text: Use consume_messages to sample messages when the debugging needs content, not just offsets.
+      from_id: mcp-kafka
+      from_field: tools
+    - text: Before sampling, know the risk — it can expose production PII in the agent's context; grant a read-only principal, prefer a topic allow-list, and never sample topics containing personal data without masking.
+      from_id: mcp-kafka
+      from_field: security_notes
+  check_yourself:
+    - describe_consumer_group on the suspect group returns the same per-partition offsets the CLI kafka-consumer-groups describe shows.
+    - consume_messages runs only against an allow-listed topic with a read-only principal, and no personal data reaches the agent context unmasked.
+  when_to_use:
+    - "An agent needs read access to topic inventory, lag, and message samples"
+    - "Stream debugging should happen from the agent's context instead of ad hoc CLI sessions"
+  why: The server puts topic inventory, consumer-group lag, and message sampling behind four tools, so an agent can debug a stream without cluster write access.
+  gotchas:
+    - "consume_messages can expose production PII in the agent's context — never sample topics containing personal data without masking."
+    - "Grant a read-only principal and prefer a topic allow-list before handing the server to an agent."
+    - "The server's licensing is ambiguous — MIT badge in the README but no LICENSE file — verify before commercial use."
+  production_notes:
+    - "Give the server its own KAFKA_CLIENT_ID and stdio transport so its connections are identifiable."
+    - "Keep SASL credentials in the environment, scoped to a read-only principal."
+  diagram: |
+    kafka mcp exploration
+       |
+       |- KAFKA_BROKERS + optional SASL --> server connects (stdio)
+       |
+       |- list_topics --> topic inventory
+       |
+       |- describe_topic + describe_consumer_group --> topic detail + lag
+       |
+       |- consume_messages --> samples (read-only principal, allow-list, mask PII)
+  source_refs: [mcp-kafka]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/kafka-topics-via-mcp
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-kafka] }
+- id: tutorial-kafka-console-commands
+  slug: kafka-console-commands
+  type: tutorial
+  title: Debug a Kafka stream with the Kafka Console plugin
+  description: >-
+    Drive the Kafka Console plugin's three commands across a lag incident:
+    /topic-info for inventory, /lag-triage for per-partition lag and rebalance
+    detection, and /sample-topic for a read-only message sample with a PII
+    redaction pass. Permissions stay at kafka-sasl-read throughout.
+  category: cat-kafka
+  difficulty: intermediate
+  tags: [tutorial, kafka, plugin, lag, streaming, pii]
+  learning_objectives:
+    - Inventory topics with /topic-info before touching lag
+    - Triage per-partition lag and rebalance detection with /lag-triage
+    - Sample messages through the PII redaction pass
+  what_you_need:
+    - A consumer group showing lag
+    - Kafka SASL read credentials
+    - Install: amp plugin add de-agent/kafka-console
+  steps:
+    - text: Run /topic-info for topic inventory.
+      from_id: plugin-kafka-console
+      from_field: commands
+    - text: Run /lag-triage for per-partition lag triage and rebalance detection.
+      from_id: plugin-kafka-console
+      from_field: commands
+    - text: Run /sample-topic for the read-only message sampler.
+      from_id: plugin-kafka-console
+      from_field: commands
+    - text: Know what the plugin covers — topic inventory, per-partition lag triage, rebalance detection, and a read-only message sampler with a PII redaction pass.
+      from_id: plugin-kafka-console
+      from_field: description
+    - text: Expect the PII redaction pass on every sample — the plugin ships with hook-pii-leak-guard wired in.
+      from_id: plugin-kafka-console
+      from_field: hooks
+    - text: Stay inside the permission model — filesystem none, network kafka, credentials kafka-sasl-read.
+      from_id: plugin-kafka-console
+      from_field: permissions
+  check_yourself:
+    - /lag-triage output distinguishes a skewed partition from uniformly distributed lag before any scaling decision is made.
+    - /sample-topic output contains no unredacted personal data because the PII leak guard hook runs on the sampling path.
+  when_to_use:
+    - "A lag incident needs topic inventory, triage, and sampling from one place"
+    - "Message samples must pass PII redaction before entering the agent context"
+  why: One plugin covers inventory, lag triage, and redacted sampling, so debugging does not sprawl across raw CLI tools and unredacted output.
+  gotchas:
+    - "Credentials are kafka-sasl-read only — the plugin cannot and should not mutate the cluster."
+    - "The PII redaction pass (hook-pii-leak-guard) exists because sampling is how personal data leaks into agent contexts."
+    - "Lag triage builds on skill-kafka-lag-triage — the command is only as good as the signature model behind it."
+  production_notes:
+    - "Keep the plugin on read-only SASL credentials even in debug clusters."
+    - "Pin the plugin's hook-pii-leak-guard so sampling paths can never bypass redaction."
+  diagram: |
+    kafka console plugin
+       |
+       |- /topic-info --> topic inventory
+       |
+       |- /lag-triage --> per-partition lag + rebalance detection
+       |
+       |- /sample-topic --> read-only sample --> PII redaction pass
+       |
+       --> permissions: network kafka, sasl read-only
+  source_refs: [plugin-kafka-console, skill-kafka-lag-triage]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/kafka-console-commands
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-kafka] }

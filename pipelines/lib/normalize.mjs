@@ -198,6 +198,10 @@ function typePayload(r) {
         monitoring: r.monitoring ?? [], agent_skills: r.agent_skills ?? [], agents: r.agents ?? [],
         gotchas: r.gotchas ?? [], production_notes: r.production_notes ?? [],
         why: r.why ?? null, diagram: r.diagram ?? null, tradeoffs: r.tradeoffs ?? [],
+        // incident notebook: what responders need beyond the technical fix
+        impact: r.impact ?? null, escalation: r.escalation ?? null,
+        evidence_to_collect: r.evidence_to_collect ?? [], rollback: r.rollback ?? null,
+        follow_up: r.follow_up ?? [],
       };
     case 'architecture':
       return {

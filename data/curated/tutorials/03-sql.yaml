@@ -1,0 +1,230 @@
+# Tutorials — SQL: reading an EXPLAIN plan, applying the SQLFluff core rule
+# pack, and running the full SQL review pass on a PR.
+# Every step is verbatim (or lightly compressed) from the cited source field.
+# Structure (need, steps, check) is ours; wording is the source's.
+- id: tutorial-sql-query-plan
+  slug: sql-query-plan-read
+  type: tutorial
+  title: Read an EXPLAIN plan and pick the one fix
+  description: >-
+    Take the EXPLAIN output of a slow query and read it bottom-up, naming the
+    expensive node before you touch anything. You compare estimated rows to
+    actual rows to catch stale statistics, separate scan cost from compute
+    time with the warehouse runbook, and finish by deciding between an index,
+    a rewrite, or a stats refresh — one change, with a way to measure it.
+  category: cat-sql
+  difficulty: intermediate
+  tags: [tutorial, sql, explain, query-plan, performance, intermediate]
+  learning_objectives:
+    - Read a plan bottom-up and name the expensive node
+    - Detect cardinality misestimation from stale statistics
+    - Separate scan cost from compute time before choosing a fix
+  what_you_need:
+    - EXPLAIN or EXPLAIN ANALYZE output for a slow query
+    - The target dialect (postgres/duckdb)
+    - Install: npx de-agent-platform add sql-query-plan-explainer
+  steps:
+    - text: Read a plan bottom-up and name the expensive node.
+      from_id: skill-sql-query-plan
+      from_field: learning_objectives
+    - text: Detect cardinality misestimation from stale statistics.
+      from_id: skill-sql-query-plan
+      from_field: learning_objectives
+    - text: Separate scan cost from compute time (bytes/partitions scanned vs queue time).
+      from_id: runbook-warehouse-query-slow
+      from_field: diagnosis
+    - text: Compare the plan against the clustering/partition key.
+      from_id: runbook-warehouse-query-slow
+      from_field: diagnosis
+    - text: Over-scan → fix the predicate or add/adjust the clustering key.
+      from_id: runbook-warehouse-query-slow
+      from_field: fix
+    - text: Decide between an index, a rewrite, or a stats refresh.
+      from_id: skill-sql-query-plan
+      from_field: learning_objectives
+  check_yourself:
+    - You can point to the single most expensive node and quote its estimated vs actual rows.
+    - The one recommended change states its expected effect and a way to measure it.
+  when_to_use:
+    - "A query that used to take seconds now takes minutes"
+    - "Estimated rows and actual rows disagree by an order of magnitude"
+  why: Reading the plan bottom-up turns an unreadable dump into one expensive node and one change worth making.
+  gotchas:
+    - ">10x off between estimated and actual rows means stale stats — refresh them before buying an index."
+    - "Bytes scanned and queue time are different diseases — sizing up a scan-bound query buys nothing."
+    - "Clustering on a low-selectivity key stops pruning entirely."
+  production_notes:
+    - "Alert on the partitions_scanned/partitions_total ratio."
+    - "Review weekly query history for the top-cost queries."
+  diagram: |
+    query plan read
+       |
+       |- read bottom-up --> name the expensive node
+       |
+       |- rows vs actual rows --> >10x off --> stale stats --> refresh
+       |
+       |- scan cost vs compute --> over-scan --> fix predicate / recluster
+       |
+       |- one change --> index, rewrite, or stats refresh --> measure
+  source_refs: [skill-sql-query-plan, runbook-warehouse-query-slow]
+  agent_skills: [skill-sql-query-plan]
+  agents: []
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/sql-query-plan-read
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-sql] }
+- id: tutorial-sql-sqlfluff-rules
+  slug: sql-sqlfluff-core-rules
+  type: tutorial
+  title: Fix SQL lint with the SQLFluff core rule pack
+  description: >-
+    Install the SQLFluff core rule pack, point it at your warehouse dialect,
+    and lint a fixture that fails on purpose: indentation, keyword
+    capitalisation, SELECT star, and unused CTEs. You fix each finding while
+    the passing fixture stays green, then wire the same lint run into CI.
+  category: cat-sql
+  difficulty: beginner
+  tags: [tutorial, sql, sqlfluff, linting, ci, beginner]
+  learning_objectives:
+    - Configure SQLFluff for your warehouse dialect
+    - Fix L003, L010, L030, and L057 findings in real SQL
+    - Integrate SQLFluff into CI/CD pipelines
+  what_you_need:
+    - Python >= 3.8 with pip
+    - pip install sqlfluff==3.0.0 sqlfluff-templater-dbt
+    - A .sql file or dbt project to lint
+  steps:
+    - text: Configure SQLFluff for your warehouse dialect.
+      from_id: rule-pack-sqlfluff-core
+      from_field: learning_objectives
+    - text: L003 — Consistent indentation.
+      from_id: rule-pack-sqlfluff-core
+      from_field: rules
+    - text: L010 — Keywords capitalisation policy (UPPER).
+      from_id: rule-pack-sqlfluff-core
+      from_field: rules
+    - text: L030 — SELECT star usage.
+      from_id: rule-pack-sqlfluff-core
+      from_field: rules
+    - text: L057 — Unused CTE detection.
+      from_id: rule-pack-sqlfluff-core
+      from_field: rules
+    - text: Integrate SQLFluff into CI/CD pipelines.
+      from_id: rule-pack-sqlfluff-core
+      from_field: learning_objectives
+  check_yourself:
+    - sqlfluff lint flags the seeded violations in the failing fixture and returns nothing on the passing one.
+    - CI fails on style-severity findings and stays green on the passing fixture.
+  when_to_use:
+    - "Team SQL style drifts and review time burns on formatting"
+    - "Legacy SQL debt needs fixing incrementally instead of one big reformat"
+  why: Mechanical lint rules settle formatting and naming so review time goes to correctness.
+  gotchas:
+    - "The pack defaults to the dbt templater and the snowflake dialect — set both to your project or findings mislead."
+    - "L014 and L030 are warnings, not style errors — severity decides what blocks CI."
+    - "Fix legacy SQL debt incrementally; a whole-repo reformat buries the real diff."
+  production_notes:
+    - "Pin sqlfluff==3.0.0 with sqlfluff-templater-dbt so CI and local runs agree."
+    - "Exclude rules deliberately via exclude_rules rather than ignoring findings inline."
+  diagram: |
+    sqlfluff pass
+       |
+       |- install sqlfluff==3.0.0 + dbt templater
+       |
+       |- set dialect + templater --> lint fixture
+       |
+       |- L003 --> L010 --> L030 --> L057 --> fix each finding
+       |
+       |- lint in CI --> passing fixture stays green
+  source_refs: [rule-pack-sqlfluff-core]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/sql-sqlfluff-core-rules
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-sql] }
+- id: tutorial-sql-review-pass
+  slug: sql-review-full-pass
+  type: tutorial
+  title: Run the full SQL review pass on a PR
+  description: >-
+    Run the SQL Reviewer agent's full pass over a pull request: read the diff
+    in context, state the grain of every result set, then check the
+    correctness bugs the SQL Review skill targets — fan-out joins, NULL-unsafe
+    NOT IN and = predicates — and emit findings with file:line and a
+    rewritten clause you can verify against the evaluation fixture.
+  category: cat-sql
+  difficulty: beginner
+  tags: [tutorial, sql, review, correctness, beginner]
+  learning_objectives:
+    - State the grain of every result set in one sentence
+    - Apply the review rules in order and stop at the first violation
+    - Emit findings with severity, location, rule, and a rewritten clause
+  what_you_need:
+    - A pull request or a .sql file
+    - The target dialect (postgres/duckdb/snowflake)
+    - Install: npx de-agent-platform add sql-review
+  steps:
+    - text: Read the diff and the file context.
+      from_id: agent-sql-reviewer
+      from_field: workflow
+    - text: Establish the grain of every result set.
+      from_id: agent-sql-reviewer
+      from_field: workflow
+    - text: State the grain of a result set in one sentence.
+      from_id: skill-sql-review
+      from_field: learning_objectives
+    - text: Prove a join cannot fan out before writing it.
+      from_id: skill-sql-review
+      from_field: learning_objectives
+    - text: Spot NULL-unsafe `NOT IN` and `=` predicates.
+      from_id: skill-sql-review
+      from_field: learning_objectives
+    - text: Emit findings with file:line and a rewritten clause.
+      from_id: agent-sql-reviewer
+      from_field: workflow
+  check_yourself:
+    - On the 12-case fixture of known-bad SQL, findings cite severity, location, rule, and a fix — with 0 false positives.
+    - Every SELECT in the PR has a one-sentence grain statement before you judge the query.
+  when_to_use:
+    - "A SQL PR needs a full correctness pass, not a single-issue check"
+    - "Findings must cite the rule, the failure case, and a rewritten clause"
+  why: A fixed rule order plus a findings format turns ad-hoc SQL review into a pass anyone can repeat.
+  gotchas:
+    - "NOT IN with a nullable column never compares as you think; use NOT EXISTS."
+    - "`ORDER BY` without `LIMIT` in a view is meaningless — drop it."
+    - "`SELECT *` in a persisted model freezes an unstable schema."
+  production_notes:
+    - "Keep the 12-case evaluation fixture in CI so regressions resurface."
+    - "Emit findings with the exact predicate, the failure case, and a rewritten clause reviewers can verify."
+  diagram: |
+    full review pass
+       |
+       |- read diff + context --> grain statement per result set
+       |
+       |- grain stated --> fan-out-proof joins --> NULL-unsafe predicates
+       |
+       |- emit findings --> file:line + rewritten clause --> verify on fixture
+  source_refs: [agent-sql-reviewer, skill-sql-review]
+  agent_skills: [skill-sql-review]
+  agents: [agent-sql-reviewer]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/sql-review-full-pass
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-sql] }

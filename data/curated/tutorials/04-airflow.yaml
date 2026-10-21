@@ -1,0 +1,290 @@
+# Tutorials — beginner-friendly arrangements of artifact content.
+# Every step is verbatim from the cited source field. Structure (need, steps,
+# check) is ours; wording is the source's.
+- id: tutorial-review-dag-idempotency
+  slug: review-dag-idempotency
+  type: tutorial
+  title: Review a DAG for idempotency and retry safety
+  description: >-
+    Walk the Pipeline Reviewer's four-step pass over a DAG: apply the
+    idempotency test to every task, check retry, timeout and concurrency
+    settings, predict backfill behaviour, and propose missing integration
+    tests — then close the loop with the Airflow DAG Reviewer's checklist so
+    every task is safe to re-run before the DAG merges.
+  category: cat-airflow
+  difficulty: beginner
+  tags: [tutorial, airflow, dag, review, idempotency, beginner]
+  learning_objectives:
+    - Apply the idempotency test to every task in a DAG
+    - Justify retry, timeout and concurrency settings per task
+    - Predict what a backfill will do before running it
+  what_you_need:
+    - A DAG file or pull request to review
+    - The pipeline's schedule and SLA
+    - Install: npx de-agent-platform add airflow-dag-reviewer
+  steps:
+    - text: Apply the idempotency test to every task.
+      from_id: agent-pipeline-reviewer
+      from_field: workflow
+    - text: Check retry, timeout and concurrency settings.
+      from_id: agent-pipeline-reviewer
+      from_field: workflow
+    - text: Predict backfill behaviour.
+      from_id: agent-pipeline-reviewer
+      from_field: workflow
+    - text: Propose missing integration tests.
+      from_id: agent-pipeline-reviewer
+      from_field: workflow
+    - text: Set retries with a backoff — a task that retries instantly will hammer a downstream.
+      from_id: skill-airflow-dag-reviewer
+      from_field: body
+    - text: Cap max_active_runs and pool limits so a backfill cannot starve the daily run.
+      from_id: skill-airflow-dag-reviewer
+      from_field: body
+  check_yourself:
+    - On the fixture of 8 DAGs with seeded non-idempotency bugs, the review flags every seeded bug and no healthy task.
+    - Reviewing a task that appends without a partition key, you flag it as duplicating rows on retry.
+  when_to_use:
+    - "A DAG is about to merge and must be safe to retry"
+    - "A backfill is being considered and its behaviour must be predicted first"
+  why: Non-idempotent tasks duplicate rows on every retry, and the reviewer's read-only four-step pass surfaces that before the DAG ships.
+  gotchas:
+    - "A task that appends without a partition key will duplicate rows on retry."
+    - "`catchup` is a deliberate choice, not a default."
+    - "Sensors use `reschedule`, not `poke`, so they don't hold a worker slot."
+  production_notes:
+    - "The reviewer is read-only analysis and never triggers a run."
+    - "Keep the fixture of 8 DAGs with seeded non-idempotency bugs in CI so regressions resurface."
+  diagram: |
+    dag review pass
+       |
+       |- idempotency test per task --> flag appends without partition keys
+       |
+       |- retry/timeout/concurrency check --> backoff + max_active_runs
+       |
+       |- predict backfill behaviour --> propose missing integration tests
+  source_refs: [agent-pipeline-reviewer, skill-airflow-dag-reviewer]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/review-dag-idempotency
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-airflow] }
+- id: tutorial-plan-safe-backfill
+  slug: plan-safe-backfill
+  type: tutorial
+  title: Plan and execute a safe backfill
+  description: >-
+    Use the Backfill Planner's four-step plan — correctness criteria, downstream
+    impact from lineage, cost and contention, staged batches — then execute it
+    the way the backfill runbook demands: shadow table, sample validation per
+    batch, and never beside the daily production run.
+  category: cat-airflow
+  difficulty: intermediate
+  tags: [tutorial, backfill, airflow, planning, safety]
+  learning_objectives:
+    - Write correctness criteria for a backfill before running it
+    - Compute the downstream impact set from lineage
+    - Execute the backfill in batches with validation gates and a rollback path
+  what_you_need:
+    - Target table and date range
+    - Pipeline dependencies and lineage
+    - An idle window that excludes the daily job
+    - Install: npx de-agent-platform add backfill-planner
+  steps:
+    - text: Define correctness criteria for the backfill.
+      from_id: agent-backfill-planner
+      from_field: workflow
+    - text: Compute downstream impact from lineage.
+      from_id: agent-backfill-planner
+      from_field: workflow
+    - text: Estimate cost and contention.
+      from_id: agent-backfill-planner
+      from_field: workflow
+    - text: Stage batches with validation between them.
+      from_id: agent-backfill-planner
+      from_field: workflow
+    - text: "Write to a shadow table, validate a sample, then swap."
+      from_id: runbook-backfill-required
+      from_field: fix
+    - text: Never run a backfill concurrently with the daily production run.
+      from_id: runbook-backfill-required
+      from_field: fix
+  check_yourself:
+    - The plan includes a rollback path and an explicit window with the daily job excluded — the planner refuses to plan without both.
+    - A 90-day backfill comes out planned around the daily run, batched weekly, with a shadow table and a row-count gate.
+  when_to_use:
+    - "A past date range is wrong or missing"
+    - "A logic fix or new column must be applied historically"
+  why: A backfill is production work with a bigger blast radius than the original pipeline — shadow-write, sample-validate, then swap.
+  gotchas:
+    - "Never run a backfill concurrently with the daily production run."
+    - "One huge date range starves the cluster; batch it and validate a sample per batch."
+    - "Backfilling without a written definition of correctness just relocates the bug."
+  production_notes:
+    - "Idempotent pipelines make a backfill a routine operation."
+    - "Document a backfill runbook per pipeline, with its idle window and resource budget."
+  diagram: |
+    backfill plan
+       |
+       |- correctness criteria --> downstream impact from lineage
+       |
+       |- cost + contention --> idle window with daily job excluded
+       |
+       |- shadow table --> batched dates --> validate sample per batch --> swap
+  source_refs: [agent-backfill-planner, runbook-backfill-required]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/plan-safe-backfill
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-airflow] }
+- id: tutorial-scaffold-airflow-dag
+  slug: scaffold-airflow-dag
+  type: tutorial
+  title: Scaffold an idempotent DAG from the template
+  description: >-
+    Generate a new pipeline from the Airflow DAG template and keep its
+    guarantees — an idempotent skeleton with task groups, retries and backoff,
+    SLA, pools, and a reschedule-mode sensor — then make catchup a deliberate
+    choice and every write partition-keyed or a MERGE.
+  category: cat-airflow
+  difficulty: beginner
+  tags: [tutorial, airflow, dag, template, scaffolding, beginner]
+  learning_objectives:
+    - Scaffold a DAG project with tests and a Dockerfile from the template
+    - Write tasks that are safe to re-run from day one
+    - Set catchup, retries and sensor modes as deliberate choices
+  what_you_need:
+    - An Airflow development environment
+    - Install: amp template new de-agent/airflow-dag ./dags
+    - A pipeline to model, such as a daily orders job
+  steps:
+    - text: Run amp template new de-agent/airflow-dag ./dags.
+      from_id: tpl-airflow-dag
+      from_field: installation
+    - text: "Work in the generated layout: dags/orders_pipeline.py, plugins/, tests/test_dag_integrity.py, Dockerfile."
+      from_id: tpl-airflow-dag
+      from_field: repo_structure
+    - text: Keep the skeleton's guarantees — task groups, retries and backoff, SLA, pools, and a sensor using reschedule mode.
+      from_id: tpl-airflow-dag
+      from_field: description
+    - text: Every task writes to a partition keyed by the logical date, or uses MERGE.
+      from_id: skill-airflow-dag-reviewer
+      from_field: body
+    - text: Set `catchup` as a deliberate choice, not a default.
+      from_id: skill-airflow-dag-reviewer
+      from_field: body
+  check_yourself:
+    - The generated project matches the template layout — dags/orders_pipeline.py, plugins/, tests/test_dag_integrity.py and a Dockerfile are all present.
+    - Asking the idempotency question of each task — same logical date, same output? — every task answers yes.
+  when_to_use:
+    - "A new pipeline DAG is being created and must be idempotent from day one"
+    - "A team wants a standard layout with DAG-integrity tests included"
+  why: A skeleton with retries, backoff, SLA, pools and reschedule sensors built in is cheaper than un-duplicating rows after the first retry.
+  gotchas:
+    - "`max_active_runs` and pool limits prevent a backfill from starving the daily run."
+    - "Sensors use `reschedule`, not `poke`, so they don't hold a worker slot."
+    - "Never overlap the production window; never backfill without a rollback path."
+  production_notes:
+    - "The template ships tests/test_dag_integrity.py — run DAG-integrity tests in CI."
+    - "Pair the scaffold with skill-airflow-dag-reviewer and pattern-backfill-safety, the template's declared related resources."
+  diagram: |
+    scaffold dag
+       |
+       |- amp template new --> orders_pipeline.py + tests + Dockerfile
+       |
+       |- keep guarantees --> retries/backoff, SLA, pools, reschedule sensor
+       |
+       |- partition or MERGE writes --> deliberate catchup --> review with idempotency test
+  source_refs: [tpl-airflow-dag, skill-airflow-dag-reviewer, pattern-backfill-safety]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/scaffold-airflow-dag
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-airflow] }
+- id: tutorial-gate-backfills-with-hook
+  slug: gate-backfills-with-hook
+  type: tutorial
+  title: Gate backfills with the safety check hook
+  description: >-
+    Wire the Backfill Safety Check as a pre-run gate that refuses any backfill
+    lacking an explicit date range, a shadow or snapshotted target, and a window
+    clear of the scheduled production run — and watch it block the bare backfill
+    command that would otherwise corrupt the target.
+  category: cat-airflow
+  difficulty: intermediate
+  tags: [tutorial, airflow, backfill, hook, guardrail]
+  learning_objectives:
+    - Install a pre-run gate that intercepts backfill triggers
+    - State the three requirements the hook enforces before any backfill
+    - Recognize a denied bare backfill command and what it was missing
+  what_you_need:
+    - A scheduler or wrapper that triggers backfills
+    - The daily production schedule for the target DAG
+    - A shadow table or snapshot procedure for the target
+  steps:
+    - text: Set the trigger to pre-run so the check intercepts a backfill trigger.
+      from_id: hook-backfill-safety-check
+      from_field: trigger
+    - text: Require an explicit date range.
+      from_id: hook-backfill-safety-check
+      from_field: implementation
+    - text: Require a target that is either a shadow table or snapshotted.
+      from_id: hook-backfill-safety-check
+      from_field: implementation
+    - text: Require a window that does not overlap the scheduled production run.
+      from_id: hook-backfill-safety-check
+      from_field: implementation
+    - text: Deny the trigger otherwise — failure behavior is block.
+      from_id: hook-backfill-safety-check
+      from_field: failure_behavior
+    - text: "Confirm the gate: a bare `airflow dags backfill --start-date 2024-01-01` is denied for missing a range and rollback."
+      from_id: hook-backfill-safety-check
+      from_field: example
+  check_yourself:
+    - A bare `airflow dags backfill --start-date 2024-01-01` is denied for missing a range and rollback.
+    - A trigger with an explicit range, a snapshotted target and an off-peak window passes the pre-run check.
+  when_to_use:
+    - "Any historical recompute of a production table"
+    - "A backfill trigger lacks a rollback path or overlaps the daily run"
+  why: The cheapest backfill incident is the one denied before it starts — a pre-run block costs seconds, a corrupted target costs days.
+  gotchas:
+    - "Never overlap the production window; never backfill without a rollback path."
+    - "An explicit date range alone is not enough — the target must be a shadow table or snapshotted."
+    - "Passing the gate is not the finish line — backfill in date batches, smallest first, validating a sample after each batch."
+  production_notes:
+    - "failure_behavior is block — the hook denies the trigger instead of warning."
+    - "Document a backfill runbook per pipeline, with its idle window and resource budget."
+  diagram: |
+    backfill trigger
+       |
+       |- pre-run gate --> explicit date range? --> no --> block
+       |
+       |- shadow or snapshotted target? --> no --> block
+       |
+       |- window clear of daily run? --> yes --> run batches, validate samples
+  source_refs: [hook-backfill-safety-check, pattern-backfill-safety, skill-backfill-planner, runbook-backfill-required]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/gate-backfills-with-hook
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-airflow] }

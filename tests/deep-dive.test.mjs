@@ -126,3 +126,21 @@ test('pipeline: enriched runbook + tutorial YAML carry the new content fields', 
     throw new Error(`expected all ${tutorials.length} tutorials enriched, found ${enrichedTutorials.length}`);
   }
 });
+
+test('runbooks render an incident notebook block (impact/escalation/evidence/rollback/follow-up)', () => {
+  const detail = read('src/components/ResourceDetail.astro');
+  if (!detail.includes('data-section="incident-notebook"')) throw new Error('incident-notebook section missing');
+  if (!detail.includes('<h2>Incident notebook</h2>')) throw new Error('Incident notebook heading missing');
+  if (!detail.includes("[data-artifact-type='runbook'] [data-section='incident-notebook'] { order: 12; }")) {
+    throw new Error('incident-notebook ordering rule missing');
+  }
+  const registry = JSON.parse(read('src/data/generated/registry.json'));
+  const items = Array.isArray(registry) ? registry : registry.resources ?? Object.values(registry);
+  const runbooks = items.filter((x) => x.type === 'runbook');
+  const missing = runbooks.filter(
+    (r) => !r.impact || !r.escalation || !(r.evidence_to_collect ?? []).length || !r.rollback || !(r.follow_up ?? []).length
+  );
+  if (missing.length) {
+    throw new Error('runbooks missing notebook fields: ' + missing.map((m) => m.id).join(', '));
+  }
+});

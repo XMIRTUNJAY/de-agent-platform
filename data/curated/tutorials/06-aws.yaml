@@ -1,0 +1,296 @@
+# Tutorials — beginner-friendly arrangements of artifact content.
+# Every step is verbatim from the cited source field. Structure (need, steps,
+# check) is ours; wording is the source's.
+- id: tutorial-athena-cut-bytes-scanned
+  slug: athena-cut-bytes-scanned
+  type: tutorial
+  title: Cut Athena bytes scanned with partitions and projection
+  description: >-
+    Walk one expensive Athena query through the Partition Advisor's levers in
+    order: confirm the per-TB bill model, partition on the dominant filter
+    column, replace MSCK REPAIR with partition projection, compact small files,
+    and move to columnar compression. Every move is judged by a single number —
+    bytes scanned.
+  category: cat-aws
+  difficulty: beginner
+  tags: [tutorial, aws, athena, partitions, projection, cost]
+  learning_objectives:
+    - Read the scanned-bytes metric per query
+    - Apply partition projection for high-cardinality columns
+    - Compact small files to cut per-request overhead
+  what_you_need:
+    - An Athena workgroup and a table you can query
+    - The scanned-bytes metric for recent queries
+    - Install: npx de-agent-platform add athena-partition-advisor
+  steps:
+    - text: "Judge every recommendation by one question — does this reduce bytes scanned? You pay per TB scanned, and nothing else matters."
+      from_id: skill-athena-partition-advisor
+      from_field: body
+    - text: Partition on the dominant filter column (usually date).
+      from_id: skill-athena-partition-advisor
+      from_field: body
+    - text: Use partition projection instead of `MSCK REPAIR` for predictable layouts.
+      from_id: skill-athena-partition-advisor
+      from_field: body
+    - text: Compact small files — per-file overhead dominates at < 16 MB.
+      from_id: skill-athena-partition-advisor
+      from_field: body
+    - text: Go columnar + compression (Parquet + snappy/zstd) — 10-100x vs CSV.
+      from_id: skill-athena-partition-advisor
+      from_field: body
+  check_yourself:
+    - Re-running the expensive query after the levers land shows the scanned-bytes metric dropping to only the touched date partitions.
+    - A table whose files average under 16 MB is compacted, and the per-query bill no longer carries per-file overhead.
+  when_to_use:
+    - "Athena cost climbs with no change in query count"
+    - "A partitioned table still scans everything because partition metadata relies on MSCK REPAIR"
+  why: Bytes scanned is the only thing Athena bills, so applying the advisor's four levers in order is the shortest path to a smaller invoice on the next run.
+  gotchas:
+    - "Every recommendation is judged by bytes scanned — a change that adds complexity without cutting scan is a no."
+    - "Per-file overhead dominates at < 16 MB — small files inflate the bill even when pruning works."
+    - "Partition projection replaces MSCK REPAIR only for predictable layouts."
+  production_notes:
+    - "Track the scanned-bytes metric per query so layout regressions show up the day they land."
+    - "Write Parquet with snappy/zstd; CSV inputs scan 10-100x more bytes for the same data."
+  diagram: |
+    athena bytes pass
+       |
+       |- read scanned-bytes metric --> baseline per query
+       |
+       |- partition on dominant filter column --> projection replaces MSCK REPAIR
+       |
+       |- compact small files (< 16 MB overhead) --> parquet + snappy/zstd
+       |
+       --> re-run query --> bytes scanned drops
+  source_refs: [skill-athena-partition-advisor]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/athena-cut-bytes-scanned
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-aws] }
+- id: tutorial-glue-job-review-pass
+  slug: glue-job-review-pass
+  type: tutorial
+  title: Review a Glue job for sizing, bookmarks, and catalogue drift
+  description: >-
+    Take a Glue/Spark job through the AWS Glue Job Reviewer's three checks:
+    size workers from the input files' partitions instead of habit, verify the
+    job bookmark against the input path layout, and diff the Glue Data Catalog
+    schema against the Parquet file footer. Each check targets a silent cost
+    leak that ends in full reprocessing.
+  category: cat-aws
+  difficulty: beginner
+  tags: [tutorial, aws, glue, spark, cost, review]
+  learning_objectives:
+    - Size Glue workers from data volume, not habit
+    - Use job bookmarks correctly
+    - Avoid full-table reprocessing from catalogue mistakes
+  what_you_need:
+    - A Glue job definition and its input path layout
+    - The task histogram from a recent run
+    - Install: npx de-agent-platform add aws-glue-job-reviewer
+  steps:
+    - text: Start worker sizing at 2x the number of input files' partitions, then watch the task histogram.
+      from_id: skill-aws-glue-reviewer
+      from_field: body
+    - text: Check the job bookmark — it only helps if the input path layout is stable.
+      from_id: skill-aws-glue-reviewer
+      from_field: body
+    - text: Look for a renamed prefix under the input path; it silently resets the bookmark and triggers a full reprocess.
+      from_id: skill-aws-glue-reviewer
+      from_field: body
+    - text: Diff the Glue Data Catalog schema against the file footer — drifting schemas make readers drop columns silently.
+      from_id: skill-aws-glue-reviewer
+      from_field: body
+  check_yourself:
+    - A job sized by habit is re-sized to 2x the input partitions and the task histogram shows balanced tasks instead of idle executors.
+    - A prefix rename under the input path is caught before the next run, so the bookmark never silently resets into a full reprocess.
+  when_to_use:
+    - "A Glue job's bill grew without any change in data volume"
+    - "A bookmark reset caused a surprise full reprocess overnight"
+  why: Over-provisioned workers, reset bookmarks, and catalogue drift each cause silent full reprocessing, and this three-check pass catches all of them before the next run.
+  gotchas:
+    - "A bookmark only helps if the input path layout is stable — a renamed prefix silently resets it into a full reprocess."
+    - "If the Glue Data Catalog schema drifts from the actual Parquet schema, readers drop columns silently."
+    - "Over-provisioned workers are the most common Glue cost leak — size from data volume, not habit."
+  production_notes:
+    - "Keep the task histogram in every review; it is the fastest signal that sizing is wrong."
+    - "Diff the catalogue schema against the file footer on a schedule, not as a one-off."
+  diagram: |
+    glue job review
+       |
+       |- sizing --> 2x input file partitions --> watch task histogram
+       |
+       |- bookmarks --> stable input layout? --> renamed prefix = full reprocess
+       |
+       |- catalogue --> diff catalog schema vs file footer --> silent column drops
+       |
+       --> findings before the next run
+  source_refs: [skill-aws-glue-reviewer]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/glue-job-review-pass
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-aws] }
+- id: tutorial-s3-glue-athena-starter
+  slug: s3-glue-athena-starter
+  type: tutorial
+  title: Stand up the S3 → Glue → Athena starter
+  description: >-
+    Deploy the serverless query-in-place starter end to end: Terraform
+    provisions buckets, catalog, and a bounded Athena workgroup, Parquet lands
+    in a Hive layout, the table is registered with partition projection, and
+    pruning is proven with explain analyze. The sample data ships one
+    deliberately oversized file to demonstrate compaction.
+  category: cat-aws
+  difficulty: beginner
+  tags: [tutorial, aws, s3, glue, athena, terraform]
+  learning_objectives:
+    - Lay out Parquet so Athena prunes well
+    - Use partition projection instead of repeated crawls
+    - Measure and cut bytes scanned
+  what_you_need:
+    - Terraform and an AWS profile it can apply with
+    - The starter repo (terraform/, ddl/table.sql, queries/, sample Parquet under data/dt=)
+    - Install: amp template new de-agent/terraform-aws-data-platform ./infra
+  steps:
+    - text: "Provision the stack: terraform init && terraform apply."
+      from_id: project-s3-glue-athena
+      from_field: setup
+    - text: "Land the data: aws s3 sync data/ s3://<bucket>/<prefix>/."
+      from_id: project-s3-glue-athena
+      from_field: setup
+    - text: "Register the table: run ddl/table.sql in Athena to register with projection."
+      from_id: project-s3-glue-athena
+      from_field: setup
+    - text: Define the table with projection on dt (no MSCK REPAIR).
+      from_id: project-s3-glue-athena
+      from_field: implementation
+    - text: "Verify pruning: explain analyze shows partition pruning on dt."
+      from_id: project-s3-glue-athena
+      from_field: tests
+    - text: Add the workgroup guardrail — an Athena workgroup with a per-query bytes-scanned limit.
+      from_id: project-s3-glue-athena
+      from_field: production_hardening
+  check_yourself:
+    - explain analyze on a dt-filtered query shows partition pruning, and the workgroup reports scanned bytes within budget.
+    - A query that scans everything is traced to a predicate that is not on the partition column, then fixed without touching the layout.
+  when_to_use:
+    - "A serverless lakehouse on AWS is needed without a cluster to run"
+    - "Athena cost must stay bounded while dashboards query S3 Parquet"
+  why: The starter makes the query-in-place pattern real with projection DDL and a workgroup bytes limit, so cost and layout are right from day one.
+  gotchas:
+    - "A new partition is invisible → the projection pattern does not match the layout."
+    - "A query scans everything → the predicate is not on the partition column."
+    - "Thousands of tiny files → compact; the sample data ships one deliberately oversized file to demonstrate the fix."
+  production_notes:
+    - "Run the workgroup with a per-query bytes-scanned limit and CloudWatch alarms on scanned bytes per hour."
+    - "Add a nightly compaction job to keep the Parquet layout near the 128 MB target."
+  diagram: |
+    s3 -> glue -> athena starter
+       |
+       |- terraform apply --> buckets + catalog + workgroup (bytes limit)
+       |
+       |- s3 sync data/ --> hive layout dt=..
+       |
+       |- ddl/table.sql --> partition projection (no MSCK REPAIR)
+       |
+       |- explain analyze --> pruning on dt --> bytes scanned in budget
+  source_refs: [project-s3-glue-athena, tpl-terraform-aws-data]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/s3-glue-athena-starter
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-aws] }
+- id: tutorial-aws-architecture-review-pass
+  slug: aws-architecture-review-pass
+  type: tutorial
+  title: Run an AWS data architecture review pass
+  description: >-
+    Point the AWS Architecture Reviewer at an architecture description or IaC
+    and follow its four-step workflow: map the services to a data flow, check
+    IAM for least privilege, estimate dominant cost drivers, and identify
+    single points of failure. The agent is read-only and never creates
+    resources.
+  category: cat-aws
+  difficulty: intermediate
+  tags: [tutorial, aws, architecture, iam, review, cost]
+  learning_objectives:
+    - Map an AWS data platform into a single data flow before judging it
+    - Check IAM roles for least privilege
+    - Name the dominant cost drivers and single points of failure
+  what_you_need:
+    - An architecture description or IaC
+    - Workload characteristics (volume, freshness, consumers)
+    - Install: npx de-agent-platform add aws-architecture-reviewer
+  steps:
+    - text: Map the described services to a data flow.
+      from_id: agent-aws-architecture-reviewer
+      from_field: workflow
+    - text: Check IAM for least privilege.
+      from_id: agent-aws-architecture-reviewer
+      from_field: workflow
+    - text: Estimate dominant cost drivers.
+      from_id: agent-aws-architecture-reviewer
+      from_field: workflow
+    - text: Identify single points of failure.
+      from_id: agent-aws-architecture-reviewer
+      from_field: workflow
+    - text: Collect the four outputs — architecture diagram (text), IAM findings, cost drivers, reliability risks.
+      from_id: agent-aws-architecture-reviewer
+      from_field: outputs
+    - text: Hold the guardrails — the agent never creates resources and requires human approval for any IAM recommendation.
+      from_id: agent-aws-architecture-reviewer
+      from_field: guardrails
+  check_yourself:
+    - The review flags a Glue job running with an admin role and no bookmark, causing nightly full reprocessing — the agent's own worked example.
+    - Every IAM recommendation stops at human approval, and the agent created zero resources during the pass.
+  when_to_use:
+    - "A new AWS data architecture needs a cost/IAM/reliability pass before build"
+    - "An existing platform keeps producing cost surprises or single points of failure"
+  why: Thirty AWS data-platform anti-patterns repeat across teams, and a fixed four-step review pass turns them into findings instead of incidents.
+  gotchas:
+    - "The agent never creates resources — anything beyond findings needs a human."
+    - "IAM recommendations always require human approval; never auto-apply them."
+    - "Bind mcp-aws to a dedicated least-privilege AWS profile with short-lived SSO credentials — never attach an admin role."
+  production_notes:
+    - "Score each pass against the 30-anti-pattern checklist so reviews are comparable over time."
+    - "Keep the review read-only against the account; resource-creating tools require human confirmation."
+  diagram: |
+    aws architecture review
+       |
+       |- map services --> one data flow
+       |
+       |- IAM --> least privilege --> human approval only
+       |
+       |- cost drivers --> dominant spend ranked
+       |
+       |- single points of failure --> reliability risks
+       |
+       --> findings: diagram + IAM + cost + reliability
+  source_refs: [agent-aws-architecture-reviewer, mcp-aws]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/aws-architecture-review-pass
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-aws] }

@@ -367,6 +367,41 @@ const scoreColor = (score: number) => {
             <ol style="padding-left: 1.25rem; color: var(--fg-muted);">{res.symptoms.map((s: any) => <li style="margin-block: 0.3rem;">{typeof s === 'string' ? s : (Object.entries(s).map(([k, v]) => `${k}: ${v}`).join(' — ') as any)}</li>)}</ol>
           </section>
         )}
+        {(res.impact || res.escalation || (res.evidence_to_collect ?? []).length > 0 || res.rollback || (res.follow_up ?? []).length > 0) && (
+          <section class="mount" data-section="incident-notebook">
+            <h2>Incident notebook</h2>
+            {res.impact && (
+              <div class="notebook-row">
+                <h3>Impact</h3>
+                <p>{res.impact}</p>
+              </div>
+            )}
+            {res.escalation && (
+              <div class="notebook-row">
+                <h3>Escalation</h3>
+                <p>{res.escalation}</p>
+              </div>
+            )}
+            {(res.evidence_to_collect ?? []).length > 0 && (
+              <div class="notebook-row">
+                <h3>Evidence to collect first</h3>
+                <ul>{res.evidence_to_collect.map((e: any) => <li>{e}</li>)}</ul>
+              </div>
+            )}
+            {res.rollback && (
+              <div class="notebook-row">
+                <h3>Rollback</h3>
+                <p>{res.rollback}</p>
+              </div>
+            )}
+            {(res.follow_up ?? []).length > 0 && (
+              <div class="notebook-row">
+                <h3>Follow-up</h3>
+                <ul>{res.follow_up.map((f: any) => <li>{f}</li>)}</ul>
+              </div>
+            )}
+          </section>
+        )}
         {res.diagnosis && res.diagnosis.length && (
           <section class="mount" data-section="diagnosis">
             <h2>Diagnosis</h2>
@@ -913,6 +948,7 @@ const scoreColor = (score: number) => {
     min-width: 0;
   }
   [data-artifact-type='runbook'] [data-section='symptoms'] { order: 10; }
+  [data-artifact-type='runbook'] [data-section='incident-notebook'] { order: 12; }
   [data-artifact-type='runbook'] [data-section='at-a-glance'] { order: 5; }
   [data-artifact-type='runbook'] [data-section='gotchas'] { order: 65; }
   [data-artifact-type='runbook'] [data-section='diagram'] { order: 72; }
@@ -1000,5 +1036,25 @@ const scoreColor = (score: number) => {
   .detail-sections table.stats-table tr:last-child th,
   .detail-sections table.stats-table tr:last-child td {
     border-bottom: 0;
+  }
+  /* Incident notebook block (runbooks) */
+  .notebook-row {
+    margin-block: 0.9rem;
+  }
+  .notebook-row:first-of-type {
+    margin-top: 0;
+  }
+  .notebook-row h3 {
+    margin: 0 0 0.25rem;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--fg-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .notebook-row p,
+  .notebook-row ul {
+    margin: 0;
+    color: var(--fg);
   }
 </style>

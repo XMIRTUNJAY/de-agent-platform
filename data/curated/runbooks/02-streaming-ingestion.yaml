@@ -40,6 +40,17 @@
     - "Consumer-group lag keeps rising and won't recover on its own"
     - "Downstream tables are going fresh-to-stale"
   why: Lag compounds — every minute behind is a minute of stale truth downstream, and the sink silently becomes the bottleneck nobody owns.
+  impact: Downstream tables go stale minute by minute; freshness SLAs breach and consumers act on old data without knowing it.
+  escalation: Page the streaming on-call when the lag slope stays positive for 3 consecutive alert intervals; loop in the sink's owner early — the bottleneck is usually downstream.
+  evidence_to_collect:
+    - "Per-partition lag (uniform vs skewed)"
+    - "Consumer-group state history (rebalance frequency)"
+    - "Sink write latency and throughput for the same window"
+    - "DLQ depth and any stuck committed offsets"
+  rollback: If a consumer or sink deploy preceded the lag, roll it back; scaling consumers is a mitigation, not a rollback.
+  follow_up:
+    - "Switch the alert to lag slope, not absolute lag"
+    - "Verify the DLQ path actually catches poison messages"
   gotchas:
     - "Never reset offsets to clear lag; that is silent data loss."
     - "Uniform lag means capacity; one stuck partition means key skew or a poison message — read per-partition lag before scaling."
@@ -109,6 +120,18 @@
     - "Change events stopped arriving from a source table"
     - "The target is silently diverging and consumers see no error"
   why: CDC failures are silent by construction — the target keeps serving yesterday's truth, and divergence compounds until a reconciliation catches it.
+  impact: The target silently diverges from the source — every consumer reads stale data with no error anywhere; reports are wrong by omission.
+  escalation: Declare an incident immediately; page the platform on-call and the source-database owner (slot and WAL changes need DBA rights).
+  evidence_to_collect:
+    - "Connector and task status for the affected source"
+    - "pg_replication_slots: active, restart_lsn, confirmed_flush_lsn, retained WAL"
+    - "Topic offsets: last event timestamp vs the source's max LSN/SCN"
+    - "Source-to-target row-count delta for the affected tables"
+  rollback: "Not applicable — recovery is forward-only: restart the task, or re-snapshot if the slot/WAL was lost. Never hand-edit offsets."
+  follow_up:
+    - "Add the retained-WAL and task-state alerts that were missing"
+    - "Run a full reconciliation over the divergence window"
+    - "Postmortem: why monitoring missed the silence"
   gotchas:
     - "Never hand-edit offsets; replay from the snapshot point."
     - "WAL purged beyond the slot's retention is unrecoverable in place — the only correct fix is a fresh snapshot."
@@ -171,6 +194,16 @@
     - "Files landed after the daily job already ran"
     - "Yesterday's numbers changed this morning and reconciliations disagree"
   why: Late arrivals rewrite history silently; without a watermark policy every run is a fresh bet on the partner's clock.
+  impact: Historical numbers keep changing; reconciliations disagree and consumers lose trust in yesterday's numbers.
+  escalation: Escalate to the partner manager when lateness repeatedly breaches the contractual delivery window.
+  evidence_to_collect:
+    - "30-day arrival-time distribution for the partner's files (in UTC)"
+    - "The job schedule vs the contractual delivery time"
+    - "Which partitions were reprocessed, and when"
+  rollback: None — reprocess idempotently; if a reprocess corrupted a window, restore it from the pre-write snapshot and re-run.
+  follow_up:
+    - "Set the watermark window from measured lateness, not guesswork"
+    - "Document the partner SLA next to the job schedule"
   gotchas:
     - "Re-running the whole partition for one late file is wasteful — overwrite windows, not history."
     - "Timezone mismatch between partner and pipeline shifts lateness by hours — measure arrival times in UTC."
@@ -235,6 +268,16 @@
     - "Row counts are inflated and metrics double-counted"
     - "A unique-key test starts failing after a retry, join change or backfill"
   why: Duplicates corrupt every metric quietly; finding the first duplicate date and the deploy that introduced it is the whole diagnosis.
+  impact: Revenue and usage metrics double-count; finance and product dashboards disagree with each other and with the source.
+  escalation: Notify metric consumers immediately that published numbers are wrong; bring in the owning team for the write-mode fix.
+  evidence_to_collect:
+    - "Duplicate counts per key, and the earliest duplicate date"
+    - "The deploy or change correlated with that date"
+    - "The write mode (append vs overwrite/MERGE) of the affected job"
+  rollback: Roll back the write-mode change; then rewrite only the affected partitions, deduplicating by latest event time.
+  follow_up:
+    - "Add the unique-grain test in CI and in production"
+    - "Convert the job to idempotent writes (partition overwrite or MERGE)"
   gotchas:
     - "Fix the destination partitions, not the whole table — a full rewrite is both slow and a new risk."
     - "An append instead of overwrite on retry is the classic maker of duplicates."

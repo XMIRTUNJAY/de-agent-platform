@@ -1,0 +1,289 @@
+# Tutorials — beginner-friendly arrangements of artifact content.
+# Every step is verbatim from the cited source field. Structure (need, steps,
+# check) is ours; wording is the source's.
+- id: tutorial-dq-quarantine-publish-walkthrough
+  slug: dq-quarantine-publish-walkthrough
+  type: tutorial
+  title: Split a batch into quarantine and publish
+  description: >-
+    Build the pipeline-dq-quarantine starter the way the Quarantine then Publish
+    pattern prescribes: a quality contract splits each batch into a published set
+    and a quarantine with reasons. You finish with a test that proves no row is
+    ever lost and an alert on the quarantine rate.
+  category: cat-data-quality
+  difficulty: intermediate
+  tags: [tutorial, data-quality, quarantine, contracts, pyspark, starter]
+  learning_objectives:
+    - Express a quality contract as executable checks
+    - Design a quarantine table with a reason
+    - Alert on the quarantine rate, not just on failure
+  what_you_need:
+    - The pipeline-dq-quarantine starter (contract/orders.yml, src/validate.py, src/publish.py)
+    - DuckDB or PySpark to compile the contract rules to SQL
+    - A batch with ~5% deliberately invalid rows (nulls, dupes, out-of-range)
+    - Install: npx de-agent-platform add spark-data-quality-review
+  steps:
+    - text: Split every batch into publish and quarantine on a quality contract.
+      from_id: pattern-quarantine-publish
+      from_field: solution
+    - text: Validate the contract offline against fixtures with `make test`, then run `make run`.
+      from_id: project-pipeline-dq-quarantine
+      from_field: setup
+    - text: Load the contract and compile rules to SQL (DuckDB) or Spark expressions.
+      from_id: project-pipeline-dq-quarantine
+      from_field: implementation
+    - text: Split into pass/fail with a stable `failure_reason`.
+      from_id: project-pipeline-dq-quarantine
+      from_field: implementation
+    - text: Publish the pass set; write the fail set to quarantine with provenance.
+      from_id: project-pipeline-dq-quarantine
+      from_field: implementation
+    - text: Alert when the quarantine rate > 1% for 2 consecutive runs.
+      from_id: project-pipeline-dq-quarantine
+      from_field: production_hardening
+  check_yourself:
+    - Every row is either published or quarantined — never lost; the quarantine contains exactly the seeded bad rows, and a clean batch produces an empty quarantine.
+    - A quarantine rate above 1% for 2 consecutive runs fires the alert with the failure_reason breakdown attached.
+  when_to_use:
+    - "External/partner data or any table with an SLA"
+    - "High-value downstream metrics that one bad batch could poison"
+  why: A row never disappears — it is either published or quarantined with a reason, so one bad batch cannot poison the table.
+  gotchas:
+    - "A quarantine nobody reviews is just a slower data loss."
+    - "Contract too strict → quarantine rate explodes; tier rules and loosen with evidence."
+    - "Alert on quarantine rate, not just on a hard failure — a rising rate is the early signal of an upstream problem."
+  production_notes:
+    - "Alert when quarantine rate > 1% for 2 consecutive runs."
+    - "Ship a reprocess command that re-runs the quarantined rows after a fix."
+  diagram: |
+    batch
+       |
+       |- [contract check] --> pass --> published/ (SLA-bearing)
+       |
+       |- [contract check] --> fail --> quarantine/ (+reason, +source_file)
+       |
+       |- quarantine rate > 1% x2 runs --> alert --> review + reprocess
+  source_refs: [pattern-quarantine-publish, project-pipeline-dq-quarantine]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/dq-quarantine-publish-walkthrough
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-data-quality] }
+- id: tutorial-dq-respond-failing-expectation
+  slug: dq-respond-failing-expectation
+  type: tutorial
+  title: Respond to a failing quality expectation
+  description: >-
+    A quality expectation failed in production and bad data may be reaching
+    consumers. Follow the data-quality-failure runbook: read the failure
+    precisely, quantify it, then make the one decision that matters — block,
+    quarantine, or pass-with-warning.
+  category: cat-data-quality
+  difficulty: beginner
+  tags: [tutorial, data-quality, runbook, expectations, incident]
+  learning_objectives:
+    - Read a failing expectation precisely — column, rule, value
+    - Quantify a failure — how many rows and which ones
+    - Decide block vs quarantine vs pass-with-warning on evidence
+  what_you_need:
+    - The failing test name and its output (dbt or Great Expectations)
+    - Read access to the failing table
+    - Install: npx de-agent-platform add spark-data-quality-review
+  steps:
+    - text: "Read the failing expectation precisely: which column, which rule, what value."
+      from_id: runbook-data-quality-failure
+      from_field: diagnosis
+    - text: "Quantify: how many rows, and which ones (sample them)."
+      from_id: runbook-data-quality-failure
+      from_field: diagnosis
+    - text: "Decide: block, quarantine, or pass-with-warning."
+      from_id: runbook-data-quality-failure
+      from_field: diagnosis
+    - text: Quarantine the failing rows, publish the clean set, keep the bad set for reprocessing.
+      from_id: runbook-data-quality-failure
+      from_field: fix
+    - text: If it is upstream, halt promotion and notify the producer.
+      from_id: runbook-data-quality-failure
+      from_field: fix
+    - text: If it is a false positive, loosen the threshold with evidence.
+      from_id: runbook-data-quality-failure
+      from_field: fix
+  check_yourself:
+    - "`dbt test --select fct_orders` isolates the failing test, and `SELECT * FROM fct_orders WHERE order_id IS NULL LIMIT 20;` samples the offending rows."
+    - "Given an upstream null-rate jump, you halt promotion and notify the producer instead of loosening the threshold."
+  when_to_use:
+    - "A quality expectation failed in production"
+    - "A freshness or volume check alarmed, or consumers report wrong numbers"
+  why: The decision on every failure is the same — block, quarantine or warn; getting it wrong ships bad data to consumers or pages people at 3am for nothing.
+  gotchas:
+    - "Loosening a threshold to silence an alarm is only right with evidence it was a false positive."
+    - "Bad data that already reached consumers needs disclosure, not just a fix."
+    - "Blocking on a warning-tier expectation turns small blips into outages."
+  production_notes:
+    - "Tier expectations: critical blocks, warnings alert."
+    - "Keep a quarantine table so a bad batch never ships."
+  diagram: |
+    expectation failed
+       |
+       |- read precisely --> column + rule + value
+       |
+       |- quantify --> row count + samples
+       |
+       |- decide --> upstream --> halt promotion --> notify producer
+       |             false positive --> evidence --> loosen threshold
+       |             genuine --> quarantine rows --> publish clean set
+  source_refs: [runbook-data-quality-failure]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/dq-respond-failing-expectation
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-data-quality] }
+- id: tutorial-dq-deduplicate-records
+  slug: dq-deduplicate-records
+  type: tutorial
+  title: Deduplicate records without rewriting the table
+  description: >-
+    Row counts are inflated and revenue double-counted after a retry or a fan-out
+    join. Work the duplicate-records runbook: find the first duplicate date,
+    correlate it with a deploy, dedupe on the business key, and rewrite only the
+    affected partitions.
+  category: cat-data-quality
+  difficulty: beginner
+  tags: [tutorial, data-quality, duplicates, idempotency, sql]
+  learning_objectives:
+    - Count duplicates per key with one GROUP BY query
+    - Correlate the first duplicate date with a deploy
+    - Rewrite affected partitions instead of the whole table
+  what_you_need:
+    - The inflated table and its business (grain) key
+    - Warehouse SQL access to run the grouping queries
+    - Install: npx de-agent-platform add spark-data-quality-review
+  steps:
+    - text: Identify the duplicate key and count duplicates per key.
+      from_id: runbook-duplicate-records
+      from_field: diagnosis
+    - text: "Run: `SELECT k, count(*) c FROM t GROUP BY k HAVING count(*) > 1 ORDER BY c DESC LIMIT 20;`"
+      from_id: runbook-duplicate-records
+      from_field: commands
+    - text: Determine the earliest date duplicates appeared → correlate with a deploy.
+      from_id: runbook-duplicate-records
+      from_field: diagnosis
+    - text: Check whether the write is append vs merge/overwrite.
+      from_id: runbook-duplicate-records
+      from_field: diagnosis
+    - text: Deduplicate on the business key, keeping the latest by event time.
+      from_id: runbook-duplicate-records
+      from_field: fix
+    - text: Rewrite the affected partitions (overwrite), not the whole table.
+      from_id: runbook-duplicate-records
+      from_field: fix
+  check_yourself:
+    - "After the fix, the duplicates query returns zero rows for the rewritten partitions: `SELECT k, count(*) c FROM t GROUP BY k HAVING count(*) > 1` is empty."
+    - "Duplicate-rate per key is back to 0 and row count vs source count reconciles."
+  when_to_use:
+    - "Row counts are inflated and metrics double-counted"
+    - "A unique-key test starts failing after a retry, join change or backfill"
+  why: Duplicates corrupt every metric quietly; finding the first duplicate date and the deploy that introduced it is the whole diagnosis.
+  gotchas:
+    - "Fix the destination partitions, not the whole table — a full rewrite is both slow and a new risk."
+    - "An append instead of overwrite on retry is the classic maker of duplicates."
+    - "A non-unique 'one' side in a join fans out silently; test the grain, not the totals."
+  production_notes:
+    - "Idempotent writes: partition overwrite or MERGE on the business key."
+    - "Run a unique test on the grain key in CI and in production."
+  diagram: |
+    duplicates
+       |
+       |- count per key --> top duplicated keys
+       |
+       |- min duplicate date --> correlate with deploy --> fix write mode
+       |
+       |- dedupe by business key --> keep latest by event time --> overwrite affected partitions
+  source_refs: [runbook-duplicate-records]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/dq-deduplicate-records
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-data-quality] }
+- id: tutorial-dq-pre-deploy-dq-gate
+  slug: dq-pre-deploy-dq-gate
+  type: tutorial
+  title: Gate promotion with a pre-deploy DQ check
+  description: >-
+    Wire the pre-deployment DQ check so a pipeline is only promoted when its
+    quality suite passes against staged output. You attach the pre-deploy trigger,
+    run dbt/GE tests on the staging namespace, and prove a failed expectation
+    leaves production untouched.
+  category: cat-data-quality
+  difficulty: intermediate
+  tags: [tutorial, data-quality, deployment, ci, hooks]
+  learning_objectives:
+    - Attach the DQ suite to a pre-deploy trigger
+    - Promote only when critical tests pass on staged output
+    - Block promotion while keeping the previous production data
+  what_you_need:
+    - A pipeline that writes to a staging namespace before production
+    - A dbt or Great Expectations test suite for the model
+    - A deployment workflow with a pre-deploy stage to register the hook
+  steps:
+    - text: Wire the check to the pre-deploy trigger, before promotion to production.
+      from_id: hook-pre-deployment-dq-check
+      from_field: trigger
+    - text: After a pipeline writes to the staging namespace, run the model's dbt/GE tests against the staged output.
+      from_id: hook-pre-deployment-dq-check
+      from_field: implementation
+    - text: Promote only if all critical tests pass.
+      from_id: hook-pre-deployment-dq-check
+      from_field: implementation
+    - text: Otherwise leave the previous production data in place and report the failed expectations.
+      from_id: hook-pre-deployment-dq-check
+      from_field: implementation
+    - text: Confirm the failure behavior is block — a not-null test failing on 412 rows in staging blocks promotion, production untouched.
+      from_id: hook-pre-deployment-dq-check
+      from_field: example
+  check_yourself:
+    - Stage a run with a not-null violation: promotion is blocked and the previous production data is still in place.
+    - "The hook's failure_behavior is block — an all-green critical suite is the only path to promotion."
+  when_to_use:
+    - "A staged run must pass its quality suite before promotion to production"
+    - "Bad data must never reach consumers, even under a urgent deploy"
+  why: Promotion is the last chance to stop a bad batch — this hook turns the quality suite into that last gate.
+  gotchas:
+    - "The check runs after the pipeline writes to staging — an empty or stale staging namespace has nothing to test."
+    - "Tier the expectations: critical (block) vs warning (alert only) — blocking on a warning-tier expectation turns small blips into outages."
+    - "When the gate blocks, production still serves the previous data — say so in the report instead of assuming the deploy partially landed."
+  production_notes:
+    - "Promote only on an all-green critical suite; anything else leaves the previous production data in place."
+    - "Report the failed expectations with the block — the operator needs the column, rule and row count."
+  diagram: |
+    deploy
+       |
+       |- pipeline writes --> staging namespace
+       |
+       |- pre-deploy hook --> run dbt/GE tests on staged output
+       |
+       |- all critical pass --> promote --> production
+       |
+       |- any critical fail --> block --> production untouched --> report failures
+  source_refs: [hook-pre-deployment-dq-check, runbook-data-quality-failure]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/dq-pre-deploy-dq-gate
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-data-quality] }

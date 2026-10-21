@@ -1,0 +1,289 @@
+# Tutorials — beginner-friendly arrangements of artifact content.
+# Every step is verbatim from the cited source field. Structure (need, steps,
+# check) is ours; wording is the source's.
+- id: tutorial-spark-skew-diagnosis-walkthrough
+  slug: spark-skew-diagnosis-walkthrough
+  type: tutorial
+  title: Diagnose a skewed Spark stage
+  description: >-
+    One Spark stage hangs while other executors idle. Open the stage view, read
+    the p50-vs-p99 task durations, and follow the skew skill's decision order:
+    AQE skew join first, salting second, broadcast only under a size budget — and
+    never repartition(1).
+  category: cat-spark
+  difficulty: intermediate
+  tags: [tutorial, spark, skew, performance, aqe]
+  learning_objectives:
+    - Read task-level duration histograms to confirm skew
+    - Choose between AQE skew join, salting and broadcast
+    - Attach the evidence a skew review requires
+  what_you_need:
+    - Spark UI access or the job's event log
+    - The job source
+    - Install: npx de-agent-platform add spark-skew-diagnosis
+  steps:
+    - text: Open the Spark UI stage view; compare p50 vs p99 task duration.
+      from_id: runbook-spark-job-slow
+      from_field: diagnosis
+    - text: Skew if p99 >> p50 (10x+). Uniform slowness if p50 is high.
+      from_id: runbook-spark-job-slow
+      from_field: diagnosis
+    - text: Check shuffle read/write bytes and spill (disk) bytes per task.
+      from_id: runbook-spark-job-slow
+      from_field: diagnosis
+    - text: Confirm with `spark.sql.adaptive.skewJoin.enabled=true` — if it fixes it, ship that.
+      from_id: skill-spark-skew-diagnosis
+      from_field: body
+    - text: If not, salt the hot key on both sides and aggregate twice.
+      from_id: skill-spark-skew-diagnosis
+      from_field: body
+    - text: Broadcast only if the small side is < 100 MB *after* filtering; never `repartition(1)` to 'fix' skew — it serialises the stage.
+      from_id: skill-spark-skew-diagnosis
+      from_field: body
+  check_yourself:
+    - Re-running with `spark.sql.adaptive.skewJoin.enabled=true` removes the straggler; if it does not, the salted two-stage aggregate does.
+    - The task-duration histogram, the shuffle read/write bytes, and the top-10 keys by row count are attached — the review is not complete without them.
+  when_to_use:
+    - "A batch job's runtime jumped and no code changed"
+    - "Executors idle while a few tasks run long"
+  why: Slow jobs miss SLAs and burn executor-hours — attributing between skew, spill and over-scan is the difference between a 10-minute and a 10-hour incident.
+  gotchas:
+    - "repartition(1) serialises the stage — never reach for it to 'fix' slowness."
+    - "p99 much greater than p50 means skew; uniformly high p50 means capacity. Salting helps the first, not the second."
+    - "Spill shows up as slow tasks, not failures — check spill bytes before paying for bigger executors."
+  production_notes:
+    - "Baseline shuffle/spill/scan metrics so CI can fail a regression before users feel it."
+    - "Keep AQE on, and confirm broadcast vs sort-merge plans with explain('formatted') before shipping."
+  diagram: |
+    stage slow
+       |
+       |- p99 >> p50 --> key skew --> AQE skew join --> fixed? ship
+       |                                          > not fixed --> salt hot key, aggregate twice
+       |
+       |- spill bytes high --> oversized partitions --> more partitions / memory
+       |
+       |- all tasks slow (high p50) --> capacity, not skew --> do not salt
+  source_refs: [runbook-spark-job-slow, skill-spark-skew-diagnosis]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/spark-skew-diagnosis-walkthrough
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-spark] }
+- id: tutorial-spark-dq-review-pass
+  slug: spark-dq-review-pass
+  type: tutorial
+  title: Review a PySpark transform for silent quality failures
+  description: >-
+    Run the five-check pass over a PySpark transform before it merges: null
+    propagation, join fan-out, silent coercion, non-determinism, and missing
+    post-write assertions. Each finding lands as severity, file:line, rule and a
+    suggested patch.
+  category: cat-spark
+  difficulty: intermediate
+  tags: [tutorial, spark, pyspark, data-quality, code-review]
+  learning_objectives:
+    - Identify the five classes of silent failure in a Spark transform
+    - Add pre/post row-count and null assertions to a job
+    - Report findings as severity, file:line, rule, patch
+  what_you_need:
+    - A PySpark transform about to be merged
+    - The intended grain of the output table
+    - Install: npx de-agent-platform add spark-data-quality-review
+  steps:
+    - text: Run this when a PySpark transform is about to be merged, or when a downstream table's row count changed without a code change.
+      from_id: skill-spark-data-quality-review
+      from_field: body
+    - text: Null propagation — every outer join introduces nullable right-side keys; confirm downstream code coalesces or filters them.
+      from_id: skill-spark-data-quality-review
+      from_field: body
+    - text: Join fan-out — assert key uniqueness on the intended 1-side before joining.
+      from_id: skill-spark-data-quality-review
+      from_field: body
+    - text: Silent coercion — `cast` failures return null, not errors; prefer `try_cast` and count the nulls it produces.
+      from_id: skill-spark-data-quality-review
+      from_field: body
+    - text: Non-determinism — `dropDuplicates` without a sort key keeps an arbitrary row.
+      from_id: skill-spark-data-quality-review
+      from_field: body
+    - text: Missing assertions — every write should be followed by a row-count and a null-rate check on the primary key.
+      from_id: skill-spark-data-quality-review
+      from_field: body
+  check_yourself:
+    - Every write in the transform is followed by a row-count and a null-rate check on the primary key.
+    - "Findings come back as `severity | file:line | rule | suggested patch`."
+  when_to_use:
+    - "A PySpark transform is about to be merged"
+    - "A downstream table's row count changed without a code change"
+  why: Spark fails silently — nulls propagate, casts return null, and dropDuplicates keeps an arbitrary row, so the review pass is the defense before consumers see it.
+  gotchas:
+    - "`cast` failures return null, not errors — count the nulls try_cast produces."
+    - "`dropDuplicates` without a sort key keeps an arbitrary row."
+    - "Every outer join introduces nullable right-side keys — confirm downstream code coalesces or filters them."
+  production_notes:
+    - "Every write should be followed by a row-count and a null-rate check on the primary key."
+    - "Report findings as `severity | file:line | rule | suggested patch` so they are actionable in a PR."
+  diagram: |
+    transform review
+       |
+       |- null propagation --> outer joins --> coalesce or filter downstream
+       |
+       |- join fan-out --> assert 1-side key uniqueness
+       |
+       |- silent coercion --> try_cast + count nulls
+       |
+       |- non-determinism --> sort key before dropDuplicates
+       |
+       |- missing assertions --> row-count + null-rate after every write
+  source_refs: [skill-spark-data-quality-review]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/spark-dq-review-pass
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-spark] }
+- id: tutorial-spark-pyspark-template-start
+  slug: spark-pyspark-template-start
+  type: tutorial
+  title: Start a PySpark project from the template
+  description: >-
+    Scaffold a testable PySpark project with one command and learn where each
+    piece lives: transforms in src/, 3-10 row fixtures in tests/data/, and a
+    Makefile that runs lint plus tests offline. Finish by hardening the first
+    transform with row-count and null assertions.
+  category: cat-spark
+  difficulty: beginner
+  tags: [tutorial, spark, pyspark, template, testing]
+  learning_objectives:
+    - Scaffold a PySpark project with the template
+    - Arrange transforms and offline test fixtures
+    - Add pre/post row-count and null assertions to a job
+  what_you_need:
+    - An agent host with template support
+    - Docker for the containerised test run
+    - Install: amp template new de-agent/pyspark-project ./my-pipeline
+  steps:
+    - text: "Scaffold the project: `amp template new de-agent/pyspark-project ./my-pipeline`."
+      from_id: tpl-pyspark-project
+      from_field: installation
+    - text: Check the scaffold — src/transforms, tests with a local Spark session, a Dockerfile, and a Makefile that runs lint + tests offline.
+      from_id: tpl-pyspark-project
+      from_field: description
+    - text: Put transforms in src/transforms/ (orders_daily.py), readers in src/io/, and 3-10 row fixtures in tests/data/.
+      from_id: tpl-pyspark-project
+      from_field: repo_structure
+    - text: Run the Makefile's lint + tests offline — no cluster needed.
+      from_id: tpl-pyspark-project
+      from_field: description
+    - text: Add pre/post row-count and null assertions to the first job.
+      from_id: skill-spark-data-quality-review
+      from_field: learning_objectives
+  check_yourself:
+    - The Makefile runs lint + tests offline against the 3-10 row fixtures in tests/data/.
+    - The first transform ships with a row-count and a null-rate check on its primary key.
+  when_to_use:
+    - "Starting a new PySpark pipeline"
+    - "A Spark project that must test offline before touching a cluster"
+  why: Transforms that only run on a cluster are transforms nobody tests; the template makes the offline path the default.
+  gotchas:
+    - "tests/data/ is for 3-10 row fixtures — a fixture that needs a cluster defeats the offline Makefile."
+    - "Transforms live in src/transforms/ and I/O in src/io/ — mixing them breaks the layout the tests expect."
+    - "The Makefile runs lint + tests offline — a transform that only runs on a cluster has no offline test."
+  production_notes:
+    - "Keep tests with a local Spark session so CI needs no cluster."
+    - "Pair the template with the Spark data-quality review skill before merging transforms."
+  diagram: |
+    amp template new
+       |
+       |- scaffold --> src/transforms + src/io + tests/data (3-10 rows)
+       |
+       |- make lint + tests --> offline, local Spark session
+       |
+       |- first transform --> row-count + null assertions --> ready for review
+  source_refs: [tpl-pyspark-project, skill-spark-data-quality-review]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/spark-pyspark-template-start
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-spark] }
+- id: tutorial-spark-lens-event-log
+  slug: spark-lens-event-log
+  type: tutorial
+  title: Read a Spark event log with the Spark Lens plugin
+  description: >-
+    Install the Spark Lens plugin and work its three commands over a Spark event
+    log: /spark-analyze to build a task histogram and flag skew, /spark-explain-plan
+    to check the join strategy, and /spark-baseline to store the cost baseline the
+    guard enforces.
+  category: cat-spark
+  difficulty: intermediate
+  tags: [tutorial, spark, plugin, performance, cost]
+  learning_objectives:
+    - Turn a Spark event log into a task histogram
+    - Flag skew and shuffle amplification with /spark-analyze
+    - Store a cost baseline with /spark-baseline
+  what_you_need:
+    - A Spark event log or Spark UI metrics
+    - The job source
+    - Install: amp plugin add de-agent/spark-lens
+  steps:
+    - text: "Install the plugin: `amp plugin add de-agent/spark-lens`."
+      from_id: plugin-spark-lens
+      from_field: installation
+    - text: Point it at a Spark event log — it parses the log into a task histogram and flags skew and shuffle amplification.
+      from_id: plugin-spark-lens
+      from_field: description
+    - text: Run `/spark-analyze` on the event log.
+      from_id: plugin-spark-lens
+      from_field: commands
+    - text: Run `/spark-explain-plan` before shipping the change.
+      from_id: plugin-spark-lens
+      from_field: commands
+    - text: Run `/spark-baseline` to store the cost baseline.
+      from_id: plugin-spark-lens
+      from_field: commands
+    - text: Wire the guard — shuffle write grows 3.9x after a join change → build fails with the stage id.
+      from_id: hook-spark-cost-check
+      from_field: example
+  check_yourself:
+    - "`/spark-analyze` produces a task histogram from the event log and names skew or shuffle amplification when present."
+    - "A join change that grows shuffle write 3.9x fails the build with the stage id."
+  when_to_use:
+    - "Diagnosing a slow or expensive Spark job from its event log"
+    - "Storing a cost baseline before the next Spark change"
+  why: Event logs already contain the cost story — the plugin turns them into a histogram and a baseline the CI guard can enforce.
+  gotchas:
+    - "The cost guard needs prior runs to build its 5-run baseline — a cold start has nothing to compare against."
+    - "The plugin's permissions are filesystem read-only with no network — it analyzes logs you provide, it does not fetch metrics."
+    - "Event-log retention matters — rotated logs close the run-over-run comparison window."
+  production_notes:
+    - "Store a baseline per job and compare against the median of the last 5 runs."
+    - "The plugin ships the skew-diagnosis and cost-regression-guard skills — use them for the root-cause step."
+  diagram: |
+    event log
+       |
+       |- /spark-analyze --> task histogram --> skew / shuffle amplification flags
+       |
+       |- /spark-explain-plan --> broadcast vs sort-merge
+       |
+       |- /spark-baseline --> stored baseline --> CI guard fails > 25% growth
+  source_refs: [plugin-spark-lens, hook-spark-cost-check, runbook-spark-job-suddenly-costs-4x]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/spark-lens-event-log
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-spark] }

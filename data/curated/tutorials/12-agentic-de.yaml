@@ -1,0 +1,286 @@
+# Tutorials — beginner-friendly arrangements of artifact content.
+# Every step is verbatim from the cited source field. Structure (need, steps,
+# check) is ours; wording is the source's.
+- id: tutorial-agentic-mcp-contract-audit
+  slug: agentic-mcp-contract-audit
+  type: tutorial
+  title: Audit an MCP server's tool contracts
+  description: >-
+    Before connecting an MCP server, audit its tools for blast radius. Read each
+    tool schema, classify every tool as Read, Write, Destructive, Spend or
+    Exfiltrate, and produce a least-privilege connection config that grants only
+    what the task needs.
+  category: cat-agentic
+  difficulty: intermediate
+  tags: [tutorial, mcp, security, least-privilege, review]
+  learning_objectives:
+    - Read a tool schema and predict its side effects
+    - Classify tools by blast radius
+    - Write a least-privilege MCP configuration
+  what_you_need:
+    - The MCP server's tool list and schemas
+    - The task the agent must perform
+    - Install: npx de-agent-platform add mcp-tool-contract-auditor
+  steps:
+    - text: Read a tool schema and predict its side effects.
+      from_id: skill-mcp-tool-contract-auditor
+      from_field: learning_objectives
+    - text: Classify every tool — Read, Write, Destructive, Spend, Exfiltrate.
+      from_id: skill-mcp-tool-contract-auditor
+      from_field: body
+    - text: Treat Destructive tools (delete/drop/truncate) as requiring human confirmation.
+      from_id: skill-mcp-tool-contract-auditor
+      from_field: body
+    - text: Produce a table of tools by class, then a config that grants only the Read/Write tools the task needs.
+      from_id: skill-mcp-tool-contract-auditor
+      from_field: body
+    - text: Never connect an unvetted server with broad credentials.
+      from_id: skill-mcp-tool-contract-auditor
+      from_field: body
+  check_yourself:
+    - Every tool in the server's list lands in exactly one class — Read, Write, Destructive, Spend or Exfiltrate.
+    - The connection config grants only the Read/Write tools the task needs, and Destructive tools require human confirmation.
+  when_to_use:
+    - "Before connecting a new MCP server"
+    - "Writing the least-privilege config for an agent"
+  why: Listing a server is not trusting it — a tool schema that can write, delete, spend money or exfiltrate data defines the blast radius before the first call.
+  gotchas:
+    - "Read tools are safe, but still log the data they can reach."
+    - "Spend tools provision resources or run billable queries — classify them even when they read like lookups."
+    - "Never connect an unvetted server with broad credentials."
+  production_notes:
+    - "Keep the tools-by-class table with the config so reviewers can see the blast radius."
+    - "Produce the least-privilege connection recommendation as the deliverable, not just the classification table."
+  diagram: |
+    mcp server
+       |
+       |- list tools --> read each schema --> predict side effects
+       |
+       |- classify --> Read / Write / Destructive / Spend / Exfiltrate
+       |
+       |- deliverable --> tools-by-class table --> least-privilege config
+       |
+       |- unvetted + broad credentials --> never connect
+  source_refs: [skill-mcp-tool-contract-auditor]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/agentic-mcp-contract-audit
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-agentic] }
+- id: tutorial-agentic-agent-in-the-loop
+  slug: agentic-agent-in-the-loop
+  type: tutorial
+  title: Keep an agent read-only until a human approves
+  description: >-
+    Coding agents can do real data-engineering work, but can also ship a schema
+    change or drop a table. Walk the Agent-in-the-Loop Review pattern: separate
+    read/recommend from write/execute, put a human gate before anything
+    irreversible, and encode the policy as hooks.
+  category: cat-agentic
+  difficulty: beginner
+  tags: [tutorial, agentic, guardrails, review, security]
+  learning_objectives:
+    - Separate agent read/recommend from write/execute
+    - Encode the safety policy as hooks
+    - Keep a human gate on anything irreversible
+  what_you_need:
+    - An agent working against a real data repository
+    - Read-only credentials for the agent
+    - The destructive SQL guard and prod write confirmation hooks available
+  steps:
+    - text: Separate read/recommend from write/execute.
+      from_id: pattern-agent-in-the-loop-review
+      from_field: solution
+    - text: Constrain the agent with read-only credentials plus MCP servers limited to the needed tools.
+      from_id: pattern-agent-in-the-loop-review
+      from_field: solution
+    - text: Encode the safety policy as hooks (destructive SQL guard, prod write confirmation).
+      from_id: pattern-agent-in-the-loop-review
+      from_field: solution
+    - text: Keep a human in the loop for anything irreversible.
+      from_id: pattern-agent-in-the-loop-review
+      from_field: solution
+    - text: Test the policy — `DROP TABLE prod.orders` from an agent is denied and surfaced for confirmation.
+      from_id: hook-destructive-sql-guard
+      from_field: example
+  check_yourself:
+    - A write against a production target is suspended pending a human 'approve once' token scoped to the single call.
+    - A destructive statement is denied by default, and a DELETE/UPDATE without a WHERE clause is always denied.
+  when_to_use:
+    - "Any agent touching production data"
+    - "Regulated environments"
+  why: Trust must be earned per action — the pattern keeps agent velocity while bounding the blast radius to what a human approved.
+  gotchas:
+    - "Blast radius can be production — an agent with write credentials is one prompt away from a drop."
+    - "The human gate adds friction; it requires a real permission model, not a convention."
+    - "A DELETE/UPDATE without a WHERE clause is always denied — there is no flag for it."
+  production_notes:
+    - "Grant read-only credentials by default; write only through the scoped, logged execute path."
+    - "Encode the safety policy as hooks so it holds even when the agent is prompted otherwise."
+  diagram: |
+    agent
+       |
+       |- read tools --> analysis --> proposal
+       |
+       |- proposal --> human gate --> approved --> scoped write (logged)
+       |                  > rejected --> no write
+       |
+       |- hooks --> destructive SQL guard + prod write confirm --> policy enforced
+  source_refs: [pattern-agent-in-the-loop-review, hook-destructive-sql-guard, hook-prod-write-confirm]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/agentic-agent-in-the-loop
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-agentic] }
+- id: tutorial-agentic-core-mcp-wiring
+  slug: agentic-core-mcp-wiring
+  type: tutorial
+  title: Wire the core MCP servers for a data repo
+  description: >-
+    Wire the three reference MCP servers a data repo needs: filesystem for the
+    working directory, git for history and commits, and GitHub for issues and
+    pull requests. Each connection is scoped — one directory, one repository, one
+    fine-grained token.
+  category: cat-agentic
+  difficulty: beginner
+  tags: [tutorial, mcp, setup, filesystem, git, github]
+  learning_objectives:
+    - Configure the filesystem, git and GitHub MCP servers
+    - Scope each server to the minimum it needs
+    - Know what each server can and cannot do
+  what_you_need:
+    - A repository to work in
+    - Node/npx and uvx available
+    - A fine-grained GitHub token (read-only unless the task must open PRs)
+  steps:
+    - text: "Add the filesystem server: `npx -y @modelcontextprotocol/server-filesystem /path/to/allowed/dir`."
+      from_id: mcp-filesystem
+      from_field: installation
+    - text: Scope it to a single working directory; never pass a home directory or a mount containing secrets.
+      from_id: mcp-filesystem
+      from_field: security_notes
+    - text: "Add the git server: `uvx mcp-server-git --repository /path/to/repo`."
+      from_id: mcp-git
+      from_field: installation
+    - text: Note its limits — it can commit and create branches in the scoped repository, but cannot push unless credentials are also present in the environment.
+      from_id: mcp-git
+      from_field: security_notes
+    - text: "Add the GitHub server with a token: `docker run -i --rm -e GITHUB_PERSONAL_ACCESS_TOKEN ghcr.io/github/github-mcp-server`."
+      from_id: mcp-github
+      from_field: installation
+    - text: Use a fine-grained token limited to the target repositories and read-only unless the task must open PRs; never grant org-wide admin.
+      from_id: mcp-github
+      from_field: security_notes
+  check_yourself:
+    - The agent reads files in the allowed directory and commits on the scoped repository, but has no push path and no access outside the directory.
+    - The GitHub token is fine-grained, repository-scoped and read-only; its permission list shows no org-wide scopes.
+  when_to_use:
+    - "Setting up an agent for a data repository"
+    - "Giving an agent repo access without broad credentials"
+  why: Each server is scoped at connection time — one directory, one repository, one fine-grained token — so blast radius is a configuration choice, not an accident.
+  gotchas:
+    - "Never pass a home directory or a mount containing secrets to the filesystem server."
+    - "The git server cannot push unless credentials are also present in the environment."
+    - "Never grant org-wide admin on the GitHub token — scope it to the target repositories."
+  production_notes:
+    - "Keep the filesystem allowlist to the working directory the task needs."
+    - "Prefer fine-grained, read-only GitHub tokens; widen only when the task must open PRs."
+  diagram: |
+    agent config
+       |
+       |- mcp-filesystem --> one allowed dir --> read/write in scope only
+       |
+       |- mcp-git --> one repository --> status/diff/log/commit, no push
+       |
+       |- mcp-github --> fine-grained token --> read-only unless PRs required
+  source_refs: [mcp-filesystem, mcp-git, mcp-github]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/agentic-core-mcp-wiring
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-agentic] }
+- id: tutorial-agentic-de-data-toolkit-start
+  slug: agentic-de-data-toolkit-start
+  type: tutorial
+  title: Onboard an agent with the DE Data Toolkit
+  description: >-
+    Onboard an agent onto a data repo with the DE Data Toolkit plugin: the
+    SQL/Spark review skills, the destructive-SQL guard, a secret scanner, and the
+    file/git MCP servers already wired. Learn the three commands and which hooks
+    run underneath.
+  category: cat-agentic
+  difficulty: intermediate
+  tags: [tutorial, agentic, plugin, review, guardrails]
+  learning_objectives:
+    - Install the starter plugin for a data repo
+    - Use /review-sql and /review-spark on a change
+    - Verify guard status before writing
+  what_you_need:
+    - An agent host with plugin support
+    - A data repository to review
+    - Install: amp plugin add de-agent/de-data-toolkit
+  steps:
+    - text: "Install the plugin: `amp plugin add de-agent/de-data-toolkit`."
+      from_id: plugin-de-data-toolkit
+      from_field: installation
+    - text: Confirm what ships — SQL/Spark review skills, the destructive-SQL guard, a secret scanner and the file/git MCP servers.
+      from_id: plugin-de-data-toolkit
+      from_field: description
+    - text: Run `/review-sql` on a SQL change.
+      from_id: plugin-de-data-toolkit
+      from_field: commands
+    - text: Run `/review-spark` on a PySpark transform.
+      from_id: plugin-de-data-toolkit
+      from_field: commands
+    - text: Run `/guard-status` to check the wired guards.
+      from_id: plugin-de-data-toolkit
+      from_field: commands
+    - text: Note the hooks wired underneath — hook-destructive-sql-guard and hook-secret-scan-commit.
+      from_id: plugin-de-data-toolkit
+      from_field: hooks
+  check_yourself:
+    - "`DROP TABLE prod.orders` from the agent is denied and surfaced for confirmation."
+    - A staged diff containing a hardcoded `postgresql://user:pass@...` connection string is blocked at commit.
+  when_to_use:
+    - "Onboarding an agent onto a data engineering repo"
+    - "A starter setup that needs review skills plus guardrails from day one"
+  why: The starter plugin wires the review skills, the file/git servers and the safety hooks together, so an agent is useful and guarded on day one.
+  gotchas:
+    - "The plugin's permissions are filesystem read-write with network none — it reviews code; it does not query warehouses."
+    - "A DELETE/UPDATE without a WHERE clause is always denied by the destructive SQL guard."
+    - "Entropy-based secret detection warns; pattern matches block — a warning is not a pass."
+  production_notes:
+    - "Keep hook-secret-scan-commit active on every repo agents commit to."
+    - "The plugin uses skill-sql-review and skill-spark-data-quality-review — keep them in sync with the plugin."
+  diagram: |
+    agent + de-data-toolkit
+       |
+       |- /review-sql --> SQL findings
+       |
+       |- /review-spark --> transform findings
+       |
+       |- /guard-status --> guards active
+       |
+       |- hooks --> destructive SQL denied + secrets blocked at commit
+  source_refs: [plugin-de-data-toolkit, hook-destructive-sql-guard, hook-secret-scan-commit]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/agentic-de-data-toolkit-start
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-agentic] }

@@ -1,0 +1,301 @@
+# Tutorials — beginner-friendly arrangements of artifact content.
+# Every step is verbatim from the cited source field. Structure (need, steps,
+# check) is ours; wording is the source's.
+- id: tutorial-iceberg-maintenance-routine
+  slug: iceberg-maintenance-routine
+  type: tutorial
+  title: Run the Iceberg maintenance routine
+  description: >-
+    Work an Iceberg table through the maintenance skill's plan: read the files
+    metadata table to size the problem, rewrite data files to a 128-256 MB
+    target, rewrite manifests when the manifest list is huge, expire snapshots
+    without breaking time travel, and remove orphan files on a schedule with a
+    safety margin.
+  category: cat-lakehouse
+  difficulty: intermediate
+  tags: [tutorial, iceberg, compaction, snapshots, maintenance, lakehouse]
+  learning_objectives:
+    - Read an Iceberg metadata table to size the problem
+    - Pick a compaction strategy and rewrite interval
+    - Expire snapshots without breaking time travel
+  what_you_need:
+    - An Iceberg table with a growing file count
+    - Query access to the table's metadata tables
+    - Install: npx de-agent-platform add iceberg-table-maintenance
+  steps:
+    - text: "Size the problem from metadata: SELECT count(*) files, avg(file_size_in_bytes)/1e6 avg_mb FROM db.tbl.files; avg_mb < 32 and a growing count means compact."
+      from_id: skill-iceberg-maintenance
+      from_field: body
+    - text: Run rewrite_data_files with a target size (128-256 MB).
+      from_id: skill-iceberg-maintenance
+      from_field: body
+    - text: Run rewrite_manifests when the manifest list is huge.
+      from_id: skill-iceberg-maintenance
+      from_field: body
+    - text: Run expire_snapshots older than the retention window — but keep at least one full snapshot for time travel.
+      from_id: skill-iceberg-maintenance
+      from_field: body
+    - text: Run remove_orphan_files on a schedule, with a safety margin.
+      from_id: skill-iceberg-maintenance
+      from_field: body
+  check_yourself:
+    - After compaction, db.tbl.files reports an average file size inside the 128-256 MB target and a falling file count.
+    - expire_snapshots leaves at least one full snapshot, so time travel within the retention window still works.
+  when_to_use:
+    - "Average file size is under 32 MB and the file count keeps growing"
+    - "A scheduled cleanup plan is needed for snapshots, manifests, and orphan files"
+  why: Small files and manifest bloat tax every query and every planning step, and a fixed maintenance plan restores predictable latency without touching writers.
+  gotchas:
+    - "Do not run compaction during peak ingestion; it conflicts with concurrent writers."
+    - "expire_snapshots must keep at least one full snapshot or time travel breaks."
+    - "remove_orphan_files runs on a schedule with a safety margin — never ad hoc."
+  production_notes:
+    - "Target 128-256 MB files and alert on file-count growth."
+    - "Schedule the whole plan outside the ingestion window so compaction and writers never contend."
+  diagram: |
+    iceberg maintenance
+       |
+       |- SELECT ... FROM db.tbl.files --> avg_mb < 32 + growing count?
+       |
+       |- rewrite_data_files (target 128-256 MB)
+       |
+       |- rewrite_manifests (huge manifest list)
+       |
+       |- expire_snapshots --> keep one full snapshot for time travel
+       |
+       |- remove_orphan_files on a schedule --> safety margin
+  source_refs: [skill-iceberg-maintenance]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/iceberg-maintenance-routine
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-lakehouse] }
+- id: tutorial-delta-optimize-decision
+  slug: delta-optimize-decision
+  type: tutorial
+  title: Decide when a Delta table needs OPTIMIZE or Z-ORDER
+  description: >-
+    Apply the Delta Optimization Advisor's decision rules to one table: read
+    file stats for the OPTIMIZE trigger, pick Z-ORDER columns from actual query
+    predicates, weigh liquid clustering for high-cardinality write-heavy
+    tables, and prove the choice by comparing numFiles and bytes scanned before
+    and after.
+  category: cat-lakehouse
+  difficulty: beginner
+  tags: [tutorial, delta-lake, optimize, z-order, liquid-clustering]
+  learning_objectives:
+    - Decide if a table needs OPTIMIZE from file stats
+    - Choose Z-ORDER columns from query predicates
+    - Know when liquid clustering beats partitioning
+  what_you_need:
+    - A Delta table with file-stats and history access
+    - The query predicates your consumers actually filter on
+    - Install: npx de-agent-platform add delta-optimization-advisor
+  steps:
+    - text: "Decide: files < 32 MB and many -> run OPTIMIZE."
+      from_id: skill-delta-optimizer
+      from_field: body
+    - text: "Decide: queries filter on 1-2 high-cardinality columns -> ZORDER BY those columns."
+      from_id: skill-delta-optimizer
+      from_field: body
+    - text: "Decide: high-cardinality, many predicates, frequent writes -> liquid clustering."
+      from_id: skill-delta-optimizer
+      from_field: body
+    - text: "Decide: predicate on one low-cardinality column (date) -> partition, or leave it; Delta handles pruning well already."
+      from_id: skill-delta-optimizer
+      from_field: body
+    - text: Measure — compare numFiles and query bytes scanned before and after; if scanning did not drop, the Z-ORDER was on the wrong columns.
+      from_id: skill-delta-optimizer
+      from_field: body
+  check_yourself:
+    - A table with thousands of sub-32 MB files is OPTIMIZEd and numFiles drops while the next query reports fewer bytes scanned.
+    - A Z-ORDER on a column no query filters on is caught by the before/after measurement and reverted instead of shipped.
+  when_to_use:
+    - "A Delta table's reads slowed as micro-batch appends piled up"
+    - "A choice between OPTIMIZE, Z-ORDER, and liquid clustering must be justified with data"
+  why: OPTIMIZE and Z-ORDER both rewrite storage, so the decision rules and the before/after measurement keep you from paying for the wrong one.
+  gotchas:
+    - "If bytes scanned did not drop after Z-ORDER, the Z-ORDER was on the wrong columns — measure before and after."
+    - "A predicate on one low-cardinality column (date) rarely needs Z-ORDER — partition, or leave it; Delta handles pruning well already."
+    - "Liquid clustering is for high-cardinality, many-predicate, frequently written tables — not the default for every table."
+  production_notes:
+    - "Track numFiles and bytes scanned per query as the standing success metric for layout changes."
+    - "Re-run the decision rules when write patterns change; frequent writes with many predicates move the answer to liquid clustering."
+  diagram: |
+    delta optimize decision
+       |
+       |- files < 32 MB and many --> OPTIMIZE
+       |
+       |- 1-2 high-cardinality predicates --> ZORDER BY those columns
+       |
+       |- many predicates + frequent writes --> liquid clustering
+       |
+       |- low-cardinality date predicate --> partition or leave it
+       |
+       --> measure numFiles + bytes scanned before/after
+  source_refs: [skill-delta-optimizer]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/delta-optimize-decision
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-lakehouse] }
+- id: tutorial-small-files-diagnosis
+  slug: small-files-diagnosis
+  type: tutorial
+  title: Diagnose a small-files explosion
+  description: >-
+    Follow the small-files runbook from symptom to prevention: confirm the
+    tens-of-thousands-of-tiny-files signature, query the metadata tables for
+    the average file size, compact to a 128-256 MB target, coarsen an
+    over-partitioned layout, and schedule compaction outside the ingestion
+    window. The fix follows the small-files compaction pattern — separate the
+    write path from the layout path.
+  category: cat-lakehouse
+  difficulty: intermediate
+  tags: [tutorial, small-files, lakehouse, compaction, diagnosis]
+  learning_objectives:
+    - Recognize the small-files signature from file sizes and planning time
+    - Query metadata tables to quantify fragmentation
+    - Fix the layout, not just the symptoms
+  what_you_need:
+    - A table whose queries spend more time planning than scanning
+    - Metadata-table access (Iceberg files, Delta history)
+    - An ingestion window you can schedule compaction around
+  steps:
+    - text: "Confirm the symptoms: tens of thousands of tiny files, query planning and listing dominating query time, metadata operations (OPTIMIZE/REPAIR) very slow."
+      from_id: runbook-small-files-explosion
+      from_field: symptoms
+    - text: List file sizes; avg < 32 MB and a growing count is the signature.
+      from_id: runbook-small-files-explosion
+      from_field: diagnosis
+    - text: For Iceberg/Delta, query the metadata tables (`files`, `history`).
+      from_id: runbook-small-files-explosion
+      from_field: diagnosis
+    - text: Compact to a 128-256 MB target; rewrite manifests if huge.
+      from_id: runbook-small-files-explosion
+      from_field: fix
+    - text: Reduce partition granularity if the layout over-partitions.
+      from_id: runbook-small-files-explosion
+      from_field: fix
+    - text: Auto-compaction on the table (Delta) or a scheduled maintenance job; partition by date, not by hour/user, unless access patterns demand it.
+      from_id: runbook-small-files-explosion
+      from_field: prevention
+  check_yourself:
+    - The metadata query shows an average file size under 32 MB before the fix and inside the 128-256 MB target after compaction.
+    - Planning time no longer dominates — the same query's planning phase shrinks below scan time after compaction and layout coarsening.
+  when_to_use:
+    - "Planning or listing time dominates query time on one table"
+    - "Metadata operations (OPTIMIZE/REPAIR) have become very slow"
+  why: Fragmentation turns every read into a metadata crawl; compaction restores predictable latency without touching consumers.
+  gotchas:
+    - "Compact after the ingestion window, never during it."
+    - "ZORDER rewrites the whole table — only worth it on a real query predicate."
+    - "Over-partitioning is often the root cause; coarsening the layout beats compacting harder."
+  production_notes:
+    - "Enable Delta auto-compaction or schedule Iceberg rewrite_data_files."
+    - "Target 128-256 MB files and alert on file-count growth."
+  diagram: |
+    small files diagnosis
+       |
+       |- planning dominates query time --> list file sizes
+       |
+       |- avg < 32 MB + growing count --> metadata tables (files/history)
+       |
+       |- compact to 128-256 MB --> rewrite manifests if huge
+       |
+       |- over-partitioned? --> coarsen layout (date, not hour/user)
+       |
+       |- schedule compaction after ingestion window --> prevent regrowth
+  source_refs: [runbook-small-files-explosion, pattern-small-files-compaction]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/small-files-diagnosis
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-lakehouse] }
+- id: tutorial-lakehouse-guard-health
+  slug: lakehouse-guard-health
+  type: tutorial
+  title: Check lakehouse table health with Lakehouse Guard
+  description: >-
+    Use the Lakehouse Guard plugin's three commands on a Delta/Iceberg table:
+    /table-health for a status read, /plan-compaction for a maintenance plan,
+    and /expire-snapshots for a safe expiry plan. The guard exists to block
+    compaction or snapshot expiry during peak ingestion windows, so plans
+    cannot run in the wrong window.
+  category: cat-lakehouse
+  difficulty: intermediate
+  tags: [tutorial, lakehouse, plugin, delta, iceberg, maintenance]
+  learning_objectives:
+    - Read a table-health report before planning maintenance
+    - Generate a compaction plan instead of running compaction ad hoc
+    - Understand when the guard blocks maintenance actions
+  what_you_need:
+    - A Delta or Iceberg table due for maintenance
+    - Warehouse credentials with read access
+    - Install: amp plugin add de-agent/lakehouse-guard
+  steps:
+    - text: Run /table-health for a table-health read.
+      from_id: plugin-lakehouse-guard
+      from_field: commands
+    - text: Run /plan-compaction for the compaction plan.
+      from_id: plugin-lakehouse-guard
+      from_field: commands
+    - text: Run /expire-snapshots for the snapshot-expiry plan.
+      from_id: plugin-lakehouse-guard
+      from_field: commands
+    - text: Know what the plugin is — a Delta/Iceberg table maintenance advisor plus a guard that blocks compaction or snapshot expiry during peak ingestion windows.
+      from_id: plugin-lakehouse-guard
+      from_field: description
+    - text: Expect the two capabilities, table-maintenance and guardrails, on every interaction.
+      from_id: plugin-lakehouse-guard
+      from_field: capabilities
+  check_yourself:
+    - A /plan-compaction issued during the ingestion window is blocked by the guard instead of executing.
+    - The three commands run in order — health read, compaction plan, expiry plan — each producing a plan, not an execution.
+  when_to_use:
+    - "Compaction or snapshot expiry must never collide with peak ingestion"
+    - "Table maintenance should be planned first and executed deliberately"
+  why: Maintenance done ad hoc collides with writers and peak traffic, and the guard pairs an advisor with a hard block so the plan cannot run in the wrong window.
+  gotchas:
+    - "The guard blocks compaction or snapshot expiry during peak ingestion windows — plan around them."
+    - "Commands produce plans; executing them still needs your warehouse credentials and judgement."
+    - "Permissions are filesystem read with warehouse network and credentials — the plugin reads, it does not hold broad access."
+  production_notes:
+    - "Keep maintenance inside the plugin's guardrails rather than bypassing them during incidents."
+    - "Plan compaction against the ingestion calendar so peak windows are known before planning."
+  diagram: |
+    lakehouse guard
+       |
+       |- /table-health --> current health read
+       |
+       |- /plan-compaction --> maintenance plan
+       |
+       |- /expire-snapshots --> expiry plan
+       |
+       |- peak ingestion window? --> guard blocks execution
+  source_refs: [plugin-lakehouse-guard]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/lakehouse-guard-health
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-lakehouse] }

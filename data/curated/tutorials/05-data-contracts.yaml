@@ -1,0 +1,294 @@
+# Tutorials — beginner-friendly arrangements of artifact content.
+# Every step is verbatim from the cited source field. Structure (need, steps,
+# check) is ours; wording is the source's.
+- id: tutorial-author-first-data-contract
+  slug: author-first-data-contract
+  type: tutorial
+  title: Author your first data contract
+  description: >-
+    Draft an enforceable contract for one real dataset by walking the six parts
+    — owner, schema, semantics, SLA, breaking-change policy, enforcement —
+    starting from the data-contract template, and finish with the CI test that
+    makes it a contract instead of documentation.
+  category: cat-data-contracts
+  difficulty: beginner
+  tags: [tutorial, data-contract, governance, sla, beginner]
+  learning_objectives:
+    - Write all six parts of a contract for a real dataset
+    - Specify freshness and completeness numbers in the SLA
+    - Name the CI test that fails when the contract is violated
+  what_you_need:
+    - A producer dataset with at least one consumer
+    - Install: amp template new de-agent/data-contract-template ./contracts
+    - Install: npx de-agent-platform add data-contract-author
+  steps:
+    - text: Name an owner — a team, with an on-call.
+      from_id: skill-data-contract-author
+      from_field: body
+    - text: Define the schema, typed and versioned.
+      from_id: skill-data-contract-author
+      from_field: body
+    - text: "Write the semantics: what each field means, units, nullability."
+      from_id: skill-data-contract-author
+      from_field: body
+    - text: Set the SLA — freshness and completeness.
+      from_id: skill-data-contract-author
+      from_field: body
+    - text: Agree the breaking-change policy — notice period and a deprecation path.
+      from_id: skill-data-contract-author
+      from_field: body
+    - text: "Wire enforcement: name the CI test that fails on violation."
+      from_id: skill-data-contract-author
+      from_field: body
+  check_yourself:
+    - The contract names a team with an on-call as owner, not a distribution list.
+    - Renaming a promised field in a test branch fails the CI test named in part six.
+  when_to_use:
+    - "A producer and its consumers keep arguing about what a column means"
+    - "A dataset feeds multiple teams and needs a freshness or completeness SLA"
+  why: A contract with no enforcement is documentation, and documentation is not a contract — the sixth part is what makes the other five binding.
+  gotchas:
+    - "A contract with no enforcement is documentation. Documentation is not a contract."
+    - "The owner is a team with an on-call — a contract owned by nobody has no pager."
+    - "A rename + a new column with the old name looks compatible to a schema differ but breaks every consumer that read the old semantics — write the semantics section so the diff catches it."
+  production_notes:
+    - "Enforcement is part six — the contract must name the CI test that fails on violation."
+    - "Keep contract.yaml, schema.avsc, ci/check-compat.sh and DEPRECATION.md together; the template ships all four."
+  diagram: |
+    contract authoring
+       |
+       |- owner + schema --> semantics (units, nullability)
+       |
+       |- SLA (freshness, completeness) --> breaking-change policy
+       |
+       |- enforcement --> CI test fails on violation --> contract, not documentation
+  source_refs: [skill-data-contract-author, tpl-data-contract, skill-schema-change-contract-review]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/author-first-data-contract
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-data-contracts] }
+- id: tutorial-review-schema-change-against-contract
+  slug: review-schema-change-against-contract
+  type: tutorial
+  title: Review a schema change against its contract
+  description: >-
+    Run the Schema Reviewer's four-step pass over a producer's schema diff —
+    classify each field change, resolve consumers from lineage, emit a dated
+    migration plan — and use the schema-drift runbook to separate hard failures
+    from silent nulls before anything merges.
+  category: cat-data-contracts
+  difficulty: intermediate
+  tags: [tutorial, schema, contracts, review, migration]
+  learning_objectives:
+    - Classify each schema change as compatible, risky, or breaking
+    - Resolve the consumer impact set from lineage
+    - Emit a migration plan with dates for any breaking change
+  what_you_need:
+    - Before/after schema for the change
+    - A consumer list or lineage
+    - Install: npx de-agent-platform add schema-change-contract-review
+  steps:
+    - text: Diff the schemas field by field.
+      from_id: agent-schema-reviewer
+      from_field: workflow
+    - text: "Classify each change: compatible, risky, breaking."
+      from_id: agent-schema-reviewer
+      from_field: workflow
+    - text: Determine whether the failure is hard (job error) or silent (nulls).
+      from_id: runbook-schema-drift
+      from_field: diagnosis
+    - text: Resolve consumers from lineage.
+      from_id: agent-schema-reviewer
+      from_field: workflow
+    - text: Emit a migration plan with dates.
+      from_id: agent-schema-reviewer
+      from_field: workflow
+    - text: Rename/removal is breaking; coordinate with consumers.
+      from_id: runbook-schema-drift
+      from_field: fix
+  check_yourself:
+    - A diff narrowing decimal(18,2) to decimal(10,2) is classified risky and blocked as data-loss risky.
+    - On a labelled set of 20 schema changes, every classification matches its label.
+  when_to_use:
+    - "A producer PR touches a column a contract covers"
+    - "A column appeared, disappeared or changed type upstream without notice"
+  why: A schema change shipped unreviewed is a loaded gun in the pipeline — hard casts break loudly, silent nulls break worse.
+  gotchas:
+    - "Assume breaking when semantics are ambiguous."
+    - "Renames are removals in disguise; treat them as breaking."
+    - "A rename + a new column with the old name looks compatible to a schema differ — always diff semantics, not just names."
+  production_notes:
+    - "Never approve a breaking change without a dated plan."
+    - "Enforce a schema contract with a compatibility policy in CI."
+  diagram: |
+    schema change review
+       |
+       |- field-by-field diff --> classify compatible / risky / breaking
+       |
+       |- hard failure or silent nulls? --> silent nulls keep the job green
+       |
+       |- consumers from lineage --> migration plan with dates --> approve or block
+  source_refs: [agent-schema-reviewer, runbook-schema-drift, skill-schema-change-contract-review]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/review-schema-change-against-contract
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-data-contracts] }
+- id: tutorial-gate-contracts-in-ci
+  slug: gate-contracts-in-ci
+  type: tutorial
+  title: Enforce contracts in CI with the schema change check
+  description: >-
+    Install the Schema Change Check as a pre-commit gate over staged schema
+    files so a breaking change exits non-zero unless a migration plan or
+    deprecation annotation rides along with it — the producer-CI placement that
+    catches breakage before merge.
+  category: cat-data-contracts
+  difficulty: beginner
+  tags: [tutorial, contracts, ci, hook, guardrail, beginner]
+  learning_objectives:
+    - Configure a pre-commit check over staged schema files
+    - State what lets a breaking change pass — MIGRATION.md or a deprecated_at annotation
+    - Explain why the gate belongs in the producer's CI, not the consumer's runtime
+  what_you_need:
+    - A repo carrying schema files (*.avsc, *.sql DDL, dbt schema.yml)
+    - A pre-commit hook setup in the producer repo
+    - The consumer list for the covered datasets
+  steps:
+    - text: "Run the check on staged schema files: *.avsc, *.sql DDL, dbt schema.yml."
+      from_id: hook-schema-change-check
+      from_field: implementation
+    - text: Diff the staged files against HEAD and classify the change.
+      from_id: hook-schema-change-check
+      from_field: implementation
+    - text: Exit non-zero on a breaking change — failure_behavior is block.
+      from_id: hook-schema-change-check
+      from_field: failure_behavior
+    - text: Allow the commit only when a MIGRATION.md or a `deprecated_at` annotation is present.
+      from_id: hook-schema-change-check
+      from_field: implementation
+    - text: Keep the gate in the producer's CI, where the change is made — the cheapest place to catch it is before merge.
+      from_id: pattern-contracts-quality-gate
+      from_field: solution
+    - text: "Verify with the documented case: a commit narrowing `amount` from decimal(18,2) to decimal(10,2) is blocked with an explanation and a suggested migration."
+      from_id: hook-schema-change-check
+      from_field: example
+  check_yourself:
+    - A commit narrowing `amount` from decimal(18,2) to decimal(10,2) is blocked with an explanation and a suggested migration.
+    - The same commit passes once MIGRATION.md or a `deprecated_at` annotation is present.
+  when_to_use:
+    - "Shared assets across teams"
+    - "Regulated or SLA-bearing data"
+  why: A pre-commit gate blocks breaking schema changes at the producer, where catching them is cheapest.
+  gotchas:
+    - "The check only sees staged schema files (*.avsc, *.sql DDL, dbt schema.yml) — schema changes elsewhere never reach it."
+    - "Producers carry process overhead; the gate needs buy-in, or it gets bypassed."
+    - "A rename + a new column with the old name looks compatible to a schema differ — always diff semantics, not just names."
+  production_notes:
+    - "Wire it as a pre-commit trigger so classification happens before the change leaves the branch."
+    - "Additive changes pass; breaking changes require a dated deprecation plan."
+  diagram: |
+    producer commit
+       |
+       |- staged schema files --> diff vs HEAD --> classify
+       |
+       |- compatible --> pass
+       |
+       |- breaking --> MIGRATION.md or deprecated_at? --> yes --> pass
+                                                     --> no --> block (exit non-zero)
+  source_refs: [hook-schema-change-check, pattern-contracts-quality-gate, skill-schema-change-contract-review]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/gate-contracts-in-ci
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-data-contracts] }
+- id: tutorial-respond-broken-contract
+  slug: respond-broken-contract
+  type: tutorial
+  title: Respond when a data contract breaks
+  description: >-
+    Work the broken-contract runbook end to end: identify which clause broke,
+    bound the consumer impact set from lineage before anything else, decide
+    whether the producer reverts or the consumer adapts, and close with
+    consumer-driven contract tests in the producer's pipeline.
+  category: cat-data-contracts
+  difficulty: intermediate
+  tags: [tutorial, contracts, incident, lineage, sla]
+  learning_objectives:
+    - Classify a breach by clause — schema, semantics, or SLA
+    - Bound the consumer impact set from lineage before assigning the fix
+    - Choose between a producer revert and a consumer adaptation
+  what_you_need:
+    - The failing consumer's error and the producer's recent deploys
+    - Lineage for the broken asset
+    - The contract document with its SLA and breaking-change policy
+  steps:
+    - text: Identify which contract clause broke — schema, semantics, or SLA.
+      from_id: runbook-data-contract-broken
+      from_field: diagnosis
+    - text: Establish the impact set from lineage before anything else.
+      from_id: runbook-data-contract-broken
+      from_field: diagnosis
+    - text: Determine if the fix is on the producer (revert) or consumer (adapt).
+      from_id: runbook-data-contract-broken
+      from_field: diagnosis
+    - text: "Schema breach → producer reverts or adds a compatibility shim."
+      from_id: runbook-data-contract-broken
+      from_field: fix
+    - text: "SLA breach → negotiate a temporary relaxation and a root-cause fix."
+      from_id: runbook-data-contract-broken
+      from_field: fix
+    - text: Add consumer-driven contract tests in the producer's pipeline.
+      from_id: runbook-data-contract-broken
+      from_field: prevention
+  check_yourself:
+    - The impact-set query returns every downstream consumer of the broken asset before anyone assigns the fix.
+    - A consumer that broke right after a producer deploy traces to a rename that changed semantics, and is treated as a breach.
+  when_to_use:
+    - "A consumer broke right after a producer deploy"
+    - "A promised column or semantic changed, or an SLA was breached"
+  why: A broken contract is a negotiation as much as a bug — bound the blast radius from lineage before deciding who reverts and who adapts.
+  gotchas:
+    - "A rename that changed semantics is still a breach, even when it looks safe."
+    - "SLA misses can come from unrelated outages — root-cause before pointing at the producer."
+    - "Whatever the fix, the consumer impact set comes first, from lineage."
+  production_notes:
+    - "Contracts get CI enforcement and a dated deprecation path."
+    - "Run consumer-driven contract tests in the producer's pipeline."
+  diagram: |
+    contract broken
+       |
+       |- which clause broke? --> schema / semantics / SLA
+       |
+       |- impact set from lineage --> consumers listed first
+       |
+       |- schema breach --> producer reverts or adds a compatibility shim
+       |
+       |- SLA breach --> temporary relaxation --> root-cause fix
+  source_refs: [runbook-data-contract-broken]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/respond-broken-contract
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-data-contracts] }

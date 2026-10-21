@@ -1,0 +1,298 @@
+# Tutorials — dbt: writing a model's test set from scratch, reviewing a model
+# PR, driving the dbt Workbench plugin commands, and running the
+# dbt-warehouse-tests starter project end to end.
+# Every step is verbatim (or lightly compressed) from the cited source field.
+# Structure (need, steps, check) is ours; wording is the source's.
+- id: tutorial-dbt-test-writer
+  slug: minimum-dbt-test-set
+  type: tutorial
+  title: Write the minimum dbt test set for a model
+  description: >-
+    Start from the model's grain, then rank dbt tests by the cost of the
+    failure they prevent: uniqueness and not-null on the grain key,
+    relationships on foreign keys, accepted values on enums, and freshness on
+    sources. You add one custom singular test, wire freshness on a source, and
+    finish by running the set in data-aware CI against a staging schema.
+  category: cat-dbt
+  difficulty: beginner
+  tags: [tutorial, dbt, testing, data-quality, beginner]
+  learning_objectives:
+    - Rank dbt tests by blast radius instead of by effort
+    - Add a singular test for a rule schema.yml cannot express
+    - Wire freshness on a source and read its result
+  what_you_need:
+    - A dbt project with at least one model
+    - models/schema.yml for generic tests
+    - Install: npx de-agent-platform add dbt-test-writer
+  steps:
+    - text: State a model's grain and match it to its unique key test.
+      from_id: skill-dbt-model-review
+      from_field: learning_objectives
+    - text: Rank tests by the cost of the failure they prevent.
+      from_id: skill-dbt-test-writer
+      from_field: learning_objectives
+    - text: Write a custom singular test.
+      from_id: skill-dbt-test-writer
+      from_field: learning_objectives
+    - text: Wire freshness on a source.
+      from_id: skill-dbt-test-writer
+      from_field: learning_objectives
+    - text: Run data-aware CI against a staging schema.
+      from_id: project-dbt-warehouse-tests
+      from_field: learning_objectives
+  check_yourself:
+    - schema.yml has unique + not_null on the declared grain key, and dbt test passes on the dev target.
+    - The source block carries freshness thresholds, and dbt source freshness runs green.
+  when_to_use:
+    - "A model's test set does not protect its grain key"
+    - "A source has no freshness check while the extractor can stall silently"
+  why: Uniqueness and freshness failures are the silent outages, and a test set ranked by blast radius catches them before consumers do.
+  gotchas:
+    - "Row-count equality tests on raw sources: they flake."
+    - "Testing a column nobody reads."
+    - "`warn` severity on a correctness test nobody will see."
+  production_notes:
+    - "Freshness on sources catches a stalled extractor, the #1 silent outage — run it on a schedule."
+    - "Keep warn severity off correctness tests nobody will see."
+  diagram: |
+    dbt test set
+       |
+       |- state grain --> unique + not_null on grain key
+       |
+       |- rank by blast radius --> relationships --> accepted_values --> freshness
+       |
+       |- singular test --> run in data-aware CI on staging schema
+  source_refs: [skill-dbt-test-writer, skill-dbt-model-review, project-dbt-warehouse-tests]
+  agent_skills: [skill-dbt-test-writer]
+  agents: [agent-data-quality-reviewer]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/minimum-dbt-test-set
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-dbt] }
+- id: tutorial-dbt-model-review
+  slug: review-dbt-model-pr
+  type: tutorial
+  title: Review a dbt model PR before merge
+  description: >-
+    Take a pull request that adds or changes a dbt model and walk the
+    reviewer's pass: read the diff in context, state the model's grain and
+    check it against the unique key test, choose table vs incremental vs view
+    deliberately, and handle late-arriving data in the incremental filter. You
+    finish with findings a reviewer can verify before the model merges.
+  category: cat-dbt
+  difficulty: intermediate
+  tags: [tutorial, dbt, review, incremental, grain, intermediate]
+  learning_objectives:
+    - State a model's grain in one sentence and match it to the unique test
+    - Justify table vs incremental vs view for a given source
+    - Add a lookback window so late-arriving rows are not dropped
+  what_you_need:
+    - A pull request that adds or changes a dbt model
+    - The model's schema.yml with its declared grain
+    - Install: npx de-agent-platform add dbt-model-review
+  steps:
+    - text: Read the diff and the file context.
+      from_id: agent-sql-reviewer
+      from_field: workflow
+    - text: Establish the grain of every result set.
+      from_id: agent-sql-reviewer
+      from_field: workflow
+    - text: State a model's grain and match it to its unique key test.
+      from_id: skill-dbt-model-review
+      from_field: learning_objectives
+    - text: Choose table vs incremental vs view deliberately.
+      from_id: skill-dbt-model-review
+      from_field: learning_objectives
+    - text: Handle late data in an incremental model.
+      from_id: skill-dbt-model-review
+      from_field: learning_objectives
+  check_yourself:
+    - The review states the model's grain in one sentence and the unique test sits on that key.
+    - "An incremental model carries a lookback window such as >= max(updated_at) - interval '3 days'."
+  when_to_use:
+    - "A PR changes a dbt model's materialisation or incremental filter"
+    - "A model's unique test does not sit on its declared grain key"
+  why: Grain, materialisation, and late data decide whether a model lies, and this pass checks all three before merge.
+  gotchas:
+    - "Late-arriving rows older than the watermark are silently dropped — add a lookback window."
+    - "is_incremental() must guard the filter or every full run is a full reload."
+    - "Deletes never arrive — decide explicitly: soft-delete, or periodic full-refresh."
+  production_notes:
+    - "Add a lookback window (e.g. >= max(updated_at) - interval '3 days') to every incremental filter."
+    - "Decide soft-delete vs periodic full-refresh explicitly; deletes never arrive on their own."
+  diagram: |
+    dbt model review
+       |
+       |- read diff + context --> establish grain per result set
+       |
+       |- grain statement --> unique test on that key
+       |
+       |- materialisation picker --> view / table / incremental
+       |
+       |- incremental --> lookback window --> guard is_incremental()
+  source_refs: [skill-dbt-model-review, agent-sql-reviewer]
+  agent_skills: [skill-dbt-model-review, skill-sql-review]
+  agents: [agent-sql-reviewer]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/review-dbt-model-pr
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-dbt] }
+- id: tutorial-dbt-workbench
+  slug: dbt-workbench-commands
+  type: tutorial
+  title: Run dbt model review and tests from the workbench plugin
+  description: >-
+    Install the dbt Workbench plugin and drive one model change through its
+    three commands: /dbt-review-model for the model review, /dbt-write-tests
+    for a proposed test set, and /dbt-impact before you merge. Along the way
+    you apply the same grain and blast-radius checks the plugin's underlying
+    skills use, with the full-refresh guard watching destructive rebuilds.
+  category: cat-dbt
+  difficulty: intermediate
+  tags: [tutorial, dbt, plugin, review, testing, intermediate]
+  learning_objectives:
+    - Run /dbt-review-model, /dbt-write-tests, and /dbt-impact on a model change
+    - Read the review output against the model's grain and unique key
+    - Rank the generated tests by blast radius before accepting them
+  what_you_need:
+    - A dbt project with a dev target in profiles.yml
+    - Install: amp plugin add de-agent/dbt-workbench
+    - A pull request or branch that changes a model
+  steps:
+    - text: Run /dbt-review-model.
+      from_id: plugin-dbt-workbench
+      from_field: commands
+    - text: State a model's grain and match it to its unique key test.
+      from_id: skill-dbt-model-review
+      from_field: learning_objectives
+    - text: Run /dbt-write-tests.
+      from_id: plugin-dbt-workbench
+      from_field: commands
+    - text: Rank tests by the cost of the failure they prevent.
+      from_id: skill-dbt-test-writer
+      from_field: learning_objectives
+    - text: Run /dbt-impact.
+      from_id: plugin-dbt-workbench
+      from_field: commands
+  check_yourself:
+    - /dbt-review-model returns findings that reference the model's grain and materialisation.
+    - /dbt-write-tests proposes tests ordered by blast radius, and /dbt-impact lists the downstream nodes.
+  when_to_use:
+    - "Review and test generation for a dbt model should live in the agent, not memory"
+    - "A model change needs a downstream impact check before merge"
+  why: The workbench turns review, test generation, and impact checks into three commands instead of habits you have to remember.
+  gotchas:
+    - "The plugin holds warehouse credentials through the dbt profile — scope it to a dev target."
+    - "Late-arriving rows older than the watermark are silently dropped; keep the lookback window."
+    - "is_incremental() must guard the filter or every full run is a full reload."
+  production_notes:
+    - "The full-refresh guard hook blocks destructive rebuilds — leave it enabled."
+    - "The plugin runs with filesystem read-write and warehouse network access; review its permissions before installing."
+  diagram: |
+    dbt workbench
+       |
+       |- /dbt-review-model --> grain + materialisation findings
+       |
+       |- /dbt-write-tests --> tests ranked by blast radius
+       |
+       |- /dbt-impact --> downstream nodes --> merge with guard hook on
+  source_refs: [plugin-dbt-workbench, skill-dbt-model-review, skill-dbt-test-writer]
+  agent_skills: [skill-dbt-model-review, skill-dbt-test-writer]
+  agents: []
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/dbt-workbench-commands
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-dbt] }
+- id: tutorial-dbt-warehouse-tests
+  slug: dbt-warehouse-tests-starter
+  type: tutorial
+  title: Run the dbt warehouse tests starter end to end
+  description: >-
+    Clone the dbt-warehouse-tests starter, seed its deterministic customers
+    and orders data, and build the staging → intermediate → marts pipeline
+    with dbt build --target dev. You serve the docs, add the tests that
+    protect the fct grain, and finish against the failure scenarios the
+    project warns about.
+  category: cat-dbt
+  difficulty: beginner
+  tags: [tutorial, dbt, starter, testing, ci, beginner]
+  learning_objectives:
+    - Layer staging, intermediate, and marts models
+    - Run the seed/build/docs loop the starter ships with
+    - Enforce unique + not_null on the fact grain key
+  what_you_need:
+    - The dbt-warehouse-tests starter repo
+    - A Postgres or DuckDB dev target
+    - dbt installed (dbt deps, dbt seed)
+  steps:
+    - text: "dbt deps && dbt seed"
+      from_id: project-dbt-warehouse-tests
+      from_field: setup
+    - text: "dbt build --target dev"
+      from_id: project-dbt-warehouse-tests
+      from_field: setup
+    - text: "dbt docs generate && dbt docs serve"
+      from_id: project-dbt-warehouse-tests
+      from_field: setup
+    - text: Write tests that protect the grain.
+      from_id: project-dbt-warehouse-tests
+      from_field: learning_objectives
+    - text: "unique + not_null on the fct grain key"
+      from_id: project-dbt-warehouse-tests
+      from_field: tests
+    - text: "relationships from fct to dims"
+      from_id: project-dbt-warehouse-tests
+      from_field: tests
+  check_yourself:
+    - dbt build --target dev finishes with every test passing and docs render for the full DAG.
+    - The fct_orders grain key carries unique + not_null, and relationships link fct to dims.
+  when_to_use:
+    - "Standing up a tested, documented star schema from raw landed data"
+    - "A template for gating dbt changes on data-aware CI"
+  why: The starter only protects you if you actually run its seed, build, tests, and CI gate against a real target.
+  gotchas:
+    - "Late-arriving order missed → lookback window too short."
+    - "Grain key not unique → a join fanned out upstream."
+    - "CI green but prod differs → CI ran on a different target/schema."
+  production_notes:
+    - "CI builds to a per-PR staging schema and runs full tests."
+    - "Declare source freshness checks on raw and exposures for dashboards."
+  diagram: |
+    starter run
+       |
+       |- dbt deps && dbt seed --> dbt build --target dev
+       |
+       |- staging --> intermediate --> fct_orders --> marts
+       |
+       |- unique + not_null on grain --> relationships to dims --> docs + CI
+  source_refs: [project-dbt-warehouse-tests, skill-dbt-test-writer]
+  agent_skills: [skill-dbt-model-review, skill-dbt-test-writer, skill-sql-review]
+  agents: []
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/dbt-warehouse-tests-starter
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-dbt] }

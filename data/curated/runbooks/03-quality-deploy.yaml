@@ -36,6 +36,16 @@
     - "A column appeared, disappeared or changed type upstream without notice"
     - "A pipeline fails on a cast or silently nulls a column"
   why: An uncontracted schema change is a loaded gun in the pipeline — hard casts break loudly, silent nulls break worse.
+  impact: Hard failures block pipelines; silent nulls poison columns while every check stays green — the second kind is the expensive one.
+  escalation: Contact the producer team immediately with the schema diff; escalate if they cannot revert before the next consumer run.
+  evidence_to_collect:
+    - "The schema diff: additive, type change, rename, or removal"
+    - "The failing job's error, or the null-rate delta on affected columns"
+    - "The contract version the producer was expected to honor"
+  rollback: Producer reverts or ships a compatibility shim; consumers may quarantine the affected columns in the interim.
+  follow_up:
+    - "Register the evolved contract; alert on any delta, even additive"
+    - "Postmortem: how the change bypassed the contract process"
   gotchas:
     - "Silent nulls are the dangerous case — the job stays green while the column dies."
     - "Renames are removals in disguise; treat them as breaking."
@@ -101,6 +111,16 @@
     - "A consumer broke right after a producer deploy"
     - "A promised column or semantic changed, or an SLA was breached"
   why: A broken contract is a negotiation as much as a bug — bound the blast radius from lineage before deciding who reverts and who adapts.
+  impact: A consumer is down or wrong in production; trust in the contract process itself takes the bigger hit.
+  escalation: Put the producer and consumer owners on the same call — revert-vs-adapt is a joint decision; escalate to the data platform lead if no agreement within the hour.
+  evidence_to_collect:
+    - "The broken clause (schema, semantics, or SLA) and its version history"
+    - "The lineage-derived impact set for the affected asset"
+    - "The producer deploy that coincides with the break"
+  rollback: Producer reverts or adds a shim; SLA breaches get a dated temporary relaxation, never an indefinite one.
+  follow_up:
+    - "Add the consumer-driven contract test to the producer's pipeline"
+    - "Record the negotiated semantics as a new contract version"
   gotchas:
     - "A 'safe' rename that changed semantics is still a breach."
     - "SLA misses can come from unrelated outages — root-cause before pointing at the producer."
@@ -167,6 +187,16 @@
     - "A quality expectation failed in production"
     - "A freshness or volume check alarmed, or consumers report wrong numbers"
   why: The decision on every failure is the same — block, quarantine or warn; getting it wrong ships bad data to consumers or pages people at 3am for nothing.
+  impact: Bad rows may already be reaching consumers; every undetected minute widens the correction surface.
+  escalation: Page the on-call for critical-tier failures; notify consumers if bad data shipped; notify the producer if upstream.
+  evidence_to_collect:
+    - "The failing expectation: which column, which rule, which values"
+    - "Row counts affected, plus sample rows"
+    - "The distribution shift vs the last good run"
+  rollback: Quarantine the failing rows and re-publish the clean set; halt promotion if a deploy is mid-flight.
+  follow_up:
+    - "Re-tier the expectation (critical vs warning) with evidence"
+    - "Root-cause upstream with the producer"
   gotchas:
     - "Loosening a threshold to silence an alarm is only right with evidence it was a false positive."
     - "Bad data that already reached consumers needs disclosure, not just a fix."
@@ -233,6 +263,16 @@
     - "A task or DAG run failed and downstream work is blocked"
     - "An alert fired and someone must decide retry vs fix now"
   why: The first minute of a pipeline incident decides its length — classify transient, deterministic or data before touching anything, or you re-run the wrong branch all morning.
+  impact: Downstream tasks sit skipped/upstream_failed; the SLA miss cascades until the failure is classified and recovered.
+  escalation: Follow the alert's failure class; page the on-call only for deterministic or data errors on critical paths — transient errors belong to retry policy.
+  evidence_to_collect:
+    - "The FIRST real error in the task log (not the last)"
+    - "The task's idempotency status before any clear-and-retry"
+    - "Upstream data state for data-class failures"
+  rollback: Roll back the code deploy if the class is deterministic and new; data errors get quarantine-then-retry, not rollback.
+  follow_up:
+    - "Make the failed task idempotent if it wasn't"
+    - "Put the failure class into the alert text"
   gotchas:
     - "Read the first real error in the log, not the last."
     - "Retrying a data error re-runs the same failure; fix or quarantine the input first."
@@ -299,6 +339,16 @@
     - "A past date range is wrong or missing"
     - "A logic fix or new column must be applied historically"
   why: A backfill is production work with a bigger blast radius than the original pipeline — shadow-write, sample-validate, then swap.
+  impact: "The incident is contention risk: an unmanaged backfill can starve daily production runs and double-write history."
+  escalation: Schedule with the platform owner; escalate if the backfill window collides with a golden-hour production run.
+  evidence_to_collect:
+    - "The written definition of correctness and its validation query"
+    - "The lineage-derived downstream impact set"
+    - "The agreed idle window and resource budget"
+  rollback: Shadow-then-swap makes rollback trivial — delete the shadow, never the production table; swap only after sample validation passes.
+  follow_up:
+    - "Batch the dates; validate a sample after each batch"
+    - "Document the runbook so the next backfill is routine"
   gotchas:
     - "Never run a backfill concurrently with the daily production run."
     - "One huge date range starves the cluster; batch it and validate a sample per batch."
@@ -362,6 +412,16 @@
     - "Errors or data changes began right after a deploy"
     - "A quality check degraded right after promotion"
   why: Roll back first, diagnose at leisure — every extra hour of a bad model in production is wrong data shipped to consumers.
+  impact: Errors or wrong data from the moment of promotion; the blast radius grows with every scheduled run that picks up the bad artifact.
+  escalation: Page the on-call and the deploying team; declare an incident when quality gates degrade post-promotion.
+  evidence_to_collect:
+    - "The deploy timestamp vs the first failing signal"
+    - "git log / dbt state:modified+ diff identifying the changed artifact"
+    - "Confirmation the previous version is a valid rollback target"
+  rollback: Roll back the artifact FIRST, diagnose after; if bad data was written, also re-run the affected period from the rolled-back code.
+  follow_up:
+    - "Move tests to a staged build in CI, not production"
+    - "Add deploy markers and post-deploy quality gates to the dashboard"
   gotchas:
     - "Roll back before you root-cause; a known-good target is worth more than the diagnosis."
     - "Config changes count: timezone or cluster settings produce invisible regressions."

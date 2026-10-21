@@ -46,6 +46,17 @@
     - Stage tasks are wildly imbalanced in the Spark UI
     - Executors idle while a few tasks run long
   why: Slow jobs miss SLAs and burn executor-hours — attributing between skew, spill and over-scan is the difference between a 10-minute and a 10-hour incident.
+  impact: Batch SLAs slip; downstream models and dashboards land late while executor-hours burn at full utilization.
+  escalation: Page the on-call data engineer if the job sits on a golden-hour SLA; otherwise file it and let the owning team run diagnosis in hours.
+  evidence_to_collect:
+    - "Spark UI stage summary: p50/p99 task durations for the slow stages"
+    - "Shuffle read/write and spill bytes per task"
+    - "Input bytes scanned vs the expected partition size"
+    - "The job's event log for the affected run"
+  rollback: No code rollback — the job is unchanged. Revert only if a config change (AQE flags, executor sizing) preceded the regression.
+  follow_up:
+    - "Record the skew/spill/scan signature in the run's cost-per-run history"
+    - "Add the partition-filter lint or CI metric guard that would have caught it"
   gotchas:
     - "repartition(1) serialises the stage — never reach for it to 'fix' slowness."
     - "p99 much greater than p50 means skew; uniformly high p50 means capacity. Salting helps the first, not the second."
@@ -117,6 +128,17 @@
     - "Compute spend for one job multiplied without a functional change"
     - "A cost-per-run alarm fired right after a deploy"
   why: Silent cost regressions compound — a 4x job running hourly is a new invoice line within a day; run-over-run byte diffs find the guilty stage fast.
+  impact: Direct compute spend 4x per run; at hourly cadence that is a new invoice line every day until reverted.
+  escalation: Notify the cost owner and the job's owning team the same day; involve finance only if the regression survives into a billing cycle.
+  evidence_to_collect:
+    - "Run-over-run diff of shuffle write bytes and input bytes"
+    - "Output row counts per stage before/after the suspect change"
+    - "The deploy diff or config change that landed between the two runs"
+    - "Autoscaling logs showing any widened limits"
+  rollback: Revert the suspect deploy first (join change, dropped filter, partitioning change) — the cost regression is the incident; diagnosis continues on the reverted baseline.
+  follow_up:
+    - "Wire the 25% cost-per-run regression alarm if it was missing"
+    - "Gate the next deploy on shuffle/scan metrics (hook-spark-cost-check)"
   gotchas:
     - "Autoscaling masks the cause: a slow stage widens the cluster and buys speed while the fan-out stays."
     - "Compare run-over-run, not day-over-day — traffic deltas will fool the diff."
@@ -183,6 +205,16 @@
     - "Planning or listing time dominates query time on one table"
     - "Metadata operations (OPTIMIZE/REPAIR) have become very slow"
   why: Fragmentation turns every read into a metadata crawl; compaction restores predictable latency without touching consumers.
+  impact: Every query on the table pays a growing planning tax; metadata operations stretch into hours and block maintenance windows.
+  escalation: No page — schedule compaction; escalate only if planning time threatens a critical dashboard's freshness SLA.
+  evidence_to_collect:
+    - "File count and average file size from the table's metadata (files/history)"
+    - "Query plans splitting time spent in planning/listing vs scan"
+    - "The write jobs feeding the table (stream cadence, micro-batch size)"
+  rollback: Not applicable — compaction is additive. Halt any concurrent OPTIMIZE that contends with the ingestion window.
+  follow_up:
+    - "Enable auto-compaction or schedule the maintenance job after ingestion"
+    - "Reassess partition granularity (date vs hour/user)"
   gotchas:
     - "Compact after the ingestion window, never during it."
     - "ZORDER rewrites the whole table — only worth it on a real query predicate."
@@ -246,6 +278,16 @@
     - "A query that used to take seconds now takes minutes"
     - "Queue times are rising on a shared warehouse"
   why: A regressed dashboard erodes trust quietly, and a scan-bound query melts everyone else's queue too.
+  impact: Dashboards and models on the shared warehouse run late; queue growth degrades every other team's queries too.
+  escalation: Escalate to the warehouse admin when queue time breaches the shared-warehouse SLA; otherwise the query owner fixes the predicate.
+  evidence_to_collect:
+    - "query_id with partitions_scanned/partitions_total and bytes_scanned"
+    - "The query plan compared against the clustering/partition key"
+    - "Queue time vs execution time split"
+  rollback: None — revert the query or DDL change if one shipped; adding clusters is mitigation, not a rollback.
+  follow_up:
+    - "Add the scan-ratio alert for the affected table"
+    - "Put the query on the weekly top-cost review list"
   gotchas:
     - "Bytes scanned and queue time are different diseases — fix the predicate vs add clusters; sizing up a scan-bound query buys nothing."
     - "Clustering on a low-selectivity key stops pruning entirely."
@@ -309,6 +351,16 @@
     - "A date partition is absent and reports quietly exclude a day"
     - "Freshness checks pass while completeness fails"
   why: A missing partition is silent data loss in every downstream report, and the window to catch it cleanly shrinks every day.
+  impact: Every downstream report silently excludes a day; decisions made on incomplete history look authoritative.
+  escalation: Page the on-call if the partition feeds revenue or executive reporting; inform report consumers the same day either way.
+  evidence_to_collect:
+    - "Partition listing diffed against the expected calendar"
+    - "The job run's logical date, UTC and local timestamps"
+    - "Source-side proof the data existed (or didn't) for that date"
+  rollback: "Not applicable — recover forward: re-run the logical date once the timezone mapping is confirmed; never delete-and-hope."
+  follow_up:
+    - "Add the completeness assertion: every expected partition exists"
+    - "Store the logical date as a partition column, not read-time derived"
   gotchas:
     - "Confirm the source actually had data before backfilling — otherwise you bake the gap in."
     - "Timezones: job logical date vs UTC vs local — diff all three before re-running."

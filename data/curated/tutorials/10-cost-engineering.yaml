@@ -1,0 +1,290 @@
+# Tutorials — beginner-friendly arrangements of artifact content.
+# Every step is verbatim from the cited source field. Structure (need, steps,
+# check) is ours; wording is the source's.
+- id: tutorial-cost-unit-economics-report
+  slug: cost-unit-economics-report
+  type: tutorial
+  title: Compute unit economics for a pipeline
+  description: >-
+    Turn cluster and warehouse billing into unit economics — cost per run, per 1M
+    rows, per model build — so a regression shows up as a number, not a surprise
+    invoice. The Cost Optimizer starts with attribution; this walkthrough ends
+    with an alert on cost-per-run instead of total spend.
+  category: cat-cost-engineering
+  difficulty: beginner
+  tags: [tutorial, cost, finops, unit-economics, attribution]
+  learning_objectives:
+    - Attribute compute cost to a pipeline run
+    - Define a unit metric that resists regressions
+    - Set an alert on cost-per-run, not on total spend
+  what_you_need:
+    - A billing/usage export and pipeline and query logs
+    - Per-run compute granularity from the cluster or warehouse
+    - Install: npx de-agent-platform add cost-unit-economics-reporter
+  steps:
+    - text: Attribute spend to pipelines and tables.
+      from_id: agent-cost-optimizer
+      from_field: workflow
+    - text: Rank by cost and by wasteful ratio (scan vs needed).
+      from_id: agent-cost-optimizer
+      from_field: workflow
+    - text: Pick a unit metric with a stable denominator — $ per pipeline run, $ per 1M rows processed, or DBU/credits per model build.
+      from_id: skill-cost-unit-economics
+      from_field: body
+    - text: Total spend rises with growth and hides regressions; cost-per-unit is flat when growth is healthy and spikes the day a join starts fanning out.
+      from_id: skill-cost-unit-economics
+      from_field: body
+    - text: Define the unit metric to watch afterwards.
+      from_id: agent-cost-optimizer
+      from_field: workflow
+    - text: Set an alert on cost-per-run, not on total spend.
+      from_id: skill-cost-unit-economics
+      from_field: learning_objectives
+  check_yourself:
+    - Cost-per-run stays flat while volume grows and total spend rises in the same period — proving the denominator resists growth.
+    - A deliberate join fan-out in a test run doubles cost-per-run and fires the alert while total spend still looks normal.
+  when_to_use:
+    - "Attributing a billing surprise to pipelines and tables"
+    - "Choosing an alert that survives healthy growth"
+  why: Total spend is the wrong alert — it rises with growth and hides regressions, while cost-per-unit spikes the day a join starts fanning out.
+  gotchas:
+    - "Total spend rises with growth and hides regressions — a healthy month can hide a 4x regression."
+    - "Never accept a recommendation that could change results — the Cost Optimizer flags those for a reason."
+    - "The optimizer never applies a change — apply savings through your own review, not through the agent."
+  production_notes:
+    - "Define the unit metric to watch after every optimization."
+    - "Validate savings estimates against historical billing after applying the change."
+  diagram: |
+    billing export
+       |
+       |- attribute spend --> pipelines + tables
+       |
+       |- rank by cost + wasteful ratio --> top offenders
+       |
+       |- define unit metric --> $ per run / per 1M rows --> alert on cost-per-run
+  source_refs: [skill-cost-unit-economics, agent-cost-optimizer]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/cost-unit-economics-report
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-cost-engineering] }
+- id: tutorial-cost-attribute-4x-regression
+  slug: cost-attribute-4x-regression
+  type: tutorial
+  title: Attribute a 4x Spark cost regression
+  description: >-
+    One job's compute cost quadrupled overnight with no functional change. Run the
+    4x runbook: diff shuffle and input bytes run-over-run, find the guilty stage,
+    reverse the regression — then wire hook-spark-cost-check so the next one fails
+    CI before the invoice.
+  category: cat-cost-engineering
+  difficulty: intermediate
+  tags: [tutorial, cost, spark, regression, runbook]
+  learning_objectives:
+    - Diff shuffle write and input bytes run-over-run
+    - Attribute a cost regression to one stage
+    - Gate deploys on shuffle/scan metrics
+  what_you_need:
+    - The event log or job metrics for two runs (before and after the cost jump)
+    - The job source
+    - Install: npx de-agent-platform add spark-cost-regression-guard
+  steps:
+    - text: Diff shuffle write bytes and input bytes for the job run-over-run.
+      from_id: runbook-spark-job-suddenly-costs-4x
+      from_field: diagnosis
+    - text: Compare output row counts before/after the join, per stage.
+      from_id: runbook-spark-job-suddenly-costs-4x
+      from_field: diagnosis
+    - text: Check whether the partition predicate still prunes (bytes scanned).
+      from_id: runbook-spark-job-suddenly-costs-4x
+      from_field: diagnosis
+    - text: Fan-out → dedupe the many-side on the join key before joining.
+      from_id: runbook-spark-job-suddenly-costs-4x
+      from_field: fix
+    - text: Lost filter → restore the partition predicate and re-run.
+      from_id: runbook-spark-job-suddenly-costs-4x
+      from_field: fix
+    - text: Read shuffle/spill/scan metrics from the event log, compare against the stored baseline (median of last 5), and fail if any metric grew by more than 25%.
+      from_id: hook-spark-cost-check
+      from_field: implementation
+  check_yourself:
+    - Output rows from the join stage greatly exceed source rows → fan-out confirmed; after deduping the many-side, output rows match and cost returns to baseline.
+    - "A deliberate join change grows shuffle write 3.9x → the build fails with the stage id."
+  when_to_use:
+    - "Compute spend for one job multiplied without a functional change"
+    - "A cost-per-run alarm fired right after a deploy"
+  why: Silent cost regressions compound — a 4x job running hourly is a new invoice line within a day; run-over-run byte diffs find the guilty stage fast.
+  gotchas:
+    - "Autoscaling masks the cause: a slow stage widens the cluster and buys speed while the fan-out stays."
+    - "Compare run-over-run, not day-over-day — traffic deltas will fool the diff."
+    - "A dropped partition filter reads full history: the join looks right, the input bytes don't."
+  production_notes:
+    - "Track cost per run as a unit metric with a 25% regression alarm."
+    - "Gate deploys on shuffle/scan metrics (hook-spark-cost-check)."
+  diagram: |
+    cost 4x
+       |
+       |- diff bytes run-over-run --> shuffle write + input bytes
+       |
+       |- output rows >> source rows --> join fan-out --> dedupe the many-side
+       |
+       |- input bytes >> usual --> lost partition filter --> restore predicate
+       |
+       |- baseline (median of last 5) --> >25% growth --> fail CI with stage id
+  source_refs: [runbook-spark-job-suddenly-costs-4x, hook-spark-cost-check]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/cost-attribute-4x-regression
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-cost-engineering] }
+- id: tutorial-cost-lens-plugin-walkthrough
+  slug: cost-lens-plugin-walkthrough
+  type: tutorial
+  title: Attribute spend with the Cost Lens plugin
+  description: >-
+    Install the Cost Lens plugin and use its three commands to attribute spend,
+    compute unit economics, and guard cost-per-run. The plugin pairs the
+    unit-economics skill with the Spark cost regression guard, and ships the
+    hooks that enforce the guard in CI.
+  category: cat-cost-engineering
+  difficulty: intermediate
+  tags: [tutorial, cost, plugin, finops, attribution]
+  learning_objectives:
+    - Attribute warehouse/cluster spend with /cost-by-pipeline
+    - Compute unit economics with /unit-cost
+    - Guard cost-per-run regressions with /cost-guard
+  what_you_need:
+    - A billing export the plugin can read (credentials: billing-read)
+    - An agent host with plugin support
+    - Install: amp plugin add de-agent/cost-lens
+  steps:
+    - text: "Install the plugin: `amp plugin add de-agent/cost-lens`."
+      from_id: plugin-cost-lens
+      from_field: installation
+    - text: Confirm the two capabilities you are wiring — cost-attribution and unit-economics.
+      from_id: plugin-cost-lens
+      from_field: capabilities
+    - text: Run `/cost-by-pipeline` to attribute warehouse/cluster spend to pipelines.
+      from_id: plugin-cost-lens
+      from_field: commands
+    - text: Run `/unit-cost` to compute unit economics.
+      from_id: plugin-cost-lens
+      from_field: commands
+    - text: Run `/cost-guard` to alert on cost-per-run regressions rather than on total spend.
+      from_id: plugin-cost-lens
+      from_field: commands
+    - text: Set an alert on cost-per-run, not on total spend.
+      from_id: skill-cost-unit-economics
+      from_field: learning_objectives
+  check_yourself:
+    - "`/cost-by-pipeline` returns spend attributed per pipeline, not one lump sum."
+    - "`/cost-guard` alerts on a cost-per-run regression and stays quiet when total spend grows with traffic."
+  when_to_use:
+    - "You need spend attributed to pipelines without writing attribution SQL by hand"
+    - "A team wants unit-economics alerts wired into the agent"
+  why: The plugin bundles attribution, unit economics and the cost guard, so a 4x regression shows up as a cost-per-run number instead of an invoice.
+  gotchas:
+    - "The plugin needs billing-read credentials and billing+catalog network access — without them /cost-by-pipeline has nothing to attribute."
+    - "Alerts fire on cost-per-run regressions, not total spend — do not 'fix' the alert by watching the invoice instead."
+    - "Its hook-spark-cost-check needs prior runs to build its 5-run baseline — a cold start has nothing to compare against."
+  production_notes:
+    - "Pair /cost-guard with hook-spark-cost-check so regressions fail CI before the invoice."
+    - "Keep the underlying skills (cost-unit-economics, spark-cost-regression-guard) for the deeper analysis."
+  diagram: |
+    billing export
+       |
+       |- /cost-by-pipeline --> spend per pipeline
+       |
+       |- /unit-cost --> $ per run / per 1M rows
+       |
+       |- /cost-guard --> regression vs baseline --> alert --> fix in CI
+  source_refs: [plugin-cost-lens, skill-cost-unit-economics, hook-spark-cost-check]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/cost-lens-plugin-walkthrough
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-cost-engineering] }
+- id: tutorial-cost-guardrails-setup
+  slug: cost-guardrails-setup
+  type: tutorial
+  title: Install cost guardrails before the invoice
+  description: >-
+    Instrument, attribute, then guard: the Cost Guardrails pattern in four moves —
+    a unit metric per pipeline, a baseline of the last N runs, CI failing on
+    regression, and hard caps. It ends with a build that fails on a 3.9x shuffle
+    jump instead of a surprise invoice.
+  category: cat-cost-engineering
+  difficulty: beginner
+  tags: [tutorial, cost, finops, guardrails, ci]
+  learning_objectives:
+    - Define a unit metric per pipeline
+    - Baseline the last N runs and fail CI past a threshold
+    - Add hard caps on top of CI guards
+  what_you_need:
+    - Cost-relevant metrics per run (shuffle/spill/scan)
+    - CI where a build can fail on a metric check
+    - Install: npx de-agent-platform add spark-cost-regression-guard
+  steps:
+    - text: Define a unit metric per pipeline ($ per run, per 1M rows).
+      from_id: pattern-cost-guardrails
+      from_field: solution
+    - text: Baseline the last N runs.
+      from_id: pattern-cost-guardrails
+      from_field: solution
+    - text: Fail CI on regression > threshold.
+      from_id: pattern-cost-guardrails
+      from_field: solution
+    - text: Add hard caps (warehouse resource monitors, quota limits).
+      from_id: pattern-cost-guardrails
+      from_field: solution
+    - text: Alert on the unit metric, never on total spend, so healthy growth doesn't page anyone and a regression does.
+      from_id: pattern-cost-guardrails
+      from_field: solution
+    - text: Verify the guard — shuffle write grows 3.9x after a join change → the build fails with the stage id.
+      from_id: hook-spark-cost-check
+      from_field: example
+  check_yourself:
+    - A change that grows any metric > 25% vs the baseline fails CI with the offending stage and metric named.
+    - Healthy growth (more data, same cost per run) does not page anyone.
+  when_to_use:
+    - "Any pipeline with variable compute cost"
+    - "Multi-team platforms"
+  why: Alert on the unit metric, never on total spend, so healthy growth doesn't page anyone and a regression does.
+  gotchas:
+    - "Spend varies with data growth and regressions hide in growth — total-spend dashboards cannot see them."
+    - "Guardrails need metrics plumbing and a baseline to be maintained — skip the baseline and the guard has nothing to compare."
+    - "Needs prior runs to build its 5-run baseline, so a cold start has nothing to compare against."
+  production_notes:
+    - "Keep the baseline as the median of the last 5 runs."
+    - "Gate deploys on shuffle/scan metrics, and keep resource monitors as the hard cap."
+  diagram: |
+    run
+       |
+       |- metrics --> unit metric ($ per run / per 1M rows)
+       |
+       |- baseline last N runs --> within baseline --> pass
+       |                          > regressed --> fail CI / alert
+       |
+       |- hard caps --> resource monitors + quotas --> invoice backstop
+  source_refs: [pattern-cost-guardrails, hook-spark-cost-check]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/cost-guardrails-setup
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-cost-engineering] }
