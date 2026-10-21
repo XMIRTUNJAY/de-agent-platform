@@ -41,6 +41,32 @@
     - task duration p99/p50 ratio
     - shuffle read/write bytes per run
     - spill bytes per stage
+  when_to_use:
+    - A batch job's runtime jumped and no code changed
+    - Stage tasks are wildly imbalanced in the Spark UI
+    - Executors idle while a few tasks run long
+  why: Slow jobs miss SLAs and burn executor-hours — attributing between skew, spill and over-scan is the difference between a 10-minute and a 10-hour incident.
+  gotchas:
+    - "repartition(1) serialises the stage — never reach for it to 'fix' slowness."
+    - "p99 much greater than p50 means skew; uniformly high p50 means capacity. Salting helps the first, not the second."
+    - "Spill shows up as slow tasks, not failures — check spill bytes before paying for bigger executors."
+    - "AQE skew-join healing does not fix over-scan; check bytes scanned separately."
+  production_notes:
+    - "Baseline shuffle/spill/scan metrics so CI can fail a regression before users feel it."
+    - "Keep AQE on, and confirm broadcast vs sort-merge plans with explain('formatted') before shipping."
+    - "Lint source reads for a partition predicate — the default is forgetting it."
+  diagram: |
+    job slow
+       |
+       |- p99 >> p50 --> key skew --> AQE skew join, or salt the hot key --> re-run
+       |
+       |- spill bytes high --> oversized partitions --> more partitions / memory
+       |
+       |- input bytes >> expected --> over-scan --> restore partition filter
+  tradeoffs:
+    - "pro: AQE heals skew with no code change"
+    - "con: salting doubles shuffle work on the hot key"
+    - "con: bigger executors mask spill instead of fixing partitioning"
   agent_skills: [skill-spark-skew-diagnosis, skill-spark-cost-regression-guard]
   agents: [agent-spark-optimizer]
   version: 1.2.0
@@ -87,6 +113,28 @@
     - CI guard on shuffle/scan metrics (hook-spark-cost-check).
   monitoring:
     - $ per run, shuffle write bytes, input bytes, output rows
+  when_to_use:
+    - "Compute spend for one job multiplied without a functional change"
+    - "A cost-per-run alarm fired right after a deploy"
+  why: Silent cost regressions compound — a 4x job running hourly is a new invoice line within a day; run-over-run byte diffs find the guilty stage fast.
+  gotchas:
+    - "Autoscaling masks the cause: a slow stage widens the cluster and buys speed while the fan-out stays."
+    - "Compare run-over-run, not day-over-day — traffic deltas will fool the diff."
+    - "A dropped partition filter reads full history: the join looks right, the input bytes don't."
+  production_notes:
+    - "Track cost per run as a unit metric with a 25% regression alarm."
+    - "Gate deploys on shuffle/scan metrics (hook-spark-cost-check)."
+  diagram: |
+    cost 4x
+       |
+       |- output rows >> source rows --> join fan-out --> dedupe the many-side --> re-run
+       |
+       |- input bytes >> usual --> lost partition filter --> restore predicate
+       |
+       |- tiny files everywhere --> small-file explosion --> OPTIMIZE / compact
+  tradeoffs:
+    - "pro: run-over-run byte diffs pin the regression to one stage"
+    - "con: needs event-log retention; rotated logs close the window"
   agent_skills: [skill-spark-cost-regression-guard, skill-cost-unit-economics]
   agents: [agent-cost-optimizer, agent-spark-optimizer]
   version: 1.1.0
@@ -131,6 +179,26 @@
     - Partition by date, not by hour/user, unless access patterns demand it.
   monitoring:
     - file count, avg file size, planning time
+  when_to_use:
+    - "Planning or listing time dominates query time on one table"
+    - "Metadata operations (OPTIMIZE/REPAIR) have become very slow"
+  why: Fragmentation turns every read into a metadata crawl; compaction restores predictable latency without touching consumers.
+  gotchas:
+    - "Compact after the ingestion window, never during it."
+    - "ZORDER rewrites the whole table — only worth it on a real query predicate."
+    - "Over-partitioning is often the root cause; coarsening the layout beats compacting harder."
+  production_notes:
+    - "Enable Delta auto-compaction or schedule Iceberg rewrite_data_files."
+    - "Target 128-256 MB files and alert on file-count growth."
+  diagram: |
+    planning slow
+       |
+       |- avg file < 32 MB --> fragmentation --> compact to 128-256 MB
+       |
+       |- partition per hour/app --> over-partitioning --> coarsen the layout
+  tradeoffs:
+    - "pro: compaction fixes latency without consumer changes"
+    - "con: compaction costs compute and needs a maintenance window"
   agent_skills: [skill-iceberg-maintenance, skill-delta-optimizer]
   agents: [agent-databricks-reviewer]
   version: 1.0.0
@@ -174,6 +242,26 @@
     - Review query history weekly for the top cost queries.
   monitoring:
     - bytes scanned, partitions scanned ratio, queue time
+  when_to_use:
+    - "A query that used to take seconds now takes minutes"
+    - "Queue times are rising on a shared warehouse"
+  why: A regressed dashboard erodes trust quietly, and a scan-bound query melts everyone else's queue too.
+  gotchas:
+    - "Bytes scanned and queue time are different diseases — fix the predicate vs add clusters; sizing up a scan-bound query buys nothing."
+    - "Clustering on a low-selectivity key stops pruning entirely."
+    - "Data volume growth silently crosses micro-partition thresholds — a query can go slow with no change at all."
+  production_notes:
+    - "Alert on the partitions_scanned/partitions_total ratio."
+    - "Review weekly query history for the top-cost queries."
+  diagram: |
+    query slow
+       |
+       |- partitions scanned ~= total --> over-scan --> fix predicate / recluster
+       |
+       |- queue time high --> contention --> add clusters, not size
+  tradeoffs:
+    - "pro: clustering makes the common path the fast path"
+    - "con: reclustering rewrites storage and burns credits"
   agent_skills: [skill-warehouse-clustering-advisor, skill-sql-query-plan]
   agents: []
   version: 1.0.1
@@ -217,6 +305,26 @@
     - Store the logical date explicitly as a partition column, not derived at read time.
   monitoring:
     - partition count per day, completeness assertions
+  when_to_use:
+    - "A date partition is absent and reports quietly exclude a day"
+    - "Freshness checks pass while completeness fails"
+  why: A missing partition is silent data loss in every downstream report, and the window to catch it cleanly shrinks every day.
+  gotchas:
+    - "Confirm the source actually had data before backfilling — otherwise you bake the gap in."
+    - "Timezones: job logical date vs UTC vs local — diff all three before re-running."
+    - "An empty partition and an absent partition both read as 'no data' downstream."
+  production_notes:
+    - "Assert every expected partition exists (completeness check, not freshness)."
+    - "Store the logical date as a partition column; never derive it at read time."
+  diagram: |
+    partition missing
+       |
+       |- source gap --> confirm upstream had data --> re-run the logical date
+       |
+       |- timezone mapping wrong --> fix mapping --> backfill corrected date
+  tradeoffs:
+    - "pro: partition-level completeness makes gaps unmissable"
+    - "con: strict partition alerts can get noisy during backfill seasons"
   agent_skills: [skill-airflow-dag-reviewer, skill-backfill-planner]
   agents: [agent-backfill-planner]
   version: 1.0.0

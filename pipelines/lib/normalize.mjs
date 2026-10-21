@@ -167,6 +167,8 @@ function typePayload(r) {
       return {
         steps: r.steps ?? [], what_you_need: r.what_you_need ?? [],
         check_yourself: r.check_yourself ?? [], source_refs: r.source_refs ?? [],
+        gotchas: r.gotchas ?? [], production_notes: r.production_notes ?? [],
+        why: r.why ?? null, diagram: r.diagram ?? null, tradeoffs: r.tradeoffs ?? [],
       };
     case 'hook':
       return {
@@ -194,6 +196,8 @@ function typePayload(r) {
         symptoms: r.symptoms ?? [], possible_causes: r.possible_causes ?? [], diagnosis: r.diagnosis ?? [],
         commands: r.commands ?? [], fix: r.fix ?? [], prevention: r.prevention ?? [],
         monitoring: r.monitoring ?? [], agent_skills: r.agent_skills ?? [], agents: r.agents ?? [],
+        gotchas: r.gotchas ?? [], production_notes: r.production_notes ?? [],
+        why: r.why ?? null, diagram: r.diagram ?? null, tradeoffs: r.tradeoffs ?? [],
       };
     case 'architecture':
       return {

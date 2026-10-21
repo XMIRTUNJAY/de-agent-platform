@@ -36,6 +36,29 @@
     - A DLQ for messages failing N times.
   monitoring:
     - consumer lag per partition, rebalance count, DLQ depth
+  when_to_use:
+    - "Consumer-group lag keeps rising and won't recover on its own"
+    - "Downstream tables are going fresh-to-stale"
+  why: Lag compounds — every minute behind is a minute of stale truth downstream, and the sink silently becomes the bottleneck nobody owns.
+  gotchas:
+    - "Never reset offsets to clear lag; that is silent data loss."
+    - "Uniform lag means capacity; one stuck partition means key skew or a poison message — read per-partition lag before scaling."
+    - "A rebalance loop can look like slowness: check the group state history for PreparingRebalance."
+    - "Adding consumers past the partition count buys nothing."
+  production_notes:
+    - "Alert on lag slope, not on an absolute lag number."
+    - "Give messages that fail N times a DLQ instead of an endless retry."
+  diagram: |
+    consumer lagging
+       |
+       |- lag uniform --> capacity bound --> scale consumers / sink throughput
+       |
+       |- one partition stuck --> hot key or poison --> re-key, or DLQ + commit past
+       |
+       |- PreparingRebalance looping --> rebalance storm --> raise session.timeout.ms
+  tradeoffs:
+    - "pro: re-keying the topic fixes hot partitions permanently"
+    - "con: raising partition count breaks per-key ordering while it rebalances"
   agent_skills: [skill-kafka-lag-triage]
   agents: [agent-kafka-troubleshooter]
   version: 1.3.0
@@ -82,6 +105,27 @@
     - Monitor the source→target row-count delta continuously.
   monitoring:
     - connector task state, slot retained WAL, event lag vs source
+  when_to_use:
+    - "Change events stopped arriving from a source table"
+    - "The target is silently diverging and consumers see no error"
+  why: CDC failures are silent by construction — the target keeps serving yesterday's truth, and divergence compounds until a reconciliation catches it.
+  gotchas:
+    - "Never hand-edit offsets; replay from the snapshot point."
+    - "WAL purged beyond the slot's retention is unrecoverable in place — the only correct fix is a fresh snapshot."
+    - "Credential rotation can stall a connector with no error on the consumer side."
+  production_notes:
+    - "Alert on replication-slot retained WAL and on connector task state."
+    - "Reconcile source-to-target row counts continuously."
+  diagram: |
+    cdc stopped
+       |
+       |- task failed --> restart --> slot intact? --> resume
+       |                                 |- slot dropped --> re-snapshot
+       |
+       |- WAL purged --> fresh snapshot --> restart from snapshot point
+  tradeoffs:
+    - "pro: a fresh snapshot is always correct"
+    - "con: full re-snapshotting is the most expensive recovery path"
   agent_skills: [skill-cdc-merge-designer]
   agents: [agent-incident-assistant]
   version: 1.1.0
@@ -123,6 +167,26 @@
     - Idempotent writes keyed by business date so a re-run is safe.
   monitoring:
     - max file lateness, count of late arrivals per run
+  when_to_use:
+    - "Files landed after the daily job already ran"
+    - "Yesterday's numbers changed this morning and reconciliations disagree"
+  why: Late arrivals rewrite history silently; without a watermark policy every run is a fresh bet on the partner's clock.
+  gotchas:
+    - "Re-running the whole partition for one late file is wasteful — overwrite windows, not history."
+    - "Timezone mismatch between partner and pipeline shifts lateness by hours — measure arrival times in UTC."
+    - "Scheduling the job before the partner's SLA window closes guarantees an incident every day."
+  production_notes:
+    - "Reprocess the last N days every run (watermark policy)."
+    - "Make writes idempotent keyed by business date so a re-run is safe."
+  diagram: |
+    late files
+       |
+       |- measure 30-day arrival lateness --> set watermark window --> reprocess N days each run
+       |
+       |- job runs before SLA close --> move schedule, or accept + reprocess
+  tradeoffs:
+    - "pro: a wide watermark window makes lateness invisible to consumers"
+    - "con: each widened window re-reads N days of data every run"
   agent_skills: [skill-airflow-dag-reviewer, skill-backfill-planner]
   agents: [agent-pipeline-reviewer]
   version: 1.0.2
@@ -167,6 +231,26 @@
     - A `unique` test on the grain key in CI and in production.
   monitoring:
     - duplicate-rate per key, row count vs source count
+  when_to_use:
+    - "Row counts are inflated and metrics double-counted"
+    - "A unique-key test starts failing after a retry, join change or backfill"
+  why: Duplicates corrupt every metric quietly; finding the first duplicate date and the deploy that introduced it is the whole diagnosis.
+  gotchas:
+    - "Fix the destination partitions, not the whole table — a full rewrite is both slow and a new risk."
+    - "An append instead of overwrite on retry is the classic maker of duplicates."
+    - "A non-unique 'one' side in a join fans out silently; test the grain, not the totals."
+  production_notes:
+    - "Idempotent writes: partition overwrite or MERGE on the business key."
+    - "Run a unique test on the grain key in CI and in production."
+  diagram: |
+    duplicates
+       |
+       |- min duplicate date --> correlate with deploy --> fix write mode --> overwrite partitions
+       |
+       |- fan-out join --> dedupe or fix the grain --> re-run affected range
+  tradeoffs:
+    - "pro: MERGE on the key makes retries harmless"
+    - "con: MERGE needs a solid key; a weak key hides duplicates instead of fixing them"
   agent_skills: [skill-spark-data-quality-review, skill-cdc-merge-designer]
   agents: [agent-data-quality-reviewer]
   version: 1.1.0

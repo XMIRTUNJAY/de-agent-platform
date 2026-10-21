@@ -38,6 +38,25 @@
   check_yourself:
     - On a 12-case fixture of known-bad SQL, correctly identifies 11 correctness bugs and 0 false positives.
     - Reviewing a PR that joins orders to a non-unique customer snapshot — flags fan-out and proposes a dedupe CTE.
+  when_to_use:
+    - "A review must prove a join cannot fan out"
+    - "Suspicion of NULL-unsafe NOT IN or = predicates"
+  why: Fan-out doubles counts silently; this walkthrough turns the SQL Reviewer's four-step pass into a habit with a fixture that proves it worked.
+  gotchas:
+    - "Stop at the first fan-out — fixing five joins at once hides which fix worked."
+    - "NOT IN with a nullable column never compares as you think; use NOT EXISTS."
+    - "State the grain of every result set in one sentence before judging the query."
+  production_notes:
+    - "Keep the 12-case evaluation fixture in CI so regressions resurface."
+    - "Emit findings with file positions and a rewritten clause reviewers can verify."
+  diagram: |
+    sql review pass
+       |
+       |- read diff + context --> state grain per result set
+       |
+       |- apply 5 rules --> first fan-out --> dedupe CTE
+       |
+       |- emit findings --> file:line + rewritten clause --> verify on fixture
   source_refs: [agent-sql-reviewer, skill-sql-review]
   version: 0.1.0
   license: Apache-2.0

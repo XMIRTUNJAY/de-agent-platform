@@ -4,6 +4,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import Breadcrumbs from '@/components/Breadcrumbs.astro';
 import ArchitectureCanvas from '@/components/diagrams/ArchitectureCanvas.astro';
 import { marked } from 'marked';
+import { atAGlanceRows, statRows, tradeoffRows } from '@/lib/deep-dive';
 
 // Resource bodies are human-gated curated YAML — trusted input, rendered
 // server-side with GFM so tables/checklists in skill docs work.
@@ -22,6 +23,15 @@ const prereqs = res.prerequisites?.map((id: any) => registry.resources.find((r: 
 const limitations = [res.when_not, res.tradeoffs, res.security_notes, res.note]
   .flatMap((v: any) => (Array.isArray(v) ? v : v ? [v] : []))
   .filter(Boolean);
+
+// Deep-dive block: What/When/Where/Why, tradeoff table, registry stats table.
+const glance = atAGlanceRows(res);
+const tradeRows = tradeoffRows(res.tradeoffs);
+const tradePros = tradeRows.filter((t) => t.kind === 'pro');
+const tradeCons = tradeRows.filter((t) => t.kind === 'con');
+const tradeNeutral = tradeRows.filter((t) => t.kind === 'neutral');
+const tradePairCount = Math.max(tradePros.length, tradeCons.length);
+const stats = statRows(res);
 
 /** stage lookup keyed by stage id */
 const stageById = registry.taxonomy.stagesById as Record<string, { title: string }>;
@@ -112,6 +122,21 @@ const scoreColor = (score: number) => {
       <!-- min-w-0: grid item's automatic minimum would otherwise be sized by
            unbroken code lines and overflow narrow viewports -->
       <section class="prose-de prose-measure min-w-0 space-y-8 detail-sections flex flex-col" data-artifact-type={res.type}>
+        {glance.length > 0 && (
+          <section class="mount" data-section="at-a-glance">
+            <h2>At a glance</h2>
+            <table class="glance-table">
+              <tbody>
+                {glance.map((g: any) => (
+                  <tr>
+                    <th scope="row">{g.label}</th>
+                    <td>{g.value}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </section>
+        )}
         {res.purpose && (
           <section class="mount" data-section="purpose">
             <h2>Purpose</h2>
@@ -130,7 +155,9 @@ const scoreColor = (score: number) => {
             <p>{res.solution}</p>
           </section>
         )}
-        {res.when_to_use && (
+        {/* when_to_use shows in the at-a-glance table when present; the standalone
+            section only renders when the glance has no When row */}
+        {res.when_to_use && !glance.some((g: any) => g.label === 'When') && (
           <section class="mount" data-section="when-to-use">
             <h2>When to use</h2>
             {Array.isArray(res.when_to_use) ? (
@@ -381,10 +408,42 @@ const scoreColor = (score: number) => {
             <ul>{res.monitoring.map((m: any) => <li>{m}</li>)}</ul>
           </section>
         )}
-        {res.tradeoffs && res.tradeoffs.length && (
+        {res.gotchas && res.gotchas.length > 0 && (
+          <section class="mount" data-section="gotchas">
+            <h2>Common gotchas</h2>
+            <ul>{res.gotchas.map((g: any) => <li>{g}</li>)}</ul>
+          </section>
+        )}
+        {res.production_notes && res.production_notes.length > 0 && (
+          <section class="mount" data-section="production-notes">
+            <h2>Production considerations</h2>
+            <ul>{res.production_notes.map((p: any) => <li>{p}</li>)}</ul>
+          </section>
+        )}
+        {tradeRows.length > 0 && (
           <section class="mount" data-section="tradeoffs">
             <h2>Tradeoffs</h2>
-            <ul>{res.tradeoffs.map((t: any) => <li>{t}</li>)}</ul>
+            {tradePairCount > 0 && (
+              <table class="tradeoff-table">
+                <thead>
+                  <tr>
+                    <th>Choose this when</th>
+                    <th>Costs &amp; caveats</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {Array.from({ length: tradePairCount }).map((_, i: number) => (
+                    <tr>
+                      <td>{tradePros[i]?.text ?? ''}</td>
+                      <td>{tradeCons[i]?.text ?? ''}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+            {tradeNeutral.length > 0 && (
+              <ul>{tradeNeutral.map((t: any) => <li>{t.text}</li>)}</ul>
+            )}
           </section>
         )}
         {res.implementation && (Array.isArray(res.implementation) ? res.implementation.length : typeof res.implementation === 'string') && (
@@ -419,6 +478,21 @@ const scoreColor = (score: number) => {
           <section class="mount" data-section="diagram">
             <h2>Diagram</h2>
             <pre class="codeblock"><code>{res.diagram}</code></pre>
+          </section>
+        )}
+        {stats.length > 0 && (
+          <section class="mount" data-section="stats-table">
+            <h2>Registry stats</h2>
+            <table class="stats-table">
+              <tbody>
+                {stats.map((s: any) => (
+                  <tr>
+                    <th scope="row">{s.label}</th>
+                    <td>{s.value}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </section>
         )}
         {res.repo_structure && (
@@ -839,6 +913,12 @@ const scoreColor = (score: number) => {
     min-width: 0;
   }
   [data-artifact-type='runbook'] [data-section='symptoms'] { order: 10; }
+  [data-artifact-type='runbook'] [data-section='at-a-glance'] { order: 5; }
+  [data-artifact-type='runbook'] [data-section='gotchas'] { order: 65; }
+  [data-artifact-type='runbook'] [data-section='diagram'] { order: 72; }
+  [data-artifact-type='runbook'] [data-section='production-notes'] { order: 74; }
+  [data-artifact-type='runbook'] [data-section='tradeoffs'] { order: 76; }
+  [data-artifact-type='runbook'] [data-section='stats-table'] { order: 85; }
   [data-artifact-type='runbook'] [data-section='diagnosis'] { order: 20; }
   [data-artifact-type='runbook'] [data-section='possible-causes'] { order: 30; }
   [data-artifact-type='runbook'] [data-section='fix'] { order: 40; }
@@ -854,6 +934,12 @@ const scoreColor = (score: number) => {
   [data-artifact-type='skill'] [data-section='tools'] { order: 60; }
   [data-artifact-type='skill'] [data-section='capabilities'] { order: 70; }
   [data-artifact-type='tutorial'] [data-section='learning-objectives'] { order: 10; }
+  [data-artifact-type='tutorial'] [data-section='at-a-glance'] { order: 5; }
+  [data-artifact-type='tutorial'] [data-section='diagram'] { order: 60; }
+  [data-artifact-type='tutorial'] [data-section='gotchas'] { order: 62; }
+  [data-artifact-type='tutorial'] [data-section='production-notes'] { order: 64; }
+  [data-artifact-type='tutorial'] [data-section='tradeoffs'] { order: 66; }
+  [data-artifact-type='tutorial'] [data-section='stats-table'] { order: 70; }
   [data-artifact-type='tutorial'] [data-section='what-you-need'] { order: 20; }
   [data-artifact-type='tutorial'] [data-section='steps'] { order: 30; }
   [data-artifact-type='tutorial'] [data-section='check-yourself'] { order: 40; }
@@ -873,4 +959,46 @@ const scoreColor = (score: number) => {
   [data-artifact-type='starter'] [data-section='tests'] { order: 50; }
   [data-artifact-type='starter'] [data-section='failure-scenarios'] { order: 60; }
   [data-artifact-type='starter'] [data-section='production-hardening'] { order: 70; }
+
+  /* Deep-dive tables: at-a-glance, tradeoffs, registry stats. */
+  .detail-sections table.glance-table,
+  .detail-sections table.tradeoff-table,
+  .detail-sections table.stats-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+  }
+  .detail-sections table.glance-table th,
+  .detail-sections table.tradeoff-table th,
+  .detail-sections table.stats-table th {
+    text-align: left;
+    font-weight: 500;
+    color: var(--fg-muted);
+    white-space: nowrap;
+    padding: 0.45rem 0.9rem 0.45rem 0;
+    border-bottom: 1px solid var(--hairline);
+    vertical-align: top;
+  }
+  .detail-sections table.glance-table td,
+  .detail-sections table.tradeoff-table td,
+  .detail-sections table.stats-table td {
+    padding: 0.45rem 0;
+    border-bottom: 1px solid var(--hairline);
+    color: var(--fg);
+    vertical-align: top;
+  }
+  .detail-sections table.tradeoff-table thead th {
+    color: var(--fg);
+    font-size: var(--text-2xs);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .detail-sections table.tradeoff-table tr:last-child th,
+  .detail-sections table.tradeoff-table tr:last-child td,
+  .detail-sections table.glance-table tr:last-child th,
+  .detail-sections table.glance-table tr:last-child td,
+  .detail-sections table.stats-table tr:last-child th,
+  .detail-sections table.stats-table tr:last-child td {
+    border-bottom: 0;
+  }
 </style>

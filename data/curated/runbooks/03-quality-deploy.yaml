@@ -32,6 +32,28 @@
     - Alert on any schema delta, even additive ones.
   monitoring:
     - schema-hash per source, drift events, quarantine counts
+  when_to_use:
+    - "A column appeared, disappeared or changed type upstream without notice"
+    - "A pipeline fails on a cast or silently nulls a column"
+  why: An uncontracted schema change is a loaded gun in the pipeline — hard casts break loudly, silent nulls break worse.
+  gotchas:
+    - "Silent nulls are the dangerous case — the job stays green while the column dies."
+    - "Renames are removals in disguise; treat them as breaking."
+    - "Type widening upstream (int to decimal) breaks the narrow cast downstream."
+  production_notes:
+    - "Enforce a schema contract with a compatibility policy in CI."
+    - "Alert on any schema delta, even additive ones."
+  diagram: |
+    schema drift
+       |
+       |- additive --> evolve contract forward --> register
+       |
+       |- type change --> explicit cast, or reject + quarantine
+       |
+       |- rename / removal --> coordinate with consumers --> coordinated cutover
+  tradeoffs:
+    - "pro: an additive-first policy keeps most changes uneventful"
+    - "con: strict contracts push work onto producers, who may not have the time"
   agent_skills: [skill-schema-change-contract-review, skill-data-contract-author]
   agents: [agent-schema-reviewer]
   version: 1.2.0
@@ -75,6 +97,28 @@
     - Consumer-driven contract tests in the producer's pipeline.
   monitoring:
     - contract-violation events, SLA breach count per asset
+  when_to_use:
+    - "A consumer broke right after a producer deploy"
+    - "A promised column or semantic changed, or an SLA was breached"
+  why: A broken contract is a negotiation as much as a bug — bound the blast radius from lineage before deciding who reverts and who adapts.
+  gotchas:
+    - "A 'safe' rename that changed semantics is still a breach."
+    - "SLA misses can come from unrelated outages — root-cause before pointing at the producer."
+    - "Whatever the fix, the consumer impact set comes first, from lineage."
+  production_notes:
+    - "Contracts get CI enforcement and a dated deprecation path."
+    - "Run consumer-driven contract tests in the producer's pipeline."
+  diagram: |
+    contract broken
+       |
+       |- schema breach --> producer reverts or adds a compatibility shim
+       |
+       |- semantic change --> agree semantics --> version the contract
+       |
+       |- SLA breach --> negotiate temporary relaxation --> root-cause fix
+  tradeoffs:
+    - "pro: consumer-driven tests catch breakage before deploy"
+    - "con: contract overhead slows fast-moving producers"
   agent_skills: [skill-schema-change-contract-review, skill-lineage-explainer]
   agents: [agent-schema-reviewer, agent-data-catalog-assistant]
   version: 1.1.0
@@ -119,6 +163,28 @@
     - A quarantine table so a bad batch never reaches consumers.
   monitoring:
     - expectation pass rate, quarantine row counts, freshness
+  when_to_use:
+    - "A quality expectation failed in production"
+    - "A freshness or volume check alarmed, or consumers report wrong numbers"
+  why: The decision on every failure is the same — block, quarantine or warn; getting it wrong ships bad data to consumers or pages people at 3am for nothing.
+  gotchas:
+    - "Loosening a threshold to silence an alarm is only right with evidence it was a false positive."
+    - "Bad data that already reached consumers needs disclosure, not just a fix."
+    - "Blocking on a warning-tier expectation turns small blips into outages."
+  production_notes:
+    - "Tier expectations: critical blocks, warnings alert."
+    - "Keep a quarantine table so a bad batch never ships."
+  diagram: |
+    quality failure
+       |
+       |- upstream data --> quarantine rows --> publish clean set --> notify producer
+       |
+       |- code change --> fix + redeploy --> re-run affected range
+       |
+       |- false positive --> gather evidence --> loosen threshold
+  tradeoffs:
+    - "pro: quarantine-publish keeps consumers working during fixes"
+    - "con: quarantined data needs an owner, or it becomes a landfill"
   agent_skills: [skill-spark-data-quality-review, skill-dbt-test-writer]
   agents: [agent-data-quality-reviewer]
   version: 1.2.0
@@ -163,6 +229,28 @@
     - Retries with backoff and a clear failure classification in the alert.
   monitoring:
     - task failure rate, DAG run duration, SLA misses
+  when_to_use:
+    - "A task or DAG run failed and downstream work is blocked"
+    - "An alert fired and someone must decide retry vs fix now"
+  why: The first minute of a pipeline incident decides its length — classify transient, deterministic or data before touching anything, or you re-run the wrong branch all morning.
+  gotchas:
+    - "Read the first real error in the log, not the last."
+    - "Retrying a data error re-runs the same failure; fix or quarantine the input first."
+    - "A re-run is only safe if the task is idempotent — check before clearing."
+  production_notes:
+    - "Make every task idempotent so a re-run is always safe."
+    - "Retry with backoff, and put the failure class in the alert text."
+  diagram: |
+    pipeline failed
+       |
+       |- transient --> clear + retry
+       |
+       |- code --> fix --> redeploy --> re-run from failed task
+       |
+       |- data --> fix or quarantine input --> idempotent re-run
+  tradeoffs:
+    - "pro: idempotent tasks turn incidents into routine re-runs"
+    - "con: idempotency costs an upsert/overwrite pattern on every write"
   agent_skills: [skill-airflow-dag-reviewer, skill-incident-postmortem-writer]
   agents: [agent-incident-assistant, agent-pipeline-reviewer]
   version: 1.1.0
@@ -207,6 +295,26 @@
     - A documented backfill runbook per pipeline.
   monitoring:
     - backfill progress, resource contention, validation pass rate
+  when_to_use:
+    - "A past date range is wrong or missing"
+    - "A logic fix or new column must be applied historically"
+  why: A backfill is production work with a bigger blast radius than the original pipeline — shadow-write, sample-validate, then swap.
+  gotchas:
+    - "Never run a backfill concurrently with the daily production run."
+    - "One huge date range starves the cluster; batch it and validate a sample per batch."
+    - "Backfilling without a written definition of correctness just relocates the bug."
+  production_notes:
+    - "Idempotent pipelines make a backfill a routine operation."
+    - "Document a backfill runbook per pipeline, with its idle window and resource budget."
+  diagram: |
+    backfill
+       |
+       |- define correctness --> shadow table --> batch dates --> validate sample --> swap
+       |
+       |- contention risk --> pick idle window --> cap concurrency
+  tradeoffs:
+    - "pro: shadow-then-swap cannot corrupt production"
+    - "con: double compute until the swap"
   agent_skills: [skill-backfill-planner]
   agents: [agent-backfill-planner]
   version: 1.1.0
@@ -250,6 +358,26 @@
     - Deploy pipelines the way you deploy services: small, reversible, observable.
   monitoring:
     - deploy markers on dashboards, post-deploy quality gates
+  when_to_use:
+    - "Errors or data changes began right after a deploy"
+    - "A quality check degraded right after promotion"
+  why: Roll back first, diagnose at leisure — every extra hour of a bad model in production is wrong data shipped to consumers.
+  gotchas:
+    - "Roll back before you root-cause; a known-good target is worth more than the diagnosis."
+    - "Config changes count: timezone or cluster settings produce invisible regressions."
+    - "If bad data was written, rolling back code isn't enough — re-run the affected period."
+  production_notes:
+    - "Run tests against a staged build in CI, not production."
+    - "Deploy pipelines like services: small diffs, reversible, observable."
+  diagram: |
+    bad deployment
+       |
+       |- first failing signal --> deploy timestamp --> exact changed artifact
+       |
+       |- previous-good exists --> rollback --> diagnose --> re-run affected period
+  tradeoffs:
+    - "pro: rollback restores consumers in minutes"
+    - "con: rollback discards any good changes shipped in the same window"
   agent_skills: [skill-incident-postmortem-writer]
   agents: [agent-incident-assistant, agent-pipeline-reviewer]
   version: 1.0.1
