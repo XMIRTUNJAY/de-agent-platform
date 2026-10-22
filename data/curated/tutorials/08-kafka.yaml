@@ -66,7 +66,31 @@
        |
        |- PreparingRebalance looping --> rebalance storm --> raise session.timeout.ms
        |
-       --> never reset offsets
+        --> never reset offsets
+  code:
+    - title: Per-partition lag and group state
+      lang: bash
+      code: |
+        kafka-consumer-groups --bootstrap-server $B --describe --group $G
+        kafka-consumer-groups --bootstrap-server $B --describe --group $G --state
+      source_id: runbook-kafka-consumer-lagging
+    - title: Lag signatures
+      lang: text
+      code: |
+        - Lag on one partition only → key skew; re-key or increase partitions.
+        - All partitions rising, CPU low → downstream (DB/API) is the bottleneck.
+        - Lag resets to zero then climbs → rebalance loop; check `session.timeout.ms`.
+        - One offset stuck, others advance → poison message in a retry loop.
+      source_id: skill-kafka-lag-triage
+    - title: Fix by signature
+      lang: text
+      code: |
+        - Sink-bound → batch/upsert in bulk, or scale the sink.
+        - Key skew → re-key the topic or increase partitions (breaks ordering per key).
+        - Rebalance → raise session.timeout.ms / max.poll.interval.ms.
+        - Poison message → route to a DLQ and commit past it.
+        - Never reset offsets to reduce lag; that is silent data loss.
+      source_id: runbook-kafka-consumer-lagging
   source_refs: [skill-kafka-lag-triage, runbook-kafka-consumer-lagging]
   version: 0.1.0
   license: CC-BY-4.0
@@ -146,7 +170,31 @@
        |
        |- least destructive fix --> risk rating + prevention
        |
-       --> guardrails: read-only, never reset offsets
+        --> guardrails: read-only, never reset offsets
+  code:
+    - title: Collect the group describe evidence
+      lang: bash
+      code: |
+        kafka-consumer-groups --bootstrap-server $B --describe --group $G
+        kafka-consumer-groups --bootstrap-server $B --describe --group $G --state
+      source_id: runbook-kafka-consumer-lagging
+    - title: Four-step workflow
+      lang: text
+      code: |
+        - Check lag trend and per-partition distribution.
+        - Check group state history for rebalances.
+        - Identify poison messages from retry counts.
+        - Recommend the least destructive fix.
+      source_id: agent-kafka-troubleshooter
+    - title: Outputs and guardrails
+      lang: text
+      code: |
+        Outputs: Diagnosis, Evidence, Fix with risk rating, Prevention measure
+
+        Guardrails:
+        - Never resets offsets
+        - Read-only against the cluster
+      source_id: agent-kafka-troubleshooter
   source_refs: [agent-kafka-troubleshooter, skill-kafka-lag-triage]
   version: 0.1.0
   license: CC-BY-4.0
@@ -218,7 +266,35 @@
        |
        |- describe_topic + describe_consumer_group --> topic detail + lag
        |
-       |- consume_messages --> samples (read-only principal, allow-list, mask PII)
+        |- consume_messages --> samples (read-only principal, allow-list, mask PII)
+  code:
+    - title: Register the server with the agent
+      lang: yaml
+      code: |
+        mcpServers:
+          kafka:
+            command: kafka-mcp-server
+            args: []
+            env:
+              KAFKA_BROKERS: localhost:9092
+              KAFKA_CLIENT_ID: kafka-mcp-server
+              MCP_TRANSPORT: stdio
+      source_id: mcp-kafka
+    - title: Server environment variables
+      lang: text
+      code: |
+        KAFKA_BROKERS       (required) Comma-separated broker list.
+        KAFKA_CLIENT_ID     (optional) Kafka client id for connections.
+        KAFKA_SASL_USER     (optional) SASL user, if the cluster requires it.
+        KAFKA_SASL_PASSWORD (optional) SASL password, if required.
+      source_id: mcp-kafka
+    - title: Sampling risk — security requirements
+      lang: text
+      code: |
+        Sampling messages can expose production PII in the agent's context. Grant a
+        read-only principal, prefer a topic allow-list, and never sample topics
+        containing personal data without masking.
+      source_id: mcp-kafka
   source_refs: [mcp-kafka]
   version: 0.1.0
   license: CC-BY-4.0
@@ -293,6 +369,26 @@
        |- /sample-topic --> read-only sample --> PII redaction pass
        |
        --> permissions: network kafka, sasl read-only
+  code:
+    - title: Install the plugin
+      lang: bash
+      code: |
+        amp plugin add de-agent/kafka-console
+      source_id: plugin-kafka-console
+    - title: The three commands
+      lang: text
+      code: |
+        /lag-triage
+        /topic-info
+        /sample-topic
+      source_id: plugin-kafka-console
+    - title: Permissions and the PII redaction hook
+      lang: yaml
+      code: |
+        permissions: { filesystem: none, network: kafka, credentials: kafka-sasl-read }
+        hooks: [hook-pii-leak-guard]
+        skills: [skill-kafka-lag-triage, skill-kafka-topic-design]
+      source_id: plugin-kafka-console
   source_refs: [plugin-kafka-console, skill-kafka-lag-triage]
   version: 0.1.0
   license: CC-BY-4.0

@@ -63,6 +63,32 @@
        |- [contract check] --> fail --> quarantine/ (+reason, +source_file)
        |
        |- quarantine rate > 1% x2 runs --> alert --> review + reprocess
+  code:
+    - title: Split every batch — pass publishes, fail quarantines with a reason
+      lang: text
+      code: |
+        Split every batch into publish and quarantine on a quality contract.
+          pass ─▶ published table (SLA-bearing)
+          fail ─▶ quarantine table (retained, alertable, reprocessable)
+        A row never disappears: it is either published or quarantined with a reason.
+        Alert on quarantine *rate*, not just on a hard failure — a rising rate is the
+        early signal of an upstream problem.
+      source_id: pattern-quarantine-publish
+    - title: Starter layout — contract, validate, publish
+      lang: text
+      code: |
+        pipeline-dq-quarantine/
+          contract/orders.yml       # rules: not_null, unique, range, enum
+          src/validate.py
+          src/publish.py
+          tests/test_quarantine.py
+      source_id: project-pipeline-dq-quarantine
+    - title: Validate the contract offline, then run the batch
+      lang: bash
+      code: |
+        make test  # validates against the fixtures offline
+        make run
+      source_id: project-pipeline-dq-quarantine
   source_refs: [pattern-quarantine-publish, project-pipeline-dq-quarantine]
   version: 0.1.0
   license: CC-BY-4.0
@@ -136,6 +162,24 @@
        |- decide --> upstream --> halt promotion --> notify producer
        |             false positive --> evidence --> loosen threshold
        |             genuine --> quarantine rows --> publish clean set
+  code:
+    - title: Isolate the failing test
+      lang: bash
+      code: |
+        dbt test --select fct_orders  # see the failing test
+      source_id: runbook-data-quality-failure
+    - title: Sample the offending rows
+      lang: sql
+      code: |
+        SELECT * FROM fct_orders WHERE order_id IS NULL LIMIT 20;
+      source_id: runbook-data-quality-failure
+    - title: The three-way decision
+      lang: text
+      code: |
+        Quarantine the failing rows, publish the clean set, keep the bad set for reprocessing.
+        If it is upstream, halt promotion and notify the producer.
+        If it is a false positive, loosen the threshold with evidence.
+      source_id: runbook-data-quality-failure
   source_refs: [runbook-data-quality-failure]
   version: 0.1.0
   license: CC-BY-4.0
@@ -207,6 +251,26 @@
        |- min duplicate date --> correlate with deploy --> fix write mode
        |
        |- dedupe by business key --> keep latest by event time --> overwrite affected partitions
+  code:
+    - title: Count duplicates per key
+      lang: sql
+      code: |
+        SELECT k, count(*) c FROM t GROUP BY k HAVING count(*) > 1 ORDER BY c DESC LIMIT 20;
+      source_id: runbook-duplicate-records
+    - title: Find the first and last duplicate dates
+      lang: sql
+      code: |
+        SELECT min(dt), max(dt) FROM (SELECT dt, k, count(*) FROM t GROUP BY dt, k HAVING count(*)>1);
+      source_id: runbook-duplicate-records
+    - title: Dedupe keeping latest event time, overwrite affected partitions
+      lang: text
+      code: |
+        Deduplicate on the business key, keeping the latest by event time.
+        Rewrite the affected partitions (overwrite), not the whole table.
+
+        Prevention: idempotent writes (partition overwrite or MERGE on the key);
+        a `unique` test on the grain key in CI and in production.
+      source_id: runbook-duplicate-records
   source_refs: [runbook-duplicate-records]
   version: 0.1.0
   license: CC-BY-4.0
@@ -277,6 +341,27 @@
        |- all critical pass --> promote --> production
        |
        |- any critical fail --> block --> production untouched --> report failures
+  code:
+    - title: Hook contract — pre-deploy trigger, block on failure
+      lang: yaml
+      code: |
+        # hook-pre-deployment-dq-check
+        trigger: pre-deploy
+        purpose: Run the quality suite against a staged run before promoting to production.
+        failure_behavior: block
+      source_id: hook-pre-deployment-dq-check
+    - title: Run the quality suite against the staged output
+      lang: text
+      code: |
+        After a pipeline writes to the staging namespace, run the model's dbt/GE tests
+        against the staged output. Promote only if all critical tests pass; otherwise
+        leave the previous production data in place and report the failed expectations.
+      source_id: hook-pre-deployment-dq-check
+    - title: What a blocked promotion looks like
+      lang: text
+      code: |
+        A not-null test fails on 412 rows in staging → promotion blocked, production untouched.
+      source_id: hook-pre-deployment-dq-check
   source_refs: [hook-pre-deployment-dq-check, runbook-data-quality-failure]
   version: 0.1.0
   license: CC-BY-4.0

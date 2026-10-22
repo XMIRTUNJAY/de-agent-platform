@@ -61,21 +61,25 @@ test('AUD-009: object-type fields render entries, never bare [object Object]', (
   }
 });
 
-test('AUD-005: marketplace filters split into 4 primary + collapsed advanced, quality removed', () => {
+test('AUD-005: marketplace filters split into primary + collapsed advanced, quality removed', () => {
   const page = read('src/pages/marketplace.astro');
   const panel = read('src/components/FilterPanel.astro');
   const state = read('src/lib/filter-state.mjs');
 
   // quality group no longer declared as a filter
   if (page.includes("{ label: 'Quality Score'")) throw new Error('Quality Score filter still declared');
-  // legacy type checkbox group removed in favor of kind super-groups
-  if (page.includes("{ label: 'Type', key: 'type'")) throw new Error('raw Type group still declared');
+  // Type group restored (2026-10: user-facing artifact-type filter) alongside
+  // the kind super-groups; both axes stay primary.
+  if (!page.includes("{ label: 'Type', key: 'type'")) throw new Error('raw Type group missing');
   if (!page.includes("key: 'kind'")) throw new Error('kind super-group missing');
-  // primary list = exactly 4 keys
+  // primary list = exactly 5 keys: kind, type, category, difficulty, agent
   const primaryMatch = page.match(/primary=\{\[([^\]]*)\]\}/);
   if (!primaryMatch) throw new Error('FilterPanel primary prop missing');
   const keys = primaryMatch[1].split(',').map((s) => s.trim().replace(/'/g, ''));
-  if (keys.length !== 4) throw new Error(`Expected 4 primary groups, got ${keys.length}: ${keys.join(',')}`);
+  if (keys.length !== 5) throw new Error(`Expected 5 primary groups, got ${keys.length}: ${keys.join(',')}`);
+  for (const required of ['kind', 'type', 'category', 'difficulty', 'agent']) {
+    if (!keys.includes(required)) throw new Error(`primary keys missing '${required}': ${keys.join(',')}`);
+  }
 
   // FilterPanel collapses non-primary groups behind one advanced toggle
   if (!panel.includes('primary')) throw new Error('FilterPanel lacks primary prop');

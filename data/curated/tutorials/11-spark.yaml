@@ -63,6 +63,29 @@
        |- spill bytes high --> oversized partitions --> more partitions / memory
        |
        |- all tasks slow (high p50) --> capacity, not skew --> do not salt
+  code:
+    - title: Confirm the diagnosis — AQE on, event log, plan
+      lang: bash
+      code: |
+        spark-submit --conf spark.sql.adaptive.enabled=true ...
+        # inspect the event log: grep 'TaskSetManager' spark.log | tail
+        df.explain('formatted')  # confirm broadcast vs sort-merge join
+      source_id: runbook-spark-job-slow
+    - title: Skew signals
+      lang: text
+      code: |
+        - Median task duration ~p50, but p99 is 30x+ → key skew.
+        - All tasks slow and shuffle read is huge → partition/scan problem, not skew.
+        - One executor at 100% while others idle → hot partition.
+      source_id: skill-spark-skew-diagnosis
+    - title: Decision order — AQE, salt, broadcast, never repartition(1)
+      lang: text
+      code: |
+        1. Confirm with `spark.sql.adaptive.skewJoin.enabled=true` — if it fixes it, ship that.
+        2. If not, salt the hot key on both sides and aggregate twice.
+        3. Broadcast only if the small side is < 100 MB *after* filtering.
+        4. Never `repartition(1)` to "fix" skew; it serialises the stage.
+      source_id: skill-spark-skew-diagnosis
   source_refs: [runbook-spark-job-slow, skill-spark-skew-diagnosis]
   version: 0.1.0
   license: CC-BY-4.0
@@ -138,6 +161,27 @@
        |- non-determinism --> sort key before dropDuplicates
        |
        |- missing assertions --> row-count + null-rate after every write
+  code:
+    - title: The five-check pass, in order
+      lang: text
+      code: |
+        1. Null propagation — every outer join introduces nullable right-side keys.
+           Confirm downstream code coalesces or filters them.
+        2. Join fan-out — assert key uniqueness on the intended 1-side before joining.
+        3. Silent coercion — `cast` failures return null, not errors. Prefer `try_cast`
+           and count the nulls it produces.
+        4. Non-determinism — `dropDuplicates` without a sort key keeps an arbitrary row.
+        5. Missing assertions — every write should be followed by a row-count and a
+           null-rate check on the primary key.
+      source_id: skill-spark-data-quality-review
+    - title: When to run it, and what comes back
+      lang: text
+      code: |
+        Run this when a PySpark transform is about to be merged, or when a downstream
+        table's row count changed without a code change.
+
+        Output: a findings list — severity | file:line | rule | suggested patch
+      source_id: skill-spark-data-quality-review
   source_refs: [skill-spark-data-quality-review]
   version: 0.1.0
   license: CC-BY-4.0
@@ -206,6 +250,33 @@
        |- make lint + tests --> offline, local Spark session
        |
        |- first transform --> row-count + null assertions --> ready for review
+  code:
+    - title: Scaffold the project
+      lang: bash
+      code: |
+        amp template new de-agent/pyspark-project ./my-pipeline
+      source_id: tpl-pyspark-project
+    - title: Where each piece lives
+      lang: text
+      code: |
+        pyspark-project/
+          pyproject.toml
+          Makefile
+          Dockerfile
+          src/
+            transforms/
+              orders_daily.py
+            io/readers.py
+          tests/
+            data/            # 3-10 row fixtures
+            test_orders_daily.py
+      source_id: tpl-pyspark-project
+    - title: Ship the first transform with post-write assertions
+      lang: text
+      code: |
+        Missing assertions — every write should be followed by a row-count and a
+        null-rate check on the primary key.
+      source_id: skill-spark-data-quality-review
   source_refs: [tpl-pyspark-project, skill-spark-data-quality-review]
   version: 0.1.0
   license: CC-BY-4.0
@@ -277,6 +348,28 @@
        |- /spark-explain-plan --> broadcast vs sort-merge
        |
        |- /spark-baseline --> stored baseline --> CI guard fails > 25% growth
+  code:
+    - title: Install the plugin
+      lang: bash
+      code: |
+        amp plugin add de-agent/spark-lens
+      source_id: plugin-spark-lens
+    - title: The three commands over one event log
+      lang: text
+      code: |
+        /spark-analyze        # task histogram; flags skew and shuffle amplification
+        /spark-explain-plan   # check the join strategy before shipping the change
+        /spark-baseline       # store the cost baseline the CI guard enforces
+      source_id: plugin-spark-lens
+    - title: What the baseline guard enforces
+      lang: text
+      code: |
+        After the job's test run, read shuffle/spill/scan metrics from the event log,
+        compare against the stored baseline (median of last 5), and fail if any metric
+        grew by more than 25%. Emit the offending stage and metric.
+
+        Example: shuffle write grows 3.9x after a join change → build fails with the stage id.
+      source_id: hook-spark-cost-check
   source_refs: [plugin-spark-lens, hook-spark-cost-check, runbook-spark-job-suddenly-costs-4x]
   version: 0.1.0
   license: CC-BY-4.0

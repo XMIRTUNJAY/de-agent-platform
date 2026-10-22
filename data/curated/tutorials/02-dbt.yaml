@@ -62,6 +62,38 @@
        |- rank by blast radius --> relationships --> accepted_values --> freshness
        |
        |- singular test --> run in data-aware CI on staging schema
+  code:
+    - title: Install the dbt-test-writer skill
+      lang: bash
+      code: |
+        npx de-agent-platform add dbt-test-writer
+      source_id: skill-dbt-test-writer
+    - title: Test set ranked by blast radius in schema.yml
+      lang: yaml
+      code: |
+        # Rank by blast radius, not by effort
+        models:
+          - name: <model>
+            columns:
+              - name: <grain key>      # 1. unique + not_null - the model is meaningless without it
+                tests:
+                  - unique
+                  - not_null
+              - name: <foreign key>    # 2. relationships - catches broken joins upstream
+                tests:
+                  - relationships:
+                      to: ref('<dimension model>')
+              - name: <enum column>    # 3. accepted_values - catches upstream renames
+                tests:
+                  - accepted_values:
+                      values: [<allowed values>]
+      source_id: skill-dbt-test-writer
+    - title: Run the test set with dbt build on the dev target
+      lang: bash
+      code: |
+        dbt deps && dbt seed
+        dbt build --target dev
+      source_id: project-dbt-warehouse-tests
   source_refs: [skill-dbt-test-writer, skill-dbt-model-review, project-dbt-warehouse-tests]
   agent_skills: [skill-dbt-test-writer]
   agents: [agent-data-quality-reviewer]
@@ -136,6 +168,33 @@
        |- materialisation picker --> view / table / incremental
        |
        |- incremental --> lookback window --> guard is_incremental()
+  code:
+    - title: Grain first - the unique test on the declared grain key
+      lang: yaml
+      code: |
+        # One row = one ___ ; the unique test goes on that key
+        models:
+          - name: <model>
+            columns:
+              - name: <grain key>
+                tests:
+                  - unique
+      source_id: skill-dbt-model-review
+    - title: Materialisation picker - view vs table vs incremental
+      lang: text
+      code: |
+        view        - cheap, and the model is small or rarely queried.
+        table       - the source is huge and consumers need speed.
+        incremental - the source grows monotonically and you can define the watermark.
+      source_id: skill-dbt-model-review
+    - title: Incremental filter with a lookback window, guarded by is_incremental()
+      lang: sql
+      code: |
+        -- late-arriving rows older than the watermark are silently dropped
+        {% if is_incremental() %}
+          where updated_at >= max(updated_at) - interval '3 days'
+        {% endif %}
+      source_id: skill-dbt-model-review
   source_refs: [skill-dbt-model-review, agent-sql-reviewer]
   agent_skills: [skill-dbt-model-review, skill-sql-review]
   agents: [agent-sql-reviewer]
@@ -208,6 +267,38 @@
        |- /dbt-write-tests --> tests ranked by blast radius
        |
        |- /dbt-impact --> downstream nodes --> merge with guard hook on
+  code:
+    - title: Install the dbt Workbench plugin
+      lang: bash
+      code: |
+        amp plugin add de-agent/dbt-workbench
+      source_id: plugin-dbt-workbench
+    - title: The three workbench commands in review order
+      lang: text
+      code: |
+        /dbt-review-model   # model review: grain + materialisation findings
+        /dbt-write-tests    # proposed test set, ranked by blast radius
+        /dbt-impact         # downstream nodes before you merge
+      source_id: plugin-dbt-workbench
+    - title: Proposed test set ranked by blast radius in schema.yml
+      lang: yaml
+      code: |
+        models:
+          - name: <model>
+            columns:
+              - name: <grain key>
+                tests:
+                  - unique
+                  - not_null
+              - name: <foreign key>
+                tests:
+                  - relationships:
+                      to: ref('<dimension model>')
+              - name: <enum column>
+                tests:
+                  - accepted_values:
+                      values: [<allowed values>]
+      source_id: skill-dbt-test-writer
   source_refs: [plugin-dbt-workbench, skill-dbt-model-review, skill-dbt-test-writer]
   agent_skills: [skill-dbt-model-review, skill-dbt-test-writer]
   agents: []
@@ -283,6 +374,34 @@
        |- staging --> intermediate --> fct_orders --> marts
        |
        |- unique + not_null on grain --> relationships to dims --> docs + CI
+  code:
+    - title: Seed, build, and serve the starter
+      lang: bash
+      code: |
+        dbt deps && dbt seed
+        dbt build --target dev
+        dbt docs generate && dbt docs serve
+      source_id: project-dbt-warehouse-tests
+    - title: Tests that protect the fct_orders grain in schema.yml
+      lang: yaml
+      code: |
+        # models/schema.yml - tests + descriptions on every node
+        models:
+          - name: fct_orders
+            columns:
+              - name: <grain key>      # unique + not_null on the fct grain key
+                tests:
+                  - unique
+                  - not_null
+              - name: <fk column>      # relationships from fct to dims
+                tests:
+                  - relationships:
+                      to: ref('<dim model>')
+              - name: status           # accepted_values on status
+                tests:
+                  - accepted_values:
+                      values: [<allowed statuses>]
+      source_id: project-dbt-warehouse-tests
   source_refs: [project-dbt-warehouse-tests, skill-dbt-test-writer]
   agent_skills: [skill-dbt-model-review, skill-dbt-test-writer, skill-sql-review]
   agents: []

@@ -40,6 +40,7 @@ export function activeCount(state) {
 /** filter key -> human label used on removable chips */
 export const CHIP_KEY_LABELS = {
   kind: 'Kind',
+  type: 'Type',
 };
 
 /** flat [{ key, value }] list for removable chips, stable key order */

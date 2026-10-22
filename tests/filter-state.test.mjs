@@ -38,12 +38,17 @@ describe('filter-state', () => {
     const state = { verification: ['community'], type: ['skill', 'mcp'] };
     assert.equal(activeCount(state), 3);
     const chips = chipList(state);
-    // key order follows FILTER_KEYS, not insertion order
+    // key order follows FILTER_KEYS, not insertion order; type uses its label
     assert.deepEqual(chips, [
-      { key: 'type', value: 'skill', label: 'type: skill' },
-      { key: 'type', value: 'mcp', label: 'type: mcp' },
+      { key: 'type', value: 'skill', label: 'Type: skill' },
+      { key: 'type', value: 'mcp', label: 'Type: mcp' },
       { key: 'verification', value: 'community', label: 'verification: community' },
     ]);
+  });
+
+  it('type chips use the human Type label', () => {
+    const chips = chipList({ type: ['skill'] });
+    assert.deepEqual(chips, [{ key: 'type', value: 'skill', label: 'Type: skill' }]);
   });
 
   it('kind chips use the human Kind label', () => {

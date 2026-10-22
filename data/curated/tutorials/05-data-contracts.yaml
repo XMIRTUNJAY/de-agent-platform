@@ -62,6 +62,31 @@
        |- SLA (freshness, completeness) --> breaking-change policy
        |
        |- enforcement --> CI test fails on violation --> contract, not documentation
+  code:
+    - title: Scaffold the contract repo
+      lang: bash
+      code: |
+        amp template new de-agent/data-contract-template ./contracts
+      source_id: tpl-data-contract
+    - title: The six parts of a contract
+      lang: text
+      code: |
+        1. Owner (a team, with an on-call).
+        2. Schema (typed, versioned).
+        3. Semantics (what each field *means*, units, nullability).
+        4. SLA (freshness, completeness).
+        5. Breaking-change policy (notice period, deprecation path).
+        6. Enforcement (which CI test fails on violation).
+      source_id: skill-data-contract-author
+    - title: Template layout — contract, schema, CI gate, deprecation path
+      lang: text
+      code: |
+        data-contract-template/
+          contract.yaml        # owner, sla, semantics, policy
+          schema.avsc          # typed schema
+          ci/check-compat.sh   # compatibility gate
+          DEPRECATION.md       # dated deprecation path
+      source_id: tpl-data-contract
   source_refs: [skill-data-contract-author, tpl-data-contract, skill-schema-change-contract-review]
   version: 0.1.0
   license: CC-BY-4.0
@@ -134,6 +159,25 @@
        |- hard failure or silent nulls? --> silent nulls keep the job green
        |
        |- consumers from lineage --> migration plan with dates --> approve or block
+  code:
+    - title: Diff the old and new schema
+      lang: bash
+      code: |
+        diff <(parquet-tools schema old.parquet) <(parquet-tools schema new.parquet)
+        # Glue/Athena: compare catalog columns to the Parquet footer
+      source_id: runbook-schema-drift
+    - title: Classification — compatible / risky / breaking
+      lang: text
+      code: |
+        - **Compatible** — new nullable column, widened type that preserves values.
+        - **Risky** — narrowing a type, adding a NOT NULL without a default, changing units.
+        - **Breaking** — rename, remove, or semantic change to an existing column.
+      source_id: skill-schema-change-contract-review
+    - title: Dated migration skeleton
+      lang: text
+      code: |
+        Add → dual-write → backfill → announce → migrate consumers → remove (dated).
+      source_id: skill-schema-change-contract-review
   source_refs: [agent-schema-reviewer, runbook-schema-drift, skill-schema-change-contract-review]
   version: 0.1.0
   license: CC-BY-4.0
@@ -207,6 +251,26 @@
        |
        |- breaking --> MIGRATION.md or deprecated_at? --> yes --> pass
                                                      --> no --> block (exit non-zero)
+  code:
+    - title: Pre-commit gate over staged schema files
+      lang: text
+      code: |
+        Runs on staged schema files (*.avsc, *.sql DDL, dbt schema.yml).
+        Diffs against HEAD, classifies the change, and exits non-zero on a breaking
+        change unless a MIGRATION.md or a `deprecated_at` annotation is present.
+      source_id: hook-schema-change-check
+    - title: Documented case — decimal narrowing blocked
+      lang: text
+      code: |
+        A commit narrowing `amount` from decimal(18,2) to decimal(10,2) is blocked
+        with an explanation and a suggested migration.
+      source_id: hook-schema-change-check
+    - title: Gate placement — producer CI, before merge
+      lang: text
+      code: |
+        producer change ─▶ [contract CI] ─┬─ compatible ─▶ deploy
+                                          └─ breaking ─▶ blocked + plan required
+      source_id: pattern-contracts-quality-gate
   source_refs: [hook-schema-change-check, pattern-contracts-quality-gate, skill-schema-change-contract-review]
   version: 0.1.0
   license: CC-BY-4.0
@@ -281,6 +345,26 @@
        |- schema breach --> producer reverts or adds a compatibility shim
        |
        |- SLA breach --> temporary relaxation --> root-cause fix
+  code:
+    - title: Bound the consumer impact set from lineage
+      lang: sql
+      code: |
+        # impact set from lineage
+        SELECT * FROM lineage WHERE upstream = 'prod.orders' AND direction = 'downstream';
+      source_id: runbook-data-contract-broken
+    - title: Classify the breach by clause
+      lang: text
+      code: |
+        - Identify which contract clause broke (schema, semantics, or SLA).
+        - Establish the impact set from lineage before anything else.
+        - Determine if the fix is on the producer (revert) or consumer (adapt).
+      source_id: runbook-data-contract-broken
+    - title: Who fixes it — producer reverts, consumer adapts
+      lang: text
+      code: |
+        - Schema breach → producer reverts or adds a compatibility shim.
+        - SLA breach → negotiate a temporary relaxation and a root-cause fix.
+      source_id: runbook-data-contract-broken
   source_refs: [runbook-data-contract-broken]
   version: 0.1.0
   license: CC-BY-4.0

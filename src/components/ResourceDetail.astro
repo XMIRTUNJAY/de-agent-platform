@@ -260,6 +260,25 @@ const scoreColor = (score: number) => {
             </ul>
           </section>
         )}
+        {(res.code ?? []).length > 0 && (
+          <section class="mount" data-section="worked-example">
+            <h2>Worked example</h2>
+            {res.code.map((c: any) => (
+              <div class="worked-example">
+                <p class="mono-label worked-example-title">
+                  {c.title}
+                  {c.source_id && (
+                    <span class="text-dim" style="font-weight: 400;"> — from {c.source_id}</span>
+                  )}
+                </p>
+                <div class="codeblock my-2">
+                  <pre><code class={`language-${c.lang ?? 'text'}`}>{c.code}</code></pre>
+                  <button class="copy-btn btn btn-sm btn-ghost" onclick="navigator.clipboard.writeText(this.previousElementSibling.innerText)">Copy</button>
+                </div>
+              </div>
+            ))}
+          </section>
+        )}
         {(res.source_refs ?? []).length > 0 && (
           <section class="mount" data-section="sourced-from">
             <h2>Sourced from</h2>
@@ -979,6 +998,7 @@ const scoreColor = (score: number) => {
   [data-artifact-type='tutorial'] [data-section='what-you-need'] { order: 20; }
   [data-artifact-type='tutorial'] [data-section='steps'] { order: 30; }
   [data-artifact-type='tutorial'] [data-section='check-yourself'] { order: 40; }
+  [data-artifact-type='tutorial'] [data-section='worked-example'] { order: 35; }
   [data-artifact-type='tutorial'] [data-section='sourced-from'] { order: 50; }
   [data-artifact-type='architecture'] [data-section='context'] { order: 10; }
   [data-artifact-type='architecture'] [data-section='problem'] { order: 20; }

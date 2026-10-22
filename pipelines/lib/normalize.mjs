@@ -169,6 +169,7 @@ function typePayload(r) {
         check_yourself: r.check_yourself ?? [], source_refs: r.source_refs ?? [],
         gotchas: r.gotchas ?? [], production_notes: r.production_notes ?? [],
         why: r.why ?? null, diagram: r.diagram ?? null, tradeoffs: r.tradeoffs ?? [],
+        code: r.code ?? [],
       };
     case 'hook':
       return {

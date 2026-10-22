@@ -63,6 +63,27 @@
        |- retry/timeout/concurrency check --> backoff + max_active_runs
        |
        |- predict backfill behaviour --> propose missing integration tests
+  code:
+    - title: The idempotency test
+      lang: text
+      code: |
+        "If this task runs twice for the same logical date, is the output the same?"
+        If no, fix it before anything else — retries will happen.
+      source_id: skill-airflow-dag-reviewer
+    - title: DAG review checklist
+      lang: text
+      code: |
+        1. Every task writes to a partition keyed by the logical date, or uses MERGE.
+        2. `catchup` is a deliberate choice, not a default.
+        3. Retries have a backoff; a task that retries instantly will hammer a downstream.
+        4. `max_active_runs` and pool limits prevent a backfill from starving the daily run.
+        5. Sensors use `reschedule`, not `poke`, so they don't hold a worker slot.
+      source_id: skill-airflow-dag-reviewer
+    - title: Install the DAG reviewer
+      lang: bash
+      code: |
+        npx de-agent-platform add airflow-dag-reviewer
+      source_id: skill-airflow-dag-reviewer
   source_refs: [agent-pipeline-reviewer, skill-airflow-dag-reviewer]
   version: 0.1.0
   license: CC-BY-4.0
@@ -136,6 +157,20 @@
        |- cost + contention --> idle window with daily job excluded
        |
        |- shadow table --> batched dates --> validate sample per batch --> swap
+  code:
+    - title: Batched backfill command
+      lang: bash
+      code: |
+        airflow dags backfill --start-date YYYY-MM-DD --end-date YYYY-MM-DD --reset-dagruns dag_id
+        # prefer batched date ranges over one large range
+      source_id: runbook-backfill-required
+    - title: Shadow-write, validate, then swap
+      lang: text
+      code: |
+        - Write to a shadow table, validate a sample, then swap.
+        - Batch by date; validate a sample after each batch.
+        - Never run a backfill concurrently with the daily production run.
+      source_id: runbook-backfill-required
   source_refs: [agent-backfill-planner, runbook-backfill-required]
   version: 0.1.0
   license: CC-BY-4.0
@@ -205,6 +240,30 @@
        |- keep guarantees --> retries/backoff, SLA, pools, reschedule sensor
        |
        |- partition or MERGE writes --> deliberate catchup --> review with idempotency test
+  code:
+    - title: Scaffold the DAG project
+      lang: bash
+      code: |
+        amp template new de-agent/airflow-dag ./dags
+      source_id: tpl-airflow-dag
+    - title: Generated project layout
+      lang: text
+      code: |
+        airflow-dag/
+          dags/orders_pipeline.py
+          plugins/
+          tests/test_dag_integrity.py
+          Dockerfile
+      source_id: tpl-airflow-dag
+    - title: Guarantees the scaffold must keep
+      lang: text
+      code: |
+        1. Every task writes to a partition keyed by the logical date, or uses MERGE.
+        2. `catchup` is a deliberate choice, not a default.
+        3. Retries have a backoff; a task that retries instantly will hammer a downstream.
+        4. `max_active_runs` and pool limits prevent a backfill from starving the daily run.
+        5. Sensors use `reschedule`, not `poke`, so they don't hold a worker slot.
+      source_id: skill-airflow-dag-reviewer
   source_refs: [tpl-airflow-dag, skill-airflow-dag-reviewer, pattern-backfill-safety]
   version: 0.1.0
   license: CC-BY-4.0
@@ -277,6 +336,24 @@
        |- shadow or snapshotted target? --> no --> block
        |
        |- window clear of daily run? --> yes --> run batches, validate samples
+  code:
+    - title: Pre-run gate requirements
+      lang: text
+      code: |
+        Intercepts a backfill trigger. Requires: an explicit date range, a target that
+        is either a shadow table or snapshotted, and a window that does not overlap the
+        scheduled production run. Denies otherwise.
+      source_id: hook-backfill-safety-check
+    - title: Bare backfill command the gate denies
+      lang: bash
+      code: |
+        airflow dags backfill --start-date 2024-01-01
+      source_id: hook-backfill-safety-check
+    - title: Compliant trigger with an explicit range
+      lang: bash
+      code: |
+        airflow dags backfill --start-date YYYY-MM-DD --end-date YYYY-MM-DD --reset-dagruns dag_id
+      source_id: runbook-backfill-required
   source_refs: [hook-backfill-safety-check, pattern-backfill-safety, skill-backfill-planner, runbook-backfill-required]
   version: 0.1.0
   license: CC-BY-4.0

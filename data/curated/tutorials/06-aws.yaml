@@ -62,6 +62,23 @@
        |- compact small files (< 16 MB overhead) --> parquet + snappy/zstd
        |
        --> re-run query --> bytes scanned drops
+  code:
+    - title: The four levers, in order
+      lang: text
+      code: |
+        ## Levers, in order
+        1. Partition on the dominant filter column (usually date).
+        2. Partition projection instead of `MSCK REPAIR` for predictable layouts.
+        3. Compact small files — per-file overhead dominates at < 16 MB.
+        4. Columnar + compression (Parquet + snappy/zstd) — 10-100x vs CSV.
+      source_id: skill-athena-partition-advisor
+    - title: Bill model — you pay per TB scanned
+      lang: text
+      code: |
+        ## Bill model
+        You pay per TB scanned. Every recommendation is judged by "does this reduce
+        bytes scanned?" — nothing else matters.
+      source_id: skill-athena-partition-advisor
   source_refs: [skill-athena-partition-advisor]
   version: 0.1.0
   license: CC-BY-4.0
@@ -131,6 +148,25 @@
        |- catalogue --> diff catalog schema vs file footer --> silent column drops
        |
        --> findings before the next run
+  code:
+    - title: Sizing rule
+      lang: text
+      code: |
+        ## Sizing
+        Start at 2x the number of input files' partitions, then watch the task histogram.
+        Over-provisioned workers are the most common Glue cost leak.
+      source_id: skill-aws-glue-reviewer
+    - title: Bookmarks and the catalogue trap
+      lang: text
+      code: |
+        ## Bookmarks
+        A bookmark only helps if the input path layout is stable. A renamed prefix
+        silently resets the bookmark → full reprocess.
+
+        ## Catalogue trap
+        If the Glue Data Catalog schema drifts from the actual Parquet schema, readers
+        drop columns silently. Diff the catalogue schema against the file footer.
+      source_id: skill-aws-glue-reviewer
   source_refs: [skill-aws-glue-reviewer]
   version: 0.1.0
   license: CC-BY-4.0
@@ -205,7 +241,28 @@
        |
        |- ddl/table.sql --> partition projection (no MSCK REPAIR)
        |
-       |- explain analyze --> pruning on dt --> bytes scanned in budget
+        |- explain analyze --> pruning on dt --> bytes scanned in budget
+  code:
+    - title: Provision and land the data
+      lang: bash
+      code: |
+        terraform init && terraform apply
+        aws s3 sync data/ s3://<bucket>/<prefix>/
+      source_id: project-s3-glue-athena
+    - title: Starter repo layout
+      lang: text
+      code: |
+        s3-glue-athena/
+          terraform/            # s3, glue catalog, athena workgroup
+          ddl/table.sql         # partition projection DDL
+          queries/*.sql
+          data/dt=2026-09-01/*.parquet
+      source_id: project-s3-glue-athena
+    - title: Scaffold the stack from the Terraform template
+      lang: bash
+      code: |
+        amp template new de-agent/terraform-aws-data-platform ./infra
+      source_id: tpl-terraform-aws-data
   source_refs: [project-s3-glue-athena, tpl-terraform-aws-data]
   version: 0.1.0
   license: CC-BY-4.0
@@ -283,6 +340,39 @@
        |- single points of failure --> reliability risks
        |
        --> findings: diagram + IAM + cost + reliability
+  code:
+    - title: Bind the AWS MCP server to a named profile
+      lang: yaml
+      code: |
+        mcpServers:
+          aws-core:
+            command: uvx
+            args: [awslabs.core-mcp-server@latest]
+            env:
+              AWS_PROFILE: ${AWS_PROFILE}
+              FASTMCP_LOG_LEVEL: ERROR
+      source_id: mcp-aws
+    - title: Four-step review workflow
+      lang: text
+      code: |
+        - Map the described services to a data flow.
+        - Check IAM for least privilege.
+        - Estimate dominant cost drivers.
+        - Identify single points of failure.
+      source_id: agent-aws-architecture-reviewer
+    - title: Outputs and guardrails
+      lang: text
+      code: |
+        Outputs:
+        - Architecture diagram (text)
+        - IAM findings
+        - Cost drivers
+        - Reliability risks
+
+        Guardrails:
+        - Never creates resources
+        - Requires human approval for any IAM recommendation
+      source_id: agent-aws-architecture-reviewer
   source_refs: [agent-aws-architecture-reviewer, mcp-aws]
   version: 0.1.0
   license: CC-BY-4.0

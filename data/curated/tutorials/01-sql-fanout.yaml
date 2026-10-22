@@ -57,6 +57,21 @@
        |- apply 5 rules --> first fan-out --> dedupe CTE
        |
        |- emit findings --> file:line + rewritten clause --> verify on fixture
+  code:
+    - title: Install the SQL review skill
+      lang: bash
+      code: |
+        npx de-agent-platform add sql-review
+      source_id: skill-sql-review
+    - title: The five review rules, applied in order
+      lang: text
+      code: |
+        1. Every join states its cardinality (1:1, N:1, N:N) and justifies it.
+        2. NOT IN (subquery) is banned where the subquery can return NULL — use NOT EXISTS.
+        3. Comparisons across types must be explicit casts, not implicit.
+        4. ORDER BY without LIMIT in a view is meaningless — drop it.
+        5. SELECT * in a persisted model freezes an unstable schema.
+      source_id: skill-sql-review
   source_refs: [agent-sql-reviewer, skill-sql-review]
   version: 0.1.0
   license: Apache-2.0

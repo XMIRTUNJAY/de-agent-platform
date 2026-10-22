@@ -66,6 +66,33 @@
        |- scan cost vs compute --> over-scan --> fix predicate / recluster
        |
        |- one change --> index, rewrite, or stats refresh --> measure
+  code:
+    - title: Read the plan bottom-up, then one recommended change
+      lang: text
+      code: |
+        Method
+        1. Read bottom-up; the deepest node is the first data touched.
+        2. Compare rows (estimate) to actual rows. >10x off means stale stats.
+        3. Look for Seq Scan on a large table that should use an index.
+        4. Look for Sort / Hash spilling to disk (disk usage in the plan).
+
+        Output: one sentence per expensive node, then exactly one recommended
+        change with the expected effect and a way to measure it.
+      source_id: skill-sql-query-plan
+    - title: Partitions scanned vs total in query history (Snowflake)
+      lang: sql
+      code: |
+        SELECT query_id, partitions_scanned, partitions_total, bytes_scanned
+        FROM table(information_schema.query_history_by_session())
+        ORDER BY start_time DESC LIMIT 10;
+      source_id: runbook-warehouse-query-slow
+    - title: Pick the fix - over-scan vs queue time
+      lang: text
+      code: |
+        Over-scan → fix the predicate or add/adjust the clustering key.
+        Compute-bound with high queue time → add clusters, not size.
+        Rebuild clustering on a low-selectivity key.
+      source_id: runbook-warehouse-query-slow
   source_refs: [skill-sql-query-plan, runbook-warehouse-query-slow]
   agent_skills: [skill-sql-query-plan]
   agents: []
@@ -142,6 +169,26 @@
        |- L003 --> L010 --> L030 --> L057 --> fix each finding
        |
        |- lint in CI --> passing fixture stays green
+  code:
+    - title: Install SQLFluff 3.0.0 with the dbt templater
+      lang: bash
+      code: |
+        pip install sqlfluff==3.0.0 sqlfluff-templater-dbt
+        sqlfluff --version
+      source_id: rule-pack-sqlfluff-core
+    - title: Set dialect and templater for your project (.sqlfluff)
+      lang: text
+      code: |
+        [sqlfluff]
+        dialect = snowflake   # pack default - set to your warehouse dialect
+        templater = dbt       # pack default - or jinja for plain SQL
+      source_id: rule-pack-sqlfluff-core
+    - title: Lint the failing fixture and keep the passing one green
+      lang: bash
+      code: |
+        sqlfluff lint tests/fixtures/style_fail.sql   # flags the seeded violations
+        sqlfluff lint tests/fixtures/style_pass.sql   # returns nothing
+      source_id: rule-pack-sqlfluff-core
   source_refs: [rule-pack-sqlfluff-core]
   version: 0.1.0
   license: CC-BY-4.0
@@ -215,6 +262,27 @@
        |- grain stated --> fan-out-proof joins --> NULL-unsafe predicates
        |
        |- emit findings --> file:line + rewritten clause --> verify on fixture
+  code:
+    - title: Install the SQL review skill
+      lang: bash
+      code: |
+        npx de-agent-platform add sql-review
+      source_id: skill-sql-review
+    - title: The review rules, applied in order
+      lang: text
+      code: |
+        1. Every join states its cardinality (1:1, N:1, N:N) and justifies it.
+        2. NOT IN (subquery) is banned where the subquery can return NULL - use NOT EXISTS.
+        3. Comparisons across types must be explicit casts, not implicit.
+        4. ORDER BY without LIMIT in a view is meaningless - drop it.
+        5. SELECT * in a persisted model freezes an unstable schema.
+      source_id: skill-sql-review
+    - title: What the pass emits
+      lang: text
+      code: |
+        Findings list (severity, location, rule, fix)
+        Grain statement for each SELECT
+      source_id: agent-sql-reviewer
   source_refs: [agent-sql-reviewer, skill-sql-review]
   agent_skills: [skill-sql-review]
   agents: [agent-sql-reviewer]

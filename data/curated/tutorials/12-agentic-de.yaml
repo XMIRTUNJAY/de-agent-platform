@@ -61,6 +61,27 @@
        |- deliverable --> tools-by-class table --> least-privilege config
        |
        |- unvetted + broad credentials --> never connect
+  code:
+    - title: Install the auditor skill
+      lang: bash
+      code: |
+        npx de-agent-platform add mcp-tool-contract-auditor
+      source_id: skill-mcp-tool-contract-auditor
+    - title: Classify every tool by blast radius
+      lang: text
+      code: |
+        - Read — safe, still logs the data it can reach.
+        - Write — can mutate state; needs a sandbox or a dry-run.
+        - Destructive — delete/drop/truncate; require human confirmation.
+        - Spend — provisions resources or runs billable queries.
+        - Exfiltrate — can send data to an external network.
+      source_id: skill-mcp-tool-contract-auditor
+    - title: The deliverable
+      lang: text
+      code: |
+        A table of tools by class, then a config that grants only the Read/Write tools
+        the task needs. Never connect an unvetted server with broad credentials.
+      source_id: skill-mcp-tool-contract-auditor
   source_refs: [skill-mcp-tool-contract-auditor]
   version: 0.1.0
   license: CC-BY-4.0
@@ -130,6 +151,34 @@
        |                  > rejected --> no write
        |
        |- hooks --> destructive SQL guard + prod write confirm --> policy enforced
+  code:
+    - title: Separate read/recommend from write/execute
+      lang: text
+      code: |
+        read ─▶ recommend ─▶ human approves ─▶ execute (scoped, logged)
+
+        Constrain the agent with read-only credentials plus MCP servers limited to the
+        needed tools. Encode the safety policy as hooks (destructive SQL guard, prod
+        write confirmation), and keep a human in the loop for anything irreversible.
+      source_id: pattern-agent-in-the-loop-review
+    - title: Destructive SQL guard — what gets denied
+      lang: text
+      code: |
+        Destructive statements are denied by default; a DELETE/UPDATE without a WHERE
+        clause is always denied. Statements on a non-production target can be allowed
+        with a `--allow-destructive` flag that requires a human confirmation token.
+
+        Example: `DROP TABLE prod.orders` from an agent is denied and surfaced for confirmation.
+      source_id: hook-destructive-sql-guard
+    - title: Prod write confirmation — approve once, per call
+      lang: text
+      code: |
+        Classify the tool target as production by connection string, project or
+        catalogue tag. Any write-class tool against a production target is suspended
+        and surfaced for a human "approve once" token scoped to the single call.
+
+        Example: an agent asked to run a MERGE on prod.sales is suspended pending approval.
+      source_id: hook-prod-write-confirm
   source_refs: [pattern-agent-in-the-loop-review, hook-destructive-sql-guard, hook-prod-write-confirm]
   version: 0.1.0
   license: CC-BY-4.0
@@ -201,6 +250,44 @@
        |- mcp-git --> one repository --> status/diff/log/commit, no push
        |
        |- mcp-github --> fine-grained token --> read-only unless PRs required
+  code:
+    - title: Filesystem server — one allowed directory
+      lang: json
+      code: |
+        {
+          "mcpServers": {
+            "filesystem": {
+              "command": "npx",
+              "args": ["-y", "@modelcontextprotocol/server-filesystem", "/data"]
+            }
+          }
+        }
+      source_id: mcp-filesystem
+    - title: Git server — one scoped repository
+      lang: json
+      code: |
+        {
+          "mcpServers": {
+            "git": {
+              "command": "uvx",
+              "args": ["mcp-server-git", "--repository", "/repo"]
+            }
+          }
+        }
+      source_id: mcp-git
+    - title: GitHub server — fine-grained token via env
+      lang: json
+      code: |
+        {
+          "mcpServers": {
+            "github": {
+              "command": "docker",
+              "args": ["run", "-i", "--rm", "-e", "GITHUB_PERSONAL_ACCESS_TOKEN", "ghcr.io/github/github-mcp-server"],
+              "env": { "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}" }
+            }
+          }
+        }
+      source_id: mcp-github
   source_refs: [mcp-filesystem, mcp-git, mcp-github]
   version: 0.1.0
   license: CC-BY-4.0
@@ -274,6 +361,28 @@
        |- /guard-status --> guards active
        |
        |- hooks --> destructive SQL denied + secrets blocked at commit
+  code:
+    - title: Install the plugin
+      lang: bash
+      code: |
+        amp plugin add de-agent/de-data-toolkit
+      source_id: plugin-de-data-toolkit
+    - title: The three commands
+      lang: text
+      code: |
+        /review-sql     # review a SQL change
+        /review-spark   # review a PySpark transform
+        /guard-status   # check the wired guards
+      source_id: plugin-de-data-toolkit
+    - title: Destructive SQL guard — what gets denied
+      lang: text
+      code: |
+        Destructive statements are denied by default; a DELETE/UPDATE without a WHERE
+        clause is always denied. Statements on a non-production target can be allowed
+        with a `--allow-destructive` flag that requires a human confirmation token.
+
+        Example: `DROP TABLE prod.orders` from an agent is denied and surfaced for confirmation.
+      source_id: hook-destructive-sql-guard
   source_refs: [plugin-de-data-toolkit, hook-destructive-sql-guard, hook-secret-scan-commit]
   version: 0.1.0
   license: CC-BY-4.0

@@ -82,7 +82,7 @@ test('card: metadata collapses behind a details expander; score pill carries the
     if (at < 0) throw new Error(`card marker missing: ${marker}`);
     if (at < detailsStart || at > detailsEnd) throw new Error(`'${marker}' must live inside the details expander`);
   }
-  if (!card.includes('score-pill')) throw new Error('score pill (gauge + label) missing from card top');
+  if (!card.includes('score-circle')) throw new Error('score circle (gauge + label) missing from card top');
   if (!card.includes('compositeLabel')) throw new Error('score pill must show the quality label, not just the number');
 });
 
@@ -124,6 +124,25 @@ test('pipeline: enriched runbook + tutorial YAML carry the new content fields', 
   const enrichedTutorials = tutorials.filter((r) => r.gotchas?.length && r.diagram);
   if (tutorials.length > 0 && enrichedTutorials.length !== tutorials.length) {
     throw new Error(`expected all ${tutorials.length} tutorials enriched, found ${enrichedTutorials.length}`);
+  }
+});
+
+test('tutorials carry code snippets: pipeline passes them, detail pages render a worked-example block', () => {
+  const detail = read('src/components/ResourceDetail.astro');
+  if (!detail.includes('data-section="worked-example"')) throw new Error('worked-example section missing');
+  if (!detail.includes('<h2>Worked example</h2>')) throw new Error('Worked example heading missing');
+  if (!detail.includes('res.code')) throw new Error('worked example must render from res.code');
+  if (!detail.includes("[data-artifact-type='tutorial'] [data-section='worked-example'] { order: 35; }")) {
+    throw new Error('worked-example ordering rule missing');
+  }
+  const normalize = read('pipelines/lib/normalize.mjs');
+  if (!normalize.includes('code: r.code ?? []')) throw new Error('tutorial payload must pass the code field through');
+  const registry = JSON.parse(read('src/data/generated/registry.json'));
+  const items = Array.isArray(registry) ? registry : registry.resources ?? Object.values(registry);
+  const tutorials = items.filter((x) => x.type === 'tutorial');
+  const withCode = tutorials.filter((t) => Array.isArray(t.code) && t.code.length > 0 && t.code.every((c) => c.title && c.lang && c.code && c.source_id));
+  if (tutorials.length > 0 && withCode.length !== tutorials.length) {
+    throw new Error(`expected all ${tutorials.length} tutorials to carry code snippets, found ${withCode.length}`);
   }
 });
 

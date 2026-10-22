@@ -225,10 +225,13 @@ const journey = PHASES.map((phase) => {
     font-weight: 600;
   }
   /* narrow screens: the 4.25rem stage indent + 240px card min overflow 320px;
-     drop the indent, go single column */
+     drop the indent, go single column. !important beats the inline styles. */
   @media (max-width: 480px) {
-    .stage-indent { padding-left: 0.5rem; padding-right: 0.5rem; }
+    .stage-indent { padding-left: 0.5rem !important; padding-right: 0.5rem !important; }
     .stage-indent[style*='grid-template-columns'] { grid-template-columns: 1fr !important; }
+    .gate-callout { margin-left: 0.5rem !important; margin-right: 0.5rem !important; }
     .mono-teach { margin-left: 0.5rem; }
+    .chapter-row { padding-left: 0.75rem; padding-right: 0.75rem; }
+    .chapter-num { display: none; }
   }
 </style>

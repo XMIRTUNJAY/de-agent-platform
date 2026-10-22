@@ -20,6 +20,21 @@ const readability = {
 };
 
 // Pre-compute filter options to avoid parser issues
+const typeOrder = ['tutorial', 'skill', 'mcp', 'plugin', 'hook', 'agent', 'template', 'starter', 'runbook', 'architecture', 'reference', 'tool', 'checklist', 'rule_pack', 'config_template', 'governance_pack', 'policy'];
+const typeOptions = [...new Set(registry.resources.map((r: any) => r.type))]
+  .sort((a: string, b: string) => {
+    const ia = typeOrder.indexOf(a), ib = typeOrder.indexOf(b);
+    return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
+  })
+  .map((t: string) => {
+    const sample: any = registry.resources.find((r: any) => r.type === t);
+    return {
+      value: t,
+      label: sample?.typeLabel ?? t,
+      count: registry.resources.filter((r: any) => r.type === t).length,
+    };
+  });
+
 const kindOptions = Object.entries(KINDS).map(([id, def]) => ({
   value: id,
   label: def.label,
@@ -72,12 +87,12 @@ const stageOptions = stages.map(s => ({
   count: registry.resources.filter(r => r.stage === s.id).length
 }));
 
-// Filter split (audit AUD-005): four intent-based primary groups always
-// visible; verification/security/technology/stage collapsed behind one
-// "Advanced filters" toggle. Quality Score is a sort, not a filter. The
-// legacy ?type=<raw> key stays functional via data-type (no checkbox group).
+// Filter split (audit AUD-005): intent groups always visible — Type and Kind
+// answer "what artifact is this" from both the concrete and the intent axis.
+// The legacy ?type=<raw> key stays functional and now syncs with the checkbox.
 const primary = [
   { label: 'Kind of artifact', key: 'kind', options: kindOptions },
+  { label: 'Type', key: 'type', options: typeOptions },
   { label: 'Category', key: 'category', options: categoryOptions },
   { label: 'Difficulty', key: 'difficulty', options: difficultyOptions },
   { label: 'Agent Compatibility', key: 'agent', options: agentOptions },
@@ -106,7 +121,7 @@ const filters = [...primary, ...advanced];
       <button type="button" data-filter-toggle class="btn btn-sm mb-4 gap-2 lg:hidden" aria-expanded="false" aria-controls="filters">
         <Icon name="categories" size={14} /> Filters
       </button>
-      <FilterPanel filters={filters} primary={['kind', 'category', 'difficulty', 'agent']} openByDefault={['kind', 'category']} id="filters" />
+      <FilterPanel filters={filters} primary={['kind', 'type', 'category', 'difficulty', 'agent']} openByDefault={['kind', 'type', 'category']} id="filters" />
 
       <!-- Results grid -->
       <section>

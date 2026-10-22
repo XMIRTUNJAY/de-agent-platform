@@ -63,7 +63,28 @@
        |
        |- expire_snapshots --> keep one full snapshot for time travel
        |
-       |- remove_orphan_files on a schedule --> safety margin
+        |- remove_orphan_files on a schedule --> safety margin
+  code:
+    - title: Size the problem from the files metadata table
+      lang: sql
+      code: |
+        SELECT count(*) files, avg(file_size_in_bytes)/1e6 avg_mb
+        FROM db.tbl.files;
+      source_id: skill-iceberg-maintenance
+    - title: The maintenance plan
+      lang: text
+      code: |
+        1. `rewrite_data_files` with a target size (128-256 MB).
+        2. `rewrite_manifests` when the manifest list is huge.
+        3. `expire_snapshots` older than the retention window — but keep at least one
+           full snapshot for time travel.
+        4. `remove_orphan_files` on a schedule, with a safety margin.
+      source_id: skill-iceberg-maintenance
+    - title: Compaction call
+      lang: sql
+      code: |
+        CALL catalog.system.rewrite_data_files('db.tbl');  -- Iceberg
+      source_id: runbook-small-files-explosion
   source_refs: [skill-iceberg-maintenance]
   version: 0.1.0
   license: CC-BY-4.0
@@ -138,6 +159,27 @@
        |- low-cardinality date predicate --> partition or leave it
        |
        --> measure numFiles + bytes scanned before/after
+  code:
+    - title: OPTIMIZE with Z-ORDER (Delta)
+      lang: sql
+      code: |
+        OPTIMIZE db.tbl ZORDER BY (user_id);  -- Delta
+      source_id: runbook-small-files-explosion
+    - title: Decision rules
+      lang: text
+      code: |
+        - Files < 32 MB and many → `OPTIMIZE`.
+        - Queries filter on 1-2 high-cardinality columns → `ZORDER BY` those columns.
+        - High-cardinality, many predicates, frequent writes → liquid clustering.
+        - Predicate on one low-cardinality column (date) → partition (or leave it; Delta
+          handles pruning well already).
+      source_id: skill-delta-optimizer
+    - title: Measure before and after
+      lang: text
+      code: |
+        Compare `numFiles` and query `bytes scanned` before and after. If scanning
+        didn't drop, the Z-ORDER was on the wrong columns.
+      source_id: skill-delta-optimizer
   source_refs: [skill-delta-optimizer]
   version: 0.1.0
   license: CC-BY-4.0
@@ -215,7 +257,31 @@
        |
        |- over-partitioned? --> coarsen layout (date, not hour/user)
        |
-       |- schedule compaction after ingestion window --> prevent regrowth
+        |- schedule compaction after ingestion window --> prevent regrowth
+  code:
+    - title: Quantify fragmentation from the metadata tables
+      lang: sql
+      code: |
+        SELECT count(*), avg(file_size_in_bytes)/1e6 FROM db.tbl.files;
+      source_id: runbook-small-files-explosion
+    - title: Compaction commands (Delta and Iceberg)
+      lang: sql
+      code: |
+        OPTIMIZE db.tbl ZORDER BY (user_id);  -- Delta
+        CALL catalog.system.rewrite_data_files('db.tbl');  -- Iceberg
+      source_id: runbook-small-files-explosion
+    - title: Fix and prevention
+      lang: text
+      code: |
+        Fix:
+        - Compact to a 128-256 MB target; rewrite manifests if huge.
+        - Reduce partition granularity if the layout over-partitions.
+        - Schedule compaction after the ingestion window, never during it.
+
+        Prevention:
+        - Auto-compaction on the table (Delta) or a scheduled maintenance job.
+        - Partition by date, not by hour/user, unless access patterns demand it.
+      source_id: runbook-small-files-explosion
   source_refs: [runbook-small-files-explosion, pattern-small-files-compaction]
   version: 0.1.0
   license: CC-BY-4.0
@@ -287,7 +353,27 @@
        |
        |- /expire-snapshots --> expiry plan
        |
-       |- peak ingestion window? --> guard blocks execution
+        |- peak ingestion window? --> guard blocks execution
+  code:
+    - title: Install the plugin
+      lang: bash
+      code: |
+        amp plugin add de-agent/lakehouse-guard
+      source_id: plugin-lakehouse-guard
+    - title: The three guard commands
+      lang: text
+      code: |
+        /table-health
+        /plan-compaction
+        /expire-snapshots
+      source_id: plugin-lakehouse-guard
+    - title: Capabilities, permissions, wired skills
+      lang: yaml
+      code: |
+        capabilities: [table-maintenance, guardrails]
+        permissions: { filesystem: read, network: warehouse, credentials: warehouse }
+        skills: [skill-iceberg-maintenance, skill-delta-optimizer]
+      source_id: plugin-lakehouse-guard
   source_refs: [plugin-lakehouse-guard]
   version: 0.1.0
   license: CC-BY-4.0
