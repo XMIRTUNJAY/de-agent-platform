@@ -163,3 +163,35 @@ test('runbooks render an incident notebook block (impact/escalation/evidence/rol
     throw new Error('runbooks missing notebook fields: ' + missing.map((m) => m.id).join(', '));
   }
 });
+
+test('detail sidebar: Marketplace Quality Score card is FIRST; other metadata cards are folded', () => {
+  const detail = read('src/components/ResourceDetail.astro');
+  const asideStart = detail.indexOf('<aside');
+  const asideEnd = detail.indexOf('</aside>');
+  if (asideStart < 0 || asideEnd < 0) throw new Error('sidebar aside not found');
+  const aside = detail.slice(asideStart, asideEnd);
+
+  // score card must be the first section in the aside (expanded), folded cards after it
+  const scoreAt = aside.indexOf('Marketplace Quality Score</h3>');
+  if (scoreAt < 0) throw new Error('score card missing from sidebar');
+  const firstCard = aside.indexOf('<section');
+  const firstDetails = aside.indexOf('<details');
+  if (firstCard < 0 || scoreAt < firstCard) {
+    throw new Error('score card must be the first card in the sidebar');
+  }
+  if (firstDetails >= 0 && firstDetails < firstCard) {
+    throw new Error('a folded card precedes the score card');
+  }
+  if (!aside.slice(firstCard, scoreAt).includes('<h3') || scoreAt - firstCard > 200) {
+    throw new Error('an unexpected expanded card sits between the aside start and the score heading');
+  }
+
+  // metadata + security + provenance must be folded (details), not h3 cards
+  for (const label of ['Metadata', 'Security Posture', 'Provenance', 'Technologies', 'Roadmap Alignment']) {
+    if (aside.includes(`<h3 class="mono-label mb-3">${label}</h3>`)) {
+      throw new Error(`'${label}' card is still expanded — must be a folded side-fold`);
+    }
+    const re = new RegExp(`<summary class="mono-label">\\s*${label}`);
+    if (!re.test(aside)) throw new Error(`'${label}' missing a folded summary`);
+  }
+});

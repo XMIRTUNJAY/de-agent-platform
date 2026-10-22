@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+﻿#!/usr/bin/env node
 /**
  * The ingestion pipeline, end to end:
  *
@@ -35,12 +35,12 @@ banner();
 
 // 1-4: discover/fetch/extract/classify are upstream of the curated files.
 // NORMALIZE
-const ctx = step('NORMALIZE', () => normalizeAll());
+const ctx = await step('NORMALIZE', () => normalizeAll());
 const { resources, taxonomy, meta, roadmap } = ctx;
 info(`${resources.length} resources · ${taxonomy.categories.length} categories · ${taxonomy.technologies.length} technologies`);
 
 // DEDUPLICATE
-step('DEDUPLICATE', () => {
+await step('DEDUPLICATE', () => {
   const seen = new Map();
   let dupes = 0;
   for (const r of resources) {
@@ -56,7 +56,7 @@ step('DEDUPLICATE', () => {
 });
 
 // LICENSE CHECK
-step('LICENSE CHECK', () => {
+await step('LICENSE CHECK', () => {
   const cats = meta.licenses ?? [];
   const reproducible = cats.filter((l) => l.allows_reproduce).map((l) => l.spdx);
   const restricted = resources.filter((r) => r.license && !reproducible.includes(r.license) && !String(r.license).startsWith('Proprietary'));
@@ -68,7 +68,7 @@ step('LICENSE CHECK', () => {
 });
 
 // VALIDATE
-const v = step('VALIDATE', () => validate({ resources, taxonomy, meta }));
+const v = await step('VALIDATE', () => validate({ resources, taxonomy, meta }));
 if (v.warnings.length) {
   warn(`${v.warnings.length} warning(s)`);
   if (FLAGS.has('--verbose') || FLAGS.has('--check')) for (const w of v.warnings.slice(0, 40)) warn('  ! ' + w);
@@ -82,7 +82,7 @@ if (v.errors.length) {
 }
 
 // QUALITY SCORE
-step('QUALITY SCORE', () => {
+await step('QUALITY SCORE', () => {
   scoreAll(resources, meta);
   const scored = resources.filter((r) => r.scores.quality !== null);
   const avg = scored.length ? (scored.reduce((a, r) => a + r.scores.quality, 0) / scored.length).toFixed(2) : 'n/a';
@@ -92,7 +92,7 @@ step('QUALITY SCORE', () => {
 });
 
 // DEPTH
-step('DEPTH', () => {
+await step('DEPTH', () => {
   depthAll(resources);
   const byLevel = {};
   for (const r of resources) byLevel[r.depth.level] = (byLevel[r.depth.level] ?? 0) + 1;
@@ -103,7 +103,7 @@ step('DEPTH', () => {
 });
 
 // EVIDENCE
-step('EVIDENCE', () => {
+await step('EVIDENCE', () => {
   const pipelineVersion = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8')).version;
   const at = new Date().toISOString();
   for (const r of resources) {
@@ -116,7 +116,7 @@ step('EVIDENCE', () => {
 });
 
 // GITHUB ENRICHMENT
-step('GITHUB ENRICHMENT', async () => {
+await step('GITHUB ENRICHMENT', async () => {
   try {
     const { enrichResources } = await import('./github-enrichment.mjs');
     await enrichResources(resources);
@@ -130,7 +130,7 @@ step('GITHUB ENRICHMENT', async () => {
 // SECRET SCAN — hardcoded-credential sweep (local curated tree + top remote
 // repos). Findings merge in-memory; clean scans earn vulnerability_scan_at,
 // which the marketplace security score rewards. Never modifies curated YAML.
-step('SECRET SCAN', async () => {
+await step('SECRET SCAN', async () => {
   try {
     const { scanResources } = await import('./scan-secrets.mjs');
     const { scanned, skipped, dirty } = await scanResources(resources);
@@ -147,7 +147,7 @@ step('SECRET SCAN', async () => {
 // them. Drafts ONLY (data/drafts/install-manifests/): manifests execute on
 // user machines, so a curator tests each on a clean machine and copies the
 // block into the curated record by hand. Never auto-merges.
-step('INSTALL MANIFESTS', async () => {
+await step('INSTALL MANIFESTS', async () => {
   try {
     const { proposeInstallManifests } = await import('./generate-install-manifests.mjs');
     const { proposed, skipped, noToken } = await proposeInstallManifests(resources);
@@ -159,7 +159,7 @@ step('INSTALL MANIFESTS', async () => {
 });
 
 // MARKETPLACE SCORE
-step('MARKETPLACE SCORE', () => {
+await step('MARKETPLACE SCORE', () => {
   // Load execution results for performance scoring
   const executions = loadExecutions();
   computeMarketplaceScores(resources, meta, executions);
@@ -174,7 +174,7 @@ step('MARKETPLACE SCORE', () => {
 });
 
 // VERIFY
-step('VERIFY', () => {
+await step('VERIFY', () => {
   const byV = {};
   for (const r of resources) byV[r.verification] = (byV[r.verification] ?? 0) + 1;
   const stale = resources.filter((r) => r.stale).length;
@@ -187,7 +187,7 @@ step('VERIFY', () => {
 });
 
 // ELIGIBILITY
-step('ELIGIBILITY', () => {
+await step('ELIGIBILITY', () => {
   const states = {};
   for (const r of resources) {
     r.page_eligibility = pageEligibility(r);
@@ -202,14 +202,14 @@ step('ELIGIBILITY', () => {
 });
 
 // RELATED
-step('RELATED', () => {
+await step('RELATED', () => {
   for (const r of resources) r.related_computed = relatedFor(r, resources, 5);
   info(`related links computed for ${resources.length} resources`);
   return null;
 });
 
 // FRESHNESS
-step('FRESHNESS', () => {
+await step('FRESHNESS', () => {
   const now = new Date().toISOString();
   let changed = 0, archived = 0, stale = 0;
   for (const r of resources) {
@@ -228,7 +228,7 @@ if (failed && !FLAGS.has('--no-fail')) {
 }
 
 // PUBLISH
-const pub = step('PUBLISH', () => emit(ctx));
+const pub = await step('PUBLISH', () => emit(ctx));
 info(`registry.json · search-index.json · graph.json · stats.json written to src/data/generated/`);
 info(`${pub.stats.counts.total} resources · ${pub.stats.readability.read_only} read-only · ${pub.stats.readability.needs_credentials} need credentials`);
 
@@ -240,10 +240,10 @@ function banner() {
   console.log('\n\x1b[2m  DISCOVER → FETCH → EXTRACT → CLASSIFY → NORMALIZE → DEDUPE → LICENSE → SCORE → VERIFY → PUBLISH\x1b[0m');
   console.log('\x1b[1m  DE//AGENT registry pipeline\x1b[0m\n');
 }
-function step(name, fn) {
+async function step(name, fn) {
   const started = Date.now();
   try {
-    const out = fn();
+    const out = await fn();
     const ms = String(Date.now() - started).padStart(4);
     console.log(`  \x1b[32m✓\x1b[0m \x1b[1m${name.padEnd(16)}\x1b[0m \x1b[2m${ms}ms\x1b[0m`);
     return out;

@@ -6,7 +6,7 @@
 
 import { Octokit } from '@octokit/rest';
 import { writeFileSync, readFileSync, existsSync, mkdirSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, resolve } from 'node:path';
 import { ROOT } from './lib/load.mjs';
 
 // GitHub API client (uses GITHUB_TOKEN from env if available)
@@ -226,7 +226,14 @@ async function main() {
 // Export for pipeline integration
 export { enrichResources };
 
-main().catch(err => {
-  console.error('[GitHub Enrichment] Fatal error:', err);
-  process.exit(1);
-});
+// Run standalone CLI mode only when invoked directly (node pipelines/github-enrichment.mjs),
+// never on import — importing during run.mjs used to re-read the PREVIOUS build's
+// registry.json and write it back after emit(), silently reverting the fresh build.
+import { fileURLToPath, pathToFileURL } from 'node:url';
+const invokedDirectly = process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href;
+if (invokedDirectly) {
+  main().catch(err => {
+    console.error('[GitHub Enrichment] Fatal error:', err);
+    process.exit(1);
+  });
+}

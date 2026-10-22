@@ -1,4 +1,4 @@
----
+﻿---
 import Feedback from '@/components/Feedback.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Breadcrumbs from '@/components/Breadcrumbs.astro';
@@ -23,6 +23,7 @@ const prereqs = res.prerequisites?.map((id: any) => registry.resources.find((r: 
 const limitations = [res.when_not, res.tradeoffs, res.security_notes, res.note]
   .flatMap((v: any) => (Array.isArray(v) ? v : v ? [v] : []))
   .filter(Boolean);
+const securityFlagCount = Object.values(res.security ?? {}).filter((v: any) => v === true).length;
 
 // Deep-dive block: What/When/Where/Why, tradeoff table, registry stats table.
 const glance = atAGlanceRows(res);
@@ -642,193 +643,7 @@ const scoreColor = (score: number) => {
       </section>
 
       <aside class="sticky top-16 space-y-6">
-        <!-- Metadata card -->
-        <section class="card card-pad mount">
-          <h3 class="mono-label mb-3">Metadata</h3>
-          <dl class="space-y-3 text-sm">
-            {res.categoryTitle && (
-              <div><dt class="text-muted">Category</dt><dd><a href={`/categories/${res.categorySlug}`} class="link">{res.categoryTitle}</a></dd></div>
-            )}
-            {res.stage && (
-              <div><dt class="text-muted">Stage</dt><dd>{stageById[res.stage]?.title ?? res.stage}</dd></div>
-            )}
-            {res.version && <div><dt class="text-muted">Version</dt><dd class="font-mono">{res.version}</dd></div>}
-            {res.license && <div><dt class="text-muted">License</dt><dd class="font-mono">{res.license}</dd></div>}
-            {res.author && <div><dt class="text-muted">Author</dt><dd>{res.author}</dd></div>}
-            {res.publisher && <div><dt class="text-muted">Publisher</dt><dd>{res.publisher}</dd></div>}
-            {res.last_verified && <div><dt class="text-muted">Last Verified</dt><dd class="font-mono">{res.last_verified}</dd></div>}
-            {res.source_url && <div><dt class="text-muted">Source</dt><dd><a href={res.source_url} target="_blank" rel="noopener" class="link">{res.source_url}</a></dd></div>}
-            {res.github_url && <div><dt class="text-muted">Repository</dt><dd><a href={res.github_url} target="_blank" rel="noopener" class="link">{res.github_url}</a></dd></div>}
-            {res.files && res.files.length && <div><dt class="text-muted">Files</dt><dd>{res.files.join(', ')}</dd></div>}
-          </dl>
-        </section>
-
-        <!-- Security card -->
-        <section class="card card-pad mount">
-          <h3 class="mono-label mb-3">Security Posture</h3>
-          <p class="text-sm text-muted mb-3">A listing is not an endorsement. Review the flags before connecting.</p>
-          <dl class="space-y-2 text-sm">
-            {Object.entries(res.security ?? {}).map(([k, v]) => (
-              <div class="flex items-center justify-between">
-                <dt class="text-muted capitalize">{k.replace(/_/g, ' ')}</dt>
-                <dd class="font-mono">{v === true ? 'Yes' : v === false ? 'No' : '—'}</dd>
-              </div>
-            ))}
-          </dl>
-        </section>
-
-        <!-- Static trust scan card (pipelines/scan-trust.mjs) -->
-        {trustScan && (
-          <section class="card card-pad mount">
-            <h3 class="mono-label mb-3">Static trust scan</h3>
-            <p class="text-sm text-muted mb-3">
-              {trustScan.rulesApplied} rules across 11 families ran over {trustScan.files_scanned} files.
-              Findings are evidence for review — not an automatic verdict. <a href="/docs/trust-rules" class="link">Rule catalog</a>
-            </p>
-            {trustScan.findings.length === 0 ? (
-              <p class="text-sm" style="color: var(--color-ok);">No static findings.</p>
-            ) : (
-              <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 0.6rem;">
-                {trustScan.findings.map((f: any) => (
-                  <li style="border-left: 2px solid var(--color-{f.risk === 'critical' ? 'danger' : f.risk === 'high' ? 'warn' : 'info'}); padding-left: 0.6rem;">
-                    <div class="flex items-center gap-2 flex-wrap">
-                      <span class={`chip chip-${f.risk === 'critical' ? 'danger' : f.risk === 'high' ? 'warn' : 'info'}`}>{f.risk}</span>
-                      <span class="text-sm" style="color: var(--fg);">{f.title}</span>
-                      {f.likelyExample && <span class="chip" style="color: var(--fg-dim);">docs context</span>}
-                      {f.judged && (
-                        <span class="chip" style={f.judged.verdict === 'benign-in-context' ? 'color: var(--color-ok);' : 'color: var(--color-warn);'} title={f.judged.explanation}>
-                          judged: {f.judged.verdict}
-                        </span>
-                      )}
-                    </div>
-                    <p class="text-xs text-muted" style="margin: 0.25rem 0 0;">{f.judged ? f.judged.explanation : f.definition}</p>
-                    <p class="font-mono text-2xs text-dim" style="margin: 0.15rem 0 0; overflow-wrap: anywhere;">{f.file}:{f.line}</p>
-                    <p class="text-xs" style="margin: 0.2rem 0 0; color: var(--fg-muted);">Fix: {f.remediation}</p>
-                  </li>
-                ))}
-              </ul>
-            )}
-            {trustScan.examples > 0 && (
-              <p class="text-xs text-dim" style="margin-top: 0.6rem;">{trustScan.examples} finding{trustScan.examples === 1 ? '' : 's'} matched only documentation context and do not count against this entry.</p>
-            )}
-          </section>
-        )}
-
-        <!-- Provenance card -->
-        <section class="card card-pad mount">
-          <h3 class="mono-label mb-3">Provenance</h3>
-          <dl class="space-y-2 text-sm">
-            <div><dt class="text-muted">Verification</dt><dd class="font-mono capitalize">{res.verification}</dd></div>
-            {res.evidence_summary && <div><dt class="text-muted">Evidence</dt><dd class="font-mono text-xs">{Object.values(res.evidence_summary.checks).filter((c: any) => c.status === 'passed').length}/10 checks · earned {res.evidence_summary.earned}</dd></div>}
-            {res.stale && <div class="text-warn"><dt class="text-muted">Stale</dt><dd>Last verified {res.stale_days} days ago (>180 days)</dd></div>}
-            {res.source_file && <div><dt class="text-muted">Source File</dt><dd class="font-mono text-xs">{String(res.source_file).replace(/\\/g, '/')}</dd></div>}
-            {res.publisher_source && typeof res.publisher_source === 'object' && (
-              <div>
-                <dt class="text-muted">Upstream</dt>
-                <dd class="font-mono text-xs">
-                  {res.publisher_source.unreachable
-                    ? `Repo unreachable (checked ${(res.publisher_source.checked_at ?? '').slice(0, 10)})`
-                    : `${res.publisher_source.repo ?? 'repo'} · pushed ${(res.publisher_source.pushed_at ?? '').slice(0, 10) || 'unknown'}`}
-                </dd>
-              </div>
-            )}
-          </dl>
-        </section>
-
-        <!-- Before you trust this -->
-        <section class="card card-pad mount">
-          <h3 class="mono-label mb-3">Before you trust this</h3>
-          <dl class="space-y-2 text-sm">
-            <div>
-              <dt class="text-muted">Limitations</dt>
-              <dd class="text-sm">
-                {limitations.length > 0 ? (
-                  <ul class="space-y-1">
-                    {limitations.map((l: any) => (
-                      <li>{typeof l === 'string' ? l : (Object.entries(l).map(([k, v]) => `${k}: ${v}`).join(' — ') as any)}</li>
-                    ))}
-                  </ul>
-                ) : (
-                  <span class="text-muted">No documented limitations — treat the unknown as unknown, not as safe.</span>
-                )}
-              </dd>
-            </div>
-            <div>
-              <dt class="text-muted">Prerequisites</dt>
-              <dd class="text-sm">{prereqs.length ? prereqs.map((p: any) => p.title).join(' · ') : 'None declared'}</dd>
-            </div>
-            {res.evidence_summary && (
-              <div>
-                <dt class="text-muted">Evidence checklist</dt>
-                <dd class="flex flex-wrap gap-1.5 mt-1">
-                  {Object.entries(res.evidence_summary.checks).map(([check, c]: any) => (
-                    <span class="chip text-xs" title={c.status === 'unclaimed' ? 'no evidence on file' : `${c.status} · ${c.by ?? 'unknown'} · ${c.at ?? 'undated'}`}>{check.replace(/_/g, ' ')}: {c.status}</span>
-                  ))}
-                </dd>
-              </div>
-            )}
-          </dl>
-        </section>
-
-        <!-- Prerequisites -->
-        {prereqs.length && (
-          <section class="card card-pad mount">
-            <h3 class="mono-label mb-3">Prerequisites</h3>
-            <ul class="space-y-1">
-              {prereqs.map((p: any) => (
-                <li><a href={p.url} class="link text-sm">{p.title}</a> <span class="text-dim">({p.typeLabel})</span></li>
-              ))}
-            </ul>
-          </section>
-        )}
-
-        <!-- Related -->
-        {relationships.some(([_, v]) => v?.length) && (
-          <section class="card card-pad mount">
-            <h3 class="mono-label mb-3">Relationships</h3>
-            <dl class="space-y-2 text-sm">
-              {relationships.map(([rel, list]) => list?.length && (
-                <div>
-                  <dt class="text-muted capitalize">{rel.replace(/_/g, ' ')}</dt>
-                  <dd class="flex flex-wrap gap-1.5 mt-1">
-                    {list.map((id: any) => {
-                      const r = registry.resources.find((x: any) => x.id === id);
-                      return r ? <a href={r.url} class="chip text-xs">{r.title}</a> : <span class="chip text-xs">{id}</span>;
-                    })}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-          </section>
-        )}
-
-        <!-- Related in the graph (computed, not curated) -->
-        {(res.related_computed ?? []).length > 0 && (
-          <section class="card card-pad mount">
-            <h3 class="mono-label mb-3">Related in the graph</h3>
-            <ul class="space-y-1">
-              {(res.related_computed ?? []).map((rel: any) => {
-                const r = registry.resources.find((x: any) => x.id === rel.id);
-                return r ? <li><a href={r.url} class="link text-sm">{r.title}</a> <span class="text-dim">({r.typeLabel})</span></li> : null;
-              })}
-            </ul>
-            <p class="card-desc" style="margin-top: 0.75rem;">Computed from shared taxonomy — not curator endorsements.</p>
-          </section>
-        )}
-
-        <!-- Technologies -->
-        {techs.length && (
-          <section class="card card-pad mount">
-            <h3 class="mono-label mb-3">Technologies</h3>
-            <ul class="space-y-1">
-              {techs.map((t: any) => (
-                <li><a href={`/taxonomy#${t.slug}`} class="link text-sm">{t.name}</a> <span class="text-dim">({t.category})</span></li>
-              ))}
-            </ul>
-          </section>
-        )}
-
-        <!-- Marketplace Quality Scores -->
+        <!-- Marketplace Quality Scores — first card, expanded (page-length redesign) -->
         {compositeScore > 0 && (
           <section class="card card-pad mount">
             <h3 class="mono-label mb-3">Marketplace Quality Score</h3>
@@ -866,10 +681,197 @@ const scoreColor = (score: number) => {
           </section>
         )}
 
-        <!-- Roadmap Alignment -->
+        <!-- Metadata card — folded (page-length redesign) -->
+        <details class="card card-pad mount side-fold">
+          <summary class="mono-label">Metadata</summary>
+          <dl class="space-y-3 text-sm">
+            {res.categoryTitle && (
+              <div><dt class="text-muted">Category</dt><dd><a href={`/categories/${res.categorySlug}`} class="link">{res.categoryTitle}</a></dd></div>
+            )}
+            {res.stage && (
+              <div><dt class="text-muted">Stage</dt><dd>{stageById[res.stage]?.title ?? res.stage}</dd></div>
+            )}
+            {res.version && <div><dt class="text-muted">Version</dt><dd class="font-mono">{res.version}</dd></div>}
+            {res.license && <div><dt class="text-muted">License</dt><dd class="font-mono">{res.license}</dd></div>}
+            {res.author && <div><dt class="text-muted">Author</dt><dd>{res.author}</dd></div>}
+            {res.publisher && <div><dt class="text-muted">Publisher</dt><dd>{res.publisher}</dd></div>}
+            {res.last_verified && <div><dt class="text-muted">Last Verified</dt><dd class="font-mono">{res.last_verified}</dd></div>}
+            {res.source_url && <div><dt class="text-muted">Source</dt><dd><a href={res.source_url} target="_blank" rel="noopener" class="link">{res.source_url}</a></dd></div>}
+            {res.github_url && <div><dt class="text-muted">Repository</dt><dd><a href={res.github_url} target="_blank" rel="noopener" class="link">{res.github_url}</a></dd></div>}
+            {res.files && res.files.length && <div><dt class="text-muted">Files</dt><dd>{res.files.join(', ')}</dd></div>}
+          </dl>
+        </details>
+
+        <!-- Security card — folded, flag count in the summary -->
+        <details class="card card-pad mount side-fold">
+          <summary class="mono-label">Security Posture ({securityFlagCount})</summary>
+          <p class="text-sm text-muted mb-3">A listing is not an endorsement. Review the flags before connecting.</p>
+          <dl class="space-y-2 text-sm">
+            {Object.entries(res.security ?? {}).map(([k, v]) => (
+              <div class="flex items-center justify-between">
+                <dt class="text-muted capitalize">{k.replace(/_/g, ' ')}</dt>
+                <dd class="font-mono">{v === true ? 'Yes' : v === false ? 'No' : '—'}</dd>
+              </div>
+            ))}
+          </dl>
+        </details>
+
+        <!-- Static trust scan card (pipelines/scan-trust.mjs) — folded -->
+        {trustScan && (
+          <details class="card card-pad mount side-fold">
+            <summary class="mono-label">Static trust scan ({trustScan.findings.length} findings)</summary>
+            <p class="text-sm text-muted mb-3">
+              {trustScan.rulesApplied} rules across 11 families ran over {trustScan.files_scanned} files.
+              Findings are evidence for review — not an automatic verdict. <a href="/docs/trust-rules" class="link">Rule catalog</a>
+            </p>
+            {trustScan.findings.length === 0 ? (
+              <p class="text-sm" style="color: var(--color-ok);">No static findings.</p>
+            ) : (
+              <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 0.6rem;">
+                {trustScan.findings.map((f: any) => (
+                  <li style="border-left: 2px solid var(--color-{f.risk === 'critical' ? 'danger' : f.risk === 'high' ? 'warn' : 'info'}); padding-left: 0.6rem;">
+                    <div class="flex items-center gap-2 flex-wrap">
+                      <span class={`chip chip-${f.risk === 'critical' ? 'danger' : f.risk === 'high' ? 'warn' : 'info'}`}>{f.risk}</span>
+                      <span class="text-sm" style="color: var(--fg);">{f.title}</span>
+                      {f.likelyExample && <span class="chip" style="color: var(--fg-dim);">docs context</span>}
+                      {f.judged && (
+                        <span class="chip" style={f.judged.verdict === 'benign-in-context' ? 'color: var(--color-ok);' : 'color: var(--color-warn);'} title={f.judged.explanation}>
+                          judged: {f.judged.verdict}
+                        </span>
+                      )}
+                    </div>
+                    <p class="text-xs text-muted" style="margin: 0.25rem 0 0;">{f.judged ? f.judged.explanation : f.definition}</p>
+                    <p class="font-mono text-2xs text-dim" style="margin: 0.15rem 0 0; overflow-wrap: anywhere;">{f.file}:{f.line}</p>
+                    <p class="text-xs" style="margin: 0.2rem 0 0; color: var(--fg-muted);">Fix: {f.remediation}</p>
+                  </li>
+                ))}
+              </ul>
+            )}
+            {trustScan.examples > 0 && (
+              <p class="text-xs text-dim" style="margin-top: 0.6rem;">{trustScan.examples} finding{trustScan.examples === 1 ? '' : 's'} matched only documentation context and do not count against this entry.</p>
+            )}
+          </details>
+        )}
+
+        <!-- Provenance card — folded -->
+        <details class="card card-pad mount side-fold">
+          <summary class="mono-label">Provenance</summary>
+          <dl class="space-y-2 text-sm">
+            <div><dt class="text-muted">Verification</dt><dd class="font-mono capitalize">{res.verification}</dd></div>
+            {res.evidence_summary && <div><dt class="text-muted">Evidence</dt><dd class="font-mono text-xs">{Object.values(res.evidence_summary.checks).filter((c: any) => c.status === 'passed').length}/10 checks · earned {res.evidence_summary.earned}</dd></div>}
+            {res.stale && <div class="text-warn"><dt class="text-muted">Stale</dt><dd>Last verified {res.stale_days} days ago (>180 days)</dd></div>}
+            {res.source_file && <div><dt class="text-muted">Source File</dt><dd class="font-mono text-xs">{String(res.source_file).replace(/\\/g, '/')}</dd></div>}
+            {res.publisher_source && typeof res.publisher_source === 'object' && (
+              <div>
+                <dt class="text-muted">Upstream</dt>
+                <dd class="font-mono text-xs">
+                  {res.publisher_source.unreachable
+                    ? `Repo unreachable (checked ${(res.publisher_source.checked_at ?? '').slice(0, 10)})`
+                    : `${res.publisher_source.repo ?? 'repo'} · pushed ${(res.publisher_source.pushed_at ?? '').slice(0, 10) || 'unknown'}`}
+                </dd>
+              </div>
+            )}
+          </dl>
+        </details>
+
+        <!-- Before you trust this — folded -->
+        <details class="card card-pad mount side-fold">
+          <summary class="mono-label">Before you trust this</summary>
+          <dl class="space-y-2 text-sm">
+            <div>
+              <dt class="text-muted">Limitations</dt>
+              <dd class="text-sm">
+                {limitations.length > 0 ? (
+                  <ul class="space-y-1">
+                    {limitations.map((l: any) => (
+                      <li>{typeof l === 'string' ? l : (Object.entries(l).map(([k, v]) => `${k}: ${v}`).join(' — ') as any)}</li>
+                    ))}
+                  </ul>
+                ) : (
+                  <span class="text-muted">No documented limitations — treat the unknown as unknown, not as safe.</span>
+                )}
+              </dd>
+            </div>
+            <div>
+              <dt class="text-muted">Prerequisites</dt>
+              <dd class="text-sm">{prereqs.length ? prereqs.map((p: any) => p.title).join(' · ') : 'None declared'}</dd>
+            </div>
+            {res.evidence_summary && (
+              <div>
+                <dt class="text-muted">Evidence checklist</dt>
+                <dd class="flex flex-wrap gap-1.5 mt-1">
+                  {Object.entries(res.evidence_summary.checks).map(([check, c]: any) => (
+                    <span class="chip text-xs" title={c.status === 'unclaimed' ? 'no evidence on file' : `${c.status} · ${c.by ?? 'unknown'} · ${c.at ?? 'undated'}`}>{check.replace(/_/g, ' ')}: {c.status}</span>
+                  ))}
+                </dd>
+              </div>
+            )}
+          </dl>
+        </details>
+
+        <!-- Prerequisites — folded -->
+        {prereqs.length && (
+          <details class="card card-pad mount side-fold">
+            <summary class="mono-label">Prerequisites ({prereqs.length})</summary>
+            <ul class="space-y-1">
+              {prereqs.map((p: any) => (
+                <li><a href={p.url} class="link text-sm">{p.title}</a> <span class="text-dim">({p.typeLabel})</span></li>
+              ))}
+            </ul>
+          </details>
+        )}
+
+        <!-- Related -->
+        {relationships.some(([_, v]) => v?.length) && (
+          <details class="card card-pad mount side-fold">
+            <summary class="mono-label">Relationships</summary>
+            <dl class="space-y-2 text-sm">
+              {relationships.map(([rel, list]) => list?.length && (
+                <div>
+                  <dt class="text-muted capitalize">{rel.replace(/_/g, ' ')}</dt>
+                  <dd class="flex flex-wrap gap-1.5 mt-1">
+                    {list.map((id: any) => {
+                      const r = registry.resources.find((x: any) => x.id === id);
+                      return r ? <a href={r.url} class="chip text-xs">{r.title}</a> : <span class="chip text-xs">{id}</span>;
+                    })}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </details>
+        )}
+
+        <!-- Related in the graph (computed, not curated) — folded -->
+        {(res.related_computed ?? []).length > 0 && (
+          <details class="card card-pad mount side-fold">
+            <summary class="mono-label">Related in the graph ({(res.related_computed ?? []).length})</summary>
+            <ul class="space-y-1">
+              {(res.related_computed ?? []).map((rel: any) => {
+                const r = registry.resources.find((x: any) => x.id === rel.id);
+                return r ? <li><a href={r.url} class="link text-sm">{r.title}</a> <span class="text-dim">({r.typeLabel})</span></li> : null;
+              })}
+            </ul>
+            <p class="card-desc" style="margin-top: 0.75rem;">Computed from shared taxonomy — not curator endorsements.</p>
+          </details>
+        )}
+
+        <!-- Technologies — folded -->
+        {techs.length && (
+          <details class="card card-pad mount side-fold">
+            <summary class="mono-label">Technologies ({techs.length})</summary>
+            <ul class="space-y-1">
+              {techs.map((t: any) => (
+                <li><a href={`/taxonomy#${t.slug}`} class="link text-sm">{t.name}</a> <span class="text-dim">({t.category})</span></li>
+              ))}
+            </ul>
+          </details>
+        )}
+
+
+        <!-- Roadmap Alignment — folded -->
         {mp?.roadmap_stages?.length > 0 && (
-          <section class="card card-pad mount">
-            <h3 class="mono-label mb-3">Roadmap Alignment</h3>
+          <details class="card card-pad mount side-fold">
+            <summary class="mono-label">Roadmap Alignment</summary>
             <div class="flex flex-wrap gap-2">
               {mp.roadmap_stages.map((stageId: string) => {
                 const stage = registry.taxonomy.stagesById?.[stageId];
@@ -881,19 +883,19 @@ const scoreColor = (score: number) => {
               })}
             </div>
             <p class="text-sm text-muted mt-2">This artifact teaches skills for the stages above in the 13-stage Data Engineering roadmap.</p>
-          </section>
+          </details>
         )}
 
         {mp?.install_manifest && (
-          <section class="card card-pad mount">
-            <h3 class="mono-label mb-3">Installation Manifest</h3>
+          <details class="card card-pad mount side-fold">
+            <summary class="mono-label">Installation Manifest</summary>
             <dl class="space-y-2 text-sm">
               <div><dt class="text-muted">Version</dt><dd class="font-mono">{mp.install_manifest.version}</dd></div>
               <div><dt class="text-muted">Requirements</dt><dd>{mp.install_manifest.requirements?.join(', ') ?? 'None'}</dd></div>
               <div><dt class="text-muted">Commands</dt><dd class="font-mono text-xs">{mp.install_manifest.commands?.map((c: any) => c.argv.join(' ')).join(' ; ') ?? 'None'}</dd></div>
             </dl>
             <p class="text-sm text-muted mt-2">Run <code>node pipelines/execute.mjs --manifest &lt;file&gt; --backend local --local-i-understand</code> to execute the install manifest.</p>
-          </section>
+          </details>
         )}
 
         <!-- Install manifest action (rating lives in the Rating widget above) -->
@@ -1057,6 +1059,40 @@ const scoreColor = (score: number) => {
   .detail-sections table.stats-table tr:last-child td {
     border-bottom: 0;
   }
+  /* Folded sidebar cards (page-length redesign): summary styled as the old
+     card header, chevron indicator, content indented. */
+  .side-fold > summary {
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    user-select: none;
+  }
+  .side-fold > summary::-webkit-details-marker {
+    display: none;
+  }
+  .side-fold > summary::after {
+    content: '▾';
+    color: var(--fg-muted);
+    font-size: 0.75em;
+    transition: transform 0.15s ease;
+  }
+  .side-fold[open] > summary::after {
+    transform: rotate(180deg);
+  }
+  .side-fold[open] > summary {
+    margin-bottom: 0.75rem;
+  }
+  .side-fold > *:not(summary) {
+    animation: side-fold-in 0.15s ease;
+  }
+  @keyframes side-fold-in {
+    from { opacity: 0; transform: translateY(-2px); }
+    to { opacity: 1; transform: none; }
+  }
+
   /* Incident notebook block (runbooks) */
   .notebook-row {
     margin-block: 0.9rem;
