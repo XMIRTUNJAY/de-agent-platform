@@ -12,6 +12,9 @@
     that marks a poison message, then apply the matching fix — and never reset
     offsets.
   category: cat-kafka
+  series: streaming
+  series_title: The Streaming Series
+  lesson: 9
   difficulty: intermediate
   tags: [tutorial, kafka, lag, consumer-group, offsets, incidents]
   learning_objectives:
@@ -113,6 +116,9 @@
     read-only against the cluster, never resets offsets, and ships every fix
     with a risk rating.
   category: cat-kafka
+  series: streaming
+  series_title: The Streaming Series
+  lesson: 10
   difficulty: beginner
   tags: [tutorial, kafka, agent, incidents, lag, troubleshooting]
   learning_objectives:
@@ -217,6 +223,9 @@
     sampling — stream debugging from an agent, with the sampling risks called
     out up front.
   category: cat-kafka
+  series: streaming
+  series_title: The Streaming Series
+  lesson: 2
   difficulty: beginner
   tags: [tutorial, kafka, mcp, streaming, debugging, lag]
   learning_objectives:
@@ -316,6 +325,9 @@
     detection, and /sample-topic for a read-only message sample with a PII
     redaction pass. Permissions stay at kafka-sasl-read throughout.
   category: cat-kafka
+  series: streaming
+  series_title: The Streaming Series
+  lesson: 7
   difficulty: intermediate
   tags: [tutorial, kafka, plugin, lag, streaming, pii]
   learning_objectives:

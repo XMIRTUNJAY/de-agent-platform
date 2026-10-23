@@ -13,6 +13,9 @@
   category: cat-spark
   difficulty: intermediate
   tags: [tutorial, spark, skew, performance, aqe]
+  series: data-processing
+  series_title: The Data Processing Series
+  lesson: 3
   learning_objectives:
     - Read task-level duration histograms to confirm skew
     - Choose between AQE skew join, salting and broadcast
@@ -108,6 +111,9 @@
   category: cat-spark
   difficulty: intermediate
   tags: [tutorial, spark, pyspark, data-quality, code-review]
+  series: data-processing
+  series_title: The Data Processing Series
+  lesson: 8
   learning_objectives:
     - Identify the five classes of silent failure in a Spark transform
     - Add pre/post row-count and null assertions to a job
@@ -204,6 +210,9 @@
   category: cat-spark
   difficulty: beginner
   tags: [tutorial, spark, pyspark, template, testing]
+  series: data-processing
+  series_title: The Data Processing Series
+  lesson: 2
   learning_objectives:
     - Scaffold a PySpark project with the template
     - Arrange transforms and offline test fixtures
@@ -299,6 +308,9 @@
   category: cat-spark
   difficulty: intermediate
   tags: [tutorial, spark, plugin, performance, cost]
+  series: data-processing
+  series_title: The Data Processing Series
+  lesson: 7
   learning_objectives:
     - Turn a Spark event log into a task histogram
     - Flag skew and shuffle amplification with /spark-analyze

@@ -7,6 +7,7 @@ import { join } from 'node:path';
 import { GENERATED, ROOT } from './load.mjs';
 import { buildSkillMd } from './skill-md.mjs';
 import { isStale, stalenessDays } from './score.mjs';
+import { buildSeries } from './series.mjs';
 
 export const ROUTE = {
   skill: 'skills', mcp: 'mcp', plugin: 'plugins', agent: 'agents', hook: 'hooks',
@@ -44,6 +45,7 @@ export function emit(ctx) {
     taxonomy,
     roadmap,
     meta,
+    series: buildSeries(enriched),
     resources: enriched,
   });
 

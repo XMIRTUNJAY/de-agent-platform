@@ -170,6 +170,7 @@ function typePayload(r) {
         gotchas: r.gotchas ?? [], production_notes: r.production_notes ?? [],
         why: r.why ?? null, diagram: r.diagram ?? null, tradeoffs: r.tradeoffs ?? [],
         code: r.code ?? [],
+        series: r.series ?? null, series_title: r.series_title ?? null, lesson: r.lesson ?? null,
       };
     case 'hook':
       return {

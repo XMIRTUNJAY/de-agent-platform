@@ -1,0 +1,614 @@
+# The Data Processing Series — 10 ordered lessons on batch processing:
+# mental model, first pipeline, joins & skew, aggregations & windows,
+# incremental patterns, tuning, tooling, production gotchas, incidents,
+# and the capstone checklist.
+# Every step is verbatim (or lightly compressed) from the cited source field.
+# Structure (need, steps, check) is ours; wording is the source's.
+- id: tutorial-batch-processing-mental-model
+  slug: batch-processing-mental-model
+  type: tutorial
+  title: The batch processing mental model
+  description: >-
+    Batch processing in partition terms. Learn what a partition, a shuffle and
+    a spill are, why "the job is slow" resolves into four named causes — skew,
+    partition count, spill, over-scan — and why the write side carries one
+    invariant: same date twice, same output.
+  category: cat-batch-processing
+  difficulty: beginner
+  tags: [tutorial, batch, spark, partitions, mental-model]
+  series: data-processing
+  series_title: The Data Processing Series
+  lesson: 1
+  learning_objectives:
+    - "Name the four causes of a slow batch job: skew, partition count, spill, over-scan"
+    - Explain what a shuffle does to a hot key
+    - State the idempotent-write invariant for re-runnable batch jobs
+  what_you_need:
+    - A Spark job to inspect — its Spark UI stage view or event log
+    - The output table's partition layout (dt=... or equivalent)
+  steps:
+    - text: "Batch processing recomputes per logical partition: `INSERT OVERWRITE partition(dt=...)` or Delta/Iceberg replace-where replace that partition atomically."
+      from_id: pattern-idempotent-partition-overwrite
+      from_field: solution
+    - text: "Never append to a partition you can recompute — the invariant is that running the same date twice yields identical output."
+      from_id: pattern-idempotent-partition-overwrite
+      from_field: solution
+    - text: "A shuffle moves data by key, and key skew on a join or group-by key is the first cause of a slow stage."
+      from_id: runbook-spark-job-slow
+      from_field: possible_causes
+    - text: "The second cause is partition count: too few partitions after a filter, or too many after a shuffle."
+      from_id: runbook-spark-job-slow
+      from_field: possible_causes
+    - text: "The third cause is spill to disk from an oversized partition."
+      from_id: runbook-spark-job-slow
+      from_field: possible_causes
+    - text: "The fourth cause is reading far more data than needed (missing partition filter)."
+      from_id: runbook-spark-job-slow
+      from_field: possible_causes
+    - text: "When a job skews or slows, check the config reference and the tuning guide before changing code."
+      from_id: ref-spark-docs
+      from_field: description
+  check_yourself:
+    - "You can name the four causes of a slow batch job: key skew, partition count, spill, over-scan."
+    - "A re-run for dt=2026-09-01 overwrites that partition and produces identical output."
+  when_to_use:
+    - "Starting with batch processing on Spark"
+    - "Turning 'the job is slow' into a named cause"
+  why: Batch failures cluster into four named causes — skew, partition count, spill, over-scan — and the write side has one invariant, so the mental model turns vague slowdowns into diagnoses.
+  gotchas:
+    - "Too few partitions after a filter, or too many after a shuffle: both look like 'Spark is slow'."
+    - "Spill shows up as slow tasks, not failures — check spill bytes before paying for bigger executors."
+    - "An empty partition and an absent partition both read as 'no data' downstream."
+  production_notes:
+    - "Baseline shuffle/spill/scan metrics per run so regressions are visible before users feel them."
+    - "Store the logical date explicitly as a partition column, not derived at read time."
+  diagram: |
+    batch job
+       |
+       |- read --> partitions (unit of parallelism)
+       |
+       |- shuffle by key --> hot key --> skew
+       |        > oversized partition --> spill to disk
+       |
+       |- scan --> missing partition filter --> over-scan
+       |
+       |- write --> INSERT OVERWRITE dt=... --> same date twice = same output
+  code:
+    - title: The four causes of a slow batch job
+      lang: text
+      code: |
+        - Key skew on a join or group-by key
+        - Too few partitions after a filter, or too many after a shuffle
+        - Spill to disk from an oversized partition
+        - Reading far more data than needed (missing partition filter)
+      source_id: runbook-spark-job-slow
+    - title: The idempotent batch write
+      lang: text
+      code: |
+        INSERT OVERWRITE partition(dt=...)   # or Delta/Iceberg replace-where
+
+        The invariant: running the same date twice yields identical output.
+      source_id: pattern-idempotent-partition-overwrite
+    - title: Where the exact semantics live
+      lang: text
+      code: |
+        Spark SQL, the DataFrame API, tuning and the configuration catalogue,
+        versioned per Spark release. The config reference alone resolves most
+        tuning debates.
+      source_id: ref-spark-docs
+  source_refs: [runbook-spark-job-slow, pattern-idempotent-partition-overwrite, ref-spark-docs]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/batch-processing-mental-model
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-batch-processing] }
+- id: tutorial-spark-aggregations-windows
+  slug: spark-aggregations-windows
+  type: tutorial
+  title: Aggregations and windows without the skew
+  description: >-
+    Aggregations and windows are shuffles in disguise. Treat the group-by key
+    as a skew suspect, read p50 vs p99 and the spill bytes, then apply the
+    matching fix — a salted two-stage aggregate, more partitions, or a
+    partition predicate — and never repartition(1).
+  category: cat-spark
+  difficulty: intermediate
+  tags: [tutorial, spark, aggregations, windows, skew]
+  series: data-processing
+  series_title: The Data Processing Series
+  lesson: 4
+  learning_objectives:
+    - Read p50 vs p99 task durations to confirm an aggregation is skewed
+    - Salt a hot key and aggregate twice
+    - Right-size partitions when an oversized aggregate spills
+  what_you_need:
+    - A Spark job with a group-by or window stage, and its Spark UI or event log
+    - Install: npx de-agent-platform add spark-skew-diagnosis
+  steps:
+    - text: "Treat the group-by (and any window over the same key) as a shuffle — key skew on a join or group-by key is the first cause to check."
+      from_id: runbook-spark-job-slow
+      from_field: possible_causes
+    - text: Check shuffle read/write bytes and spill (disk) bytes per task.
+      from_id: runbook-spark-job-slow
+      from_field: diagnosis
+    - text: Skew if p99 >> p50 (10x+). Uniform slowness if p50 is high.
+      from_id: runbook-spark-job-slow
+      from_field: diagnosis
+    - text: If a hot key skews the aggregate, salt the hot key on both sides and aggregate twice.
+      from_id: skill-spark-skew-diagnosis
+      from_field: body
+    - text: Spill → increase partition count or raise executor memory.
+      from_id: runbook-spark-job-slow
+      from_field: fix
+    - text: AQE skew-join healing does not fix over-scan; check bytes scanned separately.
+      from_id: runbook-spark-job-slow
+      from_field: gotchas
+  check_yourself:
+    - "The evidence is attached: task-duration histogram, shuffle read/write bytes, top-10 keys by row count."
+    - "A skewed aggregate is fixed by AQE skew join or the salted two-stage aggregate — not by repartition(1)."
+  when_to_use:
+    - "A group-by or window stage has one or a few tasks that dominate"
+    - "An aggregation slows down as the table grows"
+  why: The same key that groups your rows concentrates your shuffle, so the skew playbook applies to every aggregate before you buy bigger executors.
+  gotchas:
+    - "p99 much greater than p50 means skew; uniformly high p50 means capacity. Salting helps the first, not the second."
+    - "Spill shows up as slow tasks, not failures — check spill bytes before paying for bigger executors."
+    - "`repartition(1)` serialises the stage — never reach for it to 'fix' slowness."
+  production_notes:
+    - "Baseline shuffle/spill/scan metrics and fail CI on regression."
+    - "Monitor task duration p99/p50 ratio, shuffle read/write bytes per run, spill bytes per stage."
+  diagram: |
+    aggregation / window stage
+       |
+       |- shuffle by key
+       |     |- p99 >> p50 --> key skew --> salt hot key, aggregate twice
+       |     |- spill bytes high --> more partitions / executor memory
+       |     |- all tasks slow, huge shuffle read --> partition/scan, not skew
+       |     |- bytes scanned >> table size --> add partition predicate
+  code:
+    - title: Evidence to attach to any aggregation fix
+      lang: text
+      code: |
+        The task-duration histogram, the shuffle read/write bytes, and the top-10 keys
+        by row count — the review is not complete without them.
+      source_id: skill-spark-skew-diagnosis
+    - title: Fixes by cause
+      lang: text
+      code: |
+        Skew → enable AQE skew join; else salt the hot key and aggregate twice.
+        Spill → increase partition count or raise executor memory.
+        Over-scan → add the partition predicate; confirm with bytes scanned.
+        Never repartition(1); it serialises the stage.
+      source_id: runbook-spark-job-slow
+    - title: Monitor the aggregate stage
+      lang: text
+      code: |
+        - task duration p99/p50 ratio
+        - shuffle read/write bytes per run
+        - spill bytes per stage
+      source_id: runbook-spark-job-slow
+  source_refs: [runbook-spark-job-slow, skill-spark-skew-diagnosis]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/spark-aggregations-windows
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-spark] }
+- id: tutorial-incremental-watermark-batch
+  slug: incremental-watermark-batch
+  type: tutorial
+  title: Incremental processing with a watermark
+  description: >-
+    Full reloads stop scaling once a table grows past millions of rows. Process
+    a bounded window instead: a watermark ends it, a lookback absorbs late
+    files, and an idempotent write (partition overwrite or MERGE) makes every
+    re-run safe — including re-processing a late window.
+  category: cat-batch-processing
+  difficulty: intermediate
+  tags: [tutorial, batch, incremental, watermark, late-data]
+  series: data-processing
+  series_title: The Data Processing Series
+  lesson: 5
+  learning_objectives:
+    - Bound incremental work with a watermark and a lookback window
+    - Write incremental output idempotently so a re-run is safe
+    - Absorb late-arriving files without re-running history
+  what_you_need:
+    - An append-mostly source with deterministic event or updated timestamps
+    - A table past millions of rows where full reloads cost too much
+  steps:
+    - text: "Process a window that ends at a watermark and starts a lookback before it: scan from (max(watermark) - lookback) to now."
+      from_id: pattern-batch-incremental-watermark
+      from_field: solution
+    - text: The lookback absorbs late arrivals; the watermark bounds the work.
+      from_id: pattern-batch-incremental-watermark
+      from_field: solution
+    - text: Write idempotently (partition overwrite or MERGE) so a re-run is safe.
+      from_id: pattern-batch-incremental-watermark
+      from_field: solution
+    - text: Handle deletes explicitly (soft-delete or periodic full refresh) — they don't arrive in an append-only stream.
+      from_id: pattern-batch-incremental-watermark
+      from_field: solution
+    - text: Watch a naive is_incremental() without a lookback — it silently drops late data.
+      from_id: pattern-batch-incremental-watermark
+      from_field: tradeoffs
+    - text: Files arrive after the daily job already ran, so yesterday's numbers change the next morning.
+      from_id: runbook-late-files
+      from_field: description
+    - text: Re-process the late window idempotently (partition overwrite or MERGE), and widen the reprocessing window to cover observed lateness.
+      from_id: runbook-late-files
+      from_field: fix
+  check_yourself:
+    - A re-run for the same window produces identical output — partition overwrite or MERGE, no appends.
+    - "Yesterday's late files are absorbed by the lookback, and no full reload ran."
+  when_to_use:
+    - "Append-mostly sources"
+    - "Cost-sensitive pipelines"
+    - "Deterministic event/updated timestamps"
+  why: Incremental only pays off if it is safe to re-run — the watermark bounds the cost and the idempotent write bounds the blast radius.
+  gotchas:
+    - "A naive is_incremental() without a lookback silently drops late data."
+    - "Re-running the whole partition for one late file is wasteful — overwrite windows, not history."
+    - "Timezone mismatch between partner and pipeline shifts lateness by hours — measure arrival times in UTC."
+  production_notes:
+    - "Adopt a watermark policy: reprocess the last N days every run."
+    - "Use idempotent writes keyed by business date so a re-run is safe."
+  diagram: |
+    incremental run
+       |
+       |- watermark --> window = [max(watermark) - lookback, now]
+       |
+       |- lookback --> late files absorbed, no full reload
+       |
+       |- write --> OVERWRITE dt=... / MERGE --> re-run safe
+       |
+       |- deletes --> soft-delete or periodic full refresh
+  code:
+    - title: The incremental scan
+      lang: text
+      code: |
+        Process a window that ends at a watermark and starts a lookback before it.
+          scan from (max(watermark) - lookback) to now
+
+        The lookback absorbs late arrivals; the watermark bounds the work. Write
+        idempotently (partition overwrite or MERGE) so a re-run is safe.
+      source_id: pattern-batch-incremental-watermark
+    - title: List raw-file arrival times
+      lang: bash
+      code: |
+        aws s3api list-objects-v2 --bucket b --prefix in/ --query 'Contents[].LastModified'
+      source_id: runbook-late-files
+    - title: What to monitor
+      lang: text
+      code: |
+        - max file lateness
+        - count of late arrivals per run
+      source_id: runbook-late-files
+  source_refs: [pattern-batch-incremental-watermark, runbook-late-files]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/incremental-watermark-batch
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-batch-processing] }
+- id: tutorial-spark-tuning-memory-partitions
+  slug: spark-tuning-memory-partitions
+  type: tutorial
+  title: Tune a slow job — memory, partitions, baselines
+  description: >-
+    Run the tuning loop on a slow batch job: parse task-duration and shuffle
+    metrics, classify the stage as skew, partition count, spill or scan, apply
+    the single highest-impact change, and verify it against a stored baseline
+    the CI guard enforces.
+  category: cat-spark
+  difficulty: advanced
+  tags: [tutorial, spark, performance, tuning, spill]
+  series: data-processing
+  series_title: The Data Processing Series
+  lesson: 6
+  learning_objectives:
+    - Classify a slow stage into skew, partition count, spill, or scan
+    - Apply the single highest-impact fix with an expected effect
+    - Verify the change against baseline shuffle/spill/scan metrics
+  what_you_need:
+    - The job's event log or Spark UI metrics
+    - A stored cost baseline for the job
+    - Install: amp plugin add de-agent/spark-lens
+  steps:
+    - text: Parse task-duration and shuffle metrics.
+      from_id: agent-spark-optimizer
+      from_field: workflow
+    - text: Classify the stage — skew, partition count, spill, or scan.
+      from_id: agent-spark-optimizer
+      from_field: workflow
+    - text: Spill → increase partition count or raise executor memory.
+      from_id: runbook-spark-job-slow
+      from_field: fix
+    - text: Over-scan → add the partition predicate; confirm with bytes scanned.
+      from_id: runbook-spark-job-slow
+      from_field: fix
+    - text: Propose the single highest-impact change with expected effect, then verify against the baseline metrics.
+      from_id: agent-spark-optimizer
+      from_field: workflow
+    - text: Baseline shuffle/spill/scan metrics and fail CI on regression, and add a partition filter lint on source reads.
+      from_id: runbook-spark-job-slow
+      from_field: prevention
+  check_yourself:
+    - "You can name which of skew, partition count, spill, or scan was the cause, with the metrics to prove it."
+    - "The change you shipped is the single highest-impact one, and the stored baseline shows no regression."
+  when_to_use:
+    - "A batch job's runtime jumped and no code changed"
+    - "Before paying for bigger executors"
+  why: Tuning without a classification loop is guessing — parse, classify, fix one thing, and verify against a baseline.
+  gotchas:
+    - "repartition(1) serialises the stage — never reach for it to 'fix' slowness."
+    - "Spill shows up as slow tasks, not failures — check spill bytes before paying for bigger executors."
+    - "AQE skew-join healing does not fix over-scan; check bytes scanned separately."
+  production_notes:
+    - "Baseline shuffle/spill/scan metrics and fail CI on regression."
+    - "Monitor task duration p99/p50 ratio, shuffle read/write bytes per run, spill bytes per stage."
+  diagram: |
+    slow job
+       |
+       |- parse --> task-duration + shuffle metrics
+       |
+       |- classify --> skew | partition count | spill | scan
+       |
+       |- fix --> single highest-impact change
+       |
+       |- verify --> baseline metrics --> CI guard fails on regression
+  code:
+    - title: The tuning loop
+      lang: text
+      code: |
+        1. Parse task-duration and shuffle metrics.
+        2. Classify: skew, partition count, spill, or scan.
+        3. Propose the single highest-impact change with expected effect.
+        4. Verify against the baseline metrics.
+      source_id: agent-spark-optimizer
+    - title: What the event-log plugin adds
+      lang: text
+      code: |
+        Parses Spark event logs into a task histogram, flags skew and shuffle
+        amplification, and compares against a stored cost baseline.
+      source_id: plugin-spark-lens
+    - title: The prevention pair
+      lang: text
+      code: |
+        - Baseline shuffle/spill/scan metrics and fail CI on regression.
+        - Add a partition filter lint on source reads.
+      source_id: runbook-spark-job-slow
+  source_refs: [agent-spark-optimizer, runbook-spark-job-slow, plugin-spark-lens]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/spark-tuning-memory-partitions
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-spark] }
+- id: tutorial-spark-incident-diagnosis
+  slug: spark-incident-diagnosis
+  type: tutorial
+  title: The 3am batch incident path
+  description: >-
+    The nightly job is crawling or dead under memory pressure or skew. Follow
+    the incident path: collect the four pieces of evidence, read p50 vs p99
+    and the spill bytes, decide revert vs fix, escalate on golden-hour SLAs,
+    and record the skew/spill/scan signature so the next run is faster to
+    diagnose.
+  category: cat-spark
+  difficulty: advanced
+  tags: [tutorial, spark, incident, skew, spill]
+  series: data-processing
+  series_title: The Data Processing Series
+  lesson: 9
+  learning_objectives:
+    - Collect the four pieces of evidence a failing Spark run needs
+    - Decide between revert, a config change, and a code fix
+    - Record the skew/spill/scan signature for the cost-per-run history
+  what_you_need:
+    - The affected run's event log and Spark UI stage summary
+    - The job source and its recent config changes
+    - Install: amp plugin add de-agent/spark-lens
+  steps:
+    - text: Symptoms — job duration rose sharply with no code change, one or a few tasks dominate the stage, and executors idle while a handful run long.
+      from_id: runbook-spark-job-slow
+      from_field: symptoms
+    - text: Collect the evidence — Spark UI stage summary p50/p99 task durations, shuffle read/write and spill bytes per task, input bytes scanned vs the expected partition size, and the run's event log.
+      from_id: runbook-spark-job-slow
+      from_field: evidence_to_collect
+    - text: Skew if p99 >> p50 (10x+), uniform slowness if p50 is high; check input bytes scanned vs table size.
+      from_id: runbook-spark-job-slow
+      from_field: diagnosis
+    - text: No code rollback — the job is unchanged. Revert only if a config change (AQE flags, executor sizing) preceded the regression.
+      from_id: runbook-spark-job-slow
+      from_field: rollback
+    - text: Fix — skew gets AQE skew join or a salted hot key; spill gets more partitions or executor memory; over-scan gets a partition predicate. Never repartition(1).
+      from_id: runbook-spark-job-slow
+      from_field: fix
+    - text: Page the on-call data engineer if the job sits on a golden-hour SLA; otherwise file it and let the owning team run diagnosis in hours.
+      from_id: runbook-spark-job-slow
+      from_field: escalation
+    - text: Follow up — record the skew/spill/scan signature in the run's cost-per-run history, and add the partition-filter lint or CI metric guard that would have caught it.
+      from_id: runbook-spark-job-slow
+      from_field: follow_up
+  check_yourself:
+    - "The evidence packet is attached: p50/p99 durations, shuffle/spill bytes per task, input bytes scanned, and the event log."
+    - "The decision — revert vs AQE/salt/spill fix — cites a config change or a metric, not a hunch."
+  when_to_use:
+    - "A batch job's runtime jumped and no code changed"
+    - "Executors idle while a few tasks run long"
+    - "A nightly run failed or blew past its SLA"
+  why: 3am is the wrong time to start instrumenting — the incident path runs symptoms, evidence, rollback-or-fix, and leaves a signature behind.
+  gotchas:
+    - "Spill shows up as slow tasks, not failures — check spill bytes before paying for bigger executors."
+    - "repartition(1) serialises the stage — never reach for it to 'fix' slowness."
+    - "p99 much greater than p50 means skew; uniformly high p50 means capacity. Salting helps the first, not the second."
+  production_notes:
+    - "Monitor task duration p99/p50 ratio, shuffle read/write bytes per run, spill bytes per stage."
+    - "Baseline shuffle/spill/scan metrics so CI fails a regression before the SLA does."
+  diagram: |
+    3am incident
+       |
+       |- symptoms --> runtime jumped, no code change, few tasks dominate
+       |
+       |- evidence --> p50/p99 + shuffle/spill bytes + bytes scanned + event log
+       |
+       |- decide --> config change? revert : AQE / salt / partitions / predicate
+       |
+       |- escalate --> golden-hour SLA? page on-call
+       |
+       |- follow up --> record signature, add the CI guard
+  code:
+    - title: Evidence to collect
+      lang: text
+      code: |
+        - Spark UI stage summary: p50/p99 task durations for the slow stages
+        - Shuffle read/write and spill bytes per task
+        - Input bytes scanned vs the expected partition size
+        - The job's event log for the affected run
+      source_id: runbook-spark-job-slow
+    - title: Rollback and escalation rules
+      lang: text
+      code: |
+        No code rollback — the job is unchanged. Revert only if a config change
+        (AQE flags, executor sizing) preceded the regression.
+
+        Page the on-call data engineer if the job sits on a golden-hour SLA;
+        otherwise file it and let the owning team run diagnosis in hours.
+      source_id: runbook-spark-job-slow
+    - title: Turn the event log into a histogram
+      lang: bash
+      code: |
+        amp plugin add de-agent/spark-lens
+        /spark-analyze        # task histogram; flags skew and shuffle amplification
+      source_id: plugin-spark-lens
+  source_refs: [runbook-spark-job-slow, plugin-spark-lens]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/spark-incident-diagnosis
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-spark] }
+- id: tutorial-batch-capstone-checklist
+  slug: batch-capstone-checklist
+  type: tutorial
+  title: Capstone — the batch pipeline checklist
+  description: >-
+    Bring the API → S3 → Spark → Parquet starter up end to end, then audit it:
+    offline transform tests, idempotent partition-scoped writes, complete
+    partitions, replay-safe extraction, and baseline metrics with a CI guard.
+    One pipeline that exercises every lesson in the series.
+  category: cat-batch-processing
+  difficulty: intermediate
+  tags: [tutorial, batch, capstone, idempotency, checklist]
+  series: data-processing
+  series_title: The Data Processing Series
+  lesson: 10
+  learning_objectives:
+    - Run a batch pipeline end to end with offline tests
+    - Prove idempotency with a two-run row-count check
+    - Ship the completeness, hardening, and baseline guards
+  what_you_need:
+    - Docker (the starter runs MinIO + a local Spark)
+    - An API endpoint to extract from, or the seeded sample data
+  steps:
+    - text: The pipeline — REST API → extract (paginate + retry) → S3 raw/ (JSON, immutable) → PySpark transform (type, dedupe, partition) → S3 curated/ (Parquet, dt=.., Hive layout).
+      from_id: project-api-s3-spark-parquet
+      from_field: architecture
+    - text: "Bring it up — `make up` starts MinIO + a local Spark, `make seed` uploads sample raw JSON, `make test` runs the transform tests offline."
+      from_id: project-api-s3-spark-parquet
+      from_field: setup
+    - text: The tests that matter — row count stable across two runs (idempotency), no nulls in the business key, and partition dt matches the logical date, not the wall clock.
+      from_id: project-api-s3-spark-parquet
+      from_field: tests
+    - text: A re-run for the same date must not duplicate rows — the overwrite is partition-scoped.
+      from_id: project-api-s3-spark-parquet
+      from_field: failure_scenarios
+    - text: The invariant — running the same date twice yields identical output.
+      from_id: pattern-idempotent-partition-overwrite
+      from_field: solution
+    - text: Harden — retry with jittered exponential backoff, alert on extract lag and on null business keys, checksum raw files, and store the API's cursor for replay.
+      from_id: project-api-s3-spark-parquet
+      from_field: production_hardening
+    - text: A completeness check asserts every expected partition exists, and the logical date is stored explicitly as a partition column, not derived at read time.
+      from_id: runbook-missing-partition
+      from_field: prevention
+  check_yourself:
+    - "Two consecutive runs produce the same row count, and dt equals the logical date."
+    - "Baseline shuffle/spill/scan metrics exist and CI fails on a regression."
+    - "The overwrite is partition-scoped — a re-run for the same date does not duplicate rows."
+  when_to_use:
+    - "You finished the series and want one pipeline that exercises every lesson"
+    - "A new batch pipeline needs a production checklist before its first real run"
+  why: A pipeline is done when re-runs are safe, partitions are complete, and the metrics that would catch today's failure are baselined.
+  gotchas:
+    - "A re-run for the same date duplicates rows → the overwrite is not partition-scoped."
+    - "An API returns 429 → backoff then resume from the last cursor, not from page 1."
+    - "An empty partition and an absent partition both read as 'no data' downstream."
+  production_notes:
+    - "Checksum raw files; store the API's cursor for replay."
+    - "Store the logical date explicitly as a partition column, not derived at read time."
+  diagram: |
+    capstone checklist
+       |
+       |- run --> make up / seed / test (offline, MinIO + local Spark)
+       |
+       |- idempotency --> row count stable across two runs
+       |
+       |- completeness --> every expected dt partition exists
+       |
+       |- hardening --> backoff, cursor replay, raw checksums
+       |
+       |- guard --> baseline shuffle/spill/scan, CI fails on regression
+  code:
+    - title: Bring the pipeline up
+      lang: bash
+      code: |
+        make up    # starts MinIO + a local Spark
+        make seed  # uploads sample raw JSON
+        make test  # runs the transform tests offline
+      source_id: project-api-s3-spark-parquet
+    - title: The pipeline under test
+      lang: text
+      code: |
+        REST API ─▶ [extract: paginate + retry] ─▶ S3 raw/ (JSON, immutable)
+                                                          │
+                                                          ▼
+                                        [PySpark transform: type, dedupe, partition]
+                                                          │
+                                                          ▼
+                                        S3 curated/ (Parquet, dt=.., Hive layout)
+      source_id: project-api-s3-spark-parquet
+    - title: Failure scenarios to drill
+      lang: text
+      code: |
+        - API returns 429 → backoff then resume from the last cursor, not from page 1
+        - A page arrives with a changed field type → quarantine the page, alert
+        - A re-run for the same date duplicates rows → the overwrite is not partition-scoped
+      source_id: project-api-s3-spark-parquet
+  source_refs: [project-api-s3-spark-parquet, pattern-idempotent-partition-overwrite, runbook-missing-partition, runbook-spark-job-slow]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/batch-capstone-checklist
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-batch-processing] }

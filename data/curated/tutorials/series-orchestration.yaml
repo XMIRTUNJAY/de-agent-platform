@@ -1,0 +1,532 @@
+# The Orchestration Series — new lessons that join the four existing Airflow
+# tutorials (04-airflow.yaml) into one ordered 10-lesson series for the
+# orchestration roadmap stage. Every step derives from the cited source
+# field; structure is ours, wording is the source's.
+- id: tutorial-orchestration-mental-model
+  slug: orchestration-mental-model
+  type: tutorial
+  title: The orchestration mental model — DAGs, schedules, idempotency, backfills
+  description: >-
+    Build the map before touching code: a DAG plus its schedule decides when
+    runs happen, the idempotency test decides whether re-runs are safe,
+    catchup decides what happens to missed intervals, and a backfill decides
+    how history gets fixed — four decisions every later lesson sharpens.
+  category: cat-airflow
+  difficulty: beginner
+  tags: [tutorial, orchestration, airflow, mental-model, beginner]
+  series: orchestration
+  series_title: The Orchestration Series
+  lesson: 1
+  learning_objectives:
+    - Name the four decisions orchestration makes — schedule, catchup, idempotency, backfill
+    - Apply the idempotency test to a task before running anything
+    - Say what a backfill is for and why it is dangerous
+  what_you_need:
+    - An Airflow project to reason about — real or planned
+    - The pipeline's schedule and SLA
+    - The Airflow documentation at airflow.apache.org/docs
+  steps:
+    - text: Airflow's documentation covers DAG authoring, scheduling semantics and timetables, backfills and catchup, task state and retries, dynamic task mapping, and best practices — that list is the map of orchestration.
+      from_id: ref-airflow-docs
+      from_field: description
+    - text: Read the scheduling and best-practices pages before designing any recurring pipeline — they answer the idempotency and backfill questions the skills only sketch.
+      from_id: ref-airflow-docs
+      from_field: why
+    - text: Set `catchup` as a deliberate choice, not a default.
+      from_id: skill-airflow-dag-reviewer
+      from_field: body
+    - text: Hold every task to the idempotency test — "If this task runs twice for the same logical date, is the output the same?"
+      from_id: skill-airflow-dag-reviewer
+      from_field: body
+    - text: If no, fix it before anything else — retries will happen.
+      from_id: skill-airflow-dag-reviewer
+      from_field: body
+    - text: A backfill exists because historical output is wrong or missing and must be recomputed safely, without breaking production.
+      from_id: runbook-backfill-required
+      from_field: description
+    - text: Respect its blast radius — backfills corrupt production or take down the daily run.
+      from_id: pattern-backfill-safety
+      from_field: problem
+  check_yourself:
+    - You can say what a DAG, a logical date, `catchup` and a backfill each decide about a pipeline.
+    - Asked whether a task is safe to re-run, you reach for the idempotency test instead of a guess.
+    - Given a wrong historical date range, you name the backfill runbook before touching anything.
+  when_to_use:
+    - "Designing your first recurring pipeline"
+    - "Onboarding onto a codebase full of scheduled DAGs"
+  why: Orchestration is four decisions — what runs, when it runs, whether re-runs are safe, and how history gets fixed — and every later lesson sharpens one of them.
+  gotchas:
+    - "`catchup` is a deliberate choice, not a default."
+    - "Retries will happen — fix a task that is not idempotent before anything else."
+    - "Backfills corrupt production or take down the daily run when run unmanaged."
+  production_notes:
+    - "The scheduling and best-practices pages answer the idempotency and backfill questions the skills only sketch."
+    - "Keep pipelines idempotent so a backfill is a routine operation."
+  diagram: |
+    orchestration mental model
+       |
+       |- DAG + schedule + catchup --> when runs happen
+       |
+       |- idempotency test --> whether re-runs are safe
+       |
+       |- backfill + shadow swap --> how history gets fixed
+  code:
+    - title: The idempotency test
+      lang: text
+      code: |
+        "If this task runs twice for the same logical date, is the output the same?"
+        If no, fix it before anything else — retries will happen.
+      source_id: skill-airflow-dag-reviewer
+    - title: What the Airflow docs cover
+      lang: text
+      code: |
+        DAG authoring, scheduling semantics and timetables, backfills and catchup,
+        task state and retries, dynamic task mapping, and best practices.
+      source_id: ref-airflow-docs
+  source_refs: [ref-airflow-docs, skill-airflow-dag-reviewer, runbook-backfill-required, pattern-backfill-safety]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/orchestration-mental-model
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-23'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-airflow] }
+- id: tutorial-dag-dependencies-retries
+  slug: dag-dependencies-retries
+  type: tutorial
+  title: Wire task dependencies and retries that survive failure
+  description: >-
+    Model the pipeline as task groups and give every task deliberate retries
+    with backoff, a timeout and a pool — the skeleton's guarantees, verified
+    the way the DAG reviewer verifies them before the DAG ships.
+  category: cat-airflow
+  difficulty: intermediate
+  tags: [tutorial, airflow, dag, dependencies, retries]
+  series: orchestration
+  series_title: The Orchestration Series
+  lesson: 3
+  learning_objectives:
+    - Model task structure with task groups from the idempotent skeleton
+    - Choose retries and timeouts deliberately, with backoff
+    - Pass the reviewer's retry and concurrency check
+  what_you_need:
+    - A scaffolded DAG or any DAG file under review
+    - The pipeline's SLA
+    - Install: npx de-agent-platform add airflow-dag-reviewer
+  steps:
+    - text: Scaffold from the idempotent DAG skeleton — task groups, retries and backoff, SLA, pools, and a sensor using reschedule mode are built in.
+      from_id: tpl-airflow-dag
+      from_field: description
+    - text: Choose retries and timeouts deliberately.
+      from_id: skill-airflow-dag-reviewer
+      from_field: learning_objectives
+    - text: Retries have a backoff; a task that retries instantly will hammer a downstream.
+      from_id: skill-airflow-dag-reviewer
+      from_field: body
+    - text: Check retry, timeout and concurrency settings for every task.
+      from_id: agent-pipeline-reviewer
+      from_field: workflow
+    - text: Run the reviewer over the DAG — it flags unsafe retries, missing catchup policy and unbounded concurrency.
+      from_id: skill-airflow-dag-reviewer
+      from_field: description
+    - text: Make every task safe to re-run before adding the next one.
+      from_id: skill-airflow-dag-reviewer
+      from_field: learning_objectives
+  check_yourself:
+    - Every task in the DAG declares retries with backoff, a timeout and a pool.
+    - Running the reviewer over the DAG returns no unsafe-retry or unbounded-concurrency findings.
+  when_to_use:
+    - "Wiring task dependencies and retry settings in a new or inherited DAG"
+    - "A task retries instantly and hammers a downstream system"
+  why: Dependencies decide what runs with what, retries decide what happens when it fails — take both from the skeleton instead of rediscovering them per task.
+  gotchas:
+    - "Retries have a backoff; a task that retries instantly will hammer a downstream."
+    - "The reviewer checks for non-idempotent tasks, unsafe retries, missing catchup policy and unbounded concurrency."
+  production_notes:
+    - "SLA, pools and backoff come from the template — keep them instead of stripping defaults."
+    - "Make every task safe to re-run before adding the next one."
+  diagram: |
+    dependencies + retries
+       |
+       |- task groups --> pipeline structure
+       |
+       |- retries + backoff --> failure handling
+       |
+       |- timeouts + pools + SLA --> bounded resource use
+  code:
+    - title: What the reviewer checks
+      lang: text
+      code: |
+        Checks a DAG for non-idempotent tasks, unsafe retries, missing catchup
+        policy, ambiguous catchup/backfill semantics and unbounded concurrency.
+      source_id: skill-airflow-dag-reviewer
+    - title: Scaffold with the guarantees
+      lang: bash
+      code: |
+        amp template new de-agent/airflow-dag ./dags
+      source_id: tpl-airflow-dag
+  source_refs: [tpl-airflow-dag, skill-airflow-dag-reviewer, agent-pipeline-reviewer]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/dag-dependencies-retries
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-23'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-airflow] }
+- id: tutorial-sensors-data-aware-scheduling
+  slug: sensors-data-aware-scheduling
+  type: tutorial
+  title: Make a DAG data-aware with reschedule-mode sensors
+  description: >-
+    Stop guessing when upstream data arrives: add a sensor in reschedule mode
+    so the DAG waits for its input without holding a worker slot, read the
+    scheduling-semantics pages first, and bound the sensor with timeout and
+    concurrency settings like any other task.
+  category: cat-airflow
+  difficulty: intermediate
+  tags: [tutorial, airflow, sensors, scheduling, data-aware]
+  series: orchestration
+  series_title: The Orchestration Series
+  lesson: 4
+  learning_objectives:
+    - Add a sensor that waits for upstream data instead of assuming arrival
+    - Run sensors in reschedule mode so they release worker slots
+    - Bound the sensor with retry, timeout and concurrency settings
+  what_you_need:
+    - A DAG whose input arrives on someone else's schedule
+    - The daily production schedule for the target DAG
+    - Install: npx de-agent-platform add airflow-dag-reviewer
+  steps:
+    - text: Give the DAG a sensor using reschedule mode so it waits for its input.
+      from_id: tpl-airflow-dag
+      from_field: description
+    - text: Sensors use `reschedule`, not `poke`, so they don't hold a worker slot.
+      from_id: skill-airflow-dag-reviewer
+      from_field: body
+    - text: Read the scheduling semantics and timetables pages before designing data-aware waits.
+      from_id: ref-airflow-docs
+      from_field: description
+    - text: Check retry, timeout and concurrency settings for the sensor too.
+      from_id: agent-pipeline-reviewer
+      from_field: workflow
+    - text: The reviewer flags unbounded concurrency — a `poke` sensor holding a slot is exactly that.
+      from_id: skill-airflow-dag-reviewer
+      from_field: description
+  check_yourself:
+    - The sensor declares reschedule mode, a timeout and a pool.
+    - While the sensor waits, no worker slot is held.
+  when_to_use:
+    - "A DAG depends on a file, table or partition another job produces"
+    - "Sensors are consuming worker slots during the day"
+  why: A sensor turns someone else's schedule into your dependency — but only reschedule mode does it without holding a worker slot hostage.
+  gotchas:
+    - "Sensors use `reschedule`, not `poke`, so they don't hold a worker slot."
+    - "A sensor needs retry, timeout and concurrency settings like any other task."
+  production_notes:
+    - "The template ships a sensor using reschedule mode — keep it when you edit the skeleton."
+    - "Read scheduling semantics and timetables before designing data-aware waits."
+  diagram: |
+    data-aware scheduling
+       |
+       |- upstream job writes input --> sensor waits
+       |
+       |- reschedule mode --> worker slot released between pokes
+       |
+       |- timeout + retries --> bounded wait
+  code:
+    - title: Sensor rule from the review checklist
+      lang: text
+      code: |
+        Sensors use `reschedule`, not `poke`, so they don't hold a worker slot.
+      source_id: skill-airflow-dag-reviewer
+    - title: What the template ships
+      lang: text
+      code: |
+        An idempotent DAG skeleton with task groups, retries and backoff, SLA,
+        pools, and a sensor using reschedule mode.
+      source_id: tpl-airflow-dag
+  source_refs: [tpl-airflow-dag, skill-airflow-dag-reviewer, ref-airflow-docs, agent-pipeline-reviewer]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/sensors-data-aware-scheduling
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-23'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-airflow] }
+- id: tutorial-dynamic-mapping-date-batches
+  slug: dynamic-mapping-date-batches
+  type: tutorial
+  title: Fan out over date batches with dynamic task mapping
+  description: >-
+    Run one task definition over many date batches with dynamic task mapping —
+    the docs' mapping feature applied the way the backfill material demands:
+    batched ranges, smallest first, a validated sample after each batch.
+  category: cat-airflow
+  difficulty: intermediate
+  tags: [tutorial, airflow, dynamic-task-mapping, backfill, batches]
+  series: orchestration
+  series_title: The Orchestration Series
+  lesson: 6
+  learning_objectives:
+    - Map one task over many date batches with dynamic task mapping
+    - Scope the fan-out by date and by dependency
+    - Validate a sample after each batch before continuing
+  what_you_need:
+    - A date range to recompute or process
+    - The cluster's idle window and resource budget
+    - Install: npx de-agent-platform add backfill-planner
+  steps:
+    - text: Use dynamic task mapping — one of the topics Airflow's documentation covers — to run one task definition over many inputs.
+      from_id: ref-airflow-docs
+      from_field: description
+    - text: Scope a backfill by date and by dependency.
+      from_id: skill-backfill-planner
+      from_field: learning_objectives
+    - text: Prefer batched date ranges over one large range.
+      from_id: runbook-backfill-required
+      from_field: commands
+    - text: One huge date range starves the cluster; batch it and validate a sample per batch.
+      from_id: runbook-backfill-required
+      from_field: gotchas
+    - text: Backfill in date batches, smallest first, validating a sample after each batch.
+      from_id: skill-backfill-planner
+      from_field: body
+    - text: Stage a backfill gradually with validation between batches.
+      from_id: skill-backfill-planner
+      from_field: learning_objectives
+  check_yourself:
+    - The DAG maps the task over weekly date batches, smallest first, instead of one 90-day range.
+    - Each batch instance validates a sample before the next batch starts.
+  when_to_use:
+    - "The same transformation must run over many dates or partitions"
+    - "A single large range would starve the cluster"
+  why: Dynamic task mapping turns 'run this over N dates' into N checked instances — the batched, validated shape the backfill material demands.
+  gotchas:
+    - "One huge date range starves the cluster; batch it and validate a sample per batch."
+    - "Backfill in date batches, smallest first, validating a sample after each batch."
+  production_notes:
+    - "Detect which downstream tables must also be rebuilt before fanning out."
+    - "Monitor backfill progress, resource contention and validation pass rate."
+  diagram: |
+    dynamic mapping over date batches
+       |
+       |- date range --> batch into ranges, smallest first
+       |
+       |- map task over batches --> N instances
+       |
+       |- validate sample per batch --> proceed or stop
+  code:
+    - title: Batched range command
+      lang: bash
+      code: |
+        airflow dags backfill --start-date YYYY-MM-DD --end-date YYYY-MM-DD --reset-dagruns dag_id
+        # prefer batched date ranges over one large range
+      source_id: runbook-backfill-required
+    - title: Execution rule
+      lang: text
+      code: |
+        Backfill in date batches, smallest first, validating a sample after each batch.
+      source_id: skill-backfill-planner
+  source_refs: [ref-airflow-docs, skill-backfill-planner, runbook-backfill-required]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/dynamic-mapping-date-batches
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-23'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-airflow] }
+- id: tutorial-production-dag-gotchas
+  slug: production-dag-gotchas
+  type: tutorial
+  title: Production gotchas — topology, timeouts, concurrency
+  description: >-
+    The DAG failures that become pages: unbounded concurrency, missing
+    catchup policy, and a backfill that starves the daily run — cap them with
+    max_active_runs and pools, then wire the monitoring and escalation path
+    the backfill runbook prescribes.
+  category: cat-airflow
+  difficulty: intermediate
+  tags: [tutorial, airflow, production, concurrency, gotchas]
+  series: orchestration
+  series_title: The Orchestration Series
+  lesson: 8
+  learning_objectives:
+    - Cap max_active_runs and pool limits before a backfill starves the daily run
+    - Find unsafe retries, missing catchup policy and unbounded concurrency
+    - Monitor backfill progress, resource contention and validation pass rate
+  what_you_need:
+    - The DAGs currently in production
+    - The daily production schedule and golden-hour windows
+    - Install: npx de-agent-platform add airflow-dag-reviewer
+  steps:
+    - text: Check the DAG for unsafe retries, missing catchup policy, ambiguous catchup/backfill semantics and unbounded concurrency.
+      from_id: skill-airflow-dag-reviewer
+      from_field: description
+    - text: Cap max_active_runs and pool limits so a backfill cannot starve the daily run.
+      from_id: skill-airflow-dag-reviewer
+      from_field: body
+    - text: Never overlap the production window; never backfill without a rollback path.
+      from_id: pattern-backfill-safety
+      from_field: solution
+    - text: Design against the incident — an unmanaged backfill can starve daily production runs and double-write history.
+      from_id: runbook-backfill-required
+      from_field: impact
+    - text: Monitor backfill progress, resource contention and validation pass rate.
+      from_id: runbook-backfill-required
+      from_field: monitoring
+    - text: Schedule with the platform owner; escalate if the backfill window collides with a golden-hour production run.
+      from_id: runbook-backfill-required
+      from_field: escalation
+  check_yourself:
+    - max_active_runs and pool limits are set on every DAG a backfill could touch.
+    - The escalation path names the platform owner and the golden-hour window that must stay clear.
+  when_to_use:
+    - "Hardening a DAG before it takes production traffic"
+    - "Planning a backfill that runs beside live schedules"
+  why: Unbounded concurrency and a missing catchup policy only surface when a backfill collides with the daily run — cap both first.
+  gotchas:
+    - "Cap max_active_runs and pool limits so a backfill cannot starve the daily run."
+    - "Never overlap the production window; never backfill without a rollback path."
+    - "Ambiguous catchup/backfill semantics are a review finding, not a footnote."
+  production_notes:
+    - "Monitor backfill progress, resource contention and validation pass rate."
+    - "Escalate if the backfill window collides with a golden-hour production run."
+  diagram: |
+    production topology
+       |
+       |- max_active_runs + pools --> contention capped
+       |
+       |- catchup policy --> catchup/backfill semantics explicit
+       |
+       |- monitoring --> progress, contention, validation pass rate
+  code:
+    - title: Concurrency guard from the checklist
+      lang: text
+      code: |
+        `max_active_runs` and pool limits prevent a backfill from starving the daily run.
+      source_id: skill-airflow-dag-reviewer
+    - title: What the reviewer flags
+      lang: text
+      code: |
+        Non-idempotent tasks, unsafe retries, missing catchup policy, ambiguous
+        catchup/backfill semantics and unbounded concurrency.
+      source_id: skill-airflow-dag-reviewer
+  source_refs: [skill-airflow-dag-reviewer, pattern-backfill-safety, runbook-backfill-required]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/production-dag-gotchas
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-23'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-airflow] }
+- id: tutorial-orchestration-capstone
+  slug: orchestration-capstone
+  type: tutorial
+  title: Capstone — the checklist that decides whether a DAG ships
+  description: >-
+    Close the series by running the full review pass over your own pipeline:
+    the idempotency test per task, partitioned or MERGE writes, deliberate
+    catchup, backoff retries, reschedule sensors, bounded concurrency — and
+    a documented runbook for the day history needs fixing.
+  category: cat-airflow
+  difficulty: intermediate
+  tags: [tutorial, orchestration, airflow, checklist, capstone]
+  series: orchestration
+  series_title: The Orchestration Series
+  lesson: 10
+  learning_objectives:
+    - Run the full four-step review pass end to end
+    - Confirm every checklist item on your own pipeline
+    - Leave behind a runbook so the next backfill is routine
+  what_you_need:
+    - The DAG you built across this series
+    - The pipeline's schedule, SLA and lineage
+    - Install: npx de-agent-platform add airflow-dag-reviewer
+  steps:
+    - text: Apply the idempotency test to every task.
+      from_id: agent-pipeline-reviewer
+      from_field: workflow
+    - text: Every task writes to a partition keyed by the logical date, or uses MERGE.
+      from_id: skill-airflow-dag-reviewer
+      from_field: body
+    - text: Set `catchup` as a deliberate choice, not a default.
+      from_id: skill-airflow-dag-reviewer
+      from_field: body
+    - text: Retries have a backoff; a task that retries instantly will hammer a downstream.
+      from_id: skill-airflow-dag-reviewer
+      from_field: body
+    - text: Cap max_active_runs and pool limits so a backfill cannot starve the daily run.
+      from_id: skill-airflow-dag-reviewer
+      from_field: body
+    - text: Sensors use `reschedule`, not `poke`, so they don't hold a worker slot.
+      from_id: skill-airflow-dag-reviewer
+      from_field: body
+    - text: Keep pipelines idempotent so a backfill is a routine operation.
+      from_id: runbook-backfill-required
+      from_field: prevention
+  check_yourself:
+    - The four-step review pass — idempotency, retry/timeout/concurrency, backfill prediction, missing tests — runs clean over the capstone DAG.
+    - A documented backfill runbook exists for the pipeline, with its idle window and resource budget.
+  when_to_use:
+    - "Signing off a DAG before it merges or takes production traffic"
+    - "Auditing an inherited DAG for the first time"
+  why: Ten lessons reduce to one list — if the checklist passes, the DAG survives retries, catchup and the next backfill.
+  gotchas:
+    - "A task that appends without a partition key will duplicate rows on retry."
+    - "Never overlap the production window; never backfill without a rollback path."
+    - "Backfilling without a written definition of correctness just relocates the bug."
+  production_notes:
+    - "Document a backfill runbook per pipeline, with its idle window and resource budget."
+    - "Keep the fixture of 8 DAGs with seeded non-idempotency bugs in CI so regressions resurface."
+  diagram: |
+    capstone checklist
+       |
+       |- idempotency test --> partition or MERGE writes
+       |
+       |- deliberate catchup --> backoff retries --> reschedule sensors
+       |
+       |- bounded concurrency --> backfill runbook --> ship
+  code:
+    - title: The full DAG review checklist
+      lang: text
+      code: |
+        1. Every task writes to a partition keyed by the logical date, or uses MERGE.
+        2. `catchup` is a deliberate choice, not a default.
+        3. Retries have a backoff; a task that retries instantly will hammer a downstream.
+        4. `max_active_runs` and pool limits prevent a backfill from starving the daily run.
+        5. Sensors use `reschedule`, not `poke`, so they don't hold a worker slot.
+      source_id: skill-airflow-dag-reviewer
+    - title: The four-step review pass
+      lang: text
+      code: |
+        1. Apply the idempotency test to every task.
+        2. Check retry, timeout and concurrency settings.
+        3. Predict backfill behaviour.
+        4. Propose missing integration tests.
+      source_id: agent-pipeline-reviewer
+  source_refs: [agent-pipeline-reviewer, skill-airflow-dag-reviewer, runbook-backfill-required, pattern-backfill-safety]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/orchestration-capstone
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-23'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-airflow] }

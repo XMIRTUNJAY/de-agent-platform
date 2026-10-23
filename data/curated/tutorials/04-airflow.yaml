@@ -14,6 +14,9 @@
   category: cat-airflow
   difficulty: beginner
   tags: [tutorial, airflow, dag, review, idempotency, beginner]
+  series: orchestration
+  series_title: The Orchestration Series
+  lesson: 5
   learning_objectives:
     - Apply the idempotency test to every task in a DAG
     - Justify retry, timeout and concurrency settings per task
@@ -107,6 +110,9 @@
   category: cat-airflow
   difficulty: intermediate
   tags: [tutorial, backfill, airflow, planning, safety]
+  series: orchestration
+  series_title: The Orchestration Series
+  lesson: 9
   learning_objectives:
     - Write correctness criteria for a backfill before running it
     - Compute the downstream impact set from lineage
@@ -194,6 +200,9 @@
   category: cat-airflow
   difficulty: beginner
   tags: [tutorial, airflow, dag, template, scaffolding, beginner]
+  series: orchestration
+  series_title: The Orchestration Series
+  lesson: 2
   learning_objectives:
     - Scaffold a DAG project with tests and a Dockerfile from the template
     - Write tasks that are safe to re-run from day one
@@ -287,6 +296,9 @@
   category: cat-airflow
   difficulty: intermediate
   tags: [tutorial, airflow, backfill, hook, guardrail]
+  series: orchestration
+  series_title: The Orchestration Series
+  lesson: 7
   learning_objectives:
     - Install a pre-run gate that intercepts backfill triggers
     - State the three requirements the hook enforces before any backfill

@@ -3,6 +3,7 @@
  * publishing a broken registry.
  */
 import { CHECKS } from './evidence.mjs';
+import { validateSeriesFields } from './series.mjs';
 const REQUIRED_COMMON = ['id', 'slug', 'type', 'title', 'description', 'category'];
 export const REQUIRED_BY_TYPE = {
   skill: ['version', 'license', 'verification', 'last_verified'],
@@ -122,6 +123,9 @@ export function validate({ resources, taxonomy, meta }) {
       }
     }
   }
+
+  // series consistency: lesson/series pairing, 1..10 range, duplicate lessons
+  errors.push(...validateSeriesFields(resources));
 
   return { errors, warnings, counts: { resources: resources.length, ids: ids.size } };
 }

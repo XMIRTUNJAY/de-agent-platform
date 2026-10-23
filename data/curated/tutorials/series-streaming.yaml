@@ -1,0 +1,602 @@
+# The Streaming Series — lessons authored for the 13x10 series; structure ours, wording the source's.
+- id: tutorial-streaming-mental-model
+  slug: streaming-mental-model
+  type: tutorial
+  title: >-
+    Hold the streaming mental model: events, partitions, delivery semantics
+  description: >-
+    Build the vocabulary before touching a cluster: events instead of rows,
+    partitions instead of tables, at-least-once delivery instead of exactly-once,
+    and the lambda/kappa decision for speed versus correctness. Every later
+    lesson in this series leans on these four ideas.
+  category: cat-streaming
+  series: streaming
+  series_title: The Streaming Series
+  lesson: 1
+  difficulty: beginner
+  tags: [tutorial, streaming, kafka, architecture, concepts]
+  learning_objectives:
+    - Explain why ordering and partitions behave the way they do
+    - Treat at-least-once delivery and replays as the normal case
+    - Choose between lambda, kappa, and plain batch for a latency and reprocessing need
+  what_you_need:
+    - No cluster required — this is a concepts lesson
+    - The Apache Kafka documentation open beside you
+  steps:
+    - text: Read the map first — the docs cover architecture and design, delivery semantics, the protocol, consumer groups and offsets, operations, and security.
+      from_id: ref-kafka-docs
+      from_field: description
+    - text: The design section explains why ordering and partitions behave the way they do; the operations section is the runbook companion.
+      from_id: ref-kafka-docs
+      from_field: why
+    - text: Set your expectations for delivery — at-least-once delivery is the norm, replays happen after failure, and consumers must not see duplicates.
+      from_id: pattern-streaming-dedup-upsert
+      from_field: forces
+    - text: Name the core tradeoff — streaming is fast but hard; batch is simple but slow; you need both speed and correctness.
+      from_id: pattern-lambda-vs-kappa
+      from_field: problem
+    - text: Learn the two architectures — Lambda runs a batch layer (authoritative, reprocessable) plus a speed layer (approximate, low-latency), merged at query time; Kappa is one streaming path where reprocessing means replaying the log, which requires long log retention and replay safety.
+      from_id: pattern-lambda-vs-kappa
+      from_field: solution
+    - text: Carry one health probe into every cluster — is lag rising, flat, or falling? Flat at a high number is fine; rising is not.
+      from_id: skill-kafka-lag-triage
+      from_field: body
+  check_yourself:
+    - You can say why a partition gives per-key ordering and why the design section of the docs is where that behavior is explained.
+    - Asked whether a nightly batch needs lambda or kappa, you answer with the pattern's own exit — neither, if a nightly batch genuinely meets the SLA.
+  when_to_use:
+    - "You are new to streaming and need the vocabulary before touching a cluster"
+    - "A team debate between lambda and kappa needs a decision framework"
+  why: Every streaming incident traces back to a violated assumption about ordering, delivery, or replay — hold the model before holding the tools.
+  gotchas:
+    - "At-least-once is the norm — replays happen after failure, so consumers must tolerate duplicates from day one."
+    - "Flat lag at a high number is fine; rising is not — do not alert on an absolute lag number."
+    - "Lambda means two code paths and two bugs — the speed layer must stay consistent with the batch layer."
+  production_notes:
+    - "Keep raw immutable so history is always reprocessable — the modern default is a single lakehouse path with replayable streams, a pragmatic kappa."
+    - "Neither pattern if a nightly batch genuinely meets the SLA — keep it simple."
+  diagram: |
+    streaming mental model
+       |
+       |- events, not rows --> append-only log, ordered per partition
+       |
+       |- at-least-once --> replays happen after failure --> consumers dedupe
+       |
+       |- batch: simple + slow | stream: fast + hard
+       |
+       |- lambda --> batch (authoritative) + speed (approx) --> serve
+       |- kappa  --> one path; reprocess = replay the log
+       |
+        --> probe every cluster: is lag rising, flat, or falling?
+  code:
+    - title: Lambda vs Kappa in one view
+      lang: text
+      code: |
+        Lambda:  source ─┬─ batch (authoritative) ─┐
+                         └─ speed (approx)       ─┴─▶ serve
+        Kappa:   source ─▶ stream ─▶ table ─▶ serve   (reprocess = replay)
+      source_id: pattern-lambda-vs-kappa
+    - title: The delivery contract
+      lang: text
+      code: |
+        - At-least-once delivery is the norm
+        - Replays happen after failure
+        - Consumers must not see duplicates
+      source_id: pattern-streaming-dedup-upsert
+    - title: The three questions
+      lang: text
+      code: |
+        1. Is lag rising, flat, or falling? Flat at a high number is fine; rising is not.
+        2. Is lag even across partitions? Skew means a hot key, not capacity.
+        3. Is the consumer group stable? Frequent `PreparingRebalance` is the real bug.
+      source_id: skill-kafka-lag-triage
+  source_refs: [ref-kafka-docs, pattern-lambda-vs-kappa, pattern-streaming-dedup-upsert, skill-kafka-lag-triage]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/streaming-mental-model
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-streaming] }
+- id: tutorial-streaming-idempotent-sink
+  slug: streaming-idempotent-sink
+  type: tutorial
+  title: Make the sink idempotent so replays never duplicate rows
+  description: >-
+    The core producer-side reliability skill for streams: you cannot stop
+    replays, so the sink must converge. Deduplicate by a business key and
+    event time within the watermark, MERGE on the key, and rank change events
+    by (lsn, ts_ms) — never by arrival time.
+  category: cat-streaming
+  series: streaming
+  series_title: The Streaming Series
+  lesson: 3
+  difficulty: intermediate
+  tags: [tutorial, streaming, kafka, dedup, merge, idempotency]
+  learning_objectives:
+    - Make the sink idempotent rather than trying to make the source exactly-once
+    - Deduplicate by a business key + event time within the watermark
+    - Rank change events deterministically by (lsn, ts_ms), never by arrival time
+  what_you_need:
+    - A stream writing into Delta/Iceberg or a warehouse table with a stable business key
+    - Install: npx de-agent-platform add cdc-merge-designer
+  steps:
+    - text: Name the failure mode — streaming sinks either duplicate on replay or lose rows on failure.
+      from_id: pattern-streaming-dedup-upsert
+      from_field: problem
+    - text: Make the sink idempotent rather than trying to make the source exactly-once.
+      from_id: pattern-streaming-dedup-upsert
+      from_field: solution
+    - text: Deduplicate by a business key + event time within the watermark, then MERGE (upsert) on the key — a replay recomputes the same rows and merges to the same state, idempotent by construction.
+      from_id: pattern-streaming-dedup-upsert
+      from_field: solution
+    - text: Order by event time, not arrival time.
+      from_id: pattern-streaming-dedup-upsert
+      from_field: solution
+    - text: For change streams, rank by `(lsn, ts_ms)` — never by ingestion time; ranking by LSN makes re-running the same micro-batch produce the same table.
+      from_id: skill-cdc-merge-designer
+      from_field: body
+    - text: Deduplicate before merging — keep the latest event per primary key with a window function, then merge once.
+      from_id: skill-cdc-merge-designer
+      from_field: body
+    - text: Plan for checkpoint loss — checkpoint lost means duplicates, and the fix is making the sink idempotent.
+      from_id: project-kafka-spark-delta
+      from_field: failure_scenarios
+  check_yourself:
+    - Replaying the same micro-batch twice produces an identical table — the merge is idempotent by construction.
+    - The dedupe key is a business key plus event time within the watermark, not an offset and not an arrival timestamp.
+  when_to_use:
+    - "Kafka → Delta/Iceberg/warehouse"
+    - "Any replay-prone stream"
+  why: You cannot stop replays, so the sink must converge to the same state no matter how many times a batch arrives.
+  gotchas:
+    - "Ranking by arrival time breaks idempotency — rank by (lsn, ts_ms) or event time."
+    - "The pattern requires a stable business key and event time; state cost is the price."
+    - "A pure append-only event log with no dedup need does not need this pattern."
+  production_notes:
+    - "Correct under replay with no reliance on perfect exactly-once — that is the goal, and it is achievable."
+    - "MERGE aggregates on the window key so replays converge."
+  diagram: |
+    idempotent sink
+       |
+       |- stream arrives (at-least-once, replays included)
+       |
+       |- windowed dedupe by business key + event time
+       |
+       |- MERGE (upsert on key) --> table converges
+       |
+        --> replay the same batch --> same rows --> same state
+  code:
+    - title: The pattern in one line
+      lang: text
+      code: |
+        stream ─▶ [windowed dedupe by key] ─▶ MERGE (upsert on key) ─▶ table
+      source_id: pattern-streaming-dedup-upsert
+    - title: Ordering and idempotency rules
+      lang: text
+      code: |
+        Events arrive out of order. Rank by `(lsn, ts_ms)` — never by ingestion time.
+
+        Re-running the same micro-batch must produce the same table. Ranking by LSN
+        guarantees this; ranking by arrival time does not.
+      source_id: skill-cdc-merge-designer
+  source_refs: [pattern-streaming-dedup-upsert, skill-cdc-merge-designer, project-kafka-spark-delta]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/streaming-idempotent-sink
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-streaming] }
+- id: tutorial-streaming-consumer-reliability
+  slug: streaming-consumer-reliability
+  type: tutorial
+  title: Own the consumer side — offsets, rebalances, and the KIP-848 protocol
+  description: >-
+    Consumer reliability is where streams quietly break: a rebalance loop looks
+    like slowness, consumers past the partition count buy nothing, and
+    stop-the-world rebalances pause consumption. Read group state, fix the
+    timeouts, and know what the next-generation protocol changes.
+  category: cat-kafka
+  series: streaming
+  series_title: The Streaming Series
+  lesson: 4
+  difficulty: intermediate
+  tags: [tutorial, kafka, consumer-group, offsets, rebalancing]
+  learning_objectives:
+    - Explain how consumer groups and offsets decide who reads what
+    - Detect a rebalance loop from consumer-group state history
+    - Know what the KIP-848 protocol changes about rebalancing
+  what_you_need:
+    - kafka-consumer-groups CLI access to the cluster
+    - Install: npx de-agent-platform add kafka-consumer-lag-triage
+  steps:
+    - text: Ground yourself in the mechanics — consumer groups and offsets are what decide who reads what, and delivery semantics decide what a restart means.
+      from_id: ref-kafka-docs
+      from_field: description
+    - text: Get per-partition lag — uniform vs skewed tells you capacity vs key skew.
+      from_id: runbook-kafka-consumer-lagging
+      from_field: diagnosis
+    - text: Check the consumer-group state history for `PreparingRebalance`.
+      from_id: runbook-kafka-consumer-lagging
+      from_field: diagnosis
+    - text: Read the signature — lag resets to zero then climbs means a rebalance loop; check `session.timeout.ms`.
+      from_id: skill-kafka-lag-triage
+      from_field: body
+    - text: Know where the protocol is going — the KIP-848 consumer protocol in Apache Kafka 4.0 redesigns consumer group rebalancing to eliminate stop-the-world pauses.
+      from_id: ref-optimize-consumer-rebalancing-on-amazon-msk-with-next-generation
+      from_field: description
+    - text: When a rebalance loop is the bug — raise session.timeout.ms / max.poll.interval.ms.
+      from_id: runbook-kafka-consumer-lagging
+      from_field: fix
+    - text: Before scaling the fleet — adding consumers past the partition count buys nothing.
+      from_id: runbook-kafka-consumer-lagging
+      from_field: gotchas
+  check_yourself:
+    - Frequent `PreparingRebalance` in the group state history, with lag that resets to zero then climbs, is a rebalance loop — not a slow consumer.
+    - A 13th consumer on a 12-partition topic changes nothing — partitions cap parallelism.
+  when_to_use:
+    - "Consumers restart or rebalance more often than the workload explains"
+    - "You need to reason about offsets before changing consumer configs"
+  why: A rebalance loop steals consumption time and can look like slowness, so the consumer side is where streaming reliability is usually lost first.
+  gotchas:
+    - "A rebalance loop can look like slowness: check the group state history for PreparingRebalance."
+    - "Adding consumers past the partition count buys nothing."
+    - "Stop-the-world pauses are the problem the next-generation protocol eliminates — older protocols pause all consumption during a rebalance."
+  production_notes:
+    - "Alert on lag slope, not on an absolute lag number."
+    - "Rebalance count belongs in monitoring next to consumer lag per partition and DLQ depth."
+  diagram: |
+    consumer reliability
+       |
+       |- group subscribes --> partitions split across members
+       |
+       |- offsets committed per partition --> restart resumes, not re-reads
+       |
+       |- PreparingRebalance looping --> raise session.timeout.ms / max.poll.interval.ms
+       |
+       |- consumers > partitions --> idle members, no gain
+       |
+        --> KIP-848 (Kafka 4.0): rebalancing without stop-the-world pauses
+  code:
+    - title: Read group state
+      lang: bash
+      code: |
+        kafka-consumer-groups --bootstrap-server $B --describe --group $G
+        kafka-consumer-groups --bootstrap-server $B --describe --group $G --state
+      source_id: runbook-kafka-consumer-lagging
+    - title: Rebalance signatures
+      lang: text
+      code: |
+        - Lag resets to zero then climbs → rebalance loop; check `session.timeout.ms`.
+        - Is the consumer group stable? Frequent `PreparingRebalance` is the real bug.
+      source_id: skill-kafka-lag-triage
+    - title: Where the protocol is going
+      lang: text
+      code: |
+        The KIP-848 consumer protocol in Apache Kafka 4.0 redesigns consumer
+        group rebalancing to eliminate stop-the-world pauses.
+      source_id: ref-optimize-consumer-rebalancing-on-amazon-msk-with-next-generation
+  source_refs: [ref-kafka-docs, runbook-kafka-consumer-lagging, skill-kafka-lag-triage, ref-optimize-consumer-rebalancing-on-amazon-msk-with-next-generation]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/streaming-consumer-reliability
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-kafka] }
+- id: tutorial-streaming-windows-watermarks
+  slug: streaming-windows-watermarks
+  type: tutorial
+  title: Window a stream correctly — watermarks, dedupe, and late data
+  description: >-
+    Stream processing in practice: start from the kafka-streaming template, pick
+    event-time over processing-time windows, set a watermark you can defend, and
+    prove what happens to late data. Checkpointing and an idempotent MERGE sink
+    make the job restartable without duplicating output.
+  category: cat-streaming
+  series: streaming
+  series_title: The Streaming Series
+  lesson: 5
+  difficulty: intermediate
+  tags: [tutorial, streaming, kafka, spark, watermark, windows]
+  learning_objectives:
+    - Choose event-time vs processing-time windows
+    - Set a watermark and reason about late data
+    - Run a structured-streaming job with checkpointing and an idempotent MERGE sink
+  what_you_need:
+    - The kafka-streaming template (checkpointing, watermarking, a dedupe stage, an idempotent MERGE sink)
+    - Install: amp template new de-agent/kafka-streaming ./streaming
+    - A Kafka topic whose events carry an event timestamp and an event_id
+  steps:
+    - text: Start from the template — a structured-streaming job with checkpointing, watermarking, a dedupe stage and an idempotent MERGE sink to Delta/Iceberg.
+      from_id: tpl-kafka-streaming
+      from_field: description
+    - text: Decide time semantics first — choose event-time vs processing-time windows.
+      from_id: project-kafka-spark-delta
+      from_field: learning_objectives
+    - text: Follow the reference architecture — Spark SS with watermark 2m and dedupe on event_id, raw_events appended to bronze, agg_5min as a windowed MERGE on the window key.
+      from_id: project-kafka-spark-delta
+      from_field: architecture
+    - text: Read with `startingOffsets=earliest` in dev only; latest in prod.
+      from_id: project-kafka-spark-delta
+      from_field: implementation
+    - text: Dedupe on `event_id` within the watermark; windowed aggregation to 5-minute tumbling windows, appended idempotently.
+      from_id: project-kafka-spark-delta
+      from_field: implementation
+    - text: Prove late-data behavior in tests — a late event beyond the watermark is dropped (documented, not silent), and replaying a batch yields the same aggregate.
+      from_id: project-kafka-spark-delta
+      from_field: tests
+    - text: Watch the two classic failures — watermark too short means late data silently dropped; checkpoint lost means duplicates, fixed by making the sink idempotent.
+      from_id: project-kafka-spark-delta
+      from_field: failure_scenarios
+  check_yourself:
+    - An event arriving inside the 2-minute watermark joins its window; one beyond it is dropped — documented in the tests, not silent.
+    - Replaying a batch yields the same aggregate because the MERGE is on the window key.
+  when_to_use:
+    - "Aggregations over event streams — counts and sums per window"
+    - "A streaming job that must survive restarts without duplicating output"
+  why: Windows turn infinite streams into finite, mergeable results — get the watermark wrong and you either drop late data silently or never emit.
+  gotchas:
+    - "Watermark too short → late data silently dropped."
+    - "Read with `startingOffsets=earliest` in dev only; latest in prod."
+    - "Skewed key → one partition saturates; re-key."
+  production_notes:
+    - "Checkpoints on durable storage with lineage."
+    - "Lag + batch-duration metrics; alert on rising batch duration."
+  diagram: |
+    windowed streaming job
+       |
+       |- Kafka events (event_id, event time)
+       |
+       |- watermark 2m --> dedupe on event_id
+       |
+       |- 5-minute tumbling windows --> aggregate
+       |
+       |- raw_events --> append (bronze)
+       |- agg_5min  --> MERGE on window key (idempotent)
+       |
+        --> checkpoint on durable storage; alert on rising batch duration
+  code:
+    - title: Bring up the stack and produce events
+      lang: bash
+      code: |
+        make up
+        make produce  # emits events, some deliberately late
+        make stream &
+      source_id: project-kafka-spark-delta
+    - title: Implementation rules
+      lang: text
+      code: |
+        - Read with `startingOffsets=earliest` in dev only; latest in prod.
+        - Dedupe on `event_id` within the watermark.
+        - Windowed aggregation to 5-minute tumbling windows, appended idempotently.
+        - MERGE aggregates on the window key so replays converge.
+      source_id: project-kafka-spark-delta
+    - title: The reference architecture
+      lang: text
+      code: |
+        Kafka (events) ─▶ Spark SS [watermark 2m, dedupe on event_id]
+                          ├─▶ Delta: raw_events (append, bronze)
+                          └─▶ Delta: agg_5min  (windowed, MERGE on window key)
+      source_id: project-kafka-spark-delta
+  source_refs: [tpl-kafka-streaming, project-kafka-spark-delta]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/streaming-windows-watermarks
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-streaming] }
+- id: tutorial-streaming-cdc-lakehouse
+  slug: streaming-cdc-lakehouse
+  type: tutorial
+  title: Stream changes, not tables — CDC from Postgres into the lakehouse
+  description: >-
+    The intermediate pattern that replaces nightly extraction: read the
+    write-ahead log through Debezium, stream through Kafka, dedupe by LSN, and
+    MERGE into Delta/Iceberg. Covers tombstones, decimal handling, and what a
+    dropped replication slot costs you.
+  category: cat-cdc
+  series: streaming
+  series_title: The Streaming Series
+  lesson: 6
+  difficulty: intermediate
+  tags: [tutorial, cdc, debezium, kafka, postgres, lakehouse]
+  learning_objectives:
+    - Read the write-ahead log instead of polling source tables
+    - Order events by LSN and dedupe before merging
+    - Handle tombstones without losing history
+  what_you_need:
+    - A Postgres source with logical replication available
+    - Install: npx de-agent-platform add cdc-merge-designer
+  steps:
+    - text: Name the gap batch extraction leaves — it loads the data and still misses deletes and mid-day changes.
+      from_id: pattern-postgres-cdc-lakehouse
+      from_field: problem
+    - text: Read the write-ahead log, not the tables — WAL → Debezium → Kafka → [dedupe by LSN] → MERGE into lakehouse.
+      from_id: pattern-postgres-cdc-lakehouse
+      from_field: solution
+    - text: Configure Debezium with `decimal.handling.mode=string` to avoid precision loss.
+      from_id: project-postgres-cdc-kafka-lakehouse
+      from_field: implementation
+    - text: Read the stream, keep the latest event per key by (lsn, ts_ms); MERGE on the primary key; `op='d'` → soft delete with `_deleted_at`.
+      from_id: project-postgres-cdc-kafka-lakehouse
+      from_field: implementation
+    - text: Treat deletes as events — a delete is an event with `op = 'd'`; choose hard delete on merge, or soft delete + `_deleted_at` (required if you need history or audit).
+      from_id: skill-cdc-merge-designer
+      from_field: body
+    - text: Configure a logical replication slot safely.
+      from_id: project-postgres-cdc-kafka-lakehouse
+      from_field: learning_objectives
+    - text: Know the watch item before going live — a dropped replication slot forces a full re-snapshot.
+      from_id: pattern-postgres-cdc-lakehouse
+      from_field: tradeoffs
+  check_yourself:
+    - A row deleted in Postgres shows up in the lakehouse as an event with `op = 'd'` — applied as a hard delete or a soft delete with `_deleted_at`, not as a missing row.
+    - Replaying the same batch produces an identical table, because events are ranked by (lsn, ts_ms) and deduped before the merge.
+  when_to_use:
+    - "OLTP → lakehouse with freshness < 15 min"
+    - "You need deletes/updates"
+  why: Batch extraction from an OLTP database loads it and still misses deletes and mid-day changes — the WAL carries every change with an order you can rank on.
+  gotchas:
+    - "Replication slot dropped / WAL purged → full re-snapshot required."
+    - "Out-of-order events flip a value back → ordering used arrival time."
+    - "Never read the source tables on a schedule."
+  production_notes:
+    - "Alert on slot retained WAL and connector task failures."
+    - "Monitor source-vs-target row counts continuously."
+  diagram: |
+    postgres cdc pipeline
+       |
+       |- Postgres WAL --> Debezium --> Kafka topic
+       |
+       |- dedupe by LSN --> latest event per key
+       |
+       |- MERGE on primary key; op='d' --> soft delete (_deleted_at)
+       |
+        --> Delta/Iceberg; alert on slot retained WAL + task failures
+  code:
+    - title: Bring up the CDC stack
+      lang: bash
+      code: |
+        make up  # postgres + kafka + connect + minio
+        make register-connector
+        make seed-mutations  # insert/update/delete
+      source_id: project-postgres-cdc-kafka-lakehouse
+    - title: Check the replication slot
+      lang: sql
+      code: |
+        SELECT slot_name, active, restart_lsn, confirmed_flush_lsn FROM pg_replication_slots;
+      source_id: runbook-cdc-stopped
+    - title: The pipeline in one line
+      lang: text
+      code: |
+        Postgres WAL ─▶ Debezium ─▶ Kafka topic ─▶ stream dedupe ─▶ MERGE ─▶ Delta/Iceberg
+      source_id: pattern-postgres-cdc-lakehouse
+  source_refs: [pattern-postgres-cdc-lakehouse, project-postgres-cdc-kafka-lakehouse, skill-cdc-merge-designer, runbook-cdc-stopped]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/streaming-cdc-lakehouse
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-cdc] }
+- id: tutorial-streaming-prod-gotchas
+  slug: streaming-prod-gotchas
+  type: tutorial
+  title: Production gotchas — the configs and capacities that break streams
+  description: >-
+    The five causes of consumer lag on one card, the two destructive shortcuts
+    that must never happen, and the capacity trap of scaling past the partition
+    count. Ends with the alert that matters — lag slope, not absolute lag — and
+    the sampling rules that keep PII out of agent contexts.
+  category: cat-kafka
+  series: streaming
+  series_title: The Streaming Series
+  lesson: 8
+  difficulty: intermediate
+  tags: [tutorial, kafka, production, capacity, config, incidents]
+  learning_objectives:
+    - Map a lag symptom to its cause before changing any config
+    - Refuse the destructive shortcuts — offset resets and hand-edited offsets
+    - Size consumers to partitions and fix the sink when lag is uniform
+  what_you_need:
+    - A cluster whose lag, DLQ depth, and group state you can read
+    - Install: npx de-agent-platform add kafka-consumer-lag-triage
+  steps:
+    - text: Keep the five causes on one card — downstream sink (DB/warehouse) bottleneck, a hot key routed to a single partition, a rebalance loop stealing consumption time, a poison message retried forever, too few consumers for the partition count.
+      from_id: runbook-kafka-consumer-lagging
+      from_field: possible_causes
+    - text: Read the lag shape before scaling — uniform lag means capacity; one stuck partition means key skew or a poison message.
+      from_id: runbook-kafka-consumer-lagging
+      from_field: gotchas
+    - text: Respect the capacity ceiling — adding consumers past the partition count buys nothing.
+      from_id: runbook-kafka-consumer-lagging
+      from_field: gotchas
+    - text: Do not "fix" lag by resetting offsets. That is data loss wearing a hat.
+      from_id: skill-kafka-lag-triage
+      from_field: body
+    - text: On the ingestion side the same rule holds — never hand-edit offsets; replay from the snapshot point.
+      from_id: runbook-cdc-stopped
+      from_field: gotchas
+    - text: Before sampling messages in production, know the risk — sampling can expose production PII in the agent's context; grant a read-only principal, prefer a topic allow-list, and never sample topics containing personal data without masking.
+      from_id: mcp-kafka
+      from_field: security_notes
+    - text: Set the alert that matters — alert on lag slope, not on an absolute lag number, and keep a DLQ for messages failing N times.
+      from_id: runbook-kafka-consumer-lagging
+      from_field: prevention
+  check_yourself:
+    - Scaling from 6 to 12 consumers on a 6-partition topic fixes nothing — uniform lag is a sink-throughput problem.
+    - No incident in this lesson ends with an offset reset or a hand-edited offset — recovery replays from the log or the snapshot point.
+  when_to_use:
+    - "A config change is being proposed as the fix for lag"
+    - "A new stream goes to production and needs its failure modes listed"
+  why: Most streaming outages are self-inflicted — a config changed to chase a symptom, a fleet scaled past the partition count, or an offset reset that deleted data.
+  gotchas:
+    - "Never reset offsets to clear lag; that is silent data loss."
+    - "Adding consumers past the partition count buys nothing."
+    - "Credential rotation can stall a connector with no error on the consumer side."
+  production_notes:
+    - "Alert on lag slope, not on an absolute lag number."
+    - "Alert on replication-slot retained WAL and on connector task state."
+  diagram: |
+    production gotchas
+       |
+       |- lag uniform --> capacity bound --> fix the SINK, not the fleet
+       |- consumers > partitions --> idle members, no gain
+       |- PreparingRebalance looping --> session.timeout.ms / max.poll.interval.ms
+       |- one offset stuck --> poison message --> DLQ + commit past
+       |
+       |- never: offset resets, hand-edited offsets
+       |- sampling: read-only principal, topic allow-list, mask PII
+       |
+        --> alert on lag slope, not absolute lag
+  code:
+    - title: The five causes of lag
+      lang: text
+      code: |
+        - Downstream sink (DB/warehouse) is the bottleneck
+        - A hot key routes to a single partition
+        - Rebalance loop stealing consumption time
+        - A poison message retried forever
+        - Too few consumers for the partition count
+      source_id: runbook-kafka-consumer-lagging
+    - title: The never list
+      lang: text
+      code: |
+        Do not "fix" lag by resetting offsets. That is data loss wearing a hat.
+      source_id: skill-kafka-lag-triage
+    - title: Sampling risk in production
+      lang: text
+      code: |
+        Sampling messages can expose production PII in the agent's context. Grant a
+        read-only principal, prefer a topic allow-list, and never sample topics
+        containing personal data without masking.
+      source_id: mcp-kafka
+  source_refs: [runbook-kafka-consumer-lagging, skill-kafka-lag-triage, runbook-cdc-stopped, mcp-kafka]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/streaming-prod-gotchas
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-kafka] }

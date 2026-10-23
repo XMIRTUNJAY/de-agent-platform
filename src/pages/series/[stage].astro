@@ -1,0 +1,44 @@
+---
+// /series/[stage] — the stage's ordered 10-lesson series (SEO head-term page).
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import registry from '@/data/generated/registry.json';
+
+export async function getStaticPaths() {
+  return Object.keys((registry as any).series ?? {}).map((stage: string) => ({ params: { stage } }));
+}
+const { stage } = Astro.params;
+const series = (registry as any).series?.[stage];
+if (!series) return Astro.redirect('/tutorials');
+const stageInfo = (registry as any).taxonomy.stagesById?.[stage];
+const stageTitle = stageInfo?.title ?? stage;
+const stageOrder = stageInfo?.order;
+---
+
+<BaseLayout title={`${series.title ?? `${stageTitle} series`} — ${series.total} lessons`} description={`A ${series.total}-lesson ordered path through ${stageTitle}: from the mental model to production incidents and a capstone checklist. Free, source-grounded, with verified installs.`}>
+  <section class="col section-sm" style="padding-top: 2.5rem; max-width: 76ch;">
+    <p class="kicker">Series{stageOrder ? ` · roadmap stage ${stageOrder}/13` : ''}</p>
+    <h1 style="font-size: var(--text-2xl); font-weight: 500; margin-top: 0.5rem;">{series.title ?? `${stageTitle}: the 10-lesson path`}</h1>
+    <p class="text-dim" style="margin-top: 0.6rem;">
+      Ten lessons in order, from the mental model to a capstone checklist. Every
+      lesson is structured by us and grounded in a real, cited source from the
+      registry — no invented commands.
+    </p>
+    <p class="text-dim font-mono text-sm" style="margin-top: 0.4rem;">{series.total} of 10 lessons published</p>
+
+    <ol class="series-list" style="margin-top: 1.6rem; padding: 0; list-style: none;">
+      {series.lessons.map((l: any) => {
+        const res = (registry as any).resources.find((x: any) => x.id === l.id);
+        const href = res?.url ?? `/tutorials/${l.slug}/`;
+        return (
+          <li style="margin-top: 1rem; padding-left: 0;">
+            <span class="font-mono text-sm" style="color: var(--fg-muted);">Lesson {l.lesson}</span>
+            <a href={href} class="link" style="display: block; font-size: 1.05rem; margin-top: 0.1rem;">{l.title}</a>
+            {l.description && <p class="text-dim text-sm" style="margin-top: 0.15rem;">{l.description}</p>}
+          </li>
+        );
+      })}
+    </ol>
+
+    <p style="margin-top: 2rem;"><a href={`/stages/${stage}`} class="link">← {stageTitle} stage</a> · <a href="/tutorials" class="link">All tutorials</a></p>
+  </section>
+</BaseLayout>

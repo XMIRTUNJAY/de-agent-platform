@@ -25,6 +25,24 @@ const limitations = [res.when_not, res.tradeoffs, res.security_notes, res.note]
   .filter(Boolean);
 const securityFlagCount = Object.values(res.security ?? {}).filter((v: any) => v === true).length;
 
+/** series navigation (tutorials in an ordered stage series) */
+const seriesNav = (() => {
+  if (res.type !== 'tutorial' || !res.series || res.lesson == null) return null;
+  const lessons = registry.resources
+    .filter((x: any) => x.type === 'tutorial' && x.series === res.series && x.lesson != null)
+    .sort((a: any, b: any) => a.lesson - b.lesson);
+  const i = lessons.findIndex((x: any) => x.id === res.id);
+  if (i === -1) return null;
+  return {
+    series: res.series,
+    title: res.series_title ?? null,
+    lesson: Number(res.lesson),
+    total: lessons.length,
+    prev: i > 0 ? { url: lessons[i - 1].url, title: lessons[i - 1].title } : null,
+    next: i < lessons.length - 1 ? { url: lessons[i + 1].url, title: lessons[i + 1].title } : null,
+  };
+})();
+
 // Deep-dive block: What/When/Where/Why, tradeoff table, registry stats table.
 const glance = atAGlanceRows(res);
 const tradeRows = tradeoffRows(res.tradeoffs);
@@ -75,6 +93,11 @@ const scoreColor = (score: number) => {
     <header class="mb-8 mount">
       <div class="flex flex-wrap items-center gap-2 mb-3">
         <span class="chip">{res.typeLabel}</span>
+        {seriesNav && (
+          <a href={`/series/${seriesNav.series}`} class="chip" style="color: var(--color-accent);" title="This lesson is part of an ordered series">
+            Lesson {seriesNav.lesson} of {seriesNav.total}{seriesNav.title ? ` · ${seriesNav.title}` : ''}
+          </a>
+        )}
         {res.evidence_summary && res.evidence_summary.gap > 0 ? (
           <span class="chip" style="color: var(--color-dim)" title={`Claimed ${res.verification}; evidence on file supports ${res.evidence_summary.earned}`}>evidence: {res.evidence_summary.earned} · claimed {res.verification}</span>
         ) : (
@@ -639,6 +662,24 @@ const scoreColor = (score: number) => {
             <h2>MCP Servers</h2>
             <ul>{res.mcp.map((m: any) => <li><a href={typeof m === 'string' ? '#' : (m.url ?? '#')} class="link">{typeof m === 'string' ? m : (m.title ?? m.name ?? m.id ?? JSON.stringify(m))}</a></li>)}</ul>
           </section>
+        )}
+
+        {/* series navigation — ordered lesson path (13 stages x 10 lessons) */}
+        {seriesNav && (
+          <nav class="series-nav mount" aria-label="Series navigation">
+            <p class="font-mono text-sm" style="color: var(--fg-muted);">
+              Lesson {seriesNav.lesson} of {seriesNav.total}
+              {seriesNav.title && <> · <a href={`/series/${seriesNav.series}`} class="link">{seriesNav.title}</a></>}
+            </p>
+            <div class="flex justify-between gap-4 mt-2">
+              {seriesNav.prev ? (
+                <a href={seriesNav.prev.url} class="link text-sm">← {seriesNav.prev.title}</a>
+              ) : <span />}
+              {seriesNav.next ? (
+                <a href={seriesNav.next.url} class="link text-sm" style="text-align: right;">{seriesNav.next.title} →</a>
+              ) : <span />}
+            </div>
+          </nav>
         )}
       </section>
 
