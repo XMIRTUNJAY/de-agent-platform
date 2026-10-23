@@ -1,0 +1,971 @@
+# The Observability Series — lessons authored for the 13x10 series; structure ours, wording the source's.
+- id: tutorial-obs-mental-model
+  slug: obs-mental-model
+  type: tutorial
+  title: >-
+    Hold the observability mental model: infrastructure metrics versus data signals
+  description: >-
+    Two layers live on one data platform: infrastructure metrics (CPU, lag, job
+    success) and data signals (freshness, volume, schema, distribution). This
+    lesson separates them, places lineage and catalogs on the map, and names
+    the four data signals every pipeline owes you before you write a dashboard.
+  category: cat-data-observability
+  series: observability
+  series_title: The Observability Series
+  lesson: 1
+  difficulty: beginner
+  tags: [tutorial, observability, concepts, architecture, prometheus, grafana]
+  learning_objectives:
+    - Separate infrastructure metrics from data signals — freshness, volume, schema, distribution
+    - Place lineage and the catalog on the observability map, next to metrics and traces
+    - State what each layer answers and which tool owns it
+  what_you_need:
+    - No cluster required — this is a concepts lesson
+    - The Prometheus and Grafana documentation open beside you
+  steps:
+    - text: Ground the infra layer — the pull-based metrics model, PromQL, exporters, service discovery and alerting rules, with infra- and job-level metrics that sit underneath data-quality signals like freshness and volume.
+      from_id: ref-prometheus-docs
+      from_field: description
+    - text: Ground the data layer's surface — dashboards, panel queries, alerting including the unified alerting model; the standard surface where pipeline freshness, volume and job-health dashboards live.
+      from_id: ref-grafana-docs
+      from_field: description
+    - text: Add the instrumentation layer — traces, metrics and logs through a vendor-neutral API/SDK, the collector, and semantic conventions; increasingly the default for distributed pipelines and services.
+      from_id: ref-otel-docs
+      from_field: description
+    - text: Add the lineage layer — an open specification for lineage events with integrations for Airflow, Spark and dbt; not a tool or a service, a standard that makes cross-tool lineage possible.
+      from_id: ref-openlineage-docs
+      from_field: description
+    - text: Add the catalog layer — the open metadata model for ownership and lineage, ingestion framework, search, and governance integration; the vocabulary for catalog-related pipeline design.
+      from_id: ref-datahub-docs
+      from_field: description
+    - text: See why lineage earns its layer — technical lineage (tables and jobs) versus business lineage (metrics and reports); a breaking change needs both.
+      from_id: skill-lineage-explainer
+      from_field: body
+    - text: See that data signals can gate changes — a hook that warns when a change would silently widen the freshness SLA of a source.
+      from_id: hook-freshness-pre-merge
+      from_field: description
+  check_yourself:
+    - You can name the four data signals and give one example threshold for each.
+    - Asked what lineage adds that metrics cannot, you answer — the blast radius and the owner.
+  when_to_use:
+    - "You are planning monitoring for a new pipeline and must decide what to instrument first"
+    - "A dashboard exists but nobody trusts it because job success and data health are conflated"
+  why: Metrics tell you the machine is healthy; data signals tell you the data is usable — and lineage tells you who to call when it is not.
+  gotchas:
+    - "A green job is not fresh data — the schedule can succeed forever while the source quietly stops changing."
+    - "Infrastructure metrics sit underneath data signals — do not stop at the infra layer and call it data observability."
+    - "Lineage is not decoration — without it a freshness alert cannot name a blast radius."
+  production_notes:
+    - "Instrument in layers — infra metrics from the scheduler, data signals from the tables, lineage events from the jobs."
+    - "Keep ownership in the catalog, not in a runbook — alerts resolve faster when the owner is one query away."
+  diagram: |
+    observability layers
+       |
+       |- infra: CPU, lag, job success --> Prometheus pull model + PromQL
+       |
+       |- data signals: freshness | volume | schema | distribution
+       |
+       |- instrumentation: traces + metrics + logs (vendor-neutral API/SDK)
+       |
+       |- lineage: what feeds what --> blast radius + earliest SLA
+       |
+        --> catalog: who owns it, is it safe to use
+  code:
+    - title: The observability stack in one view
+      lang: text
+      code: |
+        infra metrics   ─▶ is the job running?   (pull-based metrics model, PromQL, alerting rules)
+        data signals    ─▶ is the data usable?   (freshness, volume, schema, distribution)
+        traces          ─▶ what ran, how long?   (vendor-neutral API/SDK + collector)
+        lineage events  ─▶ what feeds what?      (open spec; cross-tool lineage)
+        catalog         ─▶ who owns it?          (metadata model; ownership + lineage)
+      source_id: ref-prometheus-docs
+    - title: Two questions, two graphs
+      lang: text
+      code: |
+        Technical lineage — which tables/jobs depend on this column.
+        Business lineage — which metrics/reports depend on it.
+        A breaking change needs both, because a CFO does not read table names.
+      source_id: skill-lineage-explainer
+  source_refs: [ref-prometheus-docs, ref-grafana-docs, ref-otel-docs, ref-openlineage-docs, ref-datahub-docs, skill-lineage-explainer, hook-freshness-pre-merge]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/obs-mental-model
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-24'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-data-observability] }
+- id: tutorial-obs-first-freshness-alert
+  slug: obs-first-freshness-alert
+  type: tutorial
+  title: >-
+    Express a freshness check as a metric and an alert
+  description: >-
+    The first hands-on of the series: declare a freshness SLA, express
+    staleness as a metric, and write an alert rule — including what happens
+    when no data arrives at all. Ends with the pre-merge check that keeps
+    schedules honest against the SLA they claim.
+  category: cat-data-observability
+  series: observability
+  series_title: The Observability Series
+  lesson: 2
+  difficulty: beginner
+  tags: [tutorial, observability, freshness, sla, prometheus, grafana, alerting]
+  learning_objectives:
+    - Declare a freshness SLA and compute worst-case lag from a schedule
+    - Express staleness as a metric and write an alerting rule
+    - Configure no-data handling so silence is an alert, not a pass
+  what_you_need:
+    - A table with a declared freshness SLA (in hours)
+    - A Prometheus + Grafana stack, or any metrics store with alert rules you can edit
+  steps:
+    - text: Declare the contract — a freshness SLA per source, the number the hook can warn against when a change would silently widen it.
+      from_id: hook-freshness-pre-merge
+      from_field: description
+    - text: Learn the arithmetic the SLA needs — compare the schedule in the diff with the declared SLA and compute the worst-case lag.
+      from_id: hook-freshness-pre-merge
+      from_field: implementation
+    - text: Run the example — a cron changed from hourly to daily violates a 6h freshness SLA; the check warns with the computed lag.
+      from_id: hook-freshness-pre-merge
+      from_field: example
+    - text: Express staleness as a metric — the pull-based metrics model, PromQL, exporters, service discovery and alerting rules are what turn "table age" into a queryable series.
+      from_id: ref-prometheus-docs
+      from_field: description
+    - text: Trust the semantics — the metrics model and PromQL semantics pages settle how to express and alert on pipeline metrics.
+      from_id: ref-prometheus-docs
+      from_field: why
+    - text: Put the alert somewhere real — dashboards, panel queries and alerting including the unified alerting model, the surface where pipeline freshness dashboards live.
+      from_id: ref-grafana-docs
+      from_field: description
+    - text: Handle the silence — alerting semantics (no-data handling, evaluation intervals) are documented precisely; configure them or an absent series passes as health.
+      from_id: ref-grafana-docs
+      from_field: why
+  check_yourself:
+    - A daily schedule against a 6h SLA fails by construction — worst-case lag is 24h, not 6h.
+    - An absent series is not a healthy one — no-data handling decides whether silence pages you.
+  when_to_use:
+    - "You are adding the first data-quality alert for a table"
+    - "A schedule change is proposed and someone asks what it does to the SLA"
+  why: A freshness SLA that lives in a wiki page guards nothing — encode it as a metric and an alert and it defends itself.
+  gotchas:
+    - "No-data is not healthy — an absent series under default handling never fires the alert."
+    - "The evaluation interval adds detection lag — a 6h SLA checked hourly can page an hour late."
+    - "Design for worst-case lag, not average — a schedule that can emit 24h-old data eventually will."
+  production_notes:
+    - "Store the SLA next to the dataset definition so the metric, the alert and the docs share one number."
+    - "Route data-signal alerts to the table owner from the catalog, not to a shared channel."
+  diagram: |
+    freshness SLA ──▶ staleness metric ──▶ alert rule
+        |
+        |- cron × interval ─▶ worst-case lag ─▶ compare to SLA
+        |
+        |- no-data? ─▶ decide: fire (default) or pass (rare)
+        |
+        |- pre-merge: cron in diff vs SLA ─▶ warn before it pages anyone
+  code:
+    - title: Staleness as a metric and an alert rule
+      lang: text
+      code: |
+        # illustrative sketch of the model the docs define —
+        # exporter exposes last success, PromQL computes staleness,
+        # an alerting rule compares it to the SLA
+        pipeline_last_success_timestamp{table="orders"}
+        staleness_seconds = now - pipeline_last_success_timestamp
+        alert if staleness_seconds > freshness_sla{table="orders"}
+      source_id: ref-prometheus-docs
+    - title: The worst-case lag rule
+      lang: text
+      code: |
+        Compare the schedule/cron in the diff with the source's declared
+        freshness SLA. If the new schedule can produce data older than the
+        SLA (e.g. daily when the SLA is 6h), warn with the computed
+        worst-case lag.
+      source_id: hook-freshness-pre-merge
+    - title: The no-data decision
+      lang: text
+      code: |
+        Alerting semantics to set on every rule — no-data handling and the
+        evaluation interval. Decide what an absent series means before the
+        first silent night, not after it.
+      source_id: ref-grafana-docs
+  source_refs: [hook-freshness-pre-merge, ref-prometheus-docs, ref-grafana-docs]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/obs-first-freshness-alert
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-24'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-data-observability] }
+- id: tutorial-obs-otel-traces
+  slug: obs-otel-traces
+  type: tutorial
+  title: >-
+    Instrument pipelines with OpenTelemetry: traces for data jobs
+  description: >-
+    Traces give every pipeline run a story — which task ran, how long, with
+    what attributes. Wrap a job with OpenTelemetry, adopt the semantic
+    conventions so attribute names match across teams, and see exactly where
+    runtime traces end and lineage events begin.
+  category: cat-data-observability
+  series: observability
+  series_title: The Observability Series
+  lesson: 3
+  difficulty: intermediate
+  tags: [tutorial, observability, opentelemetry, tracing, instrumentation]
+  learning_objectives:
+    - Emit one trace per pipeline run with spans per task
+    - Adopt semantic conventions for attribute names
+    - Distinguish runtime traces from lineage events
+  what_you_need:
+    - A pipeline job you can wrap (Airflow task, dbt run, Spark job, or a script)
+    - An OpenTelemetry collector endpoint (or any OTLP receiver)
+  steps:
+    - text: Learn the instrumentation layer — traces, metrics and logs through a vendor-neutral API/SDK, with the collector and semantic conventions; the default instrumentation layer for distributed pipelines and services.
+      from_id: ref-otel-docs
+      from_field: description
+    - text: Name attributes the standard way — the semantic-conventions pages define standard attribute names worth citing exactly.
+      from_id: ref-otel-docs
+      from_field: why
+    - text: Wire the metric leg alongside — the metrics model and PromQL semantics pages settle how to express and alert on pipeline metrics.
+      from_id: ref-prometheus-docs
+      from_field: why
+    - text: Give traces a home — dashboards, panel queries and alerting where job-health dashboards and trace panels live.
+      from_id: ref-grafana-docs
+      from_field: description
+    - text: Separate the signals — lineage events are a different signal; an open specification for lineage events emitted per job, describing what moved between assets rather than how long a span took.
+      from_id: ref-openlineage-docs
+      from_field: description
+    - text: End where traces end — the question traces cannot answer is "what breaks if I change this column?", which needs lineage.
+      from_id: skill-lineage-explainer
+      from_field: tagline
+  check_yourself:
+    - One run equals one trace with one span per task — you can read failure and duration off it.
+    - A trace says the extract took 40 minutes; a lineage event says the extract fed stg_orders — different questions.
+  when_to_use:
+    - "A pipeline fails or slows and the logs do not say which stage"
+    - "Multiple teams instrument jobs and attribute names keep drifting"
+  why: Without traces a slow pipeline is a rumor — with them it is a span tree you can read top-down.
+  gotchas:
+    - "Invent nothing at the attribute level — the semantic conventions already define the names worth citing exactly."
+    - "A trace describes the run; it does not describe the data — lineage events are the second half."
+    - "Do not put row-level detail in spans — traces are for control flow, not payloads."
+  production_notes:
+    - "Send spans to a collector, not directly to vendors — repointing backends is then a config change."
+    - "Keep one trace per run keyed by run_id so traces, logs and lineage events join."
+  diagram: |
+    one pipeline run = one trace
+       |
+       |- span: extract   (source=postgres.orders)      ─┐
+       |- span: transform (sql=stg_orders.sql)           ├─ runtime story
+       |- span: load     (target=warehouse.stg_orders)  ─┘
+       |
+       |- lineage event: orders → stg_orders ─────── data story
+       |
+        --> traces: how long? | lineage: what moved? | both per job
+  code:
+    - title: One run, one trace
+      lang: text
+      code: |
+        trace: daily_orders_load (run_id=2026-10-24)
+          ├─ span: extract   (source=postgres.orders)
+          ├─ span: transform (sql=stg_orders.sql)
+          └─ span: load      (target=warehouse.stg_orders)
+        Attribute names follow the semantic conventions so they match
+        across teams and backends.
+      source_id: ref-otel-docs
+    - title: Traces versus lineage events
+      lang: text
+      code: |
+        A trace answers — what ran, how long, did it fail?
+        A lineage event answers — what moved between which assets?
+        Both are emitted per job; the trace describes the run, the lineage
+        event describes the data.
+      source_id: ref-openlineage-docs
+  source_refs: [ref-otel-docs, ref-prometheus-docs, ref-grafana-docs, ref-openlineage-docs, skill-lineage-explainer]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/obs-otel-traces
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-24'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-data-observability] }
+- id: tutorial-obs-column-lineage-concepts
+  slug: obs-column-lineage-concepts
+  type: tutorial
+  title: >-
+    Column-level lineage: the concepts and the event standard
+  description: >-
+    Table-level lineage says a job touched a table; column-level lineage says
+    which columns feed which. Learn the concepts, the OpenLineage event model
+    that makes lineage work across tools, and how an impact set is computed
+    from a lineage store.
+  category: cat-data-lineage
+  series: observability
+  series_title: The Observability Series
+  lesson: 4
+  difficulty: intermediate
+  tags: [tutorial, lineage, openlineage, provenance, impact-analysis]
+  learning_objectives:
+    - Explain why column-level lineage beats table-level for change impact
+    - Read an OpenLineage event and name its Airflow, Spark and dbt integrations
+    - Compute a downstream impact set from a lineage store
+  what_you_need:
+    - Install: npx de-agent-platform add lineage-explainer
+    - A lineage store (DataHub or any OpenLineage-compatible backend)
+  steps:
+    - text: Start from the standard — an open specification for lineage events with integrations for Airflow, Spark and dbt; not a tool or a service, a standard for emitting lineage events.
+      from_id: ref-openlineage-docs
+      from_field: description
+    - text: See why the standard matters — an open specification for lineage events is what makes cross-tool lineage possible.
+      from_id: ref-openlineage-docs
+      from_field: why
+    - text: Define column-level lineage — traces from an asset to its upstream sources and downstream consumers, reporting the impact set for a proposed change.
+      from_id: skill-lineage-explainer
+      from_field: description
+    - text: Hold the two graphs — technical lineage (tables and jobs) versus business lineage (metrics and reports); a breaking change needs both.
+      from_id: skill-lineage-explainer
+      from_field: body
+    - text: Practice the walk — read lineages from a lineage store, compute the downstream impact set, distinguish technical from business lineage.
+      from_id: skill-lineage-explainer
+      from_field: learning_objectives
+    - text: Know where events land — the open metadata model for ownership and lineage, plus the ingestion framework that keeps emitted events queryable.
+      from_id: ref-datahub-docs
+      from_field: description
+    - text: Keep the driving question in view — "what breaks if I change this column?", answered with evidence.
+      from_id: skill-lineage-explainer
+      from_field: tagline
+  check_yourself:
+    - A table-level edge hides the fact that only one column changed — column-level lineage localizes the blast radius.
+    - An Airflow task, a Spark job and a dbt model produce lineage into one graph because they emit the same event standard.
+  when_to_use:
+    - "A schema change is proposed and someone asks who else uses that column"
+    - "You must choose a lineage approach and need the vocabulary first"
+  why: Table-level lineage answers "something downstream broke"; column-level lineage answers "this exact field, these exact consumers".
+  gotchas:
+    - "Lineage without a standard is a per-tool island — the open spec is what stitches Airflow, Spark and dbt into one graph."
+    - "Column-level lineage is a commitment — parsers must keep up with SQL dialects or the graph lies quietly."
+    - "The impact set is a walk, not a lookup — stop at published marts, where owners and SLAs live."
+  production_notes:
+    - "Emit events from every job that moves data — partial graphs are worse than none because they look complete."
+    - "Version the lineage store like code — schema of the graph changes with the platform."
+  diagram: |
+    column-level lineage
+       |
+       |- postgres.orders ──(job)──▶ stg_orders ──▶ dim_customers ──▶ mart_revenue
+       |         │                      │                │
+       |         └── column edges ──────┴────────────────┘
+       |
+       |- change: stg_orders.customer_email
+       |
+       |- walk downstream ──▶ stop at published marts
+       |
+        --> impact set: owner + criticality + earliest SLA that breaks
+  code:
+    - title: An OpenLineage event, sketched
+      lang: text
+      code: |
+        job:      dbt://analytics/stg_orders
+        inputs:   [postgres://prod/orders]
+        outputs:  [warehouse://analytics/stg_orders]
+        # emitted per run by the integration; column facets carry the
+        # column-level edges that make the graph worth querying
+      source_id: ref-openlineage-docs
+    - title: The impact set walk
+      lang: text
+      code: |
+        changed: stg_orders.customer_email (type widened)
+          └─▶ downstream: dim_customers.email ──▶ mart_revenue (published — stop)
+        report: owner, criticality, earliest SLA that breaks
+      source_id: skill-lineage-explainer
+  source_refs: [ref-openlineage-docs, skill-lineage-explainer, ref-datahub-docs]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/obs-column-lineage-concepts
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-24'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-data-lineage] }
+- id: tutorial-obs-lineage-tooling
+  slug: obs-lineage-tooling
+  type: tutorial
+  title: >-
+    Lineage tooling in practice: DataHub MCP and the lineage-graph plugin
+  description: >-
+    Put lineage to work with two tools — a DataHub MCP server that lets an
+    agent search entities and read lineage and schema, and a lineage-graph
+    plugin that turns column-level impact analysis into agent commands. Wire
+    both, learn each tool surface, and scope the token before sharing it.
+  category: cat-data-lineage
+  series: observability
+  series_title: The Observability Series
+  lesson: 5
+  difficulty: intermediate
+  tags: [tutorial, lineage, datahub, mcp, tooling, impact-analysis]
+  learning_objectives:
+    - Wire mcp-server-datahub and call its four tools
+    - Use /impact, /lineage-up and /lineage-down for change analysis
+    - Choose the right tool for a catalog question versus an impact question
+  what_you_need:
+    - Install: uvx mcp-server-datahub
+    - Install: amp plugin add de-agent/lineage-graph
+    - DATAHUB_GMS_URL and DATAHUB_GMS_TOKEN for the GMS endpoint
+  steps:
+    - text: Meet the catalog door — an MCP server that exposes a DataHub catalog so an agent can search entities, read lineage and schema, and inspect metadata.
+      from_id: mcp-datahub
+      from_field: description
+    - text: Learn the tool surface — search, get_entities, get_lineage and get_dataset_queries.
+      from_id: mcp-datahub
+      from_field: tools
+    - text: Install it — uvx mcp-server-datahub, with the GMS URL and token wired through environment variables.
+      from_id: mcp-datahub
+      from_field: installation
+    - text: Meet the plugin — column-level impact analysis over a lineage store, with a change-impact command that lists the downstream consumers a schema change would break.
+      from_id: plugin-lineage-graph
+      from_field: description
+    - text: Learn the command surface — /impact for blast radius, /lineage-up for what feeds an asset, /lineage-down for what depends on it.
+      from_id: plugin-lineage-graph
+      from_field: commands
+    - text: Keep one vocabulary — the metadata model explains how to represent ownership and lineage consistently across tools.
+      from_id: ref-datahub-docs
+      from_field: why
+    - text: Scope before sharing — read-only against the catalog, but catalogue metadata can itself be sensitive; use a scoped token and keep the GMS endpoint internal.
+      from_id: mcp-datahub
+      from_field: security_notes
+  check_yourself:
+    - get_lineage answers "what feeds this table"; /impact answers "what breaks if this column changes" — different questions.
+    - Both tools read the same metadata model, so an answer from one is not contradicted by the other.
+  when_to_use:
+    - "You want an agent to answer catalog questions against a real DataHub instance"
+    - "A schema change is in review and the reviewer wants the downstream list in the thread"
+  why: Lineage in a UI helps one person; lineage behind tools and commands helps every agent and every review.
+  gotchas:
+    - "Catalog metadata is sensitive even when read-only — PII tags and internal table names ride along; use a scoped token."
+    - "get_dataset_queries and get_lineage answer different questions — searching for the wrong one wastes a turn."
+    - "The plugin's /impact walks the same store the MCP server reads — configure both against the same GMS."
+  production_notes:
+    - "Keep the GMS endpoint internal and hand each integration its own scoped token."
+    - "Treat the four MCP tools as the stable contract — scripts that call them survive catalog UI redesigns."
+  diagram: |
+    lineage tooling
+       |
+       |- mcp-datahub ──▶ search | get_entities | get_lineage | get_dataset_queries
+       |        (uvx mcp-server-datahub, DATAHUB_GMS_URL + TOKEN)
+       |
+       |- plugin-lineage-graph ──▶ /impact | /lineage-up | /lineage-down
+       |
+        --> both read the same metadata model (ownership + lineage)
+  code:
+    - title: Wire the catalog MCP server
+      lang: bash
+      code: |
+        uvx mcp-server-datahub
+        # required env
+        #   DATAHUB_GMS_URL=<url of the DataHub GMS endpoint>
+        #   DATAHUB_GMS_TOKEN=<personal access token>
+      source_id: mcp-datahub
+    - title: The plugin's three commands
+      lang: text
+      code: |
+        /impact <asset|column>   # downstream consumers a change would break
+        /lineage-up <asset>      # what feeds this
+        /lineage-down <asset>    # what depends on this
+      source_id: plugin-lineage-graph
+  source_refs: [mcp-datahub, plugin-lineage-graph, ref-datahub-docs]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/obs-lineage-tooling
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-24'
+  security: { runs_code: false, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-data-lineage, cat-data-catalog] }
+- id: tutorial-obs-catalog-ownership
+  slug: obs-catalog-ownership
+  type: tutorial
+  title: >-
+    Catalogs and ownership: who owns this table and is it safe to use?
+  description: >-
+    Every incident resolves faster when you can ask a catalog what this data
+    is, who owns it, and whether it is safe to use. Run the catalog-assistant
+    workflow end to end — resolve, retrieve, summarise — and keep it
+    read-only and metadata-only by design.
+  category: cat-data-catalog
+  series: observability
+  series_title: The Observability Series
+  lesson: 6
+  difficulty: beginner
+  tags: [tutorial, catalog, metadata, ownership, governance]
+  learning_objectives:
+    - Run the catalog assistant's four-step workflow on a real asset
+    - Answer owner, SLA and classification questions from metadata alone
+    - Keep catalog access read-only and metadata-only
+  what_you_need:
+    - A DataHub catalog with owners, tags and classifications populated
+    - The data-catalog-assistant agent wired to mcp-datahub
+  steps:
+    - text: Name the job — an agent that answers "what is this data, who owns it, and is it safe to use?".
+      from_id: agent-data-catalog-assistant
+      from_field: description
+    - text: Follow the workflow — resolve the assets from the catalogue, retrieve schema, ownership and classification, retrieve lineage and freshness, then summarise with provenance and caveats.
+      from_id: agent-data-catalog-assistant
+      from_field: workflow
+    - text: Know the outputs — an asset summary, owner and SLA, classification, and upstream/downstream.
+      from_id: agent-data-catalog-assistant
+      from_field: outputs
+    - text: See it answer — 'which tables feed the revenue mart and who owns them?', with owners and freshness.
+      from_id: agent-data-catalog-assistant
+      from_field: example
+    - text: Respect the guardrails — read-only, and never returns raw row data, only metadata.
+      from_id: agent-data-catalog-assistant
+      from_field: guardrails
+    - text: Ground it in the model — the open metadata model for ownership and lineage, ingestion framework, search, and governance integration.
+      from_id: ref-datahub-docs
+      from_field: description
+    - text: Secure the path — read-only against the catalog, but catalogue metadata can itself be sensitive; use a scoped token and keep the GMS endpoint internal.
+      from_id: mcp-datahub
+      from_field: security_notes
+  check_yourself:
+    - Asked "which tables feed the revenue mart and who owns them?", the answer names tables, owners and freshness — not guesses.
+    - The assistant returns metadata only — if an answer contains row values, the guardrail was violated.
+  when_to_use:
+    - "A new teammate asks what a table means and who to ask about it"
+    - "An incident needs an owner and you have a name, not a person"
+  why: An alert that names an owner resolves in minutes; an alert that names a table name resolves whenever someone feels like it.
+  gotchas:
+    - "A catalog without owners is a faster search engine — populate ownership before you need it."
+    - "Classification is part of the answer, not garnish — it decides who may see the data at all."
+    - "The GMS token is scoped for a reason — a shared admin token turns a read-only assistant into a liability."
+  production_notes:
+    - "Point the assistant at the same catalog your lineage tools read — one source of truth for ownership."
+    - "Audit quarterly that every alerting asset has an owner and an SLA in the catalog."
+  diagram: |
+    catalog assistant workflow
+       |
+       |- 1. resolve asset(s) from the catalogue
+       |- 2. retrieve schema, ownership, classification
+       |- 3. retrieve lineage and freshness
+       |- 4. summarise with provenance and caveats
+       |
+        --> outputs: asset summary | owner & SLA | classification | upstream/downstream
+  code:
+    - title: The question the catalog answers
+      lang: text
+      code: |
+        Q: which tables feed the revenue mart and who owns them?
+        A: per asset — summary, owner & SLA, classification, upstream/downstream
+        Guardrails: read-only; never returns raw row data, only metadata.
+      source_id: agent-data-catalog-assistant
+  source_refs: [agent-data-catalog-assistant, ref-datahub-docs, mcp-datahub]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/obs-catalog-ownership
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-24'
+  security: { runs_code: false, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-data-catalog] }
+- id: tutorial-obs-lineage-explainer-walkthrough
+  slug: obs-lineage-explainer-walkthrough
+  type: tutorial
+  title: >-
+    Walkthrough: the lineage-explainer skill, from question to impact set
+  description: >-
+    Install the lineage-explainer skill and walk it end to end: ask what
+    breaks if a column changes, read technical and business lineage from the
+    store, and produce an impact report with owner, criticality and the
+    earliest SLA that breaks.
+  category: cat-data-lineage
+  series: observability
+  series_title: The Observability Series
+  lesson: 7
+  difficulty: intermediate
+  tags: [tutorial, lineage, skill, impact-analysis, walkthrough]
+  learning_objectives:
+    - Install and invoke the lineage-explainer skill
+    - Distinguish technical lineage from business lineage in its output
+    - Produce an impact report with owner, criticality and earliest SLA
+  what_you_need:
+    - Install: npx de-agent-platform add lineage-explainer
+    - A lineage store the skill can read (DataHub or any OpenLineage-compatible backend)
+  steps:
+    - text: Install it — npx de-agent-platform add lineage-explainer.
+      from_id: skill-lineage-explainer
+      from_field: install_command
+    - text: Start from the question — "what breaks if I change this column?", answered with evidence.
+      from_id: skill-lineage-explainer
+      from_field: tagline
+    - text: Know what it does — traces column-level lineage from an asset to its upstream sources and downstream consumers, and reports the impact set for a proposed change.
+      from_id: skill-lineage-explainer
+      from_field: description
+    - text: Read the two graphs — technical lineage (tables and jobs) versus business lineage (metrics and reports); a CFO does not read table names.
+      from_id: skill-lineage-explainer
+      from_field: body
+    - text: Walk the impact set — downstream from the changed node, stopping at published marts; report owner, criticality, and the earliest SLA that will break.
+      from_id: skill-lineage-explainer
+      from_field: body
+    - text: Open the files — SKILL.md for the method, examples/impact.md for a worked report, references/lineage-stores.md for supported stores.
+      from_id: skill-lineage-explainer
+      from_field: files
+    - text: Reach the same answers from commands — /impact for blast radius, /lineage-up and /lineage-down for the graph in either direction.
+      from_id: plugin-lineage-graph
+      from_field: commands
+  check_yourself:
+    - The skill's report has three numbers — owner, criticality, earliest SLA — not a wall of edges.
+    - You can state which marts stop the walk and why — they are where business impact lives.
+  when_to_use:
+    - "A column change is proposed and the reviewer asks for evidence, not opinions"
+    - "You are about to rename or retype a column feeding a published mart"
+  why: Impact analysis that stops at table names moves the argument; impact analysis that names the earliest SLA that breaks ends it.
+  gotchas:
+    - "Answering only the technical graph under-serves the business — the metric owner cares about the report, not the table."
+    - "The walk stops at published marts on purpose — edges beyond them do not change the decision."
+    - "A lineage store the skill cannot read is a guessing game — check the supported stores reference first."
+  production_notes:
+    - "Run the skill in the PR template for column changes — evidence beats memory in review."
+    - "Keep examples/impact.md as the format contract for incident reports too."
+  diagram: |
+    lineage-explainer walkthrough
+       |
+       |- question: what breaks if I change this column?
+       |
+       |- technical graph: tables/jobs ──▶ who depends on it
+       |- business graph:  metrics/reports ──▶ who feels it
+       |
+       |- walk downstream ──▶ stop at published marts
+       |
+        --> impact set: owner + criticality + earliest SLA that breaks
+  code:
+    - title: The skill in three lines
+      lang: text
+      code: |
+        1. Technical lineage — which tables/jobs depend on this column.
+        2. Business lineage — which metrics/reports depend on it.
+        3. Impact set — walk downstream from the changed node, stopping at
+           published marts. Report owner, criticality, earliest SLA that breaks.
+      source_id: skill-lineage-explainer
+    - title: The files and what each is for
+      lang: text
+      code: |
+        SKILL.md                      — the two questions, two graphs
+        examples/impact.md            — a worked impact report
+        references/lineage-stores.md  — stores the skill can read
+      source_id: skill-lineage-explainer
+  source_refs: [skill-lineage-explainer, plugin-lineage-graph]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/obs-lineage-explainer-walkthrough
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-24'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-data-lineage] }
+- id: tutorial-obs-prod-gotchas
+  slug: obs-prod-gotchas
+  type: tutorial
+  title: >-
+    Production gotchas: alert fatigue, missing contracts, no-data silence
+  description: >-
+    Three failure modes of a monitoring stack that looks healthy: alerts that
+    page until nobody reads them, metrics with no declared SLA behind them,
+    and no-data windows that pass as health. Grounded in the alerting
+    semantics of Prometheus and Grafana and the schedule-vs-SLA contract.
+  category: cat-data-observability
+  series: observability
+  series_title: The Observability Series
+  lesson: 8
+  difficulty: intermediate
+  tags: [tutorial, observability, alerting, alert-fatigue, production, sla]
+  learning_objectives:
+    - Tie every alert to a declared SLA so paging has a contract
+    - Configure no-data handling and evaluation intervals explicitly
+    - Catch schedule-vs-SLA drift at pre-merge instead of at 3 a.m.
+  what_you_need:
+    - Access to your alerting rules and their no-data settings
+    - A schedule change in review to practice the SLA check on
+  steps:
+    - text: Learn the two silent killers — no-data handling and evaluation intervals are alerting semantics documented precisely, and both decide whether an alert fires at all.
+      from_id: ref-grafana-docs
+      from_field: why
+    - text: Ground the expression — the metrics model and PromQL semantics pages settle how to express and alert on pipeline metrics.
+      from_id: ref-prometheus-docs
+      from_field: why
+    - text: Know where rules live — dashboards, panel queries, alerting including the unified alerting model, and provisioning.
+      from_id: ref-grafana-docs
+      from_field: description
+    - text: See the missing contract — a cron change from hourly to daily silently widens a 6h freshness SLA; nothing in the metric changed, everything in the promise did.
+      from_id: hook-freshness-pre-merge
+      from_field: example
+    - text: Catch it earlier — warn when a change would silently widen the freshness SLA of a source, before it merges.
+      from_id: hook-freshness-pre-merge
+      from_field: description
+    - text: Compute it in review — compare the schedule in the diff with the declared SLA and warn with the computed worst-case lag.
+      from_id: hook-freshness-pre-merge
+      from_field: implementation
+    - text: Audit the tooling itself — the catalog that answers "who owns this" holds sensitive metadata; use a scoped token and keep the endpoint internal.
+      from_id: mcp-datahub
+      from_field: security_notes
+  check_yourself:
+    - Every rule you own can answer "which SLA does this defend, and what happens on no data?" in one line.
+    - A schedule change that widens worst-case lag past the SLA is caught in review, not by the pager.
+  when_to_use:
+    - "Alert volume is rising and pages are starting to be ignored"
+    - "An incident began with a change nobody connected to a data signal"
+  why: Alert fatigue is a contract problem — rules that defend a named SLA page rarely and are read every time.
+  gotchas:
+    - "An alert on a metric with no declared SLA is an opinion — name the SLA in the rule or delete the rule."
+    - "No-data and evaluation interval are set-once-and-forgotten settings that decide everything — review them like code."
+    - "Metadata is sensitive too — a scoped token on the catalog beats a shared admin token every time."
+  production_notes:
+    - "Review no-data handling quarterly — silent dashboards are how incidents start rested."
+    - "Move schedule-vs-SLA checks into CI so the pager only fires for things review cannot catch."
+  diagram: |
+    alert hygiene
+       |
+       |- rule ──▶ which SLA does it defend? ──▶ name the number
+       |
+       |- no-data ──▶ fire (default) or pass ──▶ decide explicitly
+       |
+       |- evaluation interval ──▶ detection lag ──▶ compare to SLA window
+       |
+       |- schedule change ──▶ worst-case lag vs SLA ──▶ warn pre-merge
+       |
+        --> pager pages a named owner about a breached contract
+  code:
+    - title: The contract checklist for every alert rule
+      lang: text
+      code: |
+        1. Which SLA does this rule defend? (name the number)
+        2. What happens on no data? (fire, not pass)
+        3. How often is it evaluated, and what does that add to detection lag?
+      source_id: ref-grafana-docs
+    - title: Schedule vs SLA, computed in review
+      lang: text
+      code: |
+        compare(cron_in_diff, declared_sla)
+        worst_case_lag = longest interval the schedule can leave the table stale
+        warn if worst_case_lag > declared_sla
+        # hourly → daily against a 6h SLA warns before the merge
+      source_id: hook-freshness-pre-merge
+  source_refs: [ref-grafana-docs, ref-prometheus-docs, hook-freshness-pre-merge, mcp-datahub]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/obs-prod-gotchas
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-24'
+  security: { runs_code: false, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-data-observability] }
+- id: tutorial-obs-lineage-incident
+  slug: obs-lineage-incident
+  type: tutorial
+  title: >-
+    Incident drill: a broken upstream caught by freshness and lineage
+  description: >-
+    The source job quietly changed from hourly to daily; the mart's 6h
+    freshness SLA now fails by construction. Run the drill — confirm the
+    breach from the diff, walk upstream with get_lineage, and report the
+    impact set with owner, criticality and the earliest SLA that breaks.
+  category: cat-data-observability
+  series: observability
+  series_title: The Observability Series
+  lesson: 9
+  difficulty: intermediate
+  tags: [tutorial, observability, incident, lineage, freshness, drill]
+  learning_objectives:
+    - Confirm a freshness breach from a schedule diff in minutes
+    - Walk upstream with get_lineage to find the source that slowed
+    - Report the impact set — owner, criticality, earliest SLA — as the incident note
+  what_you_need:
+    - Install: npx de-agent-platform add lineage-explainer
+    - A lineage store reached through mcp-datahub or the lineage-graph plugin
+  steps:
+    - text: Confirm the trigger — a cron changed from hourly to daily, and a 6h freshness SLA will be violated.
+      from_id: hook-freshness-pre-merge
+      from_field: example
+    - text: Show the arithmetic — the check compares the schedule in the diff with the declared SLA and warns with the computed worst-case lag.
+      from_id: hook-freshness-pre-merge
+      from_field: implementation
+    - text: Name the guard that should have caught it — a hook that warns when a change would silently widen the freshness SLA of a source.
+      from_id: hook-freshness-pre-merge
+      from_field: description
+    - text: Walk upstream — get_lineage from the stale asset finds the source that stopped feeding on time.
+      from_id: mcp-datahub
+      from_field: tools
+    - text: Walk downstream for impact — from the broken node to the published marts; report owner, criticality, and the earliest SLA that will break.
+      from_id: skill-lineage-explainer
+      from_field: body
+    - text: Ask the opening question out loud — "what breaks if I change this column?" is how the drill starts.
+      from_id: skill-lineage-explainer
+      from_field: tagline
+    - text: Run it from commands — /lineage-up to find the culprit, /impact to size the blast radius.
+      from_id: plugin-lineage-graph
+      from_field: commands
+  check_yourself:
+    - You can state the breach, the worst-case lag, the broken source and the first SLA that breaks — in that order, with evidence.
+    - The incident note names an owner and a criticality, not a dashboard link.
+  when_to_use:
+    - "A freshness alert fired and nobody knows which upstream moved"
+    - "You are rehearsing incidents and want a drill with a provable paper trail"
+  why: Freshness tells you something broke; lineage tells you what and who — the drill is the two in sequence.
+  gotchas:
+    - "The diff is evidence — the schedule change and the SLA it breaks are provable before anyone is paged."
+    - "An upstream that slowed rather than stopped still breaches a tight SLA — worst-case lag catches it."
+    - "Stop the walk at published marts — that is where owners and SLAs live, and where the walk ends."
+  production_notes:
+    - "Wire the freshness-pre-merge check into CI so this incident class dies before merge."
+    - "Keep the drill to four questions — breach, source, impact set, owner."
+  diagram: |
+    incident drill
+       |
+       |- 1. breach:  cron hourly→daily vs 6h SLA ──▶ worst-case lag 24h
+       |
+       |- 2. source:  get_lineage(stale mart) ──▶ upstream source slowed
+       |
+       |- 3. impact:  walk downstream ──▶ mart_revenue (published) ──▶ owner, criticality, earliest SLA
+       |
+        --> 4. page: owner + evidence (the diff), not a dashboard screenshot
+  code:
+    - title: The drill in four moves
+      lang: text
+      code: |
+        1. breach:  cron hourly→daily vs 6h SLA — worst-case lag 24h
+        2. source:  get_lineage(stale mart) — the upstream source slowed
+        3. impact:  walk downstream, stop at published marts —
+                    owner, criticality, earliest SLA that breaks
+        4. page:    owner + evidence (the diff), not a screenshot
+      source_id: skill-lineage-explainer
+    - title: The command pair for the drill
+      lang: text
+      code: |
+        /lineage-up <stale asset>    # find what feeds it, spot the slow source
+        /impact <broken column>      # list downstream consumers a change breaks
+      source_id: plugin-lineage-graph
+  source_refs: [hook-freshness-pre-merge, mcp-datahub, skill-lineage-explainer, plugin-lineage-graph]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/obs-lineage-incident
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-24'
+  security: { runs_code: false, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-data-observability, cat-data-lineage] }
+- id: tutorial-obs-capstone-checklist
+  slug: obs-capstone-checklist
+  type: tutorial
+  title: >-
+    Capstone: the data-platform observability checklist
+  description: >-
+    Ten lessons compress into one page. Declare SLAs, express them as metrics
+    and alerts with explicit no-data handling, instrument runs with traces,
+    emit lineage events, keep the catalog authoritative — and gate both
+    schedule changes and column changes pre-merge.
+  category: cat-data-observability
+  series: observability
+  series_title: The Observability Series
+  lesson: 10
+  difficulty: intermediate
+  tags: [tutorial, observability, checklist, capstone, production]
+  learning_objectives:
+    - Assemble the full stack — metrics, alerts, traces, lineage, catalog
+    - Gate schedule and column changes pre-merge with SLA and impact checks
+    - Run the incident drill from memory
+  what_you_need:
+    - Install: npx de-agent-platform add lineage-explainer
+    - Every surface from lessons 2-9 wired — metrics, alerts, lineage, catalog
+  steps:
+    - text: Metrics layer — the metrics model and PromQL semantics pages settle how to express and alert on pipeline metrics.
+      from_id: ref-prometheus-docs
+      from_field: why
+    - text: Alert layer — alerting semantics, no-data handling and evaluation intervals, documented in precise, citable terms.
+      from_id: ref-grafana-docs
+      from_field: why
+    - text: Instrumentation layer — the semantic-conventions pages define standard attribute names worth citing exactly.
+      from_id: ref-otel-docs
+      from_field: why
+    - text: Lineage layer — an open specification for lineage events, which is what makes cross-tool lineage possible.
+      from_id: ref-openlineage-docs
+      from_field: why
+    - text: Catalog layer — the metadata model explains how to represent ownership and lineage consistently across tools.
+      from_id: ref-datahub-docs
+      from_field: why
+    - text: Contract layer — every source carries a declared freshness SLA; changes that silently widen it are warned against.
+      from_id: hook-freshness-pre-merge
+      from_field: description
+    - text: Change layer — before merging, walk the impact set from the changed node to the published marts; report owner, criticality, earliest SLA.
+      from_id: skill-lineage-explainer
+      from_field: body
+  check_yourself:
+    - You can draw the stack — metrics, data signals, traces, lineage, catalog — and name one tool per layer.
+    - You can run the incident drill — breach, source, impact set, owner — without notes.
+  when_to_use:
+    - "A new pipeline is about to ship and needs its observability wired the same way as the rest"
+    - "You are auditing an existing platform and want one page of must-haves"
+  why: Observability is a checklist you can run under pressure — this page is it.
+  gotchas:
+    - "Every layer has a standard — metrics and traces (Prometheus, OpenTelemetry), lineage (OpenLineage), ownership (DataHub); inventing one per tool is how drift starts."
+    - "A checklist skipped under deadline pressure is the incident you will have instead — automate the gates where possible."
+    - "The pre-merge gates are the cheapest lines on the page — one prevented incident pays for all of it."
+  production_notes:
+    - "Rehearse the incident drill quarterly — lineage reads fast only for people who have walked it."
+    - "Review the checklist when a tool changes — the standards above move slowly, the integrations do not."
+  diagram: |
+    the observability stack, gated
+       |
+       |- metrics (Prometheus) ── alerts (Grafana, no-data set)
+       |- traces (OpenTelemetry, semantic conventions)
+       |- lineage (OpenLineage events) ── catalog (DataHub: owner & SLA)
+       |
+       |- pre-merge gates:
+       |     schedule change ──▶ worst-case lag vs declared SLA ──▶ warn
+       |     column change   ──▶ impact set ──▶ owner, criticality, earliest SLA
+       |
+        --> pager pages a named owner about a breached contract
+  code:
+    - title: The data-signal half of the checklist
+      lang: text
+      code: |
+        □ Freshness SLA declared per source; staleness metric + alert rule
+        □ No-data handling explicit — silence pages, it does not pass
+        □ Evaluation interval chosen against the SLA window
+        □ Every rule names the SLA it defends
+      source_id: ref-grafana-docs
+    - title: The lineage half of the checklist
+      lang: text
+      code: |
+        □ Lineage events emitted per job, queryable from the store
+        □ Technical and business lineage both readable for any asset
+        □ Column change → impact set before merge (owner, criticality, earliest SLA)
+      source_id: skill-lineage-explainer
+  source_refs: [ref-prometheus-docs, ref-grafana-docs, ref-otel-docs, ref-openlineage-docs, ref-datahub-docs, hook-freshness-pre-merge, skill-lineage-explainer]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/obs-capstone-checklist
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-24'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-data-observability, cat-data-lineage, cat-data-catalog] }

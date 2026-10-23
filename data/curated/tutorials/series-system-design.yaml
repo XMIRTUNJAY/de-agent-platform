@@ -1,0 +1,913 @@
+# The System Design Series — lessons authored for the 13x10 series; structure ours, wording the source's.
+# Stage pool is intentionally small (5 references, all cat-system-design): sources are reused at
+# field level across lessons; every step cites a real registry resource with an existing from_field.
+- id: tutorial-system-design-mental-model
+  slug: system-design-mental-model
+  type: tutorial
+  title: >-
+    Hold the system design mental model — data systems as tradeoffs
+  description: >-
+    Before any diagram, data systems are tradeoffs, not products. This lesson fixes
+    the vocabulary — reliability, scalability, maintainability, and the six canonical
+    mechanisms behind them — and shows how the canonical chapters map onto systems
+    you already run, so every later lesson in the series has a place to land.
+  category: cat-system-design
+  series: system-design
+  series_title: The System Design Series
+  lesson: 1
+  difficulty: beginner
+  tags: [tutorial, system-design, ddia, fundamentals, architecture]
+  learning_objectives:
+    - Frame any data system as a tradeoff among reliability, scalability, and maintainability
+    - Name the six mechanisms DDIA teaches and map each one to a system you operate
+    - Argue a design decision in tradeoff language instead of tool-brand language
+  what_you_need:
+    - No cluster or account required — this is a concepts lesson
+    - The DDIA table of contents open beside you
+  steps:
+    - text: Start from the canonical scope — DDIA's subject is the principles behind data systems, namely reliability, scalability, replication, partitioning, consistency, and batch/stream processing. Those six words are the axes every decision in this series moves along.
+      from_id: ref-ddia
+      from_field: summary
+    - text: Treat data platform architecture as a special case — the Primer states that data platform architectures are a special case of the same throughput/consistency tradeoffs it teaches, so this vocabulary is not a detour from your day job.
+      from_id: ref-system-design-primer
+      from_field: summary
+    - text: Know why this book anchors the series — it is called the single highest-value read for system-design interviews and for understanding why the tools are shaped as they are. Vocabulary outlasts tool versions.
+      from_id: ref-ddia
+      from_field: why
+    - text: Ground each chapter in something you run — the description maps replication to CDC, partitioning to lakehouse, and consistency to transaction semantics, so every abstract chapter has a production counterpart you can point at.
+      from_id: ref-ddia
+      from_field: description
+    - text: Accept the format — DDIA is a book, not a CLI, and that is deliberate. The payoff here is durable vocabulary rather than installable commands, which is why this stage's lessons carry no install step.
+      from_id: ref-ddia
+      from_field: kind
+  check_yourself:
+    - Asked to design a pipeline, you open with the three concerns — reliability, scalability, maintainability — before naming any product.
+    - You can say which DDIA mechanism (replication, partitioning, consistency) each of your production systems exercises.
+  when_to_use:
+    - "You are new to system design and need the vocabulary before drawing a single box"
+    - "A tool debate needs to be reframed as a tradeoff the team can actually resolve"
+  why: Every design argument collapses into the same three tradeoffs — hold the model before holding the tools.
+  gotchas:
+    - "Naming products instead of tradeoffs is the tell of an unprepared designer — the mechanisms come first."
+    - "The six words are axes, not checklists — real designs move along several at once."
+    - "A special case is not a different subject — data platforms reuse the same tradeoffs as any other system."
+  production_notes:
+    - "Review a live pipeline against the six axes once a quarter — assumptions rot silently."
+    - "When a new tool enters the stack, state which axis it moves and which it costs."
+  diagram: |
+    system design mental model
+       |
+       |- reliability --> the system keeps working when parts fail
+       |- scalability  --> the system handles growth in load
+       |- maintainability --> the system can be changed without dread
+       |
+       |- mechanisms (DDIA): replication | partitioning | consistency | batch/stream
+       |
+       |- replication --> CDC        |- partitioning --> lakehouse
+       |- consistency --> tx semantics
+       |
+        --> every decision = a move along one axis, paid for on another
+  code:
+    - title: The three concerns in one view
+      lang: text
+      code: |
+        RELIABILITY       SCALABILITY        MAINTAINABILITY
+        keeps working     handles growth     stays changeable
+             \                  |                  /
+              \                 |                 /
+               +---- every design moves along these, and pays -----+
+      source_id: ref-ddia
+    - title: The chapter-to-production map
+      lang: text
+      code: |
+        DDIA chapter    ->  system you already run
+        replication     ->  CDC pipelines
+        partitioning    ->  lakehouse tables
+        consistency     ->  transaction semantics of your MERGE
+        batch/stream    ->  your orchestrator and your stream jobs
+      source_id: ref-ddia
+  source_refs: [ref-ddia, ref-system-design-primer]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/system-design-mental-model
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-24'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-system-design] }
+- id: tutorial-system-design-back-of-envelope
+  slug: system-design-back-of-envelope
+  type: tutorial
+  title: >-
+    Run the back-of-envelope drill — numbers before architecture
+  description: >-
+    Estimation is the warm-up act of every design conversation: QPS, storage per
+    day, retention, peak factor, all written down before a single box is drawn.
+    This lesson drills the powers-of-two arithmetic and shows how to ground the
+    numbers in architectures that actually ship.
+  category: cat-system-design
+  series: system-design
+  series_title: The System Design Series
+  lesson: 2
+  difficulty: beginner
+  tags: [tutorial, system-design, estimation, capacity, arithmetic]
+  learning_objectives:
+    - Estimate QPS, storage per day, and retention footprint from a workload description
+    - Apply peak-versus-average factors instead of quoting averages alone
+    - Ground an estimate in a real deployed reference architecture
+  what_you_need:
+    - A calculator or the worksheet in this lesson
+    - A workload sentence to estimate, e.g. 100M events/day at 1 KB each
+  steps:
+    - text: Locate the drill in the study guide — back-of-envelope estimation is one of the three things the Primer exists for, alongside scaling vocabulary and worked design exercises. That placement is deliberate, numbers come before boxes.
+      from_id: ref-system-design-primer
+      from_field: summary
+    - text: Take the on-ramp seriously — the Primer is described as the standard on-ramp for the estimation and tradeoff vocabulary this stage's interview path needs, so the drills here are the path's entry fee, not an aside.
+      from_id: ref-system-design-primer
+      from_field: why
+    - text: Practice against worked exercises, not invented ones — the Primer's third pillar is worked design exercises, and each one begins with the same estimation step you are drilling here.
+      from_id: ref-system-design-primer
+      from_field: description
+    - text: Ground the numbers in deployed patterns — AWS's collection of architecture diagrams and best-practice guidance (Well-Architected pillars, serverless data lake patterns) is exactly where a sizing claim stops being hypothetical.
+      from_id: ref-aws-arch-center
+      from_field: summary
+    - text: Use architectures as citable evidence — reference architectures are called the closest thing to citable evidence when an answer needs a real-world precedent, so attach one to every estimate you defend.
+      from_id: ref-aws-arch-center
+      from_field: why
+  check_yourself:
+    - 100M events/day at 1 KB each is ~100 GB/day raw — you can get there with powers of two in under a minute.
+    - You quote peak QPS (2–3x average) before anyone asks, because averages hide the load that actually breaks systems.
+  when_to_use:
+    - "A design interview or review asks whether the numbers hang together"
+    - "A storage or throughput budget is being challenged and needs a written basis"
+  why: Numbers written down early turn vague architecture debates into checkable arithmetic.
+  gotchas:
+    - "Averages hide peaks — quote both, and size for the peak."
+    - "Retention is the silent multiplier — 100 GB/day is 36 TB/year before replication."
+    - "An estimate without a deployed precedent is an opinion — cite a reference architecture."
+  production_notes:
+    - "Re-run the estimate after every 2x growth event — the worksheet is cheap, the surprise is not."
+    - "Keep the arithmetic next to the architecture diagram so the two are reviewed together."
+  diagram: |
+    back-of-envelope drill
+       |
+       |- workload sentence: 100M events/day, 1 KB each
+       |
+       |- events/sec   --> 100e6 / 86,400  ~ 1,160 avg  ~ 3,500 peak
+       |- storage/day  --> 100e6 * 1 KB    ~ 100 GB
+       |- retention    --> * 730 days      ~ 73 TB  (+replication)
+       |
+       |- every number --> grounded in a reference architecture
+       |
+        --> numbers before boxes, always
+  code:
+    - title: Estimation worksheet
+      lang: python
+      code: |
+        # Back-of-envelope worksheet — powers of two + QPS/storage math
+        P2 = {("1 KB"): 2**10, ("1 MB"): 2**20, ("1 GB"): 2**30,
+              ("1 TB"): 2**40, ("1 PB"): 2**50}
+
+        def estimate(events_per_day, bytes_per_event, retention_days, peak_factor=3):
+            qps_avg  = events_per_day / 86_400
+            qps_peak = qps_avg * peak_factor
+            raw      = events_per_day * bytes_per_event * retention_days
+            return {"avg_qps": round(qps_avg), "peak_qps": round(qps_peak),
+                    "storage_TB": round(raw / 2**40, 1)}
+
+        print(estimate(events_per_day=100_000_000,
+                       bytes_per_event=1_000,
+                       retention_days=730))
+      source_id: ref-system-design-primer
+    - title: The four numbers every answer needs
+      lang: text
+      code: |
+        1. Throughput   — avg QPS and peak QPS (peak = 2-3x avg)
+        2. Storage/day  — events * bytes per event
+        3. Retention    — storage/day * retention days (+ replication factor)
+        4. Precedent    — one reference architecture that ships this shape
+      source_id: ref-aws-arch-center
+  source_refs: [ref-system-design-primer, ref-aws-arch-center]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/system-design-back-of-envelope
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-24'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-system-design] }
+- id: tutorial-system-design-storage-engines
+  slug: system-design-storage-engines
+  type: tutorial
+  title: >-
+    Choose storage engines on tradeoffs — reads, writes, and consistency
+  description: >-
+    Storage choice is where a design's promises become real: the engine you pick
+    decides what replication buys, what partitioning costs, and which consistency
+    semantics your merges get. This lesson builds a decision habit around the
+    DDIA mechanisms instead of brand loyalty.
+  category: cat-system-design
+  series: system-design
+  series_title: The System Design Series
+  lesson: 3
+  difficulty: intermediate
+  tags: [tutorial, system-design, storage, consistency, databases]
+  learning_objectives:
+    - Argue a storage choice from replication, partitioning, and consistency needs
+    - Explain what each consistency semantic means for a merge-based pipeline
+    - Recognize read/write shape patterns (CQRS, event sourcing) in vendor storage
+  what_you_need:
+    - Lesson 1's six-axis vocabulary
+    - One storage decision currently on your plate
+  steps:
+    - text: Re-anchor on the mechanisms — DDIA's core chapters are replication, partitioning, and consistency, and a storage engine is best understood as one particular bundle of answers to those three questions.
+      from_id: ref-ddia
+      from_field: summary
+    - text: Ask the shaping question — the book's stated payoff is understanding why data tools are shaped as they are, so when a warehouse refuses a use case, ask which mechanism answer it encodes rather than blaming the vendor.
+      from_id: ref-ddia
+      from_field: why
+    - text: Make consistency concrete — the description maps consistency to transaction semantics, which in practice means asking what your MERGE does under concurrent writers before the engine is chosen, not after the first lost update.
+      from_id: ref-ddia
+      from_field: description
+    - text: Recognize shape patterns in the catalogue — Microsoft's design patterns include CQRS and event sourcing, each a read/write shape decision, so you can name what a serving-table split or a rebuildable log is buying you.
+      from_id: ref-cloud-design-patterns
+      from_field: summary
+    - text: Check the choice against deployed guidance — AWS's architecture collection (Well-Architected pillars, data lake patterns) shows which storage bundles ship together, turning your tradeoff argument into precedent.
+      from_id: ref-aws-arch-center
+      from_field: summary
+  check_yourself:
+    - For any table you own, you can state the partitioning scheme, the replication story, and the consistency semantics your MERGE relies on.
+    - Asked why a lakehouse over a row store, your answer names write shape, scan shape, and time-travel semantics — not brand names.
+  when_to_use:
+    - "A new table or pipeline needs a home and the default is being questioned"
+    - "A storage migration is proposed and the real cost drivers need naming"
+  why: The engine is where tradeoffs become irreversible — choose it by mechanism, not by familiarity.
+  gotchas:
+    - "Consistency semantics chosen late are chosen wrong — concurrent-writer behavior belongs in the storage decision."
+    - "Every engine bundles all three mechanisms — you never get one answer without paying for the other two."
+    - "CQRS and event sourcing solve read/write shape, not scale — do not reach for them as capacity fixes."
+  production_notes:
+    - "Write the consistency expectation into the table's README — merges depend on it silently."
+    - "Revisit the storage bundle when the dominant access pattern changes shape."
+  diagram: |
+    storage engine decision
+       |
+       |- write shape  --> append? upsert? log?
+       |- read shape   --> scans? point lookups? serving tables?
+       |- consistency  --> what must a concurrent MERGE see?
+       |
+       |- mechanisms: replication | partitioning | consistency
+       |- shape patterns (CQRS, event sourcing) name the read/write split
+       |
+        --> choice grounded in a reference architecture that ships the same bundle
+  code:
+    - title: Storage decision record
+      lang: text
+      code: |
+        For table T, choose the engine by stating:
+        - Replication need   -> HA and read scale required? (replication)
+        - Partitioning need  -> what is the natural partition key? (partitioning)
+        - Consistency need   -> what must concurrent MERGE writers see? (consistency)
+        Then name the shape pattern: plain | CQRS-style serving table | event-sourced replay.
+        Finally cite one deployed reference architecture with the same bundle.
+      source_id: ref-ddia
+  source_refs: [ref-ddia, ref-cloud-design-patterns, ref-aws-arch-center]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/system-design-storage-engines
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-24'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-system-design] }
+- id: tutorial-system-design-scaling-vocabulary
+  slug: system-design-scaling-vocabulary
+  type: tutorial
+  title: >-
+    Speak the scaling vocabulary — load balancing, caching, sharding
+  description: >-
+    Scale arguments go wrong when the words do: horizontal versus vertical,
+    cache-aside versus write-through, shard by range versus hash. This lesson
+    fixes the Primer's vocabulary and lines it up with DDIA's partitioning and
+    replication so one argument covers both worlds.
+  category: cat-system-design
+  series: system-design
+  series_title: The System Design Series
+  lesson: 4
+  difficulty: intermediate
+  tags: [tutorial, system-design, scalability, caching, sharding]
+  learning_objectives:
+    - Use load balancer, cache, and shard vocabulary precisely in design arguments
+    - Translate between the Primer's scaling terms and DDIA's partitioning/replication
+    - Pick the first scaling lever for a bottleneck instead of reaching for all of them
+  what_you_need:
+    - Lesson 2's estimates (scaling needs numbers to bite on)
+    - One real bottleneck to reason about
+  steps:
+    - text: Learn the three levers in one place — the Primer's scaling vocabulary is load balancers, caching, and sharding, taught together so their interactions are visible from day one.
+      from_id: ref-system-design-primer
+      from_field: summary
+    - text: Use the standard on-ramp — the Primer is the standard on-ramp for the estimation and tradeoff vocabulary this stage's interview path needs, so its terms are the ones interviewers and reviewers will expect you to use.
+      from_id: ref-system-design-primer
+      from_field: why
+    - text: Translate to the canonical mechanisms — DDIA teaches the same ideas as replication and partitioning, so sharding is partitioning, and load balancing plus caching sit on top of replicated copies.
+      from_id: ref-ddia
+      from_field: summary
+    - text: Anchor the translation in production terms — the description maps partitioning to lakehouse, so your sharding argument is really a partition-layout argument about the tables you already curate.
+      from_id: ref-ddia
+      from_field: description
+    - text: Check scaling choices against deployed guidance — AWS's best-practice guidance (Well-Architected pillars) shows which levers ship together in real architectures, and at what cost to cost and operability.
+      from_id: ref-aws-arch-center
+      from_field: summary
+  check_yourself:
+    - You can name which lever you would pull FIRST for a read-bound serving path, and why cache precedes shard in that order.
+    - Asked to shard a lakehouse table, you answer with a partition key and skew story, not with the word sharding alone.
+  when_to_use:
+    - "A bottleneck review needs the lever named before the budget is spent"
+    - "A scaling proposal mixes terms and the team needs one vocabulary"
+  why: Scaling debates are won by whoever names the lever and its cost first — vocabulary is the lever.
+  gotchas:
+    - "Adding replicas scales reads, not writes — replication and partitioning answer different overload shapes."
+    - "A cache without an invalidation story is a correctness bug with a latency bonus."
+    - "Hash partitioning kills range scans; range partitioning creates hot keys — pick per access pattern."
+  production_notes:
+    - "Record the chosen scaling lever and its expected headroom in the design doc."
+    - "Watch partition skew after every key change — hot keys masquerade as capacity problems."
+  diagram: |
+    scaling vocabulary
+       |
+       |- too slow reads   --> 1) cache  2) load-balance replicas
+       |- too much data    --> shard / partition (by hash or range)
+       |- too many writers --> partition first; replicas do not help writes
+       |
+       |- primer words:  load balancer | cache | shard
+       |- ddia words:    replication   |       | partitioning
+       |
+        --> name the lever, its cost, and its skew story
+  code:
+    - title: Lever selection order
+      lang: text
+      code: |
+        Bottleneck            -> first lever          -> canonical mechanism
+        read-heavy serving    -> cache, then LB       -> replication
+        write throughput      -> partition the writes -> partitioning
+        dataset > one node    -> shard by access key  -> partitioning
+        spiky traffic         -> LB + autoscale       -> replication
+        Rule: one lever at a time; measure before adding the second.
+      source_id: ref-system-design-primer
+  source_refs: [ref-system-design-primer, ref-ddia, ref-aws-arch-center]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/system-design-scaling-vocabulary
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-24'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-system-design] }
+- id: tutorial-system-design-sli-slo
+  slug: system-design-sli-slo
+  type: tutorial
+  title: >-
+    Define reliability in numbers — SLIs, SLOs, and error budgets
+  description: >-
+    A design without reliability numbers is a wish. This lesson borrows the SRE
+    toolkit — SLIs, SLOs, error budgets, incident management, postmortems, and
+    capacity planning — and points it at data platforms, where freshness and
+    completeness are the properties users actually feel.
+  category: cat-system-design
+  series: system-design
+  series_title: The System Design Series
+  lesson: 5
+  difficulty: intermediate
+  tags: [tutorial, system-design, sre, slo, reliability]
+  learning_objectives:
+    - Define an SLI and an SLO for a data property like freshness or completeness
+    - Compute an error budget and state what burning it permits and forbids
+    - Borrow the incident and postmortem loop for data platform failures
+  what_you_need:
+    - A pipeline whose users can tell you what late or wrong data costs them
+    - A calendar window for the SLO (28 days is the default)
+  steps:
+    - text: Take the vocabulary from the source — Google's SRE books cover SLIs/SLOs/error budgets, incident management, postmortem culture, and capacity planning, and data platform teams already borrow from them when they define data SLAs and run incident drills.
+      from_id: ref-sre-google
+      from_field: summary
+    - text: Know why these books are canonical — they are called the origin of most SLO and postmortem vocabulary used in data reliability work, so using their terms keeps your design review intelligible to SREs.
+      from_id: ref-sre-google
+      from_field: why
+    - text: Point the toolkit at data properties — the books are the vocabulary source reliability engineering lends to data teams, so your freshness metric is an SLI, your freshness promise is an SLO, and the slack between them is a budget.
+      from_id: ref-sre-google
+      from_field: description
+    - text: Read the originals, they are free — the SRE books are published free online, so there is no paywall between your team and the chapter that defines the error budget policy you are about to adopt.
+      from_id: ref-sre-google
+      from_field: description
+    - text: Line the SLOs up with the architecture review — AWS's best-practice guidance is organized around Well-Architected pillars, and a written SLO is what turns the reliability pillar from prose into a number you can fail.
+      from_id: ref-aws-arch-center
+      from_field: summary
+  check_yourself:
+    - You can state one SLI, one SLO, and one error budget for a table you own — and what the on-call is allowed to do while the budget holds.
+    - An incident on your platform ends in a postmortem with a follow-up, not in a restart and a shrug.
+  when_to_use:
+    - "A data SLA is being negotiated and needs to become an SLO with a budget"
+    - "Reliability work competes with feature work and needs a neutral referee"
+  why: Error budgets convert reliability from a feeling into a number that permits and forbids work.
+  gotchas:
+    - "An SLA without a measured SLI behind it is a liability, not a promise."
+    - "Budget exhausted and still shipping — that is how small failures compound into the big one."
+    - "A postmortem that ends with 'be more careful' has found no mechanism and fixed nothing."
+  production_notes:
+    - "Track budget burn on the same dashboard as freshness and completeness."
+    - "Run one incident drill per quarter using a past failure as the script."
+  diagram: |
+    sli / slo / error budget
+       |
+       |- SLI  --> measured property (freshness p95, completeness ratio)
+       |- SLO  --> promise on the SLI (freshness p95 <= 15 min over 28d)
+       |- budget --> 1 - SLO  = allowed failure
+       |
+       |- budget intact   --> ship risky changes
+       |- budget burned   --> freeze, stabilize, postmortem
+       |
+        --> capacity planning closes the loop (SRE books)
+  code:
+    - title: Data SLO worksheet
+      lang: text
+      code: |
+        Data SLI candidates (pick 1-2 per pipeline):
+          - freshness    : now - max(event_time) in the serving table
+          - completeness : rows_loaded / rows_expected from source count
+          - success rate : successful runs / scheduled runs over 28d
+
+        SLO:    freshness p95 <= 15 min
+                success rate >= 99.0% over 28 days
+
+        Budget: 1 - SLO = 1% of 28d = ~6.7 h of failed schedule per month
+        Burned  -> freeze risky changes; intact -> ship.
+      source_id: ref-sre-google
+  source_refs: [ref-sre-google, ref-aws-arch-center]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/system-design-sli-slo
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-24'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-system-design] }
+- id: tutorial-system-design-resilience-patterns
+  slug: system-design-resilience-patterns
+  type: tutorial
+  title: >-
+    Design resilient pipelines — retry, circuit breaker, bulkhead
+  description: >-
+    Failures are inputs, not exceptions. Microsoft's pattern catalogue gives each
+    failure shape a name and a solution — retry, circuit breaker, compensating
+    transaction, bulkhead — and each pattern page carries the considerations that
+    decide when it backfires. This lesson fits them to pipeline components.
+  category: cat-system-design
+  series: system-design
+  series_title: The System Design Series
+  lesson: 6
+  difficulty: intermediate
+  tags: [tutorial, system-design, resilience, patterns, reliability]
+  learning_objectives:
+    - Match each pipeline failure shape to its named pattern and its considerations
+    - Cap retries with backoff and know when a circuit breaker replaces them
+    - Use bulkheads and compensating transactions to bound blast radius
+  what_you_need:
+    - Lesson 5's SLO (patterns exist to defend the budget)
+    - One component that fails messily today
+  steps:
+    - text: Take the catalogue as-is — Microsoft's cloud design patterns include retry, circuit breaker, compensating transaction, CQRS, event sourcing, and bulkhead, each with problem, solution, and considerations, and the collection is vendor-neutral in practice.
+      from_id: ref-cloud-design-patterns
+      from_field: summary
+    - text: Adopt the format, not just the patterns — each pattern page states the problem/solution pair formally, the format this stage's design exercises expect, so write your pipeline's failure modes in that same pair form.
+      from_id: ref-cloud-design-patterns
+      from_field: why
+    - text: Fit patterns to pipeline components — the catalogue is described as directly applicable to pipeline component design, so retry belongs on the extract, the breaker on the load, and the bulkhead between tenants.
+      from_id: ref-cloud-design-patterns
+      from_field: description
+    - text: Give each pattern a budget to defend — Google's SRE vocabulary supplies the error budgets and incident management that decide when retries are safe and when they are a storm, and patterns without budgets multiply load exactly when the system is weakest.
+      from_id: ref-sre-google
+      from_field: summary
+    - text: Mind the consistency of repeated work — DDIA's consistency chapter is the reason an idempotent retry is safe and a non-idempotent one is not, so pair every retry with the transaction semantics that make replaying it harmless.
+      from_id: ref-ddia
+      from_field: summary
+  check_yourself:
+    - Every external call in your pipeline has a named failure policy — retry with capped attempts and backoff, breaker, or fail-fast to a DLQ.
+    - You can say which pattern protects which SLO, and what the pattern's own considerations page warns about.
+  when_to_use:
+    - "A component fails messily and the fix needs a name before a patch"
+    - "A pipeline review lists failure modes and each needs a bounded response"
+  why: Named patterns turn failure handling from scattered try/except blocks into a reviewable design.
+  gotchas:
+    - "Retries without backoff and a cap are a self-inflicted outage — the retry storm is a pattern too."
+    - "A circuit breaker that trips silently hides a dead dependency — alert on state, not just errors."
+    - "Bulkheads partition failure, not capacity — they bound blast radius, they do not add throughput."
+  production_notes:
+    - "Write the failure policy into the component's interface — callers deserve to know what happens on failure."
+    - "Review breaker trip counts in the weekly ops review; frequent trips mean a capacity or design problem."
+  diagram: |
+    resilience patterns on a pipeline
+       |
+       |- extract --> flaky API    --> Retry (backoff + cap)
+       |- load    --> sinking DW   --> Circuit breaker (stop hammering)
+       |- tenants --> noisy neighbor--> Bulkhead (separate pools)
+       |- multi-step load --> partial failure --> Compensating transaction
+       |
+       |- every pattern defends a budget (SLO from lesson 5)
+        --> failure is an input; the pattern is the interface
+  code:
+    - title: Pattern decision table
+      lang: text
+      code: |
+        Failure shape             -> pattern                  -> pipeline application
+        transient downstream err  -> Retry                    -> re-poll API; backoff + cap
+        cascading overload        -> Circuit breaker          -> stop hammering a sinking DW
+        blast radius per tenant   -> Bulkhead                 -> separate pools per domain
+        partial multi-step load   -> Compensating transaction -> undo a half-applied load
+        read/write shape mismatch -> CQRS                     -> serving table vs ingest
+        rebuildable state         -> Event sourcing           -> replay log to reconstruct
+      source_id: ref-cloud-design-patterns
+  source_refs: [ref-cloud-design-patterns, ref-sre-google, ref-ddia]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/system-design-resilience-patterns
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-24'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-system-design] }
+- id: tutorial-system-design-reference-architectures
+  slug: system-design-reference-architectures
+  type: tutorial
+  title: >-
+    Read reference architectures like an engineer — AWS as precedent
+  description: >-
+    Reference architectures are precedent, not homework. This lesson teaches a
+    reading method: name the moving parts, find the pillar each choice defends,
+    spot the serverless data lake pattern, and re-state the diagram in DDIA
+    vocabulary so vendor drawings become reusable design evidence.
+  category: cat-system-design
+  series: system-design
+  series_title: The System Design Series
+  lesson: 7
+  difficulty: intermediate
+  tags: [tutorial, system-design, aws, architecture, reference]
+  learning_objectives:
+    - Decompose a reference architecture into ingest, store, process, and serve
+    - Connect each architectural choice to a Well-Architected pillar
+    - Re-state a vendor diagram in mechanism vocabulary to test real understanding
+  what_you_need:
+    - Lessons 1–4 vocabulary (mechanisms, estimation, scaling levers)
+    - One AWS reference architecture open in a browser
+  steps:
+    - text: Pick from the right shelf — AWS's Architecture Center is an official collection of architecture diagrams, reference architectures, and best-practice guidance, including Well-Architected pillars and serverless data lake patterns, which makes it a map of what actually ships.
+      from_id: ref-aws-arch-center
+      from_field: summary
+    - text: Read architectures as evidence — reference architectures are the closest thing to citable evidence when an answer needs a real-world precedent, so treat each diagram as a witness, not a template to copy blind.
+      from_id: ref-aws-arch-center
+      from_field: why
+    - text: Interrogate the drawing — the collection exists to ground sizing and tradeoff arguments in real deployed patterns, so ask what each box implies for cost, failure, and ops, and what the diagram leaves out.
+      from_id: ref-aws-arch-center
+      from_field: description
+    - text: Cross-read the pattern names — Microsoft's catalogue (retry, circuit breaker, CQRS, event sourcing, bulkhead) names the forces a diagram only implies, so a serverless data lake pattern reads differently once the resilience patterns label its joints.
+      from_id: ref-cloud-design-patterns
+      from_field: summary
+    - text: Translate back to mechanisms — restate the diagram in DDIA vocabulary (where is replication, where is partitioning, what consistency does the merge assume) and you have proven understanding, not recognition.
+      from_id: ref-ddia
+      from_field: summary
+  check_yourself:
+    - Given any architecture diagram, you can name the moving parts and the pillar each choice defends in under five minutes.
+    - You can point at one deployed reference architecture that resembles your own platform — and say where yours deliberately differs.
+  when_to_use:
+    - "A design needs precedent before a budget or architecture review"
+    - "A vendor proposal should be checked against what actually ships"
+  why: Precedent turns an argument from taste into evidence — someone already runs this shape in production.
+  gotchas:
+    - "Diagrams show the happy path — failure, retries, backfills, and cost are off-canvas by default."
+    - "A reference architecture is a starting point, not a destination — it encodes the vendor's default tradeoffs."
+    - "Recognizing a diagram is not understanding it — the translation test into mechanism vocabulary is the check."
+  production_notes:
+    - "Keep a 'precedent' section in each design doc with a link to the closest shipped architecture."
+    - "Re-check precedents yearly — vendor defaults move faster than your diagrams."
+  diagram: |
+    reading a reference architecture
+       |
+       |- 1. name the parts --> ingest | store | process | serve | govern
+       |- 2. find the pillar --> which Well-Architected pillar defends each box
+       |- 3. spot the shape --> serverless data lake pattern, where ops cost goes
+       |- 4. name the joints --> retry? breaker? bulkhead? (pattern catalogue)
+       |- 5. translate       --> replication? partitioning? consistency? (DDIA)
+       |
+        --> the diagram is now evidence you can cite, not a picture you admired
+  code:
+    - title: Architecture reading checklist
+      lang: text
+      code: |
+        Reading a reference architecture like an engineer:
+        1. Name the moving parts (ingest, store, process, serve, govern).
+        2. Find the pillar each choice defends (cost, reliability, security...).
+        3. Locate the serverless data lake pattern — where does it cut ops cost?
+        4. Ask what the diagram does NOT show: failure, retries, backfills, cost.
+        5. Re-state it in DDIA vocabulary (replication? partitioning? consistency?).
+      source_id: ref-aws-arch-center
+  source_refs: [ref-aws-arch-center, ref-cloud-design-patterns, ref-ddia]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/system-design-reference-architectures
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-24'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-system-design] }
+- id: tutorial-system-design-prod-gotchas
+  slug: system-design-prod-gotchas
+  type: tutorial
+  title: >-
+    Production gotchas — premature scaling and the missing capacity plan
+  description: >-
+    The two self-inflicted design failures: complexity bought before load requires
+    it, and capacity treated as an afterthought until the pager goes off. This
+    lesson puts the SRE discipline of capacity planning next to the pattern
+    catalogue's warnings, so design reviews catch both before production does.
+  category: cat-system-design
+  series: system-design
+  series_title: The System Design Series
+  lesson: 8
+  difficulty: advanced
+  tags: [tutorial, system-design, capacity-planning, production, incidents]
+  learning_objectives:
+    - Recognize premature scaling as a design smell with a pager attached
+    - Treat capacity planning as standing SRE work with its own cadence
+    - Spot retry storms and assumption rot before they become incidents
+  what_you_need:
+    - Lessons 5–7 (budgets, patterns, precedents — gotchas attack all three)
+    - One system whose growth assumptions you cannot currently state
+  steps:
+    - text: Name the missing discipline — capacity planning is in the SRE books' scope right beside SLIs/SLOs/error budgets and incident management, so a platform without a capacity plan is missing canonical SRE work, not a nice-to-have.
+      from_id: ref-sre-google
+      from_field: summary
+    - text: Question scale assumptions early — DDIA's scalability chapters exist because load assumptions age badly, and the book's payoff is understanding why tools are shaped as they are, which includes why they stop being enough.
+      from_id: ref-ddia
+      from_field: summary
+    - text: Drill the failure before it happens — the SRE material covers postmortem culture and incident management that data platform teams already borrow for incident drills, so rehearse the capacity surprise while it is still hypothetical.
+      from_id: ref-sre-google
+      from_field: description
+    - text: Audit the failure policies you shipped — the pattern catalogue's considerations for retry and circuit breaker exist precisely because misapplied resilience multiplies load, and a retry storm is premature scaling wearing a good intention.
+      from_id: ref-cloud-design-patterns
+      from_field: summary
+    - text: Diff against deployed guidance — AWS's best-practice guidance (Well-Architected pillars) is the cheapest external review available; when your architecture drifts from the pillars, assume the drift is the bug until proven otherwise.
+      from_id: ref-aws-arch-center
+      from_field: summary
+  check_yourself:
+    - For every component in your platform you can state its current utilization and the load at which it breaks — or you know it is unmeasured.
+    - The last three components you added each paid for themselves in reduced toil or risk, and you can name which.
+  when_to_use:
+    - "A new component is proposed and the load that justifies it is vague"
+    - "A growth spurt or incident reveals that the original scale assumptions never got revisited"
+  why: Production failures in design are usually self-inflicted — complexity bought early or capacity planned never.
+  gotchas:
+    - "Premature scaling is a complexity debt — every extra moving part is a pager that did not exist last year."
+    - "No capacity plan means the first growth spike is the experiment — run the drill before load runs it for you."
+    - "Retries without a budget or breaker multiply load exactly when the system is weakest — that is a storm."
+  production_notes:
+    - "Re-derive capacity numbers quarterly from utilization data, not from the original design doc."
+    - "Add breaker trip counts and retry volumes to the ops review — they are scaling symptoms in disguise."
+  diagram: |
+    production gotchas
+       |
+       |- premature scaling --> complexity bought before load requires it
+       |                      -> every moving part is a future pager
+       |
+       |- no capacity plan  --> first spike is the experiment
+       |                      -> capacity planning is standing SRE work
+       |
+       |- retry storm       -> resilience misapplied multiplies load
+       |- assumption rot    -> launch-day scale numbers never revisited
+       |
+        --> diff the architecture against the pillars; drift is a bug
+  code:
+    - title: The two self-inflicted outages
+      lang: text
+      code: |
+        Premature scaling    -> complexity bought before load requires it;
+                                every extra moving part is a pager
+        No capacity planning -> the SRE books treat capacity planning as core
+                                work, not an afterthought; without it the first
+                                growth spike is the experiment
+        Retry storm          -> retries without budget/breaker multiply load
+                                exactly when the system is weakest
+        Assumption rot       -> scale assumptions from launch day, never revisited
+      source_id: ref-sre-google
+  source_refs: [ref-sre-google, ref-ddia, ref-cloud-design-patterns, ref-aws-arch-center]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/system-design-prod-gotchas
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-24'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-system-design] }
+- id: tutorial-system-design-interview-walkthrough
+  slug: system-design-interview-walkthrough
+  type: tutorial
+  title: >-
+    Interview walkthrough — design a data platform end-to-end
+  description: >-
+    The full arc in one 45-minute shape: requirements, back-of-envelope numbers,
+    the storage and scaling argument, reliability as SLIs and budgets, and a
+    deployed precedent to close. Every claim traces to one of the five sources,
+    so nothing in the answer is invented under pressure.
+  category: cat-system-design
+  series: system-design
+  series_title: The System Design Series
+  lesson: 9
+  difficulty: advanced
+  tags: [tutorial, system-design, interview, design-exercise, walkthrough]
+  learning_objectives:
+    - Run a 45-minute design walkthrough with a repeatable time-boxed shape
+    - Support each design claim with a citation from the five source references
+    - Close an answer with a deployed precedent instead of a shrug
+  what_you_need:
+    - Lessons 1–8 (this walkthrough composes them)
+    - A timer and a whiteboard or shared doc
+  steps:
+    - text: Start from the exercise format — worked design exercises are one of the Primer's three pillars, and every one of them opens with requirements and estimates before architecture, so rehearse that order until it is reflexive.
+      from_id: ref-system-design-primer
+      from_field: description
+    - text: Use the path's own vocabulary — the Primer is the standard on-ramp for the estimation and tradeoff vocabulary this stage's interview path needs, which means the words you drilled in lessons 2 and 4 are the ones the interviewer expects to hear.
+      from_id: ref-system-design-primer
+      from_field: why
+    - text: Structure the answer on the canonical axes — DDIA's six words (reliability, scalability, replication, partitioning, consistency, batch/stream) are called the single highest-value read for system-design interviews, so let the deep dive be a mechanism, not a product tour.
+      from_id: ref-ddia
+      from_field: why
+    - text: Let the deep dive ride the mechanisms — replication, partitioning, and consistency are the DDIA chapters your data platform touches first, so spend the middle minutes on the hot table's partition layout and merge semantics rather than on logos.
+      from_id: ref-ddia
+      from_field: summary
+    - text: Close with evidence — reference architectures are the closest thing to citable evidence when an answer needs a real-world precedent, so end the walkthrough by pointing at a deployed architecture that ships your shape.
+      from_id: ref-aws-arch-center
+      from_field: why
+    - text: Pick a precedent that matches the domain — the AWS collection's Well-Architected pillars and serverless data lake patterns are concrete vendor material for grounding sizing and tradeoff arguments, which is exactly what the last five minutes of an interview need.
+      from_id: ref-aws-arch-center
+      from_field: summary
+  check_yourself:
+    - You can deliver the 45-minute shape — requirements, numbers, architecture, deep dive, reliability, precedent — inside the time box, twice, on different prompts.
+    - Every claim in your answer traces to one of the five references — nothing stands on vibes.
+  when_to_use:
+    - "A system design interview is scheduled and the format needs rehearsal"
+    - "An internal architecture review deserves the same disciplined shape"
+  why: A walkthrough with named sources and numbers survives follow-up questions — improvisation does not.
+  gotchas:
+    - "Jumping to architecture before the numbers is the most common interview failure — requirements and estimates buy the right to draw."
+    - "A deep dive on brand names instead of mechanisms collapses under the first 'why'."
+    - "Ending without a precedent leaves the interviewer holding an untested idea instead of a checked one."
+  production_notes:
+    - "Rehearse the walkthrough against a real platform decision, not a toy prompt — the vocabulary transfers."
+    - "Keep the five references bookmarked; citing the source of a claim is itself a signal."
+  diagram: |
+    45-minute data platform design
+       |
+       |- 0-5   requirements   --> functional + non-functional (freshness, volume)
+       |- 5-10  estimation     --> QPS, storage/day, retention, peak factor
+       |- 10-20 architecture   --> ingest -> raw -> process -> serve; name storage
+       |- 20-30 deep dive      --> partitioning + replication on the hot table;
+       |                          consistency for the merge
+       |- 30-40 reliability    --> SLIs/SLOs, error budget, failure modes, backfill
+       |- 40-45 precedent      --> one reference architecture that ships this shape
+       |
+        --> every claim cites one of the five sources
+  code:
+    - title: The 45-minute script
+      lang: text
+      code: |
+        45-minute data platform design — the shape:
+          0-5   Requirements: functional + non-functional (freshness, volume, growth)
+          5-10  Back-of-envelope: QPS, storage/day, retention, peak factor
+          10-20 Architecture: ingest -> raw -> process -> serve; name each store
+          20-30 Deep dive: partitioning + replication for the hot table;
+                consistency semantics for the merge
+          30-40 Reliability: SLIs/SLOs, error budget, failure modes, backfill story
+          40-45 Precedent: point at a reference architecture that ships this shape
+      source_id: ref-system-design-primer
+  source_refs: [ref-system-design-primer, ref-ddia, ref-aws-arch-center]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/system-design-interview-walkthrough
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-24'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-system-design] }
+- id: tutorial-system-design-capstone-checklist
+  slug: system-design-capstone-checklist
+  type: tutorial
+  title: >-
+    Capstone checklist — a design is done when these all hold
+  description: >-
+    Nine lessons compress into one checklist: tradeoffs named, numbers written,
+    storage chosen by mechanism, scaling lever identified, budget defined, failure
+    patterns assigned, precedent cited. Run it on your next design and on the
+    platform you already run.
+  category: cat-system-design
+  series: system-design
+  series_title: The System Design Series
+  lesson: 10
+  difficulty: advanced
+  tags: [tutorial, system-design, capstone, checklist, review]
+  learning_objectives:
+    - Apply a nine-point checklist to any design before calling it done
+    - Run the same checklist against a production platform as an audit
+    - Identify which checklist item your current design fails, and fix that one
+  what_you_need:
+    - Lessons 1–9 completed
+    - One live design (new or existing) to audit
+  steps:
+    - text: Check the spine first — reliability, scalability, replication, partitioning, consistency, and batch/stream — if the design cannot say where it stands on the six axes, the rest of the checklist has nothing to stand on.
+      from_id: ref-ddia
+      from_field: summary
+    - text: Check the numbers and levers — the Primer's estimation drills and scaling vocabulary (load balancers, caching, sharding) exist so the design's arithmetic and first lever are written down, not implied.
+      from_id: ref-system-design-primer
+      from_field: summary
+    - text: Check the reliability contract — the SRE books' SLIs/SLOs/error budgets, incident management, postmortem culture, and capacity planning are the standing items, and each needs an owner and a number before launch.
+      from_id: ref-sre-google
+      from_field: summary
+    - text: Check the failure policies — Microsoft's pattern catalogue (retry, circuit breaker, compensating transaction, bulkhead) gives every failure mode a bounded, named response; a design with unhandled failure shapes fails this item.
+      from_id: ref-cloud-design-patterns
+      from_field: summary
+    - text: Check the precedent — reference architectures are the closest thing to citable evidence when an answer needs a real-world precedent, so the last checklist item is always a deployed architecture your design can be compared against.
+      from_id: ref-aws-arch-center
+      from_field: why
+    - text: Audit the existing platform with the same list — grounding in best-practice guidance (Well-Architected pillars, data lake patterns) is what the AWS collection exists for, and drift between your platform and the pillars is the audit's finding.
+      from_id: ref-aws-arch-center
+      from_field: description
+  check_yourself:
+    - Your most recent design passes all nine checklist items with numbers, not adjectives, in the boxes.
+    - Auditing your production platform surfaces at least one failing item — and you know which lesson teaches its fix.
+  when_to_use:
+    - "A design review, an interview, or a platform audit needs one shared bar"
+    - "A team wants the series compressed into an artifact it can pin"
+  why: A checklist converts nine lessons of vocabulary into a pass/fail bar any reviewer can apply.
+  gotchas:
+    - "A checklist item with an adjective instead of a number is not checked — rewrite it."
+    - "The checklist audits designs, not people — a failing item is a finding, not a verdict."
+    - "Precedent is the last item for a reason — it checks the others, it cannot replace them."
+  production_notes:
+    - "Pin the checklist in the design-doc template so it runs by default."
+    - "Re-run the audit after major growth events — the checklist is a snapshot, load is a movie."
+  diagram: |
+    capstone checklist
+       |
+       |- 1 tradeoffs named (reliability vs scalability vs maintainability)
+       |- 2 numbers estimated (QPS, storage, retention, peak)
+       |- 3 storage chosen by mechanism (repl | part | consistency)
+       |- 4 first scaling lever named (LB | cache | shard)
+       |- 5 SLI + SLO + error budget defined
+       |- 6 one resilience pattern per failure mode
+       |- 7 capacity plan exists with a revisit date
+       |- 8 incident drill + postmortem loop defined
+       |- 9 deployed precedent cited
+       |
+        --> all nine, or the design is not done
+  code:
+    - title: The nine-point bar
+      lang: text
+      code: |
+        Capstone checklist — a design is done when:
+        [ ] Tradeoffs named explicitly (reliability vs scalability vs maintainability)
+        [ ] Numbers estimated (QPS, storage, retention, peak) and written down
+        [ ] Storage engine chosen with the mechanism reason stated
+        [ ] Scaling levers named (LB, cache, shard) and the FIRST lever identified
+        [ ] SLIs + SLO + error budget defined for the top user-visible property
+        [ ] One resilience pattern per failure mode (retry, breaker, bulkhead...)
+        [ ] Capacity plan exists, with a date it gets re-derived
+        [ ] Failure drill written: what breaks first, who is paged, what budget allows
+        [ ] A deployed reference architecture cited as precedent
+      source_id: ref-system-design-primer
+  source_refs: [ref-ddia, ref-system-design-primer, ref-sre-google, ref-cloud-design-patterns, ref-aws-arch-center]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/system-design-capstone-checklist
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-24'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-system-design] }

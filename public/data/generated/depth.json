@@ -1,8 +1,11 @@
 {
- "generated_at": "2026-10-23T18:48:37.579Z",
+ "generated_at": "2026-10-23T21:42:07.018Z",
  "levels": {
   "deep": 8,
-  "adequate": 248
+  "adequate": 291,
+  "thin": 1
  },
- "thin_ids": []
+ "thin_ids": [
+  "ref-avro-docs"
+ ]
 }

@@ -1,0 +1,265 @@
+# External references — official documentation (metadata + original summary only).
+# Added 2026-10-23 to ground the foundations / observability / system-design
+# series; every URL probed live (HTTP 200) on the day of authoring.
+- id: ref-arrow-docs
+  slug: arrow-docs
+  type: reference
+  title: Apache Arrow Documentation
+  url: https://arrow.apache.org/docs/
+  publisher: Apache Software Foundation
+  kind: documentation
+  category: cat-data-formats
+  license: Apache-2.0
+  summary: >-
+    Official Arrow docs: the columnar in-memory format, its language bindings,
+    IPC and Flight protocols, and zero-copy interchange between systems. Use it
+    for exact memory-layout and type-system semantics behind every "columnar"
+    claim in the registry.
+  why: Arrow is the substrate most modern data tools exchange data through; the format spec resolves type and layout questions definitively.
+  tags: [arrow, columnar, docs, official]
+  quality: { authority: 5, docs_quality: 4, repo_activity: 5, license_clarity: 5, installation: null, tests: null, examples: 4, security: null, maintenance: 5, compatibility: 4 }
+  verification: community
+  last_verified: 2026-10-23
+- id: ref-parquet-format
+  slug: parquet-format-docs
+  type: reference
+  title: Apache Parquet Format Documentation
+  url: https://parquet.apache.org/docs/
+  publisher: Apache Software Foundation
+  kind: documentation
+  category: cat-data-formats
+  license: Apache-2.0
+  summary: >-
+    The Parquet file format documentation: page structure, encodings,
+    compression codecs, statistics and the predicate-pushdown behavior that
+    columnar readers rely on. The ground truth for why columnar files scan
+    less data and how row-group pruning works.
+  why: When file-layout questions come up (row groups, min/max statistics, compression), the format docs are the citable source.
+  tags: [parquet, formats, docs, official]
+  quality: { authority: 5, docs_quality: 4, repo_activity: 4, license_clarity: 5, installation: null, tests: null, examples: 3, security: null, maintenance: 5, compatibility: 4 }
+  verification: community
+  last_verified: 2026-10-23
+- id: ref-avro-docs
+  slug: avro-docs
+  type: reference
+  title: Apache Avro Documentation
+  url: https://avro.apache.org/docs/
+  publisher: Apache Software Foundation
+  kind: documentation
+  category: cat-data-formats
+  license: Apache-2.0
+  summary: >-
+    Avro's official documentation: schema declaration, the schema-registry
+    evolution rules, encoding and the container format widely used for
+    event/stream payloads and Kafka wire formats.
+  why: Schema evolution rules for event payloads are exactly the kind of detail worth citing verbatim rather than paraphrasing.
+  tags: [avro, serialization, schema, docs, official]
+  quality: { authority: 5, docs_quality: 4, repo_activity: 4, license_clarity: 5, installation: null, tests: null, examples: 3, security: null, maintenance: 4, compatibility: 4 }
+  verification: community
+  last_verified: 2026-10-23
+- id: ref-12factor
+  slug: twelve-factor
+  type: reference
+  title: The Twelve-Factor App
+  url: https://12factor.net/
+  publisher: Adam Wiggins / community
+  kind: methodology
+  category: cat-engineering-foundations
+  license: CC-BY-3.0
+  summary: >-
+    The classic twelve principles for building services that run portably:
+    config in the environment, backing services as attached resources, logs as
+    event streams, disposability and dev/prod parity. Data pipelines inherit
+    these ideas whenever they run as jobs on shared infrastructure.
+  why: Short, canonical, and the shared vocabulary engineers reach for when arguing about config, logs and process design.
+  tags: [methodology, config, logging, foundations]
+  quality: { authority: 4, docs_quality: 4, repo_activity: 3, license_clarity: 4, installation: null, tests: null, examples: 2, security: null, maintenance: 4, compatibility: 4 }
+  verification: community
+  last_verified: 2026-10-23
+- id: ref-prometheus-docs
+  slug: prometheus-docs
+  type: reference
+  title: Prometheus Documentation
+  url: https://prometheus.io/docs/introduction/overview/
+  publisher: Cloud Native Computing Foundation
+  kind: documentation
+  category: cat-data-observability
+  license: Apache-2.0
+  summary: >-
+    Official Prometheus docs: the pull-based metrics model, PromQL, exporters,
+    service discovery and alerting rules. Data platforms lean on it for
+    infrastructure- and job-level metrics that sit underneath data-quality
+    signals like freshness and volume.
+  why: The metrics model and PromQL semantics pages settle how to express and alert on pipeline metrics.
+  tags: [prometheus, metrics, monitoring, docs, official]
+  quality: { authority: 5, docs_quality: 5, repo_activity: 5, license_clarity: 5, installation: 4, tests: null, examples: 4, security: null, maintenance: 5, compatibility: 4 }
+  verification: community
+  last_verified: 2026-10-23
+- id: ref-grafana-docs
+  slug: grafana-docs
+  type: reference
+  title: Grafana Documentation
+  url: https://grafana.com/docs/
+  publisher: Grafana Labs
+  kind: documentation
+  category: cat-data-observability
+  license: AGPL-3.0
+  summary: >-
+    Grafana's official documentation: dashboards, panel queries, alerting
+    (including the unified alerting model), and provisioning. The standard
+    surface where pipeline freshness, volume and job-health dashboards live.
+  why: Alerting semantics (no-data handling, evaluation intervals) are documented here in precise, citable terms.
+  tags: [grafana, dashboards, alerting, docs, official]
+  quality: { authority: 5, docs_quality: 4, repo_activity: 5, license_clarity: 4, installation: 4, tests: null, examples: 4, security: null, maintenance: 5, compatibility: 4 }
+  verification: community
+  last_verified: 2026-10-23
+- id: ref-otel-docs
+  slug: opentelemetry-docs
+  type: reference
+  title: OpenTelemetry Documentation
+  url: https://opentelemetry.io/docs/
+  publisher: Cloud Native Computing Foundation
+  kind: documentation
+  category: cat-data-observability
+  license: Apache-2.0
+  summary: >-
+    OpenTelemetry's official documentation: traces, metrics and logs through a
+    vendor-neutral API/SDK, the collector, and semantic conventions. Increasingly
+    the default instrumentation layer for distributed pipelines and services.
+  why: The semantic-conventions pages define standard attribute names worth citing exactly.
+  tags: [otel, tracing, instrumentation, docs, official]
+  quality: { authority: 5, docs_quality: 4, repo_activity: 5, license_clarity: 5, installation: 3, tests: null, examples: 4, security: null, maintenance: 5, compatibility: 4 }
+  verification: community
+  last_verified: 2026-10-23
+- id: ref-sre-google
+  slug: sre-books
+  type: reference
+  title: Google SRE Books
+  url: https://sre.google/books/
+  publisher: Google
+  kind: book
+  category: cat-system-design
+  license: CC-BY-NC-ND-4.0
+  summary: >-
+    Google's Site Reliability Engineering books, free online: SLIs/SLOs/error
+    budgets, incident management, postmortem culture and capacity planning.
+    The vocabulary source for reliability engineering that data platform teams
+    borrow from when they define data SLAs and run incident drills.
+  why: Canonical, free, and the origin of most SLO and postmortem vocabulary used in data reliability work.
+  tags: [sre, slo, incident-management, reliability]
+  quality: { authority: 5, docs_quality: 5, repo_activity: 3, license_clarity: 4, installation: null, tests: null, examples: 4, security: null, maintenance: 4, compatibility: 4 }
+  verification: community
+  last_verified: 2026-10-23
+- id: ref-system-design-primer
+  slug: system-design-primer
+  type: reference
+  title: The System Design Primer
+  url: https://github.com/donnemartin/system-design-primer
+  publisher: Donne Martin (GitHub)
+  kind: repository
+  category: cat-system-design
+  license: CC-BY-4.0
+  summary: >-
+    The widely-used open-source study guide for system design: scaling
+    vocabulary (load balancers, caching, sharding), back-of-envelope estimation,
+    and worked design exercises. Data platform architectures are a special case
+    of the same throughput/consistency tradeoffs it teaches.
+  why: Free, maintained, and the standard on-ramp for the estimation and tradeoff vocabulary this stage's interview path needs.
+  tags: [system-design, scalability, study-guide]
+  quality: { authority: 4, docs_quality: 4, repo_activity: 4, license_clarity: 5, installation: null, tests: null, examples: 4, security: null, maintenance: 4, compatibility: 4 }
+  verification: community
+  last_verified: 2026-10-23
+- id: ref-aws-arch-center
+  slug: aws-architecture-center
+  type: reference
+  title: AWS Architecture Center
+  url: https://aws.amazon.com/architecture/
+  publisher: Amazon Web Services
+  kind: documentation
+  category: cat-system-design
+  license: Proprietary (AWS Site Terms)
+  summary: >-
+    AWS's official collection of architecture diagrams, reference architectures
+    and best-practice guidance (Well-Architected pillars, serverless data lake
+    patterns). Concrete vendor material for grounding sizing and tradeoff
+    arguments in real deployed patterns.
+  why: Reference architectures are the closest thing to citable evidence when an interview answer needs a real-world precedent.
+  tags: [aws, architecture, patterns, cloud]
+  quality: { authority: 5, docs_quality: 4, repo_activity: 4, license_clarity: 3, installation: null, tests: null, examples: 4, security: null, maintenance: 5, compatibility: 4 }
+  verification: community
+  last_verified: 2026-10-23
+- id: ref-cloud-design-patterns
+  slug: cloud-design-patterns
+  type: reference
+  title: Azure Cloud Design Patterns
+  url: https://learn.microsoft.com/en-us/azure/architecture/patterns/
+  publisher: Microsoft
+  kind: documentation
+  category: cat-system-design
+  license: Proprietary (Microsoft Learn Terms)
+  summary: >-
+    Microsoft's catalogue of cloud design patterns: retry, circuit breaker,
+    compensating transaction, CQRS, event sourcing, bulkhead and more — each
+    with problem/solution and considerations. Vendor-neutral in practice, and
+    directly applicable to pipeline component design.
+  why: Each pattern page states the problem/solution pair formally — the format this stage's design exercises expect.
+  tags: [patterns, architecture, resilience, cloud]
+  quality: { authority: 5, docs_quality: 5, repo_activity: 4, license_clarity: 3, installation: null, tests: null, examples: 4, security: null, maintenance: 5, compatibility: 4 }
+  verification: community
+  last_verified: 2026-10-23
+- id: ref-python-docs
+  slug: python-docs
+  type: reference
+  title: Python Official Documentation
+  url: https://docs.python.org/3/
+  publisher: Python Software Foundation
+  kind: documentation
+  category: cat-python
+  license: PSF-2.0
+  summary: >-
+    The official Python 3 documentation: language reference, standard library
+    (itertools, collections, dataclasses, json, csv), and the data-model
+    chapter that explains iteration, mutability and hashing semantics every
+    data script depends on.
+  why: Versioned, authoritative, and the tiebreaker for Python semantics arguments.
+  tags: [python, docs, official]
+  quality: { authority: 5, docs_quality: 5, repo_activity: 5, license_clarity: 5, installation: null, tests: null, examples: 5, security: null, maintenance: 5, compatibility: 5 }
+  verification: community
+  last_verified: 2026-10-23
+- id: ref-sqlbolt
+  slug: sqlbolt
+  type: reference
+  title: SQLBolt — Learn SQL with Simple Interactive Exercises
+  url: https://sqlbolt.com/
+  publisher: community (open-source lessons)
+  kind: tutorial-site
+  category: cat-sql
+  license: Unlicense (site source)
+  summary: >-
+    Free interactive SQL lessons: SELECT basics, filtering, joins, NULL
+    handling and aggregate clauses, each runnable in the browser. A zero-setup
+    first step before touching a real warehouse or local DuckDB.
+  why: Zero-install practice surface for the very first hands-on lessons.
+  tags: [sql, exercises, beginner]
+  quality: { authority: 4, docs_quality: 4, repo_activity: 3, license_clarity: 4, installation: null, tests: null, examples: 5, security: null, maintenance: 3, compatibility: 4 }
+  verification: community
+  last_verified: 2026-10-23
+- id: ref-postgres-manual
+  slug: postgres-manual
+  type: reference
+  title: PostgreSQL Documentation — Tutorial & Reference
+  url: https://www.postgresql.org/docs/current/tutorial.html
+  publisher: The PostgreSQL Global Development Group
+  kind: documentation
+  category: cat-databases
+  license: PostgreSQL Licence
+  summary: >-
+    PostgreSQL's official documentation: the tutorial, SQL reference, indexes,
+    transactions and MVCC chapters. The semantics of transaction isolation and
+    index behavior here are the ground truth for correctness arguments in
+    pipeline source systems.
+  why: MVCC and isolation-level behavior is the kind of thing worth citing exactly, not paraphrasing.
+  tags: [postgres, sql, mvcc, docs, official]
+  quality: { authority: 5, docs_quality: 5, repo_activity: 5, license_clarity: 5, installation: 4, tests: null, examples: 4, security: null, maintenance: 5, compatibility: 5 }
+  verification: community
+  last_verified: 2026-10-23

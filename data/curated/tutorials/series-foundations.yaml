@@ -1,0 +1,893 @@
+# The Foundations Series — lessons authored for the 13x10 series; structure ours, wording the source's.
+- id: tutorial-foundations-rows-vs-columns
+  slug: foundations-rows-vs-columns
+  type: tutorial
+  title: >-
+    Hold the row-versus-column mental model
+  description: >-
+    Before you pick a file format, understand why analytics engines read
+    columnar files at all: row groups carrying min/max statistics let a reader
+    prune most of the file before decoding it, and columnar layout means a
+    scan of three columns never touches the other twenty. Every later lesson
+    in this series builds on this model.
+  category: cat-data-formats
+  series: foundations
+  series_title: The Foundations Series
+  lesson: 1
+  difficulty: beginner
+  tags: [tutorial, foundations, columnar, parquet, arrow, concepts]
+  learning_objectives:
+    - Say why analytics engines read columnar files — columnar files scan less data
+    - Place file-format decisions on the storage stage of the data engineering lifecycle
+    - Point at the sources that make columnar claims exact — layout, statistics, memory
+  what_you_need:
+    - No tooling required — this is a concepts lesson
+    - The Apache Parquet and Apache Arrow documentation open beside you
+  steps:
+    - text: Start from the lifecycle — data engineering is a lifecycle of generation, storage, ingestion, transformation, and serving, with the undercurrents of security, governance, and cost; file-format decisions live on the storage stage.
+      from_id: ref-fundamentals-de
+      from_field: description
+    - text: Columnar is a read-side promise — the Parquet format documentation is the ground truth for why columnar files scan less data and how row-group pruning works.
+      from_id: ref-parquet-format
+      from_field: description
+    - text: Columnar is also an in-memory promise — the Arrow docs cover the columnar in-memory format, its language bindings, IPC and Flight protocols, and zero-copy interchange between systems.
+      from_id: ref-arrow-docs
+      from_field: description
+    - text: Know the lever that makes layout matter — understanding row groups and statistics is what turns use Parquet into and lay it out like this.
+      from_id: ref-parquet-docs
+      from_field: why
+    - text: Know why Arrow matters outside memory — Arrow is the substrate most modern data tools exchange data through, and the format spec resolves type and layout questions definitively.
+      from_id: ref-arrow-docs
+      from_field: why
+    - text: Keep the right source for disputes — when file-layout questions come up (row groups, min/max statistics, compression), the format docs are the citable source.
+      from_id: ref-parquet-format
+      from_field: why
+  check_yourself:
+    - You can say why a scan of three columns reads less data in a columnar file — the format docs call themselves the ground truth for why columnar files scan less data.
+    - You can point at the lifecycle stage where file-format choices live — storage, between generation and ingestion.
+  when_to_use:
+    - "You are new to data engineering and need the why behind columnar before touching formats"
+    - "A teammate asks why an analytics engine ignores the row-oriented file you handed it"
+  why: Every format decision later in this series traces back to one idea — columnar layout plus statistics lets readers skip data they do not need.
+  gotchas:
+    - "Columnar is not automatically better — the win shows on scans that read few columns of many, and storage is one lifecycle stage among five."
+    - "Use Parquet alone is not a layout — statistics and row-group sizing are what turn it into one."
+  production_notes:
+    - "Carry the lifecycle frame into design reviews — generation, storage, ingestion, transformation, serving, plus the security, governance, and cost undercurrents."
+    - "Default analytics storage to columnar files and expect Arrow as the in-memory substrate most modern data tools exchange data through."
+  diagram: |
+    rows vs columns
+       |
+       |- row-oriented --> reader touches every field to reach one column
+       |
+       |- columnar --> values of one column live together
+       |               a scan of three columns reads three column streams
+       |
+       |- row group + min/max statistics --> predicate pushdown
+       |               the reader prunes row groups without decoding them
+       |
+        --> columnar files scan less data (Parquet on disk, Arrow in memory)
+  code:
+    - title: Rows versus columns in one view
+      lang: text
+      code: |
+        Row-oriented:  [r1a r1b r1c] [r2a r2b r2c] ...  read one column -> touch every row
+        Columnar:      [a1 a2 a3 ...] [b1 b2 b3 ...]     read three columns -> three streams
+
+        Why analytics engines care (Parquet format docs): the ground truth for why
+        columnar files scan less data and how row-group pruning works.
+      source_id: ref-parquet-format
+    - title: The Arrow side of the model
+      lang: text
+      code: |
+        Arrow docs: the columnar in-memory format, its language bindings, IPC and
+        Flight protocols, and zero-copy interchange between systems.
+      source_id: ref-arrow-docs
+  source_refs: [ref-fundamentals-de, ref-parquet-format, ref-arrow-docs, ref-parquet-docs]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/foundations-rows-vs-columns
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-24'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-data-formats] }
+- id: tutorial-foundations-parquet-anatomy
+  slug: foundations-parquet-anatomy
+  type: tutorial
+  title: Open the Parquet file — row groups, pages, encodings
+  description: >-
+    A Parquet file is not a black box — it is row groups of column chunks made
+    of pages, with statistics that readers use for predicate pushdown. Learn
+    the anatomy from the two Parquet sources and you can reason about every
+    read and every layout decision later in this series.
+  category: cat-data-formats
+  series: foundations
+  series_title: The Foundations Series
+  lesson: 2
+  difficulty: beginner
+  tags: [tutorial, parquet, row-groups, pages, encodings, statistics]
+  learning_objectives:
+    - Name the parts of a Parquet file — row groups, column chunks, pages, statistics
+    - Explain what per-row-group statistics buy a reader through predicate pushdown
+    - Reach the authoritative wording instead of paraphrasing the format
+  what_you_need:
+    - Lesson 1's row-versus-column mental model
+    - The Parquet documentation and the Parquet format documentation bookmarked
+  steps:
+    - text: Read the map of the docs first — the Parquet documentation and specification covers columnar encoding, row groups, statistics, predicate pushdown, and how to structure files for efficient reads.
+      from_id: ref-parquet-docs
+      from_field: description
+    - text: Know what kind of source this is — the registry classifies the Parquet documentation and specification as a spec.
+      from_id: ref-parquet-docs
+      from_field: kind
+    - text: Go one level deeper with the format documentation — page structure, encodings, compression codecs, statistics, and the predicate-pushdown behavior that columnar readers rely on.
+      from_id: ref-parquet-format
+      from_field: description
+    - text: Learn the pruning chain — predicate pushdown runs on statistics, which is why row-group sizing is a read-performance decision rather than a cosmetic one.
+      from_id: ref-parquet-docs
+      from_field: why
+    - text: Know where to settle arguments — when file-layout questions come up (row groups, min/max statistics, compression), the format docs are the citable source.
+      from_id: ref-parquet-format
+      from_field: why
+    - text: Keep the canonical address — the registry's source_url for the Parquet documentation points at parquet.apache.org/docs.
+      from_id: ref-parquet-docs
+      from_field: source_url
+  check_yourself:
+    - You can sketch a Parquet file — row groups of column chunks made of pages, with statistics feeding predicate pushdown.
+    - Asked where min/max statistics live and what they buy, you answer with row-group pruning from the format docs.
+  when_to_use:
+    - "You are about to choose row-group sizes, encodings, or compression and want the spec's own terms"
+    - "A read is slower than expected and you need the anatomy to reason about pruning"
+  why: You cannot reason about Parquet read behavior without the anatomy — row groups, pages, encodings, and statistics are the whole vocabulary.
+  gotchas:
+    - "Row-group sizing is a read-performance decision — statistics and row-group sizing are what turn use Parquet into a layout."
+    - "The two Parquet sources are different documents — the documentation covers usage and structure for efficient reads, the format documentation covers page structure, encodings, codecs, statistics, and pushdown."
+  production_notes:
+    - "Structure files for efficient reads — the documentation names columnar encoding, row groups, statistics, and predicate pushdown as the levers."
+    - "Keep the format docs as the citable source in design reviews about row groups, min/max statistics, or compression."
+  diagram: |
+    parquet file anatomy
+       |
+       |- file = row groups (metadata + statistics in the footer)
+       |
+       |- row group = column chunks, one per column
+       |               column chunk = pages (page structure, encodings)
+       |
+       |- per row group: min/max statistics -> predicate pushdown
+       |               the reader prunes whole row groups without decoding
+       |
+       |- encodings + compression codecs apply at the chunk / page level
+       |
+        --> sources: Parquet documentation + format documentation
+  code:
+    - title: Anatomy in one view
+      lang: text
+      code: |
+        Parquet file
+          row group 1 ... row group N        <- statistics per row group
+            column chunk (col A) = pages     <- page structure, encodings
+            column chunk (col B) = pages     <- compression codecs
+          footer: metadata + statistics      <- predicate pushdown lives here
+      source_id: ref-parquet-format
+    - title: The docs' own table of contents
+      lang: text
+      code: |
+        Parquet documentation & spec: columnar encoding, row groups, statistics,
+        predicate pushdown, and how to structure files for efficient reads.
+      source_id: ref-parquet-docs
+  source_refs: [ref-parquet-docs, ref-parquet-format]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/foundations-parquet-anatomy
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-24'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-data-formats] }
+- id: tutorial-foundations-arrow-zero-copy
+  slug: foundations-arrow-zero-copy
+  type: tutorial
+  title: Arrow — columnar memory and zero-copy interchange
+  description: >-
+    Between the file on disk and the engine doing work sits memory. Apache
+    Arrow defines the columnar in-memory format, its language bindings, the
+    IPC and Flight protocols, and zero-copy interchange between systems —
+    which is why modern data tools can hand columns to each other without
+    re-serializing everything in between.
+  category: cat-data-formats
+  series: foundations
+  series_title: The Foundations Series
+  lesson: 3
+  difficulty: intermediate
+  tags: [tutorial, arrow, columnar, zero-copy, ipc, flight]
+  learning_objectives:
+    - Explain Arrow's role as the columnar in-memory format and interchange substrate
+    - Name the pieces — language bindings, IPC and Flight protocols, zero-copy interchange
+    - Use the Arrow format spec to settle type and layout questions
+  what_you_need:
+    - Lesson 1's rows-versus-columns model
+    - The Apache Arrow documentation bookmarked
+  steps:
+    - text: Read the docs' own summary — official Arrow docs cover the columnar in-memory format, its language bindings, IPC and Flight protocols, and zero-copy interchange between systems.
+      from_id: ref-arrow-docs
+      from_field: description
+    - text: Use the spec for exactness — the Arrow docs are where you get exact memory-layout and type-system semantics behind every columnar claim.
+      from_id: ref-arrow-docs
+      from_field: description
+    - text: Know Arrow's position in the ecosystem — Arrow is the substrate most modern data tools exchange data through, and the format spec resolves type and layout questions definitively.
+      from_id: ref-arrow-docs
+      from_field: why
+    - text: See the family it belongs to — in this registry Arrow's closest companions are the Avro docs, the Parquet docs, and the Parquet format docs, each scored five as related resources.
+      from_id: ref-arrow-docs
+      from_field: related_computed
+    - text: Note who maintains it — the publisher is the Apache Software Foundation, under the Apache-2.0 license.
+      from_id: ref-arrow-docs
+      from_field: publisher
+  check_yourself:
+    - You can say what zero-copy interchange means for two systems exchanging columns — no re-serialization in between.
+    - Asked to settle a type or layout dispute, you reach for the Arrow format spec rather than a blog post.
+  when_to_use:
+    - "Two tools in one pipeline exchange columnar data and you want to know what format that actually is"
+    - "Someone claims a tool is columnar and you need the memory-layout and type-system semantics"
+  why: Arrow is the substrate most modern data tools exchange data through, so its memory layout is the shape your data takes between every two hops.
+  gotchas:
+    - "In-memory columnar and on-disk columnar are different formats — Arrow is the in-memory format, Parquet is the file format, and the docs describe each on its own terms."
+    - "Columnar claims need exactness — use the format spec for memory-layout and type-system semantics."
+  production_notes:
+    - "When moving data between engines, expect the interchange to be Arrow-shaped — the docs name IPC and Flight as the protocols."
+    - "Settle type and layout questions with the format spec — it resolves them definitively."
+  diagram: |
+    arrow in the pipeline
+       |
+       |- Parquet on disk --> read --> Arrow in memory --> engine
+       |
+       |- zero-copy interchange --> system A hands columns to system B
+       |
+       |- IPC / Flight --> the protocols the docs name for moving that data
+       |
+        --> one columnar substrate between tools; the spec defines layout + types
+  code:
+    - title: Arrow in one view
+      lang: text
+      code: |
+        Arrow docs, in their own words:
+          - the columnar in-memory format
+          - its language bindings
+          - IPC and Flight protocols
+          - zero-copy interchange between systems
+      source_id: ref-arrow-docs
+  source_refs: [ref-arrow-docs]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/foundations-arrow-zero-copy
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-24'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-data-formats] }
+- id: tutorial-foundations-compression-encodings
+  slug: foundations-compression-encodings
+  type: tutorial
+  title: Compression and encodings — the tradeoffs behind the file
+  description: >-
+    Encodings and compression codecs are where file size and scan speed are
+    actually decided — Parquet applies encodings and codecs per column chunk
+    with statistics on top, while Avro carries schema plus encoding for event
+    payloads. Learn what each layer buys you before you pick defaults.
+  category: cat-data-formats
+  series: foundations
+  series_title: The Foundations Series
+  lesson: 4
+  difficulty: intermediate
+  tags: [tutorial, parquet, avro, compression, encodings, codecs]
+  learning_objectives:
+    - Distinguish encodings from compression codecs in a columnar file
+    - Explain how statistics sit on top of encoded, compressed data to enable pushdown
+    - Compare Parquet's columnar encoding with Avro's encoding for event payloads
+  what_you_need:
+    - Lesson 2's Parquet anatomy
+    - The Parquet format docs and the Avro docs bookmarked
+  steps:
+    - text: Get the layering from the spec — the Parquet format documentation covers page structure, encodings, compression codecs, statistics, and the predicate-pushdown behavior that columnar readers rely on.
+      from_id: ref-parquet-format
+      from_field: description
+    - text: Treat encoding and compression as file-layout questions — when file-layout questions come up (row groups, min/max statistics, compression), the format docs are the citable source.
+      from_id: ref-parquet-format
+      from_field: why
+    - text: Connect encoding back to layout — the Parquet documentation covers columnar encoding, row groups, statistics, predicate pushdown, and how to structure files for efficient reads.
+      from_id: ref-parquet-docs
+      from_field: description
+    - text: See the event-side counterpart — Avro's official documentation covers schema declaration, the schema-registry evolution rules, encoding, and the container format widely used for event and stream payloads.
+      from_id: ref-avro-docs
+      from_field: description
+    - text: Keep the Arrow boundary in mind — Arrow's docs describe the columnar in-memory format with zero-copy interchange, the layer these on-disk encodings feed into and out of.
+      from_id: ref-arrow-docs
+      from_field: description
+  check_yourself:
+    - You can name the layers a Parquet reader passes through — pages with encodings, compression codecs, then statistics for pushdown.
+    - Asked where encoding lives for an event payload, you point at Avro's encoding and container format rather than the columnar file.
+  when_to_use:
+    - "You are choosing codecs and encodings for a Parquet layout and want the spec's terms"
+    - "You are deciding how event payloads are encoded before they land in columnar files"
+  why: Encodings and codecs decide what a scan actually reads — the format documentation is the ground truth for why columnar files scan less data.
+  gotchas:
+    - "Encodings, codecs, and statistics are three different layers — the format documentation lists page structure, encodings, compression codecs, statistics, and pushdown separately."
+    - "Columnar encodings serve scans — Avro's encoding serves event and stream payloads — the same word, different jobs."
+  production_notes:
+    - "Pick encodings and codecs as a layout decision — structure files for efficient reads, per the Parquet documentation."
+    - "For event payloads, the container format and evolution rules come from the Avro docs, not from the columnar spec."
+  diagram: |
+    compression + encodings
+       |
+       |- parquet column chunk: pages
+       |      encodings -> compression codecs -> statistics (min/max)
+       |      reader: statistics -> predicate pushdown -> decode less
+       |
+       |- avro payload: schema declaration -> encoding -> container file
+       |      the format for event / stream payloads and Kafka wire formats
+       |
+       |- arrow: columnar in-memory, zero-copy interchange (no file layout)
+       |
+        --> on-disk columnar (parquet) | event container (avro) | in-memory (arrow)
+  code:
+    - title: The layers in one view
+      lang: text
+      code: |
+        Parquet format docs: page structure, encodings, compression codecs,
+        statistics and the predicate-pushdown behavior that columnar readers
+        rely on.
+
+        Avro docs: schema declaration, schema-registry evolution rules, encoding
+        and the container format widely used for event/stream payloads and
+        Kafka wire formats.
+      source_id: ref-parquet-format
+    - title: The Arrow boundary
+      lang: text
+      code: |
+        Official Arrow docs: the columnar in-memory format, its language
+        bindings, IPC and Flight protocols, and zero-copy interchange between
+        systems.
+      source_id: ref-arrow-docs
+  source_refs: [ref-parquet-format, ref-parquet-docs, ref-avro-docs, ref-arrow-docs]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/foundations-compression-encodings
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-24'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-data-formats] }
+- id: tutorial-foundations-avro-schema-evolution
+  slug: foundations-avro-schema-evolution
+  type: tutorial
+  title: Avro and schema evolution for event payloads
+  description: >-
+    Event payloads change while consumers keep running. Avro's answer is a
+    schema declared next to the data, evolution rules carried by the schema
+    registry, and a container format used across event and stream pipelines.
+    Walk the Avro docs' own four topics and see where the format sits against
+    Parquet and Arrow.
+  category: cat-data-formats
+  series: foundations
+  series_title: The Foundations Series
+  lesson: 5
+  difficulty: intermediate
+  tags: [tutorial, avro, schema, evolution, events, kafka]
+  learning_objectives:
+    - Name Avro's four moving parts — schema declaration, evolution rules, encoding, container format
+    - Explain why schema evolution rules belong to the schema registry
+    - Place Avro against Parquet and Arrow in the format family
+  what_you_need:
+    - A stream or queue whose payloads you control — concepts only, no cluster needed
+    - The Avro documentation bookmarked
+  steps:
+    - text: Read the docs' own list — Avro's official documentation covers schema declaration, the schema-registry evolution rules, encoding, and the container format widely used for event and stream payloads and Kafka wire formats.
+      from_id: ref-avro-docs
+      from_field: description
+    - text: Treat the evolution rules as citable detail — schema evolution rules for event payloads are exactly the kind of detail worth citing verbatim rather than paraphrasing.
+      from_id: ref-avro-docs
+      from_field: why
+    - text: Orient by the tag set — avro, serialization, schema, docs, official; the schema tag is this lesson's center of gravity.
+      from_id: ref-avro-docs
+      from_field: tags
+    - text: See how the format docs group — in the registry the Avro docs' closest companions are the Arrow docs, the Parquet docs, and the Parquet format docs, each scored five.
+      from_id: ref-avro-docs
+      from_field: related_computed
+    - text: Check depth expectations — the registry scores this resource thin on depth, so read it for the schema and evolution rules rather than expecting step-by-step tutorials.
+      from_id: ref-avro-docs
+      from_field: depth
+  check_yourself:
+    - You can list Avro's four topics from the docs — schema declaration, schema-registry evolution rules, encoding, container format.
+    - Asked how an event payload survives a producer upgrade, you answer with the schema-registry evolution rules, cited from the docs.
+  when_to_use:
+    - "Producers and consumers deploy on different schedules and payloads keep changing"
+    - "A Kafka pipeline needs a wire format with rules for change"
+  why: Events outlive the code that wrote them — Avro's schema declaration and evolution rules are how payloads change without breaking consumers.
+  gotchas:
+    - "Evolution rules live with the schema registry — do not paraphrase them; the docs say they are worth citing verbatim."
+    - "The Avro docs are reference documentation, not a tutorial — the registry scores their depth thin."
+  production_notes:
+    - "Use the container format for event and stream payloads — the docs name it as widely used for Kafka wire formats."
+    - "Cite the evolution rules verbatim in data contracts and design reviews."
+  diagram: |
+    avro event payloads
+       |
+       |- producer declares schema --> payload encoded --> container file / Kafka wire
+       |
+       |- consumer reads with schema --> evolution rules decide compatibility
+       |      rules live in the schema registry, cited from the Avro docs
+       |
+       |- family: avro (events) | parquet (columnar files) | arrow (in-memory)
+       |
+        --> payloads change, consumers keep running
+  code:
+    - title: Avro in one view
+      lang: text
+      code: |
+        Avro docs, in their own words:
+          - schema declaration
+          - the schema-registry evolution rules
+          - encoding
+          - the container format widely used for event/stream payloads
+            and Kafka wire formats
+      source_id: ref-avro-docs
+  source_refs: [ref-avro-docs, ref-arrow-docs]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/foundations-avro-schema-evolution
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-24'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-data-formats] }
+- id: tutorial-foundations-choosing-file-formats
+  slug: foundations-choosing-file-formats
+  type: tutorial
+  title: Choosing file formats — Parquet, Avro, and Arrow's role
+  description: >-
+    The three formats in this series are not competitors — they answer
+    different questions. Parquet is the columnar file for analytics scans,
+    Avro is the schema-evolving container for event payloads, and Arrow is
+    the in-memory substrate between systems. Make the comparison explicit so
+    the next format debate takes minutes, not days.
+  category: cat-data-formats
+  series: foundations
+  series_title: The Foundations Series
+  lesson: 6
+  difficulty: intermediate
+  tags: [tutorial, parquet, avro, arrow, formats, decision]
+  learning_objectives:
+    - Match each format to its lane — analytics files, event payloads, in-memory interchange
+    - Argue a format choice with the sources' own wording
+    - Explain why most pipelines use more than one format
+  what_you_need:
+    - Lessons 1 through 5
+    - The Parquet, Avro, and Arrow docs bookmarked
+  steps:
+    - text: State the analytics case — the Parquet documentation is about columnar encoding, row groups, statistics, predicate pushdown, and structuring files for efficient reads.
+      from_id: ref-parquet-docs
+      from_field: description
+    - text: State the event case — Avro's documentation covers schema declaration, schema-registry evolution rules, encoding, and the container format used for event and stream payloads and Kafka wire formats.
+      from_id: ref-avro-docs
+      from_field: description
+    - text: State the in-memory case — Arrow's docs cover the columnar in-memory format, language bindings, IPC and Flight protocols, and zero-copy interchange between systems.
+      from_id: ref-arrow-docs
+      from_field: description
+    - text: Ground the comparison in read behavior — the Parquet format documentation is the ground truth for why columnar files scan less data and how row-group pruning works.
+      from_id: ref-parquet-format
+      from_field: description
+    - text: Note the family ties — the registry scores the three format docs as top companions of one another, which matches how pipelines actually use them together.
+      from_id: ref-parquet-docs
+      from_field: related_computed
+    - text: Anchor the whole choice in the lifecycle — file-format decisions are storage-stage decisions inside the generation, storage, ingestion, transformation, serving lifecycle.
+      from_id: ref-fundamentals-de
+      from_field: description
+  check_yourself:
+    - You can say in one sentence each what Parquet, Avro, and Arrow are for, using the docs' own wording.
+    - A pipeline lands Kafka events and serves warehouse scans — you explain why both Avro and Parquet appear, with Arrow in between.
+  when_to_use:
+    - "A new pipeline is being designed and the format question is open"
+    - "A format debate needs a shared, citable vocabulary"
+  why: The formats solve different problems — analytics scans, event evolution, in-memory interchange — so the debate ends when the questions are stated.
+  gotchas:
+    - "Do not compare the formats head-to-head — Parquet is a file format for scans, Avro is the event container, Arrow is in-memory; the docs describe different layers."
+    - "The comparison is not either-or — the registry links the three docs as closest companions because pipelines use them together."
+  production_notes:
+    - "Default analytics storage to columnar files structured for efficient reads; keep event payloads in a schema-evolving container."
+    - "Expect Arrow at the boundaries between engines — IPC and Flight are the protocols the docs name."
+  diagram: |
+    choosing formats
+       |
+       |- analytics scans, few columns --> Parquet (columnar file, stats, pushdown)
+       |
+       |- event payloads, evolving schemas --> Avro (schema + container)
+       |
+       |- between tools, in memory --> Arrow (columnar memory, zero-copy)
+       |
+       |- lifecycle frame: a storage-stage decision (generation .. serving)
+       |
+        --> most pipelines use all three, one lane each
+  code:
+    - title: The three lanes
+      lang: text
+      code: |
+        Parquet documentation: columnar encoding, row groups, statistics,
+        predicate pushdown, structuring files for efficient reads.
+
+        Avro documentation: schema declaration, schema-registry evolution
+        rules, encoding, container format for event/stream payloads.
+
+        Arrow documentation: columnar in-memory format, language bindings,
+        IPC and Flight protocols, zero-copy interchange.
+      source_id: ref-parquet-docs
+    - title: Why columnar scans win
+      lang: text
+      code: |
+        The Parquet format documentation is the ground truth for why columnar
+        files scan less data and how row-group pruning works.
+      source_id: ref-parquet-format
+  source_refs: [ref-parquet-docs, ref-avro-docs, ref-arrow-docs, ref-parquet-format, ref-fundamentals-de]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/foundations-choosing-file-formats
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-24'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-data-formats] }
+- id: tutorial-foundations-twelve-factor-pipelines
+  slug: foundations-twelve-factor-pipelines
+  type: tutorial
+  title: The twelve-factor vocabulary for pipeline jobs
+  description: >-
+    Data pipelines run as jobs on shared infrastructure, so the twelve-factor
+    principles apply to them — config in the environment, backing services as
+    attached resources, logs as event streams, disposability, and dev/prod
+    parity. Learn the vocabulary engineers already share when arguing about
+    config, logs, and process design.
+  category: cat-engineering-foundations
+  series: foundations
+  series_title: The Foundations Series
+  lesson: 7
+  difficulty: beginner
+  tags: [tutorial, twelve-factor, config, logging, foundations, jobs]
+  learning_objectives:
+    - Name the twelve-factor principles that map onto pipeline jobs
+    - Treat config, backing services, logs, and disposability as shared vocabulary
+    - Connect the methodology to the data engineering lifecycle
+  what_you_need:
+    - A job or pipeline whose config and logs you can point at
+    - The twelve-factor site bookmarked
+  steps:
+    - text: Read the principles as they are written — the classic twelve principles for building services that run portably — config in the environment, backing services as attached resources, logs as event streams, disposability and dev/prod parity.
+      from_id: ref-12factor
+      from_field: description
+    - text: Apply them to your job — data pipelines inherit these ideas whenever they run as jobs on shared infrastructure.
+      from_id: ref-12factor
+      from_field: description
+    - text: Know the source's standing — short, canonical, and the shared vocabulary engineers reach for when arguing about config, logs and process design.
+      from_id: ref-12factor
+      from_field: why
+    - text: Orient by the tag set — methodology, config, logging, foundations — which is the outline of this lesson.
+      from_id: ref-12factor
+      from_field: tags
+    - text: Tie the methodology to the lifecycle — the fundamentals book's lifecycle of generation, storage, ingestion, transformation, and serving is where these jobs live, with the undercurrents of security, governance, and cost.
+      from_id: ref-fundamentals-de
+      from_field: description
+  check_yourself:
+    - You can name where a pipeline job's config should live — in the environment — and why backing services are attached resources.
+    - Asked what a job's logs are in twelve-factor terms, you answer — event streams.
+  when_to_use:
+    - "A pipeline is being containerized or scheduled on shared infrastructure"
+    - "A config or logging argument needs a canonical reference"
+  why: Pipelines inherit the twelve-factor ideas whenever they run as jobs on shared infrastructure — and the vocabulary is already shared across your team.
+  gotchas:
+    - "Twelve-factor is a methodology, not a framework — the registry tags it methodology, config, logging, foundations."
+    - "The principles describe services that run portably — apply the ideas to jobs rather than expecting a pipeline-specific checklist."
+  production_notes:
+    - "Config in the environment, backing services attached, logs as event streams — carry the exact terms into job templates."
+    - "Dev/prod parity and disposability are the two principles your scheduler tests every day."
+  diagram: |
+    twelve factors for pipeline jobs
+       |
+       |- config --> in the environment, not in the code
+       |- backing services --> attached resources (databases, queues, buckets)
+       |- logs --> event streams
+       |- disposability --> fast start, clean shutdown, restart-safe
+       |- dev/prod parity --> the same shape everywhere
+       |
+        --> pipelines inherit all of it when they run as jobs on shared infrastructure
+  code:
+    - title: The factors a pipeline job touches
+      lang: text
+      code: |
+        From the twelve-factor description:
+          - config in the environment
+          - backing services as attached resources
+          - logs as event streams
+          - disposability and dev/prod parity
+      source_id: ref-12factor
+  source_refs: [ref-12factor, ref-fundamentals-de]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/foundations-twelve-factor-pipelines
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-24'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-engineering-foundations] }
+- id: tutorial-foundations-reading-data-files
+  slug: foundations-reading-data-files
+  type: tutorial
+  title: Reading data files — from bytes to columnar memory
+  description: >-
+    A read is a pipeline in miniature — the reader consults statistics,
+    prunes row groups, decodes only the columns you asked for, and hands you
+    an in-memory columnar structure. Walk the read path with the sources,
+    then place it on the lifecycle between storage and transformation.
+  category: cat-data-formats
+  series: foundations
+  series_title: The Foundations Series
+  lesson: 8
+  difficulty: intermediate
+  tags: [tutorial, parquet, reading, predicate-pushdown, arrow, lifecycle]
+  learning_objectives:
+    - Describe the read path — statistics, pruning, column decoding, in-memory handoff
+    - Use predicate-pushdown vocabulary when a scan reads more than the query asked
+    - Place the read path on the lifecycle between storage and transformation
+  what_you_need:
+    - Lesson 2's file anatomy
+    - A Parquet file you are allowed to read — the concepts hold without one
+  steps:
+    - text: Start from the lifecycle — after generation and storage comes ingestion, then transformation; reading a file sits at that boundary, and the fundamentals book gives practical patterns for each stage.
+      from_id: ref-fundamentals-de
+      from_field: description
+    - text: Follow the reader's own logic — the format documentation describes the statistics and predicate-pushdown behavior that columnar readers rely on.
+      from_id: ref-parquet-format
+      from_field: description
+    - text: Name what pruning skips — row-group pruning works on per-row-group statistics, the mechanism the Parquet documentation and specification covers under row groups and statistics.
+      from_id: ref-parquet-docs
+      from_field: description
+    - text: Know what lands in memory — after decoding, the columns live in the columnar in-memory format; the Arrow docs cover that format, its language bindings, IPC and Flight protocols, and zero-copy interchange.
+      from_id: ref-arrow-docs
+      from_field: description
+    - text: Keep the map of the field nearby — the fundamentals book is the practitioner-oriented map for someone moving into data engineering, and the read path is one of its stages.
+      from_id: ref-fundamentals-de
+      from_field: why
+  check_yourself:
+    - You can narrate a scan — statistics first, pruned row groups next, only the requested columns decoded, handed over in columnar memory.
+    - A scan reads a whole file for two columns — you ask what the row-group statistics said before blaming the engine.
+  when_to_use:
+    - "You are debugging why a scan reads more than the query asked for"
+    - "You are teaching a newcomer how a table read actually travels"
+  why: Every slow-read complaint is a question about the read path — statistics, pruning, and column decoding are the vocabulary the answers use.
+  gotchas:
+    - "Predicate pushdown depends on statistics — without them the reader has nothing to prune with; the format docs name statistics and pushdown as a pair."
+    - "Reading is not one step — file format, then in-memory format; the Arrow docs describe the second layer."
+  production_notes:
+    - "Structure files for efficient reads — the Parquet documentation names statistics, row groups, and predicate pushdown as the levers."
+    - "Expect the in-memory shape to be Arrow — the substrate most modern data tools exchange data through."
+  diagram: |
+    the read path
+       |
+       |- query: two columns, one predicate
+       |
+       |- footer: row-group statistics (min/max)
+       |
+       |- predicate pushdown --> prunes row groups that cannot match
+       |
+       |- decode only the requested columns (pages, encodings, codecs)
+       |
+       |- handoff: columnar in-memory format (Arrow-shaped)
+       |
+        --> fewer bytes decoded, zero-copy between systems
+  code:
+    - title: The read path in one view
+      lang: text
+      code: |
+        statistics + predicate-pushdown behavior that columnar readers rely on
+        -> row-group pruning (ground truth per the Parquet format docs)
+        -> decode the requested columns
+        -> columnar in-memory format, zero-copy interchange (Arrow docs)
+      source_id: ref-parquet-format
+  source_refs: [ref-fundamentals-de, ref-parquet-format, ref-parquet-docs, ref-arrow-docs]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/foundations-reading-data-files
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-24'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-data-formats] }
+- id: tutorial-foundations-format-performance-incidents
+  slug: foundations-format-performance-incidents
+  type: tutorial
+  title: Format-driven performance incidents — small scans and wrong layouts
+  description: >-
+    When a scan reads the whole lake for one column, the cause is usually the
+    file layout, not the engine — missing statistics, row groups sized
+    without intent, encodings chosen by default. Walk two incident patterns
+    grounded in what the Parquet sources actually claim about statistics and
+    pruning.
+  category: cat-data-formats
+  series: foundations
+  series_title: The Foundations Series
+  lesson: 9
+  difficulty: intermediate
+  tags: [tutorial, parquet, performance, statistics, pruning, incidents]
+  learning_objectives:
+    - Map a too-big scan to its layout cause — statistics, row groups, encodings
+    - Explain how pruning fails when statistics are absent
+    - Use the lifecycle's cost undercurrent to size the blast radius
+  what_you_need:
+    - Lesson 8's read path
+    - The Parquet docs and format docs bookmarked
+  steps:
+    - text: Name the incident class — a scan that reads everything for one column; the format documentation is the ground truth for why columnar files scan less data and how row-group pruning works, so start there when a scan does not.
+      from_id: ref-parquet-format
+      from_field: description
+    - text: Check statistics first — understanding statistics and row-group sizing is the practical step that turns use Parquet into and lay out the file like this.
+      from_id: ref-parquet-docs
+      from_field: description
+    - text: Recite the pruning chain — the predicate-pushdown behavior that columnar readers rely on runs on statistics, so a layout without statistics leaves the reader nothing to prune with.
+      from_id: ref-parquet-format
+      from_field: description
+    - text: Treat layout as the fix — row groups and statistics are what turn use Parquet into and lay it out like this, not a bigger cluster.
+      from_id: ref-parquet-docs
+      from_field: why
+    - text: Size the blast radius with the lifecycle — cost is one of the undercurrents of the data engineering lifecycle, alongside security and governance.
+      from_id: ref-fundamentals-de
+      from_field: description
+    - text: Run the review in shared vocabulary — config, logs and process design are where engineers reach for the canonical twelve-factor terms, and a defaulted encoding is a config decision as much as a format one.
+      from_id: ref-12factor
+      from_field: why
+  check_yourself:
+    - A scan reads every row group despite a filter — you check row-group statistics before scaling anything.
+    - You can explain why row-group sizing is a performance decision — pruning works per row group on its statistics.
+  when_to_use:
+    - "A warehouse or lake scan bills more than the query justifies"
+    - "A new table layout is rolling out and you want its failure modes listed"
+  why: Columnar is a promise about scans, and incidents are where the promise gets audited — statistics, row groups, and encodings are the usual suspects.
+  gotchas:
+    - "No statistics, no pruning — the predicate-pushdown behavior columnar readers rely on runs on statistics."
+    - "Use Parquet is not a layout — statistics and row-group sizing are the practical step that turns it into one."
+    - "Default encodings are decisions — a wrong one shows up as a slow scan, and the format docs are the citable source."
+  production_notes:
+    - "Audit layouts for statistics and row-group sizing — the docs name them as the practical levers."
+    - "Track cost as a lifecycle undercurrent, not an afterthought."
+  diagram: |
+    format incidents
+       |
+       |- symptom: a scan reads everything for one column
+       |
+       |- check 1: row-group statistics present? -> no -> pushdown cannot prune
+       |- check 2: row groups sized with intent? -> huge groups -> little pruning
+       |- check 3: encodings defaulted? -> format docs are the citable source
+       |
+        --> fix the layout, not the cluster; cost is a lifecycle undercurrent
+  code:
+    - title: Incident card — the scan that reads everything
+      lang: text
+      code: |
+        Claim (format docs): the ground truth for why columnar files scan less
+        data and how row-group pruning works.
+        Leverage (Parquet docs): understanding statistics and row-group sizing
+        is the practical step that turns "use Parquet" into "and lay out the
+        file like this".
+      source_id: ref-parquet-format
+  source_refs: [ref-parquet-format, ref-parquet-docs, ref-fundamentals-de, ref-12factor]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/foundations-format-performance-incidents
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-24'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-data-formats] }
+- id: tutorial-foundations-capstone-checklist
+  slug: foundations-capstone-checklist
+  type: tutorial
+  title: Capstone — the foundations checklist
+  description: >-
+    Ten lessons compress into one checklist — place every decision on the
+    lifecycle, lay out analytics files with row groups and statistics, expect
+    Arrow at the boundaries, evolve event payloads with Avro's rules, and run
+    jobs twelve-factor style. Each line cites the source that owns the claim.
+  category: cat-engineering-foundations
+  series: foundations
+  series_title: The Foundations Series
+  lesson: 10
+  difficulty: intermediate
+  tags: [tutorial, foundations, checklist, capstone, lifecycle]
+  learning_objectives:
+    - Run a design review using the six sources' own claims
+    - Assign each format its lane and each job its twelve-factor vocabulary
+    - Know where to look when a claim needs verification
+  what_you_need:
+    - Lessons 1 through 9
+    - All six reference sources bookmarked
+  steps:
+    - text: Place every decision on the lifecycle — generation, storage, ingestion, transformation, and serving, with the undercurrents of security, governance, and cost.
+      from_id: ref-fundamentals-de
+      from_field: description
+    - text: Analytics files — row groups and statistics are what turn use Parquet into and lay it out like this.
+      from_id: ref-parquet-docs
+      from_field: why
+    - text: File internals — page structure, encodings, compression codecs, statistics, and the predicate-pushdown behavior that columnar readers rely on.
+      from_id: ref-parquet-format
+      from_field: description
+    - text: Between systems — Arrow is the substrate most modern data tools exchange data through, and the format spec resolves type and layout questions definitively.
+      from_id: ref-arrow-docs
+      from_field: why
+    - text: Event payloads — schema declaration, the schema-registry evolution rules, encoding, and the container format for event and stream payloads.
+      from_id: ref-avro-docs
+      from_field: description
+    - text: The jobs themselves — config in the environment, backing services as attached resources, logs as event streams, disposability and dev/prod parity.
+      from_id: ref-12factor
+      from_field: description
+  check_yourself:
+    - You can walk the checklist line by line and name the source behind each claim.
+    - Given a new pipeline design, you can say which lifecycle stage each decision belongs to and which source owns the wording.
+  when_to_use:
+    - "Reviewing a pipeline design end to end"
+    - "Onboarding an engineer onto the foundations this series covers"
+  why: A checklist is the series compressed — every line is a claim you can trace to the source that owns it.
+  gotchas:
+    - "The checklist is six claims, not six tools — each line cites the source that owns the wording."
+    - "Revisit the lifecycle undercurrents — security, governance, and cost — at every stage, not only at storage."
+  production_notes:
+    - "Keep the six sources bookmarked — file-layout questions come back (row groups, min/max statistics, compression) and the format docs are the citable source."
+    - "Run the checklist before every design review, not after the first incident."
+  diagram: |
+    foundations checklist
+       |
+       |- [lifecycle]  generation > storage > ingestion > transformation > serving
+       |                undercurrents: security, governance, cost
+       |- [analytics]  row groups + statistics -> "lay it out like this"
+       |- [internals]  pages, encodings, codecs, statistics, pushdown
+       |- [memory]     Arrow substrate, zero-copy, IPC / Flight
+       |- [events]     Avro schema declaration + registry evolution rules
+       |- [jobs]       config in env, attached services, logs as streams
+       |
+        --> every line traceable to its source
+  code:
+    - title: The checklist with owners
+      lang: text
+      code: |
+        lifecycle       -> Fundamentals of Data Engineering (O'Reilly)
+        analytics file  -> Apache Parquet Documentation & Spec
+        file internals  -> Apache Parquet Format Documentation
+        in-memory       -> Apache Arrow Documentation
+        event payloads  -> Apache Avro Documentation
+        jobs            -> The Twelve-Factor App
+      source_id: ref-fundamentals-de
+  source_refs: [ref-fundamentals-de, ref-parquet-docs, ref-parquet-format, ref-arrow-docs, ref-avro-docs, ref-12factor]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/foundations-capstone-checklist
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-24'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-engineering-foundations] }
