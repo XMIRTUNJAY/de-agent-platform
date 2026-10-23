@@ -70,7 +70,6 @@
   license: CC-BY-4.0
   author: de-agent
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/runbooks/schema-drift
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/runbooks
   verification: community
   last_verified: 2026-09-26
   security: { runs_code: true, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
@@ -145,7 +144,6 @@
   license: CC-BY-4.0
   author: de-agent
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/runbooks/data-contract-broken
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/runbooks
   verification: community
   last_verified: 2026-09-21
   security: { runs_code: false, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
@@ -221,7 +219,6 @@
   license: CC-BY-4.0
   author: de-agent
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/runbooks/data-quality-failure
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/runbooks
   verification: community
   last_verified: 2026-09-27
   security: { runs_code: true, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
@@ -297,7 +294,6 @@
   license: CC-BY-4.0
   author: de-agent
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/runbooks/pipeline-failed
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/runbooks
   verification: community
   last_verified: 2026-09-29
   security: { runs_code: true, network_access: true, credentials: true, filesystem_access: true, external_apis: false }
@@ -371,7 +367,6 @@
   license: CC-BY-4.0
   author: de-agent
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/runbooks/backfill-required
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/runbooks
   verification: community
   last_verified: 2026-09-25
   security: { runs_code: true, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
@@ -444,7 +439,6 @@
   license: CC-BY-4.0
   author: de-agent
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/runbooks/bad-deployment
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/runbooks
   verification: community
   last_verified: 2026-09-20
   security: { runs_code: false, network_access: true, credentials: true, filesystem_access: false, external_apis: false }

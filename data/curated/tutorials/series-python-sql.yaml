@@ -92,7 +92,6 @@
   author: de-agent
   publisher: DE//AGENT Registry
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/sql-relational-mental-model
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
   verification: community
   last_verified: '2026-10-23'
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
@@ -189,7 +188,6 @@
   author: de-agent
   publisher: DE//AGENT Registry
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/sql-first-correct-select
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
   verification: community
   last_verified: '2026-10-23'
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
@@ -280,7 +278,6 @@
   author: de-agent
   publisher: DE//AGENT Registry
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/sql-window-functions-grain
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
   verification: community
   last_verified: '2026-10-23'
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
@@ -373,7 +370,6 @@
   author: de-agent
   publisher: DE//AGENT Registry
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/sql-production-gotchas
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
   verification: community
   last_verified: '2026-10-23'
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
@@ -466,7 +462,6 @@
   author: de-agent
   publisher: DE//AGENT Registry
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/sql-incident-silent-fanout
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
   verification: community
   last_verified: '2026-10-23'
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
@@ -569,7 +564,6 @@
   author: de-agent
   publisher: DE//AGENT Registry
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/sql-capstone-checklist
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
   verification: community
   last_verified: '2026-10-23'
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }

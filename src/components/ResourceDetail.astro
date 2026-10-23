@@ -12,6 +12,14 @@ marked.setOptions({ gfm: true, breaks: false });
 
 const { res, registry, trustScan = null } = Astro.props as { res: any; registry: any; trustScan?: any };
 
+/** trust-scan freshness gate: a stale scan claim is worse than no claim */
+const trustScanFresh = (() => {
+  if (!trustScan?.generated_at) return false;
+  const t = Date.parse(trustScan.generated_at);
+  if (Number.isNaN(t)) return false;
+  return Date.now() - t <= 7 * 86400000;
+})();
+
 /** ratings + install manifests need the SSR API routes. Present on Vercel
  *  deploys and in dev; hidden in the static export (no API, dead widget). */
 const liveWidgets = process.env.VERCEL === '1' || import.meta.env.MODE !== 'production';
@@ -758,7 +766,7 @@ const scoreColor = (score: number) => {
         </details>
 
         <!-- Static trust scan card (pipelines/scan-trust.mjs) — folded -->
-        {trustScan && (
+        {trustScan && trustScanFresh && (
           <details class="card card-pad mount side-fold">
             <summary class="mono-label">Static trust scan ({trustScan.findings.length} findings)</summary>
             <p class="text-sm text-muted mb-3">

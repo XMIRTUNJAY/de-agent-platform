@@ -127,5 +127,15 @@ export function validate({ resources, taxonomy, meta }) {
   // series consistency: lesson/series pairing, 1..10 range, duplicate lessons
   errors.push(...validateSeriesFields(resources));
 
+  // github_url shape: must be a canonical https://github.com/<owner>/<repo> url
+  // (optionally with trailing slash). Shorthand "owner/repo", nested paths and
+  // non-github hosts broke every downstream parser at runtime.
+  const GITHUB_URL = /^https:\/\/github\.com\/[\w.-]+\/[\w.-]+\/?$/;
+  for (const r of resources) {
+    if (r.github_url != null && r.github_url !== '' && !GITHUB_URL.test(r.github_url)) {
+      errors.push(`${r.id}: github_url must match https://github.com/<owner>/<repo> (got "${r.github_url}")`);
+    }
+  }
+
   return { errors, warnings, counts: { resources: resources.length, ids: ids.size } };
 }

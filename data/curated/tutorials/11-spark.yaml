@@ -94,7 +94,6 @@
   license: CC-BY-4.0
   author: de-agent
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/spark-skew-diagnosis-walkthrough
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
   verification: community
   last_verified: '2026-10-21'
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
@@ -193,7 +192,6 @@
   license: CC-BY-4.0
   author: de-agent
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/spark-dq-review-pass
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
   verification: community
   last_verified: '2026-10-21'
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
@@ -291,7 +289,6 @@
   license: CC-BY-4.0
   author: de-agent
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/spark-pyspark-template-start
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
   verification: community
   last_verified: '2026-10-21'
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
@@ -387,7 +384,6 @@
   license: CC-BY-4.0
   author: de-agent
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/spark-lens-event-log
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
   verification: community
   last_verified: '2026-10-21'
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }

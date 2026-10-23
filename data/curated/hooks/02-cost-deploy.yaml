@@ -23,7 +23,6 @@
   license: Apache-2.0
   author: de-agent
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/hooks/spark-cost-check
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/hooks
   verification: community
   last_verified: 2026-09-24
   security: { runs_code: true, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
@@ -49,7 +48,6 @@
   license: Apache-2.0
   author: de-agent
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/hooks/backfill-safety-check
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/hooks
   verification: community
   last_verified: 2026-09-22
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
@@ -75,7 +73,6 @@
   license: Apache-2.0
   author: de-agent
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/hooks/dbt-full-refresh-guard
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/hooks
   verification: community
   last_verified: 2026-09-21
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
@@ -101,7 +98,6 @@
   license: Apache-2.0
   author: de-agent
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/hooks/prod-write-confirm
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/hooks
   verification: community
   last_verified: 2026-09-25
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
@@ -127,7 +123,6 @@
   license: Apache-2.0
   author: de-agent
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/hooks/freshness-pre-merge
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/hooks
   verification: community
   last_verified: 2026-09-18
   security: { runs_code: true, network_access: false, credentials: false, filesystem_access: true, external_apis: false }

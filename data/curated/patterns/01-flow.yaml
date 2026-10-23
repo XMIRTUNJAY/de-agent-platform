@@ -32,7 +32,6 @@
   license: CC-BY-4.0
   author: de-agent
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns/medallion-zones
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns
   verification: community
   last_verified: 2026-09-28
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
@@ -68,7 +67,6 @@
   license: CC-BY-4.0
   author: de-agent
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns/batch-incremental-watermark
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns
   verification: community
   last_verified: 2026-09-26
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
@@ -101,7 +99,6 @@
   license: CC-BY-4.0
   author: de-agent
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns/idempotent-partition-overwrite
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns
   verification: community
   last_verified: 2026-09-24
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
@@ -137,7 +134,6 @@
   license: CC-BY-4.0
   author: de-agent
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns/quarantine-publish
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns
   verification: community
   last_verified: 2026-09-27
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
@@ -171,7 +167,6 @@
   license: CC-BY-4.0
   author: de-agent
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns/contracts-quality-gate
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns
   verification: community
   last_verified: 2026-09-22
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
@@ -205,7 +200,6 @@
   license: CC-BY-4.0
   author: de-agent
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns/postgres-cdc-lakehouse
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns
   verification: community
   last_verified: 2026-09-25
   security: { runs_code: false, network_access: true, credentials: true, filesystem_access: false, external_apis: false }
@@ -237,7 +231,6 @@
   license: CC-BY-4.0
   author: de-agent
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns/streaming-dedup-upsert
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/patterns
   verification: community
   last_verified: 2026-09-23
   security: { runs_code: false, network_access: true, credentials: true, filesystem_access: false, external_apis: false }

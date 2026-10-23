@@ -33,10 +33,16 @@ export const COMPOSITE_LABELS = [
 // completeness.mjs — shared with score.mjs so both score paths agree.
 
 /**
- * Compute all marketplace scores for all resources
+ * Compute all marketplace scores for all resources.
+ * `votes` (optional): { ratings: { [resource_id]: {average, count, distribution} },
+ *                       installs: { [resource_id]: {count, success_rate, last_installed_at} } }
+ * Aggregated bulk from the votes DB — the fields were hardcoded zeros before
+ * this existed, so the popularity model never saw its rating/engagement inputs.
  */
-export function computeMarketplaceScores(resources, meta, executions = {}) {
+export function computeMarketplaceScores(resources, meta, executions = {}, votes = {}) {
   const guide = meta.scoring?.guide ?? [];
+  const ratings = votes.ratings ?? {};
+  const installs = votes.installs ?? {};
   
   for (const r of resources) {
     // Preserve existing marketplace data (e.g., community score from GitHub enrichment)
@@ -78,18 +84,38 @@ export function computeMarketplaceScores(resources, meta, executions = {}) {
     // Roadmap phase from the canonical single table
     const roadmapPhase = r.stage ? phaseKeyForStage(r.stage) ?? undefined : undefined;
 
+    const rating = ratings[r.id] ?? null;
+    const install = installs[r.id] ?? null;
+    const popularityInputs = {
+      community: scores.community ?? 0,
+      // github_community kept as the historical key (stats API reads it)
+      github_community: scores.community ?? 0,
+      rating_avg: rating?.average ?? 0,
+      rating_count: rating?.count ?? 0,
+      installs: install?.count ?? 0,
+      copies: 0,
+      views: 0,
+    };
+
     r.marketplace = {
-      install_count: 0,
-      install_success_rate: 0,
-      last_installed_at: null,
-      rating_average: 0,
-      rating_count: 0,
-      rating_distribution: {},
+      install_count: install?.count ?? 0,
+      install_success_rate: install?.success_rate ?? 0,
+      last_installed_at: install?.last_installed_at ?? null,
+      rating_average: rating?.average ?? 0,
+      rating_count: rating?.count ?? 0,
+      rating_distribution: rating?.distribution ?? {},
       quality_scores: scores,
       composite_score: Math.round(composite * 100) / 100,
       composite_label: compositeLabel,
-      popularity_base: computePopularity({ community: scores.community ?? 0 }),
-      popularity_inputs: { github_community: scores.community ?? null },
+      popularity_base: computePopularity({
+        community: popularityInputs.community,
+        ratingAvg: popularityInputs.rating_avg,
+        ratingCount: popularityInputs.rating_count,
+        installs: popularityInputs.installs,
+        copies: popularityInputs.copies,
+        views: popularityInputs.views,
+      }),
+      popularity_inputs: popularityInputs,
       roadmap_stages: computeRoadmapStages(r),
       roadmap_phase: roadmapPhase,
       is_featured: false,

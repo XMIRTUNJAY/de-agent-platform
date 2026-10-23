@@ -25,7 +25,6 @@
   license: Apache-2.0
   author: de-agent
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/agents/sql-reviewer
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/agents
   verification: community
   last_verified: 2026-09-30
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
@@ -56,7 +55,6 @@
   license: Apache-2.0
   author: de-agent
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/agents/spark-optimizer
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/agents
   verification: community
   last_verified: 2026-09-28
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
@@ -87,7 +85,6 @@
   license: Apache-2.0
   author: de-agent
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/agents/data-quality-reviewer
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/agents
   verification: community
   last_verified: 2026-09-26
   security: { runs_code: true, network_access: false, credentials: false, filesystem_access: true, external_apis: false }

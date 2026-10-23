@@ -23,7 +23,6 @@
   author: de-agent
   publisher: DE//AGENT Registry
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/skills/incident-postmortem-writer
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/skills
   install_command: "npx de-agent-platform add incident-postmortem-writer"
   verification: community
   last_verified: 2026-09-25
@@ -69,7 +68,6 @@
   author: de-agent
   publisher: DE//AGENT Registry
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/skills/spark-cost-regression-guard
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/skills
   install_command: "npx de-agent-platform add spark-cost-regression-guard"
   verification: community
   last_verified: 2026-09-14

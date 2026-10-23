@@ -89,7 +89,6 @@
   author: de-agent
   publisher: DE//AGENT Registry
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/foundations-rows-vs-columns
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
   verification: community
   last_verified: '2026-10-24'
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
@@ -184,7 +183,6 @@
   author: de-agent
   publisher: DE//AGENT Registry
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/foundations-parquet-anatomy
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
   verification: community
   last_verified: '2026-10-24'
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
@@ -267,7 +265,6 @@
   author: de-agent
   publisher: DE//AGENT Registry
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/foundations-arrow-zero-copy
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
   verification: community
   last_verified: '2026-10-24'
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
@@ -361,7 +358,6 @@
   author: de-agent
   publisher: DE//AGENT Registry
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/foundations-compression-encodings
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
   verification: community
   last_verified: '2026-10-24'
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
@@ -446,7 +442,6 @@
   author: de-agent
   publisher: DE//AGENT Registry
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/foundations-avro-schema-evolution
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
   verification: community
   last_verified: '2026-10-24'
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
@@ -543,7 +538,6 @@
   author: de-agent
   publisher: DE//AGENT Registry
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/foundations-choosing-file-formats
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
   verification: community
   last_verified: '2026-10-24'
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
@@ -626,7 +620,6 @@
   author: de-agent
   publisher: DE//AGENT Registry
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/foundations-twelve-factor-pipelines
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
   verification: community
   last_verified: '2026-10-24'
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
@@ -711,7 +704,6 @@
   author: de-agent
   publisher: DE//AGENT Registry
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/foundations-reading-data-files
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
   verification: community
   last_verified: '2026-10-24'
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
@@ -798,7 +790,6 @@
   author: de-agent
   publisher: DE//AGENT Registry
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/foundations-format-performance-incidents
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
   verification: community
   last_verified: '2026-10-24'
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
@@ -886,7 +877,6 @@
   author: de-agent
   publisher: DE//AGENT Registry
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/foundations-capstone-checklist
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
   verification: community
   last_verified: '2026-10-24'
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }

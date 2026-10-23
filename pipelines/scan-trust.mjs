@@ -17,7 +17,7 @@
  *   node pipelines/scan-trust.mjs --resource <slug>
  */
 import { readdirSync, readFileSync, statSync, existsSync, mkdirSync, writeFileSync } from 'node:fs';
-import { join, relative, dirname, basename } from 'node:path';
+import { join, relative, dirname, basename, resolve } from 'node:path';
 import { stringify as stringifyYaml } from 'yaml';
 import { parse as parseYaml } from 'yaml';
 import registry from '../src/data/generated/registry.json' with { type: 'json' };
@@ -124,8 +124,14 @@ function curatedRecordFiles(r) {
   return [{ path: `curated:${r.source_file ?? r.category}#${r.id}`, content: block }];
 }
 
-async function main() {
-  console.log('\n  \x1b[1mDE//AGENT trust scan\x1b[0m  \x1b[2m(static rule engine)\x1b[0m\n');
+/**
+ * Run the trust scan over a registry and return the payload. Parameterized so
+ * run.mjs can fold a LOCAL scan into every build (the standalone script keeps
+ * remote scanning for manual runs). remote=true needs GITHUB_TOKEN.
+ */
+export async function runTrustScan({ registry: reg = registry, remote = false, only = null, write = false, outPath = OUT } = {}) {
+  const ONLY = only;
+  const REMOTE = remote && !!process.env.GITHUB_TOKEN;
   const rules = loadRules(RULES_PATH);
   const fam = familySummary(rules);
   const verdicts = loadVerdicts();
@@ -140,7 +146,7 @@ async function main() {
   const perResource = {};
   let totalFindings = 0, flagged = 0, scanned = 0;
 
-  for (const r of registry.resources) {
+  for (const r of reg.resources) {
     if (ONLY && r.slug !== ONLY) continue;
     const files = [...vendoredFiles(r.type, r.slug), ...curatedRecordFiles(r)];
     if (!files.length) continue;
@@ -170,13 +176,9 @@ async function main() {
   }
 
   if (REMOTE) {
-    const token = !!process.env.GITHUB_TOKEN;
-    if (!token) {
-      console.log('\n  remote pass skipped: GITHUB_TOKEN not set (60/hr anonymous is not enough)');
-    } else {
-      console.log(`\n  remote pass: top ${REMOTE_LIMIT} repos by composite score`);
-      const targets = registry.resources
-        .map((r) => ({ r, s: r.marketplace?.composite_score ?? -1 }))
+    console.log(`\n  remote pass: top ${REMOTE_LIMIT} repos by composite score`);
+    const targets = reg.resources
+      .map((r) => ({ r, s: r.marketplace?.composite_score ?? -1 }))
         .filter(({ r }) => {
           const id = repoIdentity(r.github_url ?? '');
           return id && !/de-agent-platform/i.test(r.github_url ?? '');
@@ -217,7 +219,6 @@ async function main() {
       }
       totalFindings += remoteFindings;
       console.log(`  remote scanned: ${remoteScanned} · skipped: ${remoteSkipped} · findings: ${remoteFindings}`);
-    }
   }
 
   const payload = {
@@ -226,8 +227,10 @@ async function main() {
     stats: { resources_scanned: scanned, total_findings: totalFindings, flagged_resources: flagged },
     resources: perResource,
   };
-  mkdirSync(dirname(OUT), { recursive: true });
-  writeFileSync(OUT, JSON.stringify(payload, null, 1) + '\n', 'utf8');
+  if (write) {
+    mkdirSync(dirname(outPath), { recursive: true });
+    writeFileSync(outPath, JSON.stringify(payload, null, 1) + '\n', 'utf8');
+  }
 
   console.log(`  resources scanned: ${scanned} · findings: ${totalFindings} (actionable: ${totalFindings - Object.values(perResource).reduce((a, r) => a + r.examples, 0)}) · flagged: ${flagged}`);
   for (const [url, r] of Object.entries(perResource)
@@ -236,7 +239,31 @@ async function main() {
     if (r.actionable === 0 && r.total === 0) continue;
     console.log(`  ! ${url}  actionable:${r.actionable} examples:${r.examples} flags:${r.flags}  top: ${r.findings.find((f) => !f.likelyExample)?.rule ?? r.findings[0]?.rule ?? '-'}`);
   }
-  process.exit(0);
+  return payload;
 }
 
-main().catch((e) => { console.error(e); process.exit(1); });
+/** CLI entry — direct invocation only (importing for pipeline use must not
+ *  run this, and never process.exit from a module). */
+import { pathToFileURL } from 'node:url';
+const invokedDirectly = process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href;
+if (invokedDirectly) {
+  main().then(
+    () => process.exit(0),
+    (e) => { console.error(e); process.exit(1); },
+  );
+}
+
+async function main() {
+  console.log('\n  \x1b[1mDE//AGENT trust scan\x1b[0m  \x1b[2m(static rule engine)\x1b[0m\n');
+  return runTrustScan({ remote: REMOTE, only: ONLY, write: true });
+}
+
+/** True when the trust-findings payload is recent enough to show. Missing or
+ *  unparsable payloads hide the card — a stale trust claim is worse than none. */
+const TRUST_MAX_AGE_MS = 7 * 86400000;
+export function isTrustScanFresh(scan, now = Date.now(), maxAgeMs = TRUST_MAX_AGE_MS) {
+  if (!scan?.generated_at) return false;
+  const t = Date.parse(scan.generated_at);
+  if (Number.isNaN(t)) return false;
+  return now - t >= 0 && now - t <= maxAgeMs;
+}

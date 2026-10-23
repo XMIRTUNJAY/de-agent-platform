@@ -169,10 +169,21 @@ await step('FRESHNESS', () => {
 });
 
 // MARKETPLACE SCORE
-await step('MARKETPLACE SCORE', () => {
+await step('MARKETPLACE SCORE', async () => {
   // Load execution results for performance scoring
   const executions = loadExecutions(join(ROOT, 'data', 'cache', 'executions'));
-  computeMarketplaceScores(resources, meta, executions);
+  // Live votes aggregates (ratings + install attempts). Optional: a missing
+  // or unreachable DB leaves the fields at zero rather than failing builds.
+  let votes = { ratings: {}, installs: {} };
+  try {
+    const { getRatingStatsBulk, getInstallStatsBulk } = await import('../src/lib/votes-db.mjs');
+    votes = { ratings: await getRatingStatsBulk(), installs: await getInstallStatsBulk() };
+    const nR = Object.keys(votes.ratings).length, nI = Object.keys(votes.installs).length;
+    if (nR || nI) info(`votes: ${nR} rated · ${nI} with install attempts`);
+  } catch (err) {
+    warn('votes aggregates unavailable: ' + err.message);
+  }
+  computeMarketplaceScores(resources, meta, executions, votes);
   const scored = resources.filter(r => r.marketplace?.composite_score > 0);
   const avg = scored.length ? (scored.reduce((a, r) => a + r.marketplace.composite_score, 0) / scored.length).toFixed(1) : 'n/a';
   const labels = {};
@@ -222,6 +233,18 @@ if (failed && !FLAGS.has('--no-fail')) {
   error('build halted — fix the errors above');
   process.exit(1);
 }
+
+// TRUST — fold the LOCAL static trust scan into every build so the detail
+// pages' "Static trust scan" card is never stale and new resources are
+// covered (the standalone scan-trust.mjs keeps remote scanning for manual runs).
+await step('TRUST', async () => {
+  const { runTrustScan } = await import('./scan-trust.mjs');
+  const { atomicWrite } = await import('./lib/emit.mjs');
+  const payload = await runTrustScan({ remote: false });
+  atomicWrite(join(ROOT, 'src', 'data', 'generated', 'trust-findings.json'), JSON.stringify(payload, null, 1) + '\n');
+  info(`trust scan: ${payload.stats.resources_scanned} resources · ${payload.stats.total_findings} findings · ${payload.stats.flagged_resources} flagged`);
+  return null;
+});
 
 // PUBLISH
 const pub = await step('PUBLISH', () => emit(ctx));

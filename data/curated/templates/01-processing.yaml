@@ -28,7 +28,6 @@
   license: MIT
   author: de-agent
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/templates/pyspark-project
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/templates
   verification: community
   last_verified: 2026-09-28
   security: { runs_code: true, network_access: false, credentials: false, filesystem_access: true, external_apis: false }
@@ -60,7 +59,6 @@
   license: MIT
   author: de-agent
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/templates/dbt-project
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/templates
   verification: community
   last_verified: 2026-09-27
   security: { runs_code: true, network_access: true, credentials: true, filesystem_access: true, external_apis: false }
@@ -88,7 +86,6 @@
   license: MIT
   author: de-agent
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/templates/airflow-dag
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/templates
   verification: community
   last_verified: 2026-09-24
   security: { runs_code: true, network_access: true, credentials: true, filesystem_access: true, external_apis: false }
@@ -116,7 +113,6 @@
   license: MIT
   author: de-agent
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/templates/kafka-streaming
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/templates
   verification: community
   last_verified: 2026-09-21
   security: { runs_code: true, network_access: true, credentials: true, filesystem_access: true, external_apis: false }

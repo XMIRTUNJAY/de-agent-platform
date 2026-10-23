@@ -89,7 +89,6 @@
   author: de-agent
   publisher: DE//AGENT Registry
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/orchestration-mental-model
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
   verification: community
   last_verified: '2026-10-23'
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
@@ -174,7 +173,6 @@
   author: de-agent
   publisher: DE//AGENT Registry
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/dag-dependencies-retries
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
   verification: community
   last_verified: '2026-10-23'
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
@@ -257,7 +255,6 @@
   author: de-agent
   publisher: DE//AGENT Registry
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/sensors-data-aware-scheduling
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
   verification: community
   last_verified: '2026-10-23'
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
@@ -342,7 +339,6 @@
   author: de-agent
   publisher: DE//AGENT Registry
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/dynamic-mapping-date-batches
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
   verification: community
   last_verified: '2026-10-23'
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
@@ -429,7 +425,6 @@
   author: de-agent
   publisher: DE//AGENT Registry
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/production-dag-gotchas
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
   verification: community
   last_verified: '2026-10-23'
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
@@ -525,7 +520,6 @@
   author: de-agent
   publisher: DE//AGENT Registry
   source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/orchestration-capstone
-  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
   verification: community
   last_verified: '2026-10-23'
   security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }

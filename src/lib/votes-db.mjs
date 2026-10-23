@@ -322,6 +322,55 @@ export async function getResourceInstallStats(resourceId, db = getVotesClient())
   };
 }
 
+/**
+ * Bulk aggregates for the whole registry (pipeline wiring): one query each
+ * instead of N round-trips. Returns { [resource_id]: {average, count,
+ * distribution} } for resources that have at least one vote.
+ */
+export async function getRatingStatsBulk(db = getVotesClient()) {
+  await ensureVotesSchema(db);
+  const totals = await db.execute(
+    `SELECT resource_id, COUNT(*) AS n, AVG(score) AS avg FROM votes GROUP BY resource_id`,
+  );
+  const dist = await db.execute(
+    `SELECT resource_id, score, COUNT(*) AS n FROM votes GROUP BY resource_id, score`,
+  );
+  const out = {};
+  for (const row of totals.rows) {
+    out[row.resource_id] = {
+      average: Math.round(Number(row.avg) * 100) / 100,
+      count: Number(row.n),
+      distribution: {},
+    };
+  }
+  for (const row of dist.rows) {
+    if (out[row.resource_id]) out[row.resource_id].distribution[String(row.score)] = Number(row.n);
+  }
+  return out;
+}
+
+/**
+ * Bulk install aggregates for the whole registry: { [resource_id]:
+ * {count, success_rate, last_installed_at} } for resources with attempts.
+ */
+export async function getInstallStatsBulk(db = getVotesClient()) {
+  await ensureVotesSchema(db);
+  const rs = await db.execute(
+    `SELECT resource_id, COUNT(*) AS n, COALESCE(SUM(success), 0) AS ok, MAX(requested_at) AS last_at
+     FROM install_attempts GROUP BY resource_id`,
+  );
+  const out = {};
+  for (const row of rs.rows) {
+    const n = Number(row.n);
+    out[row.resource_id] = {
+      count: n,
+      success_rate: n > 0 ? Number(row.ok) / n : 0,
+      last_installed_at: row.last_at,
+    };
+  }
+  return out;
+}
+
 /** Dashboard "my ratings": votes linked by the client-supplied user id, shaped like the old rows. */
 export async function getVotesByUser(userId, page = 1, perPage = 10, db = getVotesClient()) {
   await ensureVotesSchema(db);
