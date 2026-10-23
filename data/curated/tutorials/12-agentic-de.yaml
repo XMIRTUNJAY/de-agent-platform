@@ -13,6 +13,9 @@
   category: cat-agentic
   difficulty: intermediate
   tags: [tutorial, mcp, security, least-privilege, review]
+  series: agentic
+  series_title: The Agentic Series
+  lesson: 4
   learning_objectives:
     - Read a tool schema and predict its side effects
     - Classify tools by blast radius
@@ -104,6 +107,9 @@
   category: cat-agentic
   difficulty: beginner
   tags: [tutorial, agentic, guardrails, review, security]
+  series: agentic
+  series_title: The Agentic Series
+  lesson: 6
   learning_objectives:
     - Separate agent read/recommend from write/execute
     - Encode the safety policy as hooks
@@ -201,6 +207,9 @@
   category: cat-agentic
   difficulty: beginner
   tags: [tutorial, mcp, setup, filesystem, git, github]
+  series: agentic
+  series_title: The Agentic Series
+  lesson: 7
   learning_objectives:
     - Configure the filesystem, git and GitHub MCP servers
     - Scope each server to the minimum it needs
@@ -310,6 +319,9 @@
   category: cat-agentic
   difficulty: intermediate
   tags: [tutorial, agentic, plugin, review, guardrails]
+  series: agentic
+  series_title: The Agentic Series
+  lesson: 2
   learning_objectives:
     - Install the starter plugin for a data repo
     - Use /review-sql and /review-spark on a change

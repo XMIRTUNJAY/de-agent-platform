@@ -1,0 +1,588 @@
+# The Warehousing Series — six new lessons that join the four existing dbt
+# tutorials (02-dbt.yaml) into one ordered 10-lesson series for the
+# warehousing roadmap stage. Every step derives from the cited source field;
+# structure is ours, wording is the source's.
+- id: tutorial-warehouse-mental-model
+  slug: warehouse-mental-model
+  type: tutorial
+  title: The warehouse mental model — micro-partitions, clustering, scan vs compute
+  description: >-
+    Build the map before tuning anything: a table is a set of micro-partitions,
+    every query is described by bytes scanned, partitions scanned ratio, and
+    queue time, a clustering key decides how much gets pruned, and a slow query
+    is either a scan problem or a compute problem — never both at once.
+  category: cat-dbt
+  difficulty: beginner
+  tags: [tutorial, warehousing, mental-model, clustering, beginner]
+  series: warehousing
+  series_title: The Warehousing Series
+  lesson: 1
+  learning_objectives:
+    - Name the three numbers that describe a warehouse query — bytes scanned, partitions scanned ratio, queue time
+    - Explain why a table is a set of micro-partitions and what a clustering key prunes
+    - Separate a scan problem from a compute problem before touching any knob
+  what_you_need:
+    - A warehouse to reason about — Snowflake, BigQuery, or Redshift
+    - "Install: npx de-agent-platform add warehouse-clustering-advisor"
+    - One slow query and one fast query from your own history to compare
+  steps:
+    - text: "The advisor's scope is the mental model's table of contents: clustering keys, warehouse sizing, result caching, and the difference between a scan problem and a compute problem."
+      from_id: skill-warehouse-clustering-advisor
+      from_field: description
+    - text: Describe any warehouse query with the three numbers on the runbook's monitoring list — bytes scanned, partitions scanned ratio, queue time.
+      from_id: runbook-warehouse-query-slow
+      from_field: monitoring
+    - text: A table is physically a set of micro-partitions; the runbook lists data volume growth crossing a micro-partition threshold as a cause — a query can go slow with no change at all.
+      from_id: runbook-warehouse-query-slow
+      from_field: possible_causes
+    - text: "Diagnose first: a query that scans far more partitions than it needs is a clustering/partition problem; a scan that is optimal but still waits is a warehouse sizing or concurrency problem."
+      from_id: skill-warehouse-clustering-advisor
+      from_field: body
+    - text: The clustering key is picked from workload shape — the column that appears in the WHERE clause of the most expensive queries, with reasonable cardinality, most selective first.
+      from_id: skill-warehouse-clustering-advisor
+      from_field: body
+    - text: Compute is elastic and separate from storage — if queue time is far above execution time for short queries, scale out (more clusters), not up (bigger warehouse).
+      from_id: skill-warehouse-clustering-advisor
+      from_field: body
+    - text: Under the engine sits the logical layer the lesson arc builds — the star schema that stops analysts re-deriving the same joins and disagreeing on metric definitions.
+      from_id: pattern-dimensional-model
+      from_field: problem
+  check_yourself:
+    - You can read a query's bytes scanned, partitions scanned ratio, and queue time and say which side is sick.
+    - Asked why a query got slow when nothing changed, you answer micro-partition thresholds before blaming code.
+    - You can name the clustering key you would pick for your most expensive query and why.
+  when_to_use:
+    - "Before tuning anything on a warehouse"
+    - "Onboarding onto a team that shares one warehouse"
+  why: Every warehousing decision later in the series is a choice about partitions, clustering, or compute — and this is the map of all three.
+  gotchas:
+    - "Bytes scanned and queue time are different diseases — fix the predicate vs add clusters; sizing up a scan-bound query buys nothing."
+    - "Clustering on a low-selectivity key stops pruning entirely."
+    - "Data volume growth silently crosses micro-partition thresholds — a query can go slow with no change at all."
+  production_notes:
+    - "Alert on the partitions_scanned/partitions_total ratio from day one."
+    - "Scale out for queue time on short queries; scale up never fixes a scan-bound query."
+  diagram: |
+    warehouse mental model
+       |
+       |- table = micro-partitions --> volume growth crosses thresholds silently
+       |
+       |- scan side --> bytes + partitions scanned --> clustering key / predicate
+       |
+       |- compute side --> queue time --> scale out (more clusters), not up
+       |
+       |- logical layer --> star schema under the engine
+  code:
+    - title: The three numbers for any query, from query history
+      lang: sql
+      code: |
+        -- Snowflake
+        SELECT query_id, partitions_scanned, partitions_total, bytes_scanned
+        FROM table(information_schema.query_history_by_session())
+        ORDER BY start_time DESC LIMIT 10;
+      source_id: runbook-warehouse-query-slow
+    - title: Install the clustering advisor skill
+      lang: bash
+      code: |
+        npx de-agent-platform add warehouse-clustering-advisor
+      source_id: skill-warehouse-clustering-advisor
+  source_refs: [skill-warehouse-clustering-advisor, runbook-warehouse-query-slow, pattern-dimensional-model]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/warehouse-mental-model
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-23'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-dbt] }
+- id: tutorial-warehouse-star-schema
+  slug: warehouse-star-schema
+  type: tutorial
+  title: Model a star schema — facts, conformed dimensions, declared grain
+  description: >-
+    Turn the analytical layer into facts surrounded by conformed dimensions:
+    declare the fact grain in schema.yml, stage and intermediate models below
+    it, SCD2 where history must survive, and scaffold the whole thing from the
+    dbt project template so staging, marts, tests, and CI exist from commit one.
+  category: cat-dbt
+  difficulty: intermediate
+  tags: [tutorial, warehousing, dimensional-modeling, star-schema, dbt]
+  series: warehousing
+  series_title: The Warehousing Series
+  lesson: 3
+  learning_objectives:
+    - Declare a fact grain and surround it with conformed dimensions
+    - Layer staging, intermediate, and marts models below the star
+    - Scaffold the layered project with tests and CI from the template
+  what_you_need:
+    - A dbt project (or the template below) with raw source tables landed
+    - One business process with a defensible grain, such as order lines
+    - Dimensions that recur across facts, such as customer, product, date
+  steps:
+    - text: The pattern exists because analysts re-derive the same joins and disagree on metric definitions — the star schema is the fix.
+      from_id: pattern-dimensional-model
+      from_field: problem
+    - text: It fits a warehouse serving BI and analytics with recurring query patterns.
+      from_id: pattern-dimensional-model
+      from_field: context
+    - text: "Model facts (events/measures) surrounded by conformed dimensions (context): fct_orders at the grain of one row per order line, with dim_customer (SCD2 for history), dim_product, and dim_date."
+      from_id: pattern-dimensional-model
+      from_field: solution
+    - text: Declare the fact grain explicitly, conform dimensions across facts so they can be combined, and use SCD type 2 when an attribute's history must be preserved at the point of the fact.
+      from_id: pattern-dimensional-model
+      from_field: solution
+    - text: Layer the project below the star — staging renames and casts one row per source row, intermediate holds business logic with no direct consumer reads, and marts split fct vs dim with the grain declared in schema.yml.
+      from_id: project-dbt-warehouse-tests
+      from_field: implementation
+    - text: Check the design against the pattern's forces — analysts need simple fast queries, definitions must be consistent, and history matters for some attributes.
+      from_id: pattern-dimensional-model
+      from_field: forces
+    - text: Scaffold rather than hand-roll — the template ships dbt_project.yml, models/staging, models/intermediate, models/marts, tests/, and a CI workflow.
+      from_id: tpl-dbt-project
+      from_field: contents
+  check_yourself:
+    - fct_orders declares its grain in schema.yml and every dim can be joined to every fact.
+    - Staging models are one row per source row, and no consumer reads intermediate directly.
+    - Any attribute whose history matters at the point of the fact is an SCD2 dimension column.
+  when_to_use:
+    - "Designing the analytical layer for BI and recurring queries"
+    - "Metric definitions that must be consistent across dashboards"
+  why: A star schema with a declared grain is the difference between one shared definition of a metric and five private ones.
+  gotchas:
+    - "Grain key not unique → a join fanned out upstream."
+    - "con: less flexible for rare queries; ETL to maintain SCDs"
+    - "Intermediate holds business logic — no direct consumer reads."
+  production_notes:
+    - "Declare the fact grain in schema.yml; marts split fct vs dim with that declaration."
+    - "Conform dimensions across facts so they can be combined."
+  diagram: |
+    dim_customer ─┐
+    dim_product  ─┼─▶ fct_orders ─▶ marts
+    dim_date     ─┘
+
+    staging ─▶ intermediate ─▶ fct / dim (grain declared in schema.yml)
+  code:
+    - title: The star schema, from the pattern's solution
+      lang: text
+      code: |
+        Facts (events/measures) surrounded by conformed dimensions (context).
+          fct_orders (grain: one row per order line)
+            ├─ dim_customer (SCD2 for history)
+            ├─ dim_product
+            └─ dim_date
+      source_id: pattern-dimensional-model
+    - title: Scaffold the layered project from the template
+      lang: bash
+      code: |
+        amp template new de-agent/dbt-project ./my-dbt
+      source_id: tpl-dbt-project
+    - title: The DAG the starter project ships
+      lang: text
+      code: |
+        raw.orders ─▶ stg_orders ─▶ int_orders_enriched ─┐
+        raw.customers ─▶ stg_customers ──────────────────┼─▶ fct_orders ─▶ marts
+        seeds/ ─▶ dim_date ──────────────────────────────┘
+      source_id: project-dbt-warehouse-tests
+  source_refs: [pattern-dimensional-model, project-dbt-warehouse-tests, tpl-dbt-project]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/warehouse-star-schema
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-23'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-dbt] }
+- id: tutorial-warehouse-clustering-pruning
+  slug: warehouse-clustering-pruning
+  type: tutorial
+  title: Make queries prune — clustering keys and scan diagnosis
+  description: >-
+    Choose a clustering key from the predicates of your most expensive queries,
+    prove the prune with partitions_scanned versus partitions_total, and fix the
+    disease you actually have — a lost predicate or a low-selectivity key on the
+    scan side, or queue time on the compute side.
+  category: cat-dbt
+  difficulty: intermediate
+  tags: [tutorial, warehousing, clustering, performance, pruning]
+  series: warehousing
+  series_title: The Warehousing Series
+  lesson: 4
+  learning_objectives:
+    - Choose a clustering key from predicate selectivity
+    - Prove pruning with partitions_scanned versus partitions_total
+    - Fix the scan or compute problem you actually measured
+  what_you_need:
+    - A shared warehouse with a query history you can read
+    - "Install: npx de-agent-platform add warehouse-clustering-advisor"
+    - Your top-cost queries and their WHERE clauses
+  steps:
+    - text: Pick the clustering column from the workload — the one that appears in the WHERE clause of the most expensive queries, with reasonable cardinality; order matters, so put the most selective first.
+      from_id: skill-warehouse-clustering-advisor
+      from_field: body
+    - text: Know the failure mode — clustering on a low-selectivity key stops pruning entirely.
+      from_id: runbook-warehouse-query-slow
+      from_field: gotchas
+    - text: Diagnose before changing anything — separate scan cost from compute time (bytes/partitions scanned vs queue time) and compare the plan against the clustering/partition key.
+      from_id: runbook-warehouse-query-slow
+      from_field: diagnosis
+    - text: Measure the prune directly — query_id, partitions_scanned, partitions_total, and bytes_scanned from the session's query history.
+      from_id: runbook-warehouse-query-slow
+      from_field: commands
+    - text: Match the fix to the finding — over-scan means fixing the predicate or adding/adjusting the clustering key; rebuilding clustering on a low-selectivity key.
+      from_id: runbook-warehouse-query-slow
+      from_field: fix
+    - text: Keep it fixed — alert on the partitions_scanned/partitions_total ratio and review query history weekly for the top cost queries.
+      from_id: runbook-warehouse-query-slow
+      from_field: prevention
+  check_yourself:
+    - Your clustering key's first column is the most selective predicate of your costliest queries.
+    - You can quote partitions_scanned/partitions_total for a query before and after the change.
+    - Scan-bound and queue-bound queries get different fixes, and you can name which yours is.
+  when_to_use:
+    - "A dashboard or model scans far more partitions than it needs"
+    - "Choosing the first clustering key for a large fact table"
+  why: Pruning is the single biggest lever on warehouse cost and latency, and it is decided by one key and the predicates that use it.
+  gotchas:
+    - "Clustering on a low-selectivity key stops pruning entirely."
+    - "Scan is optimal but the query waits → warehouse sizing or concurrency problem."
+    - "Bytes scanned and queue time are different diseases — fix the predicate vs add clusters; sizing up a scan-bound query buys nothing."
+  production_notes:
+    - "Alert on the partitions_scanned/partitions_total ratio."
+    - "Review weekly query history for the top-cost queries."
+  diagram: |
+    clustering and pruning
+       |
+       |- most expensive queries --> WHERE columns --> cardinality --> key order
+       |
+       |- query history --> partitions_scanned / partitions_total --> prune proof
+       |
+       |- over-scan --> fix predicate / adjust key
+       |
+       |- waits with optimal scan --> sizing or concurrency, not the key
+  code:
+    - title: Prove the prune from query history
+      lang: sql
+      code: |
+        -- Snowflake
+        SELECT query_id, partitions_scanned, partitions_total, bytes_scanned
+        FROM table(information_schema.query_history_by_session())
+        ORDER BY start_time DESC LIMIT 10;
+      source_id: runbook-warehouse-query-slow
+    - title: Clustering key choice, from the advisor
+      lang: text
+      code: |
+        Pick the column that appears in the WHERE clause of the *most expensive*
+        queries, with reasonable cardinality. Order matters: put the most
+        selective first.
+      source_id: skill-warehouse-clustering-advisor
+  source_refs: [skill-warehouse-clustering-advisor, runbook-warehouse-query-slow]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/warehouse-clustering-pruning
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-23'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-dbt] }
+- id: tutorial-warehouse-production-gotchas
+  slug: warehouse-production-gotchas
+  type: tutorial
+  title: Warehouse production gotchas — cost, full refreshes, late data
+  description: >-
+    The three ways a healthy warehouse model hurts production: a full-refresh
+    that rebuilds a 4B-row table unannounced, a lookback window too short to
+    catch late-arriving orders, and cost drift nobody reviews. Guard the
+    destructive command, harden CI, and put the cost query on a weekly cadence.
+  category: cat-dbt
+  difficulty: advanced
+  tags: [tutorial, warehousing, production, cost, full-refresh, late-data]
+  series: warehousing
+  series_title: The Warehousing Series
+  lesson: 8
+  learning_objectives:
+    - Gate full-refreshes on row thresholds and criticality before they run
+    - Size lookback windows against real late-arriving data
+    - Keep warehouse cost visible with weekly top-cost query reviews
+  what_you_need:
+    - A dbt project with at least one incremental model in production
+    - The manifest stats the guard hook reads row thresholds from
+    - "Install: npx de-agent-platform add dbt-model-review"
+  steps:
+    - text: See the blast radius concretely — `dbt run --full-refresh --select fct_orders` on a 4B-row model is the command the guard pauses for confirmation.
+      from_id: hook-dbt-full-refresh-guard
+      from_field: example
+    - text: Understand the gate — the hook inspects dbt commands for `--full-refresh`; if any affected model exceeds a row threshold from the manifest's stats or is tagged `critical`, it requires an explicit confirmation token and logs the operator identity.
+      from_id: hook-dbt-full-refresh-guard
+      from_field: implementation
+    - text: Late data is the silent drop — a late-arriving order missed means the lookback window was too short.
+      from_id: project-dbt-warehouse-tests
+      from_field: failure_scenarios
+    - text: Environments lie too — CI green but prod differs means CI ran on a different target/schema.
+      from_id: project-dbt-warehouse-tests
+      from_field: failure_scenarios
+    - text: Deletes never arrive on their own — decide explicitly between soft-delete and a periodic full-refresh.
+      from_id: skill-dbt-model-review
+      from_field: body
+    - text: Watch the bill — review weekly query history for the top cost queries and alert on the partitions_scanned/partitions_total ratio.
+      from_id: runbook-warehouse-query-slow
+      from_field: production_notes
+    - text: Harden the loop — CI builds to a per-PR staging schema and runs full tests, source freshness checks watch raw, and exposures are declared for dashboards.
+      from_id: project-dbt-warehouse-tests
+      from_field: production_hardening
+  check_yourself:
+    - A full-refresh of your largest model now requires a confirmation token and is logged with the operator identity.
+    - Your lookback window is sized from observed late-arriving data, not guessed.
+    - Top-cost queries are reviewed weekly and the partitions ratio has an alert.
+  when_to_use:
+    - "Before the first full-refresh of a large production model"
+    - "Cost or reliability reviews of an existing warehouse model"
+  why: The commands that fix warehouses are also the ones that can destroy them — cost, full-refreshes, and late data are where models meet production.
+  gotchas:
+    - "Late-arriving order missed → lookback window too short."
+    - "CI green but prod differs → CI ran on a different target/schema."
+    - "Deletes never arrive. Decide explicitly: soft-delete, or periodic full-refresh."
+  production_notes:
+    - "Leave the full-refresh guard hook enabled — it pauses destructive rebuilds on models over the row threshold or tagged critical."
+    - "Run CI to a per-PR staging schema with full tests, source freshness on raw, and declared exposures."
+  diagram: |
+    production gotchas
+       |
+       |- --full-refresh --> row threshold / critical tag --> confirmation + logged identity
+       |
+       |- incremental --> lookback window sized for late data
+       |
+       |- deletes --> soft-delete or periodic full-refresh, decided explicitly
+       |
+       |- cost --> weekly top-cost review + partitions-ratio alert
+  code:
+    - title: The command the guard pauses
+      lang: text
+      code: |
+        dbt run --full-refresh --select fct_orders
+        # on a 4B-row model this is paused for confirmation
+      source_id: hook-dbt-full-refresh-guard
+    - title: Production hardening checklist, from the starter project
+      lang: text
+      code: |
+        CI builds to a per-PR staging schema and runs full tests
+        Source freshness checks on raw
+        Exposures declared for dashboards
+      source_id: project-dbt-warehouse-tests
+  source_refs: [hook-dbt-full-refresh-guard, project-dbt-warehouse-tests, skill-dbt-model-review, runbook-warehouse-query-slow]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/warehouse-production-gotchas
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-23'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-dbt] }
+- id: tutorial-warehouse-query-incident
+  slug: warehouse-query-incident
+  type: tutorial
+  title: Incident — the dashboard query that went slow
+  description: >-
+    Run the slow-query runbook as an incident: confirm the regression, split
+    scan cost from compute contention, pull partitions_scanned and bytes from
+    query history as evidence, apply the matched fix, and escalate on the
+    shared-warehouse SLA before the queue takes other teams down with it.
+  category: cat-dbt
+  difficulty: intermediate
+  tags: [tutorial, warehousing, incident, runbook, performance]
+  series: warehousing
+  series_title: The Warehousing Series
+  lesson: 9
+  learning_objectives:
+    - Confirm a query regression from symptoms and query history
+    - Collect the evidence packet — query_id, partitions ratio, bytes, queue split
+    - Apply the fix that matches the disease and escalate on the SLA
+  what_you_need:
+    - A regressed query and access to its query history
+    - "Install: npx de-agent-platform add warehouse-clustering-advisor"
+    - The shared warehouse's queue-time SLA
+  steps:
+    - text: Confirm the regression — a dashboard or model query that used to take seconds now takes minutes, or queue times rising on a shared warehouse.
+      from_id: runbook-warehouse-query-slow
+      from_field: symptoms
+    - text: Name the two candidate diseases before touching anything — separate scan inefficiency from compute inefficiency.
+      from_id: skill-warehouse-clustering-advisor
+      from_field: learning_objectives
+    - text: Diagnose — separate scan cost from compute time (bytes/partitions scanned vs queue time) and compare the plan against the clustering/partition key.
+      from_id: runbook-warehouse-query-slow
+      from_field: diagnosis
+    - text: Pull the evidence — query_id, partitions_scanned, partitions_total, and bytes_scanned from query history, ordered by start time.
+      from_id: runbook-warehouse-query-slow
+      from_field: commands
+    - text: Complete the evidence packet — the query_id with its partitions ratio and bytes, the plan compared against the clustering/partition key, and the queue-time vs execution-time split.
+      from_id: runbook-warehouse-query-slow
+      from_field: evidence_to_collect
+    - text: Fix what the evidence says — over-scan means fixing the predicate or adding/adjusting the clustering key; compute-bound with high queue time means adding clusters, not size; rebuild clustering on a low-selectivity key.
+      from_id: runbook-warehouse-query-slow
+      from_field: fix
+    - text: Escalate to the warehouse admin when queue time breaches the shared-warehouse SLA; otherwise the query owner fixes the predicate.
+      from_id: runbook-warehouse-query-slow
+      from_field: escalation
+  check_yourself:
+    - Your incident notes contain a query_id with its partitions ratio, bytes scanned, and a queue-vs-execution split.
+    - The fix you applied matches the disease — predicate/key for over-scan, clusters for queue time.
+    - Escalation happened on the SLA breach, not on feelings.
+  when_to_use:
+    - "A dashboard that used to take seconds now takes minutes"
+    - "Queue times rising on a shared warehouse"
+  why: A regressed dashboard erodes trust quietly, and a scan-bound query melts everyone else's queue too.
+  gotchas:
+    - "Bytes scanned and queue time are different diseases — fix the predicate vs add clusters; sizing up a scan-bound query buys nothing."
+    - "Clustering on a low-selectivity key stops pruning entirely."
+    - "Data volume growth silently crosses micro-partition thresholds — a query can go slow with no change at all."
+  production_notes:
+    - "Monitor bytes scanned, partitions scanned ratio, and queue time on the shared warehouse."
+    - "Alert on the partitions_scanned/partitions_total ratio; review weekly query history for the top-cost queries."
+  diagram: |
+    slow-query incident
+       |
+       |- symptom confirmed --> scan vs compute split
+       |
+       |- evidence --> query_id + partitions ratio + bytes + queue/execution
+       |
+       |- over-scan --> predicate / clustering key
+       |- queue-bound --> add clusters, not size
+       |
+       |- SLA breach --> escalate to warehouse admin
+  code:
+    - title: Pull the evidence from query history
+      lang: sql
+      code: |
+        -- Snowflake
+        SELECT query_id, partitions_scanned, partitions_total, bytes_scanned
+        FROM table(information_schema.query_history_by_session())
+        ORDER BY start_time DESC LIMIT 10;
+      source_id: runbook-warehouse-query-slow
+    - title: What the runbook monitors
+      lang: text
+      code: |
+        bytes scanned, partitions scanned ratio, queue time
+      source_id: runbook-warehouse-query-slow
+  source_refs: [runbook-warehouse-query-slow, skill-warehouse-clustering-advisor]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/warehouse-query-incident
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-23'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-dbt] }
+- id: tutorial-warehouse-capstone
+  slug: warehouse-capstone-checklist
+  type: tutorial
+  title: Capstone — the warehousing checklist, end to end
+  description: >-
+    Close the series by auditing one warehouse project against everything it
+    taught: models with tests and docs, layered staging to marts with a declared
+    grain, incremental loads with a lookback, CI on a staging schema, monitored
+    query history, and a repo structure a new joiner can read.
+  category: cat-dbt
+  difficulty: intermediate
+  tags: [tutorial, warehousing, capstone, checklist, best-practices]
+  series: warehousing
+  series_title: The Warehousing Series
+  lesson: 10
+  learning_objectives:
+    - Audit a warehouse project against the model-tests-docs triad
+    - Verify layering, grain, incremental lookback, and CI staging on one project
+    - Leave a repo whose structure a new joiner can read
+  what_you_need:
+    - A warehouse project you own or review — the dbt-warehouse-tests starter works
+    - The project's query history and CI configuration
+    - One afternoon to run the checklist for real
+  steps:
+    - text: "Audit the triad — every model is code with three faces: model (SQL) + tests (schema.yml) + docs (descriptions); ref() builds the DAG, tests encode the invariants, and materialisation is a deliberate choice per model."
+      from_id: pattern-dbt-tests-docs
+      from_field: solution
+    - text: Check the layers and the load — staging, intermediate, and marts with the grain declared, and incremental on fct_orders with a 3-day lookback.
+      from_id: project-dbt-warehouse-tests
+      from_field: implementation
+    - text: Check the test set — unique + not_null on the fct grain key, relationships from fct to dims, and accepted_values on status.
+      from_id: project-dbt-warehouse-tests
+      from_field: tests
+    - text: Check the production gate — CI builds to a per-PR staging schema and runs full tests, source freshness checks on raw, and exposures declared for dashboards.
+      from_id: project-dbt-warehouse-tests
+      from_field: production_hardening
+    - text: Check the watchtower — alert on the partitions_scanned/partitions_total ratio and review query history weekly for the top cost queries.
+      from_id: runbook-warehouse-query-slow
+      from_field: prevention
+    - text: Check the team constraints — logic must be reviewable, changes must be testable, and new joiners need to understand the lineage.
+      from_id: pattern-dbt-tests-docs
+      from_field: forces
+    - text: Check the repo reads clean — models/staging, models/intermediate, models/marts, schema.yml with tests and descriptions, singular tests, macros, and the CI workflow.
+      from_id: tpl-dbt-project
+      from_field: repo_structure
+  check_yourself:
+    - Every model you audited has SQL, tests in schema.yml, and a description — no exceptions found or all filed.
+    - The fact grain key carries unique + not_null, relationships tie fct to dims, and CI runs full tests on a staging schema.
+    - The partitions-ratio alert exists and someone owns the weekly top-cost review.
+  when_to_use:
+    - "Closing out a warehouse build before handover"
+    - "Quarterly review of an existing warehouse project"
+  why: A warehouse is trustworthy only when the triad, the grain, the lookback, the CI gate, and the watchtower are all true at once — this checklist proves each.
+  gotchas:
+    - "Grain key not unique → a join fanned out upstream."
+    - "CI green but prod differs → CI ran on a different target/schema."
+    - "Late-arriving order missed → lookback window too short."
+  production_notes:
+    - "Keep tests and descriptions on every node; CI on a staging schema with source freshness on raw."
+    - "Keep the partitions-ratio alert and the weekly top-cost review on the calendar."
+  diagram: |
+    warehousing capstone checklist
+       |
+       |- triad --> model SQL + tests + docs per model
+       |
+       |- layers --> staging / intermediate / marts, grain declared
+       |
+       |- load --> incremental + 3-day lookback on fct_orders
+       |
+       |- gate --> CI on staging schema + freshness + exposures
+       |
+       |- watchtower --> partitions-ratio alert + weekly top-cost review
+  code:
+    - title: The repo structure the checklist expects
+      lang: text
+      code: |
+        dbt-project/
+          dbt_project.yml
+          models/
+            staging/
+            intermediate/
+            marts/
+          macros/
+          tests/
+          .github/workflows/ci.yml
+      source_id: tpl-dbt-project
+    - title: The starter's DAG with tests and docs on every node
+      lang: text
+      code: |
+        raw.orders ─▶ stg_orders ─▶ int_orders_enriched ─┐
+        raw.customers ─▶ stg_customers ──────────────────┼─▶ fct_orders ─▶ marts
+        seeds/ ─▶ dim_date ──────────────────────────────┘
+                    (tests + docs on every node; CI on staging schema)
+      source_id: project-dbt-warehouse-tests
+  source_refs: [pattern-dbt-tests-docs, project-dbt-warehouse-tests, runbook-warehouse-query-slow, tpl-dbt-project]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/warehouse-capstone-checklist
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-23'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-dbt] }

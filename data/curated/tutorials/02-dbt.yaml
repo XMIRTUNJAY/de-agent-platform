@@ -16,6 +16,9 @@
   category: cat-dbt
   difficulty: beginner
   tags: [tutorial, dbt, testing, data-quality, beginner]
+  series: warehousing
+  series_title: The Warehousing Series
+  lesson: 6
   learning_objectives:
     - Rank dbt tests by blast radius instead of by effort
     - Add a singular test for a rule schema.yml cannot express
@@ -120,6 +123,9 @@
   category: cat-dbt
   difficulty: intermediate
   tags: [tutorial, dbt, review, incremental, grain, intermediate]
+  series: warehousing
+  series_title: The Warehousing Series
+  lesson: 5
   learning_objectives:
     - State a model's grain in one sentence and match it to the unique test
     - Justify table vs incremental vs view for a given source
@@ -221,6 +227,9 @@
   category: cat-dbt
   difficulty: intermediate
   tags: [tutorial, dbt, plugin, review, testing, intermediate]
+  series: warehousing
+  series_title: The Warehousing Series
+  lesson: 7
   learning_objectives:
     - Run /dbt-review-model, /dbt-write-tests, and /dbt-impact on a model change
     - Read the review output against the model's grain and unique key
@@ -325,6 +334,9 @@
   category: cat-dbt
   difficulty: beginner
   tags: [tutorial, dbt, starter, testing, ci, beginner]
+  series: warehousing
+  series_title: The Warehousing Series
+  lesson: 2
   learning_objectives:
     - Layer staging, intermediate, and marts models
     - Run the seed/build/docs loop the starter ships with

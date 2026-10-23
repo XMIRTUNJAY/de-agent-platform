@@ -5,6 +5,9 @@
   slug: athena-cut-bytes-scanned
   type: tutorial
   title: Cut Athena bytes scanned with partitions and projection
+  series: cloud
+  series_title: The Cloud Series
+  lesson: 4
   description: >-
     Walk one expensive Athena query through the Partition Advisor's levers in
     order: confirm the per-TB bill model, partition on the dominant filter
@@ -94,6 +97,9 @@
   slug: glue-job-review-pass
   type: tutorial
   title: Review a Glue job for sizing, bookmarks, and catalogue drift
+  series: cloud
+  series_title: The Cloud Series
+  lesson: 3
   description: >-
     Take a Glue/Spark job through the AWS Glue Job Reviewer's three checks:
     size workers from the input files' partitions instead of habit, verify the
@@ -182,6 +188,9 @@
   slug: s3-glue-athena-starter
   type: tutorial
   title: Stand up the S3 → Glue → Athena starter
+  series: cloud
+  series_title: The Cloud Series
+  lesson: 2
   description: >-
     Deploy the serverless query-in-place starter end to end: Terraform
     provisions buckets, catalog, and a bounded Athena workgroup, Parquet lands
@@ -278,6 +287,9 @@
   slug: aws-architecture-review-pass
   type: tutorial
   title: Run an AWS data architecture review pass
+  series: cloud
+  series_title: The Cloud Series
+  lesson: 6
   description: >-
     Point the AWS Architecture Reviewer at an architecture description or IaC
     and follow its four-step workflow: map the services to a data flow, check

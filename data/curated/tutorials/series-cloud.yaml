@@ -1,0 +1,643 @@
+# The Cloud Series — lessons authored for the 13x10 series; structure ours, wording the source's.
+- id: tutorial-cloud-mental-model
+  slug: cloud-mental-model
+  type: tutorial
+  title: >-
+    Hold the cloud data stack mental model — storage, catalog, compute, IAM
+  description: >-
+    Build the map before opening a console: object storage holds the bytes, a
+    managed catalog describes them, and serverless compute bills for what a
+    query scans. Walk the same shape through five managed engines — Glue,
+    Athena, BigQuery, Snowflake, Databricks — and note the IAM surface each
+    one needs before the first query.
+  category: cat-aws
+  series: cloud
+  series_title: The Cloud Series
+  lesson: 1
+  difficulty: beginner
+  tags: [tutorial, cloud, aws, bigquery, snowflake, databricks, iam, concepts]
+  learning_objectives:
+    - Explain storage/compute separation with one managed example per layer
+    - Name the IAM surface each managed service needs before the first query
+    - Map any cloud data stack into one data flow — storage, catalog, compute, serve
+  what_you_need:
+    - No cloud account required — this is a concepts lesson
+    - The AWS Glue, BigQuery, and Snowflake documentation pages open beside you
+  steps:
+    - text: See the stack as Terraform sees it — S3 buckets with lifecycle + encryption, a Glue catalogue, IAM roles scoped to least privilege, and Athena workgroups with query limits.
+      from_id: tpl-terraform-aws-data
+      from_field: description
+    - text: Read the flow in one line — Parquet in S3 (Hive layout, dt=..) into the Glue Data Catalog, queried by Athena serverless SQL, with Terraform provisioning buckets, catalog, and a workgroup with a bytes limit.
+      from_id: project-s3-glue-athena
+      from_field: architecture
+    - text: Learn the managed Glue surfaces — jobs, crawlers, the Data Catalog, job bookmarks, DPU configuration, and Ray integration are what every Glue pipeline touches.
+      from_id: ref-glue-docs
+      from_field: description
+    - text: Know where the surprises live — job bookmarks and the catalogue's behaviour are the source of the most common Glue surprises.
+      from_id: ref-glue-docs
+      from_field: why
+    - text: See storage/compute separation in BigQuery — partitioning, clustering, slot management, and the query optimizer's behavior are the levers, and the partitioning/clustering pages are the exact levers for cost control.
+      from_id: ref-bigquery-docs
+      from_field: description
+    - text: See it again in Snowflake — virtual warehouses, micro-partitions, clustering keys, and zero-copy cloning are the managed primitives; the performance and cost sections are the reference for clustering-key and warehouse-sizing decisions.
+      from_id: ref-snowflake-docs
+      from_field: description
+    - text: Close the map with Databricks — Delta Live Tables, Unity Catalog, liquid clustering, and the Photon engine are platform-specific and only documented there.
+      from_id: ref-databricks-docs
+      from_field: description
+  check_yourself:
+    - You can draw the S3 → Glue Data Catalog → Athena flow from memory and say which layer stores bytes, which describes them, and which bills for scanning.
+    - Asked what each engine bills for compute, you name the unit — DPU configuration for Glue, slot management for BigQuery, credits/hour warehouse size for Snowflake — without opening a pricing page.
+    - For each managed service you can name the IAM surface — the least-privilege role or profile the job or agent assumes.
+  when_to_use:
+    - "You are about to open a cloud console for the first time and need the map before the menus"
+    - "A stack mixes engines (Glue, Athena, BigQuery, Snowflake, Databricks) and one vocabulary has to cover all of them"
+  why: Every managed service rents you the same shape — storage, catalog, compute, IAM — so learn the shape once and every console becomes familiar.
+  gotchas:
+    - "Job bookmarks and the catalogue's behaviour are the source of the most common Glue surprises — read those doc sections before your first job."
+    - "Liquid clustering and Unity Catalog are platform-specific and only documented in the Databricks docs — engine assumptions do not transfer."
+    - "IAM roles scoped to least privilege are part of the stack definition, not a bolt-on after the first query."
+  production_notes:
+    - "Keep the Terraform template's shape as your baseline — buckets with lifecycle + encryption, catalog, least-privilege roles, workgroup with query limits."
+    - "Re-read each engine's performance and cost doc section when a sizing decision stalls; the levers are documented."
+  diagram: |
+    cloud data stack (one shape, five engines)
+       |
+       |- storage: object storage (S3) holds bytes; lifecycle + encryption live here
+       |
+       |- catalog: Glue Data Catalog describes the bytes
+       |
+       |- compute: DPUs (Glue) | scanned bytes (Athena) | slots (BigQuery) | credits/hour (Snowflake)
+       |
+       |- IAM: least-privilege roles/profiles gate every layer
+       |
+        --> map services to one data flow before judging any of it
+  code:
+    - title: The stack in one line
+      lang: text
+      code: |
+        Parquet in S3 (Hive layout: dt=..) ─▶ Glue Data Catalog ─▶ Athena (serverless SQL)
+                  ▲                                                    │
+        [Terraform: buckets, catalog, workgroup with bytes limit]    └─▶ BI
+      source_id: project-s3-glue-athena
+    - title: Cost levers in BigQuery
+      lang: text
+      code: |
+        BigQuery levers: partitioning, clustering, slot management, query optimizer
+        behavior. The partitioning/clustering pages are the exact levers for cost
+        control; the query optimizer section explains slot utilization.
+      source_id: ref-bigquery-docs
+    - title: The IaC baseline
+      lang: text
+      code: |
+        S3 buckets with lifecycle + encryption, Glue catalogue, IAM roles scoped to
+        least privilege, and Athena workgroups with query limits.
+      source_id: tpl-terraform-aws-data
+  source_refs: [tpl-terraform-aws-data, project-s3-glue-athena, ref-glue-docs, ref-bigquery-docs, ref-snowflake-docs, ref-databricks-docs]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/cloud-mental-model
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-23'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-aws] }
+- id: tutorial-cloud-cost-governance
+  slug: cloud-cost-governance
+  type: tutorial
+  title: >-
+    Govern cloud spend — right-sizing, resource monitors, and unit economics
+  description: >-
+    Govern cloud spend the way you govern data quality: right-size each
+    warehouse per environment, put a resource monitor between the workload and
+    the invoice, and alert on cost-per-run instead of total spend. Ends with
+    the unit-economics rule that turns a 4x regression into a number, not a
+    surprise.
+  category: cat-aws
+  series: cloud
+  series_title: The Cloud Series
+  lesson: 5
+  difficulty: intermediate
+  tags: [tutorial, cloud, snowflake, cost, governance, budgets, unit-economics]
+  learning_objectives:
+    - Right-size warehouses per environment instead of one size for all
+    - Enforce budgets with resource monitors and hard credit caps
+    - Alert on cost-per-run, not on total spend
+  what_you_need:
+    - A Snowflake account where you can create warehouses and resource monitors
+    - Install: npx de-agent-platform add cost-unit-economics-reporter
+  steps:
+    - text: Start from a template that covers warehouse sizing, auto-suspend/resume, resource monitors for cost control, query acceleration, and multi-cluster settings — with dev, staging, and production defaults.
+      from_id: config-template-snowflake-warehouse
+      from_field: description
+    - text: Right-size per environment — dev runs XSMALL with a 60-second auto-suspend and 100 monitor credits; staging runs MEDIUM with 500; production runs LARGE with 5,000 credits and 2-5 clusters.
+      from_id: config-template-snowflake-warehouse
+      from_field: example_values
+    - text: Know the parameters that carry money — warehouse_size is compute (credits/hour), auto_suspend is seconds of inactivity before suspend (0 = never), and resource_monitor_credits is the monthly credit quota.
+      from_id: config-template-snowflake-warehouse
+      from_field: parameters
+    - text: Turn billing into unit economics — cost per 1M rows, per run, per model — so a 4x regression shows up as a number, not a surprise invoice.
+      from_id: skill-cost-unit-economics
+      from_field: description
+    - text: Learn why total spend is the wrong alert — total spend rises with growth and hides regressions, while cost-per-unit is flat when growth is healthy and spikes the day a join starts fanning out.
+      from_id: skill-cost-unit-economics
+      from_field: body
+    - text: Back the budget with a hard cap — any principal that can run billable queries gets a resource monitor with a hard credit cap and a read-only role by default.
+      from_id: mcp-snowflake
+      from_field: security_notes
+    - text: When a sizing debate stalls, go to the source — the performance and cost sections are the reference for clustering-key and warehouse-sizing decisions.
+      from_id: ref-snowflake-docs
+      from_field: why
+  check_yourself:
+    - The dev warehouse auto-suspends after 60 seconds and carries 100 monitor credits while production runs LARGE with 5,000 — and you can say why they differ.
+    - Your alert fires on $ per pipeline run with a regression threshold, not on the month's total bill.
+    - Every principal that can run billable queries sits behind a resource monitor with a hard credit cap.
+  when_to_use:
+    - "Warehouse spend grows with no change in workload"
+    - "A team debates warehouse sizing with no documented per-environment defaults"
+    - "Cost alerts fire on total spend and everyone ignores them"
+  why: Total spend rises with growth and hides regressions — a unit metric behind a resource monitor catches the regression the day it lands.
+  gotchas:
+    - "auto_suspend = 0 means never suspend — an idle warehouse bills credits until you change it."
+    - "Total spend rises with growth and hides regressions — cost-per-unit is the metric that spikes the day a join starts fanning out."
+    - "Resource monitor credits must be positive (at least 1) — a zero quota is not a budget."
+  production_notes:
+    - "Ship the dev/staging/production defaults from the template and change them by review, not by hand."
+    - "Alert on cost-per-run, not total spend, and keep the unit metric beside the pipeline's SLA."
+  diagram: |
+    cost governance
+       |
+       |- warehouse sizing per env --> dev XSMALL / staging MEDIUM / prod LARGE
+       |
+       |- auto-suspend --> seconds of inactivity --> 0 = never (bills forever)
+       |
+       |- resource monitor --> monthly credit quota --> hard credit cap
+       |
+       |- unit metric --> $ per run, per 1M rows, per model build
+       |
+        --> alert on cost-per-unit; total spend hides regressions
+  code:
+    - title: Environment defaults from the template
+      lang: text
+      code: |
+        dev:        XSMALL, auto_suspend 60,  1 cluster,     ECONOMY,  monitor_credits 100
+        staging:    MEDIUM, auto_suspend 300, 1-2 clusters,  STANDARD, monitor_credits 500
+        production: LARGE,  auto_suspend 600, 2-5 clusters,  STANDARD, monitor_credits 5000
+      source_id: config-template-snowflake-warehouse
+    - title: Unit metrics that don't lie
+      lang: text
+      code: |
+        - $ per pipeline run (stable denominator)
+        - $ per 1M rows processed
+        - DBU/credits per model build
+      source_id: skill-cost-unit-economics
+    - title: Warehouse parameters that matter
+      lang: text
+      code: |
+        warehouse_size:            compute size (credits/hour)
+        auto_suspend:              seconds of inactivity before suspend (0 = never)
+        resource_monitor_credits:  monthly credit quota for resource monitor
+      source_id: config-template-snowflake-warehouse
+  source_refs: [config-template-snowflake-warehouse, skill-cost-unit-economics, mcp-snowflake, ref-snowflake-docs]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/cloud-cost-governance
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-23'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-aws] }
+- id: tutorial-cloud-agent-tooling
+  slug: cloud-agent-tooling
+  type: tutorial
+  title: >-
+    Wire cloud tooling — registry skills, MCP servers, and one review workflow
+  description: >-
+    Wire the registry's cloud tooling into one agent workflow: install the
+    Glue and Athena review skills, bind the AWS MCP server to a
+    least-privilege profile, and compose both skills plus the MCP server into
+    the architecture reviewer. The same pattern covers GCP with the BigQuery
+    server.
+  category: cat-aws
+  series: cloud
+  series_title: The Cloud Series
+  lesson: 7
+  difficulty: beginner
+  tags: [tutorial, aws, gcp, mcp, agents, tooling, skills]
+  learning_objectives:
+    - Install a registry skill and bind an MCP server with least-privilege credentials
+    - Compose skills and MCP servers into a single review workflow
+    - Keep agent access read-only by default
+  what_you_need:
+    - An AWS named profile with least-privilege permissions
+    - Install: npx de-agent-platform add aws-glue-job-reviewer
+  steps:
+    - text: Add the Athena advisor to your agent — the install command is npx de-agent-platform add athena-partition-advisor.
+      from_id: skill-athena-partition-advisor
+      from_field: install_command
+    - text: Give the agent the Glue checklist — it reviews Glue/Spark jobs for worker sizing, job bookmarks, partition pruning, and the catalogue/schema pitfalls that cause silent full reprocessing.
+      from_id: skill-aws-glue-reviewer
+      from_field: description
+    - text: Give it the Athena lever — the advisor recommends partition projection, bucketing or file-layout changes to reduce bytes-scanned, and writes the projection DDL.
+      from_id: skill-athena-partition-advisor
+      from_field: description
+    - text: Bind the AWS MCP server — uvx awslabs.core-mcp-server@latest, with AWS_PROFILE supplied through the environment.
+      from_id: mcp-aws
+      from_field: installation
+    - text: Know the AWS tool surface — aws_documentation_search, read_documentation, recommend, and run_iac_generation.
+      from_id: mcp-aws
+      from_field: tools
+    - text: Compose the reviewer — it ships with the Glue reviewer and Athena advisor skills attached, plus mcp-aws among its MCP servers.
+      from_id: agent-aws-architecture-reviewer
+      from_field: skills
+    - text: Same pattern for GCP — the BigQuery server exposes execute_query, list_datasets, list_tables, and describe_table.
+      from_id: mcp-bigquery
+      from_field: tools
+  check_yourself:
+    - npx de-agent-platform add athena-partition-advisor succeeds and the skill appears in the agent's list.
+    - The AWS MCP server starts with AWS_PROFILE pointing at a dedicated least-privilege profile, not an admin role.
+    - The architecture reviewer lists skill-aws-glue-reviewer and skill-athena-partition-advisor among its skills, and mcp-aws among its MCP servers.
+  when_to_use:
+    - "You are setting up an agent to review or operate a cloud data platform"
+    - "A team shares one admin role for agents and needs the least-privilege pattern"
+  why: An agent is only as safe and useful as the skills and credentials bound to it — least-privilege profiles and curated checklists beat a general-purpose admin role.
+  gotchas:
+    - "Server capabilities vary widely; some AWS MCP servers can create resources — treat resource-creating tools as requiring human confirmation."
+    - "The BigQuery server needs GOOGLE_APPLICATION_CREDENTIALS pointing at a service-account key with BigQuery roles — scope those roles down before binding."
+    - "AWS_PROFILE is required for the AWS MCP server — the named profile's IAM permissions define what is reachable."
+  production_notes:
+    - "Bind each MCP server to a dedicated profile with short-lived SSO credentials; never attach an admin role."
+    - "Prefer key-pair auth over passwords for service users on warehouse MCP servers."
+  diagram: |
+    cloud agent tooling
+       |
+       |- npx de-agent-platform add aws-glue-job-reviewer   --> Glue checklist
+       |- npx de-agent-platform add athena-partition-advisor --> bytes-scanned levers
+       |
+       |- mcp-aws: uvx awslabs.core-mcp-server@latest + AWS_PROFILE --> least privilege
+       |
+       |- agent-aws-architecture-reviewer: skills + mcp-aws composed
+       |
+        --> GCP same pattern: mcp-server-bigquery (execute_query, list_datasets, ...)
+  code:
+    - title: Install the Athena advisor skill
+      lang: bash
+      code: |
+        npx de-agent-platform add athena-partition-advisor
+      source_id: skill-athena-partition-advisor
+    - title: Bind the AWS MCP server
+      lang: yaml
+      code: |
+        mcpServers:
+          aws-core:
+            command: uvx
+            args: [awslabs.core-mcp-server@latest]
+            env:
+              AWS_PROFILE: ${AWS_PROFILE}
+              FASTMCP_LOG_LEVEL: ERROR
+      source_id: mcp-aws
+    - title: Bind the BigQuery MCP server
+      lang: yaml
+      code: |
+        mcpServers:
+          bigquery:
+            command: uvx
+            args: [mcp-server-bigquery, --project, my-project]
+      source_id: mcp-bigquery
+  source_refs: [skill-athena-partition-advisor, skill-aws-glue-reviewer, mcp-aws, mcp-bigquery, agent-aws-architecture-reviewer]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/cloud-agent-tooling
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-23'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-aws] }
+- id: tutorial-cloud-prod-gotchas
+  slug: cloud-prod-gotchas
+  type: tutorial
+  title: >-
+    Production gotchas — surprise bills, region defaults, and IAM overreach
+  description: >-
+    The surprises that turn into invoices: workers sized by habit, a renamed
+    prefix that silently resets a bookmark, thousands of small files, an agent
+    holding an admin role, and a query that scans everything because the
+    predicate missed the partition column. Each gotcha names the metric that
+    catches it early.
+  category: cat-aws
+  series: cloud
+  series_title: The Cloud Series
+  lesson: 8
+  difficulty: intermediate
+  tags: [tutorial, aws, glue, athena, production, cost, iam]
+  learning_objectives:
+    - Catch the Glue cost leaks before the invoice — oversized workers, reset bookmarks, drifted catalogues
+    - Keep small files and repeated metadata repairs out of the bill
+    - Bind agents to least-privilege profiles so IAM overreach and region drift stay impossible
+  what_you_need:
+    - Recent Glue task histograms and Athena scanned-bytes metrics
+    - Install: npx de-agent-platform add aws-glue-job-reviewer
+  steps:
+    - text: Watch for the most common Glue cost leak — over-provisioned workers; size from data volume, not habit.
+      from_id: skill-aws-glue-reviewer
+      from_field: body
+    - text: Check the input path layout before every bookmark-dependent run — a renamed prefix silently resets the bookmark into a full reprocess.
+      from_id: skill-aws-glue-reviewer
+      from_field: body
+    - text: Compact small files — per-file overhead dominates at under 16 MB, so small files inflate the bill even when pruning works.
+      from_id: skill-athena-partition-advisor
+      from_field: body
+    - text: Recognize the classic combo the reviewer flags — a Glue job running with an admin role and no bookmark, causing nightly full reprocessing.
+      from_id: agent-aws-architecture-reviewer
+      from_field: example
+    - text: Never attach an admin role to an agent — bind to a dedicated AWS profile with least privilege and short-lived SSO credentials.
+      from_id: mcp-aws
+      from_field: security_notes
+    - text: Set AWS_REGION deliberately — it is the default region for the AWS MCP servers, while AWS_PROFILE decides what is reachable.
+      from_id: mcp-aws
+      from_field: environment_variables
+    - text: Treat every BigQuery MCP query as billable — grant bigquery.dataViewer + bigquery.jobUser only, set a custom quota, and consider maximum_bytes_billed on every job.
+      from_id: mcp-bigquery
+      from_field: security_notes
+  check_yourself:
+    - The task histogram shows balanced tasks after re-sizing, and no Glue job in the account runs with an admin role and no bookmark.
+    - Tables averaging under 16 MB per file are compacted, and the per-query bill no longer carries per-file overhead.
+    - Agents bind to a dedicated least-privilege profile with short-lived SSO credentials and an explicit AWS_REGION.
+  when_to_use:
+    - "A Glue job's bill grew without any change in data volume"
+    - "An agent was granted broad credentials as a temporary measure"
+    - "A new region or profile default may be silently routing resources"
+  why: Cloud bills are silent until the invoice — every gotcha here has a metric or a diff that catches it the day it lands.
+  gotchas:
+    - "A renamed prefix under the input path silently resets the bookmark into a full reprocess."
+    - "Per-file overhead dominates at under 16 MB — small files inflate the bill even when pruning works."
+    - "A Glue job running with an admin role and no bookmark causes nightly full reprocessing — the reviewer's own worked example."
+  production_notes:
+    - "Keep the task histogram and the scanned-bytes metric in every review; both are the fastest signals that sizing or layout is wrong."
+    - "Treat resource-creating MCP tools as requiring human confirmation, and rotate short-lived SSO credentials on a schedule."
+  diagram: |
+    cloud production gotchas
+       |
+       |- workers sized by habit --> over-provisioned --> most common Glue cost leak
+       |
+       |- renamed prefix --> bookmark silently resets --> full reprocess
+       |
+       |- files < 16 MB --> per-file overhead dominates --> compact
+       |
+       |- admin role on a job --> nightly full reprocess + IAM overreach
+       |
+       |- AWS_REGION unset --> resources land in the wrong default region
+       |
+        --> billable queries (BigQuery): custom quota + maximum_bytes_billed
+  code:
+    - title: The Glue review checklist
+      lang: text
+      code: |
+        - Start worker sizing at 2x the number of input files' partitions; watch the task histogram.
+        - A bookmark only helps if the input path layout is stable.
+        - A renamed prefix silently resets the bookmark → full reprocess.
+        - Diff the Glue Data Catalog schema against the file footer.
+      source_id: skill-aws-glue-reviewer
+    - title: The billable surface
+      lang: text
+      code: |
+        Queries are billable. Grant `bigquery.dataViewer` + `bigquery.jobUser` only,
+        set a custom quota, and consider `maximum_bytes_billed` on every job.
+      source_id: mcp-bigquery
+    - title: Agent credential binding
+      lang: text
+      code: |
+        Bind to a dedicated AWS profile with least privilege, use short-lived SSO
+        credentials, and never attach an admin role. Treat resource-creating tools
+        as requiring human confirmation.
+      source_id: mcp-aws
+  source_refs: [skill-aws-glue-reviewer, skill-athena-partition-advisor, agent-aws-architecture-reviewer, mcp-aws, mcp-bigquery]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/cloud-prod-gotchas
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-23'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-aws] }
+- id: tutorial-cloud-cost-spike-incident
+  slug: cloud-cost-spike-incident
+  type: tutorial
+  title: >-
+    Incident — the job that quadrupled in cost overnight
+  description: >-
+    An invoice alert or a cost-per-run dashboard spike lands: one job's
+    compute cost quadrupled with no functional change. Work the runbook — diff
+    shuffle write and input bytes run-over-run, rank the four usual suspects,
+    fix per cause, and cap the damage with a resource monitor while you
+    diagnose.
+  category: cat-aws
+  series: cloud
+  series_title: The Cloud Series
+  lesson: 9
+  difficulty: intermediate
+  tags: [tutorial, cost, incident, spark, snowflake, diagnosis, runbook]
+  learning_objectives:
+    - Attribute a cost spike to a stage with run-over-run byte diffs
+    - Tell apart fan-out, lost filters, and small-file regressions
+    - Cap the damage with resource monitors and unit-metric alarms
+  what_you_need:
+    - Spark event logs or job metrics for the run before and the run during the spike
+    - Install: npx de-agent-platform add cost-unit-economics-reporter
+  steps:
+    - text: Name the incident — one job's compute cost quadrupled without an obvious functional change; attribute it and reverse the regression.
+      from_id: runbook-spark-job-suddenly-costs-4x
+      from_field: description
+    - text: Diagnose run-over-run — diff shuffle write bytes and input bytes, compare output row counts per stage, and check whether the partition predicate still prunes.
+      from_id: runbook-spark-job-suddenly-costs-4x
+      from_field: diagnosis
+    - text: Rank the four usual suspects — a join fanning out, a dropped partition filter re-reading full history, a small-file explosion after a partitioning change, autoscaling widened because a stage became slow.
+      from_id: runbook-spark-job-suddenly-costs-4x
+      from_field: possible_causes
+    - text: Read the masking trap — autoscaling hides the cause because a slow stage widens the cluster and buys speed while the fan-out stays; compare run-over-run, not day-over-day, or traffic deltas will fool the diff.
+      from_id: runbook-spark-job-suddenly-costs-4x
+      from_field: gotchas
+    - text: Fix per cause — dedupe the many-side on the join key, restore the partition predicate and re-run, or OPTIMIZE/compact and re-run.
+      from_id: runbook-spark-job-suddenly-costs-4x
+      from_field: fix
+    - text: Make the alarm precise — $ per pipeline run is a stable denominator, and cost-per-unit spikes the day a join starts fanning out.
+      from_id: skill-cost-unit-economics
+      from_field: body
+    - text: Prevent the repeat — a cost-per-run unit metric with a 25% regression alarm and a CI guard on shuffle/scan metrics (hook-spark-cost-check).
+      from_id: runbook-spark-job-suddenly-costs-4x
+      from_field: prevention
+  check_yourself:
+    - The run-over-run diff of shuffle write bytes identifies the guilty stage, and the fix brings cost-per-run back to baseline.
+    - A cost-per-run alarm with a regression threshold exists, so the next spike pages within one run instead of one month.
+    - Warehouses touched by agents sit behind a resource monitor with a hard credit cap.
+  when_to_use:
+    - "Cluster or warehouse spend for one job quadrupled overnight"
+    - "An invoice alert fired with no functional change in the pipeline"
+  why: Silent cost regressions compound — a 4x job running hourly is a new invoice line within a day, so the rollback is the incident response.
+  gotchas:
+    - "Autoscaling masks the cause — a slow stage widens the cluster and buys speed while the fan-out stays."
+    - "Compare run-over-run, not day-over-day — traffic deltas will fool the diff."
+    - "A dropped partition filter reads full history — the join looks right, the input bytes don't."
+  production_notes:
+    - "Monitor $ per run, shuffle write bytes, input bytes, and output rows together."
+    - "Add a CI guard on shuffle/scan metrics (hook-spark-cost-check) so cost regressions fail before deploy."
+  diagram: |
+    cost spike incident
+       |
+       |- invoice alert / $-per-run spike --> name the incident
+       |
+       |- diff run-over-run: shuffle write bytes, input bytes
+       |
+       |- suspects: fan-out | dropped partition filter | small files | autoscaling loop
+       |
+       |- fix per cause: dedupe many-side | restore predicate | OPTIMIZE/compact
+       |
+       |- resource monitor with hard credit cap --> blast radius bounded
+       |
+        --> revert the suspect deploy first; diagnose on the reverted baseline
+  code:
+    - title: The run-over-run diff
+      lang: bash
+      code: |
+        # from the event log
+        grep -E 'Shuffle Write|Input Size' spark.log | tail -40
+        SELECT count(*) FROM stage_output_pre JOIN ... -- compare to source count
+      source_id: runbook-spark-job-suddenly-costs-4x
+    - title: The monitoring set
+      lang: text
+      code: |
+        $ per run, shuffle write bytes, input bytes, output rows
+      source_id: runbook-spark-job-suddenly-costs-4x
+    - title: Hard cap on warehouse spend
+      lang: text
+      code: |
+        Use a dedicated service user with a least-privilege role, a resource monitor
+        with a hard credit cap, and a read-only role by default.
+      source_id: mcp-snowflake
+  source_refs: [runbook-spark-job-suddenly-costs-4x, skill-cost-unit-economics, mcp-snowflake]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/cloud-cost-spike-incident
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-23'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-aws] }
+- id: tutorial-cloud-capstone-checklist
+  slug: cloud-capstone-checklist
+  type: tutorial
+  title: >-
+    Capstone — the cloud guardrail checklist
+  description: >-
+    Close the series by turning nine lessons into one standing checklist:
+    workgroup bytes limits and compaction on storage, sized workers and stable
+    bookmarks on compute, resource monitors and unit-metric alerts on spend,
+    and least-privilege IAM everywhere — then produce the four review outputs
+    as evidence.
+  category: cat-aws
+  series: cloud
+  series_title: The Cloud Series
+  lesson: 10
+  difficulty: intermediate
+  tags: [tutorial, cloud, aws, checklist, production, capstone]
+  learning_objectives:
+    - Run the full cloud guardrail checklist on your own platform
+    - Turn each series lesson into a standing check with an owner
+    - Produce the four review outputs as evidence
+  what_you_need:
+    - Your platform's IaC or an architecture description
+    - The series lessons 1-9 completed
+  steps:
+    - text: Storage and query guardrails — an Athena workgroup with a per-query bytes-scanned limit, a nightly compaction job, and CloudWatch alarms on scanned bytes per hour.
+      from_id: project-s3-glue-athena
+      from_field: production_hardening
+    - text: IaC baseline — S3 buckets with lifecycle + encryption, a Glue catalogue, IAM roles scoped to least privilege, and Athena workgroups with query limits.
+      from_id: tpl-terraform-aws-data
+      from_field: description
+    - text: Compute guardrails — size Glue workers from data volume, not habit, use job bookmarks correctly, and avoid full-table reprocessing from catalogue mistakes.
+      from_id: skill-aws-glue-reviewer
+      from_field: learning_objectives
+    - text: Scan guardrails — read the scanned-bytes metric per query, apply partition projection for high-cardinality columns, and compact small files to cut per-request overhead.
+      from_id: skill-athena-partition-advisor
+      from_field: learning_objectives
+    - text: Warehouse guardrails — configure warehouses for different workloads, set up resource monitors for budget enforcement, and optimize auto-scaling for cost/performance.
+      from_id: config-template-snowflake-warehouse
+      from_field: learning_objectives
+    - text: Spend guardrails — attribute compute cost to a pipeline run, define a unit metric that resists regressions, and alert on cost-per-run rather than total spend.
+      from_id: skill-cost-unit-economics
+      from_field: learning_objectives
+    - text: "Evidence — collect the four review outputs: architecture diagram (text), IAM findings, cost drivers, and reliability risks."
+      from_id: agent-aws-architecture-reviewer
+      from_field: outputs
+  check_yourself:
+    - Every guardrail family has a live check — bytes-scanned limit and compaction on storage, task histograms on compute, credit caps and cost-per-run alarms on spend, least-privilege roles on IAM.
+    - The four review outputs (diagram, IAM findings, cost drivers, reliability risks) exist as artifacts from your last review pass.
+    - No agent or job in the account holds an admin role.
+  when_to_use:
+    - "A platform just left the build phase and needs its guardrails inventoried"
+    - "A quarterly review needs one page that covers the whole cloud series"
+  why: A cloud platform is production-ready when each guardrail in this series is a standing check with an owner, not a memory.
+  gotchas:
+    - "A checklist without an owner rots — assign each guardrail family to a person or a pipeline."
+    - "The reviewer never creates resources and requires human approval for any IAM recommendation — keep it that way."
+    - "Guardrails are per environment — dev XSMALL with 100 credits is not a production config."
+  production_notes:
+    - "Score each review against the 30-anti-pattern checklist so passes are comparable over time."
+    - "Re-run the checklist quarterly and every time a new service joins the stack."
+  diagram: |
+    cloud capstone checklist
+       |
+       |- storage: bytes-scanned workgroup limit, nightly compaction, alarms
+       |
+       |- compute: workers from data volume, bookmarks stable, catalog diffs
+       |
+       |- spend: env-sized warehouses, resource monitors, $/run alert
+       |
+       |- IAM: least privilege, short-lived SSO, no admin roles
+       |
+        --> evidence: diagram + IAM findings + cost drivers + reliability risks
+  code:
+    - title: Storage and query guardrails
+      lang: text
+      code: |
+        - Athena workgroup with a per-query bytes-scanned limit
+        - A nightly compaction job
+        - CloudWatch alarms on scanned bytes per hour
+      source_id: project-s3-glue-athena
+    - title: Review evidence
+      lang: text
+      code: |
+        Outputs:
+        - Architecture diagram (text)
+        - IAM findings
+        - Cost drivers
+        - Reliability risks
+      source_id: agent-aws-architecture-reviewer
+    - title: Spend guardrails
+      lang: text
+      code: |
+        dev:        XSMALL, auto_suspend 60,  monitor_credits 100
+        staging:    MEDIUM, auto_suspend 300, monitor_credits 500
+        production: LARGE,  auto_suspend 600, monitor_credits 5000
+      source_id: config-template-snowflake-warehouse
+  source_refs: [project-s3-glue-athena, tpl-terraform-aws-data, skill-aws-glue-reviewer, skill-athena-partition-advisor, config-template-snowflake-warehouse, skill-cost-unit-economics, agent-aws-architecture-reviewer]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/cloud-capstone-checklist
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-23'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-aws] }

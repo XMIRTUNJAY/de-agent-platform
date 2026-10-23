@@ -1,0 +1,615 @@
+# The Agentic Series — new lessons that join the four existing agentic
+# tutorials (12-agentic-de.yaml) into one ordered 10-lesson series for the
+# agentic roadmap stage. Every step derives from the cited source field;
+# structure is ours, wording is the source's.
+- id: tutorial-agentic-mental-model
+  slug: agentic-mental-model
+  type: tutorial
+  title: What makes an agent — model, tools, loop, guardrails
+  description: >-
+    Build the map before touching anything: an agent is a model that reasons,
+    tools that act, a loop that iterates, and guardrails that bound it. Meet a
+    real data-engineering agent from the registry, point at each of the four
+    parts, and see where the guardrails come from — hooks and the human gate.
+  category: cat-agentic
+  difficulty: beginner
+  tags: [tutorial, agentic, mental-model, agents, beginner]
+  series: agentic
+  series_title: The Agentic Series
+  lesson: 1
+  learning_objectives:
+    - Name the four parts of an agent — model, tools, loop, guardrails
+    - Identify each part in a real registry agent
+    - Say where DE agents fit — review, triage and planning under guardrails
+  what_you_need:
+    - A registry agent to inspect — agent-sql-reviewer is the example throughout
+    - The Agent Skills format reference
+    - No installation — this lesson reads, it does not run
+  steps:
+    - text: Start from a concrete one — agent-sql-reviewer reviews SQL before it merges, catching correctness bugs and fan-out joins.
+      from_id: agent-sql-reviewer
+      from_field: description
+    - text: Its tools are read_file and git_diff_unstaged — the file and diff access the task needs, nothing more.
+      from_id: agent-sql-reviewer
+      from_field: tools
+    - text: The rules it applies live in a skill it loads — skill-sql-review.
+      from_id: agent-sql-reviewer
+      from_field: skills
+    - text: A skill is a SKILL.md file with front-matter (name, description, version), plus references/, scripts/, and examples/ directories that an agent loads on demand.
+      from_id: ref-agent-skills
+      from_field: description
+    - text: The loop is its workflow — read the diff and the file context, establish the grain of every result set, apply the review rules, emit findings.
+      from_id: agent-sql-reviewer
+      from_field: workflow
+    - text: Guardrails bound it — read-only, never executes SQL, does not modify files without explicit approval.
+      from_id: agent-sql-reviewer
+      from_field: guardrails
+    - text: Guardrails scale up to a pattern — separate read/recommend from write/execute, and keep a human in the loop for anything irreversible.
+      from_id: pattern-agent-in-the-loop-review
+      from_field: solution
+  check_yourself:
+    - Given agent-sql-reviewer, you can point at its tools, its skill, its workflow loop and its guardrails.
+    - You can say which part of an agent would execute a DROP TABLE — and which parts are supposed to stop it.
+  when_to_use:
+    - "Before your first hands-on lesson"
+    - "Deciding whether a task needs an agent at all"
+  why: Every later lesson sharpens one of the four parts — tools, skills, hooks or the human gate — so name them once, here.
+  gotchas:
+    - "An agent is a loop, not a function — it keeps calling tools until the model decides it is done."
+    - "A guardrails list is a promise; hooks are what enforce it."
+    - "Read-only tools still reach real data — review what they can read."
+  production_notes:
+    - "Prefer agents whose tool list is the minimum the task needs."
+    - "Encode the safety policy as hooks so it holds even when the agent is prompted otherwise."
+  diagram: |
+    agent anatomy
+       |
+       |- model --> reasons about the task
+       |
+       |- tools --> read_file, git_diff_unstaged --> act in scope
+       |
+       |- skills --> SKILL.md loaded on demand
+       |
+       |- loop --> read diff -> grain -> rules -> findings
+       |
+       |- guardrails --> read-only, no unapproved writes, human gate
+  code:
+    - title: One agent, four parts
+      lang: text
+      code: |
+        tools:      read_file, git_diff_unstaged
+        skills:     skill-sql-review
+        workflow:   Read the diff and the file context. Establish the grain of
+                    every result set. Apply the SQL review rules; stop at the
+                    first fan-out. Emit findings with file:line and a rewritten clause.
+        guardrails: Read-only: never executes SQL. Does not modify files
+                    without explicit approval.
+      source_id: agent-sql-reviewer
+    - title: The skill format
+      lang: text
+      code: |
+        A SKILL.md file with front-matter (name, description, version), plus
+        references/, scripts/, and examples/ directories that an agent loads
+        on demand.
+      source_id: ref-agent-skills
+  source_refs: [agent-sql-reviewer, ref-agent-skills, pattern-agent-in-the-loop-review]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/agentic-mental-model
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-23'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-agentic] }
+- id: tutorial-agentic-skill-anatomy
+  slug: agentic-skill-anatomy
+  type: tutorial
+  title: Inside a skill — SKILL.md, references, examples, the loading protocol
+  description: >-
+    A skill is the unit of reusable agent behavior: one SKILL.md with
+    front-matter, plus directories the agent loads on demand. Dissect a real
+    registry skill file by file, learn the evaluation rubric its objectives
+    set, then install it and compare the layout with your own draft.
+  category: cat-agentic
+  difficulty: intermediate
+  tags: [tutorial, agentic, skills, skillmd, format]
+  series: agentic
+  series_title: The Agentic Series
+  lesson: 3
+  learning_objectives:
+    - Describe the SKILL.md schema and the directory layout convention
+    - Evaluate a skill's objectives before you trust it
+    - Install a registry skill and inspect its files
+  what_you_need:
+    - An agent host that supports the Agent Skills format
+    - A repeatable review you currently do by hand
+    - Install: npx de-agent-platform add mcp-tool-contract-auditor
+  steps:
+    - text: A skill is a SKILL.md file with front-matter (name, description, version), plus references/, scripts/, and examples/ directories that an agent loads on demand.
+      from_id: ref-agent-skills
+      from_field: description
+    - text: The specification covers the SKILL.md schema, the directory layout convention, and the agent loading protocol.
+      from_id: ref-agent-skills
+      from_field: description
+    - text: The format is portable across compatible agents — it is what this platform's Skill object is modelled on.
+      from_id: ref-agent-skills
+      from_field: why
+    - text: Read a real one — the mcp-tool-contract-auditor skill ships SKILL.md, references/blast-radius.md and examples/audit.md.
+      from_id: skill-mcp-tool-contract-auditor
+      from_field: files
+    - text: Judge a skill by its objectives — read a tool schema and predict its side effects, classify tools by blast radius, write a least-privilege MCP configuration.
+      from_id: skill-mcp-tool-contract-auditor
+      from_field: learning_objectives
+    - text: Install it and compare the layout with yours — npx de-agent-platform add mcp-tool-contract-auditor.
+      from_id: skill-mcp-tool-contract-auditor
+      from_field: install_command
+  check_yourself:
+    - You can say what belongs in SKILL.md front-matter versus the references/ directory.
+    - The auditor's three objectives each name an observable behavior — read, classify, write — not a topic.
+  when_to_use:
+    - "Writing or reviewing your first SKILL.md"
+    - "Deciding whether a registry skill is worth installing"
+  why: A skill is a contract — front-matter and the loading protocol tell the agent when it loads, the directories tell it what to do — and the format is portable across compatible agents.
+  gotchas:
+    - "A skill loads on demand under the agent loading protocol — it is not always in context."
+    - "references/, scripts/ and examples/ are convention directories from the layout spec — keep them if you want portable skills."
+    - "A skill's objectives should be observable behaviors — read, classify, write — not topics."
+  production_notes:
+    - "Model your SKILL.md on a registry skill — mcp-tool-contract-auditor shows the SKILL.md + references + examples layout."
+    - "Write to the spec, not to one agent — the format is portable across compatible agents."
+  diagram: |
+    skill anatomy
+       |
+       |- SKILL.md --> front-matter (name, description, version)
+       |
+       |- references/ --> deeper docs loaded on demand
+       |
+       |- scripts/ + examples/ --> runnable checks
+       |
+       |- loading protocol --> loaded on demand, portable across agents
+  code:
+    - title: A real skill's file layout
+      lang: text
+      code: |
+        SKILL.md
+        references/blast-radius.md
+        examples/audit.md
+      source_id: skill-mcp-tool-contract-auditor
+    - title: The Agent Skills format
+      lang: text
+      code: |
+        A SKILL.md file with front-matter (name, description, version), plus
+        references/, scripts/, and examples/ directories that an agent loads
+        on demand. Covers the SKILL.md schema, the directory layout convention,
+        and the agent loading protocol.
+      source_id: ref-agent-skills
+    - title: Install the example skill
+      lang: bash
+      code: |
+        npx de-agent-platform add mcp-tool-contract-auditor
+      source_id: skill-mcp-tool-contract-auditor
+  source_refs: [ref-agent-skills, skill-mcp-tool-contract-auditor]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/agentic-skill-anatomy
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-23'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-agentic] }
+- id: tutorial-agentic-hooks-gates
+  slug: agentic-hooks-gates
+  type: tutorial
+  title: Hooks — deterministic gates around an agent
+  description: >-
+    The model can be talked into anything; a hook is code on the tool path.
+    Walk the four safety hooks every data repo should know — destructive-SQL
+    guard, prod write confirmation, secret scan, backfill safety check — and
+    wire the two the starter plugin ships.
+  category: cat-agentic
+  difficulty: intermediate
+  tags: [tutorial, agentic, hooks, guardrails, security]
+  series: agentic
+  series_title: The Agentic Series
+  lesson: 5
+  learning_objectives:
+    - Explain where hooks run — on tool-call and pre-run events, outside the model
+    - Match each safety hook to the failure it prevents
+    - Wire the two starter hooks every agent repo should have
+  what_you_need:
+    - An agent host with hook support
+    - A data repository and a non-production database target
+    - The DE Data Toolkit plugin, which wires the destructive-SQL guard and the secret scanner
+  steps:
+    - text: A hook is a deterministic gate — the destructive SQL guard intercepts DROP / TRUNCATE / DELETE-without-WHERE before an agent executes it.
+      from_id: hook-destructive-sql-guard
+      from_field: description
+    - text: Its policy — destructive statements are denied by default; a DELETE/UPDATE without a WHERE clause is always denied; non-production targets can be allowed with a --allow-destructive flag that requires a human confirmation token.
+      from_id: hook-destructive-sql-guard
+      from_field: implementation
+    - text: Production writes get a human gate — any write-class tool against a production target, classified by connection string, project or catalogue tag, is suspended for an approve-once token scoped to the single call.
+      from_id: hook-prod-write-confirm
+      from_field: implementation
+    - text: Secrets never reach the repo — staged diffs are scanned for high-confidence secret patterns (AWS keys, private key headers, connection strings with passwords, JWTs); entropy-based detection warns, pattern matches block the commit.
+      from_id: hook-secret-scan-commit
+      from_field: implementation
+    - text: Gates also run before a job starts — the backfill safety check refuses to start a backfill that lacks a rollback path or overlaps the daily run.
+      from_id: hook-backfill-safety-check
+      from_field: description
+    - text: The starter plugin wires two of them for you — hook-destructive-sql-guard and hook-secret-scan-commit.
+      from_id: plugin-de-data-toolkit
+      from_field: hooks
+    - text: Encode the whole safety policy as hooks — destructive SQL guard, prod write confirmation — so it holds even when the agent is prompted otherwise.
+      from_id: pattern-agent-in-the-loop-review
+      from_field: solution
+  check_yourself:
+    - "A `DROP TABLE prod.orders` from the agent is denied and surfaced for confirmation — before any database call."
+    - A write against prod.sales is suspended until a human issues an approve-once token scoped to that single call.
+  when_to_use:
+    - "Any agent that can call database, git or backfill tools"
+    - "Encoding a safety policy that must not depend on the prompt"
+  why: The model can be talked into anything — a hook is code on the tool path, so the policy holds even when the agent is prompted otherwise.
+  gotchas:
+    - "Destructive statements are denied by default — there is no flag that lets a DELETE/UPDATE without a WHERE through."
+    - "Entropy-based secret detection warns; pattern matches block — a warning is not a pass."
+    - "The guard's failure behavior is block — when it matches, the tool call does not proceed."
+  production_notes:
+    - "Keep hook-destructive-sql-guard and hook-secret-scan-commit active on every repo agents commit to."
+    - "The approve-once token is scoped to the single call — no standing write approvals."
+  diagram: |
+    agent tool call
+       |
+       |- on-tool-call --> destructive SQL guard --> DROP/TRUNCATE/DELETE-no-WHERE --> block
+       |
+       |- write-class tool --> prod target --> suspend --> approve-once token
+       |
+       |- pre-commit --> secret scan --> pattern match --> block
+       |
+       |- pre-run --> backfill safety --> rollback path + no daily-run overlap
+  code:
+    - title: Destructive SQL guard — the policy
+      lang: text
+      code: |
+        Matches the SQL string passed to a database/MCP tool. Destructive statements
+        are denied by default; a DELETE/UPDATE without a WHERE clause is always denied.
+        Statements on a non-production target can be allowed with a `--allow-destructive`
+        flag that requires a human confirmation token.
+
+        Failure behavior: block.
+      source_id: hook-destructive-sql-guard
+    - title: Prod write confirmation — approve once
+      lang: text
+      code: |
+        Classify the tool target as production by connection string, project or
+        catalogue tag. Any write-class tool against a production target is suspended
+        and surfaced for a human "approve once" token scoped to the single call.
+      source_id: hook-prod-write-confirm
+    - title: Secret scan on commit
+      lang: text
+      code: |
+        Scan staged diffs for high-confidence secret patterns (AWS keys, private key
+        headers, connection strings with passwords, JWTs). Entropy-based detection runs
+        as a warning; pattern matches block the commit.
+      source_id: hook-secret-scan-commit
+  source_refs: [hook-destructive-sql-guard, hook-prod-write-confirm, hook-secret-scan-commit, hook-backfill-safety-check, plugin-de-data-toolkit, pattern-agent-in-the-loop-review]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/agentic-hooks-gates
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-23'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-agentic] }
+- id: tutorial-agentic-prod-gotchas
+  slug: agentic-prod-gotchas
+  type: tutorial
+  title: Production gotchas — untrusted content, destructive actions, permission scope
+  description: >-
+    An agent executes with your credentials, so its context and config are an
+    attack surface. Read the MCP security model, treat fetched content as
+    untrusted input, keep destructive statements deny-by-default, and scope
+    every credential to the role and repositories the task needs.
+  category: cat-agentic
+  difficulty: advanced
+  tags: [tutorial, agentic, security, least-privilege, prompt-injection]
+  series: agentic
+  series_title: The Agentic Series
+  lesson: 8
+  learning_objectives:
+    - Treat fetched content as untrusted model input and scope its network path
+    - Bound destructive actions with deny-by-default hooks
+    - Scope every credential to the role and repositories the task needs
+  what_you_need:
+    - The MCP specification's security section
+    - The tool list and schemas of every server you connect
+    - A non-production database role with SELECT only
+  steps:
+    - text: Read the MCP specification's security section before connecting any MCP server to real data — it is the definitive reference for transports (stdio, SSE, HTTP), tool definitions, resource templates, prompts, and the security model.
+      from_id: ref-mcp-spec
+      from_field: description
+    - text: Anything fetched becomes model context — the fetch tool retrieves a URL and converts it to markdown for the model.
+      from_id: mcp-fetch
+      from_field: description
+    - text: And fetch is network egress to arbitrary URLs — it can reach internal endpoints (SSRF risk), so in a corporate environment route it through an allowlisting proxy.
+      from_id: mcp-fetch
+      from_field: security_notes
+    - text: Destructive actions are denied by default — intercept DROP / TRUNCATE / DELETE-without-WHERE before the agent executes it.
+      from_id: hook-destructive-sql-guard
+      from_field: description
+    - text: "Scope warehouse credentials — the reference SQL server issues raw SQL: connect with a role that only has SELECT on the schemas intended, prefer a replica, and do not point it at production with a superuser."
+      from_id: mcp-postgres
+      from_field: security_notes
+    - text: Scope repository credentials — use a fine-grained GitHub token limited to the target repositories, read-only unless the task must open PRs; never grant org-wide admin.
+      from_id: mcp-github
+      from_field: security_notes
+    - text: Audit the contracts before connecting — flag tools that can write, delete, spend money or exfiltrate data, and produce a least-privilege connection recommendation.
+      from_id: skill-mcp-tool-contract-auditor
+      from_field: description
+  check_yourself:
+    - Every MCP server connected has had its tools classified — none can write, delete, spend or exfiltrate beyond what the task needs.
+    - The database role has SELECT only, the GitHub token is fine-grained and read-only, and fetch runs behind an allowlist.
+  when_to_use:
+    - "Before an agent touches production data or credentials"
+    - "Reviewing an agent setup that someone else configured"
+  why: An agent executes with your credentials — untrusted content in its context and unscoped tools in its config turn one bad task into an incident.
+  gotchas:
+    - "Network egress to arbitrary URLs can reach internal endpoints — SSRF risk; allowlist the proxy."
+    - "Never point a raw-SQL server at production with a superuser — SELECT-only role, prefer a replica."
+    - "Never grant org-wide admin on the GitHub token — scope it to the target repositories."
+  production_notes:
+    - "Treat MCP registry entries as discovery, never as a trust signal."
+    - "Classify every tool — write, delete, spend or exfiltrate — before the first connection, and keep the table with the config."
+  diagram: |
+    production agent
+       |
+       |- fetched page --> untrusted model context --> allowlisted egress only
+       |
+       |- SQL tools --> SELECT-only role, replica --> never prod superuser
+       |
+       |- repo tools --> fine-grained read-only token
+       |
+       |- destructive SQL --> denied by default
+       |
+       |- spend/exfiltrate tools --> classified before connect
+  code:
+    - title: Before connecting any server
+      lang: text
+      code: |
+        The security section of the MCP specification is required reading before
+        connecting any MCP server to real data: transports (stdio, SSE, HTTP),
+        tool definitions, resource templates, prompts, and the security model.
+      source_id: ref-mcp-spec
+    - title: SQL server credential scope
+      lang: text
+      code: |
+        The reference server issues raw SQL. Connect with a role that only has
+        SELECT on the schemas intended, and prefer a replica. Do not point it at
+        production with a superuser.
+      source_id: mcp-postgres
+    - title: GitHub token scope
+      lang: text
+      code: |
+        Requires a GitHub token. Use a fine-grained token limited to the target
+        repositories and read-only unless the task must open PRs. Never grant
+        org-wide admin.
+      source_id: mcp-github
+  source_refs: [ref-mcp-spec, mcp-fetch, hook-destructive-sql-guard, mcp-postgres, mcp-github, skill-mcp-tool-contract-auditor]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/agentic-prod-gotchas
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-23'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-agentic] }
+- id: tutorial-agentic-incident-rollback
+  slug: agentic-incident-rollback
+  type: tutorial
+  title: When an agent does the wrong thing — contain, audit, postmortem
+  description: >-
+    An agent merged a change it should not have. Roll back first, use the
+    scoping you configured to contain and reconstruct what happened — diffs,
+    logs and approve-once records — walk the incident workflow, and close with
+    a blameless postmortem whose action items name the missing gate.
+  category: cat-agentic
+  difficulty: advanced
+  tags: [tutorial, agentic, incident, rollback, audit]
+  series: agentic
+  series_title: The Agentic Series
+  lesson: 9
+  learning_objectives:
+    - Contain the damage before diagnosing — rollback first
+    - Reconstruct what the agent did from the audit trail
+    - Produce a blameless postmortem with dated, owned action items
+  what_you_need:
+    - The scoped, logged execute path your agent writes through
+    - The repository the agent worked in
+    - Install: npx de-agent-platform add incident-postmortem-writer
+  steps:
+    - text: "Roll back first — a deploy broke production: correlate the signal with the change and roll back before diagnosing."
+      from_id: runbook-bad-deployment
+      from_field: description
+    - text: Containment was designed in — the git server can commit and create branches in the scoped repository, but cannot push unless credentials are also present in the environment.
+      from_id: mcp-git
+      from_field: security_notes
+    - text: Reconstruct the change from the tools the agent had — git_status, git_diff_unstaged, git_diff_staged, git_log, git_commit.
+      from_id: mcp-git
+      from_field: tools
+    - text: Pull the approval record — any write-class tool against a production target was suspended for an approve-once token scoped to the single call, so the log names the human who approved it.
+      from_id: hook-prod-write-confirm
+      from_field: implementation
+    - text: Walk the incident workflow in order — establish impact and start time, check for a correlated deploy, walk the matching runbook, capture the timeline for the postmortem.
+      from_id: agent-incident-assistant
+      from_field: workflow
+    - text: Keep the assistant's own guardrails on during response — it suggests, never executes, production changes, and escalates to a human before any destructive step.
+      from_id: agent-incident-assistant
+      from_field: guardrails
+    - text: Close with the postmortem — timeline, impact, detection gap, contributing factors, and action items with owners and dates.
+      from_id: skill-incident-postmortem-writer
+      from_field: description
+  check_yourself:
+    - You can list every tool call the agent made — read-only tools leave diffs and logs, writes leave approve-once records.
+    - The postmortem separates trigger from contributing factors, and every action item has an owner and a date.
+  when_to_use:
+    - "An agent merged, wrote or executed something it should not have"
+    - "After any agent action a human did not explicitly approve"
+  why: The scoping that bounded the blast radius — no push credentials, approve-once tokens, a logged execute path — is what makes the incident auditable and the rollback cheap.
+  gotchas:
+    - "Roll back first — correlate the signal with the change before diagnosing."
+    - "The git server cannot push unless credentials are also present — if the agent pushed, a credential was in scope."
+    - "Mitigation runs under the same guardrails — suggest, never execute, production changes."
+  production_notes:
+    - "Keep the approve-once token log with the postmortem — it is the audit record of who approved the write."
+    - "Feed the detection gap back into the hooks — the postmortem's action items should name the gate that was missing."
+  diagram: |
+    agent incident
+       |
+       |- rollback first --> correlate signal with change
+       |
+       |- contain --> no push credentials --> wrong commit stays local
+       |
+       |- audit --> git log/diff + approve-once token log
+       |
+       |- respond --> impact -> correlated deploy -> runbook -> timeline
+       |
+       |- close --> blameless postmortem -> owned, dated action items
+  code:
+    - title: The rollback-first line
+      lang: text
+      code: |
+        A deploy broke production; correlate the signal with the change and roll
+        back first.
+      source_id: runbook-bad-deployment
+    - title: The approval record
+      lang: text
+      code: |
+        Any write-class tool against a production target is suspended and surfaced
+        for a human "approve once" token scoped to the single call.
+      source_id: hook-prod-write-confirm
+    - title: Postmortem structure
+      lang: text
+      code: |
+        Timeline, impact, detection gap, contributing factors, and action items
+        with owners and dates.
+      source_id: skill-incident-postmortem-writer
+  source_refs: [runbook-bad-deployment, mcp-git, hook-prod-write-confirm, agent-incident-assistant, skill-incident-postmortem-writer]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/agentic-incident-rollback
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-23'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-agentic] }
+- id: tutorial-agentic-capstone
+  slug: agentic-capstone
+  type: tutorial
+  title: Capstone — the guarded agent checklist
+  description: >-
+    Run the whole series against one agent setup: skills that load on demand,
+    tools scoped at the connection, least-privilege credentials, audited tool
+    contracts, hooks that fail closed, and a human gate on anything
+    irreversible. Prove each box with an attempted violation, not a promise.
+  category: cat-agentic
+  difficulty: advanced
+  tags: [tutorial, agentic, capstone, checklist, production]
+  series: agentic
+  series_title: The Agentic Series
+  lesson: 10
+  learning_objectives:
+    - Run the series checklist against a complete agent setup
+    - Prove each guard with an attempted violation, not a promise
+    - Know which artifacts to keep — config, classification table, approval log
+  what_you_need:
+    - The agent setup from lessons 2 through 9
+    - A non-production database and repository
+    - The DE Data Toolkit plugin and the contract-auditor skill installed
+  steps:
+    - text: Skills in place — SKILL.md with front-matter (name, description, version), plus references/, scripts/, and examples/ directories that the agent loads on demand.
+      from_id: ref-agent-skills
+      from_field: description
+    - text: Tools scoped at the connection — the filesystem server grants read/write within the directories you pass as arguments, so scope it to a single working directory and never pass a home directory or a mount containing secrets.
+      from_id: mcp-filesystem
+      from_field: security_notes
+    - text: Credentials least-privilege — a fine-grained GitHub token limited to the target repositories, read-only unless the task must open PRs; never org-wide admin.
+      from_id: mcp-github
+      from_field: security_notes
+    - text: Contracts audited — tools that can write, delete, spend money or exfiltrate data flagged, and a least-privilege connection recommendation produced.
+      from_id: skill-mcp-tool-contract-auditor
+      from_field: description
+    - text: Hooks active — destructive statements are denied by default, and a DELETE/UPDATE without a WHERE clause is always denied.
+      from_id: hook-destructive-sql-guard
+      from_field: implementation
+    - text: Secrets gated — staged diffs scanned for high-confidence secret patterns; pattern matches block the commit.
+      from_id: hook-secret-scan-commit
+      from_field: implementation
+    - text: The pattern underneath — separate read/recommend from write/execute, execute scoped and logged, and keep a human in the loop for anything irreversible.
+      from_id: pattern-agent-in-the-loop-review
+      from_field: solution
+  check_yourself:
+    - A write against a production target is suspended pending an approve-once token scoped to the single call.
+    - A staged connection string with a password is blocked at commit; a DROP TABLE is denied before any database call.
+    - The agent's permissions read like the review agent's — filesystem read-write, network none, credentials none.
+  when_to_use:
+    - "Before calling any agent setup production-ready"
+    - "Periodically re-auditing an agent that already runs"
+  why: A guarded agent is a checked list — skills that load on demand, scoped tools and tokens, audited contracts, hooks that fail closed, and a human gate on anything irreversible.
+  gotchas:
+    - "Prove each guard with an attempted violation — a promise in config is not a hook firing."
+    - "Destructive statements are denied by default — if yours went through, the hook was not on the tool path."
+    - "Blast radius can be production — re-check scope after every new tool or credential."
+  production_notes:
+    - "Keep the tools-by-class table, the connection configs and the approve-once log together as the agent's audit pack."
+    - "The starter plugin is the baseline — SQL/Spark review skills, the destructive-SQL guard, a secret scanner and the file/git MCP servers, wired together."
+  diagram: |
+    guarded agent checklist
+       |
+       |- skills --> SKILL.md + references + examples, loaded on demand
+       |
+       |- tools --> one dir, one repo, one scoped token
+       |
+       |- contracts --> Read/Write/Destructive/Spend/Exfiltrate classified
+       |
+       |- hooks --> destructive denied, prod writes approve-once, secrets blocked
+       |
+       |- pattern --> read/recommend vs write/execute --> human gate
+  code:
+    - title: The skills contract
+      lang: text
+      code: |
+        A SKILL.md file with front-matter (name, description, version), plus
+        references/, scripts/, and examples/ directories that an agent loads
+        on demand.
+      source_id: ref-agent-skills
+    - title: The execute path
+      lang: text
+      code: |
+        read ─▶ recommend ─▶ human approves ─▶ execute (scoped, logged)
+      source_id: pattern-agent-in-the-loop-review
+    - title: The deny-by-default hook
+      lang: text
+      code: |
+        Destructive statements are denied by default; a DELETE/UPDATE without a
+        WHERE clause is always denied. Failure behavior: block.
+      source_id: hook-destructive-sql-guard
+  source_refs: [ref-agent-skills, mcp-filesystem, mcp-github, skill-mcp-tool-contract-auditor, hook-destructive-sql-guard, hook-secret-scan-commit, pattern-agent-in-the-loop-review]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/agentic-capstone
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-23'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-agentic] }
