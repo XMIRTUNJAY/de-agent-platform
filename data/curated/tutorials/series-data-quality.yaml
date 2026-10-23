@@ -1,0 +1,219 @@
+# The Data Quality Series — new lessons that join the eight existing
+# data-quality tutorials (05-data-contracts.yaml, 09-data-quality.yaml) into
+# one ordered 10-lesson series for the data-quality roadmap stage. Every step
+# derives from the cited source field; structure is ours, wording is the
+# source's.
+- id: tutorial-dq-four-dimensions
+  slug: dq-four-dimensions
+  type: tutorial
+  title: Name the four dimensions of data quality
+  description: >-
+    Build the mental model before writing a single test: freshness,
+    completeness, validity, consistency. See each dimension in a real registry
+    artifact — the SLA part of a contract, the profiling workflow of the
+    data-quality reviewer, the rule vocabulary of the quarantine starter — and
+    leave able to name the dimension behind any "the data is bad" complaint.
+  category: cat-data-quality
+  difficulty: beginner
+  tags: [tutorial, data-quality, mental-model, freshness, completeness, beginner]
+  series: data-quality
+  series_title: The Data Quality Series
+  lesson: 1
+  learning_objectives:
+    - Name the four dimensions of data quality — freshness, completeness, validity, consistency
+    - Map each dimension to a concrete signal — SLA, null rate, range, uniqueness
+    - Rank failure modes by blast radius before writing any test
+  what_you_need:
+    - No installation — this lesson reads registry artifacts, it does not run them
+    - The cited artifacts — the data-contract skill, the data-quality reviewer agent, the quarantine starter
+  steps:
+    - text: The SLA part of a contract states freshness and completeness — the first two dimensions, with numbers.
+      from_id: skill-data-contract-author
+      from_field: body
+    - text: Semantics is next — what each field means, units, nullability — the validity a consumer was promised.
+      from_id: skill-data-contract-author
+      from_field: body
+    - text: Profile key columns (null rate, uniqueness, ranges) — the measurements that turn each dimension into a check.
+      from_id: agent-data-quality-reviewer
+      from_field: workflow
+    - text: Rank failure modes by blast radius before writing a single test.
+      from_id: agent-data-quality-reviewer
+      from_field: workflow
+    - text: The starter's rule vocabulary covers the dimensions — not_null, unique, range, enum.
+      from_id: project-pipeline-dq-quarantine
+      from_field: repo_structure
+    - text: Monitor the three signals that watch the dimensions in production — expectation pass rate, quarantine row counts, freshness.
+      from_id: runbook-data-quality-failure
+      from_field: monitoring
+  check_yourself:
+    - "A table loads six hours late — freshness; a promised column is 30% null — completeness; profiling key columns (null rate, uniqueness, ranges) surfaces both."
+    - "The SLA part of the contract names freshness and completeness, and the semantics part names units and nullability."
+    - "Failure modes are ranked by blast radius, and the minimum test set follows from that ranking."
+  when_to_use:
+    - "You are about to write quality tests and need to decide what to test first"
+    - "A stakeholder asks 'is the data good?' and you want to answer with a named dimension, not a shrug"
+  why: Every quality complaint is one of four complaints — freshness, completeness, validity, consistency — and naming the dimension turns "the data is bad" into a testable claim.
+  gotchas:
+    - "A contract with no enforcement is documentation. Documentation is not a contract."
+    - "Producers change schemas and semantics with no notice; consumers break in production."
+    - "Profiling runs against a provided sample or a read-only replica only; never writes to the source."
+  production_notes:
+    - "Monitor expectation pass rate, quarantine row counts, freshness."
+    - "Propose the minimum test set — the dimensions ranked by blast radius, not every column."
+  diagram: |
+    the four dimensions
+       |
+       |- freshness    --> how recently the data landed (SLA)
+       |
+       |- completeness --> null rate on promised columns
+       |
+       |- validity     --> ranges, enums, types, units
+       |
+       |- consistency  --> uniqueness on the grain key, stable semantics
+       |
+       |- profile key columns (null rate, uniqueness, ranges)
+       |
+       |- rank failure modes by blast radius --> minimum test set
+  code:
+    - title: The six parts of a contract
+      lang: text
+      code: |
+        1. Owner (a team, with an on-call).
+        2. Schema (typed, versioned).
+        3. Semantics (what each field *means*, units, nullability).
+        4. SLA (freshness, completeness).
+        5. Breaking-change policy (notice period, deprecation path).
+        6. Enforcement (which CI test fails on violation).
+      source_id: skill-data-contract-author
+    - title: Profiling workflow of the data-quality reviewer
+      lang: text
+      code: |
+        Profile key columns (null rate, uniqueness, ranges).
+        Rank failure modes by blast radius.
+        Propose the minimum test set.
+        Emit a quarantine path for rows that fail.
+      source_id: agent-data-quality-reviewer
+    - title: Rule vocabulary in the starter contract
+      lang: text
+      code: |
+        contract/orders.yml  # rules: not_null, unique, range, enum
+      source_id: project-pipeline-dq-quarantine
+  source_refs: [skill-data-contract-author, agent-data-quality-reviewer, project-pipeline-dq-quarantine, runbook-data-quality-failure, pattern-contracts-quality-gate]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/dq-four-dimensions
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-data-quality] }
+- id: tutorial-dq-capstone-checklist
+  slug: dq-capstone-checklist
+  type: tutorial
+  title: Capstone — wire a dataset's quality gates end to end
+  description: >-
+    Close the series by walking one SLA-bearing dataset through every gate the
+    series taught — six-part contract, CI compatibility check, staged quality
+    suite, quarantine split, quarantine-rate alerts — and finish with the
+    monitoring signals and incident paths that keep the gates honest.
+  category: cat-data-quality
+  difficulty: intermediate
+  tags: [tutorial, data-quality, capstone, checklist, production]
+  series: data-quality
+  series_title: The Data Quality Series
+  lesson: 10
+  learning_objectives:
+    - Run the full checklist — contract, CI gate, promotion gate, quarantine, alerts — against one dataset
+    - Point at the registry artifact that enforces each gate
+    - Name the monitoring signals and prevention paths that keep the gates honest
+  what_you_need:
+    - The eight earlier lessons of this series, or their registry artifacts
+    - Install: npx de-agent-platform add data-contract-author
+    - A dataset with a consumer and an SLA worth defending
+  steps:
+    - text: Write the six-part contract — owner, schema, semantics, SLA, breaking-change policy, enforcement.
+      from_id: skill-data-contract-author
+      from_field: body
+    - text: Run the contract as code in the producer's CI — compatibility check, then build, then publish.
+      from_id: pattern-contracts-quality-gate
+      from_field: solution
+    - text: After a pipeline writes to the staging namespace, run the model's dbt/GE tests against the staged output; promote only if all critical tests pass.
+      from_id: hook-pre-deployment-dq-check
+      from_field: implementation
+    - text: Split every batch into publish and quarantine on a quality contract — a row never disappears.
+      from_id: pattern-quarantine-publish
+      from_field: solution
+    - text: Alert when quarantine rate > 1% for 2 consecutive runs, and ship a reprocess command that re-runs the quarantined rows after a fix.
+      from_id: project-pipeline-dq-quarantine
+      from_field: production_hardening
+    - text: Watch the signals — expectation pass rate, quarantine row counts, freshness.
+      from_id: runbook-data-quality-failure
+      from_field: monitoring
+    - text: Close the loop with consumer-driven contract tests in the producer's pipeline.
+      from_id: runbook-data-contract-broken
+      from_field: prevention
+  check_yourself:
+    - "The checklist names the CI test that fails on violation — enforcement, part six of the contract."
+    - "A not-null test failing on 412 rows in staging blocks promotion and leaves the previous production data in place."
+    - "The quarantine alert fires on rate — 1% for 2 consecutive runs — not only on a hard failure."
+  when_to_use:
+    - "A dataset is about to become SLA-bearing and needs its gates wired in one pass"
+    - "Auditing an existing pipeline for missing quality gates"
+  why: A quality gate you cannot point at in the registry is a hope, not a gate — the capstone makes every gate concrete, named and enforced.
+  gotchas:
+    - "Tier the expectations: critical (block) vs warning (alert only) — blocking on a warning-tier expectation turns small blips into outages."
+    - "Quarantine never reviewed → add a scheduled review and a reprocess path."
+    - "The gate lives where the change is made (producer CI), not in the consumer's runtime — the cheapest place to catch it is before merge."
+  production_notes:
+    - "Alert when quarantine rate > 1% for 2 consecutive runs."
+    - "Contracts get CI enforcement and a dated deprecation path."
+  diagram: |
+    capstone checklist
+       |
+       |- contract (six parts) --> CI compatibility check --> build --> publish
+       |
+       |- staged run --> dbt/GE tests --> all critical pass --> promote
+       |                                  any critical fail --> block --> production untouched
+       |
+       |- batch --> pass --> published
+       |             fail --> quarantine (+reason) --> rate > 1% x2 runs --> alert --> review --> reprocess
+       |
+       |- signals: expectation pass rate, quarantine row counts, freshness
+       |
+       |- consumer-driven contract tests in the producer's pipeline
+  code:
+    - title: The six-part contract
+      lang: text
+      code: |
+        1. Owner (a team, with an on-call).
+        2. Schema (typed, versioned).
+        3. Semantics (what each field *means*, units, nullability).
+        4. SLA (freshness, completeness).
+        5. Breaking-change policy (notice period, deprecation path).
+        6. Enforcement (which CI test fails on violation).
+      source_id: skill-data-contract-author
+    - title: The promotion gate
+      lang: yaml
+      code: |
+        trigger: pre-deploy
+        purpose: Run the quality suite against a staged run before promoting to production.
+        failure_behavior: block
+      source_id: hook-pre-deployment-dq-check
+    - title: The monitoring signals
+      lang: text
+      code: |
+        expectation pass rate, quarantine row counts, freshness
+      source_id: runbook-data-quality-failure
+  source_refs: [skill-data-contract-author, pattern-contracts-quality-gate, hook-pre-deployment-dq-check, pattern-quarantine-publish, project-pipeline-dq-quarantine, runbook-data-quality-failure, runbook-data-contract-broken]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/dq-capstone-checklist
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-21'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-data-quality] }

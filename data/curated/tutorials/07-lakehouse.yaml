@@ -14,6 +14,9 @@
   category: cat-lakehouse
   difficulty: intermediate
   tags: [tutorial, iceberg, compaction, snapshots, maintenance, lakehouse]
+  series: lakehouse
+  series_title: The Lakehouse Series
+  lesson: 5
   learning_objectives:
     - Read an Iceberg metadata table to size the problem
     - Pick a compaction strategy and rewrite interval
@@ -109,6 +112,9 @@
   category: cat-lakehouse
   difficulty: beginner
   tags: [tutorial, delta-lake, optimize, z-order, liquid-clustering]
+  series: lakehouse
+  series_title: The Lakehouse Series
+  lesson: 8
   learning_objectives:
     - Decide if a table needs OPTIMIZE from file stats
     - Choose Z-ORDER columns from query predicates
@@ -205,6 +211,9 @@
   category: cat-lakehouse
   difficulty: intermediate
   tags: [tutorial, small-files, lakehouse, compaction, diagnosis]
+  series: lakehouse
+  series_title: The Lakehouse Series
+  lesson: 9
   learning_objectives:
     - Recognize the small-files signature from file sizes and planning time
     - Query metadata tables to quantify fragmentation
@@ -306,6 +315,9 @@
   category: cat-lakehouse
   difficulty: intermediate
   tags: [tutorial, lakehouse, plugin, delta, iceberg, maintenance]
+  series: lakehouse
+  series_title: The Lakehouse Series
+  lesson: 7
   learning_objectives:
     - Read a table-health report before planning maintenance
     - Generate a compaction plan instead of running compaction ad hoc

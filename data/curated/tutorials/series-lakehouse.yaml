@@ -1,0 +1,594 @@
+# The Lakehouse Series — six new lessons that join the four existing lakehouse
+# tutorials (07-lakehouse.yaml) into one ordered 10-lesson series for the
+# lakehouse roadmap stage. Every step derives from the cited source field;
+# structure is ours, wording is the source's.
+- id: tutorial-lakehouse-mental-model
+  slug: lakehouse-mental-model
+  type: tutorial
+  title: The lakehouse mental model — lake vs warehouse vs table formats vs zones
+  description: >-
+    Build the map before touching a table: object storage is files with no
+    structure for trust or ownership, a table format (Iceberg or Delta) adds
+    snapshots, manifests, hidden partitioning, ACID, and evolution, and
+    medallion zones make trust legible from raw to serving. Multi-catalog
+    means the formats coexist — pick each one deliberately.
+  category: cat-lakehouse
+  difficulty: beginner
+  tags: [tutorial, lakehouse, mental-model, table-formats, medallion, beginner]
+  series: lakehouse
+  series_title: The Lakehouse Series
+  lesson: 1
+  learning_objectives:
+    - Contrast lake, warehouse, and lakehouse by what each does to raw files
+    - Name the table format's jobs — snapshots, manifests, hidden partitioning, schema evolution
+    - Place the medallion zones over a lakehouse and say who owns each zone
+  what_you_need:
+    - An object-storage lake or lakehouse you can point at
+    - The Iceberg spec and Delta docs — both are in the DE//AGENT registry
+    - No installs — this lesson is the map, not the tools
+  steps:
+    - text: "Start from the gap: object storage gives you a place to put files but no structure for trust or ownership."
+      from_id: pattern-medallion-zones
+      from_field: problem
+    - text: "Name the setting: a lake or lakehouse where many teams write and read, and consumers need to know how far to trust a table."
+      from_id: pattern-medallion-zones
+      from_field: context
+    - text: "The table format is what turns the lake into a lakehouse: Iceberg's spec covers the table format, snapshots and manifests, hidden partitioning, schema and partition evolution, and maintenance procedures like compaction and snapshot expiry."
+      from_id: ref-iceberg-docs
+      from_field: summary
+    - text: "Delta is the other major format: its official docs cover ACID transactions on object storage, time travel, OPTIMIZE and Z-ORDER clustering — and the registry says compare with a Delta vs Iceberg decision guide before committing to a format."
+      from_id: ref-delta-docs
+      from_field: summary
+    - text: "Multi-format is normal, not a compromise: Amazon EMR's multi-catalog queries Iceberg, Delta Lake, Hudi, and Hive tables through a single catalog and joins data across AWS accounts without copying it."
+      from_id: ref-query-across-accounts-and-table-formats-with-multi-catalog-in-am
+      from_field: description
+    - text: "Give the house its zones: raw/ is immutable, exactly as received, never edited, schema-on-read; curated/ is cleaned, typed, deduplicated, quality-gated; serving/ is modelled marts optimised for consumption, SLA-bearing — and promotion between zones is a pipeline step with a gate, not a copy."
+      from_id: pattern-medallion-zones
+      from_field: solution
+  check_yourself:
+    - You can say what object storage lacks — structure for trust or ownership — and which zone supplies it for a given consumer.
+    - You can name four things the Iceberg spec covers beyond "a table": snapshots and manifests, hidden partitioning, schema and partition evolution, maintenance procedures.
+    - You can explain why promotion between zones is a gated pipeline step, not a copy.
+  when_to_use:
+    - "Before laying out a new lakehouse or admitting a new table format to one"
+    - "Onboarding onto a team where many teams write and read the same storage"
+  why: A lakehouse is two decisions — a table format and a zoning contract — and both are cheap to make deliberately now and expensive to reverse later.
+  gotchas:
+    - "Object storage alone gives no structure for trust or ownership — zones and formats are what turn a lake into a lakehouse."
+    - "The table format is a specification; the spec is the ground truth when tools disagree."
+    - "Do not let curated become a dumping ground; enforce the gate."
+  production_notes:
+    - "The spec is essential reading for multi-engine shops where Spark, Trino, and warehouses share tables — start there, not at engine docs."
+    - "Cross-account joins without copying are possible through multi-catalog; every extra copy is extra storage and another pipeline to run."
+  diagram: |
+    lakehouse mental model
+       |
+       |- object storage --> files, no structure for trust or ownership
+       |
+       |- table format (Iceberg | Delta) --> ACID, snapshots, manifests, evolution
+       |
+       |- raw (immutable) --> curated (quality gate) --> serving (SLA)
+       |
+       |- multi-catalog --> Iceberg + Delta + Hudi + Hive through one catalog
+  code:
+    - title: The medallion contract
+      lang: text
+      code: |
+        raw/       — immutable, exactly as received; never edited; schema-on-read.
+        curated/   — cleaned, typed, deduplicated; partitioned; quality-gated.
+        serving/   — modelled marts optimised for consumption; SLA-bearing.
+        Each zone has a different retention, quality bar and owner. Promotion
+        between zones is a pipeline step with a gate, not a copy.
+      source_id: pattern-medallion-zones
+    - title: One catalog, many formats
+      lang: text
+      code: |
+        Query Iceberg, Delta Lake, Hudi, and Hive tables through a single
+        catalog and join data across AWS accounts without copying it.
+      source_id: ref-query-across-accounts-and-table-formats-with-multi-catalog-in-am
+  source_refs: [pattern-medallion-zones, ref-iceberg-docs, ref-delta-docs, ref-query-across-accounts-and-table-formats-with-multi-catalog-in-am]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/lakehouse-mental-model
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-23'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-lakehouse] }
+- id: tutorial-first-lakehouse-table
+  slug: first-lakehouse-table
+  type: tutorial
+  title: Your first lakehouse table — create, query, measure, compact
+  description: >-
+    Run the whole loop in one sitting on a scratch table: create and query a
+    first Delta or Iceberg table from the official docs, read its health from
+    the files metadata table with one SQL query, run a first OPTIMIZE or
+    rewrite_data_files, and prove it worked by comparing numFiles and bytes
+    scanned before and after.
+  category: cat-lakehouse
+  difficulty: beginner
+  tags: [tutorial, lakehouse, delta-lake, iceberg, hands-on, metadata]
+  series: lakehouse
+  series_title: The Lakehouse Series
+  lesson: 2
+  learning_objectives:
+    - Create and query a first table on a real table format using the official docs
+    - Read a table's file health from the metadata table with one SQL query
+    - Run a first compaction and prove it with before/after numbers
+  what_you_need:
+    - A lakehouse with Delta or Iceberg available (Spark, Trino, or a warehouse that reads the format)
+    - Permission to create one scratch table
+    - Install: npx de-agent-platform add iceberg-table-maintenance
+  steps:
+    - text: "Create and query your first Delta table following the official docs — the definitive source for ACID transactions on object storage, time travel, OPTIMIZE and Z-ORDER clustering."
+      from_id: ref-delta-docs
+      from_field: summary
+    - text: "Prefer Iceberg? The spec and docs cover the table format, snapshots and manifests, hidden partitioning, and maintenance procedures like compaction and snapshot expiry — read them before writing the first table."
+      from_id: ref-iceberg-docs
+      from_field: summary
+    - text: "Before adding data, learn the one health query: SELECT count(*), avg(file_size_in_bytes)/1e6 FROM db.tbl.files;"
+      from_id: runbook-small-files-explosion
+      from_field: commands
+    - text: "Write like production does — streaming or high-frequency writes without compaction, over-partitioning (partition per hour, per user), or many small appends from a micro-batch job — and watch the health query report the damage."
+      from_id: runbook-small-files-explosion
+      from_field: possible_causes
+    - text: "Interpret the numbers with the skill's rule: avg_mb < 32 and a growing count means compact."
+      from_id: skill-iceberg-maintenance
+      from_field: body
+    - text: "Run your first maintenance call: OPTIMIZE db.tbl ZORDER BY (user_id); on Delta, or CALL catalog.system.rewrite_data_files('db.tbl'); on Iceberg."
+      from_id: runbook-small-files-explosion
+      from_field: commands
+    - text: "Close the loop: compare numFiles and query bytes scanned before and after. If scanning didn't drop, the Z-ORDER was on the wrong columns."
+      from_id: skill-delta-optimizer
+      from_field: body
+  check_yourself:
+    - The health query runs on your table and returns a count and an average file size you can write down.
+    - After OPTIMIZE or rewrite_data_files, numFiles drops and the next query reports fewer bytes scanned.
+    - You can state the compact trigger — avg_mb < 32 and a growing count — without looking it up.
+  when_to_use:
+    - "First contact with a Delta or Iceberg table — yours to create, query, and break safely"
+    - "You want the create → query → measure → compact loop demonstrated end to end before touching production tables"
+  why: The whole lakehouse discipline — metadata, file health, compaction, before/after measurement — fits on one first table, and practicing the loop on a scratch table makes every later lesson concrete.
+  gotchas:
+    - "The compact trigger is avg_mb < 32 and a growing count — measure, do not guess."
+    - "If bytes scanned did not drop after Z-ORDER, the Z-ORDER was on the wrong columns."
+    - "One scratch table is the whole exercise — do not point OPTIMIZE at a shared table."
+  production_notes:
+    - "Keep the health query standing — SELECT count(*), avg(file_size_in_bytes)/1e6 FROM db.tbl.files is the check on every table you own."
+    - "Install the Iceberg maintenance skill once and reuse its plan on every table: npx de-agent-platform add iceberg-table-maintenance."
+  diagram: |
+    first lakehouse table
+       |
+       |- create + query (Delta docs | Iceberg spec)
+       |
+       |- SELECT count(*), avg(file_size_in_bytes)/1e6 FROM db.tbl.files
+       |
+       |- avg_mb < 32 and growing --> compact
+       |
+       |- OPTIMIZE (Delta) | rewrite_data_files (Iceberg)
+       |
+       --> numFiles + bytes scanned before/after
+  code:
+    - title: The health query
+      lang: sql
+      code: |
+        SELECT count(*), avg(file_size_in_bytes)/1e6 FROM db.tbl.files;
+      source_id: runbook-small-files-explosion
+    - title: First compaction on each format
+      lang: sql
+      code: |
+        OPTIMIZE db.tbl ZORDER BY (user_id);  -- Delta
+        CALL catalog.system.rewrite_data_files('db.tbl');  -- Iceberg
+      source_id: runbook-small-files-explosion
+    - title: The measure rule
+      lang: text
+      code: |
+        Compare `numFiles` and query `bytes scanned` before and after. If
+        scanning didn't drop, the Z-ORDER was on the wrong columns.
+      source_id: skill-delta-optimizer
+  source_refs: [ref-delta-docs, ref-iceberg-docs, runbook-small-files-explosion, skill-iceberg-maintenance, skill-delta-optimizer]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/first-lakehouse-table
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-23'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-lakehouse] }
+- id: tutorial-iceberg-metadata-mechanics
+  slug: iceberg-metadata-mechanics
+  type: tutorial
+  title: Table format mechanics — snapshots, manifests, and the metadata tables
+  description: >-
+    Open the hood on an Iceberg table: the spec's layers (snapshots, manifests,
+    hidden partitioning), the files and history metadata tables you query with
+    plain SQL, and the manifest list as a maintenance target in its own right.
+    One catalog then spans Iceberg, Delta, Hudi, and Hive.
+  category: cat-lakehouse
+  difficulty: intermediate
+  tags: [tutorial, iceberg, metadata, snapshots, manifests, lakehouse]
+  series: lakehouse
+  series_title: The Lakehouse Series
+  lesson: 3
+  learning_objectives:
+    - Name the layers the Iceberg spec defines — snapshots, manifests, hidden partitioning
+    - Query the files and history metadata tables with plain SQL
+    - Explain when manifests need rewriting and why the spec outranks engine docs
+  what_you_need:
+    - An Iceberg table you can query (any engine that reads the format)
+    - Read access to the table's metadata tables (files, history)
+    - No installs — the spec and the metadata tables are the materials
+  steps:
+    - text: "A table format is a specification: the spec is the ground truth when tools disagree."
+      from_id: ref-iceberg-docs
+      from_field: why
+    - text: "The spec defines the layers: the table format, snapshots and manifests, hidden partitioning, schema and partition evolution, and maintenance procedures like compaction and snapshot expiry."
+      from_id: ref-iceberg-docs
+      from_field: summary
+    - text: "Metadata is queryable SQL: for Iceberg/Delta, query the metadata tables (files, history)."
+      from_id: runbook-small-files-explosion
+      from_field: diagnosis
+    - text: "Start with files: SELECT count(*) files, avg(file_size_in_bytes)/1e6 avg_mb FROM db.tbl.files; — avg_mb < 32 and a growing count means compact."
+      from_id: skill-iceberg-maintenance
+      from_field: body
+    - text: "Metadata itself needs maintenance: run rewrite_manifests when the manifest list is huge."
+      from_id: skill-iceberg-maintenance
+      from_field: body
+    - text: "One format is not the whole story: Amazon EMR's multi-catalog queries Iceberg, Delta Lake, Hudi, and Hive tables through a single catalog and joins data across AWS accounts without copying it."
+      from_id: ref-query-across-accounts-and-table-formats-with-multi-catalog-in-am
+      from_field: description
+  check_yourself:
+    - db.tbl.files returns a count and an average file size on your table, and you can say which layer of the spec it reads.
+    - You can explain what rewrite_manifests fixes and when to run it — when the manifest list is huge.
+    - You can say why the spec, not any engine's docs, settles a disagreement between two engines over the same table.
+  when_to_use:
+    - "You are about to maintain or debug an Iceberg table and want to know what the engine actually reads"
+    - "Multiple engines touch the same table and you need the ground truth"
+  why: Every query plan and every maintenance decision walks the metadata tree first; knowing snapshots, manifests, and the files/history tables turns magic into reading.
+  gotchas:
+    - "The spec is the ground truth when tools disagree — do not settle format questions from an engine's blog post."
+    - "A huge manifest list is its own problem: rewrite_manifests, not just data-file compaction."
+    - "Metadata tables (files, history) are queried like tables — no special tooling required."
+  production_notes:
+    - "Read the spec once end to end: it covers snapshots, manifests, hidden partitioning, evolution, and the maintenance procedures your skills automate."
+    - "Multi-engine shops share tables through catalogs; verify which catalog each engine resolves before comparing query plans."
+  diagram: |
+    iceberg metadata mechanics
+       |
+       spec: snapshots | manifests | hidden partitioning | evolution
+       |
+       |- db.tbl.files  --> count, avg file size --> compact trigger
+       |
+       |- db.tbl.history --> what happened, when
+       |
+       |- manifest list huge --> rewrite_manifests
+       |
+       |- one catalog --> Iceberg + Delta + Hudi + Hive
+  code:
+    - title: Read the files metadata table
+      lang: sql
+      code: |
+        SELECT count(*) files, avg(file_size_in_bytes)/1e6 avg_mb
+        FROM db.tbl.files;
+      source_id: skill-iceberg-maintenance
+    - title: The maintenance plan the metadata implies
+      lang: text
+      code: |
+        1. `rewrite_data_files` with a target size (128-256 MB).
+        2. `rewrite_manifests` when the manifest list is huge.
+        3. `expire_snapshots` older than the retention window — but keep at least one
+           full snapshot for time travel.
+        4. `remove_orphan_files` on a schedule, with a safety margin.
+      source_id: skill-iceberg-maintenance
+  source_refs: [ref-iceberg-docs, runbook-small-files-explosion, skill-iceberg-maintenance, ref-query-across-accounts-and-table-formats-with-multi-catalog-in-am]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/iceberg-metadata-mechanics
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-23'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-lakehouse] }
+- id: tutorial-acid-concurrent-writes
+  slug: acid-concurrent-writes
+  type: tutorial
+  title: ACID and concurrent writes — why compaction and ingestion collide
+  description: >-
+    What ACID on object storage actually guards, and where it stops: Delta
+    commits transactions on files, but compaction is also a writer, and the two
+    meet in the ingestion window. Learn the schedule rule, the
+    write-path/layout-path separation, and how a guardrail blocks maintenance
+    from running in the wrong window.
+  category: cat-lakehouse
+  difficulty: intermediate
+  tags: [tutorial, lakehouse, acid, concurrency, delta, ingestion-window]
+  series: lakehouse
+  series_title: The Lakehouse Series
+  lesson: 4
+  learning_objectives:
+    - Say what ACID transactions on object storage guarantee concurrent writers
+    - Schedule compaction outside the ingestion window and explain the contention
+    - Handle a contending OPTIMIZE — compaction is additive, so halt it, no rollback
+  what_you_need:
+    - A Delta or Iceberg table with real ingestion traffic
+    - An ingestion window you can schedule around
+    - Install: amp plugin add de-agent/lakehouse-guard
+  steps:
+    - text: "Ground truth first: Delta's official docs cover ACID transactions on object storage, time travel, OPTIMIZE and Z-ORDER clustering, Delta Live Tables, and Unity Catalog integration."
+      from_id: ref-delta-docs
+      from_field: summary
+    - text: "The classic conflict: do not run compaction during peak ingestion — it conflicts with concurrent writers."
+      from_id: skill-iceberg-maintenance
+      from_field: body
+    - text: "The schedule rule: compact after the ingestion window, never during it."
+      from_id: runbook-small-files-explosion
+      from_field: gotchas
+    - text: "The pattern behind the rule: separate the write path from the layout path — writes make many small files, scheduled compaction makes 128-256 MB files — and do it outside the ingestion window so compaction and writers don't contend."
+      from_id: pattern-small-files-compaction
+      from_field: solution
+    - text: "When contention happens anyway: compaction is additive, so there is nothing to roll back — halt any concurrent OPTIMIZE that contends with the ingestion window."
+      from_id: runbook-small-files-explosion
+      from_field: rollback
+    - text: "Guardrail it: Lakehouse Guard is a Delta/Iceberg table maintenance advisor plus a guard that blocks compaction or snapshot expiry during peak ingestion windows."
+      from_id: plugin-lakehouse-guard
+      from_field: description
+  check_yourself:
+    - You can point at the ingestion window on a calendar and say when compaction may run.
+    - A compaction plan issued during peak ingestion is blocked by the guard instead of executing.
+    - You can explain why halting a contending OPTIMIZE needs no rollback.
+  when_to_use:
+    - "Compaction and ingestion keep colliding on one table"
+    - "You are writing the maintenance calendar and need the rules written down"
+  why: ACID protects writers from each other, but maintenance is also a writer — the ingestion window is the contract that keeps them apart.
+  gotchas:
+    - "Compaction during peak ingestion conflicts with concurrent writers — schedule it after the window."
+    - "ZORDER rewrites the whole table — only worth it on a real query predicate."
+    - "Compaction is additive: halt the contending OPTIMIZE, do not attempt a rollback."
+  production_notes:
+    - "Separate the write path from the layout path: let writers be small and fast, and let scheduled compaction own file size."
+    - "Enforce the window with a guardrail (Lakehouse Guard) rather than a calendar reminder."
+  diagram: |
+    acid + concurrent writes
+       |
+       |- writes --> many small files --> peak window: writers only
+       |
+       |- after the window --> [compaction] --> 128-256 MB files
+       |
+       |- contending OPTIMIZE? --> halt it (additive, no rollback)
+       |
+       |- guard --> blocks compaction/expiry during peak ingestion
+  code:
+    - title: The do-not that ends most contention stories
+      lang: text
+      code: |
+        Do not run compaction during peak ingestion; it conflicts with
+        concurrent writers.
+      source_id: skill-iceberg-maintenance
+    - title: Write path vs layout path
+      lang: text
+      code: |
+        writes ─▶ many small files ─▶ [scheduled compaction] ─▶ 128-256 MB files
+        Compact on a schedule (or auto-compact), targeting a file size that
+        matches your read pattern. Do it outside the ingestion window so
+        compaction and writers don't contend.
+      source_id: pattern-small-files-compaction
+  source_refs: [ref-delta-docs, skill-iceberg-maintenance, runbook-small-files-explosion, pattern-small-files-compaction, plugin-lakehouse-guard]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/acid-concurrent-writes
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-23'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-lakehouse] }
+- id: tutorial-schema-evolution-time-travel
+  slug: schema-evolution-time-travel
+  type: tutorial
+  title: Schema evolution and time travel — change the table, keep the past
+  description: >-
+    Change a table without breaking its readers or its history: the Iceberg
+    spec's schema and partition evolution, Delta time travel, the history
+    metadata table you query to see what happened, and the snapshot-expiry rule
+    that keeps time travel working while storage stays bounded. The immutable
+    raw zone is the floor under all of it.
+  category: cat-lakehouse
+  difficulty: intermediate
+  tags: [tutorial, lakehouse, schema-evolution, time-travel, snapshots, iceberg]
+  series: lakehouse
+  series_title: The Lakehouse Series
+  lesson: 6
+  learning_objectives:
+    - Use schema and partition evolution instead of recreate-and-copy
+    - Query the history metadata table and time travel within the retention window
+    - Expire snapshots without breaking time travel — keep one full snapshot
+  what_you_need:
+    - A Delta or Iceberg table with a schema you are tempted to change
+    - Metadata-table access (files, history)
+    - An ingestion window expiry can be scheduled around
+  steps:
+    - text: "Evolution is a spec feature: Iceberg's documentation covers schema and partition evolution alongside the table format, snapshots and manifests, and hidden partitioning."
+      from_id: ref-iceberg-docs
+      from_field: summary
+    - text: "Delta's side of the bargain: its official docs cover ACID transactions on object storage, time travel, OPTIMIZE and Z-ORDER clustering, Delta Live Tables, and Unity Catalog integration."
+      from_id: ref-delta-docs
+      from_field: summary
+    - text: "See the past with SQL: for Iceberg/Delta, query the metadata tables (files, history)."
+      from_id: runbook-small-files-explosion
+      from_field: diagnosis
+    - text: "Bound the past safely: expire_snapshots older than the retention window — but keep at least one full snapshot for time travel."
+      from_id: skill-iceberg-maintenance
+      from_field: body
+    - text: "Evolution without loss starts at the bottom zone: raw/ — immutable, exactly as received; never edited; schema-on-read."
+      from_id: pattern-medallion-zones
+      from_field: solution
+    - text: "Reprocessing needs the original bytes — that force is why raw is immutable and why an evolved table can always be rebuilt from its source."
+      from_id: pattern-medallion-zones
+      from_field: forces
+    - text: "Schedule expiry like compaction: Lakehouse Guard is a guard that blocks compaction or snapshot expiry during peak ingestion windows."
+      from_id: plugin-lakehouse-guard
+      from_field: description
+  check_yourself:
+    - You can time travel to a snapshot inside the retention window after expiry ran.
+    - A schema change on curated/ required no rewrite of raw/ — the original bytes were never edited.
+    - The history metadata table answers what changed and when without leaving SQL.
+  when_to_use:
+    - "A consumer asks for last month's numbers exactly as they were"
+    - "A schema change is pending and you want evolution, not a table rebuild"
+  why: Snapshots make the past addressable and evolution makes change cheap; the retention window and the immutable raw zone decide how far back both reach.
+  gotchas:
+    - "expire_snapshots must keep at least one full snapshot or time travel breaks."
+    - "Schema and partition evolution are spec features — the format, not a copy job, is the mechanism."
+    - "Snapshot expiry is maintenance with a window: the guard blocks it during peak ingestion."
+  production_notes:
+    - "Set the snapshot retention window deliberately — it is the knob that trades storage for time-travel depth."
+    - "Keep raw/ immutable and schema-on-read so every evolution has an original to return to."
+  diagram: |
+    schema evolution & time travel
+       |
+       |- spec: schema evolution | partition evolution | hidden partitioning
+       |
+       |- db.tbl.history --> what changed, when
+       |
+       |- time travel --> snapshot inside the retention window
+       |
+       |- expire_snapshots --> keep one full snapshot
+       |
+       raw (immutable, schema-on-read) --> curated (evolved) --> serving
+  code:
+    - title: The snapshot expiry rule
+      lang: text
+      code: |
+        `expire_snapshots` older than the retention window — but keep at least
+        one full snapshot for time travel.
+      source_id: skill-iceberg-maintenance
+    - title: The raw zone contract
+      lang: text
+      code: |
+        raw/       — immutable, exactly as received; never edited; schema-on-read.
+      source_id: pattern-medallion-zones
+  source_refs: [ref-iceberg-docs, ref-delta-docs, runbook-small-files-explosion, skill-iceberg-maintenance, pattern-medallion-zones, plugin-lakehouse-guard]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/schema-evolution-time-travel
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-23'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-lakehouse] }
+- id: tutorial-lakehouse-capstone
+  slug: lakehouse-capstone
+  type: tutorial
+  title: Capstone — the standing lakehouse checklist
+  description: >-
+    Close the series by running the full checklist on one table you own: zones
+    with gates, a deliberately chosen format, the three standing monitors, the
+    four-part maintenance plan as a scheduled job, guardrail-enforced windows,
+    and the escalation line that decides when it pages.
+  category: cat-lakehouse
+  difficulty: intermediate
+  tags: [tutorial, lakehouse, capstone, checklist, maintenance, production]
+  series: lakehouse
+  series_title: The Lakehouse Series
+  lesson: 10
+  learning_objectives:
+    - Run the full standing checklist on one table you own
+    - Turn the four-part maintenance plan into a scheduled job with alerts
+    - Apply the escalation line — page only on a freshness-SLA threat
+  what_you_need:
+    - One production lakehouse table you own
+    - Install: npx de-agent-platform add iceberg-table-maintenance
+    - Install: amp plugin add de-agent/lakehouse-guard
+  steps:
+    - text: "Check the zones: raw/ is immutable, exactly as received, never edited, schema-on-read; curated/ is cleaned, typed, deduplicated, quality-gated; serving/ is SLA-bearing — and each zone has a different retention, quality bar and owner, with promotion between zones a pipeline step with a gate, not a copy."
+      from_id: pattern-medallion-zones
+      from_field: solution
+    - text: "Check the format decision: Delta's docs are the definitive source for Delta features and the maintenance operations the lakehouse skills reference — compare with a Delta vs Iceberg decision guide before committing to a format."
+      from_id: ref-delta-docs
+      from_field: summary
+    - text: "Check the monitors: file count, avg file size, planning time."
+      from_id: runbook-small-files-explosion
+      from_field: monitoring
+    - text: "Check the maintenance plan: rewrite_data_files with a target size (128-256 MB), rewrite_manifests when the manifest list is huge, expire_snapshots within retention keeping one full snapshot for time travel, remove_orphan_files on a schedule with a safety margin."
+      from_id: skill-iceberg-maintenance
+      from_field: body
+    - text: "Check the automation: enable Delta auto-compaction or schedule Iceberg rewrite_data_files; target 128-256 MB files and alert on file-count growth."
+      from_id: runbook-small-files-explosion
+      from_field: production_notes
+    - text: "Check the guardrails: /table-health for a status read, /plan-compaction for the maintenance plan, /expire-snapshots for the expiry plan — plans first, not ad hoc runs."
+      from_id: plugin-lakehouse-guard
+      from_field: commands
+    - text: "Check the escalation line: no page — schedule compaction; escalate only if planning time threatens a critical dashboard's freshness SLA."
+      from_id: runbook-small-files-explosion
+      from_field: escalation
+  check_yourself:
+    - Every zone has a named owner, a quality bar, and a gate — and curated is not a dumping ground.
+    - The three monitors (file count, avg file size, planning time) have alerts, and 128-256 MB is the recorded target.
+    - A /plan-compaction during peak ingestion is blocked; the same plan after the window runs.
+  when_to_use:
+    - "A new table joins the lakehouse and needs the full standing setup"
+    - "A quarterly review of an existing table's zones, monitors, maintenance, and escalation"
+  why: The series was nine lessons of one idea — a lakehouse is metadata — and the checklist is what keeps it operable after the tutorials end.
+  gotchas:
+    - "Compaction and snapshot expiry never run during peak ingestion — the guard blocks them, and so should you."
+    - "Curated becomes a dumping ground without an enforced gate — promotion is a pipeline step, not a copy."
+    - "Escalate only when planning time threatens a critical dashboard's freshness SLA — otherwise schedule, do not page."
+  production_notes:
+    - "The four-part plan (data files, manifests, snapshots, orphans) is one scheduled job with a safety margin — never four ad hoc commands."
+    - "Alert on file-count growth and target 128-256 MB files; those two numbers catch most lakehouse decay early."
+  diagram: |
+    lakehouse capstone
+       |
+       |- zones: raw --> curated --> serving (gated promotion)
+       |
+       |- format: Delta vs Iceberg, chosen deliberately
+       |
+       |- monitors: file count | avg file size | planning time
+       |
+       |- maintenance: data files | manifests | snapshots | orphans
+       |
+       |- guard: /table-health /plan-compaction /expire-snapshots
+       |
+       |- escalation: page only on a freshness-SLA threat
+  code:
+    - title: The standing monitors
+      lang: text
+      code: |
+        file count, avg file size, planning time
+      source_id: runbook-small-files-explosion
+    - title: The four-part maintenance plan
+      lang: text
+      code: |
+        1. `rewrite_data_files` with a target size (128-256 MB).
+        2. `rewrite_manifests` when the manifest list is huge.
+        3. `expire_snapshots` older than the retention window — but keep at least one
+           full snapshot for time travel.
+        4. `remove_orphan_files` on a schedule, with a safety margin.
+      source_id: skill-iceberg-maintenance
+    - title: The three guard commands
+      lang: text
+      code: |
+        /table-health
+        /plan-compaction
+        /expire-snapshots
+      source_id: plugin-lakehouse-guard
+  source_refs: [pattern-medallion-zones, ref-delta-docs, runbook-small-files-explosion, skill-iceberg-maintenance, plugin-lakehouse-guard]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/lakehouse-capstone
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-23'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-lakehouse] }

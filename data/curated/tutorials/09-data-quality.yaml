@@ -13,6 +13,9 @@
   category: cat-data-quality
   difficulty: intermediate
   tags: [tutorial, data-quality, quarantine, contracts, pyspark, starter]
+  series: data-quality
+  series_title: The Data Quality Series
+  lesson: 5
   learning_objectives:
     - Express a quality contract as executable checks
     - Design a quarantine table with a reason
@@ -111,6 +114,9 @@
   category: cat-data-quality
   difficulty: beginner
   tags: [tutorial, data-quality, runbook, expectations, incident]
+  series: data-quality
+  series_title: The Data Quality Series
+  lesson: 9
   learning_objectives:
     - Read a failing expectation precisely — column, rule, value
     - Quantify a failure — how many rows and which ones
@@ -202,6 +208,9 @@
   category: cat-data-quality
   difficulty: beginner
   tags: [tutorial, data-quality, duplicates, idempotency, sql]
+  series: data-quality
+  series_title: The Data Quality Series
+  lesson: 2
   learning_objectives:
     - Count duplicates per key with one GROUP BY query
     - Correlate the first duplicate date with a deploy
@@ -293,6 +302,9 @@
   category: cat-data-quality
   difficulty: intermediate
   tags: [tutorial, data-quality, deployment, ci, hooks]
+  series: data-quality
+  series_title: The Data Quality Series
+  lesson: 7
   learning_objectives:
     - Attach the DQ suite to a pre-deploy trigger
     - Promote only when critical tests pass on staged output

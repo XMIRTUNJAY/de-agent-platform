@@ -1,0 +1,576 @@
+﻿# The Python & SQL Series — six new lessons that join the four existing SQL
+# tutorials (01-sql-fanout.yaml, 03-sql.yaml) into one ordered 10-lesson series
+# for the python-sql roadmap stage. Every step derives from the cited source
+# field; structure is ours, wording is the source's.
+- id: tutorial-sql-mental-model
+  slug: sql-relational-mental-model
+  type: tutorial
+  title: The relational mental model — sets, grain, and NULL
+  description: >-
+    Before the first SELECT, build the model every later lesson uses: a query
+    returns a set with a stated grain, a join changes that grain by its
+    cardinality, and NULL never compares as you expect. You learn the first
+    question every SQL review asks, the five rules that follow from it, and
+    the failure modes — fan-out joins, NULL-unsafe predicates, implicit
+    casts, non-deterministic ordering, functions that silently change grain —
+    the rest of the series attacks.
+  category: cat-sql
+  difficulty: beginner
+  tags: [tutorial, sql, mental-model, grain, nulls, beginner]
+  series: python-sql
+  series_title: The Python & SQL Series
+  lesson: 1
+  learning_objectives:
+    - State the grain of a result set in one sentence
+    - Explain how a join's cardinality (1:1, N:1, N:N) changes the row count of the result
+    - Name the five correctness failure modes the SQL review rules target
+  what_you_need:
+    - No engine required — this is a concepts lesson
+    - Install: npx de-agent-platform add sql-review
+    - A query from your own team to state the grain of
+  steps:
+    - text: "Start every query with the review skill's first question: what is the grain of this result? If the author can't answer, stop."
+      from_id: skill-sql-review
+      from_field: body
+    - text: State the grain of a result set in one sentence.
+      from_id: skill-sql-review
+      from_field: learning_objectives
+    - text: A query returns a set — and every join states its cardinality (1:1, N:1, N:N) and justifies it, because cardinality is what changes the grain.
+      from_id: skill-sql-review
+      from_field: body
+    - text: NULL is part of the model and it never compares as you think — learn to spot NULL-unsafe `NOT IN` and `=` predicates.
+      from_id: skill-sql-review
+      from_field: learning_objectives
+    - text: The failure modes the series attacks — fan-out joins, NULL-unsafe predicates, implicit casts, non-deterministic ordering, and functions that silently change grain.
+      from_id: skill-sql-review
+      from_field: description
+    - text: The artifact of the mental model is a grain statement for each SELECT.
+      from_id: agent-sql-reviewer
+      from_field: outputs
+  check_yourself:
+    - You can answer the first question — the grain of a given result set — in one sentence.
+    - Given a join, you can say whether it is 1:1, N:1, or N:N and what that does to the row count.
+    - You can explain why NOT IN over a nullable subquery column is banned.
+  when_to_use:
+    - "Before writing your first production query"
+    - "Onboarding onto a team that reviews SQL with the sql-review skill"
+  why: Sets, grain, and NULL semantics are the three ideas every later lesson — joins, windows, plans, review — keeps returning to.
+  gotchas:
+    - "NOT IN with a nullable column never compares as you think; use NOT EXISTS."
+    - "A result set can be technically correct and still wrong — if the grain is wrong, the numbers are wrong."
+    - "Grain is a property of the result, not of the tables — the same join can be N:1 or N:N depending on the keys."
+  production_notes:
+    - "Make a grain statement part of every SQL PR description."
+    - "The five review rules come from the sql-review skill — keep them next to the mental model."
+  diagram: |
+    relational mental model
+       |
+       |- query = set --> state the grain in one sentence
+       |
+       |- join cardinality (1:1, N:1, N:N) --> what happens to the row count
+       |
+       |- NULL --> never compares as you think --> NOT EXISTS over NOT IN
+       |
+       |- failure modes --> fan-out, NULL-unsafe, casts, ordering, grain-changing functions
+  code:
+    - title: The first question, and the rules that follow from it
+      lang: text
+      code: |
+        The first question: what is the grain of this result?
+        If the author can't answer, stop.
+
+        1. Every join states its cardinality (1:1, N:1, N:N) and justifies it.
+        2. NOT IN (subquery) is banned where the subquery can return NULL — use NOT EXISTS.
+        3. Comparisons across types must be explicit casts, not implicit.
+        4. ORDER BY without LIMIT in a view is meaningless — drop it.
+        5. SELECT * in a persisted model freezes an unstable schema.
+      source_id: skill-sql-review
+  source_refs: [skill-sql-review, agent-sql-reviewer]
+  agent_skills: [skill-sql-review]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/sql-relational-mental-model
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-23'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-sql] }
+- id: tutorial-sql-first-select
+  slug: sql-first-correct-select
+  type: tutorial
+  title: First hands-on — a correct SELECT with a justified join
+  description: >-
+    Stand up a local DuckDB through the DuckDB MCP server, inspect before you
+    query with list_tables and describe_table, and write one SELECT with a
+    join whose cardinality you can justify. You read CSV and Parquet straight
+    into the engine, state the grain of the result, and finish by proving the
+    join cannot fan out — the habit the sql-review skill demands.
+  category: cat-sql
+  difficulty: beginner
+  tags: [tutorial, sql, duckdb, joins, hands-on, beginner]
+  series: python-sql
+  series_title: The Python & SQL Series
+  lesson: 2
+  learning_objectives:
+    - Inspect a database with list_tables and describe_table before writing SQL
+    - Write a SELECT with a join whose cardinality is stated and justified
+    - Prove a join cannot fan out before writing it
+  what_you_need:
+    - DuckDB via the MCP server — uvx mcp-server-motherduck --db-path /data/warehouse.duckdb
+    - A CSV or Parquet file to load
+    - Install: npx de-agent-platform add sql-review
+  steps:
+    - text: Run DuckDB locally through the DuckDB MCP server, which queries DuckDB databases and MotherDuck, including reading Parquet/CSV directly from object storage.
+      from_id: mcp-duckdb
+      from_field: description
+    - text: Inspect before you query — list_tables and describe_table, then query, are the three tools the server exposes.
+      from_id: mcp-duckdb
+      from_field: tools
+    - text: The DuckDB documentation covers the embedded analytics SQL engine, Parquet and CSV readers, and in-process query execution.
+      from_id: ref-duckdb-docs
+      from_field: description
+    - text: Every join states its cardinality (1:1, N:1, N:N) and justifies it.
+      from_id: skill-sql-review
+      from_field: body
+    - text: Prove a join cannot fan out before writing it.
+      from_id: skill-sql-review
+      from_field: learning_objectives
+    - text: Close by writing a grain statement for each SELECT — the artifact the SQL Reviewer emits for every result set.
+      from_id: agent-sql-reviewer
+      from_field: outputs
+  check_yourself:
+    - describe_table names every column and key you used in the join, and you can say which side is the many side.
+    - Your join's cardinality is written down (1:1, N:1, N:N) with a one-line justification.
+    - Counting rows before and after the join shows no inflation — the join cannot fan out.
+  when_to_use:
+    - "First query against a new local dataset"
+    - "Teaching a new analyst the inspect-then-query habit"
+  why: The inspect-then-query habit plus a justified join is the smallest complete unit of correct SQL.
+  gotchas:
+    - "SELECT * hides which columns the join keys came from — name them."
+    - "Parquet and CSV readers mean no import step — point the query at the file."
+    - "A join that cannot fan out on today's data can fan out tomorrow — state the cardinality, not the current counts."
+  production_notes:
+    - "Keep the MCP server pointed at a local file (mcp-server-motherduck --db-path) so experiments never touch shared data."
+    - "Read the DuckDB documentation's Parquet and SQL pages — they cover what the review skill checks."
+  diagram: |
+    first correct SELECT
+       |
+       |- start mcp-server-motherduck --> local DuckDB
+       |
+       |- list_tables --> describe_table --> keys and columns
+       |
+       |- SELECT with join --> cardinality stated (1:1, N:1, N:N)
+       |
+       |- row count before/after --> no inflation --> grain statement
+  code:
+    - title: Start the DuckDB MCP server on a local database
+      lang: bash
+      code: |
+        uvx mcp-server-motherduck --db-path /data/warehouse.duckdb
+      source_id: mcp-duckdb
+    - title: Register the server with your agent
+      lang: yaml
+      code: |
+        mcpServers:
+          duckdb:
+            command: uvx
+            args:
+              - mcp-server-motherduck
+              - --db-path
+              - /data/warehouse.duckdb
+      source_id: mcp-duckdb
+  source_refs: [mcp-duckdb, ref-duckdb-docs, skill-sql-review, agent-sql-reviewer]
+  agent_skills: [skill-sql-review]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/sql-first-correct-select
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-23'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-sql] }
+- id: tutorial-sql-window-grain
+  slug: sql-window-functions-grain
+  type: tutorial
+  title: Window functions — keep the grain, rank the rows
+  description: >-
+    A window function computes over a set of rows and hands the answer back
+    to every row, so the result keeps its grain — the property that makes a
+    keep-latest dedupe safe and a bare GROUP BY grain-changing. You find the
+    duplicates first with one GROUP BY query, dedupe on the business key
+    keeping the latest by event time, and learn when a window over the same
+    key is a shuffle that can skew or spill.
+  category: cat-sql
+  difficulty: intermediate
+  tags: [tutorial, sql, window-functions, grain, dedupe, intermediate]
+  series: python-sql
+  series_title: The Python & SQL Series
+  lesson: 4
+  learning_objectives:
+    - Keep the result grain intact — a window computes over a set without collapsing rows
+    - Find duplicate keys with one GROUP BY query before deduplicating
+    - Deduplicate on the business key, keeping the latest by event time
+  what_you_need:
+    - A table with a business key and an event-time column
+    - Install: npx de-agent-platform add sql-review
+    - The local DuckDB from lesson 2 works for all the practice queries
+  steps:
+    - text: Review the failure modes first — the sql-review skill exists to catch functions that silently change grain, alongside fan-out joins, NULL-unsafe predicates, implicit casts, and non-deterministic ordering.
+      from_id: skill-sql-review
+      from_field: description
+    - text: State the grain of a result set in one sentence — a window keeps the row grain while computing over its partition, a GROUP BY changes it.
+      from_id: skill-sql-review
+      from_field: learning_objectives
+    - text: Find the duplicate key first — identify the duplicate key and count duplicates per key.
+      from_id: runbook-duplicate-records
+      from_field: diagnosis
+    - text: "Count duplicates per key with one query: SELECT k, count(*) c FROM t GROUP BY k HAVING count(*) > 1 ORDER BY c DESC LIMIT 20;"
+      from_id: runbook-duplicate-records
+      from_field: commands
+    - text: Deduplicate on the business key, keeping the latest by event time.
+      from_id: runbook-duplicate-records
+      from_field: fix
+    - text: Treat the group-by (and any window over the same key) as a shuffle — key skew on a join or group-by key is the first cause to check.
+      from_id: tutorial-spark-aggregations-windows
+      from_field: steps
+    - text: Spill to disk from an oversized partition — a window partition that gets too big is a known shuffle failure.
+      from_id: runbook-spark-job-slow
+      from_field: possible_causes
+  check_yourself:
+    - The deduped table has one row per business key, and the GROUP BY duplicate count proves it.
+    - You can say in one sentence what the window preserved that a GROUP BY would have collapsed.
+    - The window's PARTITION BY key is the same key you checked for skew.
+  when_to_use:
+    - "Row counts are inflated and the fix must keep one row per key"
+    - "A ranking or latest-per-key read has to stay at the row grain"
+  why: Windows are the tool that computes over a set without changing the grain — which is why dedupe and rankings go through them.
+  gotchas:
+    - "A window keeps the grain, a GROUP BY changes it — pick by the grain you owe the consumer."
+    - "Dedupe on the business key, keeping the latest by event time — not by insertion order."
+    - "A window over a skewed key is a shuffle with a hot partition — it can spill to disk."
+  production_notes:
+    - "Keep the GROUP BY duplicate-count query next to the dedupe job as its check."
+    - "Check the write mode before dedupe — append vs merge/overwrite decides what the rewrite touches."
+  diagram: |
+    window functions and grain
+       |
+       |- GROUP BY --> new grain (one row per key)
+       |
+       |- window --> same grain, value computed over the partition
+       |
+       |- dedupe --> business key --> keep latest by event time
+       |
+       |- at scale --> window = shuffle --> skew / spill to disk
+  code:
+    - title: Find the duplicate keys the window dedupe will remove
+      lang: sql
+      code: |
+        SELECT k, count(*) c FROM t GROUP BY k HAVING count(*) > 1 ORDER BY c DESC LIMIT 20;
+        SELECT min(dt), max(dt) FROM (SELECT dt, k, count(*) FROM t GROUP BY dt, k HAVING count(*)>1);
+      source_id: runbook-duplicate-records
+  source_refs: [skill-sql-review, runbook-duplicate-records, tutorial-spark-aggregations-windows, runbook-spark-job-slow]
+  agent_skills: [skill-sql-review]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/sql-window-functions-grain
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-23'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-sql] }
+- id: tutorial-sql-gotchas
+  slug: sql-production-gotchas
+  type: tutorial
+  title: Production gotchas — NULL traps, implicit casts, silent drift
+  description: >-
+    The bugs that survive testing compare wrong instead of failing loud:
+    NOT IN over a nullable subquery, a comparison across types left to an
+    implicit cast, and a schema change that silently turns a column to NULLs.
+    You walk the review rules that ban each pattern, then use the
+    schema-drift runbook to tell a hard failure from a silent one and to
+    decide between an explicit cast and a quarantine.
+  category: cat-sql
+  difficulty: intermediate
+  tags: [tutorial, sql, nulls, casting, schema-drift, intermediate]
+  series: python-sql
+  series_title: The Python & SQL Series
+  lesson: 8
+  learning_objectives:
+    - Spot NULL-unsafe `NOT IN` and `=` predicates and rewrite them with NOT EXISTS
+    - Make every cross-type comparison an explicit cast, not an implicit one
+    - Classify a schema drift failure as hard (job error) or silent (nulls)
+  what_you_need:
+    - Install: npx de-agent-platform add sql-review
+    - A query with a cross-type comparison or a NOT IN to audit
+    - The schema-drift runbook for the silent-null cases
+  steps:
+    - text: "`NOT IN (subquery)` is banned where the subquery can return NULL — use `NOT EXISTS`."
+      from_id: skill-sql-review
+      from_field: body
+    - text: Spot NULL-unsafe `NOT IN` and `=` predicates.
+      from_id: skill-sql-review
+      from_field: learning_objectives
+    - text: Comparisons across types must be explicit casts, not implicit.
+      from_id: skill-sql-review
+      from_field: body
+    - text: A drift can be silent — determine whether the failure is hard (job error) or silent (nulls).
+      from_id: runbook-schema-drift
+      from_field: diagnosis
+    - text: A type change gets cast explicitly, or reject and quarantine.
+      from_id: runbook-schema-drift
+      from_field: fix
+    - text: Audit the quiet ones together — non-deterministic ordering is in the same review pass as the NULL and cast traps.
+      from_id: skill-sql-review
+      from_field: description
+  check_yourself:
+    - Every NOT IN in the query has a nullable-column story — or is rewritten as NOT EXISTS.
+    - Every cross-type comparison shows an explicit CAST.
+    - For the last schema change on the source, you can say whether it failed hard or silently.
+  when_to_use:
+    - "Before merging SQL with NOT IN, cross-type comparisons, or a changed source schema"
+    - "A pipeline went quiet instead of failing — checking for silent nulls"
+  why: NULL traps and implicit casts compare wrong without erroring — the only defense is a rule you apply before the query runs.
+  gotchas:
+    - "NOT IN with a nullable column never compares as you think; use NOT EXISTS."
+    - "An implicit cast that works in dev can flip semantics when the source type changes."
+    - "Silent nulls pass green pipelines — diff the source schema, not just the row counts."
+  production_notes:
+    - "Quarantine type-change rejections instead of letting the cast decide."
+    - "Run the sql-review rules in CI so the NULL and cast traps are caught before merge."
+  diagram: |
+    production gotchas
+       |
+       |- NOT IN vs NULL --> never compares as expected --> NOT EXISTS
+       |
+       |- cross-type comparison --> explicit cast, not implicit
+       |
+       |- schema drift --> hard (job error) vs silent (nulls)
+       |
+       |- type change --> cast explicitly, or reject and quarantine
+  code:
+    - title: The two review rules this lesson enforces
+      lang: text
+      code: |
+        2. NOT IN (subquery) is banned where the subquery can return NULL — use NOT EXISTS.
+        3. Comparisons across types must be explicit casts, not implicit.
+      source_id: skill-sql-review
+    - title: What the schema-drift runbook does with a type change
+      lang: text
+      code: |
+        Type change → cast explicitly, or reject and quarantine.
+      source_id: runbook-schema-drift
+  source_refs: [skill-sql-review, runbook-schema-drift]
+  agent_skills: [skill-sql-review]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/sql-production-gotchas
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-23'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-sql] }
+- id: tutorial-sql-incident-fanout
+  slug: sql-incident-silent-fanout
+  type: tutorial
+  title: Incident — the numbers doubled and no alarm fired
+  description: >-
+    Row counts are inflated and metrics double-counted after a retry, a
+    fan-out join or a backfill — the incident signature of a silent fan-out.
+    You work the duplicate-records runbook end to end: count duplicates per
+    key with one query, correlate the first duplicate date with a deploy,
+    check whether the write is append or merge/overwrite, then dedupe on the
+    business key and rewrite only the affected partitions.
+  category: cat-sql
+  difficulty: intermediate
+  tags: [tutorial, sql, incident, fanout, dedupe, intermediate]
+  series: python-sql
+  series_title: The Python & SQL Series
+  lesson: 9
+  learning_objectives:
+    - Recognize inflated row counts and double-counted metrics as the fan-out signature
+    - Count duplicates per key and correlate the first duplicate date with a deploy
+    - Rewrite affected partitions instead of the whole table
+  what_you_need:
+    - A table whose counts jumped and the pipeline that wrote it
+    - Write access to rewrite the affected partitions
+    - Install: npx de-agent-platform add sql-review
+  steps:
+    - text: Name the incident — row counts are inflated and metrics double-counted after a retry, a fan-out join or a backfill.
+      from_id: runbook-duplicate-records
+      from_field: description
+    - text: Identify the duplicate key and count duplicates per key.
+      from_id: runbook-duplicate-records
+      from_field: diagnosis
+    - text: "Run: SELECT k, count(*) c FROM t GROUP BY k HAVING count(*) > 1 ORDER BY c DESC LIMIT 20;"
+      from_id: runbook-duplicate-records
+      from_field: commands
+    - text: Determine the earliest date duplicates appeared → correlate with a deploy.
+      from_id: runbook-duplicate-records
+      from_field: diagnosis
+    - text: Check whether the write is append vs merge/overwrite.
+      from_id: runbook-duplicate-records
+      from_field: diagnosis
+    - text: Deduplicate on the business key, keeping the latest by event time.
+      from_id: runbook-duplicate-records
+      from_field: fix
+    - text: Rewrite the affected partitions (overwrite), not the whole table.
+      from_id: runbook-duplicate-records
+      from_field: fix
+  check_yourself:
+    - The GROUP BY duplicate count returns zero rows after the fix, on the affected partitions.
+    - You can name the deploy that introduced the duplicates and the date it landed.
+    - The rewrite touched only the partitions with duplicates — the rest of the table is untouched.
+  when_to_use:
+    - "Metrics double-counted and no alarm fired"
+    - "Row counts jumped after a retry, a fan-out join, or a backfill"
+  why: A silent fan-out ships wrong numbers with green dashboards — the runbook turns the blast into a dated, partitioned, deduped fix.
+  gotchas:
+    - "The earliest duplicate date, not the loudest metric, points at the causing deploy."
+    - "Append vs merge/overwrite decides whether the fix is a dedupe or a re-run."
+    - "Rewriting the whole table for one bad day widens the blast radius."
+  production_notes:
+    - "Alert on duplicates per key, not just on row-count deltas."
+    - "Prevent the recurrence with the review rule: prove a join cannot fan out before writing it."
+  diagram: |
+    silent fan-out incident
+       |
+       |- signature --> counts inflated, metrics double-counted
+       |
+       |- GROUP BY HAVING --> duplicates per key
+       |
+       |- earliest duplicate date --> correlate with deploy
+       |
+       |- append vs merge/overwrite --> dedupe on business key
+       |
+       |- rewrite affected partitions --> verify duplicate count returns to zero
+  code:
+    - title: Count duplicates per key, and bound the damage window
+      lang: sql
+      code: |
+        SELECT k, count(*) c FROM t GROUP BY k HAVING count(*) > 1 ORDER BY c DESC LIMIT 20;
+        SELECT min(dt), max(dt) FROM (SELECT dt, k, count(*) FROM t GROUP BY dt, k HAVING count(*)>1);
+      source_id: runbook-duplicate-records
+  source_refs: [runbook-duplicate-records, skill-sql-review]
+  agent_skills: [skill-sql-review]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/sql-incident-silent-fanout
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-23'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-sql] }
+- id: tutorial-sql-capstone
+  slug: sql-capstone-checklist
+  type: tutorial
+  title: Capstone — the SQL correctness checklist
+  description: >-
+    Close the series by turning nine lessons into one standing checklist: a
+    grain statement for every SELECT, a cardinality justification for every
+    join, NULL-safe anti-joins, explicit casts, lint in CI, and one decision
+    rule for slow queries. Each line cites the lesson that earned it, and the
+    checklist ends where the review agent ends — with findings that cite
+    severity, location, rule, and fix.
+  category: cat-sql
+  difficulty: intermediate
+  tags: [tutorial, sql, checklist, review, capstone, intermediate]
+  series: python-sql
+  series_title: The Python & SQL Series
+  lesson: 10
+  learning_objectives:
+    - Assemble the series' rules into one checklist you can run on any query
+    - Turn each checklist line into a standing check with an owner
+    - Emit findings with severity, location, rule, and fix
+  what_you_need:
+    - The series lessons 1-9 completed
+    - Install: npx de-agent-platform add sql-review
+    - Install: npx de-agent-platform add sql-query-plan-explainer
+  steps:
+    - text: "Line one, from lesson 1 — ask the first question: what is the grain of this result? If the author can't answer, stop."
+      from_id: skill-sql-review
+      from_field: body
+    - text: Line two, from lesson 3 — every join states its cardinality (1:1, N:1, N:N) and justifies it.
+      from_id: skill-sql-review
+      from_field: body
+    - text: Line three, from lessons 3 and 4 — prove a join cannot fan out before writing it.
+      from_id: skill-sql-review
+      from_field: learning_objectives
+    - text: Line four, from lesson 8 — NOT IN where the subquery can return NULL is banned; use NOT EXISTS.
+      from_id: skill-sql-review
+      from_field: body
+    - text: Line five, from lesson 8 — comparisons across types must be explicit casts, not implicit.
+      from_id: skill-sql-review
+      from_field: body
+    - text: Line six, from lesson 5 — integrate SQLFluff into CI/CD pipelines so the structure rules hold without review time.
+      from_id: rule-pack-sqlfluff-core
+      from_field: learning_objectives
+    - text: Line seven, from lesson 6 — for the slow query, decide between an index, a rewrite, or a stats refresh.
+      from_id: skill-sql-query-plan
+      from_field: learning_objectives
+    - text: The standing output — a findings list (severity, location, rule, fix) and a grain statement for each SELECT.
+      from_id: agent-sql-reviewer
+      from_field: outputs
+  check_yourself:
+    - You can run the whole checklist on a query you have never seen and produce findings with severity, location, rule, and fix.
+    - Each checklist line names the lesson and the rule that backs it.
+    - The checklist is wired into CI — lint and review rules run without a human remembering them.
+  when_to_use:
+    - "A new query, model, or PR needs one pass that covers the whole series"
+    - "A quarterly review needs one page that covers the whole python-sql series"
+  why: Nine lessons become production-ready when each rule on this checklist is a standing check with an owner, not a memory.
+  gotchas:
+    - "A checklist that lives in a doc rots — wire the lint and review rules into CI instead."
+    - "Stop at the first violation; five findings at once hide which fix worked."
+    - "The checklist checks correctness first — the plan reading comes after the query is right."
+  production_notes:
+    - "Assign an owner to each line — an unowned check is a wish."
+    - "Keep the 12-case evaluation fixture in CI so the review rules stay honest."
+  diagram: |
+    capstone checklist
+       |
+       |- grain statement --> every SELECT (lesson 1)
+       |
+       |- join cardinality + no fan-out --> every join (lessons 3-4)
+       |
+       |- NOT EXISTS + explicit casts --> every predicate (lesson 8)
+       |
+       |- sqlfluff in CI --> structure (lesson 5)
+       |
+       |- one fix per slow query --> index, rewrite, or stats refresh (lesson 6)
+       |
+       |- findings --> severity, location, rule, fix
+  code:
+    - title: The standing review output
+      lang: text
+      code: |
+        Findings list (severity, location, rule, fix)
+        Grain statement for each SELECT
+      source_id: agent-sql-reviewer
+    - title: Install the review skill the checklist runs on
+      lang: bash
+      code: |
+        npx de-agent-platform add sql-review
+      source_id: skill-sql-review
+  source_refs: [skill-sql-review, skill-sql-query-plan, rule-pack-sqlfluff-core, agent-sql-reviewer]
+  agent_skills: [skill-sql-review, skill-sql-query-plan]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/sql-capstone-checklist
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-23'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-sql] }

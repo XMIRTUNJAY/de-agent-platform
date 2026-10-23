@@ -13,6 +13,9 @@
   category: cat-data-contracts
   difficulty: beginner
   tags: [tutorial, data-contract, governance, sla, beginner]
+  series: data-quality
+  series_title: The Data Quality Series
+  lesson: 3
   learning_objectives:
     - Write all six parts of a contract for a real dataset
     - Specify freshness and completeness numbers in the SLA
@@ -110,6 +113,9 @@
   category: cat-data-contracts
   difficulty: intermediate
   tags: [tutorial, schema, contracts, review, migration]
+  series: data-quality
+  series_title: The Data Quality Series
+  lesson: 6
   learning_objectives:
     - Classify each schema change as compatible, risky, or breaking
     - Resolve the consumer impact set from lineage
@@ -201,6 +207,9 @@
   category: cat-data-contracts
   difficulty: beginner
   tags: [tutorial, contracts, ci, hook, guardrail, beginner]
+  series: data-quality
+  series_title: The Data Quality Series
+  lesson: 4
   learning_objectives:
     - Configure a pre-commit check over staged schema files
     - State what lets a breaking change pass — MIGRATION.md or a deprecated_at annotation
@@ -294,6 +303,9 @@
   category: cat-data-contracts
   difficulty: intermediate
   tags: [tutorial, contracts, incident, lineage, sla]
+  series: data-quality
+  series_title: The Data Quality Series
+  lesson: 8
   learning_objectives:
     - Classify a breach by clause — schema, semantics, or SLA
     - Bound the consumer impact set from lineage before assigning the fix

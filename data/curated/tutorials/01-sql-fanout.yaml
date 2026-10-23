@@ -14,6 +14,9 @@
   category: cat-sql
   difficulty: beginner
   tags: [tutorial, sql, review, joins, correctness, beginner]
+  series: python-sql
+  series_title: The Python & SQL Series
+  lesson: 3
   learning_objectives:
     - Prove a join cannot fan out before writing it
     - Spot NULL-unsafe `NOT IN` and `=` predicates

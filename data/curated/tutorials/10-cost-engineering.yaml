@@ -13,6 +13,9 @@
   category: cat-cost-engineering
   difficulty: beginner
   tags: [tutorial, cost, finops, unit-economics, attribution]
+  series: reliability
+  series_title: The Reliability Series
+  lesson: 2
   learning_objectives:
     - Attribute compute cost to a pipeline run
     - Define a unit metric that resists regressions
@@ -106,6 +109,9 @@
   category: cat-cost-engineering
   difficulty: intermediate
   tags: [tutorial, cost, spark, regression, runbook]
+  series: reliability
+  series_title: The Reliability Series
+  lesson: 9
   learning_objectives:
     - Diff shuffle write and input bytes run-over-run
     - Attribute a cost regression to one stage
@@ -200,6 +206,9 @@
   category: cat-cost-engineering
   difficulty: intermediate
   tags: [tutorial, cost, plugin, finops, attribution]
+  series: reliability
+  series_title: The Reliability Series
+  lesson: 7
   learning_objectives:
     - Attribute warehouse/cluster spend with /cost-by-pipeline
     - Compute unit economics with /unit-cost
@@ -293,6 +302,9 @@
   category: cat-cost-engineering
   difficulty: beginner
   tags: [tutorial, cost, finops, guardrails, ci]
+  series: reliability
+  series_title: The Reliability Series
+  lesson: 5
   learning_objectives:
     - Define a unit metric per pipeline
     - Baseline the last N runs and fail CI past a threshold

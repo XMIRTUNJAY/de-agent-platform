@@ -1,0 +1,598 @@
+# The Reliability Series — new lessons that join the four existing
+# reliability-stage tutorials (10-cost-engineering.yaml: lessons 2, 5, 7, 9)
+# into one ordered 10-lesson series for the reliability roadmap stage.
+# Every step derives from the cited source field; structure is ours, wording
+# is the source's.
+- id: tutorial-reliability-mental-model
+  slug: reliability-mental-model
+  type: tutorial
+  title: The data reliability mental model — freshness, completeness, correctness
+  description: >-
+    Build the map before writing a single check: a consumer experiences a table
+    as three properties — freshness, completeness, correctness — declared as an
+    SLA in a data contract, enforced by a CI test, and spent like an error
+    budget when failures land.
+  category: cat-reliability
+  difficulty: beginner
+  tags: [tutorial, reliability, sla, data-contracts, mental-model, beginner]
+  series: reliability
+  series_title: The Reliability Series
+  lesson: 1
+  learning_objectives:
+    - Name the three properties a consumer experiences — freshness, completeness, correctness
+    - Read a data contract's SLA section as the table's reliability promise
+    - Explain why an unenforced SLA is documentation, not a contract
+  what_you_need:
+    - A table your team's consumers depend on
+    - The pipeline's schedule and the source's declared freshness SLA
+    - Install: npx de-agent-platform add data-contract-author
+  steps:
+    - text: Reliability is the first word in DDIA's list of what data systems must balance — reliability, scalability, replication, partitioning, consistency — and every chapter maps directly to patterns in this registry.
+      from_id: ref-ddia
+      from_field: description
+    - text: A contract has six parts — owner, schema, semantics, SLA, breaking-change policy, enforcement — and part four is the SLA (freshness, completeness).
+      from_id: skill-data-contract-author
+      from_field: body
+    - text: Specify a freshness and completeness SLA — the two promises consumers experience first.
+      from_id: skill-data-contract-author
+      from_field: learning_objectives
+    - text: Freshness is computed, not felt — compare the schedule/cron with the source's declared freshness SLA, and when a change can produce data older than the SLA, warn with the computed worst-case lag.
+      from_id: hook-freshness-pre-merge
+      from_field: implementation
+    - text: Correctness needs a written definition before anyone re-runs anything — what should the values be, and how will you check?
+      from_id: runbook-backfill-required
+      from_field: diagnosis
+    - text: Design for the forces that never go away — retries are inevitable, backfills are routine, consumers must see stable values.
+      from_id: pattern-idempotent-partition-overwrite
+      from_field: forces
+    - text: A contract with no enforcement is documentation. Documentation is not a contract.
+      from_id: skill-data-contract-author
+      from_field: body
+  check_yourself:
+    - You can name freshness, completeness and correctness for a table you consume, and say where each is declared.
+    - Given a cron change, you can compute the worst-case lag and say whether it violates the declared freshness SLA.
+  when_to_use:
+    - "Onboarding onto a table or pipeline your team depends on"
+    - "Deciding what 'reliable' means before writing a single check"
+  why: Reliability is three promises a consumer experiences — freshness, completeness, correctness — and a promise nobody enforces is documentation, not a contract.
+  gotchas:
+    - "A contract with no enforcement is documentation. Documentation is not a contract."
+    - "The SLA miss cascades — downstream tasks sit skipped/upstream_failed until the failure is classified and recovered."
+    - "Retries are inevitable and backfills are routine — design for them instead of hoping."
+  production_notes:
+    - "Put freshness and completeness in the contract's SLA section, with the CI test that enforces each."
+    - "Compute the worst-case lag when a schedule changes instead of trusting the cron."
+  diagram: |
+    data reliability mental model
+       |
+       |- freshness --> declared SLA --> worst-case lag computed on schedule change
+       |
+       |- completeness --> SLA section of the contract
+       |
+       |- correctness --> written definition: what should the values be?
+       |
+       |- enforcement --> a CI test that fails on violation, or it is not a contract
+  code:
+    - title: A contract has six parts
+      lang: text
+      code: |
+        1. Owner (a team, with an on-call).
+        2. Schema (typed, versioned).
+        3. Semantics (what each field *means*, units, nullability).
+        4. SLA (freshness, completeness).
+        5. Breaking-change policy (notice period, deprecation path).
+        6. Enforcement (which CI test fails on violation).
+      source_id: skill-data-contract-author
+    - title: The freshness check
+      lang: text
+      code: |
+        Compare the schedule/cron in the diff with the source's declared freshness SLA.
+        If the new schedule can produce data older than the SLA (e.g. daily when the
+        SLA is 6h), warn with the computed worst-case lag.
+      source_id: hook-freshness-pre-merge
+  source_refs: [ref-ddia, skill-data-contract-author, hook-freshness-pre-merge, runbook-backfill-required, pattern-idempotent-partition-overwrite]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/reliability-mental-model
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-23'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-reliability] }
+- id: tutorial-reliability-safe-backfills
+  slug: reliability-safe-backfills
+  type: tutorial
+  title: Plan and execute a backfill that doesn't break production
+  description: >-
+    Historical output is wrong or missing, and the fix touches a production
+    table: define correct first, map the blast radius from lineage, then
+    shadow-write in date batches smallest-first, validate a sample per batch,
+    and swap atomically — behind a gate that demands a rollback path.
+  category: cat-production-operations
+  difficulty: intermediate
+  tags: [tutorial, reliability, backfill, production, shadow-swap]
+  series: reliability
+  series_title: The Reliability Series
+  lesson: 3
+  learning_objectives:
+    - Scope a backfill by date, dependency and blast radius before running anything
+    - Shadow-write in date batches, smallest first, validating a sample per batch
+    - Gate the backfill on an explicit range and a rollback path
+  what_you_need:
+    - A past date range in a production table that is wrong or missing
+    - The pipeline's idle window and resource budget
+    - Install: npx de-agent-platform add backfill-planner
+  steps:
+    - text: Historical output is wrong or missing and must be recomputed safely, without breaking production.
+      from_id: runbook-backfill-required
+      from_field: description
+    - text: Before running anything — which dates are wrong and what does "correct" look like; every downstream model/table that reads the target; will this run beside the daily job and at what hour the cluster is idle; can each date be re-run safely; snapshot the target or write to a shadow table first.
+      from_id: skill-backfill-planner
+      from_field: body
+    - text: Define correctness first — what should the values be, and how will you check? Then compute the downstream impact set from lineage.
+      from_id: runbook-backfill-required
+      from_field: diagnosis
+    - text: Treat a backfill as a controlled migration — 1. shadow target (or snapshot), 2. batched date ranges smallest first, 3. validate a sample after each batch, 4. swap atomically, 5. keep the old data until validated.
+      from_id: pattern-backfill-safety
+      from_field: solution
+    - text: The safety gate requires an explicit date range, a target that is either a shadow table or snapshotted, and a window that does not overlap the scheduled production run — it denies otherwise.
+      from_id: hook-backfill-safety-check
+      from_field: implementation
+    - text: Never run a backfill concurrently with the daily production run; one huge date range starves the cluster — batch it and validate a sample per batch.
+      from_id: runbook-backfill-required
+      from_field: gotchas
+    - text: Shadow-then-swap keeps rollback in reach — delete the shadow, never the production table; swap only after sample validation passes.
+      from_id: runbook-backfill-required
+      from_field: rollback
+  check_yourself:
+    - The plan names the wrong dates, the written definition of correct, the downstream blast radius and the rollback path before anything runs.
+    - The run writes to a shadow target in date batches, smallest first, and the swap happens only after sample validation passes.
+  when_to_use:
+    - "A past date range is wrong or missing"
+    - "A logic fix or new column must be applied historically"
+  why: A backfill is production work with a bigger blast radius than the original pipeline — shadow-write, sample-validate, then swap.
+  gotchas:
+    - "Never run a backfill concurrently with the daily production run."
+    - "One huge date range starves the cluster; batch it and validate a sample per batch."
+    - "Backfilling without a written definition of correctness just relocates the bug."
+  production_notes:
+    - "Idempotent pipelines make a backfill a routine operation."
+    - "Document a backfill runbook per pipeline, with its idle window and resource budget."
+  diagram: |
+    safe backfill
+       |
+       |- define correct + lineage impact --> blast radius known
+       |
+       |- shadow target (or snapshot) --> batched ranges, smallest first
+       |
+       |- validate sample per batch --> pass --> swap atomically
+       |                              fail --> delete the shadow, never prod
+  code:
+    - title: The batched backfill command
+      lang: bash
+      code: |
+        airflow dags backfill --start-date YYYY-MM-DD --end-date YYYY-MM-DD --reset-dagruns dag_id
+        # prefer batched date ranges over one large range
+      source_id: runbook-backfill-required
+    - title: What the safety gate requires
+      lang: text
+      code: |
+        Intercepts a backfill trigger. Requires: an explicit date range, a target that
+        is either a shadow table or snapshotted, and a window that does not overlap the
+        scheduled production run. Denies otherwise.
+      source_id: hook-backfill-safety-check
+    - title: The five-step controlled migration
+      lang: text
+      code: |
+        1. shadow target (or snapshot)
+        2. batched date ranges, smallest first
+        3. validate a sample after each batch
+        4. swap atomically
+        5. keep the old data until validated
+      source_id: pattern-backfill-safety
+  source_refs: [runbook-backfill-required, skill-backfill-planner, pattern-backfill-safety, hook-backfill-safety-check]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/reliability-safe-backfills
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-23'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-production-operations] }
+- id: tutorial-reliability-idempotent-reruns
+  slug: reliability-idempotent-reruns
+  type: tutorial
+  title: Idempotency and reruns — make every task safe to run twice
+  description: >-
+    Retries are inevitable, so a task that appends duplicates rows every time it
+    is cleared: hold each task to the idempotency test, replace its partition
+    atomically instead of appending, and assert the invariant in CI with a test
+    that runs the same date twice.
+  category: cat-reliability
+  difficulty: intermediate
+  tags: [tutorial, reliability, idempotency, reruns, partitions, testing]
+  series: reliability
+  series_title: The Reliability Series
+  lesson: 4
+  learning_objectives:
+    - Apply the idempotency test to every task before trusting retries
+    - Replace appends with atomic partition overwrites keyed by the logical date, or MERGE
+    - Assert idempotency in CI with an invariant test on row counts
+  what_you_need:
+    - A batch job that can be cleared and retried
+    - A logical date or partition key per run
+    - Install: npx de-agent-platform add pipeline-test-author
+  steps:
+    - text: Retries and backfills duplicate or corrupt data because writes are appends.
+      from_id: pattern-idempotent-partition-overwrite
+      from_field: problem
+    - text: Hold every task to the idempotency test — "If this task runs twice for the same logical date, is the output the same?" If no, fix it before anything else — retries will happen.
+      from_id: skill-airflow-dag-reviewer
+      from_field: body
+    - text: Make each run write the complete result for its logical partition and replace that partition atomically — `INSERT OVERWRITE partition(dt=...)` or Delta/Iceberg replace-where. The invariant — running the same date twice yields identical output.
+      from_id: pattern-idempotent-partition-overwrite
+      from_field: solution
+    - text: Every task writes to a partition keyed by the logical date, or uses MERGE.
+      from_id: skill-airflow-dag-reviewer
+      from_field: body
+    - text: A re-run is only safe if the task is idempotent — check before clearing.
+      from_id: runbook-pipeline-failed
+      from_field: gotchas
+    - text: Make every task idempotent so a re-run is always safe, and retry with backoff.
+      from_id: runbook-pipeline-failed
+      from_field: prevention
+    - text: Assert invariants, not snapshots — count(*) is stable across a re-run (idempotency), no nulls in the grain key, sum(revenue) equals the source sum within tolerance.
+      from_id: skill-pipeline-test-author
+      from_field: body
+  check_yourself:
+    - Running the same logical date twice yields identical output — proven by a CI test that asserts count(*) is stable across a re-run.
+    - No task appends to a partition it can recompute.
+  when_to_use:
+    - "Wiring retries onto any task that writes"
+    - "Preparing a pipeline you will need to backfill"
+  why: Retries are inevitable, so a task that is not idempotent turns every retry into a duplicate — make each run replace its partition atomically instead of appending.
+  gotchas:
+    - "Retries and backfills duplicate or corrupt data because writes are appends."
+    - "A re-run is only safe if the task is idempotent — check before clearing."
+    - "Idempotency costs an upsert/overwrite pattern on every write — pay it once and retries become routine."
+  production_notes:
+    - "Idempotent tasks turn incidents into routine re-runs."
+    - "If a test needs the network or a running warehouse, it is not a unit test — keep the invariant harness offline."
+  diagram: |
+    idempotent reruns
+       |
+       |- idempotency test --> "same logical date twice, same output?"
+       |
+       |- append --> duplicates on retry   (the bug)
+       |- INSERT OVERWRITE partition / MERGE --> atomic replace  (the fix)
+       |
+       |- CI invariant --> count(*) stable across re-run
+  code:
+    - title: The idempotency test
+      lang: text
+      code: |
+        "If this task runs twice for the same logical date, is the output the same?"
+        If no, fix it before anything else — retries will happen.
+      source_id: skill-airflow-dag-reviewer
+    - title: The invariant list for the harness
+      lang: text
+      code: |
+        - `count(*)` is stable across a re-run (idempotency)
+        - no nulls in the grain key
+        - sum(revenue) equals the source sum within tolerance
+        - a quarantined row never appears in the published table
+      source_id: skill-pipeline-test-author
+    - title: The atomic overwrite
+      lang: text
+      code: |
+        Make each run write the complete result for its logical partition and replace
+        that partition atomically. Never append to a partition you can recompute.
+        `INSERT OVERWRITE partition(dt=...)` or Delta/Iceberg replace-where do this.
+      source_id: pattern-idempotent-partition-overwrite
+  source_refs: [pattern-idempotent-partition-overwrite, skill-airflow-dag-reviewer, runbook-pipeline-failed, skill-pipeline-test-author]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/reliability-idempotent-reruns
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-23'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-reliability] }
+- id: tutorial-reliability-dr-replication
+  slug: reliability-dr-replication
+  type: tutorial
+  title: DR and replication — design the recovery path before you need it
+  description: >-
+    Disaster recovery for data systems starts before the outage: DDIA's
+    replication and consistency chapters name the mechanisms, and the registry's
+    runbooks name the recovery paths — code rollback for deterministic failures,
+    quarantine-then-retry for data errors, shadow-then-swap for recomputes.
+  category: cat-reliability
+  difficulty: intermediate
+  tags: [tutorial, reliability, disaster-recovery, replication, rollback]
+  series: reliability
+  series_title: The Reliability Series
+  lesson: 6
+  learning_objectives:
+    - Map replication and consistency from DDIA to mechanisms in your own stack
+    - Keep the old data until the new data is validated — shadow-then-swap as rollback
+    - Classify recovery per failure class — code rollback vs quarantine-then-retry vs recompute
+  what_you_need:
+    - The tables your consumers cannot lose
+    - The deploy/revert mechanism for pipeline code
+    - A recovery drill scheduled with the platform owner
+  steps:
+    - text: DDIA's chapters map directly to patterns in this registry — replication to CDC, partitioning to lakehouse, consistency to transaction semantics.
+      from_id: ref-ddia
+      from_field: description
+    - text: A recovery design must satisfy three forces — correctness must be verifiable, production must stay available, rollback must be possible.
+      from_id: pattern-backfill-safety
+      from_field: forces
+    - text: "Keep the old data until validated — shadow-then-swap keeps rollback in reach: delete the shadow, never the production table; swap only after sample validation passes."
+      from_id: runbook-backfill-required
+      from_field: rollback
+    - text: Classify the recovery by failure class — roll back the code deploy if the class is deterministic and new; data errors get quarantine-then-retry, not rollback.
+      from_id: runbook-pipeline-failed
+      from_field: rollback
+    - text: Recovery is when destructive SQL is most dangerous — destructive statements are denied by default, and a DELETE/UPDATE without a WHERE clause is always denied.
+      from_id: hook-destructive-sql-guard
+      from_field: implementation
+    - text: Any write-class tool against a production target is suspended and surfaced for a human "approve once" token scoped to the single call.
+      from_id: hook-prod-write-confirm
+      from_field: implementation
+  check_yourself:
+    - Every critical table has a named recovery path — code rollback, quarantine-then-retry, or shadow-then-swap recompute.
+    - The old data still exists until the replacement is validated — you have never deleted production to fix production.
+  when_to_use:
+    - "Deciding which tables need replication, snapshots or both"
+    - "Writing the recovery section of a pipeline's runbook"
+  why: Rollback must be possible — a recovery path that starts with "delete production" is not a path, and replication is the principle that keeps one open.
+  gotchas:
+    - "Roll back the code deploy if the class is deterministic and new — data errors get quarantine-then-retry, not rollback."
+    - "Delete the shadow, never the production table; swap only after sample validation passes."
+    - "A DELETE/UPDATE without a WHERE clause is always denied — recovery scripts are not exempt."
+  production_notes:
+    - "Map replication to CDC and consistency to transaction semantics when choosing the mechanism for each critical table."
+    - "Suspend write-class tools against production targets during recovery — a human approve-once token scoped to a single call."
+  diagram: |
+    recovery paths
+       |
+       |- deterministic (new code) --> roll back the deploy
+       |
+       |- data error --> quarantine input --> re-run idempotently
+       |
+       |- recompute --> shadow-then-swap --> old data kept until validated
+       |
+       |- destructive SQL during recovery --> denied by default
+  code:
+    - title: Recovery classification
+      lang: text
+      code: |
+        Roll back the code deploy if the class is deterministic and new; data errors
+        get quarantine-then-retry, not rollback.
+      source_id: runbook-pipeline-failed
+    - title: The three forces a recovery design satisfies
+      lang: text
+      code: |
+        - Correctness must be verifiable
+        - Production must stay available
+        - Rollback must be possible
+      source_id: pattern-backfill-safety
+  source_refs: [ref-ddia, pattern-backfill-safety, runbook-backfill-required, runbook-pipeline-failed, hook-destructive-sql-guard, hook-prod-write-confirm]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/reliability-dr-replication
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-23'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-reliability] }
+- id: tutorial-reliability-prod-gotchas
+  slug: reliability-prod-gotchas
+  type: tutorial
+  title: Production gotchas — silent failures and partial writes
+  description: >-
+    The failures that become pages are the ones nobody was watching: a
+    regression hiding in growth, a cron change that silently widens the
+    freshness SLA, and appends that duplicate on retry — cap each with a
+    guard, a computed worst-case lag, and an atomic partition replace.
+  category: cat-production-operations
+  difficulty: intermediate
+  tags: [tutorial, reliability, production, silent-failures, partial-writes, hooks]
+  series: reliability
+  series_title: The Reliability Series
+  lesson: 8
+  learning_objectives:
+    - Catch silent failures — hidden cost regressions and silently widened freshness SLAs
+    - Stop partial writes — no appends to recomputable partitions, no unguarded prod writes
+    - Put the failure class in the alert text so on-call can triage before touching anything
+  what_you_need:
+    - The pipelines currently in production
+    - An alerting channel wired to task failure rate and SLA misses
+    - CI where a hook can warn or block a merge
+  steps:
+    - text: A working pipeline silently becomes expensive and nobody notices until the invoice.
+      from_id: pattern-cost-guardrails
+      from_field: problem
+    - text: A change can silently widen the freshness SLA of a source — compare the schedule/cron in the diff with the source's declared freshness SLA and warn with the computed worst-case lag.
+      from_id: hook-freshness-pre-merge
+      from_field: implementation
+    - text: Partial writes come from appends — retries and backfills duplicate or corrupt data because writes are appends; replace the partition atomically instead.
+      from_id: pattern-idempotent-partition-overwrite
+      from_field: problem
+    - text: Read the first real error in the log, not the last — and retrying a data error re-runs the same failure; fix or quarantine the input first.
+      from_id: runbook-pipeline-failed
+      from_field: gotchas
+    - text: Guard every production write — any write-class tool against a production target is suspended and surfaced for a human "approve once" token scoped to the single call.
+      from_id: hook-prod-write-confirm
+      from_field: implementation
+    - text: "`DROP TABLE prod.orders` from an agent is denied and surfaced for confirmation."
+      from_id: hook-destructive-sql-guard
+      from_field: example
+    - text: Retry with backoff, and put the failure class in the alert text.
+      from_id: runbook-pipeline-failed
+      from_field: production_notes
+  check_yourself:
+    - A cron change that would violate the freshness SLA warns at pre-merge with the computed worst-case lag.
+    - No production write path exists that a hook does not classify, confirm or block.
+  when_to_use:
+    - "Hardening pipelines that already serve consumers"
+    - "After an incident caused by a silent failure or a partial write"
+  why: The failures that page you are the ones no dashboard was watching — silent regressions, silently widened SLAs and appends that duplicate on retry.
+  gotchas:
+    - "Read the first real error in the log, not the last."
+    - "Retrying a data error re-runs the same failure; fix or quarantine the input first."
+    - "Spend varies with data growth and regressions hide in growth — total-spend dashboards cannot see them."
+  production_notes:
+    - "Retry with backoff, and put the failure class in the alert text."
+    - "Make every task idempotent so a re-run is always safe."
+  diagram: |
+    silent failures + partial writes
+       |
+       |- regression hides in growth --> unit metric + baseline catches it
+       |
+       |- cron change --> freshness SLA widened silently --> warn with worst-case lag
+       |
+       |- append on retry --> duplicated rows --> atomic partition replace
+       |
+       |- prod write --> classified + confirmed or blocked
+  code:
+    - title: The silent widening example
+      lang: text
+      code: |
+        Changing a source cron from hourly to daily warns that the 6h freshness SLA
+        will be violated.
+      source_id: hook-freshness-pre-merge
+    - title: The production write suspension
+      lang: text
+      code: |
+        Classify the tool target as production by connection string, project or
+        catalogue tag. Any write-class tool against a production target is suspended
+        and surfaced for a human "approve once" token scoped to the single call.
+      source_id: hook-prod-write-confirm
+  source_refs: [pattern-cost-guardrails, hook-freshness-pre-merge, pattern-idempotent-partition-overwrite, runbook-pipeline-failed, hook-prod-write-confirm, hook-destructive-sql-guard]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/reliability-prod-gotchas
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-23'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-production-operations] }
+- id: tutorial-reliability-capstone
+  slug: reliability-capstone
+  type: tutorial
+  title: Capstone — the reliability checklist for a pipeline you can page on
+  description: >-
+    Close the series by running the reliability checklist over your own
+    pipeline: a declared and enforced SLA, idempotent tasks with backoff
+    retries, a documented backfill runbook — then drill the incident path from
+    alert to blameless postmortem with dated, owned action items.
+  category: cat-reliability
+  difficulty: intermediate
+  tags: [tutorial, reliability, incident, postmortem, checklist, capstone]
+  series: reliability
+  series_title: The Reliability Series
+  lesson: 10
+  learning_objectives:
+    - Run the reliability checklist over your own pipeline end to end
+    - Drill the incident path — match the alert, walk the runbook, capture the timeline
+    - Close with a blameless postmortem with dated, owned action items
+  what_you_need:
+    - The pipeline you built across this series
+    - Its SLA, runbook and alert routing
+    - Install: npx de-agent-platform add incident-postmortem-writer
+  steps:
+    - text: Declare the SLA — freshness and completeness — with the CI test that enforces it, because a contract with no enforcement is documentation.
+      from_id: skill-data-contract-author
+      from_field: body
+    - text: Make every task idempotent so a re-run is always safe, and retry with backoff with a clear failure classification in the alert.
+      from_id: runbook-pipeline-failed
+      from_field: prevention
+    - text: Keep a documented backfill runbook per pipeline.
+      from_id: runbook-backfill-required
+      from_field: prevention
+    - text: When the alert fires, load the production playbooks into the agent, match the alert to a runbook, and walk the operator through diagnosis and mitigation step by step.
+      from_id: plugin-runbook-runner
+      from_field: description
+    - text: The incident workflow — establish impact and start time; check for a correlated deploy; walk the matching runbook; capture the timeline for the postmortem.
+      from_id: agent-incident-assistant
+      from_field: workflow
+    - text: The postmortem structure — impact in business terms with a duration; a timestamped, factual, no-blame timeline; how we found out, because if a human told us that's a gap; contributing factors, plural; action items each with an owner, a date and a "done" definition.
+      from_id: skill-incident-postmortem-writer
+      from_field: body
+    - text: '"Be more careful" is not an action item — change the system so a careful mistake is harmless.'
+      from_id: skill-incident-postmortem-writer
+      from_field: body
+  check_yourself:
+    - The checklist passes — SLA declared and enforced, tasks idempotent with backoff retries, backfill runbook documented, failure class in the alert text.
+    - A tabletop incident produces a rolling timeline and a draft postmortem with dated, owned action items.
+  when_to_use:
+    - "Signing off a pipeline for on-call"
+    - "Running a quarterly reliability drill"
+  why: Ten lessons reduce to one page — a declared SLA, idempotent tasks, a backfill runbook, classified alerts, and a postmortem that changes the system.
+  gotchas:
+    - "\"Be more careful\" is not an action item — change the system so a careful mistake is harmless."
+    - "If a human told you about the incident, detection is a gap."
+    - "Incidents are rarely single-cause — contributing factors are plural."
+  production_notes:
+    - "Capture the timeline as the incident happens, not from memory afterwards."
+    - "The incident assistant suggests, never executes, production changes — it escalates to a human before any destructive step."
+  diagram: |
+    reliability capstone
+       |
+       |- SLA declared + enforced --> freshness, completeness in CI
+       |
+       |- idempotent tasks + backoff retries --> reruns safe by construction
+       |
+       |- backfill runbook documented --> history fixable without fear
+       |
+       |- alert --> match runbook --> walk diagnosis --> capture timeline
+       |
+       |- postmortem --> impact, timeline, detection, factors, owned actions
+  code:
+    - title: The postmortem structure
+      lang: text
+      code: |
+        1. **Impact** — who/what, in business terms, with a duration.
+        2. **Timeline** — timestamped, factual, no blame.
+        3. **Detection** — how we found out; if a human told us, that's a gap.
+        4. **Contributing factors** — plural; incidents are rarely single-cause.
+        5. **Action items** — each with an owner and a date, and a "done" definition.
+      source_id: skill-incident-postmortem-writer
+    - title: The incident workflow
+      lang: text
+      code: |
+        Establish impact and start time.
+        Check for a correlated deploy.
+        Walk the matching runbook.
+        Capture the timeline for the postmortem.
+      source_id: agent-incident-assistant
+    - title: The Runbook Runner commands
+      lang: text
+      code: |
+        /runbook
+        /match-alert
+        /incident-timeline
+      source_id: plugin-runbook-runner
+  source_refs: [skill-data-contract-author, runbook-pipeline-failed, runbook-backfill-required, plugin-runbook-runner, agent-incident-assistant, skill-incident-postmortem-writer]
+  version: 0.1.0
+  license: CC-BY-4.0
+  author: de-agent
+  publisher: DE//AGENT Registry
+  source_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials/reliability-capstone
+  github_url: https://github.com/XMIRTUNJAY/de-agent-platform/tree/main/data/curated/tutorials
+  verification: community
+  last_verified: '2026-10-23'
+  security: { runs_code: false, network_access: false, credentials: false, filesystem_access: false, external_apis: false }
+  relationships: { related_to: [cat-reliability] }

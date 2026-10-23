@@ -15,6 +15,9 @@
   category: cat-sql
   difficulty: intermediate
   tags: [tutorial, sql, explain, query-plan, performance, intermediate]
+  series: python-sql
+  series_title: The Python & SQL Series
+  lesson: 6
   learning_objectives:
     - Read a plan bottom-up and name the expensive node
     - Detect cardinality misestimation from stale statistics
@@ -118,6 +121,9 @@
   category: cat-sql
   difficulty: beginner
   tags: [tutorial, sql, sqlfluff, linting, ci, beginner]
+  series: python-sql
+  series_title: The Python & SQL Series
+  lesson: 5
   learning_objectives:
     - Configure SQLFluff for your warehouse dialect
     - Fix L003, L010, L030, and L057 findings in real SQL
@@ -213,6 +219,9 @@
   category: cat-sql
   difficulty: beginner
   tags: [tutorial, sql, review, correctness, beginner]
+  series: python-sql
+  series_title: The Python & SQL Series
+  lesson: 7
   learning_objectives:
     - State the grain of every result set in one sentence
     - Apply the review rules in order and stop at the first violation
