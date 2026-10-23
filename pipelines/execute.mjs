@@ -16,10 +16,11 @@ const flag = (name) => {
   return i === -1 ? null : (args[i + 1] ?? true);
 };
 const manifestArg = flag('manifest');
+const resourceIdArg = flag('resource-id');
 const backendArg = flag('backend') ?? 'dry';
 const ack = args.includes('--local-i-understand');
 
-if (!manifestArg) { console.error('usage: node pipelines/execute.mjs --manifest <file> [--backend dry|local|docker] [--local-i-understand]'); process.exit(2); }
+if (!manifestArg) { console.error('usage: node pipelines/execute.mjs --manifest <file> [--resource-id <resource id>] [--backend dry|local|docker] [--local-i-understand]'); process.exit(2); }
 const manifestPath = resolve(ROOT, String(manifestArg));
 if (relative(ROOT, manifestPath).startsWith('..')) { console.error('manifest must live under the repo root'); process.exit(2); }
 const manifest = readYaml(manifestPath);
@@ -31,7 +32,7 @@ if (backend !== 'dry' && !ack) {
   console.log(`warning: --backend ${backend} without --local-i-understand; degrading to dry (nothing executed)`);
   backend = 'dry';
 }
-const out = await runManifest(manifest, { backend, root: ROOT });
+const out = await runManifest(manifest, { backend, root: ROOT, resourceId: resourceIdArg && resourceIdArg !== true ? String(resourceIdArg) : null });
 console.log(`state: ${out.state}\nbackend: ${backend}`);
 for (const c of out.commands) {
   console.log(`- ${c.name}: ${c.skipped ? 'skipped (dry)' : `exit ${c.exitCode} in ${c.durationMs}ms sha256 ${c.sha256}`}${c.failure ? ` [${c.failure.category}]` : ''}`);

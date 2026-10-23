@@ -2,7 +2,7 @@
  * PUBLISH — write the generated registry, the search index and the knowledge
  * graph. Everything the site reads is produced here; nothing is hand-edited.
  */
-import { writeFileSync, existsSync, mkdirSync, readdirSync, readFileSync } from 'node:fs';
+import { writeFileSync, existsSync, mkdirSync, readFileSync, renameSync } from 'node:fs';
 import { join } from 'node:path';
 import { GENERATED, ROOT } from './load.mjs';
 import { buildSkillMd } from './skill-md.mjs';
@@ -57,7 +57,7 @@ export function emit(ctx) {
   // served as a static asset — Astro only publishes public/.
   const publicGenerated = join(ROOT, 'public', 'data', 'generated');
   ensure(publicGenerated);
-  writeFileSync(join(publicGenerated, 'search-index.json'), JSON.stringify(searchIndex, null, 0) + '\n', 'utf8');
+  atomicWrite(join(publicGenerated, 'search-index.json'), JSON.stringify(searchIndex, null, 0) + '\n', 'utf8');
 
   // Agent Skills files: one SKILL.md per installable skill, served statically
   // so every CLI installer (and the emanisha.in copy) can fetch them.
@@ -68,7 +68,7 @@ export function emit(ctx) {
     if (r.type !== 'skill' || !(r.install_command || (r.files ?? []).length > 0)) continue;
     const dir = join(skillsDir, r.slug);
     ensure(dir);
-    writeFileSync(join(dir, 'SKILL.md'), buildSkillMd(r), 'utf8');
+    atomicWrite(join(dir, 'SKILL.md'), buildSkillMd(r), 'utf8');
     skillsEmitted++;
   }
 
@@ -99,8 +99,19 @@ function buildRoadmapGaps(resources, roadmap) {
     .filter((stage) => !tutorialStages.has(stage))
     .map((stage) => ({ stage, needsOriginal: originals[stage] ?? null }));
 }
+/**
+ * Crash-safe write: content lands at `<file>.tmp` first, then atomically
+ * renames onto the final path. A mid-write crash can no longer leave a
+ * truncated registry.json/search-index.json for the Astro build to consume.
+ */
+export function atomicWrite(file, data) {
+  const tmp = `${file}.tmp`;
+  writeFileSync(tmp, data, 'utf8');
+  renameSync(tmp, file);
+}
+
 function write(name, data) {
-  writeFileSync(join(GENERATED, name), JSON.stringify(data, null, 0) + '\n', 'utf8');
+  atomicWrite(join(GENERATED, name), JSON.stringify(data, null, 0) + '\n', 'utf8');
 }
 
 function buildStats(resources, taxonomy) {
@@ -176,15 +187,17 @@ function buildStats(resources, taxonomy) {
 }
 
 /** A flat, self-contained index. Small enough to ship, rich enough to be useful. */
-function buildSearchIndex(resources, taxonomy) {
+export function buildSearchIndex(resources, taxonomy) {
   return resources.map((r) => {
-    const text = [
-      r.title, r.tagline, r.description, r.summary,
-      ...(r.tags ?? []), ...(r.learning_objectives ?? []),
-      ...(r.symptoms ?? []), ...(r.possible_causes ?? []),
-      ...(r.when_to_use ?? []), r.categoryTitle,
-      ...(r.technologies ?? []).map(prettyTech),
-    ].filter(Boolean).join(' ');
+    // Long-tail search fields (objectives, symptoms, causes, when-to-use,
+    // tech, tags) as a TRUNCATED keywords string. The old `text` blob
+    // duplicated title/description/tags already present on the entry and
+    // cost ~half the payload of search-index.json on every page view.
+    const keywords = [
+      ...(r.tags ?? []), ...(r.technologies ?? []).map(prettyTech),
+      ...(r.learning_objectives ?? []), ...(r.symptoms ?? []),
+      ...(r.possible_causes ?? []), ...(r.when_to_use ?? []),
+    ].filter(Boolean).join(' ').slice(0, 200);
     return {
       id: r.id,
       slug: r.slug,
@@ -203,8 +216,8 @@ function buildSearchIndex(resources, taxonomy) {
       security_flags: r.security_flags,
       tags: r.tags ?? [],
       technologies: (r.technologies ?? []).map(prettyTech),
+      keywords,
       url: r.url,
-      text,
     };
   });
 }
@@ -235,5 +248,3 @@ function buildGraph(resources, taxonomy) {
 function prettyTech(id) {
   return String(id).replace(/^tech-/, '').replace(/-/g, ' ');
 }
-
-export { readdirSync };

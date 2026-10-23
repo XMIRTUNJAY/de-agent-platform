@@ -25,10 +25,20 @@ import { ROOT } from './lib/load.mjs';
 
 const norm = (s) => String(s ?? '').toLowerCase().replace(/[-_.]+/g, '');
 
-async function ghJson(url) {
-	const text = await fetchText(url);
-	if (!text) throw new Error('empty response: ' + url);
-	return JSON.parse(text);
+/**
+ * Fetch a GitHub API JSON resource. fetchText resolves to {ok,status,body} —
+ * the old code tested the always-truthy result object and then fed
+ * "[object Object]" to JSON.parse, so every fetch threw and the feature
+ * never proposed anything. Second param is injectable for tests.
+ */
+export async function ghJson(url, fetchImpl = fetchText) {
+	const res = await fetchImpl(url);
+	if (!res?.ok) throw new Error(`gh ${res?.status ?? 'network'}: ${url}`);
+	try {
+		return JSON.parse(res.body);
+	} catch (e) {
+		throw new Error(`gh invalid JSON from ${url}: ${e.message}`);
+	}
 }
 
 async function ghFile(owner, repo, filePath) {

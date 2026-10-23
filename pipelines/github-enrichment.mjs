@@ -22,6 +22,25 @@ const octokit = new Octokit({
 const CACHE_DIR = join(ROOT, 'data', 'cache', 'github');
 const CACHE_FILE = join(CACHE_DIR, 'enrichment.json');
 
+// Cache TTLs: positive entries refetch after 24h; negative (404/dead repo)
+// entries retry after 7 days instead of hammering the API every run.
+export const CACHE_TTL_HOURS = 24;
+export const NEGATIVE_TTL_HOURS = 24 * 7;
+
+/** True when `entry` is a positive cache record fetched within maxAgeHours. */
+export function isCacheFresh(entry, maxAgeHours = CACHE_TTL_HOURS) {
+  if (!entry || entry.missing || !entry.fetched_at) return false;
+  const age = (Date.now() - new Date(entry.fetched_at).getTime()) / (1000 * 60 * 60);
+  return Number.isFinite(age) && age >= 0 && age < maxAgeHours;
+}
+
+/** True when `entry` is a still-fresh negative (missing repo) record. */
+export function isNegativeCacheFresh(entry, maxAgeHours = NEGATIVE_TTL_HOURS) {
+  if (!entry?.missing || !entry.fetched_at) return false;
+  const age = (Date.now() - new Date(entry.fetched_at).getTime()) / (1000 * 60 * 60);
+  return Number.isFinite(age) && age >= 0 && age < maxAgeHours;
+}
+
 if (!existsSync(CACHE_DIR)) {
   mkdirSync(CACHE_DIR, { recursive: true });
 }
@@ -49,10 +68,15 @@ if (!existsSync(CACHE_DIR)) {
  * @property {Record<string, GitHubRepoData>} repos
  */
 
-function loadCache() {
-  if (existsSync(CACHE_FILE)) {
+function cacheFile(cacheDir) {
+  return join(cacheDir ?? CACHE_DIR, 'enrichment.json');
+}
+
+function loadCache(cacheDir) {
+  const file = cacheFile(cacheDir);
+  if (existsSync(file)) {
     try {
-      return JSON.parse(readFileSync(CACHE_FILE, 'utf8'));
+      return JSON.parse(readFileSync(file, 'utf8'));
     } catch {
       return { updated_at: new Date().toISOString(), repos: {} };
     }
@@ -60,9 +84,11 @@ function loadCache() {
   return { updated_at: new Date().toISOString(), repos: {} };
 }
 
-function saveCache(cache) {
+function saveCache(cache, cacheDir) {
   cache.updated_at = new Date().toISOString();
-  writeFileSync(CACHE_FILE, JSON.stringify(cache, null, 2), 'utf8');
+  const file = cacheFile(cacheDir);
+  if (!existsSync(join(file, '..'))) mkdirSync(join(file, '..'), { recursive: true });
+  writeFileSync(file, JSON.stringify(cache, null, 2), 'utf8');
 }
 
 function parseGitHubUrl(url) {
@@ -81,26 +107,40 @@ function parseGitHubUrl(url) {
   return null;
 }
 
-async function fetchRepoData(owner, repo) {
+/**
+ * Contributor total without walking the list: with per_page=1 each page holds
+ * exactly one contributor, so the rel="last" Link header page number IS the
+ * total. Falls back to the returned page length for small repos (no Link).
+ */
+function countContributors(res) {
+  const data = res?.data ?? [];
+  if (data.length === 0) return 0;
+  const link = res?.headers?.link ?? res?.headers?.Link;
+  const last = link ? Number((link.match(/[?&]page=(\d+)>;\s*rel="last"/) || [])[1]) : NaN;
+  return Number.isFinite(last) ? last : data.length;
+}
+
+async function fetchRepoData(owner, repo, kit = octokit) {
   try {
     // Get repo info
-    const { data: repoData } = await octokit.repos.get({ owner, repo });
-    
-    // Get contributors count
-    const { data: contributors } = await octokit.repos.listContributors({ owner, repo, per_page: 1 });
-    const contributorsCount = contributors.length > 0 ? 
-      (await octokit.paginate(octokit.repos.listContributors, { owner, repo })).length : 0;
-    
+    const { data: repoData } = await kit.repos.get({ owner, repo });
+
+    // Get contributors count (single per_page=1 call + Link header — the old
+    // code discarded this response and paginate()ed the whole list, 30+ calls
+    // on big repos).
+    const contributorsRes = await kit.repos.listContributors({ owner, repo, per_page: 1 });
+    const contributorsCount = countContributors(contributorsRes);
+
     // Get recent commits (last 30 days)
     const since = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
-    const { data: commits } = await octokit.repos.listCommits({ owner, repo, since, per_page: 100 });
+    const { data: commits } = await kit.repos.listCommits({ owner, repo, since, per_page: 100 });
     const recentCommits = commits.length;
-    
+
     // Get releases
-    const { data: releases } = await octokit.repos.listReleases({ owner, repo, per_page: 10 });
+    const { data: releases } = await kit.repos.listReleases({ owner, repo, per_page: 10 });
     const releasesCount = releases.length;
     const lastReleaseAt = releases.length > 0 ? releases[0].published_at : null;
-    
+
     return {
       stars: repoData.stargazers_count,
       forks: repoData.forks_count,
@@ -152,12 +192,12 @@ function computeCommunityScore(repoData) {
   return Math.round(Math.min(100, Math.max(0, score)));
 }
 
-async function enrichResources(resources) {
-  const cache = loadCache();
+export async function enrichResources(resources, { fetchRepo = fetchRepoData, cacheDir } = {}) {
+  const cache = loadCache(cacheDir);
   const resourcesWithGithub = resources.filter(r => r.github_url);
-  
+
   console.log(`[GitHub Enrichment] Found ${resourcesWithGithub.length} resources with GitHub URLs`);
-  
+
   let updated = 0;
   let skipped = 0;
   let failed = 0;
@@ -172,10 +212,15 @@ async function enrichResources(resources) {
 
     const cacheKey = `${parsed.owner}/${parsed.repo}`;
     const cached = cache.repos[cacheKey];
-    const cacheAge = cached ? (Date.now() - new Date(cached.updated_at).getTime()) / (1000 * 60 * 60) : Infinity; // hours
 
-    // Use cache if less than 24 hours old
-    if (cached && cacheAge < 24) {
+    // Fresh negative entry: this repo 404'd recently — don't refetch, don't score.
+    if (isNegativeCacheFresh(cached)) {
+      failed++;
+      continue;
+    }
+
+    // Fresh positive entry: score from cache, zero API calls.
+    if (isCacheFresh(cached)) {
       resource.marketplace = resource.marketplace || {};
       resource.marketplace.quality_scores = resource.marketplace.quality_scores || {};
       resource.marketplace.quality_scores.community = computeCommunityScore(cached);
@@ -184,15 +229,19 @@ async function enrichResources(resources) {
     }
 
     console.log(`[GitHub] Fetching ${cacheKey}...`);
-    const repoData = await fetchRepoData(parsed.owner, parsed.repo);
-    
+    const repoData = await fetchRepo(parsed.owner, parsed.repo);
+
     if (repoData) {
-      cache.repos[cacheKey] = repoData;
+      // fetched_at is OUR fetch time (the repo's updated_at is upstream's, and
+      // using it made the 24h TTL never hit).
+      cache.repos[cacheKey] = { ...repoData, fetched_at: new Date().toISOString() };
       resource.marketplace = resource.marketplace || {};
       resource.marketplace.quality_scores = resource.marketplace.quality_scores || {};
       resource.marketplace.quality_scores.community = computeCommunityScore(repoData);
       updated++;
     } else {
+      // Negative cache so dead repos stop retrying every run (7-day TTL).
+      cache.repos[cacheKey] = { missing: true, fetched_at: new Date().toISOString() };
       failed++;
     }
 
@@ -200,7 +249,7 @@ async function enrichResources(resources) {
     await new Promise(resolve => setTimeout(resolve, 100));
   }
 
-  saveCache(cache);
+  saveCache(cache, cacheDir);
   console.log(`[GitHub Enrichment] Updated: ${updated}, Cached: ${skipped}, Failed: ${failed}`);
 }
 
@@ -224,7 +273,7 @@ async function main() {
 }
 
 // Export for pipeline integration
-export { enrichResources };
+export { fetchRepoData };
 
 // Run standalone CLI mode only when invoked directly (node pipelines/github-enrichment.mjs),
 // never on import — importing during run.mjs used to re-read the PREVIOUS build's

@@ -20,8 +20,8 @@ export function parseRepoUrl(url) {
   return m ? { owner: m[1], repo: m[2] } : null;
 }
 
-export async function fetchRepoMeta(owner, repo) {
-  const res = await fetchJson(`https://api.github.com/repos/${owner}/${repo}`);
+export async function fetchRepoMeta(owner, repo, { fetchJson: fetchJsonImpl = fetchJson } = {}) {
+  const res = await fetchJsonImpl(`https://api.github.com/repos/${owner}/${repo}`);
   if (!res.ok) return { ok: false, status: res.status };
   const j = res.json;
   return {
@@ -35,8 +35,8 @@ export async function fetchRepoMeta(owner, repo) {
   };
 }
 
-export async function fetchRepoTree(owner, repo, branch) {
-  const res = await fetchJson(`https://api.github.com/repos/${owner}/${repo}/git/trees/${branch}?recursive=1`);
+export async function fetchRepoTree(owner, repo, branch, { fetchJson: fetchJsonImpl = fetchJson } = {}) {
+  const res = await fetchJsonImpl(`https://api.github.com/repos/${owner}/${repo}/git/trees/${branch}?recursive=1`);
   if (!res.ok) return { ok: false, status: res.status, truncated: true, paths: [] };
   const paths = (res.json.tree ?? []).filter((t) => t.type === 'blob').map((t) => t.path);
   return { ok: true, truncated: !!res.json.truncated, paths };
@@ -89,31 +89,33 @@ export function candidateInstallCommands(text) {
   return [...found].slice(0, 5);
 }
 
-export async function fetchSkillDoc(owner, repo, branch, paths) {
+export async function fetchSkillDoc(owner, repo, branch, paths, { fetchText: fetchTextImpl = fetchText } = {}) {
   const skillPath = paths.find((p) => p === 'SKILL.md' || p.endsWith('/SKILL.md'));
   if (!skillPath) return '';
-  const res = await fetchText(RAW(owner, repo, branch, skillPath));
-  return res.ok ? String(res.text).slice(0, 8000) : '';
+  const res = await fetchTextImpl(RAW(owner, repo, branch, skillPath));
+  // fetchText resolves {ok,status,body} — res.text is always undefined.
+  return res.ok ? String(res.body).slice(0, 8000) : '';
 }
 
 /**
  * Full lane-2 extraction for one repo URL. Returns { lane: 'extract', ... }
  * or { lane: 'summarize', reason } when the license gate or fetch fails.
+ * deps { fetchJson, fetchText } are injectable for tests.
  */
-export async function extractRepo(url) {
+export async function extractRepo(url, { fetchJson: fetchJsonImpl = fetchJson, fetchText: fetchTextImpl = fetchText } = {}) {
   const parsed = parseRepoUrl(url);
   if (!parsed) return { lane: 'summarize', reason: 'not a github repo url' };
-  const meta = await fetchRepoMeta(parsed.owner, parsed.repo);
+  const meta = await fetchRepoMeta(parsed.owner, parsed.repo, { fetchJson: fetchJsonImpl });
   if (!meta.ok) return { lane: 'summarize', reason: `repo meta fetch failed (${meta.status})` };
   if (!EXTRACTABLE_LICENSES.has(meta.license)) {
     return { lane: 'summarize', reason: `license ${meta.license} not extractable` };
   }
-  const tree = await fetchRepoTree(parsed.owner, parsed.repo, meta.branch);
+  const tree = await fetchRepoTree(parsed.owner, parsed.repo, meta.branch, { fetchJson: fetchJsonImpl });
   const paths = tree.paths ?? [];
-  const readmeRes = await fetchText(RAW(parsed.owner, parsed.repo, meta.branch, 'README.md'));
-  const readme = readmeRes.ok ? String(readmeRes.text).slice(0, 12000) : '';
+  const readmeRes = await fetchTextImpl(RAW(parsed.owner, parsed.repo, meta.branch, 'README.md'));
+  const readme = readmeRes.ok ? String(readmeRes.body).slice(0, 12000) : '';
   const installMd = extractInstallSection(readme);
-  const skillDoc = await fetchSkillDoc(parsed.owner, parsed.repo, meta.branch, paths);
+  const skillDoc = await fetchSkillDoc(parsed.owner, parsed.repo, meta.branch, paths, { fetchText: fetchTextImpl });
   return {
     lane: 'extract',
     license: meta.license,

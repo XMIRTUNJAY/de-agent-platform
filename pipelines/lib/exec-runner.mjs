@@ -9,7 +9,7 @@
  */
 import { spawn } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { join, resolve, relative } from 'node:path';
 import { evaluatePolicy, classifyFailure } from './exec-policy.mjs';
 
@@ -51,10 +51,12 @@ function toolVersion(root) {
   }
 }
 
-export async function runManifest(manifest, { backend = 'dry', root = process.cwd(), env = process.env } = {}) {
+export async function runManifest(manifest, { backend = 'dry', root = process.cwd(), env = process.env, resourceId = null } = {}) {
   const policy = evaluatePolicy(manifest);
   const started_at = new Date().toISOString();
-  const provenance = { tool: 'de-agent-exec', version: toolVersion(root), manifest: manifest.id, backend, started_at };
+  // resource_id keys marketplace performance lookups (manifest.id alone never
+  // matched a resource id, so the performance weight was dead for everyone).
+  const provenance = { tool: 'de-agent-exec', version: toolVersion(root), manifest: manifest.id, resource_id: resourceId, backend, started_at };
   if (!policy.eligible) {
     return { state: 'blocked', spawned: false, policy, commands: [], log: '', resultPath: null, provenance };
   }
@@ -120,4 +122,24 @@ async function runOne(cmd, { cwd, env, limits }) {
       return rec;
     }
   });
+}
+
+/**
+ * Load cached execution results keyed for marketplace lookups. New records
+ * carry provenance.resource_id; legacy records (resource_id absent) fall back
+ * to the manifest id. Unparsable files are reported, never silently skipped.
+ */
+export function loadExecutions(execDir) {
+  if (!existsSync(execDir)) return {};
+  const executions = {};
+  for (const file of readdirSync(execDir).filter((f) => f.endsWith('.json'))) {
+    try {
+      const data = JSON.parse(readFileSync(join(execDir, file), 'utf8'));
+      const key = data.provenance?.resource_id ?? data.provenance?.manifest;
+      if (key) executions[key] = data;
+    } catch (e) {
+      console.error(`[executions] skipping unparsable ${file}: ${e.message}`);
+    }
+  }
+  return executions;
 }

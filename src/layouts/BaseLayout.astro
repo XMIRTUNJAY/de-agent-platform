@@ -265,7 +265,7 @@ const analyticsEnabled = import.meta.env.PUBLIC_ANALYTICS_ENABLED === 'true';
           var terms = q.split(/\s+/).filter(Boolean);
           var scored = registry
             .map(function(r) {
-              var hay = (r.title + ' ' + (r.tagline || '') + ' ' + (r.description || '') + ' ' + (r.tags || []).join(' ') + ' ' + (r.categoryTitle || '')).toLowerCase();
+              var hay = (r.title + ' ' + (r.tagline || '') + ' ' + (r.description || '') + ' ' + (r.tags || []).join(' ') + ' ' + (r.categoryTitle || '') + ' ' + (r.keywords || '')).toLowerCase();
               var score = 0;
               for (var i = 0; i < terms.length; i++) {
                 if (r.title.toLowerCase().includes(terms[i])) score += 10;

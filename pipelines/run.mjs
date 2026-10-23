@@ -18,12 +18,13 @@ import { findCandidates } from './lib/identity.mjs';
 import { evaluateAll } from './lib/evidence.mjs';
 import { pageEligibility } from './lib/eligibility.mjs';
 import { relatedFor } from './lib/related.mjs';
-import { evaluateFreshness } from './lib/freshness.mjs';
 import { depthAll } from './lib/depth.mjs';
 import { computeMarketplaceScores } from './lib/marketplace-score.mjs';
+import { applyFreshness } from './lib/freshness.mjs';
+import { loadExecutions } from './lib/exec-runner.mjs';
 import { ROUTE } from './lib/emit.mjs';
 import { ROOT } from './lib/load.mjs';
-import { writeFileSync, mkdirSync, existsSync, readFileSync, readdirSync } from 'node:fs';
+import { writeFileSync, mkdirSync, existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 const args = process.argv.slice(2);
@@ -158,10 +159,19 @@ await step('INSTALL MANIFESTS', async () => {
   return null;
 });
 
+// FRESHNESS — must run BEFORE MARKETPLACE SCORE so the maintainability
+// dimension sees r.freshness (freshness points and the archived-repo penalty
+// used to read undefined) and VERIFY/ELIGIBILITY see a real r.stale.
+await step('FRESHNESS', () => {
+  const counts = applyFreshness(resources, new Date().toISOString());
+  info(`${counts.upstream_changed} upstream-changed · ${counts.archived} archived · ${counts.stale} stale`);
+  return null;
+});
+
 // MARKETPLACE SCORE
 await step('MARKETPLACE SCORE', () => {
   // Load execution results for performance scoring
-  const executions = loadExecutions();
+  const executions = loadExecutions(join(ROOT, 'data', 'cache', 'executions'));
   computeMarketplaceScores(resources, meta, executions);
   const scored = resources.filter(r => r.marketplace?.composite_score > 0);
   const avg = scored.length ? (scored.reduce((a, r) => a + r.marketplace.composite_score, 0) / scored.length).toFixed(1) : 'n/a';
@@ -205,20 +215,6 @@ await step('ELIGIBILITY', () => {
 await step('RELATED', () => {
   for (const r of resources) r.related_computed = relatedFor(r, resources, 5);
   info(`related links computed for ${resources.length} resources`);
-  return null;
-});
-
-// FRESHNESS
-await step('FRESHNESS', () => {
-  const now = new Date().toISOString();
-  let changed = 0, archived = 0, stale = 0;
-  for (const r of resources) {
-    r.freshness = evaluateFreshness(r, now);
-    if (r.freshness.upstream_changed) changed++;
-    if (r.freshness.archived) archived++;
-    if (r.freshness.stale) stale++;
-  }
-  info(`${changed} upstream-changed · ${archived} archived · ${stale} stale`);
   return null;
 });
 
@@ -275,22 +271,6 @@ function emitDepth(byLevel) {
     if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
     writeFileSync(join(dir, 'depth.json'), JSON.stringify(payload, null, 1) + '\n', 'utf8');
   }
-}
-
-function loadExecutions() {
-  const execDir = join(ROOT, 'data', 'cache', 'executions');
-  if (!existsSync(execDir)) return {};
-  const files = readdirSync(execDir).filter(f => f.endsWith('.json'));
-  const executions = {};
-  for (const file of files) {
-    try {
-      const data = JSON.parse(readFileSync(join(execDir, file), 'utf8'));
-      if (data.provenance?.manifest) {
-        executions[data.provenance.manifest] = data;
-      }
-    } catch {}
-  }
-  return executions;
 }
 
 function warn(msg) { console.log(`      \x1b[33m${msg}\x1b[0m`); }
