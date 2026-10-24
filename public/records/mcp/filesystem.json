@@ -1,0 +1,47 @@
+{
+ "id": "mcp-filesystem",
+ "slug": "filesystem",
+ "type": "mcp",
+ "title": "Filesystem MCP Server",
+ "description": "Reference server that exposes a sandboxed set of directories as readable and (optionally) writable tools. Useful for pipelines that operate on local files.",
+ "install_command": "npx -y @modelcontextprotocol/server-filesystem /path/to/allowed/dir",
+ "installation": {
+  "command": "npx -y @modelcontextprotocol/server-filesystem /path/to/allowed/dir",
+  "config_snippet": {
+   "mcpServers": {
+    "filesystem": {
+     "command": "npx",
+     "args": [
+      "-y",
+      "@modelcontextprotocol/server-filesystem",
+      "/data"
+     ]
+    }
+   }
+  }
+ },
+ "server": {
+  "name": "@modelcontextprotocol/server-filesystem",
+  "registry": "official-registry",
+  "publisher": "Model Context Protocol"
+ },
+ "transport": "stdio",
+ "tools": [
+  "read_file",
+  "read_text_file",
+  "write_file",
+  "edit_file",
+  "list_directory",
+  "directory_tree",
+  "search_files",
+  "move_file",
+  "get_file_info"
+ ],
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": null,
+ "architecture": null,
+ "license": "MIT",
+ "url": "/mcp/filesystem"
+}

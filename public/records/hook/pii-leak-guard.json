@@ -1,0 +1,19 @@
+{
+ "id": "hook-pii-leak-guard",
+ "slug": "pii-leak-guard",
+ "type": "hook",
+ "title": "PII Leak Guard",
+ "description": "Prevent raw PII from entering model context or being written to an unprotected path.",
+ "install_command": null,
+ "installation": null,
+ "server": null,
+ "transport": null,
+ "tools": null,
+ "trigger": "on-tool-call",
+ "implementation": "Wrap database/sample tools. Inspect returned rows against the column\nclassification tags; if a column is classified PII and not masked, redact the\nvalue in the tool response and log the access. Block writes of PII to any path\nnot tagged as restricted.\n",
+ "failure_behavior": "redact",
+ "repo_structure": null,
+ "architecture": null,
+ "license": "Apache-2.0",
+ "url": "/hooks/pii-leak-guard"
+}

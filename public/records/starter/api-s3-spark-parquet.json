@@ -1,0 +1,26 @@
+{
+ "id": "project-api-s3-spark-parquet",
+ "slug": "api-s3-spark-parquet",
+ "type": "starter",
+ "title": "API → S3 → Spark → Parquet",
+ "description": "Land a paginated REST API into S3 raw, transform with PySpark into partitioned Parquet, and make the whole thing idempotent and testable offline.",
+ "install_command": null,
+ "installation": null,
+ "server": null,
+ "transport": null,
+ "tools": null,
+ "trigger": null,
+ "implementation": [
+  "Extract with an explicit cursor and a max-pages guard; log every request.",
+  "Land raw JSON untouched, keyed by ingestion date.",
+  {
+   "Transform": "cast types explicitly, dedupe on the business key, add dt."
+  },
+  "Write Parquet with INSERT OVERWRITE on dt so re-runs are safe."
+ ],
+ "failure_behavior": null,
+ "repo_structure": "api-s3-spark-parquet/\n  extract/api_client.py     # pagination, backoff, idempotency key\n  transform/orders.py       # typed, deduped, partitioned\n  extract/land_raw.py       # writes raw JSON, never overwrites silently\n  tests/data/*.json         # tiny fixtures\n  tests/test_orders.py\n  docker-compose.yml        # minio + spark local\n  Makefile\n",
+ "architecture": "REST API ─▶ [extract: paginate + retry] ─▶ S3 raw/ (JSON, immutable)\n                                                  │\n                                                  ▼\n                                 [PySpark transform: type, dedupe, partition]\n                                                  │\n                                                  ▼\n                                 S3 curated/ (Parquet, dt=.., Hive layout)\n",
+ "license": "MIT",
+ "url": "/projects/api-s3-spark-parquet"
+}

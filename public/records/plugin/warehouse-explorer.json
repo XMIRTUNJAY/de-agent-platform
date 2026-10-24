@@ -1,0 +1,21 @@
+{
+ "id": "plugin-warehouse-explorer",
+ "slug": "warehouse-explorer",
+ "type": "plugin",
+ "title": "Warehouse Explorer",
+ "description": "Schema browsing, query-plan explanation, clustering advice and a read-only connection profile for Snowflake/BigQuery/Redshift.",
+ "install_command": "amp plugin add de-agent/warehouse-explorer",
+ "installation": "amp plugin add de-agent/warehouse-explorer",
+ "server": null,
+ "transport": null,
+ "tools": [
+  "read_file"
+ ],
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": null,
+ "architecture": null,
+ "license": "Apache-2.0",
+ "url": "/plugins/warehouse-explorer"
+}

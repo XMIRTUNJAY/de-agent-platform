@@ -1,0 +1,46 @@
+{
+ "id": "mcp-git",
+ "slug": "git",
+ "type": "mcp",
+ "title": "Git MCP Server",
+ "description": "Exposes local Git operations — status, diff, log, commit, branch — as tools, so an agent can inspect history and prepare changes without shelling out blindly.",
+ "install_command": "uvx mcp-server-git --repository /path/to/repo",
+ "installation": {
+  "command": "uvx mcp-server-git --repository /path/to/repo",
+  "config_snippet": {
+   "mcpServers": {
+    "git": {
+     "command": "uvx",
+     "args": [
+      "mcp-server-git",
+      "--repository",
+      "/repo"
+     ]
+    }
+   }
+  }
+ },
+ "server": {
+  "name": "mcp-server-git",
+  "registry": "official-registry",
+  "publisher": "Model Context Protocol"
+ },
+ "transport": "stdio",
+ "tools": [
+  "git_status",
+  "git_diff_unstaged",
+  "git_diff_staged",
+  "git_log",
+  "git_commit",
+  "git_add",
+  "git_create_branch",
+  "git_checkout"
+ ],
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": null,
+ "architecture": null,
+ "license": "MIT",
+ "url": "/mcp/git"
+}

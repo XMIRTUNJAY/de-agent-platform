@@ -1,0 +1,19 @@
+{
+ "id": "skill-cdc-merge-designer",
+ "slug": "cdc-merge-designer",
+ "type": "skill",
+ "title": "CDC Merge Designer",
+ "description": "Produces a MERGE (or Delta/Iceberg merge) that applies inserts, updates and deletes from a CDC stream correctly, including out-of-order events and tombstones.",
+ "install_command": "npx de-agent-platform add cdc-merge-designer",
+ "installation": null,
+ "server": null,
+ "transport": null,
+ "tools": null,
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": null,
+ "architecture": null,
+ "license": "Apache-2.0",
+ "url": "/skills/cdc-merge-designer"
+}

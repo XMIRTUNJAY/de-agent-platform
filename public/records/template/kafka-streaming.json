@@ -1,0 +1,19 @@
+{
+ "id": "tpl-kafka-streaming",
+ "slug": "kafka-streaming",
+ "type": "template",
+ "title": "Kafka Streaming Job Template",
+ "description": "A structured-streaming job with checkpointing, watermarking, a dedupe stage and an idempotent MERGE sink to Delta/Iceberg.",
+ "install_command": "amp template new de-agent/kafka-streaming ./streaming",
+ "installation": "amp template new de-agent/kafka-streaming ./streaming",
+ "server": null,
+ "transport": null,
+ "tools": null,
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": "kafka-streaming/\n  src/stream.py\n  conf/consumer.yml\n  tests/test_dedupe.py\n  docker-compose.yml   # kafka + minio for local dev\n",
+ "architecture": null,
+ "license": "MIT",
+ "url": "/templates/kafka-streaming"
+}

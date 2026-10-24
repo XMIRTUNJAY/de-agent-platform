@@ -1,0 +1,19 @@
+{
+ "id": "hook-destructive-sql-guard",
+ "slug": "destructive-sql-guard",
+ "type": "hook",
+ "title": "Destructive SQL Guard",
+ "description": "Intercept DROP / TRUNCATE / DELETE-without-WHERE before an agent executes it.",
+ "install_command": null,
+ "installation": null,
+ "server": null,
+ "transport": null,
+ "tools": null,
+ "trigger": "on-tool-call",
+ "implementation": "Matches the SQL string passed to a database/MCP tool. Destructive statements\nare denied by default; a DELETE/UPDATE without a WHERE clause is always denied.\nStatements on a non-production target can be allowed with a `--allow-destructive`\nflag that requires a human confirmation token.\n",
+ "failure_behavior": "block",
+ "repo_structure": null,
+ "architecture": null,
+ "license": "Apache-2.0",
+ "url": "/hooks/destructive-sql-guard"
+}

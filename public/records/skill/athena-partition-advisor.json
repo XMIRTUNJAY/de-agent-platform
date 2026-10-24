@@ -1,0 +1,19 @@
+{
+ "id": "skill-athena-partition-advisor",
+ "slug": "athena-partition-advisor",
+ "type": "skill",
+ "title": "Athena Partition Advisor",
+ "description": "Recommends partition projection, bucketing or file-layout changes to reduce Athena bytes-scanned, and writes the projection DDL.",
+ "install_command": "npx de-agent-platform add athena-partition-advisor",
+ "installation": null,
+ "server": null,
+ "transport": null,
+ "tools": null,
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": null,
+ "architecture": null,
+ "license": "Apache-2.0",
+ "url": "/skills/athena-partition-advisor"
+}

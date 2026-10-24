@@ -1,0 +1,21 @@
+{
+ "id": "plugin-cost-lens",
+ "slug": "cost-lens",
+ "type": "plugin",
+ "title": "Cost Lens",
+ "description": "Attributes warehouse/cluster spend to pipelines, computes unit economics, and alerts on cost-per-run regressions rather than on total spend.",
+ "install_command": "amp plugin add de-agent/cost-lens",
+ "installation": "amp plugin add de-agent/cost-lens",
+ "server": null,
+ "transport": null,
+ "tools": [
+  "read_file"
+ ],
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": null,
+ "architecture": null,
+ "license": "Apache-2.0",
+ "url": "/plugins/cost-lens"
+}

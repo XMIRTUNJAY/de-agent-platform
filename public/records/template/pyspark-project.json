@@ -1,0 +1,19 @@
+{
+ "id": "tpl-pyspark-project",
+ "slug": "pyspark-project",
+ "type": "template",
+ "title": "PySpark Project Template",
+ "description": "A testable PySpark project: src/transforms, tests with a local Spark session, a Dockerfile, and a Makefile that runs lint + tests offline.",
+ "install_command": "amp template new de-agent/pyspark-project ./my-pipeline",
+ "installation": "amp template new de-agent/pyspark-project ./my-pipeline",
+ "server": null,
+ "transport": null,
+ "tools": null,
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": "pyspark-project/\n  pyproject.toml\n  Makefile\n  Dockerfile\n  src/\n    transforms/\n      orders_daily.py\n    io/readers.py\n  tests/\n    data/            # 3-10 row fixtures\n    test_orders_daily.py\n",
+ "architecture": null,
+ "license": "MIT",
+ "url": "/templates/pyspark-project"
+}

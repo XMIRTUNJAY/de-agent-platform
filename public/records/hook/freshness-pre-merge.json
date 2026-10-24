@@ -1,0 +1,19 @@
+{
+ "id": "hook-freshness-pre-merge",
+ "slug": "freshness-pre-merge",
+ "type": "hook",
+ "title": "Freshness Pre-Merge Check",
+ "description": "Warn when a change would silently widen the freshness SLA of a source.",
+ "install_command": null,
+ "installation": null,
+ "server": null,
+ "transport": null,
+ "tools": null,
+ "trigger": "pre-merge",
+ "implementation": "Compare the schedule/cron in the diff with the source's declared freshness SLA.\nIf the new schedule can produce data older than the SLA (e.g. daily when the\nSLA is 6h), warn with the computed worst-case lag.\n",
+ "failure_behavior": "warn",
+ "repo_structure": null,
+ "architecture": null,
+ "license": "Apache-2.0",
+ "url": "/hooks/freshness-pre-merge"
+}

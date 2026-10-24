@@ -1,0 +1,23 @@
+{
+ "id": "plugin-de-data-toolkit",
+ "slug": "de-data-toolkit",
+ "type": "plugin",
+ "title": "DE Data Toolkit",
+ "description": "The opinionated starter plugin: SQL/Spark review skills, the destructive-SQL guard, a secret scanner and the file/git MCP servers, wired for data engineers.",
+ "install_command": "amp plugin add de-agent/de-data-toolkit",
+ "installation": "amp plugin add de-agent/de-data-toolkit",
+ "server": null,
+ "transport": null,
+ "tools": [
+  "read_file",
+  "edit_file",
+  "search_files"
+ ],
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": null,
+ "architecture": null,
+ "license": "Apache-2.0",
+ "url": "/plugins/de-data-toolkit"
+}

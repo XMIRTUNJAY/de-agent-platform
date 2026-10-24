@@ -1,0 +1,19 @@
+{
+ "id": "skill-dbt-model-review",
+ "slug": "dbt-model-review",
+ "type": "skill",
+ "title": "dbt Model Review",
+ "description": "Checks a dbt model's grain statement, ref/dependency hygiene, incremental strategy and late-arriving-data handling, then proposes a test set.",
+ "install_command": "npx de-agent-platform add dbt-model-review",
+ "installation": null,
+ "server": null,
+ "transport": null,
+ "tools": null,
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": null,
+ "architecture": null,
+ "license": "Apache-2.0",
+ "url": "/skills/dbt-model-review"
+}

@@ -1,0 +1,19 @@
+{
+ "id": "skill-backfill-planner",
+ "slug": "backfill-planner",
+ "type": "skill",
+ "title": "Backfill Planner",
+ "description": "Produces a backfill plan: date ranges, blast radius, resource contention, idempotency check, validation gates and rollback.",
+ "install_command": "npx de-agent-platform add backfill-planner",
+ "installation": null,
+ "server": null,
+ "transport": null,
+ "tools": null,
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": null,
+ "architecture": null,
+ "license": "Apache-2.0",
+ "url": "/skills/backfill-planner"
+}

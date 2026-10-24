@@ -1,0 +1,19 @@
+{
+ "id": "skill-dbt-test-writer",
+ "slug": "dbt-test-writer",
+ "type": "skill",
+ "title": "dbt Test Writer",
+ "description": "Proposes dbt tests ranked by blast radius: uniqueness/not-null on the grain key, accepted values on enums, relationships on foreign keys, and freshness on sources.",
+ "install_command": "npx de-agent-platform add dbt-test-writer",
+ "installation": null,
+ "server": null,
+ "transport": null,
+ "tools": null,
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": null,
+ "architecture": null,
+ "license": "Apache-2.0",
+ "url": "/skills/dbt-test-writer"
+}

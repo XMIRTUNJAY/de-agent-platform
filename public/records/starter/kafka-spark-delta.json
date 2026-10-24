@@ -1,0 +1,24 @@
+{
+ "id": "project-kafka-spark-delta",
+ "slug": "kafka-spark-delta",
+ "type": "starter",
+ "title": "Kafka → Spark Streaming → Delta",
+ "description": "A low-latency stream into Delta Lake with watermarking, windowed aggregation and idempotent upserts that survive replays.",
+ "install_command": null,
+ "installation": null,
+ "server": null,
+ "transport": null,
+ "tools": null,
+ "trigger": null,
+ "implementation": [
+  "Read with `startingOffsets=earliest` in dev only; latest in prod.",
+  "Dedupe on `event_id` within the watermark.",
+  "Windowed aggregation to 5-minute tumbling windows, appended idempotently.",
+  "MERGE aggregates on the window key so replays converge."
+ ],
+ "failure_behavior": null,
+ "repo_structure": "kafka-spark-delta/\n  src/stream_raw.py\n  src/stream_agg.py\n  conf/stream.yml\n  tests/test_window.py\n  docker-compose.yml\n",
+ "architecture": "Kafka (events) ─▶ Spark SS [watermark 2m, dedupe on event_id]\n                    ├─▶ Delta: raw_events (append, bronze)\n                    └─▶ Delta: agg_5min  (windowed, MERGE on window key)\n",
+ "license": "MIT",
+ "url": "/projects/kafka-spark-delta"
+}

@@ -1,0 +1,19 @@
+{
+ "id": "skill-data-contract-author",
+ "slug": "data-contract-author",
+ "type": "skill",
+ "title": "Data Contract Author",
+ "description": "Drafts a data contract (schema, semantics, freshness SLA, ownership, breaking- change policy) and the tests that enforce it in CI.",
+ "install_command": "npx de-agent-platform add data-contract-author",
+ "installation": null,
+ "server": null,
+ "transport": null,
+ "tools": null,
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": null,
+ "architecture": null,
+ "license": "Apache-2.0",
+ "url": "/skills/data-contract-author"
+}

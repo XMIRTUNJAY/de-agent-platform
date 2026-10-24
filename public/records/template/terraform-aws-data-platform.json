@@ -1,0 +1,19 @@
+{
+ "id": "tpl-terraform-aws-data",
+ "slug": "terraform-aws-data-platform",
+ "type": "template",
+ "title": "Terraform AWS Data Platform",
+ "description": "S3 buckets with lifecycle + encryption, Glue catalogue, IAM roles scoped to least privilege, and Athena workgroups with query limits.",
+ "install_command": "amp template new de-agent/terraform-aws-data-platform ./infra",
+ "installation": "amp template new de-agent/terraform-aws-data-platform ./infra",
+ "server": null,
+ "transport": null,
+ "tools": null,
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": "terraform-aws-data-platform/\n  modules/\n    s3/       # versioning, SSE-KMS, lifecycle\n    glue/     # catalog + crawlers\n    iam/      # least-privilege roles\n    athena/   # workgroup + bytes-scanned limit\n  main.tf\n  variables.tf\n",
+ "architecture": null,
+ "license": "MIT",
+ "url": "/templates/terraform-aws-data-platform"
+}

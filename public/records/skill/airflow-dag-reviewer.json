@@ -1,0 +1,19 @@
+{
+ "id": "skill-airflow-dag-reviewer",
+ "slug": "airflow-dag-reviewer",
+ "type": "skill",
+ "title": "Airflow DAG Reviewer",
+ "description": "Checks a DAG for non-idempotent tasks, unsafe retries, missing catchup policy, ambiguous catchup/backfill semantics and unbounded concurrency.",
+ "install_command": "npx de-agent-platform add airflow-dag-reviewer",
+ "installation": null,
+ "server": null,
+ "transport": null,
+ "tools": null,
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": null,
+ "architecture": null,
+ "license": "Apache-2.0",
+ "url": "/skills/airflow-dag-reviewer"
+}

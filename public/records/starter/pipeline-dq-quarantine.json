@@ -1,0 +1,23 @@
+{
+ "id": "project-pipeline-dq-quarantine",
+ "slug": "pipeline-dq-quarantine",
+ "type": "starter",
+ "title": "Pipeline → DQ → quarantine → publish",
+ "description": "Put a contract in front of a table: validate each batch, publish the clean rows, quarantine the rest with reasons, and alert on the quarantine rate.",
+ "install_command": null,
+ "installation": null,
+ "server": null,
+ "transport": null,
+ "tools": null,
+ "trigger": null,
+ "implementation": [
+  "Load the contract, compile rules to SQL (DuckDB) or Spark expressions.",
+  "Split into pass/fail with a stable `failure_reason`.",
+  "Publish the pass set; write the fail set to quarantine with provenance."
+ ],
+ "failure_behavior": null,
+ "repo_structure": "pipeline-dq-quarantine/\n  contract/orders.yml       # rules: not_null, unique, range, enum\n  src/validate.py\n  src/publish.py\n  tests/test_quarantine.py\n",
+ "architecture": "batch ─▶ [contract check] ─┬─ pass ─▶ published/ (SLA-bearing)\n                           └─ fail ─▶ quarantine/ (+reason, +source_file)\n                                          │\n                                          └─▶ alert on rate\n",
+ "license": "MIT",
+ "url": "/projects/pipeline-dq-quarantine"
+}

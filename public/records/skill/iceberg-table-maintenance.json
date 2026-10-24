@@ -1,0 +1,19 @@
+{
+ "id": "skill-iceberg-maintenance",
+ "slug": "iceberg-table-maintenance",
+ "type": "skill",
+ "title": "Iceberg Table Maintenance",
+ "description": "Diagnoses small-file and manifest bloat and generates the compaction, snapshot expiry and orphan-file cleanup plan for an Iceberg table.",
+ "install_command": "npx de-agent-platform add iceberg-table-maintenance",
+ "installation": null,
+ "server": null,
+ "transport": null,
+ "tools": null,
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": null,
+ "architecture": null,
+ "license": "Apache-2.0",
+ "url": "/skills/iceberg-table-maintenance"
+}

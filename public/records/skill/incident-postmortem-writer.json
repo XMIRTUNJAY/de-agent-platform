@@ -1,0 +1,19 @@
+{
+ "id": "skill-incident-postmortem-writer",
+ "slug": "incident-postmortem-writer",
+ "type": "skill",
+ "title": "Incident Postmortem Writer",
+ "description": "Structures incident notes into a blameless postmortem: timeline, impact, detection gap, contributing factors, and action items with owners and dates.",
+ "install_command": "npx de-agent-platform add incident-postmortem-writer",
+ "installation": null,
+ "server": null,
+ "transport": null,
+ "tools": null,
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": null,
+ "architecture": null,
+ "license": "Apache-2.0",
+ "url": "/skills/incident-postmortem-writer"
+}

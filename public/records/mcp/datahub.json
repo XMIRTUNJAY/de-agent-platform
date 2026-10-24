@@ -1,0 +1,44 @@
+{
+ "id": "mcp-datahub",
+ "slug": "datahub",
+ "type": "mcp",
+ "title": "DataHub MCP Server",
+ "description": "Exposes a DataHub catalog: search entities, read lineage and schema, and inspect metadata, so an agent can answer \"what is this table and what depends on it?\".",
+ "install_command": "uvx mcp-server-datahub",
+ "installation": {
+  "command": "uvx mcp-server-datahub",
+  "config_snippet": {
+   "mcpServers": {
+    "datahub": {
+     "command": "uvx",
+     "args": [
+      "mcp-server-datahub"
+     ],
+     "env": {
+      "DATAHUB_GMS_URL": "${DATAHUB_URL}",
+      "DATAHUB_GMS_TOKEN": "${DATAHUB_TOKEN}"
+     }
+    }
+   }
+  }
+ },
+ "server": {
+  "name": "mcp-server-datahub",
+  "registry": "vendor",
+  "publisher": "Acryl Data"
+ },
+ "transport": "stdio",
+ "tools": [
+  "search",
+  "get_entities",
+  "get_lineage",
+  "get_dataset_queries"
+ ],
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": null,
+ "architecture": null,
+ "license": "Apache-2.0",
+ "url": "/mcp/datahub"
+}

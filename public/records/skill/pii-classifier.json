@@ -1,0 +1,19 @@
+{
+ "id": "skill-pii-classifier",
+ "slug": "pii-classifier",
+ "type": "skill",
+ "title": "PII Classifier",
+ "description": "Scans column names and sample values for PII categories, then proposes classification tags and a masking/pseudonymisation policy.",
+ "install_command": "npx de-agent-platform add pii-classifier",
+ "installation": null,
+ "server": null,
+ "transport": null,
+ "tools": null,
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": null,
+ "architecture": null,
+ "license": "Apache-2.0",
+ "url": "/skills/pii-classifier"
+}

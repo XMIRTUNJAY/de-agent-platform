@@ -1,0 +1,41 @@
+{
+ "id": "mcp-duckdb",
+ "slug": "duckdb",
+ "type": "mcp",
+ "title": "DuckDB / MotherDuck MCP Server",
+ "description": "Queries DuckDB databases and MotherDuck, including reading Parquet/CSV directly from object storage. Excellent for local, offline analysis with an agent.",
+ "install_command": "uvx mcp-server-motherduck --db-path /data/warehouse.duckdb",
+ "installation": {
+  "command": "uvx mcp-server-motherduck --db-path /data/warehouse.duckdb",
+  "config_snippet": {
+   "mcpServers": {
+    "duckdb": {
+     "command": "uvx",
+     "args": [
+      "mcp-server-motherduck",
+      "--db-path",
+      "/data/warehouse.duckdb"
+     ]
+    }
+   }
+  }
+ },
+ "server": {
+  "name": "mcp-server-motherduck",
+  "registry": "vendor",
+  "publisher": "MotherDuck"
+ },
+ "transport": "stdio",
+ "tools": [
+  "query",
+  "list_tables",
+  "describe_table"
+ ],
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": null,
+ "architecture": null,
+ "license": "MIT",
+ "url": "/mcp/duckdb"
+}

@@ -1,0 +1,30 @@
+{
+ "id": "project-dbt-warehouse-tests",
+ "slug": "dbt-warehouse-tests",
+ "type": "starter",
+ "title": "dbt → warehouse → tests → docs",
+ "description": "Transform raw landed data into a tested, documented star schema with dbt, and gate every change on data-aware CI.",
+ "install_command": null,
+ "installation": null,
+ "server": null,
+ "transport": null,
+ "tools": null,
+ "trigger": null,
+ "implementation": [
+  {
+   "Staging": "rename, cast, one row per source row."
+  },
+  {
+   "Intermediate": "business logic, no direct consumer reads."
+  },
+  {
+   "Marts": "fct vs dim, grain declared in schema.yml."
+  },
+  "Incremental on fct_orders with a 3-day lookback."
+ ],
+ "failure_behavior": null,
+ "repo_structure": "dbt-warehouse-tests/\n  models/staging/\n  models/intermediate/\n  models/marts/\n  models/schema.yml     # tests + descriptions\n  tests/                # singular tests\n  .github/workflows/ci.yml\n",
+ "architecture": "raw.orders ─▶ stg_orders ─▶ int_orders_enriched ─┐\nraw.customers ─▶ stg_customers ──────────────────┼─▶ fct_orders ─▶ marts\nseeds/ ─▶ dim_date ──────────────────────────────┘\n            (tests + docs on every node; CI on staging schema)\n",
+ "license": "MIT",
+ "url": "/projects/dbt-warehouse-tests"
+}

@@ -1,0 +1,19 @@
+{
+ "id": "skill-aws-glue-reviewer",
+ "slug": "aws-glue-job-reviewer",
+ "type": "skill",
+ "title": "AWS Glue Job Reviewer",
+ "description": "Reviews Glue/Spark jobs for worker sizing, job bookmarks, partition pruning, and the catalogue/schema pitfalls that cause silent full reprocessing.",
+ "install_command": "npx de-agent-platform add aws-glue-job-reviewer",
+ "installation": null,
+ "server": null,
+ "transport": null,
+ "tools": null,
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": null,
+ "architecture": null,
+ "license": "Apache-2.0",
+ "url": "/skills/aws-glue-job-reviewer"
+}

@@ -1,0 +1,23 @@
+{
+ "id": "project-s3-glue-athena",
+ "slug": "s3-glue-athena",
+ "type": "starter",
+ "title": "S3 → Glue → Athena",
+ "description": "A serverless, query-in-place pattern: land Parquet in S3, catalogue it with Glue, and query with Athena while keeping scanned bytes (and cost) low.",
+ "install_command": null,
+ "installation": null,
+ "server": null,
+ "transport": null,
+ "tools": null,
+ "trigger": null,
+ "implementation": [
+  "Write Parquet compressed, target 128 MB files.",
+  "Define the table with projection on dt (no MSCK REPAIR).",
+  "Query only the needed columns; compare scanned bytes before/after."
+ ],
+ "failure_behavior": null,
+ "repo_structure": "s3-glue-athena/\n  terraform/            # s3, glue catalog, athena workgroup\n  ddl/table.sql         # partition projection DDL\n  queries/*.sql\n  data/dt=2026-09-01/*.parquet\n",
+ "architecture": "Parquet in S3 (Hive layout: dt=..) ─▶ Glue Data Catalog ─▶ Athena (serverless SQL)\n          ▲                                                     │\n    [Terraform: buckets, catalog, workgroup with bytes limit]    └─▶ BI / notebooks\n",
+ "license": "MIT",
+ "url": "/projects/s3-glue-athena"
+}

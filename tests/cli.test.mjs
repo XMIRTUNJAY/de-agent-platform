@@ -1,4 +1,4 @@
-// CLI end-to-end: spawn bin/de-agent.mjs exactly as npm users would.
+﻿// CLI end-to-end: spawn bin/de-agent.mjs exactly as npm users would.
 // Covers argv parsing, exit codes, dry-run vs real install, the
 // refuse-non-SKILL.md guard, and the all-agents matrix — the pre-publish
 // dress rehearsal for `npx de-agent-platform add <slug>`.
@@ -29,12 +29,21 @@ let server, baseUrl;
 
 before(async () => {
   server = createServer((req, res) => {
+    const json = (body) => { res.writeHead(200, { 'content-type': 'application/json' }); res.end(JSON.stringify(body)); };
     if (req.url === '/skills/test-skill/SKILL.md') {
       res.writeHead(200, { 'content-type': 'text/plain; charset=utf-8' });
       res.end(GOOD_SKILL_MD);
     } else if (req.url === '/skills/html-trap/SKILL.md') {
       res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' });
       res.end('<!doctype html><p>not a skill</p>');
+    } else if (req.url === '/records/mcp/mcpx.json') {
+      json({ id: 'mcp-mcpx', slug: 'mcpx', type: 'mcp', title: 'MCPX', server: { name: 'mcp-server-mcpx', publisher: 'Test' }, transport: 'stdio', tools: ['a', 'b'], install_command: 'uvx mcp-server-mcpx --db-path /d.duckdb', url: '/mcp/mcpx/' });
+    } else if (req.url === '/records/hook/guardx.json') {
+      json({ id: 'hook-guardx', slug: 'guardx', type: 'hook', title: 'GuardX', trigger: 'on-tool-call', implementation: 'Deny destructive SQL without WHERE.', failure_behavior: 'block', url: '/hooks/guardx/' });
+    } else if (req.url === '/records/starter/newproj.json') {
+      json({ id: 'starter-newproj', slug: 'newproj', type: 'starter', title: 'NewProj', repo_structure: 'newproj/\n  models/staging/\n  models/marts/\n', architecture: 'raw ─▶ stg ─▶ marts', url: '/projects/newproj/' });
+    } else if (req.url === '/records/plugin/ampx.json') {
+      json({ id: 'plugin-ampx', slug: 'ampx', type: 'plugin', title: 'AmpX', install_command: 'amp plugin add de-agent/ampx', url: '/plugins/ampx/' });
     } else {
       res.writeHead(404);
       res.end('not found');
@@ -53,13 +62,13 @@ function run(args, cwd = ROOT) {
 describe('de-agent CLI', () => {
   test('--help prints usage on stdout and exits 0', async () => {
     const { stdout } = await run(['--help']);
-    assert.match(stdout, /Usage: de-agent add/);
+    assert.match(stdout, /de-agent add <slug>/);
   });
 
   test('no command prints usage on stderr and exits 2', async () => {
     await assert.rejects(
       () => run([]),
-      (e) => e.code === 2 && /Usage: de-agent add/.test(e.stderr ?? ''),
+      (e) => e.code === 2 && /de-agent add <slug>/.test(e.stderr ?? ''),
     );
   });
 
@@ -112,7 +121,7 @@ describe('de-agent CLI', () => {
   test('missing slug exits 1 with a clear message', async () => {
     await assert.rejects(
       () => run(['add', 'no-such-skill', '--source', baseUrl]),
-      (e) => e.code === 1 && /not found/.test(e.stderr ?? ''),
+      (e) => e.code === 1 && /not found|no skill or installable record found/.test(e.stderr ?? ''),
     );
   });
 
@@ -125,5 +134,40 @@ describe('de-agent CLI', () => {
       }
       assert.match(stdout, /hermes: skipped/);
     } finally { rmSync(cwd, { recursive: true, force: true }); }
+  });
+
+  test('mcp command prints per-agent configs derived from the record', async () => {
+    const { stdout } = await run(['mcp', 'mcpx', '--agent', 'claude-code', '--source', baseUrl]);
+    assert.match(stdout, /claude mcp add mcp-server-mcpx -- uvx mcp-server-mcpx --db-path \/d\.duckdb/);
+    const { stdout: jsonOut } = await run(['mcp', 'mcpx', '--agent', 'cursor', '--source', baseUrl]);
+    assert.match(jsonOut, /"mcpServers"/);
+    assert.match(jsonOut, /"command": "uvx"/);
+  });
+
+  test('add on a hook writes a wiring card (no invented code)', async () => {
+    const cwd = mkdtempSync(join(tmpdir(), 'deagent-cli-'));
+    try {
+      const { stdout } = await run(['add', 'guardx', '--source', baseUrl], cwd);
+      assert.match(stdout, /installed .*HOOK\.md/);
+      const card = readFileSync(join(cwd, '.agents', 'hooks', 'guardx', 'HOOK.md'), 'utf8');
+      assert.match(card, /Deny destructive SQL without WHERE\./);
+      assert.match(card, /failure behavior: block/);
+    } finally { rmSync(cwd, { recursive: true, force: true }); }
+  });
+
+  test('new scaffolds a starter from repo_structure + ARCHITECTURE.md', async () => {
+    const cwd = mkdtempSync(join(tmpdir(), 'deagent-cli-'));
+    try {
+      const { stdout } = await run(['new', 'newproj', '--source', baseUrl], cwd);
+      assert.match(stdout, /scaffolded newproj\//);
+      assert.ok(existsSync(join(cwd, 'newproj', 'models', 'staging')));
+      assert.ok(existsSync(join(cwd, 'newproj', 'models', 'marts')));
+      assert.match(readFileSync(join(cwd, 'newproj', 'ARCHITECTURE.md'), 'utf8'), /raw ─▶ stg ─▶ marts/);
+    } finally { rmSync(cwd, { recursive: true, force: true }); }
+  });
+
+  test('add on a plugin prints the native command verbatim', async () => {
+    const { stdout } = await run(['add', 'ampx', '--source', baseUrl]);
+    assert.match(stdout, /amp plugin add de-agent\/ampx/);
   });
 });

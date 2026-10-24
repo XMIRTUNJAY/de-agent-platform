@@ -1,0 +1,19 @@
+{
+ "id": "skill-mcp-tool-contract-auditor",
+ "slug": "mcp-tool-contract-auditor",
+ "type": "skill",
+ "title": "MCP Tool Contract Auditor",
+ "description": "Inspects an MCP server's tool list and schemas, flags tools that can write, delete, spend money or exfiltrate data, and produces a least-privilege connection recommendation.",
+ "install_command": "npx de-agent-platform add mcp-tool-contract-auditor",
+ "installation": null,
+ "server": null,
+ "transport": null,
+ "tools": null,
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": null,
+ "architecture": null,
+ "license": "Apache-2.0",
+ "url": "/skills/mcp-tool-contract-auditor"
+}

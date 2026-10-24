@@ -1,0 +1,44 @@
+{
+ "id": "mcp-aws",
+ "slug": "aws",
+ "type": "mcp",
+ "title": "AWS MCP Servers (Labs)",
+ "description": "A suite of AWS Labs servers — including documentation search, CDK/Terraform assistance, and service-specific servers — for agents working on AWS.",
+ "install_command": "uvx awslabs.core-mcp-server@latest",
+ "installation": {
+  "command": "uvx awslabs.core-mcp-server@latest",
+  "config_snippet": {
+   "mcpServers": {
+    "aws-core": {
+     "command": "uvx",
+     "args": [
+      "awslabs.core-mcp-server@latest"
+     ],
+     "env": {
+      "AWS_PROFILE": "${AWS_PROFILE}",
+      "FASTMCP_LOG_LEVEL": "ERROR"
+     }
+    }
+   }
+  }
+ },
+ "server": {
+  "name": "awslabs-mcp",
+  "registry": "vendor",
+  "publisher": "AWS Labs"
+ },
+ "transport": "stdio",
+ "tools": [
+  "aws_documentation_search",
+  "read_documentation",
+  "recommend",
+  "run_iac_generation"
+ ],
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": null,
+ "architecture": null,
+ "license": "Apache-2.0",
+ "url": "/mcp/aws"
+}

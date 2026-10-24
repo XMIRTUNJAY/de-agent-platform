@@ -1,0 +1,19 @@
+{
+ "id": "tpl-docker-local-stack",
+ "slug": "docker-local-stack",
+ "type": "template",
+ "title": "Local Docker Data Stack",
+ "description": "A docker-compose stack (Postgres, Kafka, MinIO, Spark, and a DuckDB CLI) for developing and testing pipelines entirely offline.",
+ "install_command": "amp template new de-agent/docker-local-stack ./local",
+ "installation": "amp template new de-agent/docker-local-stack ./local",
+ "server": null,
+ "transport": null,
+ "tools": null,
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": "docker-local-stack/\n  docker-compose.yml   # postgres, kafka, minio, spark,\n  .env.example\n  Makefile             # make up / make seed / make down\n",
+ "architecture": null,
+ "license": "MIT",
+ "url": "/templates/docker-local-stack"
+}

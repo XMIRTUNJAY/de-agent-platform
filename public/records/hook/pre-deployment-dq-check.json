@@ -1,0 +1,19 @@
+{
+ "id": "hook-pre-deployment-dq-check",
+ "slug": "pre-deployment-dq-check",
+ "type": "hook",
+ "title": "Pre-deployment DQ Check",
+ "description": "Run the quality suite against a staged run before promoting to production.",
+ "install_command": null,
+ "installation": null,
+ "server": null,
+ "transport": null,
+ "tools": null,
+ "trigger": "pre-deploy",
+ "implementation": "After a pipeline writes to the staging namespace, run the model's dbt/GE tests\nagainst the staged output. Promote only if all critical tests pass; otherwise\nleave the previous production data in place and report the failed expectations.\n",
+ "failure_behavior": "block",
+ "repo_structure": null,
+ "architecture": null,
+ "license": "Apache-2.0",
+ "url": "/hooks/pre-deployment-dq-check"
+}

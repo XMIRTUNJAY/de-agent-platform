@@ -1,0 +1,19 @@
+{
+ "id": "hook-dbt-full-refresh-guard",
+ "slug": "dbt-full-refresh-guard",
+ "type": "hook",
+ "title": "dbt Full-Refresh Guard",
+ "description": "Require confirmation before a full-refresh of a large incremental model.",
+ "install_command": null,
+ "installation": null,
+ "server": null,
+ "transport": null,
+ "tools": null,
+ "trigger": "on-tool-call",
+ "implementation": "Inspect dbt commands for `--full-refresh`. If any affected model exceeds a row\nthreshold (from the manifest's stats) or is tagged `critical`, require an\nexplicit confirmation token and log the operator identity.\n",
+ "failure_behavior": "confirm",
+ "repo_structure": null,
+ "architecture": null,
+ "license": "Apache-2.0",
+ "url": "/hooks/dbt-full-refresh-guard"
+}

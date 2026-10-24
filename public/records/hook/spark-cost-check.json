@@ -1,0 +1,19 @@
+{
+ "id": "hook-spark-cost-check",
+ "slug": "spark-cost-check",
+ "type": "hook",
+ "title": "Spark Cost Check",
+ "description": "Fail a build when a Spark job's shuffle/spill/scan metrics regress past a threshold.",
+ "install_command": null,
+ "installation": null,
+ "server": null,
+ "transport": null,
+ "tools": null,
+ "trigger": "post-run",
+ "implementation": "After the job's test run, read shuffle/spill/scan metrics from the event log,\ncompare against the stored baseline (median of last 5), and fail if any metric\ngrew by more than 25%. Emit the offending stage and metric.\n",
+ "failure_behavior": "block",
+ "repo_structure": null,
+ "architecture": null,
+ "license": "Apache-2.0",
+ "url": "/hooks/spark-cost-check"
+}

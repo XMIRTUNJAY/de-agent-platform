@@ -1,0 +1,19 @@
+{
+ "id": "skill-spark-skew-diagnosis",
+ "slug": "spark-skew-diagnosis",
+ "type": "skill",
+ "title": "Spark Skew Diagnosis",
+ "description": "Walks an agent through reading the Spark UI/event log to distinguish key skew, partition skew, and shuffle-write amplification, then selects between salting, AQE skew join, broadcast, and repartition strategies.",
+ "install_command": "npx de-agent-platform add spark-skew-diagnosis",
+ "installation": null,
+ "server": null,
+ "transport": null,
+ "tools": null,
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": null,
+ "architecture": null,
+ "license": "Apache-2.0",
+ "url": "/skills/spark-skew-diagnosis"
+}

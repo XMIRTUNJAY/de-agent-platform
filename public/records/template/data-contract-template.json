@@ -1,0 +1,19 @@
+{
+ "id": "tpl-data-contract",
+ "slug": "data-contract-template",
+ "type": "template",
+ "title": "Data Contract Template",
+ "description": "A contract skeleton (ownership, schema, semantics, SLA, compatibility policy) with the CI check that enforces it and a deprecation checklist.",
+ "install_command": "amp template new de-agent/data-contract-template ./contracts",
+ "installation": "amp template new de-agent/data-contract-template ./contracts",
+ "server": null,
+ "transport": null,
+ "tools": null,
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": "data-contract-template/\n  contract.yaml        # owner, sla, semantics, policy\n  schema.avsc          # typed schema\n  ci/check-compat.sh   # compatibility gate\n  DEPRECATION.md       # dated deprecation path\n",
+ "architecture": null,
+ "license": "MIT",
+ "url": "/templates/data-contract-template"
+}

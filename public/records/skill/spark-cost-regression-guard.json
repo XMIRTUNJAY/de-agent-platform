@@ -1,0 +1,19 @@
+{
+ "id": "skill-spark-cost-regression-guard",
+ "slug": "spark-cost-regression-guard",
+ "type": "skill",
+ "title": "Spark Cost Regression Guard",
+ "description": "Compares a job's shuffle/spill/scan metrics against a stored baseline and fails the change if cost-per-run regresses beyond a threshold, with the diff explained.",
+ "install_command": "npx de-agent-platform add spark-cost-regression-guard",
+ "installation": null,
+ "server": null,
+ "transport": null,
+ "tools": null,
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": null,
+ "architecture": null,
+ "license": "Apache-2.0",
+ "url": "/skills/spark-cost-regression-guard"
+}

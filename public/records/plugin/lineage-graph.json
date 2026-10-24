@@ -1,0 +1,21 @@
+{
+ "id": "plugin-lineage-graph",
+ "slug": "lineage-graph",
+ "type": "plugin",
+ "title": "Lineage Graph",
+ "description": "Column-level impact analysis over a lineage store, with a change-impact command that lists the downstream consumers a schema change would break.",
+ "install_command": "amp plugin add de-agent/lineage-graph",
+ "installation": "amp plugin add de-agent/lineage-graph",
+ "server": null,
+ "transport": null,
+ "tools": [
+  "read_file"
+ ],
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": null,
+ "architecture": null,
+ "license": "Apache-2.0",
+ "url": "/plugins/lineage-graph"
+}

@@ -1,0 +1,50 @@
+{
+ "id": "mcp-github",
+ "slug": "github",
+ "type": "mcp",
+ "title": "GitHub MCP Server",
+ "description": "First-party GitHub server exposing repositories, issues, pull requests and code search, plus optional write operations.",
+ "install_command": "docker run -i --rm -e GITHUB_PERSONAL_ACCESS_TOKEN ghcr.io/github/github-mcp-server",
+ "installation": {
+  "command": "docker run -i --rm -e GITHUB_PERSONAL_ACCESS_TOKEN ghcr.io/github/github-mcp-server",
+  "config_snippet": {
+   "mcpServers": {
+    "github": {
+     "command": "docker",
+     "args": [
+      "run",
+      "-i",
+      "--rm",
+      "-e",
+      "GITHUB_PERSONAL_ACCESS_TOKEN",
+      "ghcr.io/github/github-mcp-server"
+     ],
+     "env": {
+      "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
+     }
+    }
+   }
+  }
+ },
+ "server": {
+  "name": "github-mcp-server",
+  "registry": "vendor",
+  "publisher": "GitHub"
+ },
+ "transport": "stdio",
+ "tools": [
+  "search_repositories",
+  "get_file_contents",
+  "create_issue",
+  "create_pull_request",
+  "list_commits",
+  "search_code"
+ ],
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": null,
+ "architecture": null,
+ "license": "MIT",
+ "url": "/mcp/github"
+}

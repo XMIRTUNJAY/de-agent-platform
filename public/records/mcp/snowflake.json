@@ -1,0 +1,48 @@
+{
+ "id": "mcp-snowflake",
+ "slug": "snowflake",
+ "type": "mcp",
+ "title": "Snowflake MCP Server (Labs)",
+ "description": "Snowflake Labs server exposing object management and SQL execution against a Snowflake account, including Cortex Search and Analyst services.",
+ "install_command": "uvx --from mcp-server-snowflake mcp_server_snowflake",
+ "installation": {
+  "command": "uvx --from mcp-server-snowflake mcp_server_snowflake",
+  "config_snippet": {
+   "mcpServers": {
+    "snowflake": {
+     "command": "uvx",
+     "args": [
+      "--from",
+      "mcp-server-snowflake",
+      "mcp_server_snowflake"
+     ],
+     "env": {
+      "SNOWFLAKE_ACCOUNT": "${SNOWFLAKE_ACCOUNT}",
+      "SNOWFLAKE_USER": "${SNOWFLAKE_USER}",
+      "SNOWFLAKE_PRIVATE_KEY_PATH": "${SNOWFLAKE_KEY}"
+     }
+    }
+   }
+  }
+ },
+ "server": {
+  "name": "mcp-server-snowflake",
+  "registry": "vendor",
+  "publisher": "Snowflake Labs"
+ },
+ "transport": "stdio",
+ "tools": [
+  "run_query",
+  "list_objects",
+  "describe_object",
+  "create_object",
+  "drop_object"
+ ],
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": null,
+ "architecture": null,
+ "license": "Apache-2.0",
+ "url": "/mcp/snowflake"
+}

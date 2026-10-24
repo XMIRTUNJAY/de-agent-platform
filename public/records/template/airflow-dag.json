@@ -1,0 +1,19 @@
+{
+ "id": "tpl-airflow-dag",
+ "slug": "airflow-dag",
+ "type": "template",
+ "title": "Airflow DAG Template",
+ "description": "An idempotent DAG skeleton with task groups, retries and backoff, SLA, pools, and a sensor using reschedule mode.",
+ "install_command": "amp template new de-agent/airflow-dag ./dags",
+ "installation": "amp template new de-agent/airflow-dag ./dags",
+ "server": null,
+ "transport": null,
+ "tools": null,
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": "airflow-dag/\n  dags/orders_pipeline.py\n  plugins/\n  tests/test_dag_integrity.py\n  Dockerfile\n",
+ "architecture": null,
+ "license": "MIT",
+ "url": "/templates/airflow-dag"
+}

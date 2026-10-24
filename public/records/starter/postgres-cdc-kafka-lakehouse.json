@@ -1,0 +1,24 @@
+{
+ "id": "project-postgres-cdc-kafka-lakehouse",
+ "slug": "postgres-cdc-kafka-lakehouse",
+ "type": "starter",
+ "title": "Postgres → CDC → Kafka → Lakehouse",
+ "description": "Capture changes from Postgres with Debezium, stream through Kafka, and merge into a lakehouse table with correct ordering, deletes and replay safety.",
+ "install_command": null,
+ "installation": null,
+ "server": null,
+ "transport": null,
+ "tools": null,
+ "trigger": null,
+ "implementation": [
+  "Debezium with `decimal.handling.mode=string` to avoid precision loss.",
+  "Read the stream, keep the latest event per key by (lsn, ts_ms).",
+  "MERGE on the primary key; `op='d'` → soft delete with `_deleted_at`.",
+  "Checkpoint to object storage so a restart resumes correctly."
+ ],
+ "failure_behavior": null,
+ "repo_structure": "postgres-cdc-kafka-lakehouse/\n  docker-compose.yml        # postgres, kafka, connect, minio, spark\n  connect/orders-connector.json\n  stream/merge_to_lake.py\n  ddl/target_table.sql\n  tests/test_merge.py\n",
+ "architecture": "Postgres (WAL) ─▶ Debezium ─▶ Kafka (orders.cdc) ─▶ Spark SS [dedupe by LSN]\n                                                          │\n                                                          ▼\n                                                MERGE into Delta/Iceberg\n",
+ "license": "MIT",
+ "url": "/projects/postgres-cdc-kafka-lakehouse"
+}

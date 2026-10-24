@@ -1,0 +1,19 @@
+{
+ "id": "skill-kafka-lag-triage",
+ "slug": "kafka-consumer-lag-triage",
+ "type": "skill",
+ "title": "Kafka Consumer Lag Triage",
+ "description": "Triages consumer lag from the consumer-group offsets: distinguishing a slow consumer, a partitioned hot key, a rebalance storm, and a poison-pill retry loop.",
+ "install_command": "npx de-agent-platform add kafka-consumer-lag-triage",
+ "installation": null,
+ "server": null,
+ "transport": null,
+ "tools": null,
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": null,
+ "architecture": null,
+ "license": "Apache-2.0",
+ "url": "/skills/kafka-consumer-lag-triage"
+}

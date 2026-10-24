@@ -1,0 +1,45 @@
+{
+ "id": "mcp-dbt",
+ "slug": "dbt",
+ "type": "mcp",
+ "title": "dbt MCP Server",
+ "description": "dbt Labs server that exposes project discovery, the semantic layer, and the dbt CLI (`run`, `test`, `compile`) as tools, so an agent can build and inspect models.",
+ "install_command": "uvx dbt-mcp",
+ "installation": {
+  "command": "uvx dbt-mcp",
+  "config_snippet": {
+   "mcpServers": {
+    "dbt": {
+     "command": "uvx",
+     "args": [
+      "dbt-mcp"
+     ],
+     "env": {
+      "DBT_PROJECT_DIR": "${PWD}",
+      "DBT_PROFILES_DIR": "${HOME}/.dbt"
+     }
+    }
+   }
+  }
+ },
+ "server": {
+  "name": "dbt-mcp",
+  "registry": "vendor",
+  "publisher": "dbt Labs"
+ },
+ "transport": "stdio",
+ "tools": [
+  "list_models",
+  "get_model_details",
+  "run_dbt_command",
+  "query_metrics",
+  "compile_sql"
+ ],
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": null,
+ "architecture": null,
+ "license": "Apache-2.0",
+ "url": "/mcp/dbt"
+}

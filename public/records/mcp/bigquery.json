@@ -1,0 +1,42 @@
+{
+ "id": "mcp-bigquery",
+ "slug": "bigquery",
+ "type": "mcp",
+ "title": "BigQuery MCP Server",
+ "description": "Community server for BigQuery that lists datasets and runs SQL against a project, with support for the BigQuery SQL dialect.",
+ "install_command": "uvx mcp-server-bigquery --project my-project --location EU",
+ "installation": {
+  "command": "uvx mcp-server-bigquery --project my-project --location EU",
+  "config_snippet": {
+   "mcpServers": {
+    "bigquery": {
+     "command": "uvx",
+     "args": [
+      "mcp-server-bigquery",
+      "--project",
+      "my-project"
+     ]
+    }
+   }
+  }
+ },
+ "server": {
+  "name": "mcp-server-bigquery",
+  "registry": "community",
+  "publisher": "Community"
+ },
+ "transport": "stdio",
+ "tools": [
+  "execute_query",
+  "list_datasets",
+  "list_tables",
+  "describe_table"
+ ],
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": null,
+ "architecture": null,
+ "license": "MIT",
+ "url": "/mcp/bigquery"
+}

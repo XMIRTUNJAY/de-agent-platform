@@ -1,0 +1,21 @@
+{
+ "id": "plugin-kafka-console",
+ "slug": "kafka-console",
+ "type": "plugin",
+ "title": "Kafka Console",
+ "description": "Topic inventory, per-partition lag triage, rebalance detection and a read-only message sampler with a PII redaction pass.",
+ "install_command": "amp plugin add de-agent/kafka-console",
+ "installation": "amp plugin add de-agent/kafka-console",
+ "server": null,
+ "transport": null,
+ "tools": [
+  "read_file"
+ ],
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": null,
+ "architecture": null,
+ "license": "Apache-2.0",
+ "url": "/plugins/kafka-console"
+}

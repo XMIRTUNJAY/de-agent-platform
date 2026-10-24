@@ -1,0 +1,19 @@
+{
+ "id": "skill-sql-review",
+ "slug": "sql-review",
+ "type": "skill",
+ "title": "SQL Review",
+ "description": "Reviews a SQL statement for fan-out joins, NULL-unsafe predicates, implicit casts, non-deterministic ordering, and functions that silently change grain.",
+ "install_command": "npx de-agent-platform add sql-review",
+ "installation": null,
+ "server": null,
+ "transport": null,
+ "tools": null,
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": null,
+ "architecture": null,
+ "license": "Apache-2.0",
+ "url": "/skills/sql-review"
+}

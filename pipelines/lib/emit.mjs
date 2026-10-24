@@ -74,7 +74,32 @@ export function emit(ctx) {
     skillsEmitted++;
   }
 
-  return { generated_at, stats, skillsEmitted };
+  // Machine-actionable artifact records: one slim JSON per installable record
+  // (skill, mcp, hook, plugin, template, starter) so the CLI can fetch exactly
+  // one artifact without pulling the whole registry.
+  const RECORD_TYPES = new Set(['skill', 'mcp', 'hook', 'plugin', 'template', 'starter']);
+  const recordsDir = join(ROOT, 'public', 'records');
+  let recordsEmitted = 0;
+  for (const r of enriched) {
+    if (!RECORD_TYPES.has(r.type)) continue;
+    const dir = join(recordsDir, r.type);
+    ensure(dir);
+    const slim = {
+      id: r.id, slug: r.slug, type: r.type, title: r.title,
+      description: (r.description ?? '').slice(0, 300),
+      install_command: r.install_command ?? null,
+      installation: r.installation ?? null,
+      server: r.server ?? null, transport: r.transport ?? null, tools: r.tools ?? null,
+      trigger: r.trigger ?? null, implementation: r.implementation ?? null,
+      failure_behavior: r.failure_behavior ?? null,
+      repo_structure: r.repo_structure ?? null, architecture: r.architecture ?? null,
+      license: r.license ?? null, url: r.url,
+    };
+    atomicWrite(join(dir, `${r.slug}.json`), JSON.stringify(slim, null, 1) + '\n', 'utf8');
+    recordsEmitted++;
+  }
+
+  return { generated_at, stats, skillsEmitted, recordsEmitted };
 }
 
 function ensure(dir) {

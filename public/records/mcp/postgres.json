@@ -1,0 +1,41 @@
+{
+ "id": "mcp-postgres",
+ "slug": "postgres",
+ "type": "mcp",
+ "title": "PostgreSQL MCP Server",
+ "description": "Connects an agent to a Postgres database with a read-only query tool and schema introspection. The canonical example of a \"database over MCP\" server.",
+ "install_command": "npx -y @modelcontextprotocol/server-postgres postgresql://user:pass@host/db",
+ "installation": {
+  "command": "npx -y @modelcontextprotocol/server-postgres postgresql://user:pass@host/db",
+  "config_snippet": {
+   "mcpServers": {
+    "postgres": {
+     "command": "npx",
+     "args": [
+      "-y",
+      "@modelcontextprotocol/server-postgres",
+      "postgresql://readonly@host/db"
+     ]
+    }
+   }
+  }
+ },
+ "server": {
+  "name": "@modelcontextprotocol/server-postgres",
+  "registry": "official-registry",
+  "publisher": "Model Context Protocol"
+ },
+ "transport": "stdio",
+ "tools": [
+  "query",
+  "list_schemas",
+  "describe_table"
+ ],
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": null,
+ "architecture": null,
+ "license": "MIT",
+ "url": "/mcp/postgres"
+}

@@ -1,0 +1,43 @@
+{
+ "id": "mcp-kafka",
+ "slug": "kafka",
+ "type": "mcp",
+ "title": "Kafka MCP Server",
+ "description": "Community server for Apache Kafka that lists topics, reads consumer-group lag, and samples messages, for stream debugging from an agent.",
+ "install_command": "kafka-mcp-server",
+ "installation": {
+  "command": "kafka-mcp-server",
+  "config_snippet": {
+   "mcpServers": {
+    "kafka": {
+     "command": "kafka-mcp-server",
+     "args": [],
+     "env": {
+      "KAFKA_BROKERS": "localhost:9092",
+      "KAFKA_CLIENT_ID": "kafka-mcp-server",
+      "MCP_TRANSPORT": "stdio"
+     }
+    }
+   }
+  }
+ },
+ "server": {
+  "name": "kafka-mcp-server",
+  "registry": "community",
+  "publisher": "tuannvm"
+ },
+ "transport": "stdio",
+ "tools": [
+  "list_topics",
+  "describe_topic",
+  "describe_consumer_group",
+  "consume_messages"
+ ],
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": null,
+ "architecture": null,
+ "license": "MIT",
+ "url": "/mcp/kafka"
+}

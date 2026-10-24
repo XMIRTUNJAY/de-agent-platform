@@ -1,0 +1,21 @@
+{
+ "id": "plugin-lakehouse-guard",
+ "slug": "lakehouse-guard",
+ "type": "plugin",
+ "title": "Lakehouse Guard",
+ "description": "Delta/Iceberg table maintenance advisor plus a guard that blocks compaction or snapshot expiry during peak ingestion windows.",
+ "install_command": "amp plugin add de-agent/lakehouse-guard",
+ "installation": "amp plugin add de-agent/lakehouse-guard",
+ "server": null,
+ "transport": null,
+ "tools": [
+  "read_file"
+ ],
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": null,
+ "architecture": null,
+ "license": "Apache-2.0",
+ "url": "/plugins/lakehouse-guard"
+}

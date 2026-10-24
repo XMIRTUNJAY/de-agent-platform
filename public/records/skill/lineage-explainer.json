@@ -1,0 +1,19 @@
+{
+ "id": "skill-lineage-explainer",
+ "slug": "lineage-explainer",
+ "type": "skill",
+ "title": "Lineage Explainer",
+ "description": "Traces column-level lineage from an asset to its upstream sources and downstream consumers, and reports the impact set for a proposed change.",
+ "install_command": "npx de-agent-platform add lineage-explainer",
+ "installation": null,
+ "server": null,
+ "transport": null,
+ "tools": null,
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": null,
+ "architecture": null,
+ "license": "Apache-2.0",
+ "url": "/skills/lineage-explainer"
+}

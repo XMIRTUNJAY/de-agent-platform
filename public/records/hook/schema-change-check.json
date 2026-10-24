@@ -1,0 +1,19 @@
+{
+ "id": "hook-schema-change-check",
+ "slug": "schema-change-check",
+ "type": "hook",
+ "title": "Schema Change Check",
+ "description": "Block a commit that introduces a breaking schema change without a migration plan.",
+ "install_command": null,
+ "installation": null,
+ "server": null,
+ "transport": null,
+ "tools": null,
+ "trigger": "pre-commit",
+ "implementation": "Runs on staged schema files (*.avsc, *.sql DDL, dbt schema.yml).\nDiffs against HEAD, classifies the change, and exits non-zero on a breaking\nchange unless a MIGRATION.md or a `deprecated_at` annotation is present.\n",
+ "failure_behavior": "block",
+ "repo_structure": null,
+ "architecture": null,
+ "license": "Apache-2.0",
+ "url": "/hooks/schema-change-check"
+}

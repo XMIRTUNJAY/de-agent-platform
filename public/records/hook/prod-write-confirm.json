@@ -1,0 +1,19 @@
+{
+ "id": "hook-prod-write-confirm",
+ "slug": "prod-write-confirm",
+ "type": "hook",
+ "title": "Production Write Confirmation",
+ "description": "Force human confirmation for any write against a production data target.",
+ "install_command": null,
+ "installation": null,
+ "server": null,
+ "transport": null,
+ "tools": null,
+ "trigger": "on-tool-call",
+ "implementation": "Classify the tool target as production by connection string, project or\ncatalogue tag. Any write-class tool against a production target is suspended\nand surfaced for a human \"approve once\" token scoped to the single call.\n",
+ "failure_behavior": "confirm",
+ "repo_structure": null,
+ "architecture": null,
+ "license": "Apache-2.0",
+ "url": "/hooks/prod-write-confirm"
+}

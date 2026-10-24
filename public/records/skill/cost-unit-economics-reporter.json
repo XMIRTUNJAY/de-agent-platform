@@ -1,0 +1,19 @@
+{
+ "id": "skill-cost-unit-economics",
+ "slug": "cost-unit-economics-reporter",
+ "type": "skill",
+ "title": "Cost Unit-Economics Reporter",
+ "description": "Turns cluster/warehouse billing into unit economics (cost per 1M rows, per run, per model) so a 4x regression shows up as a number, not a surprise invoice.",
+ "install_command": "npx de-agent-platform add cost-unit-economics-reporter",
+ "installation": null,
+ "server": null,
+ "transport": null,
+ "tools": null,
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": null,
+ "architecture": null,
+ "license": "Apache-2.0",
+ "url": "/skills/cost-unit-economics-reporter"
+}

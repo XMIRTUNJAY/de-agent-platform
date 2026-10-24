@@ -1,0 +1,19 @@
+{
+ "id": "skill-warehouse-clustering-advisor",
+ "slug": "warehouse-clustering-advisor",
+ "type": "skill",
+ "title": "Warehouse Clustering Advisor",
+ "description": "Advises on Snowflake/BigQuery/Redshift tuning: clustering keys, warehouse sizing, result caching, and the difference between a scan problem and a compute problem.",
+ "install_command": "npx de-agent-platform add warehouse-clustering-advisor",
+ "installation": null,
+ "server": null,
+ "transport": null,
+ "tools": null,
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": null,
+ "architecture": null,
+ "license": "Apache-2.0",
+ "url": "/skills/warehouse-clustering-advisor"
+}

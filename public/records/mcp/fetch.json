@@ -1,0 +1,37 @@
+{
+ "id": "mcp-fetch",
+ "slug": "fetch",
+ "type": "mcp",
+ "title": "Fetch MCP Server",
+ "description": "Retrieves a URL and converts it to markdown for the model. Commonly used to read documentation during a task.",
+ "install_command": "uvx mcp-server-fetch",
+ "installation": {
+  "command": "uvx mcp-server-fetch",
+  "config_snippet": {
+   "mcpServers": {
+    "fetch": {
+     "command": "uvx",
+     "args": [
+      "mcp-server-fetch"
+     ]
+    }
+   }
+  }
+ },
+ "server": {
+  "name": "mcp-server-fetch",
+  "registry": "official-registry",
+  "publisher": "Model Context Protocol"
+ },
+ "transport": "stdio",
+ "tools": [
+  "fetch"
+ ],
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": null,
+ "architecture": null,
+ "license": "MIT",
+ "url": "/mcp/fetch"
+}

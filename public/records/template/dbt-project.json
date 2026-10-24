@@ -1,0 +1,19 @@
+{
+ "id": "tpl-dbt-project",
+ "slug": "dbt-project",
+ "type": "template",
+ "title": "dbt Project Template",
+ "description": "A layered dbt project (staging/intermediate/marts) with tests, docs, a CI workflow that builds against a staging schema, and a source freshness config.",
+ "install_command": "amp template new de-agent/dbt-project ./my-dbt",
+ "installation": "amp template new de-agent/dbt-project ./my-dbt",
+ "server": null,
+ "transport": null,
+ "tools": null,
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": "dbt-project/\n  dbt_project.yml\n  models/\n    staging/\n    intermediate/\n    marts/\n  macros/\n  tests/\n  .github/workflows/ci.yml\n",
+ "architecture": null,
+ "license": "MIT",
+ "url": "/templates/dbt-project"
+}

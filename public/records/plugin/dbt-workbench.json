@@ -1,0 +1,22 @@
+{
+ "id": "plugin-dbt-workbench",
+ "slug": "dbt-workbench",
+ "type": "plugin",
+ "title": "dbt Workbench",
+ "description": "Model review, test generation, incremental-safety checks and a full-refresh guard, plus the dbt MCP server for running commands from the agent.",
+ "install_command": "amp plugin add de-agent/dbt-workbench",
+ "installation": "amp plugin add de-agent/dbt-workbench",
+ "server": null,
+ "transport": null,
+ "tools": [
+  "read_file",
+  "edit_file"
+ ],
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": null,
+ "architecture": null,
+ "license": "Apache-2.0",
+ "url": "/plugins/dbt-workbench"
+}

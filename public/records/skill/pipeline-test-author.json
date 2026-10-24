@@ -1,0 +1,19 @@
+{
+ "id": "skill-pipeline-test-author",
+ "slug": "pipeline-test-author",
+ "type": "skill",
+ "title": "Pipeline Test Author",
+ "description": "Builds a local DuckDB/pyarrow harness with tiny fixtures so pipeline logic is testable in CI without a cluster, and asserts on invariants, not snapshots.",
+ "install_command": "npx de-agent-platform add pipeline-test-author",
+ "installation": null,
+ "server": null,
+ "transport": null,
+ "tools": null,
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": null,
+ "architecture": null,
+ "license": "Apache-2.0",
+ "url": "/skills/pipeline-test-author"
+}

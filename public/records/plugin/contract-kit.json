@@ -1,0 +1,22 @@
+{
+ "id": "plugin-contract-kit",
+ "slug": "contract-kit",
+ "type": "plugin",
+ "title": "Contract Kit",
+ "description": "Authors data contracts, enforces them in CI, and classifies schema changes as compatible/risky/breaking for producers and consumers.",
+ "install_command": "amp plugin add de-agent/contract-kit",
+ "installation": "amp plugin add de-agent/contract-kit",
+ "server": null,
+ "transport": null,
+ "tools": [
+  "read_file",
+  "edit_file"
+ ],
+ "trigger": null,
+ "implementation": null,
+ "failure_behavior": null,
+ "repo_structure": null,
+ "architecture": null,
+ "license": "Apache-2.0",
+ "url": "/plugins/contract-kit"
+}

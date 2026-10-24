@@ -1,0 +1,19 @@
+{
+ "id": "hook-backfill-safety-check",
+ "slug": "backfill-safety-check",
+ "type": "hook",
+ "title": "Backfill Safety Check",
+ "description": "Refuse to start a backfill that lacks a rollback path or overlaps the daily run.",
+ "install_command": null,
+ "installation": null,
+ "server": null,
+ "transport": null,
+ "tools": null,
+ "trigger": "pre-run",
+ "implementation": "Intercepts a backfill trigger. Requires: an explicit date range, a target that\nis either a shadow table or snapshotted, and a window that does not overlap the\nscheduled production run. Denies otherwise.\n",
+ "failure_behavior": "block",
+ "repo_structure": null,
+ "architecture": null,
+ "license": "Apache-2.0",
+ "url": "/hooks/backfill-safety-check"
+}
