@@ -61,5 +61,19 @@
   },
   "engines": {
     "node": ">=18"
-  }
+  },
+  "keywords": [
+    "data-engineering",
+    "agent-skills",
+    "mcp",
+    "claude-code",
+    "opencode",
+    "cli",
+    "installer",
+    "dbt",
+    "kafka",
+    "spark",
+    "airflow"
+  ],
+  "homepage": "https://emanisha.in/de-agent"
 }
