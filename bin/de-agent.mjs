@@ -13,15 +13,20 @@ import { agentIds, installPlan, installSkill, fetchSkillMd } from '../src/lib/in
 
 const DEFAULT_SOURCE = 'https://emanisha.in/de-agent';
 
-function usage() {
-  console.log(`de-agent — install registry skills into your coding CLIs
+function usage(to = console.log) {
+  to(`de-agent — install registry skills into your coding CLIs
 Usage: de-agent add <slug> [--agent <id|all>] [--global] [--dry-run] [--source <url>]
 Agents: ${agentIds().join(', ')}`);
 }
 
 async function main(argv) {
   const [cmd, slug, ...rest] = argv;
-  if (cmd !== 'add' || !slug) { usage(); process.exitCode = 2; return; }
+  if (cmd === '--help' || cmd === '-h') { usage(); process.exitCode = 0; return; }
+  if (!cmd) { usage(console.error); process.exitCode = 2; return; }
+  if (cmd !== 'add' || !slug) {
+    console.error(cmd !== 'add' ? `Error: unknown command "${cmd}"` : 'Error: add requires a skill slug');
+    usage(console.error); process.exitCode = 2; return;
+  }
   const flag = (name) => {
     const i = rest.indexOf(`--${name}`);
     return i === -1 ? null : (rest[i + 1] && !rest[i + 1].startsWith('--') ? rest[i + 1] : true);
