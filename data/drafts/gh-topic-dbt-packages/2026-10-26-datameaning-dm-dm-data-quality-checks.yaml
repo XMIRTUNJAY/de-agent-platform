@@ -1,0 +1,62 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ref-datameaning-dm-dm-data-quality-checks
+  slug: datameaning-dm-dm-data-quality-checks
+  type: reference
+  title: datameaning-dm/dm-data-quality-checks
+  description: >-
+    dbt package: write data quality rules in YAML and run them natively as
+    Snowflake data metric functions and Databricks Lakeflow expectations. Apache
+    2.0, by Data Meaning.
+
+
+    Install (from source README):
+
+    1. Add the package to your dbt project's `packages.yml`, then run `dbt
+    deps`:
+
+       ```yaml
+       packages:
+         - local: ../dm-data-quality-checks   # or a git URL once published
+       ```
+
+    2. Declare rules under `meta.native_dq` on a model, seed, snapshot or source
+    table:
+
+       ```yaml
+       models:
+         - name: orders
+           config:
+             meta:
+               native_dq:
+                 steward: steward.sales@example.com
+                 rules:
+                   - id: orders_customer_id_not_null
+                     type: not_null
+                     column: customer_id
+                     severity: critical
+                   -
+  category: cat-data-quality
+  tags:
+    - data-metric-functions
+    - data-quality
+    - databricks
+    - dbt
+    - dbt-package
+    - lakeflow
+    - snowflake
+  url: https://github.com/datameaning-dm/dm-data-quality-checks
+  publisher: GitHub topic — dbt packages
+  source_url: https://github.com/datameaning-dm/dm-data-quality-checks
+  github_url: https://github.com/datameaning-dm/dm-data-quality-checks
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-dbt-packages
+    extracted_at: 2026-10-26T12:05:28.517Z
+    lane: extract

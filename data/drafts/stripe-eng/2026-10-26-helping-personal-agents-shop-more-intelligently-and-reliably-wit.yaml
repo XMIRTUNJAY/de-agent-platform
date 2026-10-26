@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-helping-personal-agents-shop-more-intelligently-and-reliably-wit
+  slug: helping-personal-agents-shop-more-intelligently-and-reliably-wit
+  type: reference
+  title: Helping personal agents shop more intelligently and reliably with Link
+  description: As agents take on more purchases, agent builders have increasingly
+    asked us to help agents navigate checkout and earn consumer trust. Today,
+    we’re sharing three major improvements to support this broader set of needs.
+  category: cat-agentic
+  tags: []
+  url: https://stripe.com/blog/helping-personal-agents-shop-more-intelligently-and-reliably-with-link
+  publisher: Stripe Engineering Blog
+  kind: blog
+  why: null
+  source_url: https://stripe.com/blog/helping-personal-agents-shop-more-intelligently-and-reliably-with-link
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: stripe-eng
+    extracted_at: 2026-10-26T12:02:59.010Z
+    published: Tue, 29 Sep 2026 00:00:00 +0000
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

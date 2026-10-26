@@ -1,0 +1,57 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-nitinx12-banking-delta-lakehouse
+  slug: nitinx12-banking-delta-lakehouse
+  type: agent
+  title: Nitinx12/Banking-Delta-Lakehouse
+  description: >-
+    End-to-end banking data lakehouse pipeline built with PySpark, PostgreSQL,
+    Databricks Delta, and Apache Airflow, featuring incremental ingestion,
+    medallion architecture, SQL transformations, automated data quality checks,
+    audit logging, and a Streamlit dashboard.
+
+
+    Install (from source README):
+
+    ```bash
+
+    make install     # runtime + dev dependencies (uv)
+
+    make hooks       # enable the repo git hooks
+
+    make ci          # local gate: lint + contracts + sql-lint + coverage +
+    smoke
+
+    make daily       # run the whole pipeline
+
+    ```
+
+
+    On Windows use `tasks.bat <target>` instead of `make <target>`; the two are
+
+    kept in sync by `tests/smoke/test_make_parity.py`.
+  category: cat-lakehouse
+  tags:
+    - apache-airflow
+    - data-engineering
+    - data-quality
+    - data-warehouse
+    - databricks
+    - delta-lake
+    - etl-pipeline
+    - jinja2-templates
+  url: https://github.com/Nitinx12/Banking-Delta-Lakehouse
+  publisher: GitHub topic — Delta Lake tooling
+  source_url: https://github.com/Nitinx12/Banking-Delta-Lakehouse
+  github_url: https://github.com/Nitinx12/Banking-Delta-Lakehouse
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-delta-lake
+    extracted_at: 2026-10-26T12:05:54.420Z
+    lane: extract

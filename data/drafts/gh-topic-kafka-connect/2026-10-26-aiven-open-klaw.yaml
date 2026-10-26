@@ -1,0 +1,31 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-aiven-open-klaw
+  slug: aiven-open-klaw
+  type: agent
+  title: Aiven-Open/klaw
+  description: Klaw, the latest OS tool by Aiven, helps enterprises cope with
+    Apache Kafka(r) topics, schema registry and connectors governance by
+    introducing roles/authorizations to users of various teams of an org.
+  category: cat-streaming
+  tags:
+    - apache-kafka
+    - governance
+    - kafka
+    - kafka-connect
+    - kafka-governance
+  url: https://github.com/Aiven-Open/klaw
+  publisher: GitHub topic — Kafka connectors
+  source_url: https://github.com/Aiven-Open/klaw
+  github_url: https://github.com/Aiven-Open/klaw
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-kafka-connect
+    extracted_at: 2026-10-26T12:06:45.320Z
+    lane: extract

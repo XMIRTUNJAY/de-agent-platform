@@ -1,0 +1,35 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-sodadata-messydata
+  slug: sodadata-messydata
+  type: skill
+  title: sodadata/messydata
+  description: |-
+    Synthetic dirty data generator
+
+    Install (from source README):
+    ```bash
+    uv pip install messydata
+  category: cat-data-quality
+  tags:
+    - data-generation
+    - data-quality
+    - dirty-data
+    - messy-data
+  url: https://github.com/sodadata/messydata
+  publisher: GitHub org — Soda
+  source_url: https://github.com/sodadata/messydata
+  github_url: https://github.com/sodadata/messydata
+  license: Apache-2.0
+  install_command: pip install messydata
+  install_candidates:
+    - pip install messydata
+  skill_files:
+    - SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-sodadata
+    extracted_at: 2026-10-26T12:07:46.068Z
+    lane: extract

@@ -1,0 +1,43 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-hkuds-vibe-trading
+  slug: hkuds-vibe-trading
+  type: skill
+  title: HKUDS/Vibe-Trading
+  description: '"Vibe-Trading: Your Personal Trading Agent"'
+  category: cat-agentic
+  tags:
+    - ai-agent
+    - algorithmic-trading
+    - backtesting
+    - fintech
+    - llm
+    - mcp
+    - multi-agent
+    - python
+  url: https://github.com/HKUDS/Vibe-Trading
+  publisher: GitHub topic — mcp
+  source_url: https://github.com/HKUDS/Vibe-Trading
+  github_url: https://github.com/HKUDS/Vibe-Trading
+  license: MIT
+  install_command: pip install vibe-trading-ai
+  install_candidates:
+    - pip install vibe-trading-ai
+  skill_files:
+    - agent/SKILL.md
+    - agent/src/skills/adr-hshare/SKILL.md
+    - agent/src/skills/akshare/SKILL.md
+    - agent/src/skills/alpha-zoo/SKILL.md
+    - agent/src/skills/ashare-pre-st-filter/SKILL.md
+    - agent/src/skills/asset-allocation/SKILL.md
+    - agent/src/skills/backtest-diagnose/SKILL.md
+    - agent/src/skills/behavioral-finance/SKILL.md
+    - agent/src/skills/bottleneck-hunter/SKILL.md
+    - agent/src/skills/candlestick/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: github-topic-mcp
+    extracted_at: 2026-10-26T12:05:13.776Z
+    lane: extract

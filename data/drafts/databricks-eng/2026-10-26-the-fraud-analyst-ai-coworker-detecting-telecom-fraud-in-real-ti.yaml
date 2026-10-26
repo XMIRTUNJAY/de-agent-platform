@@ -1,0 +1,29 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-the-fraud-analyst-ai-coworker-detecting-telecom-fraud-in-real-ti
+  slug: the-fraud-analyst-ai-coworker-detecting-telecom-fraud-in-real-ti
+  type: reference
+  title: "The Fraud Analyst AI Coworker: Detecting Telecom Fraud in Real-Time on
+    One Platform"
+  description: BackgroundAccording to the Communications Fraud Control
+    Association's 2025 survey...
+  category: null
+  tags: []
+  url: https://www.databricks.com/blog/fraud-analyst-ai-coworker-detecting-telecom-fraud-real-time-one-platform
+  publisher: Databricks Engineering Blog
+  kind: blog
+  why: null
+  source_url: https://www.databricks.com/blog/fraud-analyst-ai-coworker-detecting-telecom-fraud-real-time-one-platform
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: databricks-eng
+    extracted_at: 2026-10-26T12:02:52.155Z
+    published: Thu, 22 Oct 2026 18:30:00 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

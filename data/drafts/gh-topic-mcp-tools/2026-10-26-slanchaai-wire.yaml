@@ -1,0 +1,29 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-slanchaai-wire
+  slug: slanchaai-wire
+  type: reference
+  title: SlanchaAI/wire
+  description: agent-to-agent comms, no vendor in the middle — telephone-exchange
+    protocol for AI agents. wire dial / wire send / wire pending / wire accept.
+  category: cat-agentic
+  tags: []
+  url: https://github.com/SlanchaAI/wire
+  publisher: GitHub topic — MCP tools
+  kind: blog
+  why: null
+  source_url: https://github.com/SlanchaAI/wire
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: gh-topic-mcp-tools
+    extracted_at: 2026-10-26T12:06:59.044Z
+    published: 2026-10-25T22:12:11Z
+  classification:
+    backend: rules
+    confidence: high
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

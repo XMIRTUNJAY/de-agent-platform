@@ -1,0 +1,41 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-pushary-cursor-plugin
+  slug: pushary-cursor-plugin
+  type: skill
+  title: Pushary/cursor-plugin
+  description: >-
+    Pushary for Cursor: push notifications, human-in-the-loop questions, and
+    permission gating for the Cursor agent.
+
+
+    Install (from source README):
+
+    You need two things: the plugin, and an API key.
+  category: cat-agentic
+  tags:
+    - agent-hooks
+    - agent-skills
+    - ai-agents
+    - cursor
+    - cursor-ai
+    - human-in-the-loop
+    - mcp
+    - push-notifications
+  url: https://github.com/Pushary/cursor-plugin
+  publisher: GitHub topic — agent hooks
+  source_url: https://github.com/Pushary/cursor-plugin
+  github_url: https://github.com/Pushary/cursor-plugin
+  license: MIT
+  install_command: npx pushary@latest
+  install_candidates:
+    - npx pushary@latest
+  skill_files:
+    - skills/pushary/SKILL.md
+  executables: false
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-agent-hooks
+    extracted_at: 2026-10-26T12:07:07.354Z
+    lane: extract

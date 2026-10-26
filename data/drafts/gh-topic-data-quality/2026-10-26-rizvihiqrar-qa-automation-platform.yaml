@@ -1,0 +1,34 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-rizvihiqrar-qa-automation-platform
+  slug: rizvihiqrar-qa-automation-platform
+  type: agent
+  title: rizvihiqrar/qa-automation-platform
+  description: "QA automation platform: browser, API, contract, performance,
+    accessibility and AI-assisted testing, with a release gate and a live CI
+    dashboard (24 packages)"
+  category: cat-data-quality
+  tags:
+    - api-testing
+    - bdd
+    - ci-cd
+    - claude-api
+    - contract-testing
+    - cucumber
+    - data-quality
+    - exploratory-testing
+  url: https://github.com/rizvihiqrar/qa-automation-platform
+  publisher: GitHub topic — data quality frameworks
+  source_url: https://github.com/rizvihiqrar/qa-automation-platform
+  github_url: https://github.com/rizvihiqrar/qa-automation-platform
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-data-quality
+    extracted_at: 2026-10-26T12:06:16.203Z
+    lane: extract

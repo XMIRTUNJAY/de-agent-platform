@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-from-medical-devices-to-ai-devops-engineer
+  slug: from-medical-devices-to-ai-devops-engineer
+  type: reference
+  title: From Medical Devices to AI DevOps Engineer! 🤯💻
+  description: Summary pending review — see the source.
+  category: cat-infrastructure
+  tags: []
+  url: https://www.youtube.com/shorts/1MbL0YUsSl4
+  publisher: TechWorld with Nana (devops/data infra)
+  kind: blog
+  why: null
+  source_url: https://www.youtube.com/shorts/1MbL0YUsSl4
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: yt-nana
+    extracted_at: 2026-10-26T12:03:19.995Z
+    published: 2026-07-24T14:00:26+00:00
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-infrastructure
+    suggested_type: tutorial

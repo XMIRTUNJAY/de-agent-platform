@@ -1,0 +1,29 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-from-json-strings-to-typed-columns
+  slug: from-json-strings-to-typed-columns
+  type: reference
+  title: From JSON Strings to Typed Columns
+  description: JSON often arrives as a text column inside a table, not as a file.
+    In this post, we infer a schema from such a column, adjust it, and turn the
+    column into typed columns, without first writing the data to a file.
+  category: cat-databases
+  tags: []
+  url: https://duckdb.org/2026/10/16/json-to-typed-columns.html
+  publisher: DuckDB News
+  kind: blog
+  why: null
+  source_url: https://duckdb.org/2026/10/16/json-to-typed-columns.html
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: duckdb
+    extracted_at: 2026-10-26T12:02:54.732Z
+    published: 2026-10-16T00:00:00+00:00
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

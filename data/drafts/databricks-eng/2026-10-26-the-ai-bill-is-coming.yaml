@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-the-ai-bill-is-coming
+  slug: the-ai-bill-is-coming
+  type: reference
+  title: The AI Bill is coming
+  description: In this conversation, Catherine Brown talks with Patrick about what
+    happened when...
+  category: null
+  tags: []
+  url: https://www.databricks.com/blog/ai-bill-coming
+  publisher: Databricks Engineering Blog
+  kind: blog
+  why: null
+  source_url: https://www.databricks.com/blog/ai-bill-coming
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: databricks-eng
+    extracted_at: 2026-10-26T12:02:52.156Z
+    published: Thu, 22 Oct 2026 18:12:49 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

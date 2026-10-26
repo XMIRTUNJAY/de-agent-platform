@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-the-alien-economics-of-ai-monetization
+  slug: the-alien-economics-of-ai-monetization
+  type: reference
+  title: The “alien” economics of AI monetization
+  description: As usage, costs, and customer expectations change, AI companies are
+    moving beyond traditional SaaS pricing. Leaders at Monetize 2026 shared how
+    they’re combining subscriptions with usage-based billing, building spend
+    controls into products, adapting packaging and value metrics, a
+  category: cat-cost-engineering
+  tags: []
+  url: https://stripe.com/blog/economics-of-ai-monetization
+  publisher: Stripe Engineering Blog
+  kind: blog
+  why: null
+  source_url: https://stripe.com/blog/economics-of-ai-monetization
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: stripe-eng
+    extracted_at: 2026-10-26T12:02:59.009Z
+    published: Tue, 13 Oct 2026 00:00:00 +0000
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-cost-engineering
+    suggested_type: null

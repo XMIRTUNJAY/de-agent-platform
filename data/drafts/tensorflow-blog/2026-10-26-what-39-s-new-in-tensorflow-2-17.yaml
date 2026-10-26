@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-what-39-s-new-in-tensorflow-2-17
+  slug: what-39-s-new-in-tensorflow-2-17
+  type: reference
+  title: What&#39;s new in TensorFlow 2.17
+  description: "Posted by the TensorFlow team TensorFlow 2.17 has been released!
+    Highlights of this release (and 2.16) include CUDA update, upcoming Numpy
+    2.0, and more. For the full release notes, please click here . Note: Release
+    updates on the new multi-backend Keras will be published on kera"
+  category: cat-python
+  tags: []
+  url: https://blog.tensorflow.org/2024/07/whats-new-in-tensorflow-217.html
+  publisher: TensorFlow Blog (Google)
+  kind: blog
+  why: null
+  source_url: https://blog.tensorflow.org/2024/07/whats-new-in-tensorflow-217.html
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: tensorflow-blog
+    extracted_at: 2026-10-26T12:03:04.141Z
+    published: 2024-07-18T09:00:00.000-07:00
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-python
+    suggested_type: null

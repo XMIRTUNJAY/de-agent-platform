@@ -1,0 +1,84 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-krishivai-krishiv-engine
+  slug: krishivai-krishiv-engine
+  type: skill
+  title: KrishivAI/krishiv-engine
+  description: >-
+    Rust-native, Spark-compatible compute engine for the agentic era — batch
+    SQL, streaming and incremental materialized views, from embedded to
+    distributed.
+
+
+    Install (from source README):
+
+    The embedded core runs in your process: no server, no JVM. Needs Python 3.11
+    or newer. Nothing is published yet, so
+
+    until the first release is out, build the wheel from this repository
+    (`maturin build`, see
+
+    [python/README.md](python/README.md)) and install that file instead of the
+    name below.
+
+
+    <!-- quickstart:begin (CI runs every block below from a clean venv against
+    the built wheel: .github/scripts/quickstart-test.sh) -->
+
+
+    Install, with pyarrow for the Arrow results:
+
+
+    ```bash
+
+    pip install "krishiv[pyarrow]"
+
+    ```
+
+
+    SQL and DataFrames:
+
+
+    ```python
+
+    import tempfile
+
+    from pathlib import Path
+
+
+    import py
+  category: cat-agentic
+  tags:
+    - ai-agents
+    - analytics
+    - apache-arrow
+    - batch-processing
+    - compute-engine
+    - data-engineering
+    - dataframe
+    - delta-lake
+  url: https://github.com/KrishivAI/krishiv-engine
+  publisher: GitHub topic — Delta Lake tooling
+  source_url: https://github.com/KrishivAI/krishiv-engine
+  github_url: https://github.com/KrishivAI/krishiv-engine
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - .claude/skills/krishiv-add-config/SKILL.md
+    - .claude/skills/krishiv-add-error-class/SKILL.md
+    - .claude/skills/krishiv-add-type/SKILL.md
+    - .claude/skills/krishiv-adr/SKILL.md
+    - .claude/skills/krishiv-bench-suite/SKILL.md
+    - .claude/skills/krishiv-benchmark/SKILL.md
+    - .claude/skills/krishiv-codec-feature/SKILL.md
+    - .claude/skills/krishiv-dependency/SKILL.md
+    - .claude/skills/krishiv-experiment/SKILL.md
+    - .claude/skills/krishiv-golden-category/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-delta-lake
+    extracted_at: 2026-10-26T12:05:51.375Z
+    lane: extract

@@ -1,0 +1,26 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ref-crewaiinc-awesome-crewai
+  slug: crewaiinc-awesome-crewai
+  type: reference
+  title: crewAIInc/awesome-crewai
+  description: A curated list of open-source projects built by the CrewAI
+    community. Discover, contribute, and extend the possibilities of AI agents
+    with CrewAI.
+  category: cat-agentic
+  tags: []
+  url: https://github.com/crewAIInc/awesome-crewai
+  publisher: GitHub org — CrewAI
+  source_url: https://github.com/crewAIInc/awesome-crewai
+  github_url: https://github.com/crewAIInc/awesome-crewai
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: false
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-crewai
+    extracted_at: 2026-10-26T12:04:21.473Z
+    lane: extract

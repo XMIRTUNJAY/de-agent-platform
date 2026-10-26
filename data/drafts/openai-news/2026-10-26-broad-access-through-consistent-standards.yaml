@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-broad-access-through-consistent-standards
+  slug: broad-access-through-consistent-standards
+  type: reference
+  title: Broad access through consistent standards
+  description: How OpenAI works with distribution partners to uphold consistent
+    safeguards, support responsible access, and clarify expectations in our
+    Usage Policies.
+  category: cat-agentic
+  tags: []
+  url: https://openai.com/index/broad-access-through-consistent-standards
+  publisher: OpenAI News
+  kind: blog
+  why: null
+  source_url: https://openai.com/index/broad-access-through-consistent-standards
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: openai-news
+    extracted_at: 2026-10-26T12:03:01.350Z
+    published: Wed, 21 Oct 2026 21:00:00 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

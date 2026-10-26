@@ -1,0 +1,52 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-borski-travel-hacking-toolkit
+  slug: borski-travel-hacking-toolkit
+  type: skill
+  title: borski/travel-hacking-toolkit
+  description: >-
+    AI-powered travel hacking and search with cash, points, miles, and award
+    flights. Drop-in skills and MCP servers for Claude, Codex, and OpenCode.
+
+
+    Install (from source README):
+
+    The easiest way to use the toolkit. Pick your tool:
+
+
+    claude --plugin-dir .
+  category: cat-agentic
+  tags:
+    - award-flights
+    - claude-code
+    - flights
+    - hotels
+    - mcp
+    - opencode
+    - points-and-miles
+    - skills
+  url: https://github.com/borski/travel-hacking-toolkit
+  publisher: GitHub topic — claude-code
+  source_url: https://github.com/borski/travel-hacking-toolkit
+  github_url: https://github.com/borski/travel-hacking-toolkit
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - plugins/travel-hacking-toolkit/skills/alliances/SKILL.md
+    - plugins/travel-hacking-toolkit/skills/american-airlines/SKILL.md
+    - plugins/travel-hacking-toolkit/skills/amex-travel/SKILL.md
+    - plugins/travel-hacking-toolkit/skills/atlas-obscura/SKILL.md
+    - plugins/travel-hacking-toolkit/skills/award-calendar/SKILL.md
+    - plugins/travel-hacking-toolkit/skills/award-holds/SKILL.md
+    - plugins/travel-hacking-toolkit/skills/award-sweet-spots/SKILL.md
+    - plugins/travel-hacking-toolkit/skills/awardwallet/SKILL.md
+    - plugins/travel-hacking-toolkit/skills/bilt/SKILL.md
+    - plugins/travel-hacking-toolkit/skills/booking-guidance/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-claude-code
+    extracted_at: 2026-10-26T12:04:33.583Z
+    lane: extract

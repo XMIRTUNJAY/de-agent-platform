@@ -1,0 +1,27 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-dathere-qsv
+  slug: dathere-qsv
+  type: reference
+  title: dathere/qsv
+  description: Blazing-fast, Neuro-symbolic Data-Wrangling toolkit
+  category: null
+  tags: []
+  url: https://github.com/dathere/qsv
+  publisher: GitHub topic — data-engineering
+  kind: blog
+  why: null
+  source_url: https://github.com/dathere/qsv
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: github-topic-de
+    extracted_at: 2026-10-26T12:05:05.110Z
+    published: 2026-10-26T11:11:43Z
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

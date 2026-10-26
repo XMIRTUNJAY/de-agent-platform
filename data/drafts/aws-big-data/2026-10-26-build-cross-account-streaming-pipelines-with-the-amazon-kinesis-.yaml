@@ -1,0 +1,34 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-build-cross-account-streaming-pipelines-with-the-amazon-kinesis-
+  slug: build-cross-account-streaming-pipelines-with-the-amazon-kinesis-
+  type: reference
+  title: Build cross-account streaming pipelines with the Amazon Kinesis Producer
+    Library and Kinesis Client Library
+  description: Learn how to build an enterprise-scale cross-account streaming
+    pipeline with Amazon Kinesis Data Streams using the Kinesis Producer Library
+    (KPL) and Kinesis Client Library (KCL) across three separate AWS accounts,
+    with resource-based policies, cross-account IAM, and a shared cus
+  category: cat-streaming
+  tags: []
+  url: https://aws.amazon.com/blogs/big-data/build-cross-account-streaming-pipelines-with-the-amazon-kinesis-producer-library-and-kinesis-client-library/
+  publisher: AWS Big Data Blog
+  kind: blog
+  why: null
+  source_url: https://aws.amazon.com/blogs/big-data/build-cross-account-streaming-pipelines-with-the-amazon-kinesis-producer-library-and-kinesis-client-library/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: aws-big-data
+    extracted_at: 2026-10-26T12:02:48.470Z
+    published: Mon, 12 Oct 2026 15:48:07 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-streaming
+      - cat-aws
+      - cat-security
+    suggested_type: tutorial

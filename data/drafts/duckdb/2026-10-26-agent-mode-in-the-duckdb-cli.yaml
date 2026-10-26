@@ -1,0 +1,33 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-agent-mode-in-the-duckdb-cli
+  slug: agent-mode-in-the-duckdb-cli
+  type: reference
+  title: Agent Mode in the DuckDB CLI
+  description: The DuckDB v2.0 CLI has an agent mode that gets AI coding agents to
+    a correct result faster and with fewer tokens. When the CLI detects an
+    agent, it prints compact Markdown tables instead of padded boxes, says
+    clearly when a result was cut, stops runaway queries early, and report
+  category: cat-agentic
+  tags: []
+  url: https://duckdb.org/2026/10/09/agent-mode.html
+  publisher: DuckDB News
+  kind: blog
+  why: null
+  source_url: https://duckdb.org/2026/10/09/agent-mode.html
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: duckdb
+    extracted_at: 2026-10-26T12:02:54.733Z
+    published: 2026-10-09T00:00:00+00:00
+  classification:
+    backend: rules
+    confidence: high
+    suggested_categories:
+      - cat-agentic
+      - cat-databases
+      - cat-cost-engineering
+    suggested_type: null

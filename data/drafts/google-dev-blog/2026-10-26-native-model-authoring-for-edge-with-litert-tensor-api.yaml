@@ -1,0 +1,29 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-native-model-authoring-for-edge-with-litert-tensor-api
+  slug: native-model-authoring-for-edge-with-litert-tensor-api
+  type: reference
+  title: Native Model Authoring for Edge with LiteRT Tensor API
+  description: "Meet the LiteRT Tensor API: giving developers native C++ control
+    over the model graph to unify end-to-end ML computations on heterogeneous
+    edge hardware."
+  category: null
+  tags: []
+  url: https://developers.googleblog.com/native-model-authoring-for-edge-with-litert-tensor-api/
+  publisher: Google Developers Blog
+  kind: blog
+  why: null
+  source_url: https://developers.googleblog.com/native-model-authoring-for-edge-with-litert-tensor-api/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: google-dev-blog
+    extracted_at: 2026-10-26T12:02:51.623Z
+    published: null
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: tutorial

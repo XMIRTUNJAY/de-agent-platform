@@ -1,0 +1,32 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-claude-code-vs-cursor-what-a-field-test-shows-that-the-feature-c
+  slug: claude-code-vs-cursor-what-a-field-test-shows-that-the-feature-c
+  type: reference
+  title: "Claude Code vs. Cursor: What a Field Test Shows That the Feature
+    Comparisons Miss"
+  description: "One benchmark says Claude Code used 33,000 tokens where Cursor
+    used 188,000. Another says the exact reverse. Here is the field test that
+    actually settles it for your team. The post Claude Code vs. Cursor: What a
+    Field Test Shows That the Feature Comparisons Miss appeared first on"
+  category: cat-agentic
+  tags: []
+  url: https://towardsdatascience.com/claude-code-vs-cursor-what-a-field-test-shows-that-the-feature-comparisons-miss/
+  publisher: Towards Data Science
+  kind: blog
+  why: null
+  source_url: https://towardsdatascience.com/claude-code-vs-cursor-what-a-field-test-shows-that-the-feature-comparisons-miss/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: towards-data-science
+    extracted_at: 2026-10-26T12:03:08.099Z
+    published: Mon, 26 Oct 2026 11:00:00 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+    suggested_type: tutorial

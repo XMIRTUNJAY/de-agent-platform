@@ -1,0 +1,25 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-modelcontextprotocol-ext-skills
+  slug: modelcontextprotocol-ext-skills
+  type: agent
+  title: modelcontextprotocol/ext-skills
+  description: MCP Extension for Skills discovery and distribution through MCP
+    primitives. Maintained by the Skills Over MCP Working Group.
+  category: cat-agentic
+  tags: []
+  url: https://github.com/modelcontextprotocol/ext-skills
+  publisher: GitHub org — modelcontextprotocol
+  source_url: https://github.com/modelcontextprotocol/ext-skills
+  github_url: https://github.com/modelcontextprotocol/ext-skills
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: false
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-modelcontextprotocol
+    extracted_at: 2026-10-26T12:07:30.604Z
+    lane: extract

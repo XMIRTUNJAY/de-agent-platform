@@ -1,0 +1,47 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-google-yggdrasil-decision-forests
+  slug: google-yggdrasil-decision-forests
+  type: agent
+  title: google/yggdrasil-decision-forests
+  description: >-
+    A library to train, evaluate, interpret, and productionize decision forest
+    models such as Random Forest and Gradient Boosted Decision Trees. 
+
+
+    Install (from source README):
+
+    To install YDF from [PyPI](https://pypi.org/project/ydf/), run:
+
+
+    ```shell
+
+    pip install ydf -U
+
+    ```
+  category: cat-agentic
+  tags:
+    - cart
+    - cli
+    - cpp
+    - decision-forest
+    - decision-trees
+    - distributed-computing
+    - go
+    - gradient-boosting
+  url: https://github.com/google/yggdrasil-decision-forests
+  publisher: GitHub org — Google (incl. Gemini samples)
+  source_url: https://github.com/google/yggdrasil-decision-forests
+  github_url: https://github.com/google/yggdrasil-decision-forests
+  license: Apache-2.0
+  install_command: pip install ydf
+  install_candidates:
+    - pip install ydf
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-google
+    extracted_at: 2026-10-26T12:03:38.223Z
+    lane: extract

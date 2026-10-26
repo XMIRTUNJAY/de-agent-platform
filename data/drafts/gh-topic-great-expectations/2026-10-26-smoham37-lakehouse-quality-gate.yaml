@@ -1,0 +1,46 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-smoham37-lakehouse-quality-gate
+  slug: smoham37-lakehouse-quality-gate
+  type: agent
+  title: smoham37/lakehouse-quality-gate
+  description: >-
+    An active data-quality gate: a dbt plus Great Expectations checkpoint that
+    fails the pipeline and emits a webhook alert on schema drift or null-floods
+    before bad data reaches trusted marts.
+
+
+    Install (from source README):
+
+    ```bash
+
+    python -m venv .venv
+
+    source .venv/bin/activate
+
+    pip install -r requirements.txt
+  category: cat-data-quality
+  tags:
+    - apache-airflow
+    - dbt
+    - duckdb
+    - github-actions
+    - great-expectations
+    - parquet
+    - python
+  url: https://github.com/smoham37/lakehouse-quality-gate
+  publisher: GitHub topic — Great Expectations ecosystem
+  source_url: https://github.com/smoham37/lakehouse-quality-gate
+  github_url: https://github.com/smoham37/lakehouse-quality-gate
+  license: MIT
+  install_command: pip install -r
+  install_candidates:
+    - pip install -r
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-great-expectations
+    extracted_at: 2026-10-26T12:06:54.308Z
+    lane: extract

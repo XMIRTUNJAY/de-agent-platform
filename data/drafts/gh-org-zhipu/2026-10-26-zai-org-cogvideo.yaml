@@ -1,0 +1,31 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ref-zai-org-cogvideo
+  slug: zai-org-cogvideo
+  type: reference
+  title: zai-org/CogVideo
+  description: "text and image to video generation: CogVideoX (2024) and CogVideo
+    (ICLR 2023)"
+  category: cat-agentic
+  tags:
+    - cogvideox
+    - image-to-video
+    - llm
+    - sora
+    - text-to-video
+    - video-generation
+  url: https://github.com/zai-org/CogVideo
+  publisher: GitHub org — Zhipu AI (GLM — moved to zai-org)
+  source_url: https://github.com/zai-org/CogVideo
+  github_url: https://github.com/zai-org/CogVideo
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-zhipu
+    extracted_at: 2026-10-26T12:04:05.507Z
+    lane: extract

@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-shipping-media-over-quic-at-meta-scale-for-instagram-live-ingest
+  slug: shipping-media-over-quic-at-meta-scale-for-instagram-live-ingest
+  type: reference
+  title: Shipping Media Over QUIC at Meta Scale for Instagram Live Ingest
+  description: Meta has begun deploying Media over QUIC (MoQ), an emerging open
+    protocol for real-time video streaming at scale. MoQ will help simplify our
+    protocol stack for live streaming video and enhance overall user experience
+    for live video. We’re sharing how we shipped MoQ on Instagram L
+  category: cat-streaming
+  tags: []
+  url: https://engineering.fb.com/2026/10/12/video-engineering/shipping-media-over-quic-at-meta-scale-for-instagram-live-ingest/
+  publisher: Meta Engineering Blog
+  kind: blog
+  why: null
+  source_url: https://engineering.fb.com/2026/10/12/video-engineering/shipping-media-over-quic-at-meta-scale-for-instagram-live-ingest/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: meta-eng
+    extracted_at: 2026-10-26T12:02:57.113Z
+    published: Mon, 12 Oct 2026 16:01:32 +0000
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-streaming
+    suggested_type: null

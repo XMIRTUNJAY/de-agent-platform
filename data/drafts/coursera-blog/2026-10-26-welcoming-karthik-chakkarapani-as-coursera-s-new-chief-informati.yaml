@@ -1,0 +1,29 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-welcoming-karthik-chakkarapani-as-coursera-s-new-chief-informati
+  slug: welcoming-karthik-chakkarapani-as-coursera-s-new-chief-informati
+  type: reference
+  title: Welcoming Karthik Chakkarapani as Coursera’s new Chief Information Officer
+  description: I’m excited to welcome Karthik Chakkarapani to Coursera as our new
+    SVP Chief Information Officer. The post Welcoming Karthik Chakkarapani as
+    Coursera’s new Chief Information Officer appeared first on Coursera Blog .
+  category: null
+  tags: []
+  url: https://blog.coursera.org/welcoming-karthik-chakkarapani-as-courseras-new-chief-information-officer/
+  publisher: Coursera Blog
+  kind: blog
+  why: null
+  source_url: https://blog.coursera.org/welcoming-karthik-chakkarapani-as-courseras-new-chief-information-officer/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: coursera-blog
+    extracted_at: 2026-10-26T12:03:06.054Z
+    published: Fri, 18 Sep 2026 16:00:00 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: tutorial

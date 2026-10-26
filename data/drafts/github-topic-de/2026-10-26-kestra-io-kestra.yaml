@@ -1,0 +1,35 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-kestra-io-kestra
+  slug: kestra-io-kestra
+  type: agent
+  title: kestra-io/kestra
+  description: Orchestrate everything, everywhere. The open-source control plane
+    for workflows across data, infrastructure, business processes and AI agents.
+    Declarative YAML, event-driven, any language, Git-versioned, scalable to
+    millions of executions.
+  category: cat-agentic
+  tags:
+    - ai-agents
+    - automation
+    - control-plane
+    - data-engineering
+    - data-orchestration
+    - data-orchestrator
+    - devops
+    - etl
+  url: https://github.com/kestra-io/kestra
+  publisher: GitHub topic — data-engineering
+  source_url: https://github.com/kestra-io/kestra
+  github_url: https://github.com/kestra-io/kestra
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: github-topic-de
+    extracted_at: 2026-10-26T12:04:59.941Z
+    lane: extract

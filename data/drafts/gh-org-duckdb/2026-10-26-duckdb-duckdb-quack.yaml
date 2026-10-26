@@ -1,0 +1,24 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-duckdb-duckdb-quack
+  slug: duckdb-duckdb-quack
+  type: agent
+  title: duckdb/duckdb-quack
+  description: See the source repository.
+  category: cat-databases
+  tags: []
+  url: https://github.com/duckdb/duckdb-quack
+  publisher: GitHub org — DuckDB
+  source_url: https://github.com/duckdb/duckdb-quack
+  github_url: https://github.com/duckdb/duckdb-quack
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-duckdb
+    extracted_at: 2026-10-26T12:07:59.217Z
+    lane: extract

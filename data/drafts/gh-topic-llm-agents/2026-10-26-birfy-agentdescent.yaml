@@ -1,0 +1,87 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-birfy-agentdescent
+  slug: birfy-agentdescent
+  type: skill
+  title: Birfy/agentdescent
+  description: >-
+    Gradient descent, but the parameters are agents — a parallel, asynchronous
+    framework for self-evolving agents (skills, prompts, harnesses). Diffs are
+    the gradients; the aggregator is the optimizer.
+
+
+    Install (from source README):
+
+    Install **0.7.0** from PyPI:
+
+
+    ```bash
+
+    pip install "agentdescent>=0.7.0"
+
+    agentdescent demo
+
+    ```
+
+
+    Or, when developing from source, install your checkout:
+
+
+    ```bash
+
+    git clone https://github.com/Birfy/agentdescent && cd agentdescent
+
+    pip install -e .
+
+    agentdescent demo
+
+    ```
+
+
+    The library supports Python ≥ 3.9 and installs NumPy for its
+
+    prediction-powered audit estimator. The packaged demo runs the offline
+
+    evolution loop without a model API key and ends with output like:
+
+
+    ```
+
+    held-out reward: 1.000 outcomes: {'committed': 1}
+
+    what it learned: rules.md -> 'COLUMN: amount'
+
+    ```
+
+
+    Research examples are outside
+  category: cat-agentic
+  tags:
+    - agent-framework
+    - agents
+    - ai-agents
+    - asynchronous
+    - evolutionary-algorithms
+    - gradient-descent
+    - llm
+    - llm-agents
+  url: https://github.com/Birfy/agentdescent
+  publisher: GitHub topic — llm agents
+  source_url: https://github.com/Birfy/agentdescent
+  github_url: https://github.com/Birfy/agentdescent
+  license: MIT
+  install_command: pip install -e
+  install_candidates:
+    - pip install -e
+  skill_files:
+    - .claude/skills/fix-issue/SKILL.md
+    - .claude/skills/review-pr/SKILL.md
+    - agentdescent/integrations/SKILL.md
+    - integrations/claude-code/skills/agentdescent/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-llm-agents
+    extracted_at: 2026-10-26T12:04:53.766Z
+    lane: extract

@@ -1,0 +1,39 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ref-deepseek-ai-deepseek-recipe
+  slug: deepseek-ai-deepseek-recipe
+  type: reference
+  title: deepseek-ai/deepseek-recipe
+  description: |-
+    Install (from source README):
+    Python 3.10+:
+
+    ```sh
+    python3 -m pip install deepseek-recipe
+    ```
+
+
+    ```sh
+    cargo add deepseek-recipe@0.2 deepseek-recipe-encoding@0.2 serde_json@1
+    ```
+
+    See the [development guide](docs/development.md) for source builds and image
+    dependencies.
+  category: cat-agentic
+  tags: []
+  url: https://github.com/deepseek-ai/deepseek-recipe
+  publisher: GitHub org — DeepSeek
+  source_url: https://github.com/deepseek-ai/deepseek-recipe
+  github_url: https://github.com/deepseek-ai/deepseek-recipe
+  license: MIT
+  install_command: pip install deepseek-recipe
+  install_candidates:
+    - pip install deepseek-recipe
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-deepseek
+    extracted_at: 2026-10-26T12:03:47.619Z
+    lane: extract

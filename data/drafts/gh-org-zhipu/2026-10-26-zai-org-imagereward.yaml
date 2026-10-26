@@ -1,0 +1,74 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ref-zai-org-imagereward
+  slug: zai-org-imagereward
+  type: reference
+  title: zai-org/ImageReward
+  description: >-
+    [NeurIPS 2023] ImageReward: Learning and Evaluating Human Preferences for
+    Text-to-image Generation
+
+
+    Install (from source README):
+
+    import ImageReward as RM
+
+    model = RM.load("ImageReward-v1.0")
+
+
+    rewards = model.score("<prompt>", ["<img1_obj_or_path>",
+    "<img2_obj_or_path>", ...])
+
+    ```
+
+
+    Try `image-reward` package in only 4 lines of code for ReFL fine-tuning!
+
+
+    ```python
+
+    from ImageReward import ReFL
+
+    args = ReFL.parse_args()
+
+    trainer = ReFL.Trainer("CompVis/stable-diffusion-v1-4",
+    "data/refl_data.json", args=args)
+
+    trainer.train(args=args)
+
+    ```
+
+
+    If you find `ImageReward`'s open-source effort useful, please 🌟 us to
+    encourage our following developement!
+
+
+    <p align="center">
+        <img src="figures/ImageReward.jpg" width="700px">
+    </p>
+
+
+    -
+  category: cat-agentic
+  tags:
+    - diffusion-models
+    - generative-model
+    - human-preferences
+    - rlhf
+  url: https://github.com/zai-org/ImageReward
+  publisher: GitHub org — Zhipu AI (GLM — moved to zai-org)
+  source_url: https://github.com/zai-org/ImageReward
+  github_url: https://github.com/zai-org/ImageReward
+  license: Apache-2.0
+  install_command: pip install image-reward
+  install_candidates:
+    - pip install image-reward
+    - pip install diffusers==0.16.0
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-zhipu
+    extracted_at: 2026-10-26T12:03:59.775Z
+    lane: extract

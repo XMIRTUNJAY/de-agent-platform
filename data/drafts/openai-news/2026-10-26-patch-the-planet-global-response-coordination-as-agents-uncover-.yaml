@@ -1,0 +1,32 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-patch-the-planet-global-response-coordination-as-agents-uncover-
+  slug: patch-the-planet-global-response-coordination-as-agents-uncover-
+  type: reference
+  title: "Patch the Planet: global response coordination as agents uncover
+    critical vulnerabilities"
+  description: Patch the Planet connects security researchers, maintainers, and
+    incident responders to help address critical vulnerabilities across open
+    source.
+  category: cat-agentic
+  tags: []
+  url: https://openai.com/index/coordinated-disclosure-of-critical-vulnerabilities
+  publisher: OpenAI News
+  kind: blog
+  why: null
+  source_url: https://openai.com/index/coordinated-disclosure-of-critical-vulnerabilities
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: openai-news
+    extracted_at: 2026-10-26T12:03:01.351Z
+    published: Wed, 21 Oct 2026 07:00:00 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+      - cat-production-operations
+    suggested_type: runbook

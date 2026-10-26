@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-skewness-and-kurtosis-from-moments-to-machine-learning
+  slug: skewness-and-kurtosis-from-moments-to-machine-learning
+  type: reference
+  title: "Skewness and Kurtosis: From Moments to Machine Learning"
+  description: "The mathematics, intuition, interpretation, and practical use of
+    higher-order moments. The post Skewness and Kurtosis: From Moments to
+    Machine Learning appeared first on Towards Data Science ."
+  category: cat-spark
+  tags: []
+  url: https://towardsdatascience.com/skewness-and-kurtosis-from-moments-to-machine-learning/
+  publisher: Towards Data Science
+  kind: blog
+  why: null
+  source_url: https://towardsdatascience.com/skewness-and-kurtosis-from-moments-to-machine-learning/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: towards-data-science
+    extracted_at: 2026-10-26T12:03:08.101Z
+    published: Fri, 23 Oct 2026 14:00:00 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-spark
+    suggested_type: tutorial

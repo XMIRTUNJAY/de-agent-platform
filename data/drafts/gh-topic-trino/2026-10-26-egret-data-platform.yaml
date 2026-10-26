@@ -1,0 +1,67 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-egret-data-platform
+  slug: egret-data-platform
+  type: agent
+  title: egret-data/platform
+  description: >-
+    One governed data platform for every team: isolated workspaces, BI, Data
+    API, workflows and data apps on a shared Iceberg lakehouse, with access
+    policy enforced in Trino and StarRocks. Written in Rust.
+
+
+    Install (from source README):
+
+    Run the whole platform on Docker, with no Kubernetes: Egret, Postgres,
+    object storage, Keycloak SSO, a Trino engine,
+
+    Data Apps, a mail catcher, a PDF/PNG renderer, and a sample workspace with a
+    dataset, charts and a dashboard.
+
+
+    ```bash
+
+    git clone https://github.com/egret-data/platform.git
+
+    cd platform
+
+    just demo-up
+
+    ```
+
+
+    Then open <http://egret.localtest.me:8080> and sign in with **Admin sign-in
+    (break-glass)**:
+
+    `admin@egret.local` / `Admin12345!`. Single sign-on users `admin-sso` and
+    `member-sso` are there too, and every
+
+    mail the demo sends lands in Mailpit at <http://localhost:8025>.
+
+
+    - **Needs*
+  category: cat-lakehouse
+  tags:
+    - apache-iceberg
+    - apache-ranger
+    - business-intelligence
+    - dashboards
+    - data-api
+    - data-apps
+    - data-catalog
+    - data-governance
+  url: https://github.com/egret-data/platform
+  publisher: GitHub topic — Trino tooling
+  source_url: https://github.com/egret-data/platform
+  github_url: https://github.com/egret-data/platform
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-trino
+    extracted_at: 2026-10-26T12:06:12.954Z
+    lane: extract

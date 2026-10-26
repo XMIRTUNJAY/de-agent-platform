@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-what-fde-means-at-openai
+  slug: what-fde-means-at-openai
+  type: reference
+  title: What FDE means at OpenAI
+  description: What forward deployed engineering means at OpenAI
+  category: cat-agentic
+  tags: []
+  url: https://openai.com/index/forward-deployed-engineering-means
+  publisher: OpenAI News
+  kind: blog
+  why: null
+  source_url: https://openai.com/index/forward-deployed-engineering-means
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: openai-news
+    extracted_at: 2026-10-26T12:03:01.349Z
+    published: Thu, 22 Oct 2026 06:00:00 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

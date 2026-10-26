@@ -1,0 +1,35 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-osodevops-kafka-connect-oracle-cdc
+  slug: osodevops-kafka-connect-oracle-cdc
+  type: agent
+  title: osodevops/kafka-connect-oracle-cdc
+  description: "Open-source change data capture from Oracle Database to Apache
+    Kafka through LogMiner: a Kafka Connect source connector with exactly-once
+    delivery, a transaction journal and a preflight doctor. The Apache-2.0
+    alternative to Confluent's Oracle CDC connector."
+  category: cat-cdc
+  tags:
+    - cdc
+    - change-data-capture
+    - debezium-alternative
+    - kafka
+    - kafka-connect
+    - kafka-connector
+    - logminer
+    - oracle-database
+  url: https://github.com/osodevops/kafka-connect-oracle-cdc
+  publisher: GitHub topic — Kafka connectors
+  source_url: https://github.com/osodevops/kafka-connect-oracle-cdc
+  github_url: https://github.com/osodevops/kafka-connect-oracle-cdc
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-kafka-connect
+    extracted_at: 2026-10-26T12:06:42.229Z
+    lane: extract

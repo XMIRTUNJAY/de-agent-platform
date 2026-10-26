@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-how-to-add-guardrails-to-a-local-llm-agent
+  slug: how-to-add-guardrails-to-a-local-llm-agent
+  type: reference
+  title: How to Add Guardrails to a Local LLM Agent
+  description: A hands-on guide with Gemma 4, Ollama, and the OpenAI Agents SDK
+    The post How to Add Guardrails to a Local LLM Agent appeared first on
+    Towards Data Science .
+  category: cat-agentic
+  tags: []
+  url: https://towardsdatascience.com/how-to-add-guardrails-to-a-local-llm-agent/
+  publisher: Towards Data Science
+  kind: blog
+  why: null
+  source_url: https://towardsdatascience.com/how-to-add-guardrails-to-a-local-llm-agent/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: towards-data-science
+    extracted_at: 2026-10-26T12:03:08.100Z
+    published: Sat, 24 Oct 2026 14:00:00 GMT
+  classification:
+    backend: rules
+    confidence: high
+    suggested_categories:
+      - cat-agentic
+    suggested_type: tutorial

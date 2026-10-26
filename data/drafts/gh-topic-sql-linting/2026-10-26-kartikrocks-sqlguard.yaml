@@ -1,0 +1,74 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-kartikrocks-sqlguard
+  slug: kartikrocks-sqlguard
+  type: agent
+  title: KARTIKrocks/sqlguard
+  description: >-
+    Production-safe SQL query analyzer for Go — detects slow queries, N+1, and
+    dangerous SQL patterns at runtime and in CI. Like golangci-lint, but for
+    SQL.
+
+
+    Install (from source README):
+
+    Requires Go 1.27+.
+
+
+    ```bash
+
+    go get github.com/KARTIKrocks/sqlguard                      # library
+
+    go install github.com/KARTIKrocks/sqlguard/cmd/sqlguard@latest  # CLI
+
+    ```
+
+
+
+    ```go
+
+    package main
+
+
+    import (
+        "database/sql"
+        "log"
+        "time"
+
+        _ "github.com/jackc/pgx/v5/stdlib" // registers the "pgx" driver
+
+        "github.com/KARTIKrocks/sqlguard"
+        "github.com/KARTIKrocks/sqlguard/middleware"
+    )
+
+
+    func main() {
+        if err := sqlguard.Register("sqlguard-pg", "pgx",
+            middleware.WithSlowQueryThreshold(500*time.Millisecond),
+            middleware.WithN1Detection(5, 2*time.Second),
+        ); er
+  category: cat-sql
+  tags:
+    - database
+    - developer-tools
+    - go
+    - golang
+    - gorm
+    - linter
+    - middleware
+    - mysql
+  url: https://github.com/KARTIKrocks/sqlguard
+  publisher: GitHub topic — SQL linting & review
+  source_url: https://github.com/KARTIKrocks/sqlguard
+  github_url: https://github.com/KARTIKrocks/sqlguard
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-sql-linting
+    extracted_at: 2026-10-26T12:07:24.833Z
+    lane: extract

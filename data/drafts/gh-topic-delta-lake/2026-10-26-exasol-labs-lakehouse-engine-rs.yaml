@@ -1,0 +1,58 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-exasol-labs-lakehouse-engine-rs
+  slug: exasol-labs-lakehouse-engine-rs
+  type: agent
+  title: exasol-labs/lakehouse-engine-rs
+  description: >-
+    In-place query engine for Lakehouses (Iceberg and Delta Lake) for Exasol.
+    Written in Rust 🦀
+
+
+    Install (from source README):
+
+    After you deploy the engine (see [Install](docs/install.md)), create a
+    Virtual Schema. Then query
+
+    the schema:
+
+
+    ```sql
+
+    CREATE VIRTUAL SCHEMA MY_LAKEHOUSE
+
+    USING LHVS.LAKEHOUSE_ADAPTER WITH
+      CATALOG_CONNECTION = 'LAKEHOUSE_CATALOG_CREDS'
+      NAMESPACE          = 'default';
+
+    SELECT id, name, score FROM MY_LAKEHOUSE.EVENTS WHERE score > 15.0 LIMIT 5;
+
+    ```
+
+
+    ---
+  category: cat-lakehouse
+  tags:
+    - data-bakehouse
+    - database
+    - datalake
+    - delta-lake
+    - exasol
+    - iceberg
+    - lakehouse
+    - lakehouse-architecture
+  url: https://github.com/exasol-labs/lakehouse-engine-rs
+  publisher: GitHub topic — Delta Lake tooling
+  source_url: https://github.com/exasol-labs/lakehouse-engine-rs
+  github_url: https://github.com/exasol-labs/lakehouse-engine-rs
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-delta-lake
+    extracted_at: 2026-10-26T12:05:53.437Z
+    lane: extract

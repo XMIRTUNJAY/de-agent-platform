@@ -1,0 +1,52 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-rolovibes-halo-harness
+  slug: rolovibes-halo-harness
+  type: skill
+  title: roloVibes/Halo-Harness
+  description: |-
+    Multi-model agent harness with orchestration, Claude Code compatibility, local LLM support, and live agent monitoring.
+
+    Install (from source README):
+    Install, then `halo start`:
+
+    ```sh
+    curl -fsSL https://raw.githubusercontent.com/roloVibes/Halo-Harness/v3.2.3.0/scripts/install-halo.sh | bash
+    halo init        # the wizard: provider, model, permission mode, theme, lineup
+    halo start       # the guided first run: its card (models, cost, time, what it writes), then one real Orchestra run
+    ```
+
+    Windows:
+
+    ```powershell
+    powershell -ExecutionPolicy ByPass -c "irm https://raw.githubusercontent.com/roloVibes/Halo-Harness/v3.2.3.0/scripts/install-halo.ps1 | iex"
+    ```
+
+    The installer is fetched from a release tag, never a moving branch, and installs the
+    ne
+  category: cat-agentic
+  tags:
+    - agent-dashboard
+    - agent-harness
+    - agent-orchestration
+    - ai-agents
+    - claude-code
+    - coding-agent
+    - llm-agents
+    - mcp
+  url: https://github.com/roloVibes/Halo-Harness
+  publisher: GitHub topic — llm agents
+  source_url: https://github.com/roloVibes/Halo-Harness
+  github_url: https://github.com/roloVibes/Halo-Harness
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - halo_harness/templates/packs/doc-review/skills/check-links/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-llm-agents
+    extracted_at: 2026-10-26T12:04:54.785Z
+    lane: extract

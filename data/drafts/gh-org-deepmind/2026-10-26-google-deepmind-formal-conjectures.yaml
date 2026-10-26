@@ -1,0 +1,26 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-google-deepmind-formal-conjectures
+  slug: google-deepmind-formal-conjectures
+  type: agent
+  title: google-deepmind/formal-conjectures
+  description: A collection of formalized statements of conjectures in Lean.
+  category: cat-agentic
+  tags:
+    - formal-mathematics
+    - lean4
+  url: https://github.com/google-deepmind/formal-conjectures
+  publisher: GitHub org — Google DeepMind
+  source_url: https://github.com/google-deepmind/formal-conjectures
+  github_url: https://github.com/google-deepmind/formal-conjectures
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-deepmind
+    extracted_at: 2026-10-26T12:03:34.381Z
+    lane: extract

@@ -1,0 +1,43 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-philterd-opensearch-agent-skill-right-to-be-forgotten
+  slug: philterd-opensearch-agent-skill-right-to-be-forgotten
+  type: skill
+  title: philterd/opensearch-agent-skill-right-to-be-forgotten
+  description: >-
+    An OpenSearch agent skill for "right to be forgotten" erasure, including
+    indirect contextual identification.
+
+
+    Install (from source README):
+
+    Requires `uv`, and Docker for the local demo.
+
+
+    ```bash
+
+    npx skills add philterd/opensearch-agent-right-to-be-forgotten
+  category: cat-agentic
+  tags:
+    - agent-skills
+    - gdpr
+    - hybrid-search
+    - opensearch
+    - pii
+  url: https://github.com/philterd/opensearch-agent-skill-right-to-be-forgotten
+  publisher: GitHub topic — agent-skills
+  source_url: https://github.com/philterd/opensearch-agent-skill-right-to-be-forgotten
+  github_url: https://github.com/philterd/opensearch-agent-skill-right-to-be-forgotten
+  license: Apache-2.0
+  install_command: npx skills
+  install_candidates:
+    - npx skills
+  skill_files:
+    - SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-agent-skills
+    extracted_at: 2026-10-26T12:04:48.140Z
+    lane: extract

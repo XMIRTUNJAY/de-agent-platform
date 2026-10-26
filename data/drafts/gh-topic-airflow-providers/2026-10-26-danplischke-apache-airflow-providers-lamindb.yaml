@@ -1,0 +1,62 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-danplischke-apache-airflow-providers-lamindb
+  slug: danplischke-apache-airflow-providers-lamindb
+  type: agent
+  title: danplischke/apache-airflow-providers-lamindb
+  description: >-
+    Apache Airflow provider for LaminDB: track DAG runs as flows and tasks as
+    steps, and trigger DAGs on LaminHub events.
+
+
+    Install (from source README):
+
+    ```bash
+
+    pip install apache-airflow-providers-lamindb
+
+    pip install "apache-airflow-providers-lamindb[k8s]"  # adds
+    @task.lamindb_kubernetes
+
+    ```
+
+
+    Requires `apache-airflow>=3.3.0` and `apache-airflow-providers-standard`.
+    Airflow 3.3.0 added the asset
+
+    state store that the event triggers use to resume after restarts.
+
+
+    Supports lamindb 2.8.1 and newer only, for LaminDB instances and for the
+    lamindb that lineage tasks
+
+    run. Older versions fail deliberately with an explicit error.
+
+
+    Lineage tasks install `lamindb` in their own virtualenv or use the pod's
+    image, so its version
+
+    does not have to fit Airflow
+  category: cat-airflow
+  tags:
+    - airflow
+    - airflow-provider
+    - apache-airflow
+    - data-lineage
+    - lamindb
+  url: https://github.com/danplischke/apache-airflow-providers-lamindb
+  publisher: GitHub topic — airflow providers
+  source_url: https://github.com/danplischke/apache-airflow-providers-lamindb
+  github_url: https://github.com/danplischke/apache-airflow-providers-lamindb
+  license: MIT
+  install_command: pip install apache-airflow-providers-lamindb
+  install_candidates:
+    - pip install apache-airflow-providers-lamindb
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-airflow-providers
+    extracted_at: 2026-10-26T12:05:37.029Z
+    lane: extract

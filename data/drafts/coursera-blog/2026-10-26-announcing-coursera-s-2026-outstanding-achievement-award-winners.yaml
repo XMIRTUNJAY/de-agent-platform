@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-announcing-coursera-s-2026-outstanding-achievement-award-winners
+  slug: announcing-coursera-s-2026-outstanding-achievement-award-winners
+  type: reference
+  title: Announcing Coursera’s 2026 Outstanding Achievement Award winners
+  description: Meet the organizations building stronger skills, broader access,
+    sustained engagement, and measurable results through learning. The post
+    Announcing Coursera’s 2026 Outstanding Achievement Award winners appeared
+    first on Coursera Blog .
+  category: null
+  tags: []
+  url: https://blog.coursera.org/2026-customer-award-winners/
+  publisher: Coursera Blog
+  kind: blog
+  why: null
+  source_url: https://blog.coursera.org/2026-customer-award-winners/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: coursera-blog
+    extracted_at: 2026-10-26T12:03:06.055Z
+    published: Wed, 09 Sep 2026 15:00:00 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: tutorial

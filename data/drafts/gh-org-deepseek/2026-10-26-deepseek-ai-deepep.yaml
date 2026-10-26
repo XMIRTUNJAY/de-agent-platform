@@ -1,0 +1,44 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ref-deepseek-ai-deepep
+  slug: deepseek-ai-deepep
+  type: reference
+  title: deepseek-ai/DeepEP
+  description: >-
+    DeepEP: an efficient expert-parallel communication library
+
+
+    Install (from source README):
+
+    Install the NCCL package matching your CUDA environment so DeepEP can locate
+    its headers and library:
+
+
+    ```bash
+
+
+    ```bash
+
+    bash install.sh
+
+    ```
+
+
+    Then import `deep_ep` in your Python project.
+  category: cat-agentic
+  tags: []
+  url: https://github.com/deepseek-ai/DeepEP
+  publisher: GitHub org — DeepSeek
+  source_url: https://github.com/deepseek-ai/DeepEP
+  github_url: https://github.com/deepseek-ai/DeepEP
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-deepseek
+    extracted_at: 2026-10-26T12:03:50.333Z
+    lane: extract

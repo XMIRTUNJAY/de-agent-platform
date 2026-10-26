@@ -1,0 +1,33 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-knewstimek-veh-debugger
+  slug: knewstimek-veh-debugger
+  type: agent
+  title: knewstimek/veh-debugger
+  description: Windows VEH-based debugger with DAP + MCP support — anti-debug
+    bypass, hardware breakpoints, AI agent integration
+  category: cat-agentic
+  tags:
+    - dap
+    - debug
+    - debugger
+    - mcp
+    - mcp-debugger
+    - reverse-engineering
+    - veh-debugger
+    - windows-debugger
+  url: https://github.com/knewstimek/veh-debugger
+  publisher: GitHub topic — mcp
+  source_url: https://github.com/knewstimek/veh-debugger
+  github_url: https://github.com/knewstimek/veh-debugger
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: github-topic-mcp
+    extracted_at: 2026-10-26T12:05:10.389Z
+    lane: extract

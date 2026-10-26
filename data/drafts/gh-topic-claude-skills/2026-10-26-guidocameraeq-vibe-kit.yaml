@@ -1,0 +1,39 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-guidocameraeq-vibe-kit
+  slug: guidocameraeq-vibe-kit
+  type: skill
+  title: guidocameraeq/vibe-kit
+  description: "Método para dirigir Claude Code sin saber programar: skills que
+    planean, montan y ordenan tus proyectos."
+  category: cat-agentic
+  tags:
+    - claude-code
+    - claude-skills
+    - metodo
+    - vibe-coding
+  url: https://github.com/guidocameraeq/vibe-kit
+  publisher: GitHub topic — Claude skills
+  source_url: https://github.com/guidocameraeq/vibe-kit
+  github_url: https://github.com/guidocameraeq/vibe-kit
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - .claude/skills/cierre/SKILL.md
+    - .claude/skills/inicio/SKILL.md
+    - kit/skills/arquitecto-skills/SKILL.md
+    - kit/skills/arquitecto/SKILL.md
+    - kit/skills/arquitecto/templates/universales/skills/cierre/SKILL.md
+    - kit/skills/arquitecto/templates/universales/skills/inicio/SKILL.md
+    - kit/skills/docs-fyd/SKILL.md
+    - kit/skills/relevamiento/SKILL.md
+    - legacy/snapshots/arquitecto-2026-07-06/skills/arquitecto-skills/SKILL.md
+    - legacy/snapshots/arquitecto-2026-07-06/skills/arquitecto/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-claude-skills
+    extracted_at: 2026-10-26T12:07:16.413Z
+    lane: extract

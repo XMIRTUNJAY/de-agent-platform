@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-introducing-modulelens-zooming-into-pytorch-modules-for-human-an
+  slug: introducing-modulelens-zooming-into-pytorch-modules-for-human-an
+  type: reference
+  title: "Introducing ModuleLens: Zooming into PyTorch Modules for Human and
+    Agentic Engineering"
+  description: Summary pending review — see the source.
+  category: cat-agentic
+  tags: []
+  url: https://medium.com/pinterest-engineering/introducing-modulelens-zooming-into-pytorch-modules-for-human-and-agentic-engineering-b7e9be9d29f8?source=rss----4c5a5f6279b6---4
+  publisher: Pinterest Engineering
+  kind: blog
+  why: null
+  source_url: https://medium.com/pinterest-engineering/introducing-modulelens-zooming-into-pytorch-modules-for-human-and-agentic-engineering-b7e9be9d29f8?source=rss----4c5a5f6279b6---4
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: pinterest-eng
+    extracted_at: 2026-10-26T12:03:00.102Z
+    published: Mon, 19 Oct 2026 15:01:04 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+      - cat-data-formats
+    suggested_type: null

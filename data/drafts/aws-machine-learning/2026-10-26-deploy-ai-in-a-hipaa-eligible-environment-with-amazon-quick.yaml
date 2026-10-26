@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-deploy-ai-in-a-hipaa-eligible-environment-with-amazon-quick
+  slug: deploy-ai-in-a-hipaa-eligible-environment-with-amazon-quick
+  type: reference
+  title: Deploy AI in a HIPAA-eligible environment with Amazon Quick
+  description: Amazon Quick is a HIPAA-eligible service, but eligibility is not
+    the same as compliance. This post explains who HIPAA applies to, how PHI
+    flows through Amazon Quick, what the platform provides for regulated
+    environments, and a step-by-step guide to deploying compliant AI agents i
+  category: cat-agentic
+  tags: []
+  url: https://aws.amazon.com/blogs/machine-learning/deploy-ai-in-a-hipaa-eligible-environment-with-amazon-quick/
+  publisher: AWS Machine Learning Blog
+  kind: blog
+  why: null
+  source_url: https://aws.amazon.com/blogs/machine-learning/deploy-ai-in-a-hipaa-eligible-environment-with-amazon-quick/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: aws-machine-learning
+    extracted_at: 2026-10-26T12:02:49.004Z
+    published: Thu, 22 Oct 2026 17:48:22 +0000
+  classification:
+    backend: rules
+    confidence: high
+    suggested_categories:
+      - cat-agentic
+    suggested_type: tutorial

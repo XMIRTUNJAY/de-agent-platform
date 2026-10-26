@@ -1,0 +1,80 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-shijianjs-duckfn
+  slug: shijianjs-duckfn
+  type: agent
+  title: shijianjs/duckfn
+  description: >-
+    Write DuckDB extensions in plain Rust.
+
+
+    Install (from source README):
+
+    ```toml
+
+    [dependencies]
+
+    duckfn = "0.3.0"
+
+
+
+    ```rust
+
+    use duckfn::{duck_error, duck_scalar_function, duckfn_entrypoint,
+    DuckOptionResult};
+
+
+    /// ```sql
+
+    /// SELECT double_it(21);    -- 42
+
+    /// SELECT double_it(NULL);  -- NULL
+
+    /// SELECT double_it(13);    -- error: unlucky input
+
+    /// ```
+
+    #[duck_scalar_function]
+
+    pub fn double_it(v: Option<i64>) -> DuckOptionResult<i64> {
+        if v == Some(13) {
+            return Err(duck_error("unlucky input"));
+        }
+        Ok(v.map(|x| x * 2))
+    }
+
+
+    // Generate the extension entry point (name must be lowercase +
+    underscores).
+
+    duckfn_entrypoint!("my_ext");
+
+    ```
+
+
+    The wrapper, the 
+  category: cat-databases
+  tags:
+    - bindings
+    - database
+    - duckdb
+    - duckdb-extension
+    - ffi
+    - macros
+    - procedural-macro
+    - rust
+  url: https://github.com/shijianjs/duckfn
+  publisher: GitHub topic — DuckDB tooling
+  source_url: https://github.com/shijianjs/duckfn
+  github_url: https://github.com/shijianjs/duckfn
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-duckdb
+    extracted_at: 2026-10-26T12:06:05.132Z
+    lane: extract

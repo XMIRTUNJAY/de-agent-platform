@@ -1,0 +1,52 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-open-coder-ai-agentseam
+  slug: open-coder-ai-agentseam
+  type: agent
+  title: open-coder-ai/agentseam
+  description: |-
+    The primitives layer for every coding agent — one handler API over per-agent hooks, instruction files, plugin packaging, and config.
+
+    Install (from source README):
+    chock is on PyPI, but the release there (0.15.2, 30 Sep 2026) is older than the engine this page describes. Install the frozen engine from its commit (Python 3.11 or newer):
+
+    ```bash
+    pip install "chock @ git+https://github.com/open-coder-ai/chock@992711af4cf8d4fd9c4c861f10ef6e53374d75d7"
+    ```
+
+    agentseam itself is `pip install agentseam` (Python 3.9 or newer, no dependencies); the Quick start below runs end to end.
+
+
+    ```bash
+    mkdir demo && cd demo && git init -q
+    cat > my_handler.py << 'EOF'
+    from agentseam import run, Decision
+
+    def handler(event):
+        if event.event == "pre_tool" and "AKIA" in (ev
+  category: cat-agentic
+  tags:
+    - agent-hooks
+    - agents-md-template
+    - ai-agents
+    - ai-coding-assistant
+    - ai-coding-assistant-tools
+    - ai-coding-assistants
+    - capability-matrix
+    - claude-code
+  url: https://github.com/open-coder-ai/agentseam
+  publisher: GitHub topic — agent hooks
+  source_url: https://github.com/open-coder-ai/agentseam
+  github_url: https://github.com/open-coder-ai/agentseam
+  license: Apache-2.0
+  install_command: pip install agentseam
+  install_candidates:
+    - pip install agentseam
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-agent-hooks
+    extracted_at: 2026-10-26T12:07:09.169Z
+    lane: extract

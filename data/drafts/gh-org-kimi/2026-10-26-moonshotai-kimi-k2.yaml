@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-moonshotai-kimi-k2
+  slug: moonshotai-kimi-k2
+  type: reference
+  title: MoonshotAI/Kimi-K2
+  description: Kimi K2 is the large language model series developed by Moonshot AI team
+  category: cat-agentic
+  tags: []
+  url: https://github.com/MoonshotAI/Kimi-K2
+  publisher: GitHub org — MoonshotAI (Kimi)
+  kind: blog
+  why: null
+  source_url: https://github.com/MoonshotAI/Kimi-K2
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: gh-org-kimi
+    extracted_at: 2026-10-26T12:03:53.395Z
+    published: 2026-01-21T05:33:12Z
+  classification:
+    backend: rules
+    confidence: high
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-aiven-confluent-redpanda-streamnative-and-ververica-form-streamh
+  slug: aiven-confluent-redpanda-streamnative-and-ververica-form-streamh
+  type: architecture
+  title: Aiven, Confluent, Redpanda, StreamNative and Ververica Form Streamhouse
+    Working Group
+  description: New industry initiative establishes an open category for data
+    architectures that power real-time applications and AI agents
+  category: cat-agentic
+  tags: []
+  url: https://www.confluent.io/blog/aiven-confluent-redpanda-streamnative-and-ververica-form-streamhouse-working-group/
+  publisher: Confluent Blog (Kafka/Flink/Streaming)
+  kind: blog
+  why: null
+  source_url: https://www.confluent.io/blog/aiven-confluent-redpanda-streamnative-and-ververica-form-streamhouse-working-group/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: confluent
+    extracted_at: 2026-10-26T12:02:53.373Z
+    published: Tue, 15 Sep 2026 07:00:00 GMT
+  classification:
+    backend: rules
+    confidence: high
+    suggested_categories:
+      - cat-agentic
+    suggested_type: architecture

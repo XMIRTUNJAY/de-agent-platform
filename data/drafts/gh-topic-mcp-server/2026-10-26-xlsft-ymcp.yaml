@@ -1,0 +1,80 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-xlsft-ymcp
+  slug: xlsft-ymcp
+  type: agent
+  title: xlsft/ymcp
+  description: >-
+    YouTrack MCP server: all built-in YouTrack MCP tools plus deletes, sprints,
+    attachments, history and reports. Signs in with login and password;
+    one-command install into Claude, Cursor, VS Code, Zed, Codex and more.
+
+
+    Install (from source README):
+
+    macOS / Linux:
+
+
+    ```sh
+
+    curl -fsSL https://raw.githubusercontent.com/xlsft/ymcp/main/install.sh | sh
+
+    ```
+
+
+    Windows (PowerShell):
+
+
+    ```powershell
+
+    irm https://raw.githubusercontent.com/xlsft/ymcp/main/install.ps1 | iex
+
+    ```
+
+
+    Or with a package manager, then run `ymcp setup`:
+
+
+    ```sh
+
+    brew install
+    xlsft/tap/ymcp                                                  # macOS,
+    Linux
+
+    scoop bucket add xlsft https://github.com/xlsft/scoop-bucket; scoop install
+    ymcp   # Windows
+
+    winget install
+    xlsft.ymcp                                                    # Windows,
+    once Microsoft accepts it
+
+    ```
+
+
+    Package-managed copie
+  category: cat-agentic
+  tags:
+    - ai-tools
+    - claude
+    - cursor
+    - golang
+    - jetbrains
+    - mcp
+    - mcp-server
+    - model-context-protocol
+  url: https://github.com/xlsft/ymcp
+  publisher: GitHub topic — mcp-server
+  source_url: https://github.com/xlsft/ymcp
+  github_url: https://github.com/xlsft/ymcp
+  license: MIT
+  install_command: brew install xlsft/tap/ymcp
+  install_candidates:
+    - brew install xlsft/tap/ymcp
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-mcp-server
+    extracted_at: 2026-10-26T12:04:39.078Z
+    lane: extract

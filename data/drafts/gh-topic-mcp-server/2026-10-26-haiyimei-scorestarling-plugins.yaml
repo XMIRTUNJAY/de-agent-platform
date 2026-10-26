@@ -1,0 +1,44 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-haiyimei-scorestarling-plugins
+  slug: haiyimei-scorestarling-plugins
+  type: skill
+  title: HaiyiMei/scorestarling-plugins
+  description: |-
+    ScoreStarling, the all-in-one AI sheet music assistant, as a plugin for ChatGPT, Claude, Codex, Gemini CLI and Cline
+
+    Install (from source README):
+    - **ChatGPT:** install [ScoreStarling](https://chatgpt.com/plugins/plugin_asdk_app_6ac3484e9e408191bcd88bf7ea90a67e)
+      from ChatGPT's plugin directory (Plugins, search ScoreStarling, select Install plugin), then sign in and
+      allow access. Steps with pictures: https://scorestarling.com/mcp#chatgpt
+    - **Claude:** add the marketplace `HaiyiMei/scorestarling-plugins`, or add the server address
+      `https://mcp.scorestarling.com/mcp` as a custom connector.
+    - **Other clients:** see https://scorestarling.com/mcp.
+  category: cat-agentic
+  tags:
+    - agent-skills
+    - audio-to-midi
+    - chatgpt-apps
+    - claude-code-plugin
+    - claude-plugin
+    - cline
+    - codex-plugin
+    - gemini-cli-extension
+  url: https://github.com/HaiyiMei/scorestarling-plugins
+  publisher: GitHub topic — mcp-server
+  source_url: https://github.com/HaiyiMei/scorestarling-plugins
+  github_url: https://github.com/HaiyiMei/scorestarling-plugins
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - skills/scorestarling-arrange-for-level/SKILL.md
+    - skills/scorestarling-notation/SKILL.md
+    - skills/scorestarling-score/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-mcp-server
+    extracted_at: 2026-10-26T12:04:37.331Z
+    lane: extract

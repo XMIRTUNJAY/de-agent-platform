@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-build-more-responsive-apps-with-the-decisions-api
+  slug: build-more-responsive-apps-with-the-decisions-api
+  type: reference
+  title: Build more responsive apps with the Decisions API
+  description: Fast, focused, low-cost decisions for any application.
+  category: cat-cost-engineering
+  tags: []
+  url: https://openai.com/index/decisions-api
+  publisher: OpenAI News
+  kind: blog
+  why: null
+  source_url: https://openai.com/index/decisions-api
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: openai-news
+    extracted_at: 2026-10-26T12:03:01.349Z
+    published: Thu, 22 Oct 2026 19:00:00 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-cost-engineering
+    suggested_type: null

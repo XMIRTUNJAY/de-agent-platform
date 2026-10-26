@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-fivetran-dbt-package-automations
+  slug: fivetran-dbt-package-automations
+  type: reference
+  title: fivetran/dbt_package_automations
+  description: Project used by the Fivetran dbt package team to help automate
+    package development and maintenance efforts.
+  category: cat-data-quality
+  tags: []
+  url: https://github.com/fivetran/dbt_package_automations
+  publisher: GitHub topic — dbt packages
+  kind: blog
+  why: null
+  source_url: https://github.com/fivetran/dbt_package_automations
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: gh-topic-dbt-packages
+    extracted_at: 2026-10-26T12:05:27.754Z
+    published: 2026-10-22T19:21:17Z
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-dbt
+      - cat-ingestion
+    suggested_type: tutorial

@@ -1,0 +1,32 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-stream-low-latency-speech-from-ai-agents-using-kokoro-tts-on-ama
+  slug: stream-low-latency-speech-from-ai-agents-using-kokoro-tts-on-ama
+  type: reference
+  title: Stream low-latency speech from AI agents using Kokoro TTS on Amazon
+    SageMaker AI
+  description: Voice agents often wait for an agent's full response before
+    starting speech synthesis, adding latency users feel directly. This post
+    shows how to stream each sentence to a Kokoro-82M text-to-speech model on
+    Amazon SageMaker AI as the agent produces it, and how to get that audio b
+  category: cat-agentic
+  tags: []
+  url: https://aws.amazon.com/blogs/machine-learning/stream-low-latency-speech-from-ai-agents-using-kokoro-tts-on-amazon-sagemaker-ai/
+  publisher: AWS Machine Learning Blog
+  kind: blog
+  why: null
+  source_url: https://aws.amazon.com/blogs/machine-learning/stream-low-latency-speech-from-ai-agents-using-kokoro-tts-on-amazon-sagemaker-ai/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: aws-machine-learning
+    extracted_at: 2026-10-26T12:02:49.005Z
+    published: Thu, 22 Oct 2026 17:45:58 +0000
+  classification:
+    backend: rules
+    confidence: high
+    suggested_categories:
+      - cat-agentic
+    suggested_type: tutorial

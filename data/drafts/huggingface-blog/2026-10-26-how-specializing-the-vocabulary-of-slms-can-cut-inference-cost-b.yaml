@@ -1,0 +1,29 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-how-specializing-the-vocabulary-of-slms-can-cut-inference-cost-b
+  slug: how-specializing-the-vocabulary-of-slms-can-cut-inference-cost-b
+  type: reference
+  title: How Specializing the Vocabulary of SLMs Can Cut Inference Cost by 77% in
+    Real Applications
+  description: Summary pending review — see the source.
+  category: cat-cost-engineering
+  tags: []
+  url: https://huggingface.co/blog/Dharma-AI/vocabx-vocabulary-specialization
+  publisher: Hugging Face Blog
+  kind: blog
+  why: null
+  source_url: https://huggingface.co/blog/Dharma-AI/vocabx-vocabulary-specialization
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: huggingface-blog
+    extracted_at: 2026-10-26T12:03:02.436Z
+    published: Wed, 21 Oct 2026 17:35:36 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-cost-engineering
+    suggested_type: null

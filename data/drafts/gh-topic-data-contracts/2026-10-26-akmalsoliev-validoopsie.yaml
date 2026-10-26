@@ -1,0 +1,49 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-akmalsoliev-validoopsie
+  slug: akmalsoliev-validoopsie
+  type: agent
+  title: akmalsoliev/Validoopsie
+  description: |-
+    A simple and easy to use Data Validation library for Python.
+
+    Install (from source README):
+    - pip
+
+      `pip install Validoopsie`
+
+    - uv
+
+      `uv add Validoopsie`
+
+
+    - [📖 Documentation](https://akmalsoliev.github.io/Validoopsie/)
+    - [🚨 Impact Levels in Validoopsie](https://akmalsoliev.github.io/Validoopsie/impact_levels.html)
+    - [🎯 Threshold Levels in Validoopsie](https://akmalsoliev.github.io/Validoopsie/threshold_levels.html)
+    - [🛠️ Contribution Guidelines](https://akmalsoliev.github.io/Validoopsie/contributing/CONTRIBUTING.html)
+    - [✨ Contributing a new Validation to Validoopsie](https://akmalsoliev.github.io/Validoopsie/contributing/DevelopingValidation.html)
+    - [🧑‍💻 Develop your own c
+  category: cat-python
+  tags:
+    - data-contracts
+    - data-engineering
+    - data-testing
+    - data-validation
+    - python
+  url: https://github.com/akmalsoliev/Validoopsie
+  publisher: GitHub topic — data contracts
+  source_url: https://github.com/akmalsoliev/Validoopsie
+  github_url: https://github.com/akmalsoliev/Validoopsie
+  license: MIT
+  install_command: pip install Validoopsie
+  install_candidates:
+    - pip install Validoopsie
+    - uv add Validoopsie
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-data-contracts
+    extracted_at: 2026-10-26T12:06:23.786Z
+    lane: extract

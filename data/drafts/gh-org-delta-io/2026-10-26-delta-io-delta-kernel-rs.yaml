@@ -1,0 +1,24 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-delta-io-delta-kernel-rs
+  slug: delta-io-delta-kernel-rs
+  type: agent
+  title: delta-io/delta-kernel-rs
+  description: A native Delta implementation for integration with any query engine
+  category: cat-lakehouse
+  tags: []
+  url: https://github.com/delta-io/delta-kernel-rs
+  publisher: GitHub org — delta-io
+  source_url: https://github.com/delta-io/delta-kernel-rs
+  github_url: https://github.com/delta-io/delta-kernel-rs
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-delta-io
+    extracted_at: 2026-10-26T12:07:36.476Z
+    lane: extract

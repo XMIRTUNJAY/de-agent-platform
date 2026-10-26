@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-crewaiinc-crewai-lab
+  slug: crewaiinc-crewai-lab
+  type: reference
+  title: crewAIInc/crewai-lab
+  description: Summary pending review — see the source.
+  category: cat-agentic
+  tags: []
+  url: https://github.com/crewAIInc/crewai-lab
+  publisher: GitHub org — CrewAI
+  kind: blog
+  why: null
+  source_url: https://github.com/crewAIInc/crewai-lab
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: gh-org-crewai
+    extracted_at: 2026-10-26T12:04:17.739Z
+    published: 2026-09-29T16:56:38Z
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

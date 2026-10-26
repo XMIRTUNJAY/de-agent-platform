@@ -1,0 +1,32 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-10-free-anthropic-ai-courses-launch-today-on-coursera-with-more-
+  slug: 10-free-anthropic-ai-courses-launch-today-on-coursera-with-more-
+  type: reference
+  title: 10 free Anthropic AI courses launch today on Coursera, with more coming
+    each month to help learners stay current
+  description: Today, Anthropic, an AI safety and research company that built
+    Claude, is launching 10 courses on Coursera that are available for free to
+    learners around the world. The post 10 free Anthropic AI courses launch
+    today on Coursera, with more coming each month to help learners stay c
+  category: cat-agentic
+  tags: []
+  url: https://blog.coursera.org/10-free-anthropic-ai-courses-launch-today-on-coursera-with-more-coming-each-month-to-help-learners-stay-current/
+  publisher: Coursera Blog
+  kind: blog
+  why: null
+  source_url: https://blog.coursera.org/10-free-anthropic-ai-courses-launch-today-on-coursera-with-more-coming-each-month-to-help-learners-stay-current/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: coursera-blog
+    extracted_at: 2026-10-26T12:03:06.053Z
+    published: Mon, 05 Oct 2026 17:00:00 +0000
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+    suggested_type: tutorial

@@ -1,0 +1,34 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-agenthooksprotocol-website
+  slug: agenthooksprotocol-website
+  type: agent
+  title: agenthooksprotocol/website
+  description: The website for the Agent Hooks Protocol
+  category: cat-agentic
+  tags:
+    - agent-hooks
+    - ai-agents
+    - astro
+    - protocol
+  url: https://github.com/agenthooksprotocol/website
+  publisher: GitHub topic — agent hooks
+  source_url: https://github.com/agenthooksprotocol/website
+  github_url: https://github.com/agenthooksprotocol/website
+  license: Apache-2.0
+  install_command: |-
+    npm install
+    npm
+  install_candidates:
+    - |-
+      npm install
+      npm
+    - npx wrangler
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-agent-hooks
+    extracted_at: 2026-10-26T12:07:09.912Z
+    lane: extract

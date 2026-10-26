@@ -1,0 +1,49 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-duckdb-duckdb-python
+  slug: duckdb-duckdb-python
+  type: agent
+  title: duckdb/duckdb-python
+  description: >-
+    The DuckDB Python package
+
+
+    Install (from source README):
+
+    Install the latest release of DuckDB directly from
+    [PyPI](https://pypi.org/project/duckdb/):
+
+
+    ```bash
+
+    pip install duckdb
+
+    ```
+
+
+    Install with all optional dependencies:
+
+
+    ```bash
+
+    pip install 'duckdb[all]'
+
+    ```
+  category: cat-warehouses
+  tags: []
+  url: https://github.com/duckdb/duckdb-python
+  publisher: GitHub org — DuckDB
+  source_url: https://github.com/duckdb/duckdb-python
+  github_url: https://github.com/duckdb/duckdb-python
+  license: MIT
+  install_command: pip install duckdb
+  install_candidates:
+    - pip install duckdb
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-duckdb
+    extracted_at: 2026-10-26T12:08:01.221Z
+    lane: extract

@@ -1,0 +1,73 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-arminazimi-evergreen
+  slug: arminazimi-evergreen
+  type: skill
+  title: arminazimi/evergreen
+  description: >-
+    Local-first deprecation intelligence for software repositories.
+
+
+    Install (from source README):
+
+    Requirements: Node.js 22 or newer.
+
+
+    ```bash
+
+    npx evergreen-deprecation scan .
+
+    ```
+
+
+    Give an agent a short answer instead of the full report: one line per
+    finding with its id, location, severity, and replacement, most severe first,
+    capped at 25 findings (the rest are counted) and under 8 KiB:
+
+
+    ```bash
+
+    npx evergreen-deprecation scan . --format compact
+
+    ```
+
+
+    Verify that the CLI, local MCP server, Agent Skill, plugin foundations, and
+    CI
+
+    workspace are ready without changing configuration or uploading repository
+    data:
+
+
+    ```bash
+
+    npx evergreen-deprecation doctor .
+
+    npx evergreen-deprecation doctor . --json
+  category: cat-agentic
+  tags:
+    - ai-agents
+    - deprecation
+    - developer-tools
+    - github-actions
+    - mcp
+    - static-analysis
+  url: https://github.com/arminazimi/evergreen
+  publisher: GitHub topic — mcp
+  source_url: https://github.com/arminazimi/evergreen
+  github_url: https://github.com/arminazimi/evergreen
+  license: Apache-2.0
+  install_command: npx evergreen-deprecation
+  install_candidates:
+    - npx evergreen-deprecation
+  skill_files:
+    - plugins/claude/skills/evergreen-deprecation/SKILL.md
+    - plugins/codex/skills/evergreen-deprecation/SKILL.md
+    - skills/evergreen-deprecation/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: github-topic-mcp
+    extracted_at: 2026-10-26T12:05:16.115Z
+    lane: extract

@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-don-x27-t-forget-about-the-ui-for-ai
+  slug: don-x27-t-forget-about-the-ui-for-ai
+  type: reference
+  title: Don&#x27;t forget about the UI for AI
+  description: Recorded at OpenAI Dev Day 2026, Ryan sits down with Andrew
+    Ambrosino, member of the technical staff at OpenAI, for a conversation on
+    OpenAI s strategy for merging ChatGPT and Codex into a unified experience,
+    the advantages of localized computer access in their successful desktop
+  category: cat-agentic
+  tags: []
+  url: https://stackoverflow.blog/2026/10/20/don-t-forget-about-the-ui-for-ai/
+  publisher: Stack Overflow Blog (AI + devops essays)
+  kind: blog
+  why: null
+  source_url: https://stackoverflow.blog/2026/10/20/don-t-forget-about-the-ui-for-ai/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: stackoverflow-blog
+    extracted_at: 2026-10-26T12:03:05.409Z
+    published: Tue, 20 Oct 2026 07:40:00 GMT
+  classification:
+    backend: rules
+    confidence: high
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

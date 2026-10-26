@@ -1,0 +1,27 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-castle-training-natural-language-search-before-the-first-real-qu
+  slug: castle-training-natural-language-search-before-the-first-real-qu
+  type: reference
+  title: "CASTLE: training natural language search before the first real query"
+  description: Summary pending review — see the source.
+  category: null
+  tags: []
+  url: https://medium.com/airbnb-engineering/castle-training-natural-language-search-before-the-first-real-query-3818ef8b4828?source=rss----53c7c27702d5---4
+  publisher: Airbnb Engineering & Data Science Blog
+  kind: blog
+  why: null
+  source_url: https://medium.com/airbnb-engineering/castle-training-natural-language-search-before-the-first-real-query-3818ef8b4828?source=rss----53c7c27702d5---4
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: airbnb-eng
+    extracted_at: 2026-10-26T12:02:58.476Z
+    published: Tue, 13 Oct 2026 17:01:02 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

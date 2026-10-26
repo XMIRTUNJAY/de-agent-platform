@@ -1,0 +1,43 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-duckdb-dbt-duckdb
+  slug: duckdb-dbt-duckdb
+  type: agent
+  title: duckdb/dbt-duckdb
+  description: >-
+    dbt adapter for DuckDB
+
+
+    Install (from source README):
+
+    This project is hosted on PyPI, so you should be able to install it and the
+    necessary dependencies via:
+
+
+    `pip3 install dbt-duckdb`
+
+
+    The latest supported version targets `dbt-core` versions >= 1.8.x and
+    `duckdb` version >= 1.0.0, but we work hard to ensure that newer
+
+    versions of DuckDB will continue to work with the adapter as they are
+    released.
+  category: cat-dbt
+  tags:
+    - dbt
+    - duckdb
+  url: https://github.com/duckdb/dbt-duckdb
+  publisher: GitHub topic — dbt
+  source_url: https://github.com/duckdb/dbt-duckdb
+  github_url: https://github.com/duckdb/dbt-duckdb
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: github-topic-dbt
+    extracted_at: 2026-10-26T12:05:23.517Z
+    lane: extract

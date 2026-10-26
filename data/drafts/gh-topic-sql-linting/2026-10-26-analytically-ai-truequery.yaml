@@ -1,0 +1,56 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-analytically-ai-truequery
+  slug: analytically-ai-truequery
+  type: skill
+  title: Analytically-ai/truequery
+  description: |-
+    The data standard that makes your AI coding agent better at data work.
+
+    Install (from source README):
+    Needs [Claude Code](https://claude.com/claude-code) and
+    [uv](https://docs.astral.sh/uv/) (Python 3.11+).
+
+    ```bash
+    claude plugin marketplace add Analytically-ai/truequery
+    claude plugin install truequery@analytically
+    ```
+
+    Then open your project in Claude Code and run `/truequery init`.
+
+    The checker ships inside the plugin: the hooks and the agent always run
+    the version that matches the plugin, with nothing else to install. To use
+    `truequery` in a terminal or in CI:
+
+    ```bash
+    pip install truequery          # or: uv tool install truequery
+    ```
+
+    That installs `truequery` and the alias `tq`. Contribut
+  category: cat-agentic
+  tags:
+    - ai-agents
+    - analytics
+    - analytics-engineering
+    - claude-code
+    - claude-code-plugin
+    - data-engineering
+    - data-quality
+    - dbt
+  url: https://github.com/Analytically-ai/truequery
+  publisher: GitHub topic — SQL linting & review
+  source_url: https://github.com/Analytically-ai/truequery
+  github_url: https://github.com/Analytically-ai/truequery
+  license: Apache-2.0
+  install_command: pip install truequery
+  install_candidates:
+    - pip install truequery
+  skill_files:
+    - plugin/skills/truequery/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-sql-linting
+    extracted_at: 2026-10-26T12:07:20.395Z
+    lane: extract

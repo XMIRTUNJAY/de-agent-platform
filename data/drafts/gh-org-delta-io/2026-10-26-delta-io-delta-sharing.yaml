@@ -1,0 +1,60 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-delta-io-delta-sharing
+  slug: delta-io-delta-sharing
+  type: agent
+  title: delta-io/delta-sharing
+  description: >-
+    An open protocol for secure data sharing
+
+
+    Install (from source README):
+
+    ```
+
+    pip3 install delta-sharing
+
+    ```
+
+
+    If you are using [Databricks
+    Runtime](https://docs.databricks.com/runtime/dbr.html), you can follow
+    [Databricks Libraries doc](https://docs.databricks.com/libraries/index.html)
+    to install the library on your clusters.
+
+
+    If this doesn’t work because of an issue downloading
+    delta-kernel-rust-sharing-wrapper try the following:
+
+    - Check python3 version >= 3.8
+
+    - Upgrade your pip3 to the latest version
+
+    - Check the linux glibc version >= 2.31
+
+    - [Install Rust](https://www.rust-lang.org/tools/install)
+
+
+    If you cannot upgrade glibc or PyPI does not have a pre-built wheel
+  category: cat-lakehouse
+  tags:
+    - big-data
+    - data-sharing
+    - delta-lake
+    - pandas
+    - spark
+  url: https://github.com/delta-io/delta-sharing
+  publisher: GitHub org — delta-io
+  source_url: https://github.com/delta-io/delta-sharing
+  github_url: https://github.com/delta-io/delta-sharing
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-delta-io
+    extracted_at: 2026-10-26T12:07:37.062Z
+    lane: extract

@@ -1,0 +1,34 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-nisshi-io-nisshi
+  slug: nisshi-io-nisshi
+  type: skill
+  title: nisshi-io/nisshi
+  description: Apache Kafka® compatible broker with S3, PostgreSQL, SQLite, Apache
+    Iceberg and Delta Lake
+  category: cat-lakehouse
+  tags:
+    - apache-arrow
+    - apache-iceberg
+    - apache-kafka
+    - built-with-rust
+    - datafusion
+    - datalake
+    - delta-lake
+    - parquet
+  url: https://github.com/nisshi-io/nisshi
+  publisher: GitHub topic — Iceberg tooling
+  source_url: https://github.com/nisshi-io/nisshi
+  github_url: https://github.com/nisshi-io/nisshi
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - .claude/skills/cut-release/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-iceberg
+    extracted_at: 2026-10-26T12:05:48.803Z
+    lane: extract

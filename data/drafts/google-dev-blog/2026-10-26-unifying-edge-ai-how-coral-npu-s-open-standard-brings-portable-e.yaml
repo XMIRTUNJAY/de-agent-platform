@@ -1,0 +1,33 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-unifying-edge-ai-how-coral-npu-s-open-standard-brings-portable-e
+  slug: unifying-edge-ai-how-coral-npu-s-open-standard-brings-portable-e
+  type: architecture
+  title: "Unifying Edge AI: How Coral NPU’s open standard brings portable,
+    energy-viable intelligence from model to silicon"
+  description: Google Research has completed the 32-bit open-source Coral NPU
+    RISC-V architecture with the introduction of its Matrix Execution Unit,
+    which delivers up to 1 TOPS while targeting 10 mW average power for edge
+    inference. Alongside this architecture, the release of the v1.0 open-sou
+  category: cat-agentic
+  tags: []
+  url: https://developers.googleblog.com/unifying-edge-ai-how-coral-npus-open-standard-brings-portable-energy-viable-intelligence-from-model-to-silicon/
+  publisher: Google Developers Blog
+  kind: blog
+  why: null
+  source_url: https://developers.googleblog.com/unifying-edge-ai-how-coral-npus-open-standard-brings-portable-energy-viable-intelligence-from-model-to-silicon/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: google-dev-blog
+    extracted_at: 2026-10-26T12:02:51.621Z
+    published: null
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+      - cat-data-formats
+    suggested_type: architecture

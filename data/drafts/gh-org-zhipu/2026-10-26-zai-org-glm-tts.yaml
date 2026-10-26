@@ -1,0 +1,48 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-zai-org-glm-tts
+  slug: zai-org-glm-tts
+  type: mcp
+  title: zai-org/GLM-TTS
+  description: >-
+    GLM-TTS: Controllable & Emotion-Expressive Zero-shot TTS with Multi-Reward
+    Reinforcement Learning
+
+
+    Install (from source README):
+
+    pip install -r requirements.txt
+
+
+    cd grpo/modules
+
+    git clone https://github.com/s3prl/s3prl
+
+    git clone https://github.com/omine-me/LaughterSegmentation
+
+    cd grpo/modules
+
+    git clone https://github.com/s3prl/s3prl
+
+    git clone https://github.com/omine-me/LaughterSegmentation
+  category: cat-agentic
+  tags:
+    - edge-computing
+    - llm
+    - tts
+  url: https://github.com/zai-org/GLM-TTS
+  publisher: GitHub org — Zhipu AI (GLM — moved to zai-org)
+  source_url: https://github.com/zai-org/GLM-TTS
+  github_url: https://github.com/zai-org/GLM-TTS
+  license: Apache-2.0
+  install_command: pip install -r
+  install_candidates:
+    - pip install -r
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-zhipu
+    extracted_at: 2026-10-26T12:04:04.475Z
+    lane: extract

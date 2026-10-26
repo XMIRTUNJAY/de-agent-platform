@@ -1,0 +1,48 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-docglow-docglow
+  slug: docglow-docglow
+  type: skill
+  title: docglow/docglow
+  description: >-
+    Modern documentation site generator for dbt Core — lineage explorer, health
+    scoring, full-text search. Live demo: https://demo.docglow.com
+
+
+    Install (from source README):
+
+    ```bash
+
+    pip install docglow
+
+    ```
+
+
+
+    ```bash
+  category: cat-dbt
+  tags:
+    - analytics-engineering
+    - data-catalog
+    - data-engineering
+    - dbt
+    - dbt-core
+    - documentation
+    - lineage
+  url: https://github.com/docglow/docglow
+  publisher: GitHub topic — dbt
+  source_url: https://github.com/docglow/docglow
+  github_url: https://github.com/docglow/docglow
+  license: MIT
+  install_command: pip install docglow
+  install_candidates:
+    - pip install docglow
+  skill_files:
+    - .claude/skills/pr-verify/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: github-topic-dbt
+    extracted_at: 2026-10-26T12:05:25.506Z
+    lane: extract

@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-learn-model-context-protocol-mcp-security
+  slug: learn-model-context-protocol-mcp-security
+  type: reference
+  title: Learn Model Context Protocol (MCP) Security
+  description: MCP bridges the gap between your AI agents and your external tools,
+    allowing them to send Discord messages, read your emails, and interact with
+    your environment. But this massive leap in capability co
+  category: cat-agentic
+  tags: []
+  url: https://www.freecodecamp.org/news/learn-model-context-protocol-mcp-security/
+  publisher: freeCodeCamp News
+  kind: blog
+  why: null
+  source_url: https://www.freecodecamp.org/news/learn-model-context-protocol-mcp-security/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: freecodecamp-news
+    extracted_at: 2026-10-26T12:03:06.791Z
+    published: Fri, 23 Oct 2026 01:49:44 +0000
+  classification:
+    backend: rules
+    confidence: high
+    suggested_categories:
+      - cat-agentic
+    suggested_type: tutorial

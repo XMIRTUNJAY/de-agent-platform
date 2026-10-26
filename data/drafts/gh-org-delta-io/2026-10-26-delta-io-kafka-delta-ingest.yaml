@@ -1,0 +1,28 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-delta-io-kafka-delta-ingest
+  slug: delta-io-kafka-delta-ingest
+  type: agent
+  title: delta-io/kafka-delta-ingest
+  description: A highly efficient daemon for streaming data from Kafka into Delta Lake
+  category: cat-lakehouse
+  tags:
+    - delta
+    - deltalake
+    - kafka
+    - rust
+  url: https://github.com/delta-io/kafka-delta-ingest
+  publisher: GitHub org — delta-io
+  source_url: https://github.com/delta-io/kafka-delta-ingest
+  github_url: https://github.com/delta-io/kafka-delta-ingest
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-delta-io
+    extracted_at: 2026-10-26T12:07:37.625Z
+    lane: extract

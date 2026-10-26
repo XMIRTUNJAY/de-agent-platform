@@ -1,0 +1,57 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-passtunnel-passtunnel
+  slug: passtunnel-passtunnel
+  type: agent
+  title: PassTunnel/passtunnel
+  description: >-
+    Connect your VPN without ever typing a one-time code again. macOS app for
+    OpenVPN and FortiGate SSL VPN, with a CLI and an MCP server for AI
+    assistants.
+
+
+    Install (from source README):
+
+    Requires **macOS 13 Ventura or later** on a Mac with **Apple silicon**.
+
+
+
+    On first launch PassTunnel walks you through three steps:
+
+
+    1. **Welcome.**
+
+    2. **Install the helper.** Click *Install Helper*, then turn PassTunnel on
+    in **System Settings →
+       General → Login Items** (macOS asks once). You can also do this later from **Settings → Helper**.
+    3. **Add your first VPN.**
+
+
+    <p align="center">
+      <img src="docs/images/onboarding-helper.png" width="460" alt="Onboarding step: Install the helper">
+    </p>
+  category: cat-agentic
+  tags:
+    - 2fa
+    - ai-agents
+    - claude-code
+    - cli
+    - fortigate
+    - fortinet
+    - homebrew
+    - macos
+  url: https://github.com/PassTunnel/passtunnel
+  publisher: GitHub topic — claude-code
+  source_url: https://github.com/PassTunnel/passtunnel
+  github_url: https://github.com/PassTunnel/passtunnel
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-claude-code
+    extracted_at: 2026-10-26T12:04:28.842Z
+    lane: extract

@@ -1,0 +1,57 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-sqlfluff-sqlfluff
+  slug: sqlfluff-sqlfluff
+  type: agent
+  title: sqlfluff/sqlfluff
+  description: >-
+    A modular SQL linter and auto-formatter with support for multiple dialects
+    and templated code.
+
+
+    Install (from source README):
+
+    To get started, install the package and run `sqlfluff lint` or `sqlfluff
+    fix`.
+
+
+    ```shell
+
+    $ pip install sqlfluff
+
+    $ echo "  SELECT a  +  b FROM tbl;  " > test.sql
+
+    $ sqlfluff lint test.sql --dialect ansi
+
+    == [test.sql] FAIL
+
+    L:   1 | P:   1 | LT01 | Expected only single space before 'SELECT' keyword.
+                           | Found '  '. [layout.spacing]
+    L:   1 | P:   1 | LT02 | First line should not be indented.
+                           | [layout.indent]
+    L:   1 | P:   1 | LT13 | Files must not begin with newlines or whitespace.
+                           | [layout.start_of_file]
+    L:   1 | P:  11 | LT01 | 
+  category: cat-sql
+  tags:
+    - hacktoberfest
+    - pypi
+    - sql
+    - sql-linter
+  url: https://github.com/sqlfluff/sqlfluff
+  publisher: GitHub topic — SQL linting & review
+  source_url: https://github.com/sqlfluff/sqlfluff
+  github_url: https://github.com/sqlfluff/sqlfluff
+  license: MIT
+  install_command: pip install sqlfluff
+  install_candidates:
+    - pip install sqlfluff
+    - pip install sqlfluff[rs]
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-sql-linting
+    extracted_at: 2026-10-26T12:07:21.890Z
+    lane: extract

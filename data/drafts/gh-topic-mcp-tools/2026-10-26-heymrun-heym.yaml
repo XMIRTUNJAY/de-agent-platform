@@ -1,0 +1,32 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-heymrun-heym
+  slug: heymrun-heym
+  type: reference
+  title: heymrun/heym
+  description: Build agentic systems. Run them with confidence. Orchestrate
+    agents, automate business processes, inspect every execution, and keep
+    humans in control. Deploy Heym on your own infrastructure.
+  category: cat-agentic
+  tags: []
+  url: https://github.com/heymrun/heym
+  publisher: GitHub topic — MCP tools
+  kind: blog
+  why: null
+  source_url: https://github.com/heymrun/heym
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: gh-topic-mcp-tools
+    extracted_at: 2026-10-26T12:06:57.798Z
+    published: 2026-10-25T17:07:09Z
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+      - cat-data-formats
+      - cat-infrastructure
+    suggested_type: null

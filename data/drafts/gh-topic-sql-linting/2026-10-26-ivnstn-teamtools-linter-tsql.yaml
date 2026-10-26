@@ -1,0 +1,36 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-ivnstn-teamtools-linter-tsql
+  slug: ivnstn-teamtools-linter-tsql
+  type: agent
+  title: IVNSTN/TeamTools.Linter.TSQL
+  description: |-
+    T-SQL static code analysis lib
+
+    Install (from source README):
+    The library must be referenced in the configuration file of the command‑line utility [IVNSTN/TeamTools.Linter.CommandLine](https://github.com/IVNSTN/TeamTools.Linter.CommandLine) as one of the plugins.
+
+    This library is already included in the CLI utility distribution and is enabled by default. To start using the implemented rules, download the latest version of the CLI utility from the repository linked above.
+
+    In Visual Studio the dedicated [extension](https://github.com/IVNSTN/TeamTools.Linter.VSIX) can be used instead of CLI tool.
+  category: cat-sql
+  tags:
+    - sql-linter
+    - static-code-analysis
+    - t-sql
+    - tsql
+  url: https://github.com/IVNSTN/TeamTools.Linter.TSQL
+  publisher: GitHub topic — SQL linting & review
+  source_url: https://github.com/IVNSTN/TeamTools.Linter.TSQL
+  github_url: https://github.com/IVNSTN/TeamTools.Linter.TSQL
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: false
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-sql-linting
+    extracted_at: 2026-10-26T12:07:26.469Z
+    lane: extract

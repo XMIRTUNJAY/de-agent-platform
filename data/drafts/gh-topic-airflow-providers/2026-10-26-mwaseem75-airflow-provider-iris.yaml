@@ -1,0 +1,54 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-mwaseem75-airflow-provider-iris
+  slug: mwaseem75-airflow-provider-iris
+  type: agent
+  title: mwaseem75/airflow-provider-iris
+  description: |-
+    ⚙️ Apache Airflow Provider for InterSystems IRIS | 🔗 Native IRIS connections with IrisHook | 🗄️ Execute SQL with IrisSQLOperator |  🔄 Build reliable ETL/ELT workflows for healthcare, interoperability, analytics & enterprise data.
+
+    Install (from source README):
+    ```bash
+    pip install airflow-provider-iris
+    ```
+    <a name="quick-start"></a>
+
+    Configure Connection in Airflow UI
+    Go to Admin → Connections → Add Connection
+    * Conn Id: **Connection ID**
+    * Description : **Connection Description**
+    * Conn Type: **InterSystems IRIS**
+    * Host: **IRIS server hostname**
+    * Username: **User Name**
+    * Password: **Password**
+    * Port : **IRIS Superserver Port**
+    * Namespace : **Namespace**
+    <img width="1127" alt="image" src="https://raw.githubusercontent.com/mwaseem75/streamlitLLM/main/images/connection.png" />
+
+    Use your InterSystems IRIS connection by setting the `iris_conn_id` pa
+  category: cat-airflow
+  tags:
+    - airflow-provider
+    - apache-airflow
+    - data-integration
+    - elt
+    - etl
+    - intersystems-iris
+    - python
+    - workflow-automation
+  url: https://github.com/mwaseem75/airflow-provider-iris
+  publisher: GitHub topic — airflow providers
+  source_url: https://github.com/mwaseem75/airflow-provider-iris
+  github_url: https://github.com/mwaseem75/airflow-provider-iris
+  license: MIT
+  install_command: pip install airflow-provider-iris
+  install_candidates:
+    - pip install airflow-provider-iris
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-airflow-providers
+    extracted_at: 2026-10-26T12:05:40.665Z
+    lane: extract

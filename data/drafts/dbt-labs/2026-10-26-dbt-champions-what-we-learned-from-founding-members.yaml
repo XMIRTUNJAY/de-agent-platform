@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-dbt-champions-what-we-learned-from-founding-members
+  slug: dbt-champions-what-we-learned-from-founding-members
+  type: reference
+  title: "dbt Champions: What we learned from founding members"
+  description: Six months in, our first 30 dbt Champions show how encouragement,
+    Big Projects, and finding your people help a community grow.
+  category: cat-dbt
+  tags: []
+  url: https://www.getdbt.com/blog/dbt-champions-what-we-learned-from-founding-members
+  publisher: dbt Labs Blog
+  kind: blog
+  why: null
+  source_url: https://www.getdbt.com/blog/dbt-champions-what-we-learned-from-founding-members
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: dbt-labs
+    extracted_at: 2026-10-26T12:02:54.194Z
+    published: Tue, 20 Oct 2026 20:46:00 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-dbt
+      - cat-agentic
+    suggested_type: tutorial

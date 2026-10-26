@@ -1,0 +1,73 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-ajitpratap0-gosqlx
+  slug: ajitpratap0-gosqlx
+  type: skill
+  title: ajitpratap0/GoSQLX
+  description: >-
+    Pure-Go SQL parser, formatter, linter and security scanner for 8 dialects.
+    Zero-copy, race-free, with an LSP and MCP server.
+
+
+    Install (from source README):
+
+    Source:
+    [`examples/readme_quickstart/main.go`](examples/readme_quickstart/main.go),
+    compiled in CI against HEAD and the latest release.
+
+
+    ```go
+
+    package main
+
+
+    import (
+    	"context"
+    	"errors"
+    	"fmt"
+    	"log"
+
+    	"github.com/ajitpratap0/GoSQLX/pkg/gosqlx"
+    	"github.com/ajitpratap0/GoSQLX/pkg/sql/ast"
+    )
+
+
+    func main() {
+    	ctx := context.Background()
+
+    	// ParseTree is the recommended entry point. It returns an
+    	// opaque handle with built-in helpers.
+    	tree, err := gosqlx.ParseTree(ctx, "SELECT id, name FROM users WHERE active = true",
+    		gosqlx.WithDialect("postgresql"))
+    	if err != nil {
+    		// Sentinel errors w
+  category: cat-sql
+  tags:
+    - ast
+    - cli
+    - go
+    - golang
+    - lsp
+    - mcp-server
+    - mysql
+    - parser
+  url: https://github.com/ajitpratap0/GoSQLX
+  publisher: GitHub topic — SQL linting & review
+  source_url: https://github.com/ajitpratap0/GoSQLX
+  github_url: https://github.com/ajitpratap0/GoSQLX
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - plugins/gosqlx/skills/sql-analysis/SKILL.md
+    - plugins/gosqlx/skills/sql-dialects/SKILL.md
+    - plugins/gosqlx/skills/sql-formatting/SKILL.md
+    - plugins/gosqlx/skills/sql-linting/SKILL.md
+    - plugins/gosqlx/skills/sql-security-review/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-sql-linting
+    extracted_at: 2026-10-26T12:07:22.767Z
+    lane: extract

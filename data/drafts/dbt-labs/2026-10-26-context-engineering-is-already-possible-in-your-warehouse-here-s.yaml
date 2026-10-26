@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-context-engineering-is-already-possible-in-your-warehouse-here-s
+  slug: context-engineering-is-already-possible-in-your-warehouse-here-s
+  type: reference
+  title: Context engineering is already possible in your warehouse. Here's how to
+    get started.
+  description: Analytics teams have always modeled data for BI. Context
+    engineering models data for agents, starting with semantic search.
+  category: cat-agentic
+  tags: []
+  url: https://www.getdbt.com/blog/context-engineering-in-your-warehouse
+  publisher: dbt Labs Blog
+  kind: blog
+  why: null
+  source_url: https://www.getdbt.com/blog/context-engineering-in-your-warehouse
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: dbt-labs
+    extracted_at: 2026-10-26T12:02:54.195Z
+    published: Thu, 24 Sep 2026 15:57:00 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+    suggested_type: tutorial

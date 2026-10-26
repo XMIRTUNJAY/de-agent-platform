@@ -1,0 +1,51 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-kiwayu-e-commerce-analytics-pipeline
+  slug: kiwayu-e-commerce-analytics-pipeline
+  type: agent
+  title: kiwayu/e-commerce-analytics-pipeline
+  description: >-
+    E-commerce data warehouse pipeline. Airflow DAGs land a public dataset in
+    PostgreSQL, dbt models it through staging, intermediate and mart layers, and
+    Great Expectations validates it. One Docker Compose command to run.
+
+
+    Install (from source README):
+
+    Prerequisites: Docker with Docker Compose, ~6GB free RAM for the stack.
+
+
+    ```bash
+
+    git clone https://github.com/kiwayu/e-commerce-analytics-pipeline
+
+    cd e-commerce-analytics-pipeline/airflow
+
+    cp .env.example .env          # adjust passwords if you like
+
+
+    docker compose up -d
+  category: cat-data-quality
+  tags:
+    - airflow
+    - data-engineering
+    - dbt
+    - great-expectations
+    - postgresql
+    - pyspark
+    - python
+  url: https://github.com/kiwayu/e-commerce-analytics-pipeline
+  publisher: GitHub topic — Great Expectations ecosystem
+  source_url: https://github.com/kiwayu/e-commerce-analytics-pipeline
+  github_url: https://github.com/kiwayu/e-commerce-analytics-pipeline
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-great-expectations
+    extracted_at: 2026-10-26T12:06:52.965Z
+    lane: extract

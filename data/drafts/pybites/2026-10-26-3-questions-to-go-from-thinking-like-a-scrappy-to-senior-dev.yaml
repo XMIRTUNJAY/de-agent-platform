@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-3-questions-to-go-from-thinking-like-a-scrappy-to-senior-dev
+  slug: 3-questions-to-go-from-thinking-like-a-scrappy-to-senior-dev
+  type: reference
+  title: 3 Questions to go from thinking like a Scrappy to Senior Dev
+  description: "How do you know if you’re actually growing as a dev? Last week I
+    was chatting with a developer who d hit a wall. (I talk to a lot of devs now
+    that I think about it!) Like him, you might consider yourself a scrappy
+    coder. You re an all-rounder, can generally figure things out and "
+  category: cat-python
+  tags: []
+  url: https://pybit.es/articles/3-questions-to-go-from-thinking-like-a-scrappy-to-senior-dev/
+  publisher: PyBites (Python practice + coaching)
+  kind: blog
+  why: null
+  source_url: https://pybit.es/articles/3-questions-to-go-from-thinking-like-a-scrappy-to-senior-dev/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: pybites
+    extracted_at: 2026-10-26T12:03:09.728Z
+    published: Sat, 21 Feb 2026 09:00:00 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: tutorial

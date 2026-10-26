@@ -1,0 +1,29 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-real-time-energy-trading-and-analytics-on-databricks
+  slug: real-time-energy-trading-and-analytics-on-databricks
+  type: reference
+  title: Real-time energy trading and analytics on Databricks
+  description: Why does real-time energy trading need more than faster data?Energy
+    trading desks...
+  category: cat-databricks
+  tags: []
+  url: https://www.databricks.com/blog/real-time-energy-trading-and-analytics-databricks
+  publisher: Databricks Engineering Blog
+  kind: blog
+  why: null
+  source_url: https://www.databricks.com/blog/real-time-energy-trading-and-analytics-databricks
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: databricks-eng
+    extracted_at: 2026-10-26T12:02:52.154Z
+    published: Fri, 23 Oct 2026 19:00:00 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-databricks
+    suggested_type: null

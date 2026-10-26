@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-inside-prometheus-meta-s-journey-to-a-gigawatt-scale-supercluste
+  slug: inside-prometheus-meta-s-journey-to-a-gigawatt-scale-supercluste
+  type: reference
+  title: "Inside Prometheus: Meta’s Journey to a Gigawatt-Scale Supercluster"
+  description: With the recent release of the Muse family of foundational models,
+    we want to take you inside the infrastructure that has made it all possible.
+    The first phase of Prometheus, our gigawatt-scale supercluster, is already
+    complete and we’re working toward scaling it to comprise ~1 m
+  category: cat-infrastructure
+  tags: []
+  url: https://engineering.fb.com/2026/10/19/data-center-engineering/inside-prometheus-meta-gigawatt-scale-supercluster/
+  publisher: Meta Engineering Blog
+  kind: blog
+  why: null
+  source_url: https://engineering.fb.com/2026/10/19/data-center-engineering/inside-prometheus-meta-gigawatt-scale-supercluster/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: meta-eng
+    extracted_at: 2026-10-26T12:02:57.110Z
+    published: Mon, 19 Oct 2026 13:00:10 +0000
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-infrastructure
+    suggested_type: null

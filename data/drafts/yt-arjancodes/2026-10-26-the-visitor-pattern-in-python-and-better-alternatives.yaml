@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-the-visitor-pattern-in-python-and-better-alternatives
+  slug: the-visitor-pattern-in-python-and-better-alternatives
+  type: reference
+  title: The Visitor Pattern in Python (And Better Alternatives)
+  description: Summary pending review — see the source.
+  category: cat-python
+  tags: []
+  url: https://www.youtube.com/watch?v=45MgUX_ih0s
+  publisher: ArjanCodes (software design, Python)
+  kind: blog
+  why: null
+  source_url: https://www.youtube.com/watch?v=45MgUX_ih0s
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: yt-arjancodes
+    extracted_at: 2026-10-26T12:03:19.137Z
+    published: 2026-10-23T15:00:28+00:00
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-python
+    suggested_type: tutorial

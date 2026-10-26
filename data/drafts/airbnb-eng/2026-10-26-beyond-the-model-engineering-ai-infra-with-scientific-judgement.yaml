@@ -1,0 +1,27 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-beyond-the-model-engineering-ai-infra-with-scientific-judgement
+  slug: beyond-the-model-engineering-ai-infra-with-scientific-judgement
+  type: reference
+  title: "Beyond the model: Engineering AI infra with scientific judgement"
+  description: Summary pending review — see the source.
+  category: null
+  tags: []
+  url: https://medium.com/airbnb-engineering/beyond-the-model-engineering-ai-infra-with-scientific-judgement-371316d43261?source=rss----53c7c27702d5---4
+  publisher: Airbnb Engineering & Data Science Blog
+  kind: blog
+  why: null
+  source_url: https://medium.com/airbnb-engineering/beyond-the-model-engineering-ai-infra-with-scientific-judgement-371316d43261?source=rss----53c7c27702d5---4
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: airbnb-eng
+    extracted_at: 2026-10-26T12:02:58.477Z
+    published: Tue, 15 Sep 2026 17:06:18 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

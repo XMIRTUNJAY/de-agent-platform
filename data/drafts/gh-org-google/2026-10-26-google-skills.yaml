@@ -1,0 +1,50 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-google-skills
+  slug: google-skills
+  type: skill
+  title: google/skills
+  description: |-
+    Agent Skills for Google products and technologies
+
+    Install (from source README):
+    ```bash
+    npx skills add google/skills
+    ```
+
+    When prompted, select specific skills or all skills, the target agents to
+    configure, and the installation scope (project or global).
+
+    If `npx` is not available in your environment, install
+    [Node.js](https://nodejs.org/en/download), which includes `npm` and `npx`.
+  category: cat-agentic
+  tags:
+    - google
+    - googlecloud
+    - skills
+  url: https://github.com/google/skills
+  publisher: GitHub org — Google (incl. Gemini samples)
+  source_url: https://github.com/google/skills
+  github_url: https://github.com/google/skills
+  license: Apache-2.0
+  install_command: npx skills
+  install_candidates:
+    - npx skills
+  skill_files:
+    - plugins/cloud/google-cloud-developer/skills/finding-google-skills/SKILL.md
+    - plugins/cloud/google-cloud-developer/skills/gcloud/SKILL.md
+    - plugins/cloud/google-cloud-developer/skills/google-cloud-recipe-auth/SKILL.md
+    - plugins/cloud/google-cloud-developer/skills/google-cloud-recipe-onboarding/SKILL.md
+    - plugins/cloud/google-cloud-developer/skills/retrieving-developer-knowledge/SKILL.md
+    - skills/ads/data-manager-api-audience-ingestion/SKILL.md
+    - skills/ads/data-manager-api-event-ingestion/SKILL.md
+    - skills/ads/data-manager-api-setup/SKILL.md
+    - skills/ads/google-ads-api-account-diagnostics/SKILL.md
+    - skills/ads/google-ads-api-mcp-setup/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-google
+    extracted_at: 2026-10-26T12:03:42.358Z
+    lane: extract

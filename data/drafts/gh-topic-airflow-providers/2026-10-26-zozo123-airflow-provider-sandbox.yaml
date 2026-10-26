@@ -1,0 +1,66 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-zozo123-airflow-provider-sandbox
+  slug: zozo123-airflow-provider-sandbox
+  type: agent
+  title: zozo123/airflow-provider-sandbox
+  description: >-
+    Alpha third-party Apache Airflow provider that runs tasks in ephemeral
+    sandboxes (local, Daytona, E2B, Modal, islo) via SandboxOperator or
+    SandboxExecutor.
+
+
+    Install (from source README):
+
+    ```bash
+
+    pip install "airflow-provider-sandbox @
+    git+https://github.com/zozo123/airflow-provider-sandbox"
+
+    pip install "airflow-provider-sandbox[daytona] @
+    git+https://github.com/zozo123/airflow-provider-sandbox"  # also [e2b],
+    [modal], [islo]
+
+    ```
+
+
+
+    ```bash
+
+    python examples/demo.py          # runs a task in a local subprocess
+    "sandbox"
+
+    SANDBOX_PROVIDER=daytona python examples/demo.py   # needs DAYTONA_API_KEY
+
+    ```
+
+
+    It drives the exact lifecycle the executor uses
+
+    (`create → upload → run → poll → logs → destroy`) and prints each step.
+  category: cat-airflow
+  tags:
+    - airflow
+    - airflow-provider
+    - daytona
+    - e2b
+    - executor
+    - islo
+    - modal
+    - sandbox
+  url: https://github.com/zozo123/airflow-provider-sandbox
+  publisher: GitHub topic — airflow providers
+  source_url: https://github.com/zozo123/airflow-provider-sandbox
+  github_url: https://github.com/zozo123/airflow-provider-sandbox
+  license: Apache-2.0
+  install_command: pip install -r
+  install_candidates:
+    - pip install -r
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-airflow-providers
+    extracted_at: 2026-10-26T12:05:34.822Z
+    lane: extract

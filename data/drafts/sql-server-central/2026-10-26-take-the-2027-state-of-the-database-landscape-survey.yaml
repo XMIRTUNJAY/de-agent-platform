@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-take-the-2027-state-of-the-database-landscape-survey
+  slug: take-the-2027-state-of-the-database-landscape-survey
+  type: reference
+  title: Take the 2027 State of the Database Landscape Survey
+  description: Share your view on the database landscape and you could win
+    USD$500. The post Take the 2027 State of the Database Landscape Survey
+    appeared first on SQLServerCentral .
+  category: cat-sql
+  tags: []
+  url: https://www.sqlservercentral.com/articles/take-the-2027-state-of-the-database-landscape-survey
+  publisher: SQLServerCentral (tutorials)
+  kind: blog
+  why: null
+  source_url: https://www.sqlservercentral.com/articles/take-the-2027-state-of-the-database-landscape-survey
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: sql-server-central
+    extracted_at: 2026-10-26T12:03:16.094Z
+    published: Mon, 28 Sep 2026 00:00:56 +0000
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-sql
+    suggested_type: tutorial

@@ -1,0 +1,29 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-the-five-components-of-building-a-company-harness
+  slug: the-five-components-of-building-a-company-harness
+  type: reference
+  title: The five components of building a "company harness"
+  description: Learn how LangChain built internal agents across marketing, sales,
+    and engineering, and how they have completely changed how those teams work.
+  category: cat-agentic
+  tags: []
+  url: https://www.langchain.com/blog/components-building-company-harness
+  publisher: LangChain Blog
+  kind: blog
+  why: null
+  source_url: https://www.langchain.com/blog/components-building-company-harness
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: langchain-blog
+    extracted_at: 2026-10-26T12:03:04.883Z
+    published: Sun, 25 Oct 2026 18:06:32 GMT
+  classification:
+    backend: rules
+    confidence: high
+    suggested_categories:
+      - cat-agentic
+    suggested_type: tutorial

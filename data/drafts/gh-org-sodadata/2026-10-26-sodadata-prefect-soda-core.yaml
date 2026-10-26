@@ -1,0 +1,53 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-sodadata-prefect-soda-core
+  slug: sodadata-prefect-soda-core
+  type: agent
+  title: sodadata/prefect-soda-core
+  description: >-
+    Install (from source README):
+
+    `prefect-soda-core` is based on `soda-core`.  
+
+    As `soda-core` requires you to specify the right option for your database,
+    so does `prefect-soda-core`.  
+
+    I.e. to use `prefect-soda-core` with Snowflake, run the following:
+
+
+    ```bash
+
+    pip install prefect-soda-core[snowflake]
+
+    ```
+
+
+    You can find the list of supported options in `setup.py`.
+
+
+    **Please note that since this integration is built on top of Soda CLI, it is
+    not possible to run data quality checks using Spark.**
+
+
+    pre-commit install
+
+    ```
+  category: cat-data-quality
+  tags: []
+  url: https://github.com/sodadata/prefect-soda-core
+  publisher: GitHub org — Soda
+  source_url: https://github.com/sodadata/prefect-soda-core
+  github_url: https://github.com/sodadata/prefect-soda-core
+  license: Apache-2.0
+  install_command: pip install prefect-soda-core[snowflake]
+  install_candidates:
+    - pip install prefect-soda-core[snowflake]
+    - pip install -e
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-sodadata
+    extracted_at: 2026-10-26T12:07:43.669Z
+    lane: extract

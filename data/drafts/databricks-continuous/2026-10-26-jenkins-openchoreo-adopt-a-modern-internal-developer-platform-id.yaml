@@ -1,0 +1,34 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-jenkins-openchoreo-adopt-a-modern-internal-developer-platform-id
+  slug: jenkins-openchoreo-adopt-a-modern-internal-developer-platform-id
+  type: reference
+  title: "Jenkins + OpenChoreo: Adopt a modern Internal Developer Platform (IDP)
+    Without Replacing Your CI System"
+  description: "Your Jenkins setup represents a decade of institutional knowledge:
+    countless custom pipelines, shared libraries, and specialized build agents.
+    Yet when platform engineering enters the conversation, most IDP demos ignore
+    this investment entirely. This article is for platform engin"
+  category: cat-agentic
+  tags: []
+  url: https://www.jenkins.io/blog/2026/09/07/adopt-a-modern-idp-without-replacing-your-ci/
+  publisher: Continuous Coalition (DE blog via Feedburner)
+  kind: blog
+  why: null
+  source_url: https://www.jenkins.io/blog/2026/09/07/adopt-a-modern-idp-without-replacing-your-ci/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: databricks-continuous
+    extracted_at: 2026-10-26T12:03:00.776Z
+    published: 2026-09-07T00:00:00+00:00
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+      - cat-cost-engineering
+      - cat-infrastructure
+    suggested_type: null

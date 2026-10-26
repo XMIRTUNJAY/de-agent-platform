@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-announcing-project-helix-a-skills-platform-for-the-ai-era
+  slug: announcing-project-helix-a-skills-platform-for-the-ai-era
+  type: reference
+  title: "Announcing Project Helix: A skills platform for the AI era"
+  description: "Today, at Coursera and Udemy’s first global FWD customer event as
+    a combined company, we previewed Project Helix, our new AI-native skills
+    platform — along with new AI-powered capabilities across Coursera and Udemy.
+    The post Announcing Project Helix: A skills platform for the AI "
+  category: null
+  tags: []
+  url: https://blog.coursera.org/announcing-project-helix/
+  publisher: Coursera Blog
+  kind: blog
+  why: null
+  source_url: https://blog.coursera.org/announcing-project-helix/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: coursera-blog
+    extracted_at: 2026-10-26T12:03:06.054Z
+    published: Wed, 09 Sep 2026 15:16:00 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: tutorial

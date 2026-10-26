@@ -1,0 +1,47 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-cdelmonte-zg-delta-explain
+  slug: cdelmonte-zg-delta-explain
+  type: agent
+  title: cdelmonte-zg/delta-explain
+  description: |-
+    CLI diagnostic tool showing step-by-step how Delta Lake prunes files given a predicate
+
+    Install (from source README):
+    Choose one:
+
+    ```bash
+    brew tap cdelmonte-zg/tap && brew install delta-explain    # Homebrew (macOS, Linux)
+    pip install delta-explain                                  # PyPI: binary wheel + Python API
+    cargo install delta-explain                                # crates.io (Rust 1.88+)
+    docker pull ghcr.io/cdelmonte-zg/delta-explain             # Docker (amd64 + arm64)
+    ```
+
+    Every other route - pre-built binaries and `.deb` packages for six targets, Scoop, from Git - is on the [install page](https://cdelmonte-zg.github.io/delta-explain/getting-started/install.html).
+  category: cat-lakehouse
+  tags:
+    - apache-spark
+    - cli
+    - data-engineering
+    - data-skipping
+    - database-internals
+    - delta-lake
+    - file-pruning
+    - lakehouse
+  url: https://github.com/cdelmonte-zg/delta-explain
+  publisher: GitHub topic — Delta Lake tooling
+  source_url: https://github.com/cdelmonte-zg/delta-explain
+  github_url: https://github.com/cdelmonte-zg/delta-explain
+  license: MIT
+  install_command: brew install delta-explain
+  install_candidates:
+    - brew install delta-explain
+    - pip install delta-explain
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-delta-lake
+    extracted_at: 2026-10-26T12:05:52.723Z
+    lane: extract

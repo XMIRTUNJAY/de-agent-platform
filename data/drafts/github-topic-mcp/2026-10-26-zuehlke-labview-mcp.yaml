@@ -1,0 +1,52 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-zuehlke-labview-mcp
+  slug: zuehlke-labview-mcp
+  type: agent
+  title: Zuehlke/labview-mcp
+  description: >-
+    The best way out there for any AI to connect to LabVIEW.
+
+
+    Install (from source README):
+
+    **You need:** Windows x64, **[Claude Code](https://claude.com/claude-code) ≥
+    2.1.224**, and
+
+    **LabVIEW 2026 Q3**. LabVIEW has to be running before you use the tools,
+    though not to install
+
+    them.
+
+
+
+    Open a terminal in your LabVIEW project folder:
+
+
+    ```powershell
+
+    claude plugin marketplace add Zuehlke/labview-mcp
+
+    claude plugin install labview-mcp@zuehlke-labview
+
+    ```
+  category: cat-agentic
+  tags:
+    - ai
+    - labview
+    - mcp
+  url: https://github.com/Zuehlke/labview-mcp
+  publisher: GitHub topic — mcp
+  source_url: https://github.com/Zuehlke/labview-mcp
+  github_url: https://github.com/Zuehlke/labview-mcp
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: github-topic-mcp
+    extracted_at: 2026-10-26T12:05:14.828Z
+    lane: extract

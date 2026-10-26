@@ -1,0 +1,27 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-are-public-agencies-letting-open-source-software-down
+  slug: are-public-agencies-letting-open-source-software-down
+  type: reference
+  title: Are Public Agencies Letting Open-Source Software Down?
+  description: Summary pending review — see the source.
+  category: null
+  tags: []
+  url: https://medium.com/data-science/are-public-agencies-letting-open-source-software-down-7688c89e7c02?source=rss----7f60cf5620c9---4
+  publisher: Medium — Data Science tag
+  kind: blog
+  why: null
+  source_url: https://medium.com/data-science/are-public-agencies-letting-open-source-software-down-7688c89e7c02?source=rss----7f60cf5620c9---4
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: medium-data-science
+    extracted_at: 2026-10-26T12:03:08.739Z
+    published: Mon, 03 Feb 2025 18:46:56 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: tutorial

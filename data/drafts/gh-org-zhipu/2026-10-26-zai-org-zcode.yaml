@@ -1,0 +1,34 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-zai-org-zcode
+  slug: zai-org-zcode
+  type: skill
+  title: zai-org/ZCode
+  description: Z.ai's coding agent harness. Powerful, intelligent, extensible.
+  category: cat-agentic
+  tags: []
+  url: https://github.com/zai-org/ZCode
+  publisher: GitHub org — Zhipu AI (GLM — moved to zai-org)
+  source_url: https://github.com/zai-org/ZCode
+  github_url: https://github.com/zai-org/ZCode
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - .agents/skills/agent-browser/SKILL.md
+    - .agents/skills/ai-elements/SKILL.md
+    - .agents/skills/architecture-governance/SKILL.md
+    - .agents/skills/dep-refs/SKILL.md
+    - .agents/skills/dogfood/SKILL.md
+    - .agents/skills/e2e-case-lifecycle/SKILL.md
+    - .agents/skills/electron/SKILL.md
+    - .agents/skills/feature-boundary-planner/SKILL.md
+    - .agents/skills/react-best-practices/SKILL.md
+    - .agents/skills/session-management/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-zhipu
+    extracted_at: 2026-10-26T12:03:59.066Z
+    lane: extract

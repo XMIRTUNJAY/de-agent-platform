@@ -1,0 +1,32 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-masthead-data-dbt-reservations
+  slug: masthead-data-dbt-reservations
+  type: reference
+  title: masthead-data/dbt-reservations
+  description: dbt package (bq_reservations) that assigns BigQuery reservations to
+    models from a Masthead-generated config, to optimize slot and on-demand
+    costs.
+  category: cat-data-quality
+  tags: []
+  url: https://github.com/masthead-data/dbt-reservations
+  publisher: GitHub topic — dbt packages
+  kind: blog
+  why: null
+  source_url: https://github.com/masthead-data/dbt-reservations
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: gh-topic-dbt-packages
+    extracted_at: 2026-10-26T12:05:32.999Z
+    published: 2026-08-20T09:18:40Z
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-warehouses
+      - cat-dbt
+      - cat-gcp
+    suggested_type: null

@@ -1,0 +1,48 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-delta-io-delta-rs
+  slug: delta-io-delta-rs
+  type: agent
+  title: delta-io/delta-rs
+  description: >-
+    A native Rust library for Delta Lake, with bindings into Python
+
+
+    Install (from source README):
+
+    The `deltalake` library aims to adopt patterns from other libraries in data
+    processing,
+
+    so getting started should look familiar.
+
+
+    ```py3
+
+    from deltalake import DeltaTable, write_deltalake
+
+    import pandas as pd
+  category: cat-lakehouse
+  tags:
+    - databricks
+    - delta
+    - delta-lake
+    - pandas
+    - pandas-dataframe
+    - python
+    - rust
+  url: https://github.com/delta-io/delta-rs
+  publisher: GitHub org — delta-io
+  source_url: https://github.com/delta-io/delta-rs
+  github_url: https://github.com/delta-io/delta-rs
+  license: Apache-2.0
+  install_command: pip install deltalake
+  install_candidates:
+    - pip install deltalake
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-delta-io
+    extracted_at: 2026-10-26T12:07:35.204Z
+    lane: extract

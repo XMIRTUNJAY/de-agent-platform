@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-ai-for-societal-impact
+  slug: ai-for-societal-impact
+  type: reference
+  title: AI for Societal Impact
+  description: Explore this collection to see how experts and local leaders are
+    using AI breakthroughs to ensure everyone can share the opportunity of AI.
+  category: cat-agentic
+  tags: []
+  url: https://blog.google/innovation-and-ai/technology/ai/ai-for-societal-impact/
+  publisher: Google Blog — AI
+  kind: blog
+  why: null
+  source_url: https://blog.google/innovation-and-ai/technology/ai/ai-for-societal-impact/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: google-ai-blog
+    extracted_at: 2026-10-26T12:03:03.257Z
+    published: Tue, 15 Sep 2026 16:00:00 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

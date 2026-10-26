@@ -1,0 +1,71 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-google-deepmind-dm-pix
+  slug: google-deepmind-dm-pix
+  type: agent
+  title: google-deepmind/dm_pix
+  description: >-
+    PIX is an image processing library in JAX, for JAX.
+
+
+    Install (from source README):
+
+    PIX is written in pure Python, but depends on C++ code via JAX.
+
+
+    Because JAX installation is different depending on your CUDA version, PIX
+    does
+
+    not list JAX as a dependency in [`pyproject.toml`], although it is
+    technically
+
+    listed for reference, but commented.
+
+
+    First, follow [JAX installation instructions] to install JAX with the
+    relevant
+
+    accelerator support.
+
+
+    Then, install PIX using `pip`:
+
+
+    ```bash
+
+    $ pip install dm-pix
+
+    ```
+
+
+
+    To use `PIX`, you just need to `import dm_pix as pix` and use it right away!
+
+
+    For example, let's assume to have loaded the JAX logo (available in
+
+    `examples/assets/jax_logo
+  category: cat-agentic
+  tags:
+    - computer-vision
+    - image
+    - image-processing
+    - jax
+    - machine-learning
+    - python
+  url: https://github.com/google-deepmind/dm_pix
+  publisher: GitHub org — Google DeepMind
+  source_url: https://github.com/google-deepmind/dm_pix
+  github_url: https://github.com/google-deepmind/dm_pix
+  license: Apache-2.0
+  install_command: pip install dm-pix
+  install_candidates:
+    - pip install dm-pix
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-deepmind
+    extracted_at: 2026-10-26T12:03:28.874Z
+    lane: extract

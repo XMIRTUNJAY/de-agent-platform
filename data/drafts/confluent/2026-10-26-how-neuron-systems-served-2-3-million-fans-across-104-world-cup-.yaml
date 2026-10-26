@@ -1,0 +1,32 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-how-neuron-systems-served-2-3-million-fans-across-104-world-cup-
+  slug: how-neuron-systems-served-2-3-million-fans-across-104-world-cup-
+  type: reference
+  title: How Neuron Systems Served 2.3 Million Fans Across 104 World Cup Matches
+    with AI on Confluent
+  description: Every one of the 42.1 million production events flowed through
+    Confluent’s Data Streaming Platform and that single decision is what let a
+    small team serve a global tournament without the commentary ever falling out
+    of sync.
+  category: cat-streaming
+  tags: []
+  url: https://www.confluent.io/blog/neuron-systems-fifa-world-cup-ai-on-confluent/
+  publisher: Confluent Blog (Kafka/Flink/Streaming)
+  kind: blog
+  why: null
+  source_url: https://www.confluent.io/blog/neuron-systems-fifa-world-cup-ai-on-confluent/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: confluent
+    extracted_at: 2026-10-26T12:02:53.377Z
+    published: Fri, 14 Aug 2026 06:48:05 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-streaming
+    suggested_type: null

@@ -1,0 +1,32 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-genrecs-tokenization-transforming-ads-recommendation-at-meta-wit
+  slug: genrecs-tokenization-transforming-ads-recommendation-at-meta-wit
+  type: reference
+  title: "GenRecs Tokenization: Transforming Ads Recommendation at Meta with
+    Stable Model Vocabulary"
+  description: Generative Recommenders (GenRecs) represent a paradigm shift from
+    scoring every ad to reasoning about ad content and user preferences together
+    in order to predict the best outcome for advertisers. Leveraging the world
+    knowledge built into LLMs makes ad matching more intelligent a
+  category: cat-agentic
+  tags: []
+  url: https://engineering.fb.com/2026/10/19/ml-applications/genrecs-tokenization-transforming-ads-recommendation-at-meta-with-stable-model-vocabulary/
+  publisher: Meta Engineering Blog
+  kind: blog
+  why: null
+  source_url: https://engineering.fb.com/2026/10/19/ml-applications/genrecs-tokenization-transforming-ads-recommendation-at-meta-with-stable-model-vocabulary/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: meta-eng
+    extracted_at: 2026-10-26T12:02:57.109Z
+    published: Mon, 19 Oct 2026 16:00:47 +0000
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

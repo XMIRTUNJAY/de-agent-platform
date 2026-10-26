@@ -1,0 +1,37 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ref-slidoapp-dbt-superset-lineage
+  slug: slidoapp-dbt-superset-lineage
+  type: reference
+  title: slidoapp/dbt-superset-lineage
+  description: |-
+    Make dbt docs and Apache Superset talk to one another
+
+    Install (from source README):
+    ```
+    pip install dbt-superset-lineage
+    ```
+  category: cat-dbt
+  tags:
+    - cli
+    - data-lineage
+    - dbt
+    - lineage
+    - superset
+    - tool
+  url: https://github.com/slidoapp/dbt-superset-lineage
+  publisher: GitHub topic — dbt
+  source_url: https://github.com/slidoapp/dbt-superset-lineage
+  github_url: https://github.com/slidoapp/dbt-superset-lineage
+  license: MIT
+  install_command: pip install dbt-superset-lineage
+  install_candidates:
+    - pip install dbt-superset-lineage
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: github-topic-dbt
+    extracted_at: 2026-10-26T12:05:19.586Z
+    lane: extract

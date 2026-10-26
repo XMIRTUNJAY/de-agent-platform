@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-the-guest-journey-updated-in-real-time-extending-airbnb-s-sequen
+  slug: the-guest-journey-updated-in-real-time-extending-airbnb-s-sequen
+  type: reference
+  title: "The guest journey, updated in real time: extending Airbnb’s sequence
+    recommender with Chronon"
+  description: Summary pending review — see the source.
+  category: null
+  tags: []
+  url: https://medium.com/airbnb-engineering/the-guest-journey-updated-in-real-time-extending-airbnbs-sequence-recommender-with-chronon-8f1582578553?source=rss----53c7c27702d5---4
+  publisher: Airbnb Engineering & Data Science Blog
+  kind: blog
+  why: null
+  source_url: https://medium.com/airbnb-engineering/the-guest-journey-updated-in-real-time-extending-airbnbs-sequence-recommender-with-chronon-8f1582578553?source=rss----53c7c27702d5---4
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: airbnb-eng
+    extracted_at: 2026-10-26T12:02:58.477Z
+    published: Thu, 17 Sep 2026 17:01:02 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

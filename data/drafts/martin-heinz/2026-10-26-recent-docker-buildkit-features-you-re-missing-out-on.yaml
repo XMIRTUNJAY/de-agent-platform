@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-recent-docker-buildkit-features-you-re-missing-out-on
+  slug: recent-docker-buildkit-features-you-re-missing-out-on
+  type: reference
+  title: Recent Docker BuildKit Features You're Missing Out On
+  description: Learn how to use BuildKit - the improved builder backend for Docker
+    - that adds many new features to Docker, including new Dockerfile syntax,
+    built-in debugger and more...
+  category: cat-infrastructure
+  tags: []
+  url: https://martinheinz.dev/blog/111
+  publisher: Martin Heinz (Practical Data Science)
+  kind: blog
+  why: null
+  source_url: https://martinheinz.dev/blog/111
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: martin-heinz
+    extracted_at: 2026-10-26T12:03:14.403Z
+    published: Mon, 13 May 2024 16:00:00 +0000
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-infrastructure
+    suggested_type: tutorial

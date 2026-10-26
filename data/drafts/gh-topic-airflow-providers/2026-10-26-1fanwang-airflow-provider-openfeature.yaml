@@ -1,0 +1,55 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-1fanwang-airflow-provider-openfeature
+  slug: 1fanwang-airflow-provider-openfeature
+  type: agent
+  title: 1fanwang/airflow-provider-openfeature
+  description: |-
+    Feature flags for Apache Airflow: ramp, A/B test, and kill-switch your DAGs' behavior and placement (pool/queue/executor) through OpenFeature. Works with flagd, LaunchDarkly, GrowthBook, Unleash, Statsig, or an in-house engine.
+
+    Install (from source README):
+    Install with a backend, here [flagd](https://flagd.dev):
+
+    ```bash
+    pip install "airflow-provider-openfeature[flagd]"
+    ```
+
+    Point [OpenFeature](https://openfeature.dev) at that backend once, in
+    [`airflow_local_settings.py`](https://airflow.apache.org/docs/apache-airflow/stable/administration-and-deployment/modules_management.html)
+    or any bootstrap, and turn the policy on:
+
+    ```python
+    from openfeature import api
+    from openfeature.contrib.provider.flagd import FlagdProvider
+
+    api.set_provider(FlagdProvider(host="localhost", port=8013))
+    ```
+
+    ```ini
+    [openfeature]
+    enable_policy = True   # flag-driven poo
+  category: cat-airflow
+  tags:
+    - ab-testing
+    - airflow
+    - airflow-provider
+    - apache-airflow
+    - canary
+    - experimentation
+    - feature-flags
+    - feature-management
+  url: https://github.com/1fanwang/airflow-provider-openfeature
+  publisher: GitHub topic — airflow providers
+  source_url: https://github.com/1fanwang/airflow-provider-openfeature
+  github_url: https://github.com/1fanwang/airflow-provider-openfeature
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-airflow-providers
+    extracted_at: 2026-10-26T12:05:35.521Z
+    lane: extract

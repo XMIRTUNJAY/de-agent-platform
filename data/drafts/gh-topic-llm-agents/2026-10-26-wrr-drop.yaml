@@ -1,0 +1,69 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ref-wrr-drop
+  slug: wrr-drop
+  type: reference
+  title: wrr/drop
+  description: >-
+    Linux sandboxing that doesn't get in your way
+
+
+    Install (from source README):
+
+    The workflow is inspired by Python's virtualenv: create an easily
+
+    disposable environment, enter it, work normally - but with enforced
+
+    sandboxing.
+
+
+    To create a new Drop environment you simply run:
+
+
+    ```console
+
+    alice@zax:~/project$ drop init
+
+    Drop environment created with config at
+    /home/alice/.config/drop/home-alice-project.toml
+
+    ```
+
+
+    To start a sandboxed shell in the created environment:
+
+
+    ```console
+
+    alice@zax:~/project$ drop run
+
+    ```
+
+
+    The created environment gets its own writable home dir with selected
+
+    files and dirs from your original home available in read-only mode. By
+
+    default the environment h
+  category: cat-agentic
+  tags:
+    - gvisor
+    - linux
+    - llm-agents
+    - sandbox
+    - security-tools
+  url: https://github.com/wrr/drop
+  publisher: GitHub topic — llm agents
+  source_url: https://github.com/wrr/drop
+  github_url: https://github.com/wrr/drop
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-llm-agents
+    extracted_at: 2026-10-26T12:04:51.683Z
+    lane: extract

@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-amazon-polly-delivers-a-major-upgrade-to-its-generative-engine
+  slug: amazon-polly-delivers-a-major-upgrade-to-its-generative-engine
+  type: reference
+  title: Amazon Polly delivers a major upgrade to its Generative engine
+  description: "The Amazon Polly Generative engine gets a major upgrade: more
+    expressive, more accurate speech with low latency, plus 14 new voices across
+    9 locales and general availability of Hindi and Finnish. This drop-in
+    upgrade requires no code changes and is now generally available in prod"
+  category: cat-agentic
+  tags: []
+  url: https://aws.amazon.com/blogs/machine-learning/amazon-polly-delivers-a-major-upgrade-to-its-generative-engine/
+  publisher: AWS Machine Learning Blog
+  kind: blog
+  why: null
+  source_url: https://aws.amazon.com/blogs/machine-learning/amazon-polly-delivers-a-major-upgrade-to-its-generative-engine/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: aws-machine-learning
+    extracted_at: 2026-10-26T12:02:49.002Z
+    published: Thu, 22 Oct 2026 18:06:35 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

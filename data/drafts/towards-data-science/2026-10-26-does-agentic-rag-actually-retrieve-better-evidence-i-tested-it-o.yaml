@@ -1,0 +1,32 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-does-agentic-rag-actually-retrieve-better-evidence-i-tested-it-o
+  slug: does-agentic-rag-actually-retrieve-better-evidence-i-tested-it-o
+  type: reference
+  title: Does Agentic RAG Actually Retrieve Better Evidence? I Tested It on 298
+    Questions
+  description: I let an AI agent search again whenever it chose. It found some
+    papers plain search had missed, lost some plain search had found, and gained
+    too little to trust. The post Does Agentic RAG Actually Retrieve Better
+    Evidence? I Tested It on 298 Questions appeared first on Towards Da
+  category: cat-agentic
+  tags: []
+  url: https://towardsdatascience.com/does-agentic-rag-actually-retrieve-better-evidence-i-tested-it-on-298-questions/
+  publisher: Towards Data Science
+  kind: blog
+  why: null
+  source_url: https://towardsdatascience.com/does-agentic-rag-actually-retrieve-better-evidence-i-tested-it-on-298-questions/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: towards-data-science
+    extracted_at: 2026-10-26T12:03:08.102Z
+    published: Thu, 22 Oct 2026 15:30:00 GMT
+  classification:
+    backend: rules
+    confidence: high
+    suggested_categories:
+      - cat-agentic
+    suggested_type: tutorial

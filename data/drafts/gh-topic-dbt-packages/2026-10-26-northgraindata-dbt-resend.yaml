@@ -1,0 +1,75 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-northgraindata-dbt-resend
+  slug: northgraindata-dbt-resend
+  type: agent
+  title: northgraindata/dbt-resend
+  description: >-
+    dbt package for Resend email analytics, webhook events, lifecycle metrics,
+    and warehouse-ready marts.
+
+
+    Install (from source README):
+
+    After the first stable release is published to dbt Hub, add this to your
+    `packages.yml`:
+
+
+    ```yaml
+
+    packages:
+      - package: northgraindata/resend
+        version: [">=0.1.0", "<0.2.0"]
+    ```
+
+
+    Run:
+
+
+    ```bash
+
+    dbt deps
+
+    ```
+
+
+
+    ```yaml
+
+    packages:
+      - git: "https://github.com/northgraindata/dbt-resend.git"
+        revision: 0.1.0
+    ```
+
+
+
+    ```yaml
+
+    packages:
+      - local: ../dbt-resend
+    ```
+  category: cat-dbt
+  tags:
+    - analytics-engineering
+    - data-modeling
+    - data-warehouse
+    - dbt
+    - dbt-package
+    - dbt-packages
+    - email
+    - email-analytics
+  url: https://github.com/northgraindata/dbt-resend
+  publisher: GitHub topic — dbt packages
+  source_url: https://github.com/northgraindata/dbt-resend
+  github_url: https://github.com/northgraindata/dbt-resend
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: false
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-dbt-packages
+    extracted_at: 2026-10-26T12:05:32.010Z
+    lane: extract

@@ -1,0 +1,27 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-google-google-java-format
+  slug: google-google-java-format
+  type: reference
+  title: google/google-java-format
+  description: Reformats Java source code to comply with Google Java Style.
+  category: cat-agentic
+  tags: []
+  url: https://github.com/google/google-java-format
+  publisher: GitHub org — Google (incl. Gemini samples)
+  kind: blog
+  why: null
+  source_url: https://github.com/google/google-java-format
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: gh-org-google
+    extracted_at: 2026-10-26T12:03:38.478Z
+    published: 2026-10-26T12:02:15Z
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

@@ -1,0 +1,32 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-neilss170-nyc-taxi-lakehouse
+  slug: neilss170-nyc-taxi-lakehouse
+  type: reference
+  title: neilss170/nyc-taxi-lakehouse
+  description: "Apache Spark + Delta Lake lakehouse over 79.5M NYC taxi trips:
+    medallion layers, data-quality quarantine, Structured Streaming, MLlib
+    forecast, tuning study, live dashboard."
+  category: cat-lakehouse
+  tags: []
+  url: https://github.com/neilss170/nyc-taxi-lakehouse
+  publisher: GitHub topic — Delta Lake tooling
+  kind: blog
+  why: null
+  source_url: https://github.com/neilss170/nyc-taxi-lakehouse
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: gh-topic-delta-lake
+    extracted_at: 2026-10-26T12:05:53.678Z
+    published: 2026-10-26T11:50:25Z
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-lakehouse
+      - cat-spark
+      - cat-streaming
+    suggested_type: null

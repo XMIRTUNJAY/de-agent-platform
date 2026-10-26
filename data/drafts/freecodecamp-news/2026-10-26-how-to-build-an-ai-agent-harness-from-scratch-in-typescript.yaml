@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-how-to-build-an-ai-agent-harness-from-scratch-in-typescript
+  slug: how-to-build-an-ai-agent-harness-from-scratch-in-typescript
+  type: reference
+  title: How to Build an AI Agent Harness from Scratch in TypeScript
+  description: Many AI agent tutorials start with a language model, give it a few
+    tools, and run a loop until it produces an answer. That's enough to
+    demonstrate tool calling, but it leaves the interesting engineeri
+  category: cat-agentic
+  tags: []
+  url: https://www.freecodecamp.org/news/how-to-build-an-ai-agent-harness-from-scratch-in-typescript/
+  publisher: freeCodeCamp News
+  kind: blog
+  why: null
+  source_url: https://www.freecodecamp.org/news/how-to-build-an-ai-agent-harness-from-scratch-in-typescript/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: freecodecamp-news
+    extracted_at: 2026-10-26T12:03:06.793Z
+    published: Tue, 20 Oct 2026 09:33:46 +0000
+  classification:
+    backend: rules
+    confidence: high
+    suggested_categories:
+      - cat-agentic
+    suggested_type: tutorial

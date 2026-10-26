@@ -1,0 +1,60 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-aws-aws-sdk-pandas
+  slug: aws-aws-sdk-pandas
+  type: agent
+  title: aws/aws-sdk-pandas
+  description: >-
+    pandas on AWS - Easy integration with Athena, Glue, Redshift, Timestream,
+    Neptune, OpenSearch, QuickSight, Chime, CloudWatchLogs, DynamoDB, EMR,
+    SecretManager, PostgreSQL, MySQL, SQLServer and S3 (Parquet, CSV, JSON and
+    EXCEL).
+
+
+    Install (from source README):
+
+    Installation command: `pip install awswrangler`
+
+
+    > ⚠️ **Starting version 3.0, optional modules must be installed
+    explicitly:**<br>
+
+    ➡️`pip install 'awswrangler[redshift]'`
+
+
+    ```py3
+
+    import awswrangler as wr
+
+    import pandas as pd
+
+    from datetime import datetime
+
+
+    df = pd.DataFrame({"id": [1, 2], "value": ["foo", "boo"]})
+  category: cat-aws
+  tags:
+    - amazon-athena
+    - amazon-sagemaker-notebook
+    - apache-arrow
+    - apache-parquet
+    - athena
+    - aws
+    - aws-glue
+    - aws-lambda
+  url: https://github.com/aws/aws-sdk-pandas
+  publisher: GitHub topic — data-engineering
+  source_url: https://github.com/aws/aws-sdk-pandas
+  github_url: https://github.com/aws/aws-sdk-pandas
+  license: Apache-2.0
+  install_command: pip install awswrangler
+  install_candidates:
+    - pip install awswrangler
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: github-topic-de
+    extracted_at: 2026-10-26T12:05:03.450Z
+    lane: extract

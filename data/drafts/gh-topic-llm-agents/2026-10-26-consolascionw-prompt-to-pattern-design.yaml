@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-consolascionw-prompt-to-pattern-design
+  slug: consolascionw-prompt-to-pattern-design
+  type: reference
+  title: consolascionw/prompt-to-pattern-design
+  description: "AI-Powered AST Context Engine: Outline-Driven Code Generation 2026"
+  category: cat-agentic
+  tags: []
+  url: https://github.com/consolascionw/prompt-to-pattern-design
+  publisher: GitHub topic — llm agents
+  kind: blog
+  why: null
+  source_url: https://github.com/consolascionw/prompt-to-pattern-design
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: gh-topic-llm-agents
+    extracted_at: 2026-10-26T12:04:56.885Z
+    published: 2026-10-26T11:59:11Z
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

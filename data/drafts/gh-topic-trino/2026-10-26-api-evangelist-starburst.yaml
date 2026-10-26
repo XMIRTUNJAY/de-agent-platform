@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-api-evangelist-starburst
+  slug: api-evangelist-starburst
+  type: reference
+  title: api-evangelist/starburst
+  description: "Starburst — independent third-party profile of a public API
+    surface, by API Evangelist. Starburst is an enterprise data analytics and
+    intelligence platform built on Trino, the open-source distributed "
+  category: cat-sql
+  tags: []
+  url: https://github.com/api-evangelist/starburst
+  publisher: GitHub topic — Trino tooling
+  kind: blog
+  why: null
+  source_url: https://github.com/api-evangelist/starburst
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: gh-topic-trino
+    extracted_at: 2026-10-26T12:06:11.777Z
+    published: 2026-10-26T05:55:21Z
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-sql
+    suggested_type: null

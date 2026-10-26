@@ -1,0 +1,42 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-michaelkeithlewis-show-file-skills
+  slug: michaelkeithlewis-show-file-skills
+  type: skill
+  title: michaelkeithlewis/show-file-skills
+  description: Read and write live audio show files and studio sessions (dLive,
+    DiGiCo, Pro Tools, Logic, LiveTrax, LiveProfessor, VENUE) without the vendor
+    software. Built on tour by the co-founder of Truck Packer.
+  category: cat-agentic
+  tags:
+    - audio-engineering
+    - claude-code
+    - digico
+    - dlive
+    - live-audio
+    - logic-pro
+    - pro-tools
+    - touring
+  url: https://github.com/michaelkeithlewis/show-file-skills
+  publisher: GitHub topic — claude-code
+  source_url: https://github.com/michaelkeithlewis/show-file-skills
+  github_url: https://github.com/michaelkeithlewis/show-file-skills
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - digico/SKILL.md
+    - dlive/SKILL.md
+    - liveprofessor/SKILL.md
+    - livetrax/SKILL.md
+    - logic/SKILL.md
+    - macos-accessibility/SKILL.md
+    - protools/SKILL.md
+    - venue/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-claude-code
+    extracted_at: 2026-10-26T12:04:32.009Z
+    lane: extract

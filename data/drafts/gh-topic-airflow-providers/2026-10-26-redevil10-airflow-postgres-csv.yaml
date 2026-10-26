@@ -1,0 +1,39 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-redevil10-airflow-postgres-csv
+  slug: redevil10-airflow-postgres-csv
+  type: agent
+  title: Redevil10/airflow-postgres-csv
+  description: |-
+    Airflow operators for bulk PostgreSQL ↔ CSV transfers using COPY
+
+    Install (from source README):
+    ```bash
+    pip install airflow-postgres-csv
+    ```
+  category: cat-airflow
+  tags:
+    - airflow
+    - airflow-provider
+    - apache-airflow
+    - csv
+    - data-engineering
+    - data-pipeline
+    - etl
+    - postgres
+  url: https://github.com/Redevil10/airflow-postgres-csv
+  publisher: GitHub topic — airflow providers
+  source_url: https://github.com/Redevil10/airflow-postgres-csv
+  github_url: https://github.com/Redevil10/airflow-postgres-csv
+  license: Apache-2.0
+  install_command: pip install airflow-postgres-csv
+  install_candidates:
+    - pip install airflow-postgres-csv
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-airflow-providers
+    extracted_at: 2026-10-26T12:05:38.569Z
+    lane: extract

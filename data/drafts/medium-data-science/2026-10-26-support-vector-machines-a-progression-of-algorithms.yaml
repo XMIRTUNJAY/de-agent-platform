@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-support-vector-machines-a-progression-of-algorithms
+  slug: support-vector-machines-a-progression-of-algorithms
+  type: reference
+  title: "Support Vector Machines: A Progression of Algorithms"
+  description: Summary pending review — see the source.
+  category: cat-agentic
+  tags: []
+  url: https://medium.com/data-science/support-vector-machines-a-progression-of-algorithms-841d63574825?source=rss----7f60cf5620c9---4
+  publisher: Medium — Data Science tag
+  kind: blog
+  why: null
+  source_url: https://medium.com/data-science/support-vector-machines-a-progression-of-algorithms-841d63574825?source=rss----7f60cf5620c9---4
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: medium-data-science
+    extracted_at: 2026-10-26T12:03:08.739Z
+    published: Mon, 03 Feb 2025 18:49:54 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+    suggested_type: tutorial

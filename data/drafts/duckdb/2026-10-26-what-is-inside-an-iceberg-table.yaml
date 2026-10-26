@@ -1,0 +1,33 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-what-is-inside-an-iceberg-table
+  slug: what-is-inside-an-iceberg-table
+  type: reference
+  title: What Is Inside an Iceberg Table?
+  description: "An Iceberg table is a tree of JSON, Avro and Parquet files. DuckDB
+    can read every one of them, so you can walk the tree yourself with SQL: from
+    the metadata file, through the manifest list and manifests, down to the data
+    files and delete files."
+  category: cat-data-formats
+  tags: []
+  url: https://duckdb.org/2026/10/13/inside-iceberg-table.html
+  publisher: DuckDB News
+  kind: blog
+  why: null
+  source_url: https://duckdb.org/2026/10/13/inside-iceberg-table.html
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: duckdb
+    extracted_at: 2026-10-26T12:02:54.732Z
+    published: 2026-10-13T00:00:00+00:00
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-data-formats
+      - cat-sql
+      - cat-databases
+    suggested_type: null

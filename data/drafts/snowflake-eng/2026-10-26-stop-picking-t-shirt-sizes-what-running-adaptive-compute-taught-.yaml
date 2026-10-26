@@ -1,0 +1,27 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-stop-picking-t-shirt-sizes-what-running-adaptive-compute-taught-
+  slug: stop-picking-t-shirt-sizes-what-running-adaptive-compute-taught-
+  type: reference
+  title: "Stop Picking T-Shirt Sizes: What Running Adaptive Compute Taught Me"
+  description: Summary pending review — see the source.
+  category: null
+  tags: []
+  url: https://medium.com/snowflake/stop-picking-t-shirt-sizes-what-running-adaptive-compute-taught-me-b2b8f4973cdd?source=rss----34b6daafc07---4
+  publisher: Snowflake Engineering Blog
+  kind: blog
+  why: null
+  source_url: https://medium.com/snowflake/stop-picking-t-shirt-sizes-what-running-adaptive-compute-taught-me-b2b8f4973cdd?source=rss----34b6daafc07---4
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: snowflake-eng
+    extracted_at: 2026-10-26T12:02:52.773Z
+    published: Thu, 22 Oct 2026 00:01:03 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

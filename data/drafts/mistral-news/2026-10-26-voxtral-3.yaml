@@ -1,0 +1,29 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-voxtral-3
+  slug: voxtral-3
+  type: reference
+  title: Voxtral 3
+  description: "Voxtral 3: Mistral's voice agent SDK for real-time speech in 50+
+    languages, accurate transcription, emotional TTS, deep tool use."
+  category: cat-agentic
+  tags: []
+  url: https://mistral.ai/news/voxtral-3/
+  publisher: Mistral AI News
+  kind: blog
+  why: null
+  source_url: https://mistral.ai/news/voxtral-3/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: mistral-news
+    extracted_at: 2026-10-26T12:03:01.889Z
+    published: Tue, 20 Oct 2026 12:00:22 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

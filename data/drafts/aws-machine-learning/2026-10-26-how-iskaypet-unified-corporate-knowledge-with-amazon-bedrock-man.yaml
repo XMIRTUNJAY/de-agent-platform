@@ -1,0 +1,33 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-how-iskaypet-unified-corporate-knowledge-with-amazon-bedrock-man
+  slug: how-iskaypet-unified-corporate-knowledge-with-amazon-bedrock-man
+  type: reference
+  title: How IskayPet unified corporate knowledge with Amazon Bedrock Managed
+    Knowledge Bases
+  description: Learn how IskayPet, a leading pet care company in Iberia, built a
+    multilingual corporate knowledge assistant on Amazon Bedrock Managed
+    Knowledge Bases. The assistant answers employee questions across retail,
+    veterinary, onboarding, and procurement in four languages and three coun
+  category: cat-agentic
+  tags: []
+  url: https://aws.amazon.com/blogs/machine-learning/how-iskaypet-unified-corporate-knowledge-with-amazon-bedrock-managed-knowledge-bases/
+  publisher: AWS Machine Learning Blog
+  kind: blog
+  why: null
+  source_url: https://aws.amazon.com/blogs/machine-learning/how-iskaypet-unified-corporate-knowledge-with-amazon-bedrock-managed-knowledge-bases/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: aws-machine-learning
+    extracted_at: 2026-10-26T12:02:49.002Z
+    published: Thu, 22 Oct 2026 18:01:53 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-agentic
+      - cat-infrastructure
+    suggested_type: tutorial

@@ -1,0 +1,63 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-lakekeeper-lakekeeper
+  slug: lakekeeper-lakekeeper
+  type: agent
+  title: lakekeeper/lakekeeper
+  description: >-
+    Apache Iceberg REST Catalog in Rust — access control, credential vending and
+    audit for every engine and AI agent. Apache 2.0.
+
+
+    Install (from source README):
+
+    A Docker Container is available on
+    [quay.io](https://quay.io/repository/lakekeeper/catalog?tab=info).
+
+    We have prepared a minimal docker-compose file to demonstrate how to use the
+    Lakekeeper catalog with common query engines.
+
+
+    ```sh
+
+    git clone https://github.com/lakekeeper/lakekeeper.git
+
+    cd lakekeeper/examples/minimal
+
+    docker compose up
+
+    ```
+
+
+    Then open your browser and head to [localhost:8888](http://localhost:8888)
+    to load the example Jupyter notebooks or head to
+    [localhost:8181](http://localhost:8181) for the [Lakekeeper
+    UI](https://github.com/lakekeeper/console) (the open-source Console).
+
+
+    For 
+  category: cat-agentic
+  tags:
+    - access-control
+    - apache-iceberg
+    - catalog
+    - data-governance
+    - data-lake
+    - iceberg
+    - iceberg-rest-catalog
+    - lakehouse
+  url: https://github.com/lakekeeper/lakekeeper
+  publisher: GitHub topic — Iceberg tooling
+  source_url: https://github.com/lakekeeper/lakekeeper
+  github_url: https://github.com/lakekeeper/lakekeeper
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-iceberg
+    extracted_at: 2026-10-26T12:05:46.154Z
+    lane: extract

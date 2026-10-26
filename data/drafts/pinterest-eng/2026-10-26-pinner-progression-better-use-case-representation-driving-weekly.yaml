@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-pinner-progression-better-use-case-representation-driving-weekly
+  slug: pinner-progression-better-use-case-representation-driving-weekly
+  type: reference
+  title: "Pinner Progression: Better Use-Case Representation Driving Weekly Active
+    User Growth at Pinterest"
+  description: Summary pending review — see the source.
+  category: null
+  tags: []
+  url: https://medium.com/pinterest-engineering/pinner-progression-better-use-case-representation-driving-weekly-active-user-growth-at-pinterest-bd2131ab238a?source=rss----4c5a5f6279b6---4
+  publisher: Pinterest Engineering
+  kind: blog
+  why: null
+  source_url: https://medium.com/pinterest-engineering/pinner-progression-better-use-case-representation-driving-weekly-active-user-growth-at-pinterest-bd2131ab238a?source=rss----4c5a5f6279b6---4
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: pinterest-eng
+    extracted_at: 2026-10-26T12:03:00.104Z
+    published: Mon, 27 Jul 2026 16:01:02 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

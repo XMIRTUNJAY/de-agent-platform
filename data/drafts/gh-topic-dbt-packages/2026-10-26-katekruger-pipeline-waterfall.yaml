@@ -1,0 +1,40 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-katekruger-pipeline-waterfall
+  slug: katekruger-pipeline-waterfall
+  type: agent
+  title: katekruger/pipeline-waterfall
+  description: >-
+    dbt package for B2B bookings and pipeline waterfall analytics — created,
+    advanced, pushed, slipped, pulled in, won, lost, expanded, contracted,
+    reopened. Reconciles or fails.
+
+
+    Install (from source README):
+
+    ```yaml
+  category: cat-dbt
+  tags:
+    - analytics-engineering
+    - dbt
+    - dbt-package
+    - hubspot
+    - pipeline
+    - revops
+    - sales-analytics
+    - salesforce
+  url: https://github.com/katekruger/pipeline-waterfall
+  publisher: GitHub topic — dbt packages
+  source_url: https://github.com/katekruger/pipeline-waterfall
+  github_url: https://github.com/katekruger/pipeline-waterfall
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: false
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-dbt-packages
+    extracted_at: 2026-10-26T12:05:31.355Z
+    lane: extract

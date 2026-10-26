@@ -1,0 +1,34 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-build-rag-ready-indexes-from-amazon-s3-with-amazon-opensearch-in
+  slug: build-rag-ready-indexes-from-amazon-s3-with-amazon-opensearch-in
+  type: reference
+  title: Build RAG-ready indexes from Amazon S3 with Amazon OpenSearch intelligent
+    ingestion
+  description: Amazon OpenSearch intelligent ingestion is a fully managed,
+    serverless capability that turns documents and structured data in Amazon S3
+    into RAG-ready, searchable indexes with no pipelines to manage. Learn how it
+    works and when to use Ingestion Jobs or Ingestion Streams.
+  category: cat-lakes
+  tags: []
+  url: https://aws.amazon.com/blogs/big-data/build-rag-ready-indexes-from-amazon-s3-with-amazon-opensearch-intelligent-ingestion/
+  publisher: AWS Big Data Blog
+  kind: blog
+  why: null
+  source_url: https://aws.amazon.com/blogs/big-data/build-rag-ready-indexes-from-amazon-s3-with-amazon-opensearch-intelligent-ingestion/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: aws-big-data
+    extracted_at: 2026-10-26T12:02:48.461Z
+    published: Fri, 23 Oct 2026 21:50:38 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-lakes
+      - cat-ingestion
+      - cat-aws
+    suggested_type: tutorial

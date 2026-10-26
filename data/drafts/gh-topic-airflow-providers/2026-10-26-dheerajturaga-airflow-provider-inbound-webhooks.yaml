@@ -1,0 +1,65 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-dheerajturaga-airflow-provider-inbound-webhooks
+  slug: dheerajturaga-airflow-provider-inbound-webhooks
+  type: agent
+  title: dheerajturaga/airflow-provider-inbound-webhooks
+  description: >-
+    Inbound webhooks for Apache Airflow: verified deliveries from services
+    become asset events that trigger Dags
+
+
+    Install (from source README):
+
+    On the machine running the Airflow API server, with Airflow 3.1.1 or later,
+    install the plugin and
+
+    create its table in Airflow's metadata database:
+
+
+    ```bash
+
+    pip install airflow-provider-inbound-webhooks "apache-airflow==$(airflow
+    version)"
+
+    airflow db migrate
+
+    ```
+
+
+    Pinning `apache-airflow` to the version you run keeps pip from changing it.
+    On Airflow 3.1,
+
+    `airflow db migrate` only creates the table once `external_db_managers`
+    names the plugin; see
+
+    [Compatibility](docs/compatibility.md). Dag files that import `WebhookTopic`
+    also need the package
+
+    wherever they are parsed: on the Dag processor and 
+  category: cat-airflow
+  tags:
+    - airflow
+    - airflow-plugin
+    - airflow-provider
+    - apache-airflow
+    - event-driven
+    - github-webhooks
+    - gitlab
+    - jira
+  url: https://github.com/dheerajturaga/airflow-provider-inbound-webhooks
+  publisher: GitHub topic — airflow providers
+  source_url: https://github.com/dheerajturaga/airflow-provider-inbound-webhooks
+  github_url: https://github.com/dheerajturaga/airflow-provider-inbound-webhooks
+  license: Apache-2.0
+  install_command: pip install airflow-provider-inbound-webhooks
+  install_candidates:
+    - pip install airflow-provider-inbound-webhooks
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-airflow-providers
+    extracted_at: 2026-10-26T12:05:37.916Z
+    lane: extract

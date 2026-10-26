@@ -1,0 +1,33 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-ellmos-ai-hook-master
+  slug: ellmos-ai-hook-master
+  type: agent
+  title: ellmos-ai/hook-master
+  description: Local-first pointer registry and materialization for agent hooks
+    (sibling to policy-registry)
+  category: cat-agentic
+  tags:
+    - agent-hooks
+    - antigravity
+    - claude-code
+    - cli
+    - codex
+    - developer-tools
+    - ellmos-ai
+    - fail-closed
+  url: https://github.com/ellmos-ai/hook-master
+  publisher: GitHub topic — agent hooks
+  source_url: https://github.com/ellmos-ai/hook-master
+  github_url: https://github.com/ellmos-ai/hook-master
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-agent-hooks
+    extracted_at: 2026-10-26T12:07:10.563Z
+    lane: extract

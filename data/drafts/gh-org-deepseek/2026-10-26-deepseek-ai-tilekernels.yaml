@@ -1,0 +1,37 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ref-deepseek-ai-tilekernels
+  slug: deepseek-ai-tilekernels
+  type: reference
+  title: deepseek-ai/TileKernels
+  description: |-
+    A kernel library written in tilelang
+
+    Install (from source README):
+    ```bash
+    pip install -e ".[dev]"
+    ```
+
+
+    ```bash
+    pip install tile-kernels
+    ```
+  category: cat-agentic
+  tags: []
+  url: https://github.com/deepseek-ai/TileKernels
+  publisher: GitHub org — DeepSeek
+  source_url: https://github.com/deepseek-ai/TileKernels
+  github_url: https://github.com/deepseek-ai/TileKernels
+  license: MIT
+  install_command: pip install -e
+  install_candidates:
+    - pip install -e
+    - pip install tile-kernels
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-deepseek
+    extracted_at: 2026-10-26T12:03:51.014Z
+    lane: extract

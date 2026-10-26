@@ -1,0 +1,33 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-introducing-timesfm-3-0-with-multivariate-time-series-forecastin
+  slug: introducing-timesfm-3-0-with-multivariate-time-series-forecastin
+  type: reference
+  title: Introducing TimesFM 3.0 with multivariate time-series forecasting in BigQuery
+  description: "Overview Since introducing zero-shot time-series forecasting in
+    BigQuery with AI.FORECAST — initially powered by TimesFM 2.0 and later
+    upgraded to TimesFM 2.5 — you have been able to generate forecasts directly
+    in SQL without training or managing custom models. However, up until "
+  category: cat-agentic
+  tags: []
+  url: https://cloud.google.com/blog/products/data-analytics/bigquery-timesfm-3-0-with-multivariate-time-series-forecasting/
+  publisher: Google Cloud — Data Analytics blog
+  kind: blog
+  why: null
+  source_url: https://cloud.google.com/blog/products/data-analytics/bigquery-timesfm-3-0-with-multivariate-time-series-forecasting/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: gcp-data-analytics
+    extracted_at: 2026-10-26T12:02:50.850Z
+    published: Mon, 12 Oct 2026 16:00:00 +0000
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+      - cat-sql
+      - cat-warehouses
+    suggested_type: tutorial

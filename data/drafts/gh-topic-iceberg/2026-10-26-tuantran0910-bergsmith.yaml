@@ -1,0 +1,29 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-tuantran0910-bergsmith
+  slug: tuantran0910-bergsmith
+  type: agent
+  title: tuantran0910/bergsmith
+  description: Self-hosted maintenance platform for Apache Iceberg tables, written in Rust
+  category: cat-lakehouse
+  tags:
+    - apache-iceberg
+    - compaction
+    - data-engineering
+    - lakehouse
+    - rust
+  url: https://github.com/tuantran0910/bergsmith
+  publisher: GitHub topic — Iceberg tooling
+  source_url: https://github.com/tuantran0910/bergsmith
+  github_url: https://github.com/tuantran0910/bergsmith
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-iceberg
+    extracted_at: 2026-10-26T12:05:44.681Z
+    lane: extract

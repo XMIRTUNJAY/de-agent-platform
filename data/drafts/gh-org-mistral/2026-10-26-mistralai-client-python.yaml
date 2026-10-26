@@ -1,0 +1,43 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-mistralai-client-python
+  slug: mistralai-client-python
+  type: skill
+  title: mistralai/client-python
+  description: >-
+    Python client library for Mistral AI platform
+
+
+    Install (from source README):
+
+    > [!NOTE]
+
+    > **Python version upgrade policy**
+
+    >
+
+    > Once a Python version reaches its [official end of life
+    date](https://devguide.python.org/versions/), a 3-month grace period is
+    provided for users to upgrade. Following this grace period, the minimum
+    python version supported in the SDK will be updated.
+
+
+    The SDK can be installed with *uv*, *pip*, or *poetry* package managers.
+  category: cat-agentic
+  tags: []
+  url: https://github.com/mistralai/client-python
+  publisher: GitHub org — Mistral AI
+  source_url: https://github.com/mistralai/client-python
+  github_url: https://github.com/mistralai/client-python
+  license: Apache-2.0
+  install_command: uv add mistralai
+  install_candidates:
+    - uv add mistralai
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-mistral
+    extracted_at: 2026-10-26T12:04:11.491Z
+    lane: extract

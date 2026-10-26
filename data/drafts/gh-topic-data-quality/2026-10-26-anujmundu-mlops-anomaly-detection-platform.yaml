@@ -1,0 +1,32 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-anujmundu-mlops-anomaly-detection-platform
+  slug: anujmundu-mlops-anomaly-detection-platform
+  type: reference
+  title: anujmundu/mlops-anomaly-detection-platform
+  description: "Enterprise-grade real-time industrial anomaly detection &
+    self-retraining MLOps platform: Kafka streaming, Great Expectations
+    firewall, 17-dim feature store, Isolation Forest champion model, sub-8ms F"
+  category: cat-data-quality
+  tags: []
+  url: https://github.com/anujmundu/mlops-anomaly-detection-platform
+  publisher: GitHub topic — data quality frameworks
+  kind: blog
+  why: null
+  source_url: https://github.com/anujmundu/mlops-anomaly-detection-platform
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: gh-topic-data-quality
+    extracted_at: 2026-10-26T12:06:16.469Z
+    published: 2026-10-26T11:45:49Z
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-data-quality
+      - cat-kafka
+      - cat-streaming
+    suggested_type: null

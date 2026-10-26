@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-monitoring-indoor-air-quality-with-prometheus-grafana-and-a-co2-
+  slug: monitoring-indoor-air-quality-with-prometheus-grafana-and-a-co2-
+  type: reference
+  title: Monitoring Indoor Air Quality with Prometheus, Grafana and a CO2 Sensor
+  description: Low indoor air quality - or high CO2 - negatively impacts cognitive
+    performance, causes headaches, drowsiness and more. It's easy to fix though,
+    just use a CO2 sensor and open a window from time-to-time. But why stop
+    there, when you can set up complete air quality monitoring solu
+  category: cat-streaming
+  tags: []
+  url: https://martinheinz.dev/blog/107
+  publisher: Martin Heinz (Practical Data Science)
+  kind: blog
+  why: null
+  source_url: https://martinheinz.dev/blog/107
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: martin-heinz
+    extracted_at: 2026-10-26T12:03:14.405Z
+    published: Tue, 02 Jan 2024 16:00:00 +0000
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-streaming
+    suggested_type: tutorial

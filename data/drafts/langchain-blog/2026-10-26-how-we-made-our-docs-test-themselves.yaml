@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-how-we-made-our-docs-test-themselves
+  slug: how-we-made-our-docs-test-themselves
+  type: reference
+  title: How We Made Our Docs Test Themselves
+  description: Stale code samples are a docs problem nobody prioritizes. Here s
+    how we used the Deep Agents CLI to automate migrating inline code into
+    testable, CI-ready examples
+  category: cat-agentic
+  tags: []
+  url: https://www.langchain.com/blog/our-docs-test-themselves
+  publisher: LangChain Blog
+  kind: blog
+  why: null
+  source_url: https://www.langchain.com/blog/our-docs-test-themselves
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: langchain-blog
+    extracted_at: 2026-10-26T12:03:04.886Z
+    published: Tue, 13 Oct 2026 19:56:07 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

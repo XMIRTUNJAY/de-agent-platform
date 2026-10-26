@@ -1,0 +1,29 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-a-letter-to-the-discord-community-in-brazil
+  slug: a-letter-to-the-discord-community-in-brazil
+  type: reference
+  title: A letter to the Discord community in Brazil
+  description: On the order from Brazil s ANPD to suspend screensharing and video
+    features in the country, how we re complying, and our commitment to our
+    community in Brazil.
+  category: null
+  tags: []
+  url: https://discord.com/blog/a-letter-to-the-discord-community-in-brazil
+  publisher: Discord Engineering Blog
+  kind: blog
+  why: null
+  source_url: https://discord.com/blog/a-letter-to-the-discord-community-in-brazil
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: discord-eng
+    extracted_at: 2026-10-26T12:02:59.510Z
+    published: Mon, 17 Aug 2026 00:00:00 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

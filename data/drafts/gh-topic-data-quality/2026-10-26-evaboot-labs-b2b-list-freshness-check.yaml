@@ -1,0 +1,34 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-evaboot-labs-b2b-list-freshness-check
+  slug: evaboot-labs-b2b-list-freshness-check
+  type: skill
+  title: evaboot-labs/b2b-list-freshness-check
+  description: "How stale is your B2B contact list? Re-check it against LinkedIn
+    Sales Navigator with Evaboot: who left, who moved, which emails to fix.
+    Claude Code, Codex, Cursor or n8n."
+  category: cat-agentic
+  tags:
+    - b2b-data
+    - data-quality
+    - evaboot
+    - lead-generation
+    - n8n
+    - sales-navigator
+  url: https://github.com/evaboot-labs/b2b-list-freshness-check
+  publisher: GitHub topic — data quality frameworks
+  source_url: https://github.com/evaboot-labs/b2b-list-freshness-check
+  github_url: https://github.com/evaboot-labs/b2b-list-freshness-check
+  license: MIT
+  install_command: npx skills
+  install_candidates:
+    - npx skills
+  skill_files:
+    - skills/b2b-list-freshness-check/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-data-quality
+    extracted_at: 2026-10-26T12:06:19.820Z
+    lane: extract

@@ -1,0 +1,33 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-google-budoux
+  slug: google-budoux
+  type: agent
+  title: google/budoux
+  description: |-
+    Install (from source README):
+    ```shellsession
+    $ pip install budoux
+    ```
+  category: cat-agentic
+  tags:
+    - javascript
+    - machine-learning
+    - nlp
+    - python
+  url: https://github.com/google/budoux
+  publisher: GitHub org — Google (incl. Gemini samples)
+  source_url: https://github.com/google/budoux
+  github_url: https://github.com/google/budoux
+  license: Apache-2.0
+  install_command: pip install budoux
+  install_candidates:
+    - pip install budoux
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-google
+    extracted_at: 2026-10-26T12:03:41.637Z
+    lane: extract

@@ -1,0 +1,68 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-mistralai-search-starter-app
+  slug: mistralai-search-starter-app
+  type: skill
+  title: mistralai/search-starter-app
+  description: >-
+    Base template to build, manage and improve search engines
+
+
+    Install (from source README):
+
+    ![Demo](demo.gif)
+
+
+    These commands run in the **generated project**. The repo root `Makefile` is
+    only for template CI.
+
+
+    ```bash
+
+    cd my-search-project
+
+    make setup-vespa
+
+    vibe --trust  # Or your agent of choice
+
+    ```
+
+
+    Alternatively, run the ingest and search entrypoints directly:
+
+
+    ```bash
+
+    make ingest path=sample_data/hello.txt
+
+    make search query="hello world"
+
+    ```
+
+
+    Generate [Bruno](https://www.usebruno.com/) API collection files to explore
+    the Vespa query and document APIs interactively:
+
+
+    ```bash
+
+    make bruno
+
+    ```
+  category: cat-agentic
+  tags: []
+  url: https://github.com/mistralai/search-starter-app
+  publisher: GitHub org — Mistral AI
+  source_url: https://github.com/mistralai/search-starter-app
+  github_url: https://github.com/mistralai/search-starter-app
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-mistral
+    extracted_at: 2026-10-26T12:04:14.550Z
+    lane: extract

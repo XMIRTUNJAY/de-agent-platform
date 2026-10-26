@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-from-2-500-requests-to-24-rebuilding-star-history-without-the-st
+  slug: from-2-500-requests-to-24-rebuilding-star-history-without-the-st
+  type: reference
+  title: "From 2,500 requests to 24: Rebuilding star history without the stargazers"
+  description: "Our new repo star history API now provides trends without
+    returning individual identities or requiring unbounded database work. These
+    are the engineering tradeoffs we made. The post From 2,500 requests to 24:
+    Rebuilding star history without the stargazers appeared first on The Gi"
+  category: null
+  tags: []
+  url: https://github.blog/engineering/architecture-optimization/from-2500-requests-to-24-rebuilding-star-history-without-the-stargazers/
+  publisher: GitHub Blog — Engineering
+  kind: blog
+  why: null
+  source_url: https://github.blog/engineering/architecture-optimization/from-2500-requests-to-24-rebuilding-star-history-without-the-stargazers/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: github-blog-eng
+    extracted_at: 2026-10-26T12:02:56.621Z
+    published: Wed, 14 Oct 2026 19:11:33 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

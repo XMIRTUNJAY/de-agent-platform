@@ -1,0 +1,42 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-developmentfinanceobservatory-spec-kit
+  slug: developmentfinanceobservatory-spec-kit
+  type: agent
+  title: DevelopmentFinanceObservatory/spec-kit
+  description: |-
+    Schemas, registries, conformance vectors and Python packages for DFO data contracts.
+
+    Install (from source README):
+    No package is published to PyPI. Install from git, pinned to one commit. Replace `<rev>` with a commit SHA from this repository.
+
+    ```bash
+    uv add "git+https://github.com/DevelopmentFinanceObservatory/spec-kit@<rev>#subdirectory=python/spec-kit"
+    uv add "git+https://github.com/DevelopmentFinanceObservatory/spec-kit@<rev>#subdirectory=python/frame-grammar"
+    uv add "git+https://github.com/DevelopmentFinanceObservatory/spec-kit@<rev>#subdirectory=python/dfo-spec-kit-components"
+    uv add "git+https://github.com/DevelopmentFinanceObservatory/spec-kit@<rev>#subdirectory=python/provenance-docs"
+    uv add "git
+  category: cat-governance
+  tags:
+    - conformance-tests
+    - data-contracts
+    - development-finance
+    - development-finance-observatory
+    - json-schema
+    - python
+  url: https://github.com/DevelopmentFinanceObservatory/spec-kit
+  publisher: GitHub topic — data contracts
+  source_url: https://github.com/DevelopmentFinanceObservatory/spec-kit
+  github_url: https://github.com/DevelopmentFinanceObservatory/spec-kit
+  license: MIT
+  install_command: pip install \
+  install_candidates:
+    - pip install \
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-data-contracts
+    extracted_at: 2026-10-26T12:06:25.109Z
+    lane: extract

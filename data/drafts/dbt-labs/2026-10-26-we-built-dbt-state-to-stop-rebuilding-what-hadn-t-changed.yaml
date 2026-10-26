@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-we-built-dbt-state-to-stop-rebuilding-what-hadn-t-changed
+  slug: we-built-dbt-state-to-stop-rebuilding-what-hadn-t-changed
+  type: reference
+  title: We built dbt State to stop rebuilding what hadn't changed
+  description: dbt State is now generally available everywhere you run dbt. See
+    how it cuts compute costs and speeds up development.
+  category: cat-dbt
+  tags: []
+  url: https://www.getdbt.com/blog/dbt-state-is-ga
+  publisher: dbt Labs Blog
+  kind: blog
+  why: null
+  source_url: https://www.getdbt.com/blog/dbt-state-is-ga
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: dbt-labs
+    extracted_at: 2026-10-26T12:02:54.196Z
+    published: Wed, 16 Sep 2026 16:57:00 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-dbt
+      - cat-cost-engineering
+    suggested_type: null

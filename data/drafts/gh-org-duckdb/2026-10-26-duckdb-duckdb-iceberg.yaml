@@ -1,0 +1,24 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-duckdb-duckdb-iceberg
+  slug: duckdb-duckdb-iceberg
+  type: agent
+  title: duckdb/duckdb-iceberg
+  description: See the source repository.
+  category: cat-warehouses
+  tags: []
+  url: https://github.com/duckdb/duckdb-iceberg
+  publisher: GitHub org — DuckDB
+  source_url: https://github.com/duckdb/duckdb-iceberg
+  github_url: https://github.com/duckdb/duckdb-iceberg
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-duckdb
+    extracted_at: 2026-10-26T12:07:57.459Z
+    lane: extract

@@ -1,0 +1,38 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-google-tunix
+  slug: google-tunix
+  type: agent
+  title: google/tunix
+  description: |-
+    A Lightweight LLM Post-Training Library
+
+    Install (from source README):
+    **Installation:** Jump to [Installation](https://tunix.readthedocs.io/en/latest/quickstart.html#installation) to install Tunix and run your first training
+    job.
+
+    For TPU users integrating `vllm` and `tpu-inference`, there are two supported
+    setup paths:
+
+    - Docker image builds use [Dockerfile](https://github.com/google/tunix/blob/main/Dockerfile) and install
+        the pinned dependencies directly from `requirements/requirements.txt` and
+        `requirements/special_requirements.txt`.
+    - Local TPU VM or developer-machine installs can use
+        [scripts/install_tunix_vllm_requirement.sh](https://github.com
+  category: cat-agentic
+  tags: []
+  url: https://github.com/google/tunix
+  publisher: GitHub org — Google (incl. Gemini samples)
+  source_url: https://github.com/google/tunix
+  github_url: https://github.com/google/tunix
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-google
+    extracted_at: 2026-10-26T12:03:40.138Z
+    lane: extract

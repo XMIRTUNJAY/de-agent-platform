@@ -1,0 +1,32 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-jenkins-board-and-officer-elections-2026-nominations-open
+  slug: jenkins-board-and-officer-elections-2026-nominations-open
+  type: reference
+  title: Jenkins Board and Officer Elections 2026 - Nominations Open
+  description: We are excited to announce the 2026 Jenkins Governance Board and
+    Officer elections! Nominations Nominations can be submitted for governance
+    board positions and all officer positions (Security, Events, Release,
+    Infrastructure, and Documentation). During the registration period, we
+  category: cat-governance
+  tags: []
+  url: https://www.jenkins.io/blog/2026/10/14/board-officer-election-announcement/
+  publisher: Continuous Coalition (DE blog via Feedburner)
+  kind: blog
+  why: null
+  source_url: https://www.jenkins.io/blog/2026/10/14/board-officer-election-announcement/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: databricks-continuous
+    extracted_at: 2026-10-26T12:03:00.773Z
+    published: 2026-10-14T00:00:00+00:00
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-governance
+      - cat-infrastructure
+    suggested_type: tutorial

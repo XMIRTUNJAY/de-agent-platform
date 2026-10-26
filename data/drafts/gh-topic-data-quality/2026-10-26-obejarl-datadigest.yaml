@@ -1,0 +1,36 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-obejarl-datadigest
+  slug: obejarl-datadigest
+  type: agent
+  title: Obejarl/datadigest
+  description: "CSV data-quality profiling with a 0-100 score and reports, plus
+    operations research on the same data: LP/MIP production, transport,
+    assignment and budget solvers (HiGHS) and M/M/c worker sizing. FastAPI,
+    reliable Redis queue, PostgreSQL, Prometheus/Grafana, Docker Compose,
+    Kubernetes, CI."
+  category: cat-infrastructure
+  tags:
+    - data-profiling
+    - data-quality
+    - docker
+    - fastapi
+    - github-actions
+    - grafana
+    - kubernetes
+    - linear-programming
+  url: https://github.com/Obejarl/datadigest
+  publisher: GitHub topic — data quality frameworks
+  source_url: https://github.com/Obejarl/datadigest
+  github_url: https://github.com/Obejarl/datadigest
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-data-quality
+    extracted_at: 2026-10-26T12:06:19.066Z
+    lane: extract

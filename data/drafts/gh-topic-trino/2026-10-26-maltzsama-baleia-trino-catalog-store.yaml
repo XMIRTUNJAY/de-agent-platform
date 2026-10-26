@@ -1,0 +1,33 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-maltzsama-baleia-trino-catalog-store
+  slug: maltzsama-baleia-trino-catalog-store
+  type: agent
+  title: maltzsama/baleia-trino-catalog-store
+  description: Trino CatalogStore plugin that loads Iceberg catalogs from
+    PostgreSQL at runtime — no static .properties files, no coordinator restart.
+  category: cat-warehouses
+  tags:
+    - apache-iceberg
+    - catalog-store
+    - data-lake
+    - iceberg
+    - java
+    - lakehouse
+    - metadata-catalog
+    - metadata-catalogue
+  url: https://github.com/maltzsama/baleia-trino-catalog-store
+  publisher: GitHub topic — Trino tooling
+  source_url: https://github.com/maltzsama/baleia-trino-catalog-store
+  github_url: https://github.com/maltzsama/baleia-trino-catalog-store
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-trino
+    extracted_at: 2026-10-26T12:06:10.395Z
+    lane: extract

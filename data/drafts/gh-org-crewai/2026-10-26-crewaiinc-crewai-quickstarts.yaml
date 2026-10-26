@@ -1,0 +1,57 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-crewaiinc-crewai-quickstarts
+  slug: crewaiinc-crewai-quickstarts
+  type: agent
+  title: crewAIInc/crewAI-quickstarts
+  description: >-
+    A comprehensive collection of CrewAI quickstarts and feature demos designed
+    to help developers learn and master the CrewAI framework through hands-on
+    examples.
+
+
+    Install (from source README):
+
+    A comprehensive collection of **CrewAI quickstarts and feature demos**
+    designed to help developers learn and master the CrewAI framework through
+    hands-on examples. Each quickstart provides a foundation that you can build
+    upon and customize to suit your needs.
+
+
+    <p align="left">
+      <a href="https://crewai.com">Homepage</a>
+      ·
+      <a href="https://docs.crewai.com">Docs</a>
+      ·
+      <a href="https://app.crewai.com">Start Cloud Trial</a>
+      ·
+      <a href="https://blog.crewai.com">Blog</a>
+      ·
+      <a href="https://community.crewai.com">Forum</a>
+    </p>
+
+
+    <p align="left">
+      <a href="https://github.com/crewAIInc/c
+  category: cat-agentic
+  tags:
+    - agents
+    - ai
+    - crewai
+    - crewai-quickstarts
+    - quickstarts
+  url: https://github.com/crewAIInc/crewAI-quickstarts
+  publisher: GitHub org — CrewAI
+  source_url: https://github.com/crewAIInc/crewAI-quickstarts
+  github_url: https://github.com/crewAIInc/crewAI-quickstarts
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-crewai
+    extracted_at: 2026-10-26T12:04:18.465Z
+    lane: extract

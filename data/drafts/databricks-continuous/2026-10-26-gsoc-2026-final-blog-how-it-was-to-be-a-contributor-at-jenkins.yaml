@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-gsoc-2026-final-blog-how-it-was-to-be-a-contributor-at-jenkins
+  slug: gsoc-2026-final-blog-how-it-was-to-be-a-contributor-at-jenkins
+  type: reference
+  title: "GSoC 2026 Final Blog: How It Was to Be a Contributor at Jenkins"
+  description: "Hello everyone! I am Mallikarjun G D, and I have been a GSoC 2026
+    contributor for the project Continue: AI-Powered Chatbot for Quick Access to
+    Jenkins Resources. Over the past few months, I have learnt a lot, not just
+    about AI and Jenkins, but also about contributing to a large o"
+  category: null
+  tags: []
+  url: https://www.jenkins.io/blog/2026/09/11/arjun-713-final-blog/
+  publisher: Continuous Coalition (DE blog via Feedburner)
+  kind: blog
+  why: null
+  source_url: https://www.jenkins.io/blog/2026/09/11/arjun-713-final-blog/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: databricks-continuous
+    extracted_at: 2026-10-26T12:03:00.775Z
+    published: 2026-09-11T00:00:00+00:00
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: tutorial

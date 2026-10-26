@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-announcing-ai-era-devops-live-masterclass
+  slug: announcing-ai-era-devops-live-masterclass
+  type: reference
+  title: "⚠️ ANNOUNCING: AI-Era DevOps Live Masterclass"
+  description: Summary pending review — see the source.
+  category: cat-infrastructure
+  tags: []
+  url: https://www.youtube.com/shorts/HV-7NrW2LmY
+  publisher: TechWorld with Nana (devops/data infra)
+  kind: blog
+  why: null
+  source_url: https://www.youtube.com/shorts/HV-7NrW2LmY
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: yt-nana
+    extracted_at: 2026-10-26T12:03:19.993Z
+    published: 2026-08-28T12:11:50+00:00
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-infrastructure
+    suggested_type: tutorial

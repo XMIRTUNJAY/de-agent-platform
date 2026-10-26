@@ -1,0 +1,49 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-northgraindata-dbt-http
+  slug: northgraindata-dbt-http
+  type: agent
+  title: northgraindata/dbt-http
+  description: |-
+    Adapter-aware HTTP request and URL-read macros for dbt projects.
+
+    Install (from source README):
+    Install from GitHub:
+
+    ```yaml
+    packages:
+      - git: "https://github.com/northgraindata/dbt-http.git"
+        revision: v0.1.0
+    ```
+
+    Install locally during development:
+
+    ```yaml
+    packages:
+      - local: ../dbt-http
+    ```
+  category: cat-dbt
+  tags:
+    - analytics-engineering
+    - bigquery
+    - clickhouse
+    - data-engineering
+    - data-warehouse
+    - databricks
+    - dbt
+    - dbt-package
+  url: https://github.com/northgraindata/dbt-http
+  publisher: GitHub topic — dbt packages
+  source_url: https://github.com/northgraindata/dbt-http
+  github_url: https://github.com/northgraindata/dbt-http
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-dbt-packages
+    extracted_at: 2026-10-26T12:05:32.731Z
+    lane: extract

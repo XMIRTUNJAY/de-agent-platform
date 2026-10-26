@@ -1,0 +1,43 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-opengeos-geolibre
+  slug: opengeos-geolibre
+  type: skill
+  title: opengeos/GeoLibre
+  description: |-
+    A lightweight, cloud-native GIS platform for visualizing, exploring, and analyzing geospatial data. It runs in the web browser, on the desktop, on mobile, and inside Jupyter notebooks.
+
+    Install (from source README):
+    [![The GeoLibre Whitebox toolbox running locally with WebAssembly, listing the full catalog of 1,000+ tools with the Regularize Building Footprints tool selected](https://assets.geolibre.app/images/whitebox.webp)](https://assets.geolibre.app/images/whitebox.webp)
+
+    **Processing → Whitebox Toolbox** opens a toolbox of **1,000+ geoprocessing tools** that
+    execute in the browser through a WebAssembly runtime with native raster and
+    vector I/O. There is no Python sidecar to install and no server to call — the
+    tools, your data, and the results all stay on your machine, so the full toolbox
+    is available
+  category: cat-warehouses
+  tags:
+    - cesium
+    - data-science
+    - duckdb
+    - geolibre
+    - geospatial
+    - gis
+    - mapbox
+    - maplibre
+  url: https://github.com/opengeos/GeoLibre
+  publisher: GitHub topic — DuckDB tooling
+  source_url: https://github.com/opengeos/GeoLibre
+  github_url: https://github.com/opengeos/GeoLibre
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - skills/geolibre/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-duckdb
+    extracted_at: 2026-10-26T12:06:01.070Z
+    lane: extract

@@ -1,0 +1,33 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-cnstlungu-portable-data-stack-dagster
+  slug: cnstlungu-portable-data-stack-dagster
+  type: agent
+  title: cnstlungu/portable-data-stack-dagster
+  description: " A portable Datamart and Business Intelligence suite built with
+    Docker, Dagster, dbt, DuckDB and Superset "
+  category: cat-dbt
+  tags:
+    - business-intelligence
+    - dagster
+    - data-engineering
+    - data-visualization
+    - dbt
+    - duckdb
+    - python
+    - superset
+  url: https://github.com/cnstlungu/portable-data-stack-dagster
+  publisher: GitHub topic — dbt
+  source_url: https://github.com/cnstlungu/portable-data-stack-dagster
+  github_url: https://github.com/cnstlungu/portable-data-stack-dagster
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: github-topic-dbt
+    extracted_at: 2026-10-26T12:05:21.288Z
+    lane: extract

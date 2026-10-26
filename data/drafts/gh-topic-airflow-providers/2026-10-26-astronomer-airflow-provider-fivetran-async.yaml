@@ -1,0 +1,41 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-astronomer-airflow-provider-fivetran-async
+  slug: astronomer-airflow-provider-fivetran-async
+  type: agent
+  title: astronomer/airflow-provider-fivetran-async
+  description: |-
+    A new Airflow Provider for Fivetran, maintained by Astronomer and Fivetran
+
+    Install (from source README):
+    Prerequisites: An environment running `apache-airflow`.
+
+    ```
+    pip install airflow-provider-fivetran-async
+    ```
+  category: cat-airflow
+  tags:
+    - airflow
+    - airflow-operator
+    - airflow-provider
+    - apache-airflow
+    - dag
+    - data-orchestration
+    - etl
+    - python
+  url: https://github.com/astronomer/airflow-provider-fivetran-async
+  publisher: GitHub topic — airflow providers
+  source_url: https://github.com/astronomer/airflow-provider-fivetran-async
+  github_url: https://github.com/astronomer/airflow-provider-fivetran-async
+  license: Apache-2.0
+  install_command: pip install airflow-provider-fivetran-async
+  install_candidates:
+    - pip install airflow-provider-fivetran-async
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-airflow-providers
+    extracted_at: 2026-10-26T12:05:39.303Z
+    lane: extract

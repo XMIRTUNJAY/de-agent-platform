@@ -1,0 +1,29 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-don-t-let-messy-data-bend-your-curves
+  slug: don-t-let-messy-data-bend-your-curves
+  type: reference
+  title: Don’t Let Messy Data Bend Your Curves
+  description: "Robust Estimation Series: Building Accurate Curves with
+    Polynomials and Splines With Spurious Data The post Don’t Let Messy Data
+    Bend Your Curves appeared first on Towards Data Science ."
+  category: null
+  tags: []
+  url: https://towardsdatascience.com/dont-let-messy-data-bend-your-curves/
+  publisher: Towards Data Science
+  kind: blog
+  why: null
+  source_url: https://towardsdatascience.com/dont-let-messy-data-bend-your-curves/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: towards-data-science
+    extracted_at: 2026-10-26T12:03:08.101Z
+    published: Fri, 23 Oct 2026 15:30:00 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: tutorial

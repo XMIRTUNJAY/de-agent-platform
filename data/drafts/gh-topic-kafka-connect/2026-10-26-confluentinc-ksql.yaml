@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-confluentinc-ksql
+  slug: confluentinc-ksql
+  type: reference
+  title: confluentinc/ksql
+  description: The database purpose-built for stream processing applications.
+  category: cat-sql
+  tags: []
+  url: https://github.com/confluentinc/ksql
+  publisher: GitHub topic — Kafka connectors
+  kind: blog
+  why: null
+  source_url: https://github.com/confluentinc/ksql
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: gh-topic-kafka-connect
+    extracted_at: 2026-10-26T12:06:43.811Z
+    published: 2026-10-26T12:05:31Z
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-sql
+    suggested_type: null

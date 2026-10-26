@@ -1,0 +1,71 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-cordata-tech-pipeline-runtime
+  slug: cordata-tech-pipeline-runtime
+  type: agent
+  title: cordata-tech/pipeline-runtime
+  description: >-
+    Runnable reference implementation of the descriptor-driven pipeline executor
+    from the cordata.tech pipeline-half posts — DuckDB and Parquet standing in
+    for Glue and Spark, so a clean clone runs with no cloud account.
+
+
+    Install (from source README):
+
+    Python **3.12+** (the code uses `match` and PEP 695 `type` aliases). No
+    cloud
+
+    account, no credentials, no clone:
+
+
+    ```bash
+
+    pip install 'cordata-pipeline-runtime[run]'
+
+
+    mkdir demo && cd demo
+
+    pipeline-runtime demo .          # seed the example, then run all three
+    pipelines
+
+    ```
+
+
+    `demo` writes three things into the directory you give it and nowhere else:
+    the
+
+    local catalog (`catalog.duckdb`), the warehouse the `s3://…` locations land
+    in,
+
+    and `out/lineage.ndjson` holding every event the runs emitted. It refuses a
+
+    directory holding files it did not write, so point it at an empty one.
+
+
+    To run one pipel
+  category: cat-data-quality
+  tags:
+    - data-engineering
+    - data-governance
+    - data-lineage
+    - data-mesh
+    - duckdb
+    - great-expectations
+    - openlineage
+    - python
+  url: https://github.com/cordata-tech/pipeline-runtime
+  publisher: GitHub topic — Great Expectations ecosystem
+  source_url: https://github.com/cordata-tech/pipeline-runtime
+  github_url: https://github.com/cordata-tech/pipeline-runtime
+  license: MIT
+  install_command: pip install -e
+  install_candidates:
+    - pip install -e
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-great-expectations
+    extracted_at: 2026-10-26T12:06:51.616Z
+    lane: extract

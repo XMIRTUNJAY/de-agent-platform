@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-bringing-visual-graph-debugging-to-custom-edge-compilers-with-mo
+  slug: bringing-visual-graph-debugging-to-custom-edge-compilers-with-mo
+  type: reference
+  title: Bringing Visual Graph Debugging to Custom Edge Compilers with Model Explorer
+  description: Google AI Edge Model Explorer now supports custom compiler
+    intermediate representations and open-source adapters like TOSA, VGF, and
+    PTE for on-device machine learning. Developers can leverage hierarchical
+    graph visualization, split-pane views, and per-node trace overlays to catc
+  category: cat-agentic
+  tags: []
+  url: https://developers.googleblog.com/bringing-visual-graph-debugging-to-custom-edge-compilers-with-model-explorer/
+  publisher: Google Developers Blog
+  kind: blog
+  why: null
+  source_url: https://developers.googleblog.com/bringing-visual-graph-debugging-to-custom-edge-compilers-with-model-explorer/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: google-dev-blog
+    extracted_at: 2026-10-26T12:02:51.620Z
+    published: null
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

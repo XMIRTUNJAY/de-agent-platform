@@ -1,0 +1,33 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-trinodb-trino
+  slug: trinodb-trino
+  type: agent
+  title: trinodb/trino
+  description: Official repository of Trino, the distributed SQL query engine for
+    big data, formerly known as PrestoSQL (https://trino.io)
+  category: cat-sql
+  tags:
+    - analytics
+    - big-data
+    - data-science
+    - database
+    - databases
+    - datalake
+    - delta-lake
+    - distributed-database
+  url: https://github.com/trinodb/trino
+  publisher: GitHub topic — Delta Lake tooling
+  source_url: https://github.com/trinodb/trino
+  github_url: https://github.com/trinodb/trino
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-delta-lake
+    extracted_at: 2026-10-26T12:05:58.891Z
+    lane: extract

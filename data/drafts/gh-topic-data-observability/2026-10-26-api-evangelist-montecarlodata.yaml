@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-api-evangelist-montecarlodata
+  slug: api-evangelist-montecarlodata
+  type: reference
+  title: api-evangelist/montecarlodata
+  description: "Monte Carlo — independent third-party profile of a public API
+    surface, by API Evangelist. Monte Carlo is a data and AI observability
+    platform that helps enterprise organizations find and fix bad data "
+  category: cat-data-observability
+  tags: []
+  url: https://github.com/api-evangelist/montecarlodata
+  publisher: GitHub topic — data observability
+  kind: blog
+  why: null
+  source_url: https://github.com/api-evangelist/montecarlodata
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: gh-topic-data-observability
+    extracted_at: 2026-10-26T12:06:39.435Z
+    published: 2026-10-26T05:06:03Z
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-data-observability
+    suggested_type: null

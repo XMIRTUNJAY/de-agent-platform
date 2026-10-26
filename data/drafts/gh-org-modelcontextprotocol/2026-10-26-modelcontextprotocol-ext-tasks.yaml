@@ -1,0 +1,26 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-modelcontextprotocol-ext-tasks
+  slug: modelcontextprotocol-ext-tasks
+  type: agent
+  title: modelcontextprotocol/ext-tasks
+  description: This repository provides a reference for the tasks extensions to
+    the MCP protocol, allowing for long-running operations, such as Agent
+    communication, in MCP.
+  category: cat-agentic
+  tags: []
+  url: https://github.com/modelcontextprotocol/ext-tasks
+  publisher: GitHub org — modelcontextprotocol
+  source_url: https://github.com/modelcontextprotocol/ext-tasks
+  github_url: https://github.com/modelcontextprotocol/ext-tasks
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-modelcontextprotocol
+    extracted_at: 2026-10-26T12:07:33.552Z
+    lane: extract

@@ -1,0 +1,79 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-filippolmt-skills
+  slug: filippolmt-skills
+  type: skill
+  title: filippolmt/skills
+  description: >-
+    Skills for Claude Code, Codex CLI and pi: install individual plugins or
+    workflow bundles; pi uses one package with skill filters. Upstream updates
+    via Renovate.
+
+
+    Install (from source README):
+
+    In Claude Code, each skill is its own plugin **by default**; whole-plugin
+    entries
+
+    and bundles install several artifacts together. Install only what you want:
+
+
+    ```
+
+    /plugin install tdd@filippo-skills
+
+    /plugin install grill-me@filippo-skills
+
+    ```
+
+
+    Review the plugin details, choose an installation scope, and confirm in the
+    panel.
+
+    If activation is pending, run `/reload-plugins` or start a new session.
+
+    Then invoke them namespaced: `/tdd:tdd`, `/grill-me:grill-me`. Model-invoked
+
+    skills (e.g. `grilling`) are triggered by Claude automatically when
+    relevant.
+
+
+    To refresh after upstream updates:
+
+
+    ```
+
+    /plugi
+  category: cat-agentic
+  tags:
+    - agent-skills
+    - claude-code
+    - claude-skills
+    - codex
+    - pi
+    - plugin-marketplace
+  url: https://github.com/filippolmt/skills
+  publisher: GitHub topic — agent-skills
+  source_url: https://github.com/filippolmt/skills
+  github_url: https://github.com/filippolmt/skills
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - .agents/plugins/packages/agents-sdk/skills/agents-sdk/SKILL.md
+    - .agents/plugins/packages/api-scaffolding/skills/api-scaffolding-backend-architect/SKILL.md
+    - .agents/plugins/packages/api-scaffolding/skills/api-scaffolding-django-pro/SKILL.md
+    - .agents/plugins/packages/api-scaffolding/skills/api-scaffolding-fastapi-pro/SKILL.md
+    - .agents/plugins/packages/api-scaffolding/skills/api-scaffolding-graphql-architect/SKILL.md
+    - .agents/plugins/packages/api-scaffolding/skills/fastapi-templates/SKILL.md
+    - .agents/plugins/packages/archify/skills/archify/SKILL.md
+    - .agents/plugins/packages/basin/skills/basin/SKILL.md
+    - .agents/plugins/packages/brandkit/skills/brandkit/SKILL.md
+    - .agents/plugins/packages/cf-cli/skills/cf-cli/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-agent-skills
+    extracted_at: 2026-10-26T12:04:46.608Z
+    lane: extract

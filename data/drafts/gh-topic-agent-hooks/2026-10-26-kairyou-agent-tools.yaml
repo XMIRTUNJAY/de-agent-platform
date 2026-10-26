@@ -1,0 +1,82 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-kairyou-agent-tools
+  slug: kairyou-agent-tools
+  type: skill
+  title: kairyou/agent-tools
+  description: >-
+    Reusable Agent Skills, plus integrations (statusline, provider usage,
+    vision) that install into Codex, Claude Code, and opencode.
+
+
+    Install (from source README):
+
+    ```bash
+
+    npx -y skills@latest add kairyou/agent-tools --skill <name...> -g -y
+
+    ```
+
+
+    The Skills installer automatically detects and installs to the Skill
+    directories
+
+    of most supported agents.
+
+
+
+    ```bash
+
+    npx -y @kairyou/agent-tools@latest vision -a claude codex opencode pi zcode
+    dsh
+
+    ```
+
+
+    Uninstalling keeps your vision provider config by default.
+
+    Pi uses a native extension; the other agents use their MCP configuration
+
+    surfaces.
+
+
+
+    `PromptScript does not support global skill installation` means that the
+
+    PromptScript agent does not support global installation. It does not affect
+
+    other agents and can be
+  category: cat-agentic
+  tags:
+    - agent-hooks
+    - agent-skills
+    - claude-code
+    - codex
+    - coding-agents
+    - developer-tools
+    - opencode
+    - statusline
+  url: https://github.com/kairyou/agent-tools
+  publisher: GitHub topic — agent hooks
+  source_url: https://github.com/kairyou/agent-tools
+  github_url: https://github.com/kairyou/agent-tools
+  license: MIT
+  install_command: npx -y
+  install_candidates:
+    - npx -y
+  skill_files:
+    - capabilities/usage/skills/at-usage/SKILL.md
+    - capabilities/vision/skills/at-vision/SKILL.md
+    - skills/systems/at-zentao/SKILL.md
+    - skills/workflow/at-commit/SKILL.md
+    - skills/workflow/at-daily-log/SKILL.md
+    - skills/workflow/at-review/SKILL.md
+    - skills/workflow/at-self-eval/SKILL.md
+    - skills/workflow/at-simplify/SKILL.md
+  executables: false
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-agent-hooks
+    extracted_at: 2026-10-26T12:07:04.692Z
+    lane: extract

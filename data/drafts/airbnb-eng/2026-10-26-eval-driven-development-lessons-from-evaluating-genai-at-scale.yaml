@@ -1,0 +1,27 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-eval-driven-development-lessons-from-evaluating-genai-at-scale
+  slug: eval-driven-development-lessons-from-evaluating-genai-at-scale
+  type: reference
+  title: "Eval-driven development: Lessons from evaluating GenAI at scale"
+  description: Summary pending review — see the source.
+  category: null
+  tags: []
+  url: https://medium.com/airbnb-engineering/eval-driven-development-lessons-from-evaluating-genai-at-scale-e817e5ae5788?source=rss----53c7c27702d5---4
+  publisher: Airbnb Engineering & Data Science Blog
+  kind: blog
+  why: null
+  source_url: https://medium.com/airbnb-engineering/eval-driven-development-lessons-from-evaluating-genai-at-scale-e817e5ae5788?source=rss----53c7c27702d5---4
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: airbnb-eng
+    extracted_at: 2026-10-26T12:02:58.478Z
+    published: Tue, 28 Jul 2026 17:01:03 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

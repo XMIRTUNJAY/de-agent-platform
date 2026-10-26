@@ -1,0 +1,54 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-rahulnag-mcp-playbook
+  slug: rahulnag-mcp-playbook
+  type: agent
+  title: rahulnag/mcp-playbook
+  description: >-
+    ⚡ Storybook for MCP tools — auto-generates interactive docs and a live
+    playground for your MCP servers
+
+
+    Install (from source README):
+
+    **You need:** Node.js 18+ and an MCP server, written in any language.
+
+
+
+    ```bash
+
+    npm install -D mcp-playbook     # or: pnpm add -D mcp-playbook  /  yarn add
+    -D mcp-playbook
+
+    ```
+
+
+    > Install it **in your project**. Your config file imports from
+    `mcp-playbook`, so it has to be in your project's `node_modules`.
+  category: cat-agentic
+  tags:
+    - ai
+    - llm
+    - mcp
+    - mcp-client
+    - mcp-server
+    - mcp-tool
+    - mcp-tools
+    - postman
+  url: https://github.com/rahulnag/mcp-playbook
+  publisher: GitHub topic — MCP tools
+  source_url: https://github.com/rahulnag/mcp-playbook
+  github_url: https://github.com/rahulnag/mcp-playbook
+  license: MIT
+  install_command: npm install -D
+  install_candidates:
+    - npm install -D
+    - npx mcp-playbook
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-mcp-tools
+    extracted_at: 2026-10-26T12:06:58.745Z
+    lane: extract

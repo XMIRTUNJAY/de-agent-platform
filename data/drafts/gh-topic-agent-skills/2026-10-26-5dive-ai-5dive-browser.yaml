@@ -1,0 +1,65 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-5dive-ai-5dive-browser
+  slug: 5dive-ai-5dive-browser
+  type: skill
+  title: 5dive-ai/5dive-browser
+  description: >
+    A real Chrome for your AI agents, on your own server. Sign in to a site once
+    by hand; the agent uses that session, never your password, and asks you
+    before it pays.
+
+
+    Install (from source README):
+
+    ```sh
+
+    5dive plugin add 5dive-ai/5dive-browser
+
+    ```
+
+
+    **Use the qualified `<owner>/<repo>` name, not a bare `browser`.** A bare
+    plugin name is resolved
+
+    per marketplace, and a box that knows two marketplaces offering that name
+    refuses the add (`exists
+
+    in N marketplaces`) — most boxes in the fleet still carry the bundled
+    `5dive` marketplace next to
+
+    `5dive-plugins`, so the bare form is already ambiguous there.
+
+
+    **A box that already has `browser@5dive-plugins` must remove or disable it
+    first.** The CLI refuses
+
+    two plugins claiming the same verb (`_plugin_verb_install_check`, rc=3) and
+    the refusal is
+  category: cat-agentic
+  tags:
+    - 5dive
+    - agent-skills
+    - ai-agent
+    - ai-agents
+    - browser-automation
+    - chrome
+    - claude-code
+    - claude-code-plugin
+  url: https://github.com/5dive-ai/5dive-browser
+  publisher: GitHub topic — agent-skills
+  source_url: https://github.com/5dive-ai/5dive-browser
+  github_url: https://github.com/5dive-ai/5dive-browser
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - browser/skills/connect-site/SKILL.md
+    - browser/skills/use-browser/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-agent-skills
+    extracted_at: 2026-10-26T12:04:47.351Z
+    lane: extract

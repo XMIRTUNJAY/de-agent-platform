@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-investigating-build-regressions-from-the-last-known-good-build
+  slug: investigating-build-regressions-from-the-last-known-good-build
+  type: reference
+  title: Investigating Build Regressions From the Last Known-Good Build
+  description: "The following scenario is a case study. A Jenkins build fails in
+    an integration test. The console contains a NoSuchMethodError, so the
+    immediate task seems straightforward: find the incompatible dependency. Then
+    someone points out that the last three builds failed too. Another de"
+  category: null
+  tags: []
+  url: https://www.jenkins.io/blog/2026/09/10/investigating-build-regressions-from-the-last-known-good-build/
+  publisher: Continuous Coalition (DE blog via Feedburner)
+  kind: blog
+  why: null
+  source_url: https://www.jenkins.io/blog/2026/09/10/investigating-build-regressions-from-the-last-known-good-build/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: databricks-continuous
+    extracted_at: 2026-10-26T12:03:00.776Z
+    published: 2026-09-10T00:00:00+00:00
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

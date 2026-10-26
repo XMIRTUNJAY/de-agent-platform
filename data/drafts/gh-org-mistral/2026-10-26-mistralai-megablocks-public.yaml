@@ -1,0 +1,30 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ref-mistralai-megablocks-public
+  slug: mistralai-megablocks-public
+  type: reference
+  title: mistralai/megablocks-public
+  description: |-
+    Install (from source README):
+    Note: this assumes you have `numpy` and `torch` installed
+
+    **Training models with Megatron-LM:** We recommend using NGC's [`nvcr.io/nvidia/pytorch:23.01-py3`](https://catalog.ngc.nvidia.com/orgs/nvidia/containers/pytorch/tags) PyTorch container. The [Dockerfile](Dockerfile) builds on this image with additional dependencies. To build the image, run `docker build . -t megablocks-dev` and then `bash docker.sh` to launch the container. Once inside the container, install MegaBlocks with `pip install .`. See [Usage](#steam_locomotive-usage) for instructions on training MoEs with MegaBlocks + Megatro
+  category: cat-agentic
+  tags: []
+  url: https://github.com/mistralai/megablocks-public
+  publisher: GitHub org — Mistral AI
+  source_url: https://github.com/mistralai/megablocks-public
+  github_url: https://github.com/mistralai/megablocks-public
+  license: Apache-2.0
+  install_command: pip install .
+  install_candidates:
+    - pip install .
+    - pip install megablocks
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-mistral
+    extracted_at: 2026-10-26T12:04:13.710Z
+    lane: extract

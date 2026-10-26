@@ -1,0 +1,65 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-overturemaps-overture-airflow-provider
+  slug: overturemaps-overture-airflow-provider
+  type: agent
+  title: OvertureMaps/overture-airflow-provider
+  description: |-
+    Airflow provider to interact with various services used by Overture.
+
+    Install (from source README):
+    ```bash
+    pip install airflow-provider-overture
+    ```
+
+    Optional extras for platforms that need additional SDKs:
+
+    ```bash
+    pip install "airflow-provider-overture[databricks]"
+    pip install "airflow-provider-overture[wherobots]"
+    pip install "airflow-provider-overture[all]"
+    ```
+
+    Requires Python `>=3.11` and Apache Airflow `>=3.3`.
+
+
+    ```python
+    from datetime import datetime
+
+    from airflow import DAG
+
+    from overture_airflow_provider import (
+        ArtifactStoreConfig,
+        AwsGlueClusterSize,
+        GlueConfig,
+        IcebergConfig,
+        PackageRegistryConfig,
+        spark_agnostic_task_group,
+    )
+
+    with DAG(
+        dag_id="ex
+  category: cat-airflow
+  tags:
+    - airflow
+    - airflow-provider
+    - databricks
+    - glue
+    - spark
+    - wherobots
+  url: https://github.com/OvertureMaps/overture-airflow-provider
+  publisher: GitHub topic — airflow providers
+  source_url: https://github.com/OvertureMaps/overture-airflow-provider
+  github_url: https://github.com/OvertureMaps/overture-airflow-provider
+  license: MIT
+  install_command: pip install airflow-provider-overture
+  install_candidates:
+    - pip install airflow-provider-overture
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-airflow-providers
+    extracted_at: 2026-10-26T12:05:36.318Z
+    lane: extract

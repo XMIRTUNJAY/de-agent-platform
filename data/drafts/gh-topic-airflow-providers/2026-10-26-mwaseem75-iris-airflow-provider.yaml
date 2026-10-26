@@ -1,0 +1,44 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ref-mwaseem75-iris-airflow-provider
+  slug: mwaseem75-iris-airflow-provider
+  type: reference
+  title: mwaseem75/iris-airflow-provider
+  description: |-
+    ⚙️ Apache Airflow Provider for InterSystems IRIS | 🔗 Native IRIS connections with IrisHook | 🗄️ Execute IRIS SQL with IrisSQLOperator | ⏳ IrisSensor to wait for IRIS data readiness | 🔄 Build scalable ETL/ELT workflows with Airflow & IRIS.
+
+    Install (from source README):
+    The **airflow-provider-iris** package can be installed separately in any Airflow environment using the following command:
+    ```bash
+    pip install airflow-provider-iris
+    ```
+    This package is built on top of [sqlalchemy-iris](https://pypi.org/project/sqlalchemy-iris/)
+
+    For detailed documentation, usage examples, and a complete list of operators/hooks, see the published provider package:
+    [![one](https://img.shields.io/badge/PyPI%20Package-airflow%20provider%20iris-yellowgreen)](https://pypi.org/project/airflow-provider-iris/)
+    <img width="1609" alt="image" src="https://github.com/user-attachments/assets
+  category: cat-airflow
+  tags:
+    - airflow-provider
+    - apache-airflow
+    - data-pipeline
+    - elt
+    - etl
+    - intersystems-iris
+    - python
+  url: https://github.com/mwaseem75/iris-airflow-provider
+  publisher: GitHub topic — airflow providers
+  source_url: https://github.com/mwaseem75/iris-airflow-provider
+  github_url: https://github.com/mwaseem75/iris-airflow-provider
+  license: MIT
+  install_command: pip install airflow-provider-iris
+  install_candidates:
+    - pip install airflow-provider-iris
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-airflow-providers
+    extracted_at: 2026-10-26T12:05:41.357Z
+    lane: extract

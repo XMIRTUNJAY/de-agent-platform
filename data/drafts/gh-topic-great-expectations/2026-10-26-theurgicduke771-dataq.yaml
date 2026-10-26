@@ -1,0 +1,39 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-theurgicduke771-dataq
+  slug: theurgicduke771-dataq
+  type: skill
+  title: TheurgicDuke771/DataQ
+  description: "Open-source data quality monitoring: checks across warehouses,
+    lakehouses and object stores, triggered by ADF, Airflow and dbt, with
+    alerting and an MCP server."
+  category: cat-data-quality
+  tags:
+    - airflow
+    - azure
+    - azure-container-apps
+    - azure-data-factory
+    - celery
+    - data-engineering
+    - data-observability
+    - data-quality
+  url: https://github.com/TheurgicDuke771/DataQ
+  publisher: GitHub topic — Great Expectations ecosystem
+  source_url: https://github.com/TheurgicDuke771/DataQ
+  github_url: https://github.com/TheurgicDuke771/DataQ
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - .claude/skills/adr-create/SKILL.md
+    - .claude/skills/gh-issue-from-finding/SKILL.md
+    - .claude/skills/live-verify/SKILL.md
+    - .claude/skills/new-monitor-kind/SKILL.md
+    - .claude/skills/security-scan/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-great-expectations
+    extracted_at: 2026-10-26T12:06:50.766Z
+    lane: extract

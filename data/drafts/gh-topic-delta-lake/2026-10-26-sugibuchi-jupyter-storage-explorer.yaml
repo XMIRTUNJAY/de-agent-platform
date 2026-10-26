@@ -1,0 +1,38 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-sugibuchi-jupyter-storage-explorer
+  slug: sugibuchi-jupyter-storage-explorer
+  type: agent
+  title: sugibuchi/jupyter-storage-explorer
+  description: |-
+    A storage explorer for Jupyter: browse cloud storage and data lakes, preview Parquet, Delta Lake and more
+
+    Install (from source README):
+    **Try it without installing anything**:
+    [open the demo on Binder](https://mybinder.org/v2/gh/sugibuchi/jupyter-storage-explorer/v0.24.0?urlpath=lab/tree/binder/demo.ipynb),
+    a made-up data lake in a notebook and in the launcher's tab. It may take a minute to start.
+  category: cat-lakehouse
+  tags:
+    - anywidget
+    - azure-data-lake
+    - cloud-storage
+    - data-explorer
+    - data-lake
+    - databricks
+    - dataframe
+    - delta-lake
+  url: https://github.com/sugibuchi/jupyter-storage-explorer
+  publisher: GitHub topic — Delta Lake tooling
+  source_url: https://github.com/sugibuchi/jupyter-storage-explorer
+  github_url: https://github.com/sugibuchi/jupyter-storage-explorer
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-delta-lake
+    extracted_at: 2026-10-26T12:05:52.062Z
+    lane: extract

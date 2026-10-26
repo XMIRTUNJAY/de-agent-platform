@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-visivo-io-visivo
+  slug: visivo-io-visivo
+  type: reference
+  title: visivo-io/visivo
+  description: ✨ Build dashboards with end-to-end version control. 🔋 CLI w/
+    batteries included, no infra required. Develop on your laptop for instant
+    results, deploy changes safely (with automated checks), and keep
+  category: cat-agentic
+  tags: []
+  url: https://github.com/visivo-io/visivo
+  publisher: GitHub topic — DuckDB tooling
+  kind: blog
+  why: null
+  source_url: https://github.com/visivo-io/visivo
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: gh-topic-duckdb
+    extracted_at: 2026-10-26T12:06:04.454Z
+    published: 2026-10-26T11:52:23Z
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+    suggested_type: tutorial

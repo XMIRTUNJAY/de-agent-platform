@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-stripe-survey-four-trends-reshaping-how-saas-platforms-compete-i
+  slug: stripe-survey-four-trends-reshaping-how-saas-platforms-compete-i
+  type: reference
+  title: "Stripe survey: Four trends reshaping how SaaS platforms compete in the
+    AI era"
+  description: AI is creating more SaaS competition, and platforms are feeling the
+    pressure. A Stripe survey of 200 platform leaders shows how they plan to
+    evolve pricing, grow revenue, and retain customers.
+  category: null
+  tags: []
+  url: https://stripe.com/blog/saas-platform-trends-in-AI-era
+  publisher: Stripe Engineering Blog
+  kind: blog
+  why: null
+  source_url: https://stripe.com/blog/saas-platform-trends-in-AI-era
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: stripe-eng
+    extracted_at: 2026-10-26T12:02:59.008Z
+    published: Mon, 19 Oct 2026 00:00:00 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

@@ -1,0 +1,39 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-aliang-one-aliang-vb-phone
+  slug: aliang-one-aliang-vb-phone
+  type: agent
+  title: aliang-one/aliang-vb-phone
+  description: |-
+    how to manage your vibecoding session anytime,anywhre at phone
+
+    Install (from source README):
+    ```sh
+    git clone <your-fork-url>
+    cd AliangVibeCodingPhone
+    npm install
+  category: cat-agentic
+  tags:
+    - claude-code
+    - phone
+    - vibe-coding
+  url: https://github.com/aliang-one/aliang-vb-phone
+  publisher: GitHub topic — claude-code
+  source_url: https://github.com/aliang-one/aliang-vb-phone
+  github_url: https://github.com/aliang-one/aliang-vb-phone
+  license: MIT
+  install_command: |-
+    npm install
+    #
+  install_candidates:
+    - |-
+      npm install
+      #
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-claude-code
+    extracted_at: 2026-10-26T12:04:28.181Z
+    lane: extract

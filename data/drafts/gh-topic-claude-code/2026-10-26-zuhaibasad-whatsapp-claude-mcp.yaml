@@ -1,0 +1,59 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-zuhaibasad-whatsapp-claude-mcp
+  slug: zuhaibasad-whatsapp-claude-mcp
+  type: skill
+  title: zuhaibasad/whatsapp-claude-mcp
+  description: >-
+    Read-only, local MCP server that gives Claude Desktop and Claude Code a
+    daily WhatsApp brief: mentions, urgent items and follow-ups from the chats
+    you choose. English and various language supported. Encrypted on your PC.
+    Unofficial.
+
+
+    Install (from source README):
+
+    1. Get the file for your computer from the [Releases](../../releases) page:
+    `chatai-<version>-windows.mcpb` (Windows x64) or
+    `chatai-<version>-macos.mcpb` (Apple Silicon and Intel Macs). No release
+    yet? Build it: `npm ci` then `npm run build:mcpb` (the file appears in
+    `build/`).
+
+    2. Claude Desktop: **Settings, Extensions, Advanced settings, Install
+    Extension**. Pick the file. Enable **ChatAI for WhatsApp**.
+
+    3. In a chat, say **"Set up WhatsApp"** and follow the four steps above.
+
+
+    Tools missing? Quit Claude Desktop fully and open it again. You need Windows
+    10/11 (x64) or macOS, your own phone wi
+  category: cat-agentic
+  tags:
+    - anthropic
+    - baileys
+    - claude
+    - claude-code
+    - claude-desktop
+    - local-first
+    - mcp
+    - mcp-server
+  url: https://github.com/zuhaibasad/whatsapp-claude-mcp
+  publisher: GitHub topic — claude-code
+  source_url: https://github.com/zuhaibasad/whatsapp-claude-mcp
+  github_url: https://github.com/zuhaibasad/whatsapp-claude-mcp
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - skills/wa-daily-brief/SKILL.md
+    - skills/wa-department-report/SKILL.md
+    - skills/wa-export/SKILL.md
+    - skills/wa-mentions/SKILL.md
+    - skills/wa-setup/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-claude-code
+    extracted_at: 2026-10-26T12:04:31.210Z
+    lane: extract

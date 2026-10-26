@@ -1,0 +1,32 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-why-your-platform-team-shouldn-x27-t-build-an-ai-context-layer-e
+  slug: why-your-platform-team-shouldn-x27-t-build-an-ai-context-layer-e
+  type: reference
+  title: Why your platform team shouldn&#x27;t build an AI context layer (even
+    though they probably could)
+  description: Most engineering teams capable of building an internal AI knowledge
+    system think they should. But six months later, it s a platform team s
+    full-time job. Building an in-house AI context layer costs more money and
+    energy than you think.
+  category: cat-cost-engineering
+  tags: []
+  url: https://stackoverflow.blog/2026/10/15/your-team-shouldnt-build-an-ai-context-layer/
+  publisher: Stack Overflow Blog (AI + devops essays)
+  kind: blog
+  why: null
+  source_url: https://stackoverflow.blog/2026/10/15/your-team-shouldnt-build-an-ai-context-layer/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: stackoverflow-blog
+    extracted_at: 2026-10-26T12:03:05.410Z
+    published: Thu, 15 Oct 2026 17:00:00 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-cost-engineering
+    suggested_type: null

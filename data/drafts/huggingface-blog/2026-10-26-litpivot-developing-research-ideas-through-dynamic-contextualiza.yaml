@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-litpivot-developing-research-ideas-through-dynamic-contextualiza
+  slug: litpivot-developing-research-ideas-through-dynamic-contextualiza
+  type: reference
+  title: "LitPivot: Developing research ideas through dynamic contextualization
+    within the literature landscape"
+  description: Summary pending review — see the source.
+  category: cat-agentic
+  tags: []
+  url: https://huggingface.co/blog/allenai/litpivot
+  publisher: Hugging Face Blog
+  kind: blog
+  why: null
+  source_url: https://huggingface.co/blog/allenai/litpivot
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: huggingface-blog
+    extracted_at: 2026-10-26T12:03:02.434Z
+    published: Fri, 23 Oct 2026 16:15:50 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

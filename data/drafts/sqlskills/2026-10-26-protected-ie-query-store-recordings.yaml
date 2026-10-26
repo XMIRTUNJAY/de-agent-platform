@@ -1,0 +1,27 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-protected-ie-query-store-recordings
+  slug: protected-ie-query-store-recordings
+  type: reference
+  title: "Protected: IE Query Store Recordings"
+  description: There is no excerpt because this is a protected post.
+  category: cat-sql
+  tags: []
+  url: https://www.sqlskills.com/ie-query-store-recordings/
+  publisher: SQLskills (SQL Server deep-dives)
+  kind: blog
+  why: null
+  source_url: https://www.sqlskills.com/ie-query-store-recordings/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: sqlskills
+    extracted_at: 2026-10-26T12:03:17.504Z
+    published: Wed, 04 Nov 2020 18:02:26 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

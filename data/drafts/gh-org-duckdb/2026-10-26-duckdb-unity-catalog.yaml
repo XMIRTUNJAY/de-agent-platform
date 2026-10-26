@@ -1,0 +1,42 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-duckdb-unity-catalog
+  slug: duckdb-unity-catalog
+  type: agent
+  title: duckdb/unity_catalog
+  description: |-
+    Proof-of-concept extension combining the delta extension with Unity Catalog
+
+    Install (from source README):
+    ```sql
+    INSTALL unity_catalog;
+    INSTALL delta;
+    LOAD delta;
+    LOAD unity_catalog;
+
+    CREATE SECRET (
+        TYPE unity_catalog,
+        TOKEN '⟨token⟩',
+        ENDPOINT '⟨endpoint⟩',
+        AWS_REGION '⟨region⟩'
+    );
+    ATTACH 'my_catalog' AS my_catalog (TYPE unity_catalog);
+    SELECT * FROM my_catalog.my_schema.my_table;
+    ```
+  category: cat-warehouses
+  tags: []
+  url: https://github.com/duckdb/unity_catalog
+  publisher: GitHub org — DuckDB
+  source_url: https://github.com/duckdb/unity_catalog
+  github_url: https://github.com/duckdb/unity_catalog
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-duckdb
+    extracted_at: 2026-10-26T12:07:59.948Z
+    lane: extract

@@ -1,0 +1,34 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-javascript-in-mysql-extending-sql-not-moving-the-application
+  slug: javascript-in-mysql-extending-sql-not-moving-the-application
+  type: reference
+  title: "JavaScript in MySQL: Extending SQL, Not Moving the Application"
+  description: "At Percona Live Europe 2026, Dmitry Lenev and I presented
+    JavaScript in My Database? Over My Dead Query, the story of
+    component_js_lang, the V8-based JavaScript engine for Percona Server for
+    MySQL 8.4. That experience told us few things: The presentation was seen as
+    “for develope"
+  category: cat-databases
+  tags: []
+  url: https://www.percona.com/blog/javascript-in-mysql-extending-sql-not-moving-the-application/
+  publisher: Percona Database Performance Blog
+  kind: blog
+  why: null
+  source_url: https://www.percona.com/blog/javascript-in-mysql-extending-sql-not-moving-the-application/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: percona-blog
+    extracted_at: 2026-10-26T12:03:18.664Z
+    published: Thu, 15 Oct 2026 15:12:30 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-sql
+      - cat-databases
+      - cat-infrastructure
+    suggested_type: null

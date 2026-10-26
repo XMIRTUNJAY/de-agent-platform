@@ -1,0 +1,37 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-google-deepmind-science-skills
+  slug: google-deepmind-science-skills
+  type: skill
+  title: google-deepmind/science-skills
+  description: GDM Science Skills to speed up agentic scientific workflows with
+    better grounding and higher token efficiency. Integrate insights from
+    AlphaGenome, AFDB, UniProt and 30+ other databases and tools.
+  category: cat-agentic
+  tags: []
+  url: https://github.com/google-deepmind/science-skills
+  publisher: GitHub org — Google DeepMind
+  source_url: https://github.com/google-deepmind/science-skills
+  github_url: https://github.com/google-deepmind/science-skills
+  license: Apache-2.0
+  install_command: npx skills
+  install_candidates:
+    - npx skills
+  skill_files:
+    - skills/alphafold_database_fetch_and_analyze/SKILL.md
+    - skills/alphagenome_atlas_website_links/SKILL.md
+    - skills/alphagenome_single_variant_analysis/SKILL.md
+    - skills/alphagenome_variant_impact_score/SKILL.md
+    - skills/chembl_database/SKILL.md
+    - skills/clinical_trials_database/SKILL.md
+    - skills/clinvar_database/SKILL.md
+    - skills/credentials/SKILL.md
+    - skills/dbsnp_database/SKILL.md
+    - skills/embl_ebi_ols/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-deepmind
+    extracted_at: 2026-10-26T12:03:29.968Z
+    lane: extract

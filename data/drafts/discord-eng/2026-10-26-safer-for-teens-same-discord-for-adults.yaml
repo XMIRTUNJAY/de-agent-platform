@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-safer-for-teens-same-discord-for-adults
+  slug: safer-for-teens-same-discord-for-adults
+  type: reference
+  title: Safer for Teens, Same Discord for Adults
+  description: We’re launching a revamped, privacy-focused age assurance solution
+    including methods that won’t require an ID or selfie. Here’s how it works.
+  category: null
+  tags: []
+  url: https://discord.com/blog/safer-for-teens-same-discord-for-adults
+  publisher: Discord Engineering Blog
+  kind: blog
+  why: null
+  source_url: https://discord.com/blog/safer-for-teens-same-discord-for-adults
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: discord-eng
+    extracted_at: 2026-10-26T12:02:59.509Z
+    published: Tue, 22 Sep 2026 00:00:00 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

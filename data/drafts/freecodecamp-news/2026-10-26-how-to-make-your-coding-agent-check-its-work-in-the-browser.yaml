@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-how-to-make-your-coding-agent-check-its-work-in-the-browser
+  slug: how-to-make-your-coding-agent-check-its-work-in-the-browser
+  type: reference
+  title: How to Make Your Coding Agent Check Its Work in the Browser
+  description: I got tired of coding agents telling me the frontend work was done
+    when nobody had opened the frontend. You've probably seen the routine. The
+    agent changes some code, runs the formatter, the type chec
+  category: cat-agentic
+  tags: []
+  url: https://www.freecodecamp.org/news/how-to-make-your-coding-agent-check-its-work-in-the-browser/
+  publisher: freeCodeCamp News
+  kind: blog
+  why: null
+  source_url: https://www.freecodecamp.org/news/how-to-make-your-coding-agent-check-its-work-in-the-browser/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: freecodecamp-news
+    extracted_at: 2026-10-26T12:03:06.794Z
+    published: Tue, 20 Oct 2026 09:16:48 +0000
+  classification:
+    backend: rules
+    confidence: high
+    suggested_categories:
+      - cat-agentic
+    suggested_type: tutorial

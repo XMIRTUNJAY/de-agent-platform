@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-why-building-a-production-rag-pipeline-is-easier-than-you-think
+  slug: why-building-a-production-rag-pipeline-is-easier-than-you-think
+  type: architecture
+  title: Why Building a Production RAG Pipeline is Easier Than You Think
+  description: "Adding AI to legacy code doesn t have to be a challenge. Many devs
+    are hearing this right now: “We need to add AI to the app.” And for many of
+    them, panic ensues. The assumption is that you have to rip your existing
+    architecture down to its foundation. You start having nightmares"
+  category: cat-agentic
+  tags: []
+  url: https://pybit.es/articles/why-building-a-production-rag-pipeline-is-easier-than-you-think/
+  publisher: PyBites (Python practice + coaching)
+  kind: blog
+  why: null
+  source_url: https://pybit.es/articles/why-building-a-production-rag-pipeline-is-easier-than-you-think/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: pybites
+    extracted_at: 2026-10-26T12:03:09.727Z
+    published: Tue, 03 Mar 2026 09:06:04 +0000
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+    suggested_type: architecture

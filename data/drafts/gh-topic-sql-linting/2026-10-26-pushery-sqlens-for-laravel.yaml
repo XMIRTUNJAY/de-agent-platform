@@ -1,0 +1,73 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-pushery-sqlens-for-laravel
+  slug: pushery-sqlens-for-laravel
+  type: skill
+  title: pushery/sqlens-for-laravel
+  description: >-
+    Database safety for Laravel on PostgreSQL and MySQL. SQLens lints the SQL
+    your migrations actually emit for lock and downtime risk, audits live
+    schemas, detects drift and security issues, classifies deploy risk, and
+    provides deterministic CI-ready guards with explicit pass, fail, or
+    undetermined results.
+
+
+    Install (from source README):
+
+    ```bash
+
+    composer require pushery/sqlens-for-laravel
+
+    ```
+
+
+    PHP 8.4+, Laravel 12 or 13, PostgreSQL 18+ or MySQL 8.4+. The service
+    provider registers
+
+    itself through package discovery, and there is nothing to migrate: SQLens
+    ships no
+
+    tables and adds nothing to your schema.
+
+
+    ```bash
+
+    php artisan sqlens:doctor --probe             # what SQLens can see from
+    here
+
+    php artisan sqlens:lint --connection=pgsql    # the pending migrations,
+    before they reach a database
+
+    php artisan sqlens:audit --connection=pgsql   # the live schema of the
+    connection you name
+
+    ```
+
+
+    Both name a connection above because a stock La
+  category: cat-databases
+  tags:
+    - database
+    - database-audit
+    - laravel
+    - laravel-framework
+    - laravel-package
+    - livewire
+    - livewire-v4
+    - livewire4
+  url: https://github.com/pushery/sqlens-for-laravel
+  publisher: GitHub topic — SQL linting & review
+  source_url: https://github.com/pushery/sqlens-for-laravel
+  github_url: https://github.com/pushery/sqlens-for-laravel
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - resources/boost/skills/sqlens-for-laravel/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-sql-linting
+    extracted_at: 2026-10-26T12:07:25.661Z
+    lane: extract

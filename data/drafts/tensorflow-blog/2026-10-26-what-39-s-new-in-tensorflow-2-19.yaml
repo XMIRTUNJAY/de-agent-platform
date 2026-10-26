@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-what-39-s-new-in-tensorflow-2-19
+  slug: what-39-s-new-in-tensorflow-2-19
+  type: reference
+  title: What&#39;s new in TensorFlow 2.19
+  description: "Posted by the TensorFlow team TensorFlow 2.19 has been released!
+    Highlights of this release include changes to the C++ API in LiteRT,
+    bfloat16 support for tflite casting, discontinue of releasing libtensorflow
+    packages. Learn more by reading the full release notes . Note: Release"
+  category: cat-agentic
+  tags: []
+  url: https://blog.tensorflow.org/2025/03/whats-new-in-tensorflow-2-19.html
+  publisher: TensorFlow Blog (Google)
+  kind: blog
+  why: null
+  source_url: https://blog.tensorflow.org/2025/03/whats-new-in-tensorflow-2-19.html
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: tensorflow-blog
+    extracted_at: 2026-10-26T12:03:04.138Z
+    published: 2025-03-13T09:00:00.000-07:00
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: tutorial

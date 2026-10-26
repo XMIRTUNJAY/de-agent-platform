@@ -1,0 +1,42 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-vinidias-supply-chain-ai
+  slug: vinidias-supply-chain-ai
+  type: agent
+  title: vinidias/supply-chain-ai
+  description: >-
+    Full-stack AI data platform for supply chain: FastAPI, DuckDB/PostgreSQL,
+    dbt, LangChain RAG, Streamlit, Docker
+
+
+    Install (from source README):
+
+    ```bash
+
+    pip install -r requirements.txt
+  category: cat-warehouses
+  tags:
+    - ai-agents
+    - dbt
+    - docker
+    - duckdb
+    - fastapi
+    - langchain
+    - python
+    - rag
+  url: https://github.com/vinidias/supply-chain-ai
+  publisher: GitHub topic — DuckDB tooling
+  source_url: https://github.com/vinidias/supply-chain-ai
+  github_url: https://github.com/vinidias/supply-chain-ai
+  license: MIT
+  install_command: pip install -r
+  install_candidates:
+    - pip install -r
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-duckdb
+    extracted_at: 2026-10-26T12:06:03.211Z
+    lane: extract

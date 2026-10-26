@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-new-in-confluent-cloud-and-warpstream-evolving-the-data-streamin
+  slug: new-in-confluent-cloud-and-warpstream-evolving-the-data-streamin
+  type: reference
+  title: "New in Confluent Cloud and WarpStream: Evolving the Data Streaming
+    Platform for AI, Scale, and Control"
+  description: Accelerate enterprise streaming and AI workloads with new product
+    updates across Kora, connectors, Flink, Tableflow, AI anomaly detection and
+    forecasting, security enhancements, and Warpstream.
+  category: cat-streaming
+  tags: []
+  url: https://www.confluent.io/blog/2026-q3-confluent-cloud-launch/
+  publisher: Confluent Blog (Kafka/Flink/Streaming)
+  kind: blog
+  why: null
+  source_url: https://www.confluent.io/blog/2026-q3-confluent-cloud-launch/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: confluent
+    extracted_at: 2026-10-26T12:02:53.375Z
+    published: Tue, 18 Aug 2026 14:00:11 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-streaming
+    suggested_type: null

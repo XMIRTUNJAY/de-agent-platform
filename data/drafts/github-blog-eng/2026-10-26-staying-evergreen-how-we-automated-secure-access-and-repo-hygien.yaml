@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-staying-evergreen-how-we-automated-secure-access-and-repo-hygien
+  slug: staying-evergreen-how-we-automated-secure-access-and-repo-hygien
+  type: reference
+  title: "Staying Evergreen: How we automated secure access and repo hygiene in a
+    shared org"
+  description: "Put native GitHub features to work to review outside collaborator
+    access and archive stale repositories. The post Staying Evergreen: How we
+    automated secure access and repo hygiene in a shared org appeared first on
+    The GitHub Blog ."
+  category: null
+  tags: []
+  url: https://github.blog/engineering/platform-security/staying-evergreen-how-we-automated-secure-access-and-repo-hygiene-in-a-shared-org/
+  publisher: GitHub Blog — Engineering
+  kind: blog
+  why: null
+  source_url: https://github.blog/engineering/platform-security/staying-evergreen-how-we-automated-secure-access-and-repo-hygiene-in-a-shared-org/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: github-blog-eng
+    extracted_at: 2026-10-26T12:02:56.620Z
+    published: Thu, 15 Oct 2026 18:00:00 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

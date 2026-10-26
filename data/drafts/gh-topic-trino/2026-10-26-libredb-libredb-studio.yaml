@@ -1,0 +1,45 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-libredb-libredb-studio
+  slug: libredb-libredb-studio
+  type: skill
+  title: libredb/libredb-studio
+  description: >-
+    One browser tab for PostgreSQL, MySQL, Oracle, SQL Server, MongoDB, Redis,
+    SQLite, Couchbase, ClickHouse, Druid, DuckDB, Turso and more. An open-source
+    SQL IDE with SSO, audit trail and AI-assisted queries MIT licensed, with
+    nothing held back behind an enterprise wall.
+
+
+    Install (from source README):
+
+    Run a full Database Editor in one command, no clone, no build:
+
+
+    ```bash
+  category: cat-databases
+  tags:
+    - cassandra
+    - clickhouse
+    - couchbase
+    - database
+    - druid
+    - elasticsearch
+    - good-first-issue
+    - hacktoberfest
+  url: https://github.com/libredb/libredb-studio
+  publisher: GitHub topic — Trino tooling
+  source_url: https://github.com/libredb/libredb-studio
+  github_url: https://github.com/libredb/libredb-studio
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - .claude/skills/cut-release/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-trino
+    extracted_at: 2026-10-26T12:06:08.852Z
+    lane: extract

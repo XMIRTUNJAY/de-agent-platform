@@ -1,0 +1,33 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ref-selene-nyx-ai-sqlmegane
+  slug: selene-nyx-ai-sqlmegane
+  type: reference
+  title: selene-nyx-ai/sqlmegane
+  description: 実行前のSQLを、日本語で読み返す。ブラウザ完結・SQLは外部送信なし。AST解析（MySQL/PostgreSQL/SQL
+    Server）で一文要約＋JOIN罠・WHERE漏れ検出、Oracle PL/SQL対応
+  category: cat-databases
+  tags:
+    - browser
+    - data-safety
+    - database
+    - developer-tools
+    - japanese
+    - mysql
+    - oracle
+    - plsql
+  url: https://github.com/selene-nyx-ai/sqlmegane
+  publisher: GitHub topic — SQL linting & review
+  source_url: https://github.com/selene-nyx-ai/sqlmegane
+  github_url: https://github.com/selene-nyx-ai/sqlmegane
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-sql-linting
+    extracted_at: 2026-10-26T12:07:21.182Z
+    lane: extract

@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-corpusiq-corpusiq-docs
+  slug: corpusiq-corpusiq-docs
+  type: reference
+  title: CorpusIQ/corpusiq-docs
+  description: Hermes Agent Production Knowledge Repository — 406+ repos, AI Agent
+    Marketplace, MCP servers, autonomous AI agent patterns. Production-tested
+    from 1,200+ hours of ops. Updated daily.
+  category: cat-agentic
+  tags: []
+  url: https://github.com/CorpusIQ/corpusiq-docs
+  publisher: GitHub topic — agent-skills
+  kind: blog
+  why: null
+  source_url: https://github.com/CorpusIQ/corpusiq-docs
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: gh-topic-agent-skills
+    extracted_at: 2026-10-26T12:04:49.840Z
+    published: 2026-10-26T12:03:05Z
+  classification:
+    backend: rules
+    confidence: high
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

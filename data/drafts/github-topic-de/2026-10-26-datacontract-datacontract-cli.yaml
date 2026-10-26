@@ -1,0 +1,42 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-datacontract-datacontract-cli
+  slug: datacontract-datacontract-cli
+  type: agent
+  title: datacontract/datacontract-cli
+  description: |-
+    Open-source data contract testing for Snowflake, Databricks, BigQuery, Kafka & 15 more. Built on the Open Data Contract Standard (ODCS). MIT.
+
+    Install (from source README):
+    Let's look at this data contract:
+    [https://datacontract.com/orders-v1.odcs.yaml](https://datacontract.com/orders-v1.odcs.yaml)
+
+    We have a _servers_ section with endpoint details to a Postgres database, _schema_ for the structure and semantics of the data, _service levels_ and _quality_ attributes that describe the expected freshness and number of rows.
+
+    This data contract contains all information to connect to the database and check that the actual data meets the defined schema specification and quality expectations.
+    We can use this information to test if the actual data product is compliant t
+  category: cat-warehouses
+  tags:
+    - bigquery
+    - data-contract
+    - data-contracts
+    - data-engineering
+    - data-governance
+    - data-mesh
+    - data-product
+    - data-quality
+  url: https://github.com/datacontract/datacontract-cli
+  publisher: GitHub topic — data-engineering
+  source_url: https://github.com/datacontract/datacontract-cli
+  github_url: https://github.com/datacontract/datacontract-cli
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: github-topic-de
+    extracted_at: 2026-10-26T12:05:06.480Z
+    lane: extract

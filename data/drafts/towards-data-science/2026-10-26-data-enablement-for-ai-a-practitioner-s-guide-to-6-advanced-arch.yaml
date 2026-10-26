@@ -1,0 +1,32 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-data-enablement-for-ai-a-practitioner-s-guide-to-6-advanced-arch
+  slug: data-enablement-for-ai-a-practitioner-s-guide-to-6-advanced-arch
+  type: architecture
+  title: "Data Enablement for AI: A Practitioner's Guide to 6 Advanced
+    Architectural Patterns"
+  description: "Beyond naive chunk-and-embed: Six production architectures for
+    turning enterprise lakehouses into governed AI platforms. The post Data
+    Enablement for AI: A Practitioner's Guide to 6 Advanced Architectural
+    Patterns appeared first on Towards Data Science ."
+  category: cat-lakehouse
+  tags: []
+  url: https://towardsdatascience.com/data-enablement-for-ai-a-practitioners-guide-to-6-advanced-architectural-patterns/
+  publisher: Towards Data Science
+  kind: blog
+  why: null
+  source_url: https://towardsdatascience.com/data-enablement-for-ai-a-practitioners-guide-to-6-advanced-architectural-patterns/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: towards-data-science
+    extracted_at: 2026-10-26T12:03:08.100Z
+    published: Sun, 25 Oct 2026 12:00:00 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-lakehouse
+    suggested_type: architecture

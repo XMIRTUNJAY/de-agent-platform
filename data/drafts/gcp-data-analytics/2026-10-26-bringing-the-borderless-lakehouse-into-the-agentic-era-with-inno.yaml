@@ -1,0 +1,34 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-bringing-the-borderless-lakehouse-into-the-agentic-era-with-inno
+  slug: bringing-the-borderless-lakehouse-into-the-agentic-era-with-inno
+  type: reference
+  title: Bringing the borderless Lakehouse into the agentic era with innovations
+    for Gemini
+  description: "As enterprises shift their AI usage from experimental chatbots to
+    autonomous agents, teams are hitting a critical bottleneck: accessing and
+    reasoning over data scattered across multiple clouds, SaaS platforms, and
+    on-premises systems. To turn AI agents into true systems of action"
+  category: cat-agentic
+  tags: []
+  url: https://cloud.google.com/blog/products/data-analytics/borderless-lakehouse-integrates-with-gemini/
+  publisher: Google Cloud — Data Analytics blog
+  kind: blog
+  why: null
+  source_url: https://cloud.google.com/blog/products/data-analytics/borderless-lakehouse-integrates-with-gemini/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: gcp-data-analytics
+    extracted_at: 2026-10-26T12:02:50.842Z
+    published: Thu, 15 Oct 2026 16:00:00 +0000
+  classification:
+    backend: rules
+    confidence: high
+    suggested_categories:
+      - cat-agentic
+      - cat-lakehouse
+      - cat-gcp
+    suggested_type: tutorial

@@ -1,0 +1,63 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-jbelly-tech-jbelly-radar
+  slug: jbelly-tech-jbelly-radar
+  type: skill
+  title: JBelly-tech/jbelly-radar
+  description: >-
+    Deterministic trend radar for AI engineering. Answers "does a skill or an
+    MCP server already cover this requirement" from a permanent record of 54
+    public sources, not from a web search. No model call, no API key, nothing
+    leaves your machine.
+
+
+    Install (from source README):
+
+    **What it needs.** PowerShell — nothing else. No package manager, no
+    runtime, no
+
+    build step, no key. It targets **PowerShell 7**, and still runs on **Windows
+
+    PowerShell 5.1**, which ships with Windows and needs no install.
+
+
+    **Where it is checked.** On every push, CI runs the 303 static checks on
+    Linux
+
+    and on Windows, and the 333 browser assertions on Linux. A live sync of all
+    54
+
+    sources runs daily rather than per push, because it reads other people's
+    servers
+
+    and a typo fix is no reason to make them answer; it reports and does not
+    gate,
+
+    since a third party going down is not this project breakin
+  category: cat-agentic
+  tags:
+    - agent-skills
+    - ai
+    - claude
+    - dashboard
+    - developer-tools
+    - mcp
+    - model-context-protocol
+    - no-dependencies
+  url: https://github.com/JBelly-tech/jbelly-radar
+  publisher: GitHub topic — agent-skills
+  source_url: https://github.com/JBelly-tech/jbelly-radar
+  github_url: https://github.com/JBelly-tech/jbelly-radar
+  license: MIT
+  install_command: npx skills
+  install_candidates:
+    - npx skills
+  skill_files:
+    - skills/ai-tool-lookup/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-agent-skills
+    extracted_at: 2026-10-26T12:04:43.469Z
+    lane: extract

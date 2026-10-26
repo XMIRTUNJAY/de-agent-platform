@@ -1,0 +1,27 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-becoming-an-ai-team
+  slug: becoming-an-ai-team
+  type: reference
+  title: Becoming an AI Team
+  description: Summary pending review — see the source.
+  category: null
+  tags: []
+  url: https://medium.com/pinterest-engineering/becoming-an-ai-team-866d6b567803?source=rss----4c5a5f6279b6---4
+  publisher: Pinterest Engineering
+  kind: blog
+  why: null
+  source_url: https://medium.com/pinterest-engineering/becoming-an-ai-team-866d6b567803?source=rss----4c5a5f6279b6---4
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: pinterest-eng
+    extracted_at: 2026-10-26T12:03:00.104Z
+    published: Tue, 01 Sep 2026 15:01:06 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

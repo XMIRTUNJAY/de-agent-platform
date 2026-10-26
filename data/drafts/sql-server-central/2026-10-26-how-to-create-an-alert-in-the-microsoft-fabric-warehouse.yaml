@@ -1,0 +1,33 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-how-to-create-an-alert-in-the-microsoft-fabric-warehouse
+  slug: how-to-create-an-alert-in-the-microsoft-fabric-warehouse
+  type: reference
+  title: How to Create an Alert in the Microsoft Fabric Warehouse
+  description: We are building a new data platform with Microsoft Fabric and we’re
+    using the warehouse for our “gold layer”. We don’t have real-time ingestion
+    or analytic requirements, but we have a use case where we want to send an
+    alert if a certain threshold is reached. Ideally, the alert is
+  category: cat-sql
+  tags: []
+  url: https://www.sqlservercentral.com/articles/how-to-create-an-alert-in-the-microsoft-fabric-warehouse
+  publisher: SQLServerCentral (tutorials)
+  kind: blog
+  why: null
+  source_url: https://www.sqlservercentral.com/articles/how-to-create-an-alert-in-the-microsoft-fabric-warehouse
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: sql-server-central
+    extracted_at: 2026-10-26T12:03:16.096Z
+    published: Wed, 21 Oct 2026 00:00:58 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-sql
+      - cat-ingestion
+      - cat-azure
+    suggested_type: tutorial

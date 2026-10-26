@@ -1,0 +1,35 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-presentjay-dbt-plan
+  slug: presentjay-dbt-plan
+  type: agent
+  title: PresentJay/dbt-plan
+  description: "Catch breaking dbt schema changes before dbt run executes them:
+    dropped columns, the downstream models and data tests they break, contract
+    violations. Static analysis of compiled SQL, no warehouse connection. Like
+    terraform plan, for dbt."
+  category: cat-governance
+  tags:
+    - analytics-engineering
+    - bigquery
+    - breaking-changes
+    - ci
+    - ci-cd
+    - data-contracts
+    - data-engineering
+    - data-quality
+  url: https://github.com/PresentJay/dbt-plan
+  publisher: GitHub topic — data contracts
+  source_url: https://github.com/PresentJay/dbt-plan
+  github_url: https://github.com/PresentJay/dbt-plan
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-data-contracts
+    extracted_at: 2026-10-26T12:06:26.054Z
+    lane: extract

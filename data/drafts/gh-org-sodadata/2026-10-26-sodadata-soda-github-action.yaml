@@ -1,0 +1,33 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-sodadata-soda-github-action
+  slug: sodadata-soda-github-action
+  type: agent
+  title: sodadata/soda-github-action
+  description: ":zap: Prevent downstream data quality issues by integrating the
+    Soda Library into your CI/CD pipeline."
+  category: cat-data-quality
+  tags:
+    - data-engineering
+    - data-monitoring
+    - data-observability
+    - data-quality
+    - data-quality-checks
+    - data-quality-monitoring
+    - data-quality-testing
+    - data-reliability
+  url: https://github.com/sodadata/soda-github-action
+  publisher: GitHub org — Soda
+  source_url: https://github.com/sodadata/soda-github-action
+  github_url: https://github.com/sodadata/soda-github-action
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-sodadata
+    extracted_at: 2026-10-26T12:07:47.082Z
+    lane: extract

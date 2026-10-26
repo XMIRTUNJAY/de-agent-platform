@@ -1,0 +1,49 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-madrobotnet-3dprint-scout
+  slug: madrobotnet-3dprint-scout
+  type: skill
+  title: madrobotnet/3dprint-scout
+  description: |-
+    Agent skill that designs 3D-printable parts reference-first: finds existing models, builds in Fusion, OpenSCAD or Python, verifies the mesh, and delivers STL/3MF (Bambu Studio projects included).
+
+    Install (from source README):
+    **Claude (web and desktop).** Download `3dprint-scout-v<version>.zip` from the
+    [latest release](https://github.com/madrobotnet/3dprint-scout/releases/latest), then go to **Customize > Skills**, click **+**, choose
+    **Create skill > Upload a skill**, and upload the zip. Code execution must be enabled
+    ([how skills work in Claude](https://support.claude.com/en/articles/12512180-use-skills-in-claude)).
+
+    **Claude Code.** Clone into your personal skills folder (or a project's `.claude/skills/`):
+
+    ```bash
+    git clone https://github.com/madrobotnet/3dprint-scout ~/.claude/skills/3dprint-scout
+    ```
+
+    **Any 
+  category: cat-agentic
+  tags:
+    - 3d-printing
+    - agent-skills
+    - bambu-lab
+    - bambu-studio
+    - blender
+    - blender-addon
+    - blender-python
+    - claude-code-skill
+  url: https://github.com/madrobotnet/3dprint-scout
+  publisher: GitHub topic — Claude skills
+  source_url: https://github.com/madrobotnet/3dprint-scout
+  github_url: https://github.com/madrobotnet/3dprint-scout
+  license: MIT
+  install_command: npx skills
+  install_candidates:
+    - npx skills
+  skill_files:
+    - SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-claude-skills
+    extracted_at: 2026-10-26T12:07:12.236Z
+    lane: extract

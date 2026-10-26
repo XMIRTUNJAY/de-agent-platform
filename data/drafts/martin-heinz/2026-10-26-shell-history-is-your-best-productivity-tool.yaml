@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-shell-history-is-your-best-productivity-tool
+  slug: shell-history-is-your-best-productivity-tool
+  type: reference
+  title: Shell History Is Your Best Productivity Tool
+  description: If you work in shell/terminal often enough, then over time the
+    history will become your personal knowledge vault, documentation and command
+    reference. Being able to use this personal documentation efficiently can
+    hugely boost your productivity. So, here are a couple of tips on ho
+  category: cat-security
+  tags: []
+  url: https://martinheinz.dev/blog/110
+  publisher: Martin Heinz (Practical Data Science)
+  kind: blog
+  why: null
+  source_url: https://martinheinz.dev/blog/110
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: martin-heinz
+    extracted_at: 2026-10-26T12:03:14.403Z
+    published: Tue, 09 Apr 2024 16:00:00 +0000
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-security
+    suggested_type: tutorial

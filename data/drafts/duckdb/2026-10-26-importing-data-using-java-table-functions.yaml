@@ -1,0 +1,32 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-importing-data-using-java-table-functions
+  slug: importing-data-using-java-table-functions
+  type: reference
+  title: Importing Data using Java Table Functions
+  description: "When the analytics screen running on our main operational database
+    got too slow, we moved a year of data into DuckDB on the same server.
+    Getting the data in was the hard part. This is the story of every method we
+    tried, and why a table function written in pure Java is the one we "
+  category: cat-databases
+  tags: []
+  url: https://duckdb.org/2026/10/05/import-data-with-java.html
+  publisher: DuckDB News
+  kind: blog
+  why: null
+  source_url: https://duckdb.org/2026/10/05/import-data-with-java.html
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: duckdb
+    extracted_at: 2026-10-26T12:02:54.734Z
+    published: 2026-10-05T00:00:00+00:00
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-databases
+      - cat-production-operations
+    suggested_type: null

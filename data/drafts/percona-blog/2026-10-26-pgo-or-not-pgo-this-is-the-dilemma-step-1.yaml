@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-pgo-or-not-pgo-this-is-the-dilemma-step-1
+  slug: pgo-or-not-pgo-this-is-the-dilemma-step-1
+  type: reference
+  title: PGO or not PGO this is the dilemma. Step 1
+  description: "Given the topic complexity and the length of this article I have
+    split it in 3 three different blog-post: What is PGO How PGO it works Why my
+    sysbench-trained build loses and how to do it right. Step 1: What is PGO PGO
+    (Profile-Guided Optimization) is a two-pass compilation techn"
+  category: cat-databases
+  tags: []
+  url: https://www.percona.com/blog/pgo-or-not-pgo-this-is-the-dilemma-step-1/
+  publisher: Percona Database Performance Blog
+  kind: blog
+  why: null
+  source_url: https://www.percona.com/blog/pgo-or-not-pgo-this-is-the-dilemma-step-1/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: percona-blog
+    extracted_at: 2026-10-26T12:03:18.667Z
+    published: Fri, 09 Oct 2026 11:47:08 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: tutorial

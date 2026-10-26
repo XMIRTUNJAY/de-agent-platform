@@ -1,0 +1,96 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-mistralai-mistral-vibe
+  slug: mistralai-mistral-vibe
+  type: skill
+  title: mistralai/mistral-vibe
+  description: "Minimal CLI coding agent by Mistral
+
+
+    Install (from source README):
+
+    **Linux and macOS**
+
+
+    ```bash
+
+    curl -LsSf https://mistral.ai/vibe/install.sh | bash
+
+    ```
+
+
+    **Windows**
+
+
+    First, install uv
+
+
+    ```bash
+
+    powershell -ExecutionPolicy ByPass -c \"irm https://astral.sh/uv/install.ps1
+    | iex\"
+
+    ```
+
+
+    Then, use uv command below.
+
+
+
+    1. Navigate to your project's root directory:
+
+
+    \   ```bash
+
+    \   cd /path/to/your/project
+
+    \   ```
+
+
+    2. Run Vibe:
+
+
+    \   ```bash
+
+    \   vibe
+
+    \   ```
+
+
+    3. If this is your first time running Vibe, it will:
+
+    \   - Use built-in defaults without creating a configuration file until you
+
+    \     save a setting
+
+    \   - Prompt you to enter your API key if it's not already configured
+
+    \   "
+  category: cat-agentic
+  tags: []
+  url: https://github.com/mistralai/mistral-vibe
+  publisher: GitHub org — Mistral AI
+  source_url: https://github.com/mistralai/mistral-vibe
+  github_url: https://github.com/mistralai/mistral-vibe
+  license: Apache-2.0
+  install_command: pip install mistral-vibe
+  install_candidates:
+    - pip install mistral-vibe
+  skill_files:
+    - .agents/skills/vibe-async/SKILL.md
+    - .agents/skills/vibe-ci-supply-chain/SKILL.md
+    - .agents/skills/vibe-cross-platform/SKILL.md
+    - .agents/skills/vibe-python-style/SKILL.md
+    - .agents/skills/vibe-rust-tui/SKILL.md
+    - .vibe/skills/create-vibe-feature/SKILL.md
+    - .vibe/skills/instrument-feature-analytics/SKILL.md
+    - .vibe/skills/write-vibe-adr/SKILL.md
+    - .vibe/skills/write-vibe-design-doc/SKILL.md
+    - .vibe/skills/write-vibe-tests/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-mistral
+    extracted_at: 2026-10-26T12:04:08.724Z
+    lane: extract

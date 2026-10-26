@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-pikappa13-worldsense
+  slug: pikappa13-worldsense
+  type: reference
+  title: pikappa13/worldsense
+  description: Reality-check layer for AI agents. Detect hidden risks, missing
+    context & real-world consequences before your LLM answers or acts. MCP tool
+    for Claude Code & Cursor.
+  category: cat-agentic
+  tags: []
+  url: https://github.com/pikappa13/worldsense
+  publisher: GitHub topic — MCP tools
+  kind: blog
+  why: null
+  source_url: https://github.com/pikappa13/worldsense
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: gh-topic-mcp-tools
+    extracted_at: 2026-10-26T12:06:58.025Z
+    published: 2026-10-22T19:12:23Z
+  classification:
+    backend: rules
+    confidence: high
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

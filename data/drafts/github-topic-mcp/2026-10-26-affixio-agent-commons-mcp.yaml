@@ -1,0 +1,29 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-affixio-agent-commons-mcp
+  slug: affixio-agent-commons-mcp
+  type: reference
+  title: AffixIO/agent-commons-mcp
+  description: Public registry metadata and connection guides for the hosted Agent
+    Commons MCP service.
+  category: cat-agentic
+  tags: []
+  url: https://github.com/AffixIO/agent-commons-mcp
+  publisher: GitHub topic — mcp
+  kind: blog
+  why: null
+  source_url: https://github.com/AffixIO/agent-commons-mcp
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: github-topic-mcp
+    extracted_at: 2026-10-26T12:05:14.046Z
+    published: 2026-10-26T12:04:50Z
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

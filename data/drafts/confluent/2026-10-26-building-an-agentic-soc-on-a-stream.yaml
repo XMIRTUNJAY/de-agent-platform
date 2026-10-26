@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-building-an-agentic-soc-on-a-stream
+  slug: building-an-agentic-soc-on-a-stream
+  type: architecture
+  title: Building an Agentic SOC on a Stream
+  description: Discover how our security team built an automated multi-agent
+    investigation pipeline that scaled alert triage throughput using a
+    continuous streaming architecture.
+  category: cat-agentic
+  tags: []
+  url: https://www.confluent.io/blog/building-an-agentic-soc-on-a-stream/
+  publisher: Confluent Blog (Kafka/Flink/Streaming)
+  kind: blog
+  why: null
+  source_url: https://www.confluent.io/blog/building-an-agentic-soc-on-a-stream/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: confluent
+    extracted_at: 2026-10-26T12:02:53.374Z
+    published: Thu, 10 Sep 2026 19:19:05 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+      - cat-streaming
+    suggested_type: architecture

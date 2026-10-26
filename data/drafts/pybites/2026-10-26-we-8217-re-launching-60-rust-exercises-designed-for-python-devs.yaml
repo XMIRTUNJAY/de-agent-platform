@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-we-8217-re-launching-60-rust-exercises-designed-for-python-devs
+  slug: we-8217-re-launching-60-rust-exercises-designed-for-python-devs
+  type: reference
+  title: We&#8217;re launching 60 Rust Exercises Designed for Python Devs
+  description: "Rust is too hard. We hear it all the time from Python developers.
+    But after building 60 Rust exercises specifically designed for Pythonistas,
+    we ve come to a clear conclusion: Rust isn t harder than Python per se, it s
+    just a different challenge. And with the right bridges, you c"
+  category: cat-python
+  tags: []
+  url: https://pybit.es/articles/were-launching-60-rust-exercises-designed-for-python-devs/
+  publisher: PyBites (Python practice + coaching)
+  kind: blog
+  why: null
+  source_url: https://pybit.es/articles/were-launching-60-rust-exercises-designed-for-python-devs/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: pybites
+    extracted_at: 2026-10-26T12:03:09.728Z
+    published: Mon, 16 Feb 2026 15:41:24 +0000
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-python
+    suggested_type: tutorial

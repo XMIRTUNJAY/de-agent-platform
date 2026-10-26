@@ -1,0 +1,66 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ref-alexeyban-ekos-lakehouse
+  slug: alexeyban-ekos-lakehouse
+  type: reference
+  title: alexeyban/ekos-lakehouse
+  description: >-
+    EKOS Lakehouse: PostgreSQL → Iceberg medallion pipelines generated and
+    governed by EKOS
+
+
+    Install (from source README):
+
+    On Linux x86_64 with Docker:
+
+
+    ```bash
+
+    curl -fsSL
+    https://raw.githubusercontent.com/alexeyban/ekos-lakehouse/main/install.sh |
+    sh
+
+    ```
+
+
+    One command installs the program, starts the stack, creates a sample
+    project, runs its pipeline
+
+    once and opens the web console on its **Lakehouse** tab. For your own
+    database add
+
+    `-s -- --source host:5432/db --source-user reader` (password in
+    `EKOS_LH_SOURCE_PASSWORD`).
+
+    **[docs/install.md](docs/install.md)** says what it changes and how to
+    remove it;
+
+    **[docs/console.md](docs/console.md)** describes the tab.
+
+
+    To do each step yourself instead: **[docs/quickstart.m
+  category: cat-lakehouse
+  tags:
+    - apache-iceberg
+    - data-engineering
+    - dbt
+    - ekos
+    - etl
+    - lakehouse
+    - medallion-architecture
+    - pentaho
+  url: https://github.com/alexeyban/ekos-lakehouse
+  publisher: GitHub topic — Iceberg tooling
+  source_url: https://github.com/alexeyban/ekos-lakehouse
+  github_url: https://github.com/alexeyban/ekos-lakehouse
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-iceberg
+    extracted_at: 2026-10-26T12:05:45.440Z
+    lane: extract

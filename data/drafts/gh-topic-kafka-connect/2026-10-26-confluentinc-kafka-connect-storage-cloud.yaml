@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-confluentinc-kafka-connect-storage-cloud
+  slug: confluentinc-kafka-connect-storage-cloud
+  type: reference
+  title: confluentinc/kafka-connect-storage-cloud
+  description: Kafka Connect suite of connectors for Cloud storage (Amazon S3)
+  category: cat-streaming
+  tags: []
+  url: https://github.com/confluentinc/kafka-connect-storage-cloud
+  publisher: GitHub topic — Kafka connectors
+  kind: blog
+  why: null
+  source_url: https://github.com/confluentinc/kafka-connect-storage-cloud
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: gh-topic-kafka-connect
+    extracted_at: 2026-10-26T12:06:41.494Z
+    published: 2026-10-26T11:49:56Z
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-lakes
+      - cat-kafka
+      - cat-aws
+    suggested_type: null

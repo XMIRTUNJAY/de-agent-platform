@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-survey-says-you-x27-ll-swap-the-model-but-everything-you-build-a
+  slug: survey-says-you-x27-ll-swap-the-model-but-everything-you-build-a
+  type: reference
+  title: "Survey Says: You&#x27;ll swap the model, but everything you build around
+    it is staying put"
+  description: Earlier this month, my team at Stacklok surveyed 520 technical
+    leaders to understand whether they were concerned about being locked into
+    frontier labs. The data says they’re already swapping models in and out, but
+    the trap they’re concerned about is the layer on top of the model.
+  category: null
+  tags: []
+  url: https://stackoverflow.blog/2026/10/21/survey-says-you-ll-swap-the-model-but-everything-you-build-around-it-is-staying-put/
+  publisher: Stack Overflow Blog (AI + devops essays)
+  kind: blog
+  why: null
+  source_url: https://stackoverflow.blog/2026/10/21/survey-says-you-ll-swap-the-model-but-everything-you-build-around-it-is-staying-put/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: stackoverflow-blog
+    extracted_at: 2026-10-26T12:03:05.408Z
+    published: Wed, 21 Oct 2026 14:00:00 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

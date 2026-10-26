@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-databricks-ai-runtime-and-nvidia-make-it-easier-to-customize-ope
+  slug: databricks-ai-runtime-and-nvidia-make-it-easier-to-customize-ope
+  type: reference
+  title: Databricks AI Runtime and NVIDIA make it easier to customize open models
+    with enterprise data
+  description: GPUs power today's most advanced AI workloads, from cutting-edge
+    language models...
+  category: cat-databricks
+  tags: []
+  url: https://www.databricks.com/blog/databricks-ai-runtime-nvidia-train-fine-tune-models
+  publisher: Databricks Engineering Blog
+  kind: blog
+  why: null
+  source_url: https://www.databricks.com/blog/databricks-ai-runtime-nvidia-train-fine-tune-models
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: databricks-eng
+    extracted_at: 2026-10-26T12:02:52.157Z
+    published: Wed, 21 Oct 2026 11:30:00 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-databricks
+    suggested_type: null

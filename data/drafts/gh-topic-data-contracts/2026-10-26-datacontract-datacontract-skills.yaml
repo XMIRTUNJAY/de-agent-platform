@@ -1,0 +1,39 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-datacontract-datacontract-skills
+  slug: datacontract-datacontract-skills
+  type: skill
+  title: datacontract/datacontract-skills
+  description: "Agent skills for data contracts (ODCS): create, test, quality
+    rules, breaking changes, export, CI/CD, and the Data Contract Editor, with
+    the Data Contract CLI."
+  category: cat-governance
+  tags:
+    - agent-skills
+    - claude-code
+    - data-contracts
+    - datacontract-cli
+    - odcs
+  url: https://github.com/datacontract/datacontract-skills
+  publisher: GitHub topic — data contracts
+  source_url: https://github.com/datacontract/datacontract-skills
+  github_url: https://github.com/datacontract/datacontract-skills
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - skills/breaking-change-check/SKILL.md
+    - skills/contract-ci/SKILL.md
+    - skills/create-data-contract/SKILL.md
+    - skills/datacontract-cli/SKILL.md
+    - skills/datacontract-editor/SKILL.md
+    - skills/export-data-contract/SKILL.md
+    - skills/quality-rules/SKILL.md
+    - skills/test-data-contract/SKILL.md
+  executables: false
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-data-contracts
+    extracted_at: 2026-10-26T12:06:28.244Z
+    lane: extract

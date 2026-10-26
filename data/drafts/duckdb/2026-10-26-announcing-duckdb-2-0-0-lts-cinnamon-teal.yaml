@@ -1,0 +1,33 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-announcing-duckdb-2-0-0-lts-cinnamon-teal
+  slug: announcing-duckdb-2-0-0-lts-cinnamon-teal
+  type: reference
+  title: Announcing DuckDB 2.0.0 LTS “Cinnamon Teal”
+  description: The DuckDB team is happy to announce that today we're releasing
+    DuckDB version 2.0.0 LTS, codenamed “Cinnamon Teal” (Spatula cyanoptera).
+    This is our biggest feature release so far, and it ships a polished version
+    of the Quack protocol, asynchronous I/O, a first-class `VARIANT` t
+  category: cat-databases
+  tags: []
+  url: https://duckdb.org/2026/10/21/announcing-duckdb-200.html
+  publisher: DuckDB News
+  kind: blog
+  why: null
+  source_url: https://duckdb.org/2026/10/21/announcing-duckdb-200.html
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: duckdb
+    extracted_at: 2026-10-26T12:02:54.731Z
+    published: 2026-10-21T00:00:00+00:00
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-sql
+      - cat-databases
+      - cat-agentic
+    suggested_type: null

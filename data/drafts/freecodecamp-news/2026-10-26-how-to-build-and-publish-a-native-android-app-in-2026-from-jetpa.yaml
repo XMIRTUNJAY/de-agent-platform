@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-how-to-build-and-publish-a-native-android-app-in-2026-from-jetpa
+  slug: how-to-build-and-publish-a-native-android-app-in-2026-from-jetpa
+  type: reference
+  title: "How to Build and Publish a Native Android App in 2026: From Jetpack
+    Compose to the Google Play Store"
+  description: Most Android tutorials stop at "it runs on the emulator." But
+    getting an app from a blank project to a listing that real people can
+    install from Google Play involves a second half that's rarely discus
+  category: null
+  tags: []
+  url: https://www.freecodecamp.org/news/build-publish-native-android-app-from-jetpack-compose-to-google-play-store-handbook/
+  publisher: freeCodeCamp News
+  kind: blog
+  why: null
+  source_url: https://www.freecodecamp.org/news/build-publish-native-android-app-from-jetpack-compose-to-google-play-store-handbook/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: freecodecamp-news
+    extracted_at: 2026-10-26T12:03:06.794Z
+    published: Mon, 19 Oct 2026 13:14:15 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: tutorial

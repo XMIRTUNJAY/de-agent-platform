@@ -1,0 +1,81 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-slopstopper-plumb-line
+  slug: slopstopper-plumb-line
+  type: skill
+  title: slopstopper/plumb-line
+  description: >-
+    Stop uncertain data becoming confident-looking results. plumb-line carries
+    provenance, confidence and mock-taint with values through JavaScript and
+    Python, and its review-time checks and GitHub Action catch uncertainty
+    laundered into a claim in AI-assisted code.
+
+
+    Install (from source README):
+
+    **As a Claude Code plugin.** The repository is its own marketplace:
+
+
+    ```
+
+    /plugin marketplace add slopstopper/plumb-line
+
+    /plugin install plumb-line@plumb-line
+
+    ```
+
+
+    Then run `plumb-line-adopt`. It looks at your repository and tells you which
+    parts of plumb-line fit and what to run first. Updates arrive through
+    `/plugin`.
+
+
+    **The library**, with or without the plugin:
+
+
+    ```bash
+
+    npm install plumb-line-provenance      # JavaScript
+
+    pip install plumb-line-provenance      # Python
+
+    ```
+
+
+    Zero dependencies. You can also copy `primitives/js/` or
+    `primitives/python/` straight into your project.
+
+
+    **In CI.** A
+  category: cat-data-observability
+  tags:
+    - agent-skills
+    - ai-agents
+    - ai-generated-code
+    - claude-code
+    - claude-code-plugin
+    - claude-skills
+    - code-quality
+    - code-review
+  url: https://github.com/slopstopper/plumb-line
+  publisher: GitHub topic — data lineage
+  source_url: https://github.com/slopstopper/plumb-line
+  github_url: https://github.com/slopstopper/plumb-line
+  license: Apache-2.0
+  install_command: npm install plumb-line-provenance
+  install_candidates:
+    - npm install plumb-line-provenance
+    - pip install plumb-line-provenance
+  skill_files:
+    - skills/plumb-line-adopt/SKILL.md
+    - skills/plumb-line-audit/SKILL.md
+    - skills/plumb-line-bootstrap/SKILL.md
+    - skills/plumb-line-method/SKILL.md
+    - skills/plumb-line-remediate/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-data-lineage
+    extracted_at: 2026-10-26T12:06:30.196Z
+    lane: extract

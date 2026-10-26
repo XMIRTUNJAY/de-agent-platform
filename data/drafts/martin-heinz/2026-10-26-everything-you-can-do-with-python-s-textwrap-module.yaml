@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-everything-you-can-do-with-python-s-textwrap-module
+  slug: everything-you-can-do-with-python-s-textwrap-module
+  type: reference
+  title: Everything You Can Do with Python's textwrap Module
+  description: "Python has many options for formatting strings and text, including
+    f-strings, `format()` function, templates and more. There's however one
+    module that few people know about and it's called `textwrap`. This module is
+    specifically built to help you with line-wrapping, indentation, "
+  category: cat-python
+  tags: []
+  url: https://martinheinz.dev/blog/108
+  publisher: Martin Heinz (Practical Data Science)
+  kind: blog
+  why: null
+  source_url: https://martinheinz.dev/blog/108
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: martin-heinz
+    extracted_at: 2026-10-26T12:03:14.404Z
+    published: Wed, 07 Feb 2024 16:00:00 +0000
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-python
+    suggested_type: tutorial

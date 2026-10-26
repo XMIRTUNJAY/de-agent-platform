@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-the-vibe-coding-trap
+  slug: the-vibe-coding-trap
+  type: reference
+  title: The Vibe Coding trap
+  description: One of my readers replied to an email I sent a couple of weeks ago
+    and we got into a brief discussion on what I ll call, Skills Erosion. They
+    brought up the point that by leaning too heavily on AI to generate code,
+    people were losing their edge. It s a good point that s top of mi
+  category: cat-python
+  tags: []
+  url: https://pybit.es/articles/the-vibe-coding-trap/
+  publisher: PyBites (Python practice + coaching)
+  kind: blog
+  why: null
+  source_url: https://pybit.es/articles/the-vibe-coding-trap/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: pybites
+    extracted_at: 2026-10-26T12:03:09.729Z
+    published: Thu, 12 Feb 2026 00:15:23 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: tutorial

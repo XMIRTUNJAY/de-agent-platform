@@ -1,0 +1,33 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-trusted-data-apps-for-the-agentic-data-cloud-powered-by-looker
+  slug: trusted-data-apps-for-the-agentic-data-cloud-powered-by-looker
+  type: reference
+  title: Trusted Data Apps for the Agentic Data Cloud, powered by Looker
+  description: "As a business intelligence user, this probably sounds familiar:
+    Most dashboards only provide you with a standardized canvas and a fixed
+    library of charts, and the “analysis” consists of a CSV export that takes
+    you to another system. Or sometimes it's designing the dashboard that’"
+  category: cat-agentic
+  tags: []
+  url: https://cloud.google.com/blog/products/business-intelligence/introducing-looker-data-apps/
+  publisher: Google Cloud — Data Analytics blog
+  kind: blog
+  why: null
+  source_url: https://cloud.google.com/blog/products/business-intelligence/introducing-looker-data-apps/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: gcp-data-analytics
+    extracted_at: 2026-10-26T12:02:50.848Z
+    published: Mon, 12 Oct 2026 16:00:00 +0000
+  classification:
+    backend: rules
+    confidence: high
+    suggested_categories:
+      - cat-agentic
+      - cat-governance
+      - cat-dbt
+    suggested_type: tutorial

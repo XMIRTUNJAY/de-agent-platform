@@ -1,0 +1,29 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-everything-we-announced-at-dbt-summit-and-why-it-matters
+  slug: everything-we-announced-at-dbt-summit-and-why-it-matters
+  type: reference
+  title: Everything we announced at dbt Summit and why it matters
+  description: Every product announced at dbt Summit, from dbt v2 and dbt State to
+    dbt Wizard and dbt Charts, and why each one matters.
+  category: cat-dbt
+  tags: []
+  url: https://www.getdbt.com/blog/dbt-summit-2026-product-announcements
+  publisher: dbt Labs Blog
+  kind: blog
+  why: null
+  source_url: https://www.getdbt.com/blog/dbt-summit-2026-product-announcements
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: dbt-labs
+    extracted_at: 2026-10-26T12:02:54.196Z
+    published: Wed, 16 Sep 2026 16:58:00 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-dbt
+    suggested_type: null

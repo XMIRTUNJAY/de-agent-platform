@@ -1,0 +1,67 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-google-elephant-goldfish-model
+  slug: google-elephant-goldfish-model
+  type: skill
+  title: google/elephant-goldfish-model
+  description: >-
+    An open-source method and skill set created at Google for spec-driven
+    development with LLMs
+
+
+    Install (from source README):
+
+    | Harness | Install |
+
+    | :--- | :--- |
+
+    | **Any AI agent** | Ask your agent: `Install
+    https://github.com/google/elephant-goldfish-model` |
+
+    | **Antigravity** | `agy plugin install
+    https://github.com/google/elephant-goldfish-model` (or `/plugin` in IDE) |
+
+    | **Claude Code** | `claude plugin marketplace add
+    google/elephant-goldfish-model && claude plugin install egm@egm` |
+
+    | **Codex** | `codex plugin marketplace add google/elephant-goldfish-model
+    && codex plugin add egm@egm` |
+
+    | **Claude Cowork / ChatGPT** | See [Harnesses](docs/harnesses.md) for
+    desktop and workspace setup |
+
+
+
+    1. **Ideate & Stress-
+  category: cat-agentic
+  tags:
+    - agent-skills
+    - ai-agents
+    - antigravity
+    - claude-code
+    - claude-code-plugin
+    - claude-skills
+    - codex
+    - codex-plugin
+  url: https://github.com/google/elephant-goldfish-model
+  publisher: GitHub org — Google (incl. Gemini samples)
+  source_url: https://github.com/google/elephant-goldfish-model
+  github_url: https://github.com/google/elephant-goldfish-model
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - skills/egm_bootstrap/SKILL.md
+    - skills/egm_brainstorm/SKILL.md
+    - skills/egm_draft/SKILL.md
+    - skills/egm_drift_report/SKILL.md
+    - skills/egm_resolve/SKILL.md
+    - skills/egm_review/SKILL.md
+    - skills/egm_review_loop/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-google
+    extracted_at: 2026-10-26T12:03:36.804Z
+    lane: extract

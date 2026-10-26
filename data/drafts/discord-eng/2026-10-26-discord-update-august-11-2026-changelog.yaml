@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-discord-update-august-11-2026-changelog
+  slug: discord-update-august-11-2026-changelog
+  type: reference
+  title: "Discord Update: August 11, 2026 Changelog"
+  description: Here s the Discord Changelog from August 11, 2026, so you can stay
+    informed on what’s new in recent app updates!
+  category: null
+  tags: []
+  url: https://discord.com/blog/discord-update-august-11-2026-changelog
+  publisher: Discord Engineering Blog
+  kind: blog
+  why: null
+  source_url: https://discord.com/blog/discord-update-august-11-2026-changelog
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: discord-eng
+    extracted_at: 2026-10-26T12:02:59.510Z
+    published: Tue, 11 Aug 2026 00:00:00 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

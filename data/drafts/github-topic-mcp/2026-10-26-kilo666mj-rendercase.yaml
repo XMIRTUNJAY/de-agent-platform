@@ -1,0 +1,62 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-kilo666mj-rendercase
+  slug: kilo666mj-rendercase
+  type: skill
+  title: kilo666mj/rendercase
+  description: >-
+    Self-hosted artifact publishing and review for AI agents, CI, CLIs, and
+    people
+
+
+    Install (from source README):
+
+    Prerequisites:
+
+
+    - Docker with Compose v2
+
+    - Two HTTPS hostnames, one for the UI and one for artifact content
+
+    - An OIDC provider, plus either an OIDC browser client or Cloudflare Access
+
+
+    1. Clone the repository and create your configuration:
+
+       ```sh
+       git clone https://github.com/kilo666mj/rendercase.git
+       cd rendercase
+       cp .env.example .env
+       openssl rand -base64 32
+       ```
+
+    2. Put the generated value in `RENDERCASE_COOKIE_SECRET` in `.env`, then
+    fill
+       in the URLs and OIDC settings. For the default `oidc` browser mode, register
+       this callback with your provider:
+
+       ```text
+       https:/
+  category: cat-agentic
+  tags:
+    - artifacts
+    - go
+    - mcp
+    - oidc
+    - self-hosted
+  url: https://github.com/kilo666mj/rendercase
+  publisher: GitHub topic — mcp
+  source_url: https://github.com/kilo666mj/rendercase
+  github_url: https://github.com/kilo666mj/rendercase
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - skills/rendercase-artifact/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: github-topic-mcp
+    extracted_at: 2026-10-26T12:05:09.617Z
+    lane: extract

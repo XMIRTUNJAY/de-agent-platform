@@ -1,0 +1,43 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-career-ops-hq-career-ops
+  slug: career-ops-hq-career-ops
+  type: skill
+  title: career-ops-hq/career-ops
+  description: "Open-source AI job search agent and job finder: scan job boards,
+    score each job 1-5 against your CV before you apply, tailor an ATS-friendly
+    resume and cover letter, get interview prep and a job application tracker.
+    It helps you fill in each application; you press Submit. Runs locally in
+    your AI coding CLI (Claude Code, Codex, OpenCode and more)."
+  category: cat-agentic
+  tags:
+    - agent-skills
+    - ai-agent
+    - ai-job-search
+    - ats
+    - career
+    - career-ops
+    - claude-code
+    - cover-letter
+  url: https://github.com/career-ops-hq/career-ops
+  publisher: GitHub topic — agent-skills
+  source_url: https://github.com/career-ops-hq/career-ops
+  github_url: https://github.com/career-ops-hq/career-ops
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - .agents/skills/career-ops/SKILL.md
+    - .antigravitycli/skills/career-ops/SKILL.md
+    - .claude/skills/career-ops/SKILL.md
+    - .grok/skills/career-ops/SKILL.md
+    - .kimi/skills/career-ops/SKILL.md
+    - .opencode/skills/career-ops/SKILL.md
+    - .qwen/skills/career-ops/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-agent-skills
+    extracted_at: 2026-10-26T12:04:44.864Z
+    lane: extract

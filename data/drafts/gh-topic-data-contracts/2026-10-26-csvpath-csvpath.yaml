@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-csvpath-csvpath
+  slug: csvpath-csvpath
+  type: reference
+  title: csvpath/csvpath
+  description: Data Engineering infrastructure that controls inbound tabular data
+    file feeds and validates data contracts
+  category: cat-governance
+  tags: []
+  url: https://github.com/csvpath/csvpath
+  publisher: GitHub topic — data contracts
+  kind: blog
+  why: null
+  source_url: https://github.com/csvpath/csvpath
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: gh-topic-data-contracts
+    extracted_at: 2026-10-26T12:06:26.549Z
+    published: 2026-10-26T03:14:39Z
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-data-contracts
+      - cat-infrastructure
+    suggested_type: null

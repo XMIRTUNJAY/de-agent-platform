@@ -1,0 +1,47 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-nsozturk-open-agent-db
+  slug: nsozturk-open-agent-db
+  type: agent
+  title: nsozturk/open-agent-db
+  description: >-
+    The universal open database and semantic vector search engine for AI Agent
+    Skills, MCP Servers, Project Directives, and Rules. 3.48M+ assets across 7
+    ecosystems.
+
+
+    Install (from source README):
+
+    You can run Open-Agent-DB immediately using Node.js without installing
+    anything:
+
+
+    ```bash
+
+    npx open-agent-db info "Prisma Postgres"
+  category: cat-agentic
+  tags:
+    - agent-skills
+    - ai-agents
+    - claude-code
+    - claude-skills
+    - codex
+    - cursor-rules
+    - developer-tools
+    - faiss
+  url: https://github.com/nsozturk/open-agent-db
+  publisher: GitHub topic — agent-skills
+  source_url: https://github.com/nsozturk/open-agent-db
+  github_url: https://github.com/nsozturk/open-agent-db
+  license: MIT
+  install_command: npx open-agent-db
+  install_candidates:
+    - npx open-agent-db
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-agent-skills
+    extracted_at: 2026-10-26T12:04:49.605Z
+    lane: extract

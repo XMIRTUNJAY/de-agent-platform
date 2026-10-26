@@ -1,0 +1,34 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-enable-cross-region-fine-grained-data-access-with-aws-lake-forma
+  slug: enable-cross-region-fine-grained-data-access-with-aws-lake-forma
+  type: reference
+  title: Enable cross-Region fine-grained data access with AWS Lake Formation and
+    Trusted Identity Propagation
+  description: Trusted Identity Propagation with AWS IAM Identity Center now works
+    across Regions. Learn how to share AWS Lake Formation-governed Amazon S3 and
+    Amazon Redshift data in one Region and query it from another as the actual
+    corporate user, with fine-grained access control and per-use
+  category: cat-aws
+  tags: []
+  url: https://aws.amazon.com/blogs/big-data/enable-cross-region-fine-grained-data-access-with-aws-lake-formation-and-trusted-identity-propagation/
+  publisher: AWS Big Data Blog
+  kind: blog
+  why: null
+  source_url: https://aws.amazon.com/blogs/big-data/enable-cross-region-fine-grained-data-access-with-aws-lake-formation-and-trusted-identity-propagation/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: aws-big-data
+    extracted_at: 2026-10-26T12:02:48.466Z
+    published: Fri, 23 Oct 2026 19:50:12 +0000
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-aws
+      - cat-governance
+      - cat-warehouses
+    suggested_type: tutorial

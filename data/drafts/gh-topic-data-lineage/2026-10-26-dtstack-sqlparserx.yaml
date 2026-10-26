@@ -1,0 +1,34 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-dtstack-sqlparserx
+  slug: dtstack-sqlparserx
+  type: agent
+  title: DTStack/SqlParserX
+  description: A Druid-based multi-dialect SQL parsing engine with syntax and
+    business parsing layers for tables, DDL, lineage, SQL splitting and
+    rewriting.
+  category: cat-data-observability
+  tags:
+    - column-lineage
+    - data-lineage
+    - druid
+    - java
+    - multi-dialect
+    - sql-analysis
+    - sql-lineage
+    - sql-parser
+  url: https://github.com/DTStack/SqlParserX
+  publisher: GitHub topic — data lineage
+  source_url: https://github.com/DTStack/SqlParserX
+  github_url: https://github.com/DTStack/SqlParserX
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-data-lineage
+    extracted_at: 2026-10-26T12:06:33.305Z
+    lane: extract

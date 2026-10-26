@@ -1,0 +1,29 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-deploy-rfd4-proteina-on-databricks
+  slug: deploy-rfd4-proteina-on-databricks
+  type: reference
+  title: Deploy RFD4-Proteina on Databricks
+  description: Bring RFD4-Proteina to your research data with AI-assisted
+    development and serverless NVIDIA GPU compute....
+  category: cat-databricks
+  tags: []
+  url: https://www.databricks.com/blog/deploy-rfd4-proteina-model-databricks
+  publisher: Databricks Engineering Blog
+  kind: blog
+  why: null
+  source_url: https://www.databricks.com/blog/deploy-rfd4-proteina-model-databricks
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: databricks-eng
+    extracted_at: 2026-10-26T12:02:52.158Z
+    published: Wed, 21 Oct 2026 04:42:46 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-databricks
+    suggested_type: null

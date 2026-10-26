@@ -1,0 +1,33 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-graph-neural-networks-in-tensorflow
+  slug: graph-neural-networks-in-tensorflow
+  type: reference
+  title: Graph neural networks in TensorFlow
+  description: Posted by Dustin Zelle – Software Engineer, Research and Arno
+    Eigenwillig – Software Engineer, CoreML This article is also shared on the
+    Google Research Blog Objects and their relationships are ubiquitous in the
+    world around us, and relationships can be as important to understand
+  category: cat-agentic
+  tags: []
+  url: https://blog.tensorflow.org/2024/02/graph-neural-networks-in-tensorflow.html
+  publisher: TensorFlow Blog (Google)
+  kind: blog
+  why: null
+  source_url: https://blog.tensorflow.org/2024/02/graph-neural-networks-in-tensorflow.html
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: tensorflow-blog
+    extracted_at: 2026-10-26T12:03:04.145Z
+    published: 2024-02-06T11:00:00.000-08:00
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+      - cat-python
+      - cat-data-formats
+    suggested_type: tutorial

@@ -1,0 +1,40 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ref-zai-org-codegeex
+  slug: zai-org-codegeex
+  type: reference
+  title: zai-org/CodeGeeX
+  description: |-
+    CodeGeeX: An Open Multilingual Code Generation Model (KDD 2023)
+
+    Install (from source README):
+    CodeGeeX is initially implemented in Mindspore and trained Ascend 910 AI Processors. We provide a torch-compatible version based on [Megatron-LM](https://github.com/NVIDIA/Megatron-LM) to facilitate usage on GPU platforms.
+
+    Python 3.7+ / CUDA 11+ / PyTorch 1.10+ / DeepSpeed 0.6+ are required. Install ``codegeex`` package via: 
+    ```bash
+    git clone git@github.com:THUDM/CodeGeeX.git
+    cd CodeGeeX
+    pip install -e .
+    ```
+    Or use [CodeGeeX docker](https://hub.docker.com/r/codegeex/codegeex) to quickly set up the environment (with [nvidia-docker](https://docs.nvidia.com/datacenter/cloud-native/container-too
+  category: cat-agentic
+  tags:
+    - code-generation
+    - pretrained-models
+    - tools
+  url: https://github.com/zai-org/CodeGeeX
+  publisher: GitHub org — Zhipu AI (GLM — moved to zai-org)
+  source_url: https://github.com/zai-org/CodeGeeX
+  github_url: https://github.com/zai-org/CodeGeeX
+  license: Apache-2.0
+  install_command: pip install -e
+  install_candidates:
+    - pip install -e
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-zhipu
+    extracted_at: 2026-10-26T12:04:01.486Z
+    lane: extract

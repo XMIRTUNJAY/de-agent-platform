@@ -1,0 +1,76 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-dlt-hub-dlt
+  slug: dlt-hub-dlt
+  type: skill
+  title: dlt-hub/dlt
+  description: >-
+    data load tool (dlt) is an open source Python library that makes data
+    loading easy 🛠️ 
+
+
+    Install (from source README):
+
+    dlt supports Python 3.10 through Python 3.14. Note that some optional extras
+    are not yet available for Python 3.14, so support for this version is
+    considered experimental.
+
+
+    ```sh
+
+    pip install dlt
+
+    ```
+
+
+    Add the extras you need for your sources and destinations, for example:
+
+
+    ```sh
+
+    pip install "dlt[duckdb]"        # local DuckDB destination
+
+    pip install "dlt[bigquery]"      # or snowflake, postgres, redshift,
+    databricks, athena, ...
+
+    pip install "dlt[s3]"            # or gs, az for cloud filesystems
+
+    pip install "dlt[sql_database]"  # read from any SQL database
+
+    pip install "dlt[hub]"           # data
+  category: cat-python
+  tags:
+    - data
+    - data-engineering
+    - data-lake
+    - data-loading
+    - data-warehouse
+    - elt
+    - extract
+    - load
+  url: https://github.com/dlt-hub/dlt
+  publisher: GitHub topic — data-engineering
+  source_url: https://github.com/dlt-hub/dlt
+  github_url: https://github.com/dlt-hub/dlt
+  license: Apache-2.0
+  install_command: pip install dlt
+  install_candidates:
+    - pip install dlt
+  skill_files:
+    - .claude/skills/auto-docstring-rules/SKILL.md
+    - .claude/skills/auto-import-rules/SKILL.md
+    - .claude/skills/auto-write-test-rules/SKILL.md
+    - .claude/skills/commit/SKILL.md
+    - .claude/skills/create-worktree/SKILL.md
+    - .claude/skills/dashboard/SKILL.md
+    - .claude/skills/implement-issue/SKILL.md
+    - .claude/skills/optimize-code/SKILL.md
+    - .claude/skills/release-notes/SKILL.md
+    - .claude/skills/review-issues-severity/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: github-topic-de
+    extracted_at: 2026-10-26T12:05:01.509Z
+    lane: extract

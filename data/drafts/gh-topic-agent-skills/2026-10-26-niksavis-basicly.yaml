@@ -1,0 +1,72 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-niksavis-basicly
+  slug: niksavis-basicly
+  type: skill
+  title: niksavis/basicly
+  description: >-
+    A harness that ships a development process to coding agents and enforces it.
+    One YAML catalog projects instructions, skills, subagents and permissions to
+    Claude, Codex and Copilot. Git hooks refuse bad work at commit time. A loop
+    drives each unit of work to a merge in an isolated worktree, with phase
+    derived from a tracked work graph.
+
+
+    Install (from source README):
+
+    basicly requires **Python 3.14+** — for the CLI and for the projected hook
+
+    scripts that run inside your repo; older interpreters are not supported.
+
+    The default markdown gate also needs Node and a local `markdownlint-cli2`
+    package before
+
+    install. If your repository already locks the package, run `npm ci`.
+    Otherwise, get the
+
+    repository owner's approval, then run `npm install --save-dev
+    markdownlint-cli2` and commit
+
+    the package files. Install and `--dry-run` refuse missing tools before
+    writing files.
+
+    They do not add dependencies automatically. Before the first commit, select
+    Markdown
+
+    inputs in yo
+  category: cat-agentic
+  tags:
+    - agent-orchestration
+    - agent-skills
+    - agents-md
+    - ai-agents
+    - automation
+    - claude-code
+    - cli
+    - coding-agents
+  url: https://github.com/niksavis/basicly
+  publisher: GitHub topic — agent-skills
+  source_url: https://github.com/niksavis/basicly
+  github_url: https://github.com/niksavis/basicly
+  license: MIT
+  install_command: npm install --save-dev
+  install_candidates:
+    - npm install --save-dev
+  skill_files:
+    - .agents/skills/best-practices-audit/SKILL.md
+    - .agents/skills/catalog-authoring/SKILL.md
+    - .agents/skills/cli-tools/SKILL.md
+    - .agents/skills/conventional-commits/SKILL.md
+    - .agents/skills/decompose-plan/SKILL.md
+    - .agents/skills/falsify-first/SKILL.md
+    - .agents/skills/find-skills/SKILL.md
+    - .agents/skills/harness-client/SKILL.md
+    - .agents/skills/harness-loop/SKILL.md
+    - .agents/skills/interface-facts/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-agent-skills
+    extracted_at: 2026-10-26T12:04:45.679Z
+    lane: extract

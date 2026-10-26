@@ -1,0 +1,34 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-sahasilak-gravetrail
+  slug: sahasilak-gravetrail
+  type: agent
+  title: SahasilAK/GraveTrail
+  description: An open-source, AI-powered data engineering workspace for automated
+    SQL/SAS lineage discovery, dependency visualization, column usage analysis,
+    impact assessment, and developer productivity.
+  category: cat-data-observability
+  tags:
+    - code-analysis
+    - data-discovery
+    - data-engineering
+    - data-lineage
+    - data-migration
+    - data-pipelines
+    - dependency-analysis
+    - dependency-graph
+  url: https://github.com/SahasilAK/GraveTrail
+  publisher: GitHub topic — data lineage
+  source_url: https://github.com/SahasilAK/GraveTrail
+  github_url: https://github.com/SahasilAK/GraveTrail
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-data-lineage
+    extracted_at: 2026-10-26T12:06:34.140Z
+    lane: extract

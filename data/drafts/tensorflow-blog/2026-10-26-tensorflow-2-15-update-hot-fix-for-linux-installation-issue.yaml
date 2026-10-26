@@ -1,0 +1,32 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-tensorflow-2-15-update-hot-fix-for-linux-installation-issue
+  slug: tensorflow-2-15-update-hot-fix-for-linux-installation-issue
+  type: reference
+  title: "TensorFlow 2.15 update: hot-fix for Linux installation issue"
+  description: Posted by the TensorFlow team We are releasing a hot-fix for an
+    installation issue affecting the TensorFlow installation process. The
+    TensorFlow 2.15.0 Python package was released such that it requested
+    tensorrt -related packages that cannot be found unless the user installs
+    them
+  category: cat-python
+  tags: []
+  url: https://blog.tensorflow.org/2023/12/tensorflow-215-update-hot-fix-linux-installation-issue.html
+  publisher: TensorFlow Blog (Google)
+  kind: blog
+  why: null
+  source_url: https://blog.tensorflow.org/2023/12/tensorflow-215-update-hot-fix-linux-installation-issue.html
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: tensorflow-blog
+    extracted_at: 2026-10-26T12:03:04.145Z
+    published: 2023-12-05T14:00:00.000-08:00
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-python
+    suggested_type: null

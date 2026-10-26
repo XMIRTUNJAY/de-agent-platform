@@ -1,0 +1,32 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-multi-turn-reinforcement-learning-on-amazon-sagemaker-ai-a-hands
+  slug: multi-turn-reinforcement-learning-on-amazon-sagemaker-ai-a-hands
+  type: reference
+  title: "Multi-Turn Reinforcement Learning on Amazon SageMaker AI: A hands-on guide"
+  description: "Multi-Turn Reinforcement Learning (MTRL) on Amazon SageMaker AI
+    trains models on the outcome of a whole multi-step task rather than labeled
+    steps. This hands-on guide walks the full pipeline using Wordle: deploying
+    the agent and reward on Amazon Bedrock AgentCore, preparing the d"
+  category: cat-agentic
+  tags: []
+  url: https://aws.amazon.com/blogs/machine-learning/multi-turn-reinforcement-learning-on-amazon-sagemaker-ai-a-hands-on-guide/
+  publisher: AWS Machine Learning Blog
+  kind: blog
+  why: null
+  source_url: https://aws.amazon.com/blogs/machine-learning/multi-turn-reinforcement-learning-on-amazon-sagemaker-ai-a-hands-on-guide/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: aws-machine-learning
+    extracted_at: 2026-10-26T12:02:48.999Z
+    published: Fri, 23 Oct 2026 17:48:54 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-data-formats
+      - cat-agentic
+    suggested_type: tutorial

@@ -1,0 +1,34 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-streaming-comes-to-api-gateway-real-time-and-ai-ready-apis-witho
+  slug: streaming-comes-to-api-gateway-real-time-and-ai-ready-apis-witho
+  type: reference
+  title: "Streaming comes to API Gateway: real-time and AI-ready APIs, without
+    changing your spec"
+  description: API Gateway now supports real-time streaming—including Server-Sent
+    Events, WebSockets, gRPC, and chunked transfer encoding—in Public Preview
+    without requiring changes to your existing API specifications. This update
+    allows developers to route long-lived, bi-directional streams an
+  category: cat-streaming
+  tags: []
+  url: https://developers.googleblog.com/streaming-comes-to-api-gateway-real-time-and-ai-ready-apis-without-changing-your-spec/
+  publisher: Google Developers Blog
+  kind: blog
+  why: null
+  source_url: https://developers.googleblog.com/streaming-comes-to-api-gateway-real-time-and-ai-ready-apis-without-changing-your-spec/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: google-dev-blog
+    extracted_at: 2026-10-26T12:02:51.617Z
+    published: null
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-streaming
+      - cat-data-observability
+      - cat-infrastructure
+    suggested_type: null

@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-postgresql-in-action-with-opensearch
+  slug: postgresql-in-action-with-opensearch
+  type: reference
+  title: PostgreSQL in action with Opensearch
+  description: Learn about using Opensearch with PostgreSQL to improve performance
+    and quickly return results to your users. The post PostgreSQL in action with
+    Opensearch appeared first on SQLServerCentral .
+  category: cat-sql
+  tags: []
+  url: https://www.sqlservercentral.com/articles/postgresql-in-action-with-opensearch
+  publisher: SQLServerCentral (tutorials)
+  kind: blog
+  why: null
+  source_url: https://www.sqlservercentral.com/articles/postgresql-in-action-with-opensearch
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: sql-server-central
+    extracted_at: 2026-10-26T12:03:16.094Z
+    published: Fri, 23 Oct 2026 00:00:33 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-sql
+      - cat-databases
+    suggested_type: tutorial

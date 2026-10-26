@@ -1,0 +1,46 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-rocky-data-rocky
+  slug: rocky-data-rocky
+  type: skill
+  title: rocky-data/rocky
+  description: "A SQL transformation engine that type-checks your whole pipeline
+    and catches breaking changes before they run — branches, replay,
+    column-level lineage, compile-time contracts, per-model cost. Adapters:
+    Databricks, Snowflake, BigQuery, DuckDB. Single static Rust binary. Apache
+    2.0."
+  category: cat-warehouses
+  tags:
+    - bigquery
+    - column-lineage
+    - dagster
+    - data-contracts
+    - data-engineering
+    - data-lineage
+    - data-pipeline
+    - data-platform
+  url: https://github.com/rocky-data/rocky
+  publisher: GitHub topic — data contracts
+  source_url: https://github.com/rocky-data/rocky
+  github_url: https://github.com/rocky-data/rocky
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - .agents/skills/rocky-ai-workflow/SKILL.md
+    - .agents/skills/rocky-codegen/SKILL.md
+    - .agents/skills/rocky-config/SKILL.md
+    - .agents/skills/rocky-dev/SKILL.md
+    - .agents/skills/rocky-dsl-change/SKILL.md
+    - .agents/skills/rocky-new-adapter/SKILL.md
+    - .agents/skills/rocky-new-cli-command/SKILL.md
+    - .agents/skills/rocky-poc/SKILL.md
+    - .agents/skills/rocky-release/SKILL.md
+    - .agents/skills/rocky-test-fixtures/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-data-contracts
+    extracted_at: 2026-10-26T12:06:27.497Z
+    lane: extract

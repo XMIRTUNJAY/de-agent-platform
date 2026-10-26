@@ -1,0 +1,27 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-building-pinterest-s-vlm-serving-stack-on-nvidia-dynamo
+  slug: building-pinterest-s-vlm-serving-stack-on-nvidia-dynamo
+  type: reference
+  title: Building Pinterest’s VLM Serving Stack on NVIDIA Dynamo
+  description: Summary pending review — see the source.
+  category: null
+  tags: []
+  url: https://medium.com/pinterest-engineering/building-pinterests-vlm-serving-stack-on-nvidia-dynamo-0dce6e93d0f3?source=rss----4c5a5f6279b6---4
+  publisher: Pinterest Engineering
+  kind: blog
+  why: null
+  source_url: https://medium.com/pinterest-engineering/building-pinterests-vlm-serving-stack-on-nvidia-dynamo-0dce6e93d0f3?source=rss----4c5a5f6279b6---4
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: pinterest-eng
+    extracted_at: 2026-10-26T12:03:00.104Z
+    published: Thu, 10 Sep 2026 23:08:16 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

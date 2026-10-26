@@ -1,0 +1,32 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-kafma-app-awesome-kafka
+  slug: kafma-app-awesome-kafka
+  type: agent
+  title: kafma-app/awesome-kafka
+  description: A curated list of maintained Apache Kafka tools and client libraries.
+  category: cat-kafka
+  tags:
+    - apache-kafka
+    - awesome
+    - awesome-list
+    - kafka
+    - kafka-client
+    - kafka-connect
+    - kafka-gui
+    - kafka-tools
+  url: https://github.com/kafma-app/awesome-kafka
+  publisher: GitHub topic — Kafka connectors
+  source_url: https://github.com/kafma-app/awesome-kafka
+  github_url: https://github.com/kafma-app/awesome-kafka
+  license: CC0-1.0
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: false
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-kafka-connect
+    extracted_at: 2026-10-26T12:06:43.524Z
+    lane: extract

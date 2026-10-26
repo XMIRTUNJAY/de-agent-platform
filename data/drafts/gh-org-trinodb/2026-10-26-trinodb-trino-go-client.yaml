@@ -1,0 +1,75 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-trinodb-trino-go-client
+  slug: trinodb-trino-go-client
+  type: agent
+  title: trinodb/trino-go-client
+  description: >-
+    Go client for Trino
+
+
+    Install (from source README):
+
+    ```bash
+
+    go get github.com/trinodb/trino-go-client/trino
+
+    ```
+
+
+
+    Import the package for its side effect of registering the `trino` driver,
+    then
+
+    open a database with a [DSN](#dsn):
+
+
+    ```go
+
+    import (
+    	"database/sql"
+
+    	_ "github.com/trinodb/trino-go-client/trino"
+    )
+
+
+    db, err := sql.Open("trino",
+    "http://user@localhost:8080?catalog=tpch&schema=sf1")
+
+    if err != nil {
+    	return err
+    }
+
+    defer db.Close()
+
+
+    rows, err := db.QueryContext(ctx, "SELECT name, regionkey FROM nation WHERE
+    nationkey < ?", 5)
+
+    if err != nil {
+    	return err
+    }
+
+    defer rows.Close()
+
+    for rows.Next() {
+    	var name string
+    	var regionKey int64
+    	if err :=
+  category: cat-warehouses
+  tags: []
+  url: https://github.com/trinodb/trino-go-client
+  publisher: GitHub org — TrinoDB
+  source_url: https://github.com/trinodb/trino-go-client
+  github_url: https://github.com/trinodb/trino-go-client
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-trinodb
+    extracted_at: 2026-10-26T12:07:52.882Z
+    lane: extract

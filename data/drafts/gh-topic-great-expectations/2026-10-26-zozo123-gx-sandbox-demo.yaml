@@ -1,0 +1,66 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-zozo123-gx-sandbox-demo
+  slug: zozo123-gx-sandbox-demo
+  type: agent
+  title: zozo123/gx-sandbox-demo
+  description: >-
+    Minimal Great Expectations (GX Core 1.x) data-quality demo with one check
+    that fails by design; runs locally or in islo.dev and crabbox sandboxes.
+
+
+    Install (from source README):
+
+    ```bash
+
+    python -m venv .venv
+
+    source .venv/bin/activate        # Windows: .venv\Scripts\activate
+
+    pip install -r requirements.txt
+
+    python gx_demo.py
+
+    ```
+
+
+    Expected output:
+
+
+    ```
+
+    overall: FAIL
+      [PASS] expect_column_values_to_not_be_null(id)
+      [PASS] expect_column_values_to_be_between(passenger_count)
+      [FAIL] expect_column_values_to_be_between(fare_amount)
+    ```
+
+
+    There is also `run_gx_validation.py`, a more verbose variant that uses a GX
+    `ValidationDefinition`. Both scripts produce the same outcome and exit 0.
+  category: cat-data-quality
+  tags:
+    - data-quality
+    - data-validation
+    - great-expectations
+    - islo
+    - pandas
+    - python
+    - sandbox
+  url: https://github.com/zozo123/gx-sandbox-demo
+  publisher: GitHub topic — Great Expectations ecosystem
+  source_url: https://github.com/zozo123/gx-sandbox-demo
+  github_url: https://github.com/zozo123/gx-sandbox-demo
+  license: Apache-2.0
+  install_command: pip install -r
+  install_candidates:
+    - pip install -r
+    - pip install great_expectations
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-great-expectations
+    extracted_at: 2026-10-26T12:06:53.672Z
+    lane: extract

@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-flexible-authentication-reimagining-authentication-for-millions-
+  slug: flexible-authentication-reimagining-authentication-for-millions-
+  type: reference
+  title: "Flexible Authentication: Reimagining authentication for millions of
+    users at Airbnb"
+  description: Summary pending review — see the source.
+  category: null
+  tags: []
+  url: https://medium.com/airbnb-engineering/flexible-authentication-reimagining-authentication-for-millions-of-users-at-airbnb-3a8a4c917137?source=rss----53c7c27702d5---4
+  publisher: Airbnb Engineering & Data Science Blog
+  kind: blog
+  why: null
+  source_url: https://medium.com/airbnb-engineering/flexible-authentication-reimagining-authentication-for-millions-of-users-at-airbnb-3a8a4c917137?source=rss----53c7c27702d5---4
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: airbnb-eng
+    extracted_at: 2026-10-26T12:02:58.478Z
+    published: Wed, 12 Aug 2026 17:01:04 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

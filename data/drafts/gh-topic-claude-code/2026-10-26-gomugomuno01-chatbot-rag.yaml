@@ -1,0 +1,35 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-gomugomuno01-chatbot-rag
+  slug: gomugomuno01-chatbot-rag
+  type: agent
+  title: GomuGomuNo01/Chatbot-RAG
+  description: "Un assistant IA qui transforme les documents internes en réponses
+    rapides et vérifiables. Il retrouve les informations pertinentes, cite ses
+    sources et signale lorsqu’une réponse est absente. Objectif : gagner du
+    temps tout en renforçant la fiabilité des réponses."
+  category: cat-agentic
+  tags:
+    - claude-code
+    - dependabot
+    - faiss
+    - fastapi
+    - groq
+    - langchain
+    - python
+    - rag
+  url: https://github.com/GomuGomuNo01/Chatbot-RAG
+  publisher: GitHub topic — claude-code
+  source_url: https://github.com/GomuGomuNo01/Chatbot-RAG
+  github_url: https://github.com/GomuGomuNo01/Chatbot-RAG
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-claude-code
+    extracted_at: 2026-10-26T12:04:34.216Z
+    lane: extract

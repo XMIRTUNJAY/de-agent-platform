@@ -1,0 +1,50 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ref-strimzi-strimzi-github-io
+  slug: strimzi-strimzi-github-io
+  type: reference
+  title: strimzi/strimzi.github.io
+  description: >-
+    Strimzi web site project
+
+
+    Install (from source README):
+
+    [Strimzi quick starts](https://strimzi.io/quickstarts/) provide instructions
+    for evaluating Strimzi using _Minikube_, _Kubernetes kind_ or _Docker
+    Desktop_.
+
+
+    The source markdown files for the quick starts are maintained in the
+    [`quickstarts`](/quickstarts) and
+    [`/_includes/quickstarts`](/_includes/quickstarts) folders.
+
+
+    If you spot something that needs updating or changing in the quick starts,
+    you can open an issue or open a PR and contribute directly. 
+
+
+    For more information on contributing to the Strimzi documentation, see the
+    [Strimzi Documentation Contributor Guide](https://strimzi.io/contr
+  category: cat-streaming
+  tags:
+    - kafka
+    - kafka-connect
+    - kafka-streams
+    - kubernetes
+    - openshift
+  url: https://github.com/strimzi/strimzi.github.io
+  publisher: GitHub topic — Kafka connectors
+  source_url: https://github.com/strimzi/strimzi.github.io
+  github_url: https://github.com/strimzi/strimzi.github.io
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-kafka-connect
+    extracted_at: 2026-10-26T12:06:47.189Z
+    lane: extract

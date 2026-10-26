@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-introducing-full-transaction-detection-for-cloudflare-waf
+  slug: introducing-full-transaction-detection-for-cloudflare-waf
+  type: reference
+  title: Introducing full transaction detection for Cloudflare WAF
+  description: Cloudflare's web application firewall can now correlate an HTTP
+    request with its response. Full transaction detection helps every customer
+    find successful exploits, data exposure, and risky misconfigurations that
+    request-only inspection can miss.
+  category: null
+  tags: []
+  url: https://blog.cloudflare.com/full-transaction-waf/
+  publisher: Cloudflare Blog (platform + data infra)
+  kind: blog
+  why: null
+  source_url: https://blog.cloudflare.com/full-transaction-waf/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: cloudflare
+    extracted_at: 2026-10-26T12:02:55.265Z
+    published: Wed, 21 Oct 2026 14:10:42 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

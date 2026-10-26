@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-zai-org-chatglm2-6b
+  slug: zai-org-chatglm2-6b
+  type: reference
+  title: zai-org/ChatGLM2-6B
+  description: "ChatGLM2-6B: An Open Bilingual Chat LLM | 开源双语对话语言模型"
+  category: cat-agentic
+  tags: []
+  url: https://github.com/zai-org/ChatGLM2-6B
+  publisher: GitHub org — Zhipu AI (GLM — moved to zai-org)
+  kind: blog
+  why: null
+  source_url: https://github.com/zai-org/ChatGLM2-6B
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: gh-org-zhipu
+    extracted_at: 2026-10-26T12:04:00.789Z
+    published: 2024-06-27T04:05:08Z
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

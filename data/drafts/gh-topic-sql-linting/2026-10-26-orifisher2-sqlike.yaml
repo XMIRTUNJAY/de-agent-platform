@@ -1,0 +1,62 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-orifisher2-sqlike
+  slug: orifisher2-sqlike
+  type: skill
+  title: orifisher2/sqlike
+  description: >-
+    CLI, MCP server, GitHub Action and pre-commit hook for sqlike: deterministic
+    SQL analysis and query-equivalence checking. Tokenizes locally, so your real
+    table names and values never leave your machine.
+
+
+    Install (from source README):
+
+    Add it to any MCP client (Claude Code, Claude Desktop, Cursor, and so on):
+
+
+    ```json
+
+    {
+      "mcpServers": {
+        "sqlike": { "command": "npx", "args": ["-y", "@sqlike/mcp"] }
+      }
+    }
+
+    ```
+
+
+    Or install it through
+    [Smithery](https://smithery.ai/server/orifisher2/sqlike). Set
+    `SQLIKE_API_KEY`
+
+    if you have a key and want the higher rate limits. Without one you get the
+    anonymous tier, which
+
+    needs no signup.
+  category: cat-sql
+  tags:
+    - cli
+    - developer-tools
+    - duckdb
+    - github-actions
+    - mariadb
+    - mcp
+    - model-context-protocol
+    - mysql
+  url: https://github.com/orifisher2/sqlike
+  publisher: GitHub topic — SQL linting & review
+  source_url: https://github.com/orifisher2/sqlike
+  github_url: https://github.com/orifisher2/sqlike
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - skills/sqlike/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-sql-linting
+    extracted_at: 2026-10-26T12:07:23.471Z
+    lane: extract

@@ -1,0 +1,32 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-api-evangelist-unravel-data-systems
+  slug: api-evangelist-unravel-data-systems
+  type: reference
+  title: api-evangelist/unravel-data-systems
+  description: Unravel Data Systems — independent third-party profile of a public
+    API surface, by API Evangelist. Unravel Data Systems is an AI-powered data
+    observability and FinOps platform that helps data teams op
+  category: cat-data-observability
+  tags: []
+  url: https://github.com/api-evangelist/unravel-data-systems
+  publisher: GitHub topic — data observability
+  kind: blog
+  why: null
+  source_url: https://github.com/api-evangelist/unravel-data-systems
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: gh-topic-data-observability
+    extracted_at: 2026-10-26T12:06:37.869Z
+    published: 2026-10-26T06:12:51Z
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-warehouses
+      - cat-cost-engineering
+      - cat-gcp
+    suggested_type: null

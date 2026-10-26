@@ -1,0 +1,46 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-trinodb-trino-js-client
+  slug: trinodb-trino-js-client
+  type: agent
+  title: trinodb/trino-js-client
+  description: >-
+    TypeScript client library for Trino
+
+
+    Install (from source README):
+
+    `npm install @trinodb/trino-js-client` or `yarn add
+    @trinodb/trino-js-client`
+
+
+    Versions up to and including 0.2.9 were published as `trino-client`, without
+    a
+
+    scope. The scoped name starts at 0.3.0. Update the dependency name to keep
+
+    receiving new releases.
+  category: cat-warehouses
+  tags:
+    - client
+    - javascript
+    - library
+    - trino
+    - trinodb
+    - typescript
+  url: https://github.com/trinodb/trino-js-client
+  publisher: GitHub org — TrinoDB
+  source_url: https://github.com/trinodb/trino-js-client
+  github_url: https://github.com/trinodb/trino-js-client
+  license: Apache-2.0
+  install_command: npm install @trinodb/trino-js-client
+  install_candidates:
+    - npm install @trinodb/trino-js-client
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-trinodb
+    extracted_at: 2026-10-26T12:07:52.009Z
+    lane: extract

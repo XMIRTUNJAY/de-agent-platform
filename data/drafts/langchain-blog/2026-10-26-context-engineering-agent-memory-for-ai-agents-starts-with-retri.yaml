@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-context-engineering-agent-memory-for-ai-agents-starts-with-retri
+  slug: context-engineering-agent-memory-for-ai-agents-starts-with-retri
+  type: reference
+  title: Context Engineering (Agent Memory) for AI Agents Starts with Retrieval
+  description: Agents waste time and context on clumsy searches, oversized results
+    and stale data. Learn the retrieval techniques LangChain s Deep Agents
+    harness uses to get the right context in.
+  category: cat-agentic
+  tags: []
+  url: https://www.langchain.com/blog/context-engineering-starts-with-retrieval
+  publisher: LangChain Blog
+  kind: blog
+  why: null
+  source_url: https://www.langchain.com/blog/context-engineering-starts-with-retrieval
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: langchain-blog
+    extracted_at: 2026-10-26T12:03:04.884Z
+    published: Fri, 23 Oct 2026 21:32:37 GMT
+  classification:
+    backend: rules
+    confidence: high
+    suggested_categories:
+      - cat-agentic
+    suggested_type: tutorial

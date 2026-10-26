@@ -1,0 +1,79 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-zai-org-glm-ocr
+  slug: zai-org-glm-ocr
+  type: skill
+  title: zai-org/GLM-OCR
+  description: >-
+    GLM-OCR: Accurate ×  Fast × Comprehensive
+
+
+    Install (from source README):
+
+    Choose the lightest installation that matches your scenario:
+
+
+    ```bash
+
+    pip install glmocr
+
+
+    git clone https://github.com/zai-org/glm-ocr.git
+
+    cd glm-ocr
+
+    uv venv --python 3.12 --seed && source .venv/bin/activate
+
+    uv pip install -e .
+
+    ```
+
+
+
+    Use the hosted cloud API – no GPU needed. The cloud service runs the
+    complete GLM-OCR pipeline internally, so the SDK simply forwards your
+    request and returns the result.
+
+
+    1. Get an API key from https://open.bigmodel.cn
+
+    2. Configure `config.yaml`:
+
+
+    ```yaml
+
+    pipeline:
+      maas:
+        enabled: true # Enable MaaS mode
+        api_key: your-api-key # Required
+    ```
+
+
+    That's it! W
+  category: cat-agentic
+  tags:
+    - glm
+    - image2text
+    - ocr
+  url: https://github.com/zai-org/GLM-OCR
+  publisher: GitHub org — Zhipu AI (GLM — moved to zai-org)
+  source_url: https://github.com/zai-org/GLM-OCR
+  github_url: https://github.com/zai-org/GLM-OCR
+  license: Apache-2.0
+  install_command: pip install glmocr
+  install_candidates:
+    - pip install glmocr
+    - pip install -e
+  skill_files:
+    - skills/glmocr-formula/SKILL.md
+    - skills/glmocr-handwriting/SKILL.md
+    - skills/glmocr-table/SKILL.md
+    - skills/glmocr/SKILL.md
+    - skills/sdk/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-zhipu
+    extracted_at: 2026-10-26T12:04:03.196Z
+    lane: extract

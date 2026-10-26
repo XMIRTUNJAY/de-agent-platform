@@ -1,0 +1,51 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-pushary-vscode-plugin
+  slug: pushary-vscode-plugin
+  type: skill
+  title: Pushary/vscode-plugin
+  description: >-
+    Pushary for VS Code: push notifications, human-in-the-loop questions, and
+    permission gating for the VS Code agent.
+
+
+    Install (from source README):
+
+    Run **Chat: Install Plugin From Source** from the Command Palette and enter:
+
+
+    ```
+
+    https://github.com/Pushary/vscode-plugin
+
+    ```
+
+
+    Then set your API key (see below).
+  category: cat-agentic
+  tags:
+    - agent-hooks
+    - ai-agents
+    - copilot
+    - human-in-the-loop
+    - mcp
+    - push-notifications
+    - vscode
+    - vscode-extension
+  url: https://github.com/Pushary/vscode-plugin
+  publisher: GitHub topic — agent hooks
+  source_url: https://github.com/Pushary/vscode-plugin
+  github_url: https://github.com/Pushary/vscode-plugin
+  license: MIT
+  install_command: npx pushary@latest
+  install_candidates:
+    - npx pushary@latest
+  skill_files:
+    - skills/pushary/SKILL.md
+  executables: false
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-agent-hooks
+    extracted_at: 2026-10-26T12:07:06.493Z
+    lane: extract

@@ -1,0 +1,29 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-hallo-deutschland
+  slug: hallo-deutschland
+  type: reference
+  title: Hallo, Deutschland!
+  description: Mistral opens a Munich hub for Physics AI and Industrial AI
+    research, partnering with German industry.
+  category: cat-agentic
+  tags: []
+  url: https://mistral.ai/news/hallo-deutschland/
+  publisher: Mistral AI News
+  kind: blog
+  why: null
+  source_url: https://mistral.ai/news/hallo-deutschland/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: mistral-news
+    extracted_at: 2026-10-26T12:03:01.890Z
+    published: Mon, 28 Sep 2026 15:57:59 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

@@ -1,0 +1,34 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-announcing-dpop-support-for-google-oauth-securing-refresh-tokens
+  slug: announcing-dpop-support-for-google-oauth-securing-refresh-tokens
+  type: reference
+  title: "Announcing DPoP Support for Google OAuth: Securing Refresh Tokens"
+  description: Google OAuth Platform now supports DPoP (Demonstrating
+    Proof-of-Possession) to sender-constrain refresh tokens, neutralizing
+    Infostealer malware and adversary-in-the-middle attacks. By
+    cryptographically binding long-lived refresh tokens while maintaining
+    short-lived access tokens
+  category: cat-agentic
+  tags: []
+  url: https://developers.googleblog.com/announcing-dpop-support-for-google-oauth-securing-refresh-tokens/
+  publisher: Google Developers Blog
+  kind: blog
+  why: null
+  source_url: https://developers.googleblog.com/announcing-dpop-support-for-google-oauth-securing-refresh-tokens/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: google-dev-blog
+    extracted_at: 2026-10-26T12:02:51.624Z
+    published: null
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+      - cat-gcp
+      - cat-security
+    suggested_type: null

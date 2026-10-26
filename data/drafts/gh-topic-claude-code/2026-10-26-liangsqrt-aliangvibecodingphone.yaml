@@ -1,0 +1,50 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-liangsqrt-aliangvibecodingphone
+  slug: liangsqrt-aliangvibecodingphone
+  type: agent
+  title: liangsqrt/AliangVibeCodingPhone
+  description: >-
+    AI coding agents in your pocket — a React Native client for Claude Code /
+    Codex / OpenCode sessions
+
+
+    Install (from source README):
+
+    ```sh
+
+    git clone <your-fork-url>
+
+    cd AliangVibeCodingPhone
+
+    npm install
+  category: cat-agentic
+  tags:
+    - ai-agents
+    - ai-coding
+    - claude-code
+    - codex
+    - opencode
+    - react-native
+    - typescript
+    - vibe-coding
+  url: https://github.com/liangsqrt/AliangVibeCodingPhone
+  publisher: GitHub topic — claude-code
+  source_url: https://github.com/liangsqrt/AliangVibeCodingPhone
+  github_url: https://github.com/liangsqrt/AliangVibeCodingPhone
+  license: MIT
+  install_command: |-
+    npm install
+    #
+  install_candidates:
+    - |-
+      npm install
+      #
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-claude-code
+    extracted_at: 2026-10-26T12:04:30.487Z
+    lane: extract

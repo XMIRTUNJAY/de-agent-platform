@@ -1,0 +1,73 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-gaia-harness-gaia
+  slug: gaia-harness-gaia
+  type: skill
+  title: gaia-harness/gaia
+  description: >-
+    A serious harness for Claude Code. Specs before code, gates on every commit,
+    the Code Audit Team on every merge. Ships as a monorepo with a React
+    frontend. Bring your backend.
+
+
+    Install (from source README):
+
+    ```bash
+
+    npx create-gaia@latest my-app
+
+    ```
+
+
+    One command. GAIA handles the rest, then `/gaia-init` finishes the last-mile
+    setup (below).
+
+
+    > [!NOTE]
+
+    > Start projects with `npx create-gaia@latest my-app` rather than cloning or
+    forking. The CLI sets up your project for you, strips the GAIA branding and
+    release tooling, etc. A clone leaves all of that in place and pointed at the
+    wrong repo.
+
+
+    **Requirements:** [Node.js](https://nodejs.org/) >= 22.22.0
+    ([nvm](https://github.com/nvm-sh/nvm) recommended). macOS or Linux; on
+    Windows, run inside
+    [WSL2](https://learn.microsoft.com/en-us/windows/wsl/install
+  category: cat-agentic
+  tags:
+    - agentic-engineering
+    - ai-coding
+    - claude
+    - claude-code
+    - claude-hooks
+    - claude-skills
+    - eslint
+    - gaia
+  url: https://github.com/gaia-harness/gaia
+  publisher: GitHub topic — Claude skills
+  source_url: https://github.com/gaia-harness/gaia
+  github_url: https://github.com/gaia-harness/gaia
+  license: MIT
+  install_command: npx create-gaia@latest
+  install_candidates:
+    - npx create-gaia@latest
+  skill_files:
+    - .claude/skills/file-tech-debt/SKILL.md
+    - .claude/skills/gaia-wiki/SKILL.md
+    - .claude/skills/naming-conventions/SKILL.md
+    - .claude/skills/release-notes/SKILL.md
+    - .claude/skills/tdd/SKILL.md
+    - .claude/skills/update-deps/SKILL.md
+    - .claude/skills/update-gaia/SKILL.md
+    - .gaia/tests/lib/fixtures/cleanse-conflict-routing/.claude/skills/example-deploy/SKILL.md
+    - .gaia/tests/lib/fixtures/cleanse-conflict-routing/.claude/skills/example-release/SKILL.md
+    - frontend/.claude/skills/a11y-fixes/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-claude-skills
+    extracted_at: 2026-10-26T12:07:15.694Z
+    lane: extract

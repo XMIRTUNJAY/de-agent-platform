@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-reading-ci-failures-across-pipelines-not-one-build-at-a-time
+  slug: reading-ci-failures-across-pipelines-not-one-build-at-a-time
+  type: reference
+  title: Reading CI Failures Across Pipelines, Not One Build at a Time
+  description: 'Jenkins is good at explaining a single build. The console, the
+    stage view and the test report all answer "what happened in build #247". On
+    a busy controller, most CI questions are not about a single build: Five
+    pipelines are red. Is that five problems or one? Which of them broke '
+  category: cat-production-operations
+  tags: []
+  url: https://www.jenkins.io/blog/2026/10/05/reading-ci-failures-across-pipelines/
+  publisher: Continuous Coalition (DE blog via Feedburner)
+  kind: blog
+  why: null
+  source_url: https://www.jenkins.io/blog/2026/10/05/reading-ci-failures-across-pipelines/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: databricks-continuous
+    extracted_at: 2026-10-26T12:03:00.774Z
+    published: 2026-10-05T00:00:00+00:00
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-production-operations
+    suggested_type: null

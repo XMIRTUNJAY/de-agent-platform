@@ -1,0 +1,32 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-meet-mysql-26-7-a-new-versioning-era-begins
+  slug: meet-mysql-26-7-a-new-versioning-era-begins
+  type: reference
+  title: "Meet MySQL 26.7: A New Versioning Era Begins"
+  description: "Over the period, we have witnessed how MySQL versioning evolved
+    from 8.0 to 9.7 LTS, and now it has entered a new era: a calendar-based
+    model. Let’s first take a brief look at how MySQL versioning has evolved
+    over time. Phase 1 MySQL 8.0 (2018–2026) used a traditional single-trac"
+  category: cat-databases
+  tags: []
+  url: https://www.percona.com/blog/meet-mysql-26-7-a-new-versioning-era-begins/
+  publisher: Percona Database Performance Blog
+  kind: blog
+  why: null
+  source_url: https://www.percona.com/blog/meet-mysql-26-7-a-new-versioning-era-begins/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: percona-blog
+    extracted_at: 2026-10-26T12:03:18.664Z
+    published: Mon, 12 Oct 2026 04:05:49 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-sql
+      - cat-databases
+    suggested_type: null

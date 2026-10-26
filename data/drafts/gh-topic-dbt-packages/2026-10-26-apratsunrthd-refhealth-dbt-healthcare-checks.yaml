@@ -1,0 +1,53 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ref-apratsunrthd-refhealth-dbt-healthcare-checks
+  slug: apratsunrthd-refhealth-dbt-healthcare-checks
+  type: reference
+  title: apratsunrthd/refhealth-dbt-healthcare-checks
+  description: >-
+    Non-negotiable dbt tests for healthcare analytics engineering, claims
+    pipelines, and AI readiness.
+
+
+    Install (from source README):
+
+    Add this package to your dbt project's `packages.yml`:
+
+
+    ```yaml
+
+    packages:
+      - git: "https://github.com/apratsunrthd/refhealth-dbt-healthcare-checks.git"
+        revision: v1.0.0
+    ```
+
+
+    Run `dbt deps` to install.
+
+
+    ---
+  category: cat-dbt
+  tags:
+    - analytics-engineering
+    - claims-data
+    - dbt
+    - dbt-package
+    - hdaios
+    - healthcare-analytics
+    - hipaa
+    - refhealth
+  url: https://github.com/apratsunrthd/refhealth-dbt-healthcare-checks
+  publisher: GitHub topic — dbt packages
+  source_url: https://github.com/apratsunrthd/refhealth-dbt-healthcare-checks
+  github_url: https://github.com/apratsunrthd/refhealth-dbt-healthcare-checks
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: false
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-dbt-packages
+    extracted_at: 2026-10-26T12:05:29.212Z
+    lane: extract

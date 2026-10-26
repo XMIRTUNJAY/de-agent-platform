@@ -1,0 +1,69 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ref-alexander-caldwell-penny
+  slug: alexander-caldwell-penny
+  type: reference
+  title: alexander-caldwell/penny
+  description: >-
+    Model-level BigQuery cost tracking for dbt — per-model cost, trends,
+    anomalies, and a post-run summary.
+
+
+    Install (from source README):
+
+    Three steps. Project and region are read from your dbt target, so there's
+    nothing
+
+    to configure for the common case.
+
+
+    ```yaml
+
+    dbt deps
+
+    dbt build --select penny
+
+    ```
+
+
+    That's the whole setup. Everything below is optional — the console summary
+    hook,
+
+    pointing at a different project, and the tuning variables all have working
+
+    defaults.
+
+
+    Skipping step 2 works too. Penny still runs and tracks cost; it just
+    attributes
+
+    to the destination table name instead of the model name until labels are
+    present.
+
+
+    > **Don't use `models: +labels: {dbt_model_name: "{{ this.name }}"}`.** dbt
+    renders
+
+    > `dbt_project.yml` be
+  category: cat-data-quality
+  tags:
+    - analytics-engineering
+    - bigquery
+    - cost-management
+    - dbt
+    - dbt-package
+  url: https://github.com/alexander-caldwell/penny
+  publisher: GitHub topic — dbt packages
+  source_url: https://github.com/alexander-caldwell/penny
+  github_url: https://github.com/alexander-caldwell/penny
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: false
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-dbt-packages
+    extracted_at: 2026-10-26T12:05:30.040Z
+    lane: extract

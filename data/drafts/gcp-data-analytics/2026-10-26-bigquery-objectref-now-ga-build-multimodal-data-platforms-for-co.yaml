@@ -1,0 +1,34 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-bigquery-objectref-now-ga-build-multimodal-data-platforms-for-co
+  slug: bigquery-objectref-now-ga-build-multimodal-data-platforms-for-co
+  type: reference
+  title: "BigQuery ObjectRef now GA: Build multimodal data platforms for
+    conversational analytics entirely in SQL"
+  description: For data science, data engineering, and machine learning teams,
+    unlocking the value of unstructured data, such as images, videos, audio, and
+    documents, has historically meant managing siloed data pipelines for
+    structured and unstructured data, and for analytics and AI/ML use case
+  category: cat-agentic
+  tags: []
+  url: https://cloud.google.com/blog/products/data-analytics/analyze-unstructured-data-in-bigquery-with-objectref/
+  publisher: Google Cloud — Data Analytics blog
+  kind: blog
+  why: null
+  source_url: https://cloud.google.com/blog/products/data-analytics/analyze-unstructured-data-in-bigquery-with-objectref/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: gcp-data-analytics
+    extracted_at: 2026-10-26T12:02:50.837Z
+    published: Wed, 21 Oct 2026 16:00:00 +0000
+  classification:
+    backend: rules
+    confidence: high
+    suggested_categories:
+      - cat-agentic
+      - cat-warehouses
+      - cat-gcp
+    suggested_type: tutorial

@@ -1,0 +1,37 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-apache-amoro
+  slug: apache-amoro
+  type: agent
+  title: apache/amoro
+  description: |-
+    Apache Amoro(incubating) is a Lakehouse management system built on open data lake formats.
+
+    Install (from source README):
+    Visit [https://amoro.apache.org/quick-start/](https://amoro.apache.org/quick-start/) to quickly
+    explore what amoro can do.
+  category: cat-warehouses
+  tags:
+    - big-data
+    - data-lake
+    - flink
+    - hudi
+    - iceberg
+    - lake-house
+    - management-system
+    - paimon
+  url: https://github.com/apache/amoro
+  publisher: GitHub topic — Trino tooling
+  source_url: https://github.com/apache/amoro
+  github_url: https://github.com/apache/amoro
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-trino
+    extracted_at: 2026-10-26T12:06:11.480Z
+    lane: extract

@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-from-activity-to-intent-generating-user-journeys-with-llms
+  slug: from-activity-to-intent-generating-user-journeys-with-llms
+  type: reference
+  title: "From Activity to Intent: Generating User Journeys with LLMs"
+  description: Summary pending review — see the source.
+  category: cat-agentic
+  tags: []
+  url: https://medium.com/pinterest-engineering/from-activity-to-intent-generating-user-journeys-with-llms-9652b9417626?source=rss----4c5a5f6279b6---4
+  publisher: Pinterest Engineering
+  kind: blog
+  why: null
+  source_url: https://medium.com/pinterest-engineering/from-activity-to-intent-generating-user-journeys-with-llms-9652b9417626?source=rss----4c5a5f6279b6---4
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: pinterest-eng
+    extracted_at: 2026-10-26T12:03:00.102Z
+    published: Fri, 09 Oct 2026 15:01:02 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

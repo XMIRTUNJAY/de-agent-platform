@@ -1,0 +1,73 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-mvschwarz-openrig
+  slug: mvschwarz-openrig
+  type: skill
+  title: mvschwarz/openrig
+  description: >-
+    Build your own network of agents from Claude Code, Codex and Pi: persistent
+    teams with roles, shared context and owned work.
+
+
+    Install (from source README):
+
+    **Let your coding agent set it up.** First check that `node --version` shows
+    22 or 24: the command below needs
+
+    Node.js and the `npx` that comes with it. Then, in your project folder, add
+    OpenRig's `rigs` skill to the agent you
+
+    use:
+
+
+    ```sh
+
+
+    This runs OpenRig's install script from the `v0.7.0` release. It checks
+    Node.js and npm, installs the latest published `@openrig/cli` with `npm
+    install -g`, runs the Node.js and SQLite check, then runs `rig setup
+    --dry-run` and `rig setup`. The first line prints that plan and changes
+    nothing:
+
+
+    ```bash
+
+    curl -fsSL https://raw.githubusercontent.com/mvschwarz/op
+  category: cat-agentic
+  tags:
+    - agent-harness
+    - agent-orchestration
+    - agent-skills
+    - ai-coding
+    - claude-code
+    - cli
+    - codex-cli
+    - multi-agent
+  url: https://github.com/mvschwarz/openrig
+  publisher: GitHub topic — agent-skills
+  source_url: https://github.com/mvschwarz/openrig
+  github_url: https://github.com/mvschwarz/openrig
+  license: Apache-2.0
+  install_command: npm install -g
+  install_candidates:
+    - npm install -g
+    - npm install -g @openrig/cli
+    - npx skills
+  skill_files:
+    - .agents/skills/developing-openrig/SKILL.md
+    - .claude/skills/developing-openrig/SKILL.md
+    - packages/daemon/assets/plugins/openrig-core/skills/agent-operated-software/SKILL.md
+    - packages/daemon/assets/plugins/openrig-core/skills/agent-operated-workflows/SKILL.md
+    - packages/daemon/assets/plugins/openrig-core/skills/applying-a-permission-policy/SKILL.md
+    - packages/daemon/assets/plugins/openrig-core/skills/claude-compaction-restore/SKILL.md
+    - packages/daemon/assets/plugins/openrig-core/skills/delegating-work/SKILL.md
+    - packages/daemon/assets/plugins/openrig-core/skills/forming-an-openrig-mental-model/SKILL.md
+    - packages/daemon/assets/plugins/openrig-core/skills/loading-addressable-markdown/SKILL.md
+    - packages/daemon/assets/plugins/openrig-core/skills/messaging-the-human/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-agent-skills
+    extracted_at: 2026-10-26T12:04:48.920Z
+    lane: extract

@@ -1,0 +1,33 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-rumors-of-the-saas-demise-are-greatly-exaggerated
+  slug: rumors-of-the-saas-demise-are-greatly-exaggerated
+  type: architecture
+  title: Rumors of the SaaS demise are greatly exaggerated
+  description: Recorded on the floor of LDX3, Ryan chats with Nivia Henry, an
+    engineering leader most recently at Netflix, about the reality of the
+    supposed SaaS apocalypse, the complex calculus of the modern
+    build-versus-buy decision in the era of AI, and the critical importance of
+    understandi
+  category: cat-cost-engineering
+  tags: []
+  url: https://stackoverflow.blog/2026/10/23/rumors-of-the-saas-demise-are-greatly-exaggerated/
+  publisher: Stack Overflow Blog (AI + devops essays)
+  kind: blog
+  why: null
+  source_url: https://stackoverflow.blog/2026/10/23/rumors-of-the-saas-demise-are-greatly-exaggerated/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: stackoverflow-blog
+    extracted_at: 2026-10-26T12:03:05.407Z
+    published: Fri, 23 Oct 2026 07:40:00 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-cost-engineering
+      - cat-infrastructure
+    suggested_type: architecture

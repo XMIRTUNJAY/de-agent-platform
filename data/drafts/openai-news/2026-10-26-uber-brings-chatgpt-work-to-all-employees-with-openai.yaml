@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-uber-brings-chatgpt-work-to-all-employees-with-openai
+  slug: uber-brings-chatgpt-work-to-all-employees-with-openai
+  type: reference
+  title: Uber brings ChatGPT Work to all employees with OpenAI
+  description: Uber is rolling out ChatGPT Work to more than 30,000 employees,
+    helping teams research, analyze data, create presentations, and complete
+    complex workflows.
+  category: cat-agentic
+  tags: []
+  url: https://openai.com/index/uber-chatgpt-work-rollout
+  publisher: OpenAI News
+  kind: blog
+  why: null
+  source_url: https://openai.com/index/uber-chatgpt-work-rollout
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: openai-news
+    extracted_at: 2026-10-26T12:03:01.349Z
+    published: Thu, 22 Oct 2026 00:00:00 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

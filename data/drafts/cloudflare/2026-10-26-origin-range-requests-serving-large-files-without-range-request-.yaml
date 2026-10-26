@@ -1,0 +1,29 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-origin-range-requests-serving-large-files-without-range-request-
+  slug: origin-range-requests-serving-large-files-without-range-request-
+  type: architecture
+  title: "Origin Range Requests: Serving large files without range-request tuning"
+  description: Naive byte-range caching can waste gigabytes of origin bandwidth on
+    small requests. We rebuilt our cache architecture in Pingora to coordinate
+    partial fetches automatically, cutting R2 p99 latency in half.
+  category: null
+  tags: []
+  url: https://blog.cloudflare.com/origin-range-requests/
+  publisher: Cloudflare Blog (platform + data infra)
+  kind: blog
+  why: null
+  source_url: https://blog.cloudflare.com/origin-range-requests/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: cloudflare
+    extracted_at: 2026-10-26T12:02:55.264Z
+    published: Fri, 23 Oct 2026 18:22:59 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: architecture

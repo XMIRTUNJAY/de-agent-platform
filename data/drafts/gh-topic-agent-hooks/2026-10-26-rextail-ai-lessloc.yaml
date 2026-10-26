@@ -1,0 +1,66 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-rextail-ai-lessloc
+  slug: rextail-ai-lessloc
+  type: skill
+  title: rextail-ai/lessloc
+  description: >-
+    Keeps AI coding agents such as Claude Code, Codex, GitHub Copilot, Gemini
+    CLI and Cursor to the least code that does the job and still works.
+
+
+    Install (from source README):
+
+    Tell your coding agent:
+
+
+    ```
+
+    Install lessloc for this project by following https://lessloc.org/install.md
+
+    ```
+
+
+    Claude Code? Or type these in its prompt box:
+
+
+    ```
+
+    /plugin marketplace add https://get.lessloc.org/claude/lessloc.git
+
+    /plugin install lessloc@lessloc
+
+    ```
+
+
+    To remove it: `Remove lessloc by following https://lessloc.org/remove.md`
+
+
+    **On npm?** Install it with the sentence above; your agent sets up the
+    hooks.
+  category: cat-agentic
+  tags:
+    - agent-hooks
+    - ai-coding-agent
+    - amp
+    - claude-code
+    - claude-code-plugin
+    - cline
+    - code-quality
+    - code-review
+  url: https://github.com/rextail-ai/lessloc
+  publisher: GitHub topic — agent hooks
+  source_url: https://github.com/rextail-ai/lessloc
+  github_url: https://github.com/rextail-ai/lessloc
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - skills/lessloc/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-agent-hooks
+    extracted_at: 2026-10-26T12:07:03.022Z
+    lane: extract

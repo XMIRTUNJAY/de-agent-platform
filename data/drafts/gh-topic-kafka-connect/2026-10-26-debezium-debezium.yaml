@@ -1,0 +1,33 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-debezium-debezium
+  slug: debezium-debezium
+  type: agent
+  title: debezium/debezium
+  description: Change data capture for a variety of databases. Please log issues
+    at https://github.com/debezium/dbz/issues.
+  category: cat-cdc
+  tags:
+    - apache-kafka
+    - cdc
+    - change-data-capture
+    - data-pipeline
+    - database
+    - debezium
+    - event-streaming
+    - hacktoberfest
+  url: https://github.com/debezium/debezium
+  publisher: GitHub topic — Kafka connectors
+  source_url: https://github.com/debezium/debezium
+  github_url: https://github.com/debezium/debezium
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-kafka-connect
+    extracted_at: 2026-10-26T12:06:44.556Z
+    lane: extract

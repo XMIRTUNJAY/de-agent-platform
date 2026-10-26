@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-visualize-points-and-routes-with-geojson-in-amazon-quick-sight-l
+  slug: visualize-points-and-routes-with-geojson-in-amazon-quick-sight-l
+  type: reference
+  title: Visualize points and routes with GeoJSON in Amazon Quick Sight layer maps
+  description: Amazon Quick Sight layer maps now support Point and LineString
+    geometry from the same GeoJSON workflow, so you can plot store locations and
+    the routes between them. This post covers the dataset and GeoJSON structure
+    layer maps require, when to choose points or lines, and techniqu
+  category: cat-agentic
+  tags: []
+  url: https://aws.amazon.com/blogs/machine-learning/visualize-points-and-routes-with-geojson-in-amazon-quick-sight-layer-maps/
+  publisher: AWS Machine Learning Blog
+  kind: blog
+  why: null
+  source_url: https://aws.amazon.com/blogs/machine-learning/visualize-points-and-routes-with-geojson-in-amazon-quick-sight-layer-maps/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: aws-machine-learning
+    extracted_at: 2026-10-26T12:02:49.000Z
+    published: Fri, 23 Oct 2026 16:24:55 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

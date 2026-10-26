@@ -1,0 +1,34 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-resolving-concurrent-write-conflicts-for-apache-iceberg-tables-i
+  slug: resolving-concurrent-write-conflicts-for-apache-iceberg-tables-i
+  type: reference
+  title: Resolving concurrent write conflicts for Apache Iceberg tables in Amazon
+    Redshift
+  description: Amazon Redshift now automatically resolves many concurrent writes
+    to Apache Iceberg tables that don't actually overlap, committing changes
+    that previously failed and had to retry. Learn why these writes conflict,
+    how the engine rebases non-overlapping ones across operation, parti
+  category: cat-warehouses
+  tags: []
+  url: https://aws.amazon.com/blogs/big-data/resolving-concurrent-write-conflicts-for-apache-iceberg-tables-in-amazon-redshift/
+  publisher: AWS Big Data Blog
+  kind: blog
+  why: null
+  source_url: https://aws.amazon.com/blogs/big-data/resolving-concurrent-write-conflicts-for-apache-iceberg-tables-in-amazon-redshift/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: aws-big-data
+    extracted_at: 2026-10-26T12:02:48.468Z
+    published: Tue, 13 Oct 2026 20:16:48 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-warehouses
+      - cat-lakehouse
+      - cat-aws
+    suggested_type: tutorial

@@ -1,0 +1,61 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-datahub-project-datahub
+  slug: datahub-project-datahub
+  type: skill
+  title: datahub-project/datahub
+  description: >-
+    The Context Platform for your Data and AI Stack
+
+
+    Install (from source README):
+
+    - [**Try the live demo →**](https://demo.datahub.com) No installation
+    required.
+
+
+    - **Run locally.** Requires Docker (8GB RAM) and Python 3.10+.
+
+      ```sh
+      pip install acryl-datahub
+      datahub docker quickstart
+      # → http://localhost:9002 (username: datahub, password: datahub)
+      ```
+
+      [Full quickstart guide →](https://docs.datahub.com/docs/quickstart)
+
+    - **Connect your AI assistant via MCP.** Add the DataHub MCP server to your
+    MCP client (Claude Desktop, Cursor, and more).
+
+      ```sh
+      uvx mcp-server-datahub@latest
+      ```
+
+      [MCP server setup →](https://docs.datahub.com/docs/features/feature-guide
+  category: cat-data-catalog
+  tags:
+    - agent-platform
+    - context-management
+    - data-catalog
+    - data-discovery
+    - data-governance
+    - data-observability
+    - datahub
+    - metadata
+  url: https://github.com/datahub-project/datahub
+  publisher: GitHub topic — data observability
+  source_url: https://github.com/datahub-project/datahub
+  github_url: https://github.com/datahub-project/datahub
+  license: Apache-2.0
+  install_command: pip install acryl-datahub
+  install_candidates:
+    - pip install acryl-datahub
+  skill_files:
+    - .agent-skills/test-review/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-data-observability
+    extracted_at: 2026-10-26T12:06:37.638Z
+    lane: extract

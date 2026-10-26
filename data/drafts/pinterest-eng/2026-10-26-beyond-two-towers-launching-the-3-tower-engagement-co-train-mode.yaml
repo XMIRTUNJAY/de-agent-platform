@@ -1,0 +1,27 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-beyond-two-towers-launching-the-3-tower-engagement-co-train-mode
+  slug: beyond-two-towers-launching-the-3-tower-engagement-co-train-mode
+  type: reference
+  title: "Beyond Two Towers: Launching the 3-Tower Engagement Co-Train Model (Part 2)"
+  description: Summary pending review — see the source.
+  category: null
+  tags: []
+  url: https://medium.com/pinterest-engineering/beyond-two-towers-launching-the-3-tower-engagement-co-train-model-part-2-0b96167d2c14?source=rss----4c5a5f6279b6---4
+  publisher: Pinterest Engineering
+  kind: blog
+  why: null
+  source_url: https://medium.com/pinterest-engineering/beyond-two-towers-launching-the-3-tower-engagement-co-train-model-part-2-0b96167d2c14?source=rss----4c5a5f6279b6---4
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: pinterest-eng
+    extracted_at: 2026-10-26T12:03:00.103Z
+    published: Thu, 17 Sep 2026 15:01:05 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

@@ -1,0 +1,34 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-the-thin-orchestrator-how-we-made-our-ai-agents-more-reliable-by
+  slug: the-thin-orchestrator-how-we-made-our-ai-agents-more-reliable-by
+  type: reference
+  title: "The Thin Orchestrator: How We Made Our AI Agents More Reliable by Giving
+    the Router Less to Do"
+  description: "Sometimes, giving an AI agent all of the knowledge it needs is the
+    wrong approach. At Meta, we ve seen notable improvements in efficiency and
+    accuracy by keeping the orchestration layer of our data pipeline agents
+    deliberately thin: It routes work and enforces reliability checks,"
+  category: cat-agentic
+  tags: []
+  url: https://engineering.fb.com/2026/10/19/ml-applications/thin-orchestrator-ai-agent-architecture/
+  publisher: Meta Engineering Blog
+  kind: blog
+  why: null
+  source_url: https://engineering.fb.com/2026/10/19/ml-applications/thin-orchestrator-ai-agent-architecture/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: meta-eng
+    extracted_at: 2026-10-26T12:02:57.109Z
+    published: Mon, 19 Oct 2026 15:30:37 +0000
+  classification:
+    backend: rules
+    confidence: high
+    suggested_categories:
+      - cat-agentic
+      - cat-data-formats
+      - cat-airflow
+    suggested_type: null

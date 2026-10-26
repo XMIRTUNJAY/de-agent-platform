@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-openai-and-poland-s-nask-partner-to-advance-ai-safety-and-securi
+  slug: openai-and-poland-s-nask-partner-to-advance-ai-safety-and-securi
+  type: reference
+  title: OpenAI and Poland’s NASK partner to advance AI safety and security
+  description: OpenAI and Poland’s NASK are partnering on AI safety, security, and
+    technical research to strengthen safeguards and support a more resilient
+    digital ecosystem.
+  category: cat-agentic
+  tags: []
+  url: https://openai.com/index/openai-nask-ai-safety-security-partnership
+  publisher: OpenAI News
+  kind: blog
+  why: null
+  source_url: https://openai.com/index/openai-nask-ai-safety-security-partnership
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: openai-news
+    extracted_at: 2026-10-26T12:03:01.348Z
+    published: Fri, 23 Oct 2026 00:00:00 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

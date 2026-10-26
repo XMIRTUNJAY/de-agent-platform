@@ -1,0 +1,34 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-how-bayer-crop-science-built-an-agentic-decision-engine-on-amazo
+  slug: how-bayer-crop-science-built-an-agentic-decision-engine-on-amazo
+  type: architecture
+  title: How Bayer Crop Science built an agentic decision engine on Amazon Bedrock
+    AgentCore with AWS Unified Operations
+  description: Bayer Crop Science built the Agentic Decision Engine (ADE), a
+    multi-agent platform on Amazon Bedrock AgentCore that lets breeders,
+    analysts, and researchers ask natural language questions about their
+    analytics platform. This post covers the ADE architecture, five design
+    decisions
+  category: cat-agentic
+  tags: []
+  url: https://aws.amazon.com/blogs/machine-learning/how-bayer-crop-science-built-an-agentic-decision-engine-on-amazon-bedrock-agentcore-with-aws-unified-operations/
+  publisher: AWS Machine Learning Blog
+  kind: blog
+  why: null
+  source_url: https://aws.amazon.com/blogs/machine-learning/how-bayer-crop-science-built-an-agentic-decision-engine-on-amazon-bedrock-agentcore-with-aws-unified-operations/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: aws-machine-learning
+    extracted_at: 2026-10-26T12:02:49.001Z
+    published: Fri, 23 Oct 2026 16:21:36 +0000
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+      - cat-aws
+    suggested_type: architecture

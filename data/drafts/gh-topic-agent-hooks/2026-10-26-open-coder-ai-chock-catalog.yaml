@@ -1,0 +1,60 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-open-coder-ai-chock-catalog
+  slug: open-coder-ai-chock-catalog
+  type: skill
+  title: open-coder-ai/chock-catalog
+  description: |-
+    Policies that stop your coding agent from doing the thing you would have caught in review. The policy catalog for Chock: git-hook gates, command guards, and agent rules with replayed evals.
+
+    Install (from source README):
+    chock is on PyPI, but the release there (0.15.2, 30 Sep 2026) is older than the engine this page describes. Install the frozen engine from its commit (Python 3.11 or newer):
+
+    ```bash
+    pip install "chock @ git+https://github.com/open-coder-ai/chock@992711af4cf8d4fd9c4c861f10ef6e53374d75d7"
+    ```
+
+
+    The repository route, end to end. Policies are pinned to a catalog commit and checked against a hash, so what you review is what installs:
+
+    ```bash
+    pip install "chock @ git+https://github.com/open-coder-ai/chock@992711af4cf8d4fd9c4c861f10ef6e53374d75d7"
+
+    git init -q demo && cd demo
+    chock init .
+    chock add
+  category: cat-agentic
+  tags:
+    - agent-hooks
+    - agent-plugins
+    - agent-rules
+    - agentic-ai
+    - ai-agents
+    - ai-coding-assistant
+    - claude-code
+    - cursor
+  url: https://github.com/open-coder-ai/chock-catalog
+  publisher: GitHub topic — agent hooks
+  source_url: https://github.com/open-coder-ai/chock-catalog
+  github_url: https://github.com/open-coder-ai/chock-catalog
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - .agents/policies/agent-discipline/skills/agent-discipline/SKILL.md
+    - .agents/policies/block-curl-pipe-sh/skills/block-curl-pipe-sh/SKILL.md
+    - .agents/policies/block-destructive-commands/skills/block-destructive-commands/SKILL.md
+    - .agents/policies/block-invisible-unicode/skills/block-invisible-unicode/SKILL.md
+    - .agents/policies/block-no-verify/skills/block-no-verify/SKILL.md
+    - .agents/policies/block-unapproved-egress/skills/block-unapproved-egress/SKILL.md
+    - .agents/policies/block-wildcard-agent-permissions/skills/block-wildcard-agent-permissions/SKILL.md
+    - .agents/policies/code-safety/skills/code-safety/SKILL.md
+    - .agents/policies/context-hygiene/skills/context-hygiene/SKILL.md
+    - .agents/policies/firecrawl-fallback-only/skills/firecrawl-fallback-only/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-agent-hooks
+    extracted_at: 2026-10-26T12:07:08.367Z
+    lane: extract

@@ -1,0 +1,88 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-echo-mem-echo-mem
+  slug: echo-mem-echo-mem
+  type: skill
+  title: echo-mem/echo-mem
+  description: >-
+    Shared memory for AI agents on your own Postgres. The server never calls an
+    LLM to write.
+
+
+    Install (from source README):
+
+    **Requires:** Python 3.11+ and Docker (for the database).
+
+
+    ```bash
+
+    pipx install echo-mem
+
+    echo-memory quickstart
+
+    ```
+
+
+    `quickstart` starts the database, applies the schema, and prints the `claude
+    mcp add`
+
+    line that registers it, filled in with the port it actually used. The
+    Postgres image is
+
+    published, so nothing compiles.
+
+
+    Or use the hosted service and run no database at all:
+
+
+    ```bash
+
+    pipx install echo-mem
+
+    echo-memory connect <key>          # a key from https://app.echo-mem.com
+
+    ```
+
+
+    Then once per machine, so an agent knows *when* to record and recall rather
+    than only
+
+    that the tools exist:
+
+
+    ```b
+  category: cat-agentic
+  tags:
+    - agent-memory
+    - ai-agents
+    - apache-age
+    - graph-database
+    - knowledge-graph
+    - llm
+    - mcp
+    - mcp-server
+  url: https://github.com/echo-mem/echo-mem
+  publisher: GitHub topic — mcp-server
+  source_url: https://github.com/echo-mem/echo-mem
+  github_url: https://github.com/echo-mem/echo-mem
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - .agents/skills/agentdb-advanced/SKILL.md
+    - .agents/skills/agentdb-learning/SKILL.md
+    - .agents/skills/agentdb-memory-patterns/SKILL.md
+    - .agents/skills/agentdb-optimization/SKILL.md
+    - .agents/skills/agentdb-vector-search/SKILL.md
+    - .agents/skills/browser/SKILL.md
+    - .agents/skills/github-code-review/SKILL.md
+    - .agents/skills/github-multi-repo/SKILL.md
+    - .agents/skills/github-project-management/SKILL.md
+    - .agents/skills/github-release-management/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-mcp-server
+    extracted_at: 2026-10-26T12:04:41.457Z
+    lane: extract

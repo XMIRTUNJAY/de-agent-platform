@@ -1,0 +1,44 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-arenukvern-intentcall
+  slug: arenukvern-intentcall
+  type: skill
+  title: Arenukvern/intentcall
+  description: Transport-agnostic agent intent platform for Dart/Flutter — central
+    registry (AgentRegistry), typed invocation model, and adapters for MCP,
+    WebMCP, and native surfaces
+  category: cat-agentic
+  tags:
+    - agent-infrastructure
+    - agent-intent
+    - agent-surface
+    - app-intent
+    - cli
+    - client-mcp
+    - cross-platform-intent
+    - dart
+  url: https://github.com/Arenukvern/intentcall
+  publisher: GitHub topic — MCP tools
+  source_url: https://github.com/Arenukvern/intentcall
+  github_url: https://github.com/Arenukvern/intentcall
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - .agents/skills/harness-engineering-lifecycle/SKILL.md
+    - .agents/skills/mcp-harness-repo-maintainer/SKILL.md
+    - .agents/skills/mixture-of-experts/SKILL.md
+    - .agents/skills/multi-agent-handoff/SKILL.md
+    - .agents/skills/plugin-marketplace-setup/SKILL.md
+    - .agents/skills/release-changelog-harness/SKILL.md
+    - .agents/skills/repository-governance-lifecycle/SKILL.md
+    - .agents/skills/skill-authoring-lifecycle/SKILL.md
+    - .agents/skills/skill-eval-improve/SKILL.md
+    - .agents/skills/skill-source-citations/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-mcp-tools
+    extracted_at: 2026-10-26T12:06:56.823Z
+    lane: extract

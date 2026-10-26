@@ -1,0 +1,31 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ref-yakovkhalinsky-llm-world
+  slug: yakovkhalinsky-llm-world
+  type: reference
+  title: yakovkhalinsky/llm-world
+  description: "Small worlds on a small local LLM: Grove (forest) and Highfield
+    (housing estate). Deterministic sims, the LLM as a voice, isometric 2D and
+    3D views. Fully offline."
+  category: cat-agentic
+  tags:
+    - ecosystem-simulation
+    - generative-agents
+    - llm-agents
+    - local-llm
+    - ollama
+  url: https://github.com/yakovkhalinsky/llm-world
+  publisher: GitHub topic — llm agents
+  source_url: https://github.com/yakovkhalinsky/llm-world
+  github_url: https://github.com/yakovkhalinsky/llm-world
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-llm-agents
+    extracted_at: 2026-10-26T12:04:56.620Z
+    lane: extract

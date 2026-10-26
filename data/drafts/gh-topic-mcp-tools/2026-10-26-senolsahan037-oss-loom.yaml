@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-senolsahan037-oss-loom
+  slug: senolsahan037-oss-loom
+  type: reference
+  title: senolsahan037-oss/loom
+  description: "Measurement-based production system for Ableton Live: a 45-tool
+    local MCP server that reads your own projects and writes into a running Live
+    set, verifying every write"
+  category: cat-agentic
+  tags: []
+  url: https://github.com/senolsahan037-oss/loom
+  publisher: GitHub topic — MCP tools
+  kind: blog
+  why: null
+  source_url: https://github.com/senolsahan037-oss/loom
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: gh-topic-mcp-tools
+    extracted_at: 2026-10-26T12:07:00.383Z
+    published: 2026-09-24T19:21:49Z
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+    suggested_type: tutorial

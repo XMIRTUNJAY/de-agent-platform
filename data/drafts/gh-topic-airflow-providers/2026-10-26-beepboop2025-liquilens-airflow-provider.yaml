@@ -1,0 +1,47 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-beepboop2025-liquilens-airflow-provider
+  slug: beepboop2025-liquilens-airflow-provider
+  type: agent
+  title: beepboop2025/liquilens-airflow-provider
+  description: |-
+    Apache Airflow 3 provider for fail-closed LiquiLens financial evidence verification
+
+    Install (from source README):
+    Release artifacts are published on GitHub, not PyPI. The provider metadata pins
+    the public `liquilens-evidence` v0.14.0 wheel by URL and SHA-256. To verify that
+    core artifact independently:
+
+    ```shell
+    python -m pip install --require-hashes \
+      -r https://raw.githubusercontent.com/beepboop2025/liquilens-airflow-provider/v0.1.0/constraints/liquilens-evidence-v0.14.0.txt
+    ```
+
+    The pinned core wheel is:
+
+    - URL: `https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.14.0/liquilens_evidence-0.14.0-py3-none-any.whl`
+    - SHA-256: `f0162affab57307c8e20acf91dcefc33840f91e8cf9969a8d
+  category: cat-airflow
+  tags:
+    - airflow-provider
+    - apache-airflow
+    - evidence
+    - financial-data
+    - liquilens
+    - provenance
+  url: https://github.com/beepboop2025/liquilens-airflow-provider
+  publisher: GitHub topic — airflow providers
+  source_url: https://github.com/beepboop2025/liquilens-airflow-provider
+  github_url: https://github.com/beepboop2025/liquilens-airflow-provider
+  license: Apache-2.0
+  install_command: pip install --require-hashes
+  install_candidates:
+    - pip install --require-hashes
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-airflow-providers
+    extracted_at: 2026-10-26T12:05:39.932Z
+    lane: extract

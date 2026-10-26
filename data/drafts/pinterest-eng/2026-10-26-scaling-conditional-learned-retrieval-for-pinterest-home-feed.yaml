@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-scaling-conditional-learned-retrieval-for-pinterest-home-feed
+  slug: scaling-conditional-learned-retrieval-for-pinterest-home-feed
+  type: reference
+  title: Scaling Conditional Learned Retrieval for Pinterest Home Feed
+  description: Summary pending review — see the source.
+  category: cat-agentic
+  tags: []
+  url: https://medium.com/pinterest-engineering/scaling-conditional-learned-retrieval-for-pinterest-home-feed-ecfba7e5a426?source=rss----4c5a5f6279b6---4
+  publisher: Pinterest Engineering
+  kind: blog
+  why: null
+  source_url: https://medium.com/pinterest-engineering/scaling-conditional-learned-retrieval-for-pinterest-home-feed-ecfba7e5a426?source=rss----4c5a5f6279b6---4
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: pinterest-eng
+    extracted_at: 2026-10-26T12:03:00.104Z
+    published: Wed, 26 Aug 2026 14:01:05 GMT
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-agentic
+    suggested_type: null

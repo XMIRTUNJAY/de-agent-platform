@@ -1,0 +1,65 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-martinambrus-haive
+  slug: martinambrus-haive
+  type: agent
+  title: martinambrus/haive
+  description: >-
+    Deterministic multi-CLI orchestration and AI agentic workflow utility.
+
+
+    Install (from source README):
+
+    There are two ways in and they are different things. **Run a release** boots
+    published images —
+
+    no source, no build, one command. **Build from source** is the contributor
+    path and is what the
+
+    rest of this file documents.
+
+
+
+    ```bash
+
+    cd ~/haive && ./uninstall.sh            # stack + this install's runtime
+    data
+
+    cd ~/haive && ./uninstall.sh --purge    # …and repositories, CLI logins,
+    built images
+
+    ```
+
+
+    The default keeps your cloned repositories, uploaded bundles, CLI logins and
+    the DDEV CA, and
+
+    lists them by name; `--purge` removes those too. It only ever touches
+    resources belonging to this
+
+    install 
+  category: cat-agentic
+  tags:
+    - ai
+    - ai-agents
+    - ai-tools
+    - claude
+    - claude-ai
+    - claude-code
+    - claude-code-skills
+    - claude-skills
+  url: https://github.com/martinambrus/haive
+  publisher: GitHub topic — Claude skills
+  source_url: https://github.com/martinambrus/haive
+  github_url: https://github.com/martinambrus/haive
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-claude-skills
+    extracted_at: 2026-10-26T12:07:14.890Z
+    lane: extract

@@ -1,0 +1,36 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-akshatnaruka-barkcli
+  slug: akshatnaruka-barkcli
+  type: skill
+  title: AkshatNaruka/barkcli
+  description: |-
+    The management layer for AI agents 
+
+    Install (from source README):
+    ```bash
+  category: cat-agentic
+  tags:
+    - ai-agents
+    - ai-coding-agents
+    - autonomous-agents
+    - cli
+    - developer-tools
+    - git
+    - hacktoberfest
+    - kanban
+  url: https://github.com/AkshatNaruka/barkcli
+  publisher: GitHub topic — llm agents
+  source_url: https://github.com/AkshatNaruka/barkcli
+  github_url: https://github.com/AkshatNaruka/barkcli
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-llm-agents
+    extracted_at: 2026-10-26T12:04:52.994Z
+    lane: extract

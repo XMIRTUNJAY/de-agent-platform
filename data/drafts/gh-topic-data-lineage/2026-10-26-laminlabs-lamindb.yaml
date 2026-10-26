@@ -1,0 +1,58 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-laminlabs-lamindb
+  slug: laminlabs-lamindb
+  type: skill
+  title: laminlabs/lamindb
+  description: |-
+    Open-source data management for multimodal AI. Query, trace, and govern with a lineage-native, format-agnostic lakehouse for agents and teams. Supports biological formats and registries - by the creators of Scanpy. 🍊YC S22
+
+    Install (from source README):
+    To **install** the Python package with recommended dependencies, use:
+
+    ```shell
+    pip install lamindb
+    ```
+
+    <details>
+    <summary>Install with minimal dependencies.</summary>
+
+    The `lamindb` package adds data-science related dependencies through the `[full]` extra, see [here](https://github.com/laminlabs/lamindb/blob/2cc91adcf6077c5af69c1a098699085bb0844083/pyproject.toml#L30-L49).
+
+    For a minimal install of the `lamindb` namespace, use:
+
+    ```shell
+    pip install lamindb-core
+    ```
+
+    </details>
+
+    If you are an **agent**, see the [library skill](https://github.com/laminlabs/lamindb/tree/main/lamindb/.agents/sk
+  category: cat-agentic
+  tags:
+    - comp-bio-ops
+    - context-engineering
+    - data-lakehouse
+    - data-lineage
+    - data-versioning
+    - eln
+    - feature-store
+    - lims
+  url: https://github.com/laminlabs/lamindb
+  publisher: GitHub topic — data lineage
+  source_url: https://github.com/laminlabs/lamindb
+  github_url: https://github.com/laminlabs/lamindb
+  license: Apache-2.0
+  install_command: pip install lamindb
+  install_candidates:
+    - pip install lamindb
+    - pip install lamindb-core
+  skill_files:
+    - lamindb/.agents/skills/lamindb/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-data-lineage
+    extracted_at: 2026-10-26T12:06:31.077Z
+    lane: extract

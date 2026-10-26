@@ -1,0 +1,57 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-pizzaface-pizzapi
+  slug: pizzaface-pizzapi
+  type: skill
+  title: Pizzaface/PizzaPi
+  description: >-
+    🍕 An opinionated, extensible Agent Harness based on Pi. Connect Multiple
+    Computers to one harness and work anywhere.
+
+
+    Install (from source README):
+
+    ```bash
+
+    npx @pizzapi/pizza
+
+
+    npm install -g @pizzapi/pizza
+
+    pizzapi
+
+    ```
+
+
+    The first time you run `pizzapi`, a setup wizard walks you through
+    connecting to a relay server. It takes about 30 seconds.
+  category: cat-agentic
+  tags:
+    - agent-harness
+    - agent-hooks
+    - agentic-ai
+    - agents
+    - claude-code
+    - claude-skills
+    - codex
+    - extensible
+  url: https://github.com/Pizzaface/PizzaPi
+  publisher: GitHub topic — agent hooks
+  source_url: https://github.com/Pizzaface/PizzaPi
+  github_url: https://github.com/Pizzaface/PizzaPi
+  license: Apache-2.0
+  install_command: npx @pizzapi/pizza
+  install_candidates:
+    - npx @pizzapi/pizza
+    - npm install -g @pizzapi/pizza
+  skill_files:
+    - .pizzapi/skills/testing-sandbox-ui/SKILL.md
+    - packages/cli/src/skills/creating-runner-services/SKILL.md
+    - packages/cli/src/skills/extension-sdk-reference/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-agent-hooks
+    extracted_at: 2026-10-26T12:07:05.581Z
+    lane: extract

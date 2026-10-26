@@ -1,0 +1,44 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-ivan-zdravkov-ivan-the-terminal
+  slug: ivan-zdravkov-ivan-the-terminal
+  type: skill
+  title: ivan-zdravkov/ivan-the-terminal
+  description: "A self-hosted copilot in my terminal: Claude Code skills for home
+    infra, retro gaming, career, kitchen and training. Lean on tokens, private
+    by construction."
+  category: cat-agentic
+  tags:
+    - ai-agents
+    - automation
+    - bazzite
+    - claude-code
+    - claude-skills
+    - homelab
+    - linux
+    - privacy
+  url: https://github.com/ivan-zdravkov/ivan-the-terminal
+  publisher: GitHub topic — Claude skills
+  source_url: https://github.com/ivan-zdravkov/ivan-the-terminal
+  github_url: https://github.com/ivan-zdravkov/ivan-the-terminal
+  license: MIT
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - plugins/career/skills/job-digest/SKILL.md
+    - plugins/civic/skills/podai-globata/SKILL.md
+    - plugins/foundation/skills/doctor/SKILL.md
+    - plugins/foundation/skills/kaizen/SKILL.md
+    - plugins/foundation/skills/new-machine/SKILL.md
+    - plugins/foundation/skills/ship-public/SKILL.md
+    - plugins/health/skills/daily-coach/SKILL.md
+    - plugins/homelab/skills/homelab-check/SKILL.md
+    - plugins/homelab/skills/system-updates/SKILL.md
+    - plugins/homelab/skills/tv/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-claude-skills
+    extracted_at: 2026-10-26T12:07:13.330Z
+    lane: extract

@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-you-don-t-need-a-dedicated-cache-service-postgresql-as-a-cache
+  slug: you-don-t-need-a-dedicated-cache-service-postgresql-as-a-cache
+  type: reference
+  title: You Don't Need a Dedicated Cache Service - PostgreSQL as a Cache
+  description: PostgreSQL can be more than just an SQL database. Why maintain a
+    Redis or Memcached instance when you can just use PostgreSQL as a cache
+    instead?
+  category: cat-sql
+  tags: []
+  url: https://martinheinz.dev/blog/105
+  publisher: Martin Heinz (Practical Data Science)
+  kind: blog
+  why: null
+  source_url: https://martinheinz.dev/blog/105
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: martin-heinz
+    extracted_at: 2026-10-26T12:03:14.407Z
+    published: Mon, 02 Oct 2023 16:00:00 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-sql
+      - cat-databases
+    suggested_type: tutorial

@@ -1,0 +1,31 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-building-a-support-ticket-triage-report-with-iif-and-choose-in-s
+  slug: building-a-support-ticket-triage-report-with-iif-and-choose-in-s
+  type: reference
+  title: Building a Support Ticket Triage Report with IIF() and CHOOSE() in SQL Server
+  description: Learn how to use CHOOSE() and IIF() to validate priorities and
+    return easy to read messages to the user. The post Building a Support Ticket
+    Triage Report with IIF() and CHOOSE() in SQL Server appeared first on
+    SQLServerCentral .
+  category: cat-sql
+  tags: []
+  url: https://www.sqlservercentral.com/articles/building-a-support-ticket-triage-report-with-iif-and-choose-in-sql-server
+  publisher: SQLServerCentral (tutorials)
+  kind: blog
+  why: null
+  source_url: https://www.sqlservercentral.com/articles/building-a-support-ticket-triage-report-with-iif-and-choose-in-sql-server
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: sql-server-central
+    extracted_at: 2026-10-26T12:03:16.096Z
+    published: Wed, 21 Oct 2026 00:00:00 +0000
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-sql
+    suggested_type: tutorial

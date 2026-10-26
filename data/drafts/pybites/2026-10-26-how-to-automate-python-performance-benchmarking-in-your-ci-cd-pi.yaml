@@ -1,0 +1,32 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-how-to-automate-python-performance-benchmarking-in-your-ci-cd-pi
+  slug: how-to-automate-python-performance-benchmarking-in-your-ci-cd-pi
+  type: reference
+  title: How to Automate Python Performance Benchmarking in Your CI/CD Pipeline
+  description: The issue with traditional performance tracking is that it is often
+    an afterthought. We treat performance as a debugging task, (something we do
+    after users complain), rather than a quality gate. Worse, when we try to
+    automate it, we run into the Noisy Neighbour problem. If you ru
+  category: cat-python
+  tags: []
+  url: https://pybit.es/articles/how-to-automate-python-performance-benchmarking-in-your-ci-cd-pipeline/
+  publisher: PyBites (Python practice + coaching)
+  kind: blog
+  why: null
+  source_url: https://pybit.es/articles/how-to-automate-python-performance-benchmarking-in-your-ci-cd-pipeline/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: pybites
+    extracted_at: 2026-10-26T12:03:09.729Z
+    published: Mon, 16 Feb 2026 00:42:03 +0000
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories:
+      - cat-python
+      - cat-cicd
+    suggested_type: tutorial

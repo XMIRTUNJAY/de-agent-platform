@@ -1,0 +1,26 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-anthropics-single-agent-loop-kit
+  slug: anthropics-single-agent-loop-kit
+  type: skill
+  title: anthropics/single-agent-loop-kit
+  description: See the source repository.
+  category: cat-agentic
+  tags: []
+  url: https://github.com/anthropics/single-agent-loop-kit
+  publisher: GitHub org — Anthropic (claude, agents, skills)
+  source_url: https://github.com/anthropics/single-agent-loop-kit
+  github_url: https://github.com/anthropics/single-agent-loop-kit
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files:
+    - examples/support-desk/single_loop/skills/returns/SKILL.md
+    - skill/SKILL.md
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-org-anthropic
+    extracted_at: 2026-10-26T12:03:23.291Z
+    lane: extract

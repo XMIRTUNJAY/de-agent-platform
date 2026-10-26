@@ -1,0 +1,30 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-how-to-diagnose-vite-not-found-after-npm-ci-in-a-container-build
+  slug: how-to-diagnose-vite-not-found-after-npm-ci-in-a-container-build
+  type: reference
+  title: "How to Diagnose vite: not found After npm ci in a Container Build"
+  description: I recently worked on a project where a Node.js application used
+    Vite to compile its frontend. It worked in a browser-hosted development
+    environment, but its image build failed after the move to Azure
+  category: cat-azure
+  tags: []
+  url: https://www.freecodecamp.org/news/diagnose-vite-not-found-npm-ci-container-build/
+  publisher: freeCodeCamp News
+  kind: blog
+  why: null
+  source_url: https://www.freecodecamp.org/news/diagnose-vite-not-found-npm-ci-container-build/
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: freecodecamp-news
+    extracted_at: 2026-10-26T12:03:06.792Z
+    published: Wed, 21 Oct 2026 16:03:14 +0000
+  classification:
+    backend: rules
+    confidence: medium
+    suggested_categories:
+      - cat-azure
+    suggested_type: tutorial

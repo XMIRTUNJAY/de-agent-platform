@@ -1,0 +1,36 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-yu-iskw-dbt-unittest
+  slug: yu-iskw-dbt-unittest
+  type: agent
+  title: yu-iskw/dbt-unittest
+  description: >-
+    A dbt package provides macros for unit testing, inspired by python's
+    unittest module
+
+
+    Install (from source README):
+
+    Check [dbt Hub](https://hub.getdbt.com/yu-iskw/dbt_unittest/latest/) for the
+    latest installation instructions.
+  category: cat-data-quality
+  tags:
+    - dbt
+    - dbt-package
+    - unit-testing
+    - unittest
+  url: https://github.com/yu-iskw/dbt-unittest
+  publisher: GitHub topic — dbt packages
+  source_url: https://github.com/yu-iskw/dbt-unittest
+  github_url: https://github.com/yu-iskw/dbt-unittest
+  license: Apache-2.0
+  install_command: null
+  install_candidates: []
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-dbt-packages
+    extracted_at: 2026-10-26T12:05:27.447Z
+    lane: extract

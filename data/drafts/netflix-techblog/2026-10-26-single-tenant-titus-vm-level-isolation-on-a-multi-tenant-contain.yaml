@@ -1,0 +1,28 @@
+# DRAFT — not published. Review, then move to data/curated/references/.
+- id: ref-single-tenant-titus-vm-level-isolation-on-a-multi-tenant-contain
+  slug: single-tenant-titus-vm-level-isolation-on-a-multi-tenant-contain
+  type: reference
+  title: "Single-tenant Titus: VM-level isolation on a multi-tenant container
+    platform"
+  description: Summary pending review — see the source.
+  category: null
+  tags: []
+  url: https://netflixtechblog.com/single-tenant-titus-vm-level-isolation-on-a-multi-tenant-container-platform-6d8b1909d163?source=rss----2615bd06b42e---4
+  publisher: Netflix TechBlog (data platform posts)
+  kind: blog
+  why: null
+  source_url: https://netflixtechblog.com/single-tenant-titus-vm-level-isolation-on-a-multi-tenant-container-platform-6d8b1909d163?source=rss----2615bd06b42e---4
+  license: Proprietary
+  verification: community
+  curation_state: draft
+  draft_kind: brief
+  body: ""
+  discovered_from:
+    source: netflix-techblog
+    extracted_at: 2026-10-26T12:02:57.773Z
+    published: Thu, 22 Oct 2026 22:19:12 GMT
+  classification:
+    backend: rules
+    confidence: low
+    suggested_categories: []
+    suggested_type: null

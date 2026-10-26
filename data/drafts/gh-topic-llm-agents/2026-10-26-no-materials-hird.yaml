@@ -1,0 +1,68 @@
+# DRAFT extract — not published. Auto-gates or a curator promotes it.
+- id: ext-no-materials-hird
+  slug: no-materials-hird
+  type: agent
+  title: no-materials/hird
+  description: >-
+    A typed language for LLM agent systems on BEAM: effect-row tracking,
+    auditable tool effects, typed actors, and OTP supervision, queryable by
+    agents over MCP.
+
+
+    Install (from source README):
+
+    Prebuilt binaries for Linux, macOS, and Windows are attached to every
+
+    [release](https://github.com/no-materials/hird/releases): extract the
+
+    archive for your platform and put `hird` (the compiler), `hird-lsp`, and
+
+    `hird-mcp` on your `PATH`.
+
+
+    From source, with Rust 1.97 or newer:
+
+
+    ```sh
+
+    cargo install --git https://github.com/no-materials/hird hird-cli
+
+    cargo install --git https://github.com/no-materials/hird hird-lsp  #
+    optional
+
+    cargo install --git https://github.com/no-materials/hird hird-mcp  #
+    optional
+
+    ```
+
+
+    With Nix, the same three binaries are flake outputs
+
+    (`nix run github:no-materials/hird#
+  category: cat-agentic
+  tags:
+    - actor-model
+    - ai-agents
+    - algebraic-effects
+    - beam
+    - compiler
+    - effect-system
+    - erlang
+    - llm
+  url: https://github.com/no-materials/hird
+  publisher: GitHub topic — llm agents
+  source_url: https://github.com/no-materials/hird
+  github_url: https://github.com/no-materials/hird
+  license: Apache-2.0
+  install_command: brew install erlang
+  install_candidates:
+    - brew install erlang
+  skill_files: []
+  executables: true
+  verification: community
+  curation_state: draft
+  draft_kind: extract
+  discovered_from:
+    source: gh-topic-llm-agents
+    extracted_at: 2026-10-26T12:04:56.069Z
+    lane: extract
